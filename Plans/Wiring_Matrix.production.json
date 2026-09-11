@@ -43619,6 +43619,66 @@
         "Assert cmd.project.chain_wizard_open_deferred records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
+    "catalog.project_unarchive": {
+      "acceptance_checks": [
+        "cmd.project.unarchive names exactly one specified target handlers::project::unarchive; the target string is not implementation or dispatch proof.",
+        "Validate the exact request/result pair Plans/project_system_contracts.schema.json#/$defs/project_action_request -> Plans/project_system_contracts.schema.json#/$defs/project_action_result and reject unknown, stale, conflicting, or authority-widening fields.",
+        "Read state.commands.project_unarchive.availability and state.commands.project_unarchive.disabled_reason before dispatch; remain handler_unavailable until source-hashed native proof exists.",
+        "Return receipt/projection evidence only and emit no unregistered EventRecord until Event Authority admits an exact event family.",
+        "Prove every named reverse consumer, keyboard/pointer parity, exact disabled announcement, and deterministic initiating focus/route return.",
+        "Persist only the existing Project registry row from archived to listed with exact Project/registry fences and permission; preserve identity, content, Settings, topology, backups, active selection and runtime lifecycle.",
+        "Reject old ui.project.restore_archived payloads at the owner boundary. The retained UI entry constructs this exact command before every gate and cannot mutate locally or invoke an independent handler.",
+        "Successful outcome requires persisted listed readback, correlated owner receipt and exact return; already-listed no_change and idempotent replay perform no additional write. Stale, denied, removed/deletion-state and uncertain recovery never report success."
+      ],
+      "accessibility_contract": {
+        "disabled_announcement": "Announce state.commands.project_unarchive.disabled_reason, including handler_unavailable, without secrets or raw output.",
+        "focus_management": "Retain invoking focus while pending and settle to the exact initiating route/focus/continuation after result or error.",
+        "keyboard_access": "Keyboard and pointer dispatch the identical typed cmd.project.unarchive request only when available.",
+        "role_or_semantics": "Expose a stable role/name/description and exact current state for cmd.project.unarchive in every named consumer."
+      },
+      "disabled_reason_projection": "state.commands.project_unarchive.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Persisted Project registry mutation plus the correlated typed owner result/readback receipt. This is not a no-persist navigation receipt; no new EventRecord is admitted.",
+        "receipt_or_event_refs": [
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
+        ]
+      },
+      "event_test_requirements": [
+        "Assert cmd.project.unarchive writes only the existing projects:v1 registry metadata under Project authority, returns a correlated typed owner result/readback receipt, and emits zero unregistered EventRecord effects."
+      ],
+      "evidence_required": "Future production evidence for cmd.project.unarchive: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts. Registry acceptance additionally requires immutable-identity/non-registry preservation, exactly one commit, already-listed no-change, original-result replay, stale/denied/deletion-state negatives and restart/readback reconciliation. No native proof exists in this Plans change.",
+      "expected_event_types": [],
+      "handler_location": "handlers::project::unarchive",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+      "state_selector": "state.commands.project_unarchive.availability",
+      "test_evidence": [
+        {
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.project.unarchive reaches only handlers::project::unarchive; the declared target string is not proof.",
+          "test_id": "wiring.catalog.project_unarchive.dispatcher"
+        },
+        {
+          "evidence_kind": "state_projection",
+          "requirement": "Prove exact availability and disabled reason, including handler_unavailable before native evidence.",
+          "test_id": "wiring.catalog.project_unarchive.state"
+        },
+        {
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove typed receipt/projection correlation and zero unregistered EventRecord effects.",
+          "test_id": "wiring.catalog.project_unarchive.effect"
+        },
+        {
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove role/name, keyboard-pointer parity, focus return, busy state, disabled reason, and outcome announcement in every reverse consumer.",
+          "test_id": "wiring.catalog.project_unarchive.accessibility"
+        }
+      ],
+      "ui_command_id": "cmd.project.unarchive",
+      "ui_element_id": "catalog.project_unarchive",
+      "ui_location": "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
+    },
     "catalog.project_duplicate_configuration": {
       "acceptance_checks": [
         "cmd.project.duplicate_configuration names exactly one specified target handlers::project::duplicate_configuration; the target string is not implementation or dispatch proof.",

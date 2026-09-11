@@ -67,7 +67,7 @@ REPOSITORY_LOCAL_PACKET_TOKENS = {
     "cmd.source_control.backup_history.open",
 }
 CONNECTION_DRAFT_LOCAL_PACKET_TOKENS = {"cmd.connection.draft.open_details"}
-ADJUDICATION_SHA256 = "d45da4082814b15fc92e6d7b074e6e10f429e1e3e090c4969a778564fac74fcd"
+ADJUDICATION_SHA256 = "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
 
 
 def load_json(path: Path) -> Any:
@@ -363,7 +363,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         schema_enum_actions(
             "Plans/project_system_contracts.schema.json",
             "/$defs/ProjectCompositionLocalActionId/enum",
-        ) - {"ui.project.restore_archived"},
+        ),
     )
     add(
         "TCP-NAMED",
@@ -994,9 +994,9 @@ def adjudication_inventory() -> tuple[
 
     exact_counts = {
         "approved_alias_to_exact": 43,
-        "new_canonical_required": 86,
+        "new_canonical_required": 87,
         "rejected_with_reason": 3,
-        "typed_local_ui_action": 39,
+        "typed_local_ui_action": 38,
     }
     exact_sir_counts = {
         "approved_alias_to_exact": 33,
@@ -1021,10 +1021,10 @@ def adjudication_inventory() -> tuple[
         failures.append(
             f"server-gap alias target denominator drift: expected 19, found {len(set(alias_targets.values()))}"
         )
-    if len(excluded_sources) != 42:
+    if len(excluded_sources) != 41:
         failures.append(
             "server-gap typed-local/reject exclusion drift: "
-            f"expected 42 (39+3), found {len(excluded_sources)}"
+            f"expected 41 (38+3), found {len(excluded_sources)}"
         )
     stats = {
         "source_sha256": source_sha256,
@@ -1484,12 +1484,15 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings,
     # retired cmd.chat.delete_message, and the file-only cmd.chat.add_file_reference
     # alias whose target remains cmd.chat.attachment.add. Source cases are retained.
+    # USER-PROJECT-UNARCHIVE-REGISTRY-20260911 changes one existing Touch UI row
+    # to its Project-owner command, removes its command exclusion, and adds one
+    # production-intent row. No Touch row/profile, native proof or event is added.
     exact_resolved_denominators = {
         "row_count": 644,
         "profile_count": 131,
-        "excluded_token_count": 58,
+        "excluded_token_count": 57,
         "alias_binding_count": 64,
-        "production_wiring_entry_count": 1143,
+        "production_wiring_entry_count": 1144,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

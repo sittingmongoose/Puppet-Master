@@ -2,21 +2,21 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11743-L11974
+Source lines: L11743-L11975
 
-Source SHA256: `f5a6f1c5de6a27ed8d70864fb009a0c818b9f96e32ad816119dbd6614c52cf98`
+Source SHA256: `36db06e7ad7a107fca4bc6c536082d91b497a822198a07f364925a7e6bf3c35f`
 
 ---
 
 ## Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01
 
 
-The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+The current machine partition is 171 packet rows: 87 new canonical commands, 43 pre-policy aliases, 38 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 104 obligation references collapse to **103 unique primary command/catalog/production-intent rows**; the packet primary denominator is 93 (`87 + 6`). USER-PROJECT-UNARCHIVE-REGISTRY-20260911 reclassifies only source row 128 from local-only presentation to the Project-owner registry mutation. The earlier 86/39, 102-central and 92-packet counts remain historical source-report lineage, not current denominators; every source row identity is preserved.
 
 Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
 
 
-### Exact 102 primary catalog rows
+### Exact 103 primary catalog rows
 
 | Exact primary command | Human label | Owner / PlanUnit | Sole future handler target | Complete intended GUI consumers |
 |---|---|---|---|---|
@@ -70,6 +70,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.installation.attach_external` | Installation Attach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.installation.detach_external` | Installation Detach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.installation.remove` | Installation Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.project.unarchive` | Restore Archived Project | `Plans/Project_System.md` / `PJCT-002` | `handlers::project::unarchive` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.duplicate_configuration` | Project Duplicate Configuration | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.duplicate_with_history` | Project Duplicate With History | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.execution_host.select` | Project Execution Host Select | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
@@ -199,7 +200,6 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
 | `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
-| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
@@ -223,7 +223,7 @@ plan_unit_id: UCC-151
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The server/Egolite closure catalogs 102 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 39 predecessor spellings typed-local-only, and three rejections non-dispatchable.
+canonical_text: The server/Egolite closure catalogs 103 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 38 predecessor spellings typed-local-only, and three rejections non-dispatchable; cmd.project.unarchive is the September 11 owner-backed registry mutation correction.
 gui_related: true
 depends_on: [CS-073]
 unblocks: [WM-050, UIW-016]
@@ -231,6 +231,7 @@ acceptance_criteria:
   - Each exact primary appears once in the catalog and at least once in production-intent wiring with the same command and sole target.
   - Every intended GUI consumer is preserved in the catalog and receives exact availability, disabled reason, keyboard semantics, focus return, and receipt/result projection.
   - Alias, typed-local predecessor, and rejected tokens have no primary catalog or production row.
+  - Restore Archived Project consumes cmd.project.unarchive through PJCT-002 and the existing Project action family. Its retained ui.project.restore_archived entry is only a pre-gate adapter; visible success requires the Project owner's persisted listed result, never an optimistic local-only row change or backup/runtime restoration.
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
 risk_class: catalog_reverse_coverage_or_alias_promotion_drift
 reasoning_tier: high
