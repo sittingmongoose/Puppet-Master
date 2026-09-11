@@ -1,0 +1,74 @@
+{
+  "schema_id": "pm.assurance.event_authority.compaction_blocked_packet.v1",
+  "step": 6,
+  "status": "BLOCKED",
+  "delivery": "report_only_partial_step",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-036",
+    "Plans/Decision_Log.md#DL-039"
+  ],
+  "base_commit": "0db6e2627ca0b30435ced3341a1748e23aad7f55",
+  "event_type": "context.compaction.completed",
+  "persistence_decision": "Already approved by Jared in DL-039; not re-asked.",
+  "pending_decision_card": "reports/event-authority-20260911/step-06-decision-card.md",
+  "owner_contract_blockers": [
+    "No event-specific focused-thread consumer/projector or checkpoint key/schema/version binding in current canon. Existing generic components cannot prove this event contract by association.",
+    "Event payload and exact scope/idempotency binding remain to be authored and verified through Assistant Chat and Storage.",
+    "Completion record retention requires explicit choice between thread-lifetime source policy and permanent content-free audit receipt policy."
+  ],
+  "independent_governance_constraint": {
+    "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
+    "validator_sha256": "bd54afffc689146753daec474d6cdbc7ac663afaf21d842aad4fcf10255112d5",
+    "predicate": "live_set - known37 == AUGUST2 while August families remain registered",
+    "synthetic_40th_set_member_result": "unexpected_august_set",
+    "validator_edit_authorized": false,
+    "resolution": "Preserve as a separate governance conflict for later conditional Step 10; do not infer permission to change the validator or claim a seal is possible.",
+    "pnc019_checkpoint": "Step 4 approved only 39 families at registry revision 2026-08-27.1; no advance authorized or applied here."
+  },
+  "future_coherence_scope": [
+    "Plans/assistant-chat-design.md:ACD-177 and completed-event owner contract",
+    "Plans/storage-plan.md:single-family Event Authority contract",
+    "Plans/event_family_registry.json:exactly one family only after full contract",
+    "Plans/event_payloads/:closed completed payload schema only after owner authority",
+    "Plans/UI_Command_Catalog.md:cmd.chat.compact_context/UCC-060",
+    "Plans/Wiring_Matrix.production.json:catalog.chat_compact_context",
+    "Plans/Automated_Testing_System.md:ATS-017/ATS-040 completed-only expectations",
+    "Plans/FinalGUISpec.md:completed-specific PM7 no-EventRecord consumer text",
+    "Plans/shared_runtime_command_contracts.schema.json and fixtures:reconcile completed fixture expectation without promoting fixture-only schema into event authority"
+  ],
+  "claim_boundary": {
+    "registry_family_count": 39,
+    "registry_admissions": 0,
+    "canonical_plans_changed": false,
+    "contract_depth_claimed_complete": false,
+    "validator_changed": false,
+    "spec_lock_changed": false,
+    "freeze_or_closure_hash_restamped": false,
+    "pnc019_certified": false,
+    "runtime_enabled": false,
+    "worknodes_created": false,
+    "step_6_complete": false,
+    "step_9_all_252_scope_preserved": true
+  },
+  "evidence": {
+    "identity-payload-producer-preflight.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/identity-payload-producer-preflight.json",
+      "sha256": "e835bd281a34a513be1f79190caf8d2a852ee86116f2719bdd232fc16fc07978"
+    },
+    "frozen-validator-extra-family-probe.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/frozen-validator-extra-family-probe.json",
+      "sha256": "8bfae7d8ba5f213a73681bbb8929c58db1de2f771fdad6c1187c2ec883c1d142"
+    },
+    "root-binding-adjudication.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/root-binding-adjudication.json",
+      "sha256": "aad9b706ba3aeaa73a73047aeb6bf023b256684cbc117ec59c750df8e9dcdc9a"
+    }
+  },
+  "cost": {
+    "agent_model": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "tokens": null,
+    "usd": null,
+    "note": "Usage and dollar cost unavailable; no estimate invented."
+  }
+}
