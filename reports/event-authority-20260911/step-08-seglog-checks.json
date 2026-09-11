@@ -1,7 +1,7 @@
 {
   "status": "PASS_STATIC_SCHEMAS_AND_BOUNDED_REVIEW",
   "value_shape_cases": 12,
-  "existing_storage_families_preserved": 95,
+  "existing_storage_families_preserved": 96,
   "new_storage_families": 3,
   "all_other_registry_fields_preserved": true,
   "subject_manifest": {
@@ -23,8 +23,8 @@
   "native": "NOT_RUN",
   "new_closed_event_rows": 0,
   "generated_index_scope": {
-    "old_plan_units_preserved": 6537,
-    "new_plan_unit_count": 6538,
+    "old_plan_units_preserved": 6539,
+    "new_plan_unit_count": 6540,
     "generated_shard_owner_groups": [
       "storage-plan",
       "storage_value_registry"
@@ -34,12 +34,12 @@
   "shard_check": {
     "status": "pass",
     "docs": 98,
-    "shards": 2254
+    "shards": 2260
   },
   "plan_index": {
     "status": "pass",
-    "plan_units": 6538,
-    "acceptance_units": 25115
+    "plan_units": 6540,
+    "acceptance_units": 25125
   },
   "standard_governance": {
     "status": "FAIL_UNSEALED_GOVERNANCE_AND_PREEXISTING_MISSING_REFERENCES",
@@ -47,7 +47,8 @@
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-root-20260911/full-gates.json",
       "sha256": "75f1972814bc1179568d57671f94e3382db85646ab4148cc0d699130fcf517be",
       "checks": 36,
-      "failed": 18
+      "failed": 18,
+      "source_phase": "Before Browser reset rebase; not rerun as complete aggregate after rebase"
     },
     "targeted_rechecks_after_materializing_tests_and_Concepts": {
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-root-20260911/restored-sparse-gates.json",
@@ -72,5 +73,28 @@
     "new_contracts_gate": "PASS",
     "new_planunit_path_or_contractref_failure": false,
     "governance_mutations": false
+  },
+  "pre_rebase_generated_index_scope": {
+    "old_plan_units_preserved": 6539,
+    "new_plan_unit_count": 6540,
+    "generated_shard_owner_groups": [
+      "storage-plan",
+      "storage_value_registry"
+    ],
+    "all_existing_plan_unit_semantics_preserved": true
+  },
+  "post_rebase": {
+    "upstream": "6e0a38084ed86b4326be9ddbbfde2d3f8e2ae2c1",
+    "source_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-root-20260911/rebase-source-review.json",
+      "sha256": "6eb5e797e898b8d8575827883c689ec2688112dea809e64b9fe70e67bab4e603"
+    },
+    "all_prior_96_rows_and_42_events_preserved": true,
+    "all_prior_6539_planunits_semantically_preserved": true,
+    "changed_derived_owner_groups": [
+      "storage-plan",
+      "storage_value_registry"
+    ],
+    "own_12_shape_cases": "PASS"
   }
 }

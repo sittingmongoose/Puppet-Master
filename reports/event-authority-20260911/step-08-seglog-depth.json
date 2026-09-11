@@ -1,6 +1,6 @@
 {
   "status": "NORMATIVE_CONTRACT_COMPLETE_NATIVE_UNPROVEN",
-  "baseline_head": "641c9802642343a8c5be05612ddc12898fe10b2a",
+  "baseline_head": "6e0a38084ed86b4326be9ddbbfde2d3f8e2ae2c1",
   "event_type": "seglog.event_appended",
   "new_plan_units": [
     "SP-270"
@@ -11,8 +11,8 @@
     "seglog_observability_reader_checkpoint"
   ],
   "storage_family_counts": {
-    "before": 95,
-    "after": 98
+    "before": 96,
+    "after": 99
   },
   "old_rows_and_policy_values_preserved": true,
   "event_registry_unchanged": true,
@@ -56,7 +56,7 @@
       "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
       "owner_plan_unit": "SP-270",
       "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
-      "assessment": "Existing closed five-required/one-optional-field payload unchanged; three new closed sidecar definitions validate."
+      "assessment": "Existing exact closed five-required/one-optional payload remains unchanged; three first-native registered closed sidecar value definitions match their physical rows."
     },
     {
       "criterion": "scope_identity",
@@ -80,7 +80,7 @@
       "external_proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
       "owner_plan_unit": "SP-270",
       "current_owner_anchor": "Plans/storage-plan.md#seglog-append-observability-producer-and-read-contract",
-      "assessment": "Unchanged metadata/source/index/checkpoint policy values. NEW adoption class mapping to indefinite migration/source lineage explicitly requires root review; pending source uses existing live-ref/maintenance class. Actual same-key <=3 generation layouts, first-withdrawal anchors, stable birth, typed hold checks and serialized slot cleanup now materialized."
+      "assessment": "Exact unchanged source/metadata/index/checkpoint policies; explicit new adoption floor/prefix assignment to existing indefinite migration/source-lineage class under DL-045; existing pending live-ref class; same-key bounded histories, first-withdrawal anchors, current holds and serialized lawful cleanup."
     },
     {
       "criterion": "redaction_custody",
@@ -127,5 +127,10 @@
   "canonical_prefix_is_new_authority": true,
   "governance_seal": false,
   "normative_contract_complete": true,
-  "status_meaning": "PASS means this facet is explicitly supplied by the individual normative contract. It is not native execution, frozen-validator DEPTH_PASS, runtime acceptance, readiness or governance certification."
+  "status_meaning": "PASS means this facet is explicitly supplied by the individual normative contract. It is not native execution, frozen-validator DEPTH_PASS, runtime acceptance, readiness or governance certification.",
+  "initial_fixture_base_head": "641c9802642343a8c5be05612ddc12898fe10b2a",
+  "current_event_family_count": 42,
+  "outside_denominator": "Separately admitted compaction and Browser created/reset families do not expand original39-row depth denominator.",
+  "normative_rows_completed_in_this_supplement": 1,
+  "closed_rows_meaning": "Frozen independent validator/runtime closure; normative completion is separately true."
 }
