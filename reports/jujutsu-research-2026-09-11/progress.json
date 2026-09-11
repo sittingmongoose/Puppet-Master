@@ -1,17 +1,18 @@
 {
-  "at": "2026-09-11T13:50:14.871041+00:00",
-  "status": "partial_budget_guard_stop_before_adjudication",
+  "at": "2026-09-11T13:57:22.220604+00:00",
+  "status": "d3_blind_adjudication_running",
   "checkpoint_reached": false,
   "non_arm_observed_api_equivalent_usd": 59.065252,
-  "non_arm_cap_usd": 60,
+  "non_arm_cap_usd": 180,
   "operational_reserve_usd": 2.0,
   "reserve_is_not_spend": true,
-  "allowance_stop_reason": "Non-arm observed usage plus operational reservation threshold",
+  "allowance_stop_reason": null,
   "actual_cash_usd": null,
   "named_xhigh_disputes": 0,
   "d1": "complete_pushed",
   "d2": "complete_partial_campaigns_frozen_pushed",
-  "d3": "blind_inputs_prepared_classification_pending",
+  "d3": "blind_medium_adjudication_running",
   "d4": "pending_no_corrections_landed_no_decision_packet",
-  "d5": "pending_answers_after_d4"
+  "d5": "pending_answers_after_d4",
+  "budget_extension": "d3-prepared/allowance-extension.json"
 }

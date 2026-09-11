@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-11T13:55:33.717646+00:00",
+  "source": "Jared in the active task",
+  "authorization_verbatim": "you can go past your budget up to $180",
+  "interpretation": "New cumulative non-arm allowance is $180 total; preserves all prior usage. Arm caps, processing deadline and named-dispute count remain unchanged.",
+  "previous_cap_usd": 60,
+  "new_cap_usd": 180,
+  "observed_before_extension_usd": 60.325424,
+  "old_refresher_sha256": "a19cd6511c0bd356d69b7e6e05da5ab6210cff2dde76dfabbdf975c2c14b8199",
+  "new_refresher_sha256": "1e1c2c6b10cc0bfa905e625c8c3be7d9c72973b588cc01b1cd07740559294d21",
+  "evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/allowance-extension-180.json",
+    "sha256": "90fceb0b5e7951c2ff6b8092429e18537669c73283441e3bdebc248bb6918d47"
+  }
+}
