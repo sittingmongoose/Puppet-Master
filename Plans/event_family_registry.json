@@ -5097,6 +5097,210 @@
       }
     },
     {
+      "family_id": "event-family-testing-session-opened",
+      "family_revision": "1.0.0",
+      "event_type": "testing.session.opened",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Automated_Testing_System.md#ATS-049",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.testing_session_event.opened.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/opened",
+        "schema_id": "pm.testing_session_event.opened.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/owner_result/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/owner_result/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/owner_result/context/run_id"
+          ],
+          "attempt_id": [
+            "/payload/owner_result/context/attempt_id"
+          ],
+          "actor_ref": [
+            "/payload/owner_result/context/actor_ref"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/testing_session_event_admission.json#/rows/0",
+        "Plans/Automated_Testing_System.md#ATS-049",
+        "Plans/testing_session_event_payloads.schema.json#/$defs/opened"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-testing-session-watch-started",
+      "family_revision": "1.0.0",
+      "event_type": "testing.session.watch_started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Automated_Testing_System.md#ATS-049",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.testing_session_event.watch_started.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/watch_started",
+        "schema_id": "pm.testing_session_event.watch_started.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/owner_result/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/owner_result/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/owner_result/context/run_id"
+          ],
+          "attempt_id": [
+            "/payload/owner_result/context/attempt_id"
+          ],
+          "actor_ref": [
+            "/payload/owner_result/context/actor_ref"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/testing_session_event_admission.json#/rows/1",
+        "Plans/Automated_Testing_System.md#ATS-049",
+        "Plans/testing_session_event_payloads.schema.json#/$defs/watch_started"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-testing-session-backgrounded",
+      "family_revision": "1.0.0",
+      "event_type": "testing.session.backgrounded",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Automated_Testing_System.md#ATS-049",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.testing_session_event.backgrounded.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/backgrounded",
+        "schema_id": "pm.testing_session_event.backgrounded.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/owner_result/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/owner_result/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/owner_result/context/run_id"
+          ],
+          "attempt_id": [
+            "/payload/owner_result/context/attempt_id"
+          ],
+          "actor_ref": [
+            "/payload/owner_result/context/actor_ref"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/testing_session_event_admission.json#/rows/2",
+        "Plans/Automated_Testing_System.md#ATS-049",
+        "Plans/testing_session_event_payloads.schema.json#/$defs/backgrounded"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-testing-session-redaction-inspected",
+      "family_revision": "1.0.0",
+      "event_type": "testing.session.redaction_inspected",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Automated_Testing_System.md#ATS-049",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.testing_session_event.redaction_inspected.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/redaction_inspected",
+        "schema_id": "pm.testing_session_event.redaction_inspected.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/owner_result/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/owner_result/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/owner_result/context/run_id"
+          ],
+          "attempt_id": [
+            "/payload/owner_result/context/attempt_id"
+          ],
+          "actor_ref": [
+            "/payload/owner_result/context/actor_ref"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/testing_session_event_admission.json#/rows/3",
+        "Plans/Automated_Testing_System.md#ATS-049",
+        "Plans/testing_session_event_payloads.schema.json#/$defs/redaction_inspected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
       "family_id": "event-family-context-compaction-completed",
       "family_revision": "1.0.0",
       "event_type": "context.compaction.completed",

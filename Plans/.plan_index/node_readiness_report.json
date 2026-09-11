@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14694,
+    "depends_on_edge_count": 14695,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17342,
-    "node_count": 6467,
+    "edge_count": 17343,
+    "node_count": 6468,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T17:34:15Z",
+  "generated_at_utc": "2026-09-11T17:34:45Z",
   "gui_related_units": {
     "count": 3122,
     "units": [
@@ -34366,10 +34366,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6467,
+  "plan_unit_count": 6468,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1923,
+      "high": 1924,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35455,6 +35455,7 @@
       "eval_policy_escape_or_false_proof": 1,
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
+      "event_authority_and_false_completion": 1,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
       "event_authority_payload_depth_drift": 1,
@@ -38089,7 +38090,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6276,
+      "accepted": 6277,
       "retired": 182,
       "superseded": 9
     },
@@ -38156,7 +38157,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5159,
+      "requirement": 5160,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38226,7 +38227,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "6f25aed6e6d699bf497f4444deeb846a336b127aa89e52a29492837e39264107",
+        "expected": "ba0c09d7e52a93f7b077db24ab55df3fc0a9dab63c328595663f5ad25528b414",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38274,19 +38275,19 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "c5d52e380cd004edfe694b995adfcb2f54e8ae00c21248ac288c6679b0673afb",
+        "expected": "6851ed233249a29701b1e87bf78da3f44f30389152186072927adc0ffd0fa1dc",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "f46c9a1a659e7b03bdab4d94216840dd77d5ac057b7617990976901364bc2537",
+        "expected": "1fbc71e122ebe6fbce8e34f7e2fe2469fa7eae33ef3b39de2b30c70517aefbd7",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "fdb8de797e7801d61d44dac55eee5aa1180bd0adb89663a42d5a7fdfa23ceb80",
+        "expected": "fce3644ccbd04e74660dbdf57862b6d4b5912443ee8d6102e4e9506a21d0fb8e",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -38317,7 +38318,7 @@
       },
       {
         "actual_checkpoint": {
-          "registered_kernel_rows": 93,
+          "registered_kernel_rows": 97,
           "registry_revision": "2026-09-11.4",
           "registry_schema_id": "pm.event_family_registry.v1",
           "registry_schema_version": "2.0.0"
@@ -38365,7 +38366,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 93
+        "registered_kernel_rows": 97
       },
       {
         "bulk_registration_allowed": false,
@@ -38384,7 +38385,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 93
+        "registered_kernel_rows": 97
       }
     ],
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",

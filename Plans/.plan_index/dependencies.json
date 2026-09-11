@@ -5333,6 +5333,7 @@
     "SIR-026",
     "SMPFS-151",
     "SIR-023",
+    "ATS-049",
     "TCME-008",
     "W-001",
     "POA-037",
@@ -12222,6 +12223,11 @@
       "edge_type": "depends_on",
       "from": "ATS-048",
       "to": "TCME-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-049",
+      "to": "ATS-048"
     },
     {
       "edge_type": "depends_on",
@@ -93184,7 +93190,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T17:34:14Z",
+  "generated_at_utc": "2026-09-11T17:34:45Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -105914,6 +105920,23 @@
         "heading_level": 2,
         "heading_line": 4271,
         "line": 4330,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "existing_testing_session_events",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-049",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_and_false_completion",
+      "source_location": {
+        "heading": "ATS-049 — Existing Session Event Admission",
+        "heading_level": 2,
+        "heading_line": 4390,
+        "line": 4450,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -203132,10 +203155,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14694,
+    "depends_on_edge_count": 14695,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17342,
-    "node_count": 6467,
+    "edge_count": 17343,
+    "node_count": 6468,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0

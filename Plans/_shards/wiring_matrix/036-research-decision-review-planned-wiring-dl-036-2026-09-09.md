@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4435-L4704
+Source lines: L4435-L4708
 
-Source SHA256: `27929a04fdfb0b39db05173649b2d444ec63a080785d5649ad1878e1f66b0515`
+Source SHA256: `6799b3bf5925c780cc3ad614e073863b3480aeb2ac18db6dd41066bd5ba9b558`
 
 ---
 
@@ -274,7 +274,11 @@ The current denominator stays 644 Touch rows and 1,144 production placements;
 the profile count becomes 133 solely because of these two owner splits. All seven
 rows remain `partial`. This correction is not native handler, runtime, visual,
 security, whole-packet audit completion, WorkNode, readiness or governance proof.
-Event obligations remain separate: a typed command binding cannot admit an event,
-and a no-op/replay must not manufacture a second effect.
+Event obligations remain separate: a typed command binding cannot admit an event.
+The eight session placements additionally consume ATS-049 through their exact
+`Plans/testing_session_event_admission.json` row. Only the committed owner transition
+emits its registered event; pending, no-op, refused/failed/cancelled, unknown-effect
+and command replay results emit none. Other Testing/recording event dispositions
+are unchanged, and static event admission does not supply a native producer.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-004, ContractName:Plans/Commands_System.md
