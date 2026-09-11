@@ -24,7 +24,7 @@ class TestingSessionEventTests(unittest.TestCase):
         self.assertEqual(report["failures"], [])
         self.assertEqual(report["positive_cases"], 4)
         self.assertEqual(report["negative_cases"], 124)
-        self.assertEqual(report["registry_families"], 92)
+        self.assertEqual(report["registry_families"], 93)
         self.assertEqual(report["admitted_events"], 0)
         self.assertEqual(report["event_disposition"], "quarantined_not_admitted")
         self.assertFalse(report["event_persistence_authorized"])
@@ -46,7 +46,7 @@ class TestingSessionEventTests(unittest.TestCase):
     def test_readiness_resolves_real_payload_pointers_without_lifting_pinned_kernel(self):
         owner = gate.response.module("testing_event_readiness_reader", "pm-implementation-readiness.py")
         registry = gate.load("Plans/event_family_registry.json")
-        self.assertEqual(len(registry["families"]), 92)
+        self.assertEqual(len(registry["families"]), 93)
         for family in registry["families"]:
             with self.subTest(event=family["event_type"]):
                 payload, schema_id = owner.event_family_payload_schema(family)
