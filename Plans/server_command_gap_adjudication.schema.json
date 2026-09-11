@@ -52,7 +52,7 @@
         "dispositions": {
           "type": "object", "additionalProperties": false,
           "required": ["approved_alias_to_exact", "new_canonical_required", "rejected_with_reason", "typed_local_ui_action"],
-          "properties": {"approved_alias_to_exact": {"const": 43}, "new_canonical_required": {"const": 86}, "rejected_with_reason": {"const": 3}, "typed_local_ui_action": {"const": 39}}
+          "properties": {"approved_alias_to_exact": {"const": 43}, "new_canonical_required": {"const": 87}, "rejected_with_reason": {"const": 3}, "typed_local_ui_action": {"const": 38}}
         },
         "retired_process_only": {"const": 0}, "reuse_exact_canonical": {"const": 0}
       }
@@ -91,7 +91,7 @@
       "properties": {
         "exact_duplicate_tokens_in_input": {"const": 0}, "semantic_duplicate_rows_normalized": {"const": 43}, "semantic_alias_target_count": {"const": 19},
         "alias_target_clusters": {"$ref": "#/$defs/cluster_map"}, "local_action_target_clusters": {"$ref": "#/$defs/cluster_map"},
-        "new_distinct_semantics": {"const": 86}, "rejected_command_shaped_rows": {"const": 3},
+        "new_distinct_semantics": {"const": 87}, "rejected_command_shaped_rows": {"const": 3},
         "analysis_rule": {"const": "Exact string uniqueness does not imply semantic uniqueness; normalize only where payload/result and owner effects can preserve the source behavior without a second handler."}
       }
     },
