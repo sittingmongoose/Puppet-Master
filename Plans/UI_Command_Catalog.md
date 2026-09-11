@@ -331,7 +331,7 @@ These IDs are required by `Plans/GitHub_Integration.md` section D and the legacy
 |---|---|---|---|
 | `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |
 | `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |
-| `cmd.project.new_github_repo` | `{ name, description?, private, visibility?, gitignore_template?, license?, local_clone_path }` | `project.created`, `git.clone.completed` | File menu, Dashboard, New GitHub Repo flow |
+| `cmd.project.new_github_repo` | Project-owned `project_action_request` (`Plans/project_system_contracts.schema.json`); approved forge intent under GI-042 / PJCT-008 | `project_action_result`; separately admitted `github.repo.create_requested` intake and `project.github_repo_bound` committed transition | File menu, Dashboard, New GitHub Repo flow; existing consumers unchanged |
 | `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |
 | `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Planning Wizard deferred intake (legacy command alias) |
 
@@ -13084,3 +13084,14 @@ and recording controls retain receipt-only domain-event dispositions. No new nat
 handler, visual design, command, storage family, runtime proof or readiness is claimed.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Automated_Testing_System.md#ATS-049, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+
+The existing `cmd.project.new_github_repo` and its sole planned
+`handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
+Project action request/result family. No second field-list DTO, generic create
+command or Project Composition command is introduced. The two registered events
+are separate owner transitions, not unconditional dispatch success. The central
+response preserves the application-scoped creation operation while its typed
+terminal result identifies the actual committed Project. Native availability
+remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007

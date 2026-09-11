@@ -565,6 +565,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_forge_backup_acceptance": "validate-forge-backup-acceptance",
     "validate_browser_event_admission": "validate-browser-event-admission",
     "validate_testing_session_event_admission": "validate-testing-session-event-admission",
+    "validate_github_project_integration": "validate-github-project-integration",
     "validate_ui_command_response": "validate-ui-command-response",
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
@@ -599,6 +600,7 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "forge_backup_acceptance": "validate-forge-backup-acceptance",
     "browser_event_admission": "validate-browser-event-admission",
     "testing_session_event_admission": "validate-testing-session-event-admission",
+    "github_project_integration": "validate-github-project-integration",
     "ui_command_response": "validate-ui-command-response",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
@@ -6439,6 +6441,22 @@ def cmd_validate_testing_session_event_admission(args: argparse.Namespace) -> di
     )
 
 
+def cmd_validate_github_project_integration(args: argparse.Namespace) -> dict[str, Any]:
+    """Check the existing GitHub/Project handoff without granting native proof."""
+    validator = ROOT / "scripts" / "pm-github-project-integration.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-github-project-integration", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-github-project-integration", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_ui_command_response(args: argparse.Namespace) -> dict[str, Any]:
     """Validate central response joins without claiming native dispatcher proof."""
     validator = ROOT / "scripts" / "pm-ui-command-response.py"
@@ -6808,6 +6826,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -6864,6 +6883,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
@@ -6947,6 +6967,7 @@ COMMANDS = {
     "validate-forge-backup-acceptance": cmd_validate_forge_backup_acceptance,
     "validate-browser-event-admission": cmd_validate_browser_event_admission,
     "validate-testing-session-event-admission": cmd_validate_testing_session_event_admission,
+    "validate-github-project-integration": cmd_validate_github_project_integration,
     "validate-ui-command-response": cmd_validate_ui_command_response,
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
@@ -6986,6 +7007,7 @@ def main() -> int:
         "validate-forge-backup-acceptance",
         "validate-browser-event-admission",
         "validate-testing-session-event-admission",
+        "validate-github-project-integration",
         "validate-ui-command-response",
         "validate-working-notebook-contracts",
         "validate-server-command-gap",

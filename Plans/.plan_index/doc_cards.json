@@ -7672,10 +7672,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 4,
+        "False": 5,
         "True": 37
       },
-      "heading_count": 67,
+      "heading_count": 69,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/Executor_Protocol.md",
@@ -7685,14 +7685,16 @@
         "Plans/GitHub_Integration.md",
         "Plans/Permissions_System.md",
         "Plans/Planning_Wizard.md",
+        "Plans/Project_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.md",
         "Plans/WorktreeGitImprovement.md",
+        "Plans/event_family_registry.json",
         "future remote Git cache adapter"
       ],
-      "line_count": 2516,
+      "line_count": 2604,
       "path": "Plans/GitHub_Integration.md",
-      "plan_unit_count": 41,
+      "plan_unit_count": 42,
       "plan_unit_ids": [
         "GI-002",
         "GI-003",
@@ -7734,13 +7736,15 @@
         "GI-038",
         "GI-039",
         "GI-040",
-        "GI-041"
+        "GI-041",
+        "GI-042"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "duplicate_remote_effect_or_false_project_creation",
         "github_integration_drift",
         "github_required_for_local_completion",
         "migration_lineage",
@@ -7748,19 +7752,22 @@
         "p1_security_release_supply_chain_hardening",
         "remote_cache_consumer_drift"
       ],
-      "sha256": "ca98a6f62948a97779ea383dd564964b485e8863072dd42e40730cc7ccccbfa9",
+      "sha256": "a8d9c1a920d9cc7c09bed2758a8ee8f04033f1d5e5ef34362b0e9dfe25bcb5ca",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 41
+        "accepted": 42
       },
       "title": "GitHub Integration -- Spec",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 40
+        "requirement": 41
       },
       "validation_surfaces": [
         "Future no-local-substitution integration checks.",
         "Future remote cache disclosure tests.",
+        "Plans/github_project_event_admission.json",
+        "Plans/github_project_event_fixtures.json",
+        "Plans/github_project_event_payloads.schema.json",
         "Unauthenticated/authenticated API fallback tests",
         "future GitHub promotion receipt validation",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
@@ -7768,7 +7775,9 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "stale tag detection"
+        "scripts/pm-github-project-integration.py",
+        "stale tag detection",
+        "tests/test_pm_github_project_integration.py"
       ]
     },
     {
@@ -13437,24 +13446,28 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 1,
+        "False": 2,
         "True": 6
       },
-      "heading_count": 21,
+      "heading_count": 23,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
+        "Plans/GitHub_Integration.md",
         "Plans/Project_System.md",
+        "Plans/Wiring_Matrix.production.json",
         "Plans/Working_Notebook.md",
         "Plans/project_system_contract_fixtures.json",
         "Plans/project_system_contracts.schema.json",
         "Plans/storage-plan.md",
         "future Backup Restore native owner",
         "future Project composition native handlers",
-        "future Projects surface"
+        "future Projects surface",
+        "scripts/pm_project_forge_contract.py",
+        "scripts/pm_ui_command_response.py"
       ],
-      "line_count": 445,
+      "line_count": 526,
       "path": "Plans/Project_System.md",
-      "plan_unit_count": 7,
+      "plan_unit_count": 8,
       "plan_unit_ids": [
         "PJCT-001",
         "PJCT-002",
@@ -13462,7 +13475,8 @@
         "PJCT-004",
         "PJCT-005",
         "PJCT-006",
-        "PJCT-007"
+        "PJCT-007",
+        "PJCT-008"
       ],
       "reasoning_tiers": [
         "high",
@@ -13470,6 +13484,7 @@
       ],
       "risk_classes": [
         "identity_leak",
+        "premature_project_publication_or_duplicate_remote_effect",
         "premature_project_publication_or_false_provider_context",
         "project_backup_owner_leak_or_restore_identity_collision",
         "project_composition_identity_or_alias_bypass",
@@ -13477,20 +13492,22 @@
         "project_identity_or_owner_collapse",
         "project_registration_or_migration_data_loss"
       ],
-      "sha256": "fb53b1ce7b6c8e74d53d6a1d4c6f3dfa70a70a72b524307151882fd3d5de6ec3",
+      "sha256": "dd952dcc2c5166307b8ea6cc434760efd8c757f7fcadaea2131634a3ad35f1d8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 7
+        "accepted": 8
       },
       "title": "Project System",
       "unit_type_counts": {
         "integration_contract": 3,
         "owner_boundary": 1,
-        "requirement": 3
+        "requirement": 4
       },
       "validation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/backup_restore_system_contracts.schema.json",
+        "Plans/github_project_event_fixtures.json",
+        "Plans/github_project_event_payloads.schema.json",
         "Plans/project_system_contract_fixtures.json",
         "Plans/project_system_contracts.schema.json",
         "Plans/project_system_contracts.schema.json#/$defs/project_backup_consumer_projection",
@@ -13500,7 +13517,9 @@
         "owner-routing negative fixtures",
         "persistence and migration fixtures",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "scripts/pm-github-project-integration.py",
         "scripts/pm_project_unarchive_contract.py",
+        "tests/test_pm_github_project_integration.py",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_project_unarchive.py",
         "tests/test_pm_settings_draft_transfer.py"
@@ -17279,7 +17298,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13086,
+      "line_count": 13097,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 162,
       "plan_unit_ids": [
@@ -17511,7 +17530,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "8284a6915b69ac969ca00e2b73620818e820e0b00edddb3bffd456be606cdd05",
+      "sha256": "3d25fad71807e4fec63b0b0dc24ff8d61a7fb8567ff2264c5a6db5f89688e104",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 161,
@@ -18108,7 +18127,7 @@
         "False": 13,
         "True": 43
       },
-      "heading_count": 126,
+      "heading_count": 127,
       "implementation_surfaces": [
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Concepts/pm7-tools/systems_integration_source.py",
@@ -18139,7 +18158,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 4708,
+      "line_count": 4729,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 56,
       "plan_unit_ids": [
@@ -18231,7 +18250,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "ae7269e1dcd11a02faf9923588d40f44cb51db22e382e6d771a52e843934f91d",
+      "sha256": "c54cc869d5c77961e7c9cd6707cb055129e493b1f75313fcf6e8a07539fe21a3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 56
@@ -18557,7 +18576,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:18:36Z",
+  "generated_at_utc": "2026-09-11T17:19:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18565,13 +18584,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3346,
+      "False": 3348,
       "True": 3121
     },
-    "plan_unit_count": 6467,
+    "plan_unit_count": 6469,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6276,
+      "accepted": 6278,
       "retired": 182,
       "superseded": 9
     },
@@ -18638,7 +18657,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5159,
+      "requirement": 5161,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
