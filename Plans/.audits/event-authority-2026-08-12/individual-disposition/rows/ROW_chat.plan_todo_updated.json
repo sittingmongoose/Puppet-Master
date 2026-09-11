@@ -2,8 +2,8 @@
   "event_type": "chat.plan_todo_updated",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.plan_todo_updated. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-11T16:49:03.364813+00:00: Jared approved the historical-read/future-To-Do transition in DL-042. TDR-012 makes chat.plan_todo_updated a historical readable identity, routes future durable mutations through individually admitted ToDoController events, and expressly forbids fallback new legacy appends. The current producer identity is retired; historical access, retention, deletion rules and original bytes remain preserved. No alias to todo.updated or another event is inferred. Current Plans evidence: Plans/ToDo_Runtime.md:617-617; Plans/ToDo_Runtime.md:619-619; Plans/ToDo_Runtime.md:640-640. Application: reports/event-authority-20260911/step-09-semantic-exclusion-application.json. Semantic exclusion is recorded; the legacy CPU bucket and cohort pins remain because the frozen schema/validator has no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -91,6 +91,21 @@
       "citation": "Plans/Contracts_V0.md:1468",
       "status": "ok",
       "notes": "Canonical minimal payload is {plan_id,todo_id,field,old_value,new_value,source} with one event per affected todo_id allowed."
+    },
+    {
+      "citation": "Plans/ToDo_Runtime.md:617-617",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
+    },
+    {
+      "citation": "Plans/ToDo_Runtime.md:619-619",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
+    },
+    {
+      "citation": "Plans/ToDo_Runtime.md:640-640",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
     }
   ],
   "owner_veto": null,

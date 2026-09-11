@@ -1,0 +1,206 @@
+{
+  "schema_id": "pm.assurance.event_authority.step09_semantic_exclusion_application.v1",
+  "base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "applied_at_utc": "2026-09-11T16:49:03.364813+00:00",
+  "authority_ref": "Plans/Decision_Log.md#DL-039",
+  "scope": "Six individually evidenced semantic exclusions using the existing RECLASSIFY_TO_EXCLUDED disposition; no registry admission or denominator rebucketing",
+  "semantic_exclusions_recorded": 6,
+  "newly_represented_denominator_removals": 0,
+  "applications": [
+    {
+      "event_type": "chat.plan_todo_updated",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/ToDo_Runtime.md",
+      "rationale": "Jared approved the historical-read/future-To-Do transition in DL-042. TDR-012 makes chat.plan_todo_updated a historical readable identity, routes future durable mutations through individually admitted ToDoController events, and expressly forbids fallback new legacy appends. The current producer identity is retired; historical access, retention, deletion rules and original bytes remain preserved. No alias to todo.updated or another event is inferred.",
+      "source_citations": [
+        {
+          "path": "Plans/ToDo_Runtime.md",
+          "sha256": "329c3ed3d2944035c404ba8d56b705f175a2ab2c325cf6a2d58ca7bcf88aea20",
+          "line_start": 617,
+          "line_end": 617
+        },
+        {
+          "path": "Plans/ToDo_Runtime.md",
+          "sha256": "329c3ed3d2944035c404ba8d56b705f175a2ab2c325cf6a2d58ca7bcf88aea20",
+          "line_start": 619,
+          "line_end": 619
+        },
+        {
+          "path": "Plans/ToDo_Runtime.md",
+          "sha256": "329c3ed3d2944035c404ba8d56b705f175a2ab2c325cf6a2d58ca7bcf88aea20",
+          "line_start": 640,
+          "line_end": 640
+        }
+      ],
+      "previous_ledger_line": 43,
+      "previous_ledger_raw_line_sha256": "2b3c66b59f1e27d7548aa488b0642e9f0786807a8f4cf1f83ec8a433dcd432cc",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": "LC-CHAT-TODO-MIGRATION-RESPONSE-001"
+    },
+    {
+      "event_type": "context.compaction.failed",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "rationale": "The Command Catalog expressly retires the former started/completed/failed emission instruction and retains context.compaction.failed as a non-emitting historical spelling. Existing failure, retry and receipt state remains visible. This is retirement of this exact current producer requirement, not an alias to the registered completion event.",
+      "source_citations": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 4604,
+          "line_end": 4604
+        }
+      ],
+      "previous_ledger_line": 72,
+      "previous_ledger_raw_line_sha256": "6e19227c7f1c18eeb88cae42b1aedcb5deb4ce74cc3ad6fbb57535cf8a83bd78",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": null
+    },
+    {
+      "event_type": "context.compaction.started",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "rationale": "The Command Catalog expressly retires the former started/completed/failed emission instruction and retains context.compaction.started as a non-emitting historical spelling. Existing in-progress result/receipt state remains visible. This is retirement of this exact current producer requirement, not an alias to the registered completion event.",
+      "source_citations": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 4604,
+          "line_end": 4604
+        }
+      ],
+      "previous_ledger_line": 73,
+      "previous_ledger_raw_line_sha256": "a5be0b13e56e700a0e86d05ac1c2acb87c778be711e995953ad865ca5611e322",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": null
+    },
+    {
+      "event_type": "onboarding.free_models_refresh_retried",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "rationale": "The exact free-model retry effect is retained only in the retired cmd.onboarding.free_models.retry row. Current typed local Onboarding actions route actual work to existing target-owner commands. The former retry spelling remains source lineage, with no current producer, handler, alias or production row.",
+      "source_citations": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8112,
+          "line_end": 8115
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8120,
+          "line_end": 8120
+        }
+      ],
+      "previous_ledger_line": 181,
+      "previous_ledger_raw_line_sha256": "084554fc1e5276fe82ef57e9967ca9af0c138f98f911d91a7381f4e9f0d33fab",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": null
+    },
+    {
+      "event_type": "onboarding.free_models_refreshed",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "rationale": "The exact free-model refresh effect is retained only in the retired cmd.onboarding.free_models.refresh row. The current catalog replaces those former command rows with typed local Onboarding actions and routes actual work to existing target-owner commands; this retired effect receives no producer or production row.",
+      "source_citations": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8112,
+          "line_end": 8115
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8119,
+          "line_end": 8119
+        }
+      ],
+      "previous_ledger_line": 182,
+      "previous_ledger_raw_line_sha256": "12c91a8c9a7f66c0d39e5347a50432072045f67bc5e39bc8e122ebc7036b4aa3",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": null
+    },
+    {
+      "event_type": "onboarding.provider_setup_opened",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "representation_status": "semantic_exclusion_recorded_bucket_and_denominator_pending",
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "rationale": "The exact provider-setup-open effect is retained only in the retired cmd.onboarding.free_models.setup row. Current Onboarding routes through the existing target-owner command and typed local action boundary. This former effect remains source lineage rather than a current EventRecord producer requirement.",
+      "source_citations": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8112,
+          "line_end": 8115
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+          "line_start": 8121,
+          "line_end": 8121
+        }
+      ],
+      "previous_ledger_line": 183,
+      "previous_ledger_raw_line_sha256": "1f732857724b13429fd7e852f1405540a12d2fcf1a7268d01f13efd48d5208b1",
+      "prior_disposition": "KEEP_QUARANTINED",
+      "retained_bucket": "confirmed_persisted_unregistered",
+      "retained_cohort_pins": [
+        "july248"
+      ],
+      "genuine_response_ref": null
+    }
+  ],
+  "source_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/semantic-exclusions/six-individual-exclusion-source-capture.json",
+    "sha256": "a269c4681193133935da09e59311b053970e5fd60b5c0dd0b2aa74674393a543"
+  },
+  "preservation": {
+    "unrelated_rows_byte_identical": true,
+    "all_twelve_evidence_cells_unchanged": true,
+    "cohort_pins_unchanged": true,
+    "prior_owner_answers_unchanged": true,
+    "buckets_and_census_categories_unchanged": true,
+    "validator_and_schema_unchanged": true,
+    "freeze_and_closure_hashes_unchanged": true
+  },
+  "governance_limit": "The frozen validator derives CPU membership and the working denominator from immutable cohorts/buckets, ignoring this supported disposition for rebucketing. These six semantic exclusions remain in that legacy working denominator. This report is not an exclusion-category count update, a full depth pass, or a seal.",
+  "remaining_campaign": {
+    "registered": 0,
+    "semantic_excluded": 6,
+    "remaining_without_recorded_final_disposition": 246
+  },
+  "runtime_enabled": false,
+  "governance_sealed": false
+}

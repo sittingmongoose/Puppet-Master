@@ -2,8 +2,8 @@
   "event_type": "runtime_artifact.code_diff",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to runtime_artifact.code_diff. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Diff artifacts require changed paths and preserve base/result/content references; a path list alone does not establish safe raw-content custody. Materialized schema pm.runtime_artifact.code_diff.schema.v1 was freshly resolved; type-specific required fields: changed_paths. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. This exact row is returned on the owner-batched plain-language card EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION in reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md. No answer, approval, retention assignment, registry admission or technical depth pass is inferred. Existing buckets, cohort pins and retained evidence remain unchanged. Application: reports/event-authority-20260911/step-09-card-application.json.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -101,9 +101,37 @@
       "citation": "Plans/event_family_registry.json",
       "status": "missing",
       "notes": "No exact runtime_artifact.code_diff membership row is present; no registry append is authorized by this overlay."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:54-54",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/Runtime_Artifacts_Panel.md:2454-2456",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/storage-plan.md:1535-1535",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
     }
   ],
-  "owner_veto": null,
+  "owner_veto": {
+    "stable_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+    "field_or_decision": "retention",
+    "question": "Should these 19 artifact event histories use indefinite retention when their full contracts are ready for admission?",
+    "options": [
+      "A: indefinite event retention under existing access, redaction, hold and deletion requirements",
+      "B: explicitly classified non-authority runtime records use 365 days while authority records retain indefinitely",
+      "C: another explicit retention or payload-content boundary"
+    ],
+    "evidence_gap": "Runtime Artifacts explicitly recommends but does not assign the indefinite event policy; Storage unknown-policy preservation is materially incomplete. Payloads contain embedded text and metadata, so the choice affects retained content, replay and storage.",
+    "event_types": [
+      "runtime_artifact.code_diff"
+    ]
+  },
   "bulk_registration": false,
   "analogy_used": false,
   "inference_used": false,

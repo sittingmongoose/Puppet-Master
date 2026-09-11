@@ -1,0 +1,130 @@
+{
+  "lane": "execution88",
+  "manifest_lane_key": "execution",
+  "source_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "state": "CANDIDATE_REVIEW_COMPLETE_NOT_DISPOSITION_COMPLETE",
+  "assigned": 88,
+  "reviewed": 88,
+  "progress_counts": {
+    "registered": 0,
+    "excluded": 0,
+    "carded": 20,
+    "remaining": 68
+  },
+  "actual_recorded_dispositions": {
+    "registered": 0,
+    "excluded": 0,
+    "ledger_rows_updated": 0
+  },
+  "product_answers_supplied": 0,
+  "proposed_counts": {
+    "TECHNICAL_BLOCKED": 68,
+    "CARD": 20
+  },
+  "owner_batches": {
+    "Plans/Executor_Protocol.md": {
+      "reviewed": 16,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 16
+    },
+    "Plans/FileSafe.md": {
+      "reviewed": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/Progression_Gates.md": {
+      "reviewed": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4
+    },
+    "Plans/Prompt_Pipeline.md": {
+      "reviewed": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/Runtime_Artifacts_Panel.md": {
+      "reviewed": 19,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 19,
+      "remaining": 0
+    },
+    "Plans/assistant-chat-design.md": {
+      "reviewed": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 1,
+      "remaining": 0
+    },
+    "Plans/human-in-the-loop.md": {
+      "reviewed": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4
+    },
+    "Plans/orchestrator-subagent-integration.md": {
+      "reviewed": 38,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 38
+    },
+    "Plans/storage-plan.md": {
+      "reviewed": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    }
+  },
+  "external_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/execution/selected-excerpts.json",
+    "sha256": "4d1d9bf5762c91318a8ca43aa9279e1d4b3edb0e637abf02bc87c0b2ddad836c"
+  },
+  "validator_constraint": "Frozen validator requires live-minus-Known37 exactly the two August families; legitimate admission requires reporting this independent-check constraint, not editing it.",
+  "cost": "Astra medium review plus root adjudication; token/dollar billing unavailable.",
+  "validation_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/execution/validation.json",
+    "sha256": "51a629bb0322dd58b09cd13a2499d7fd807614aa0fd324425ae8c6ea374f13e7"
+  },
+  "source_refresh_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/execution/post-step08-source-refresh.json",
+    "sha256": "bdd6c0dd6f557c477a154ebb485b26e1ccfabce684b8445d1edff62674b6cb3f",
+    "changed_source_files": 3,
+    "unchanged_cited_spans": 91,
+    "changed_cited_passages": 0,
+    "changed_cited_ranges": 0
+  },
+  "currentness": {
+    "base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+    "live_registry_event_families": 40,
+    "new_general_binding_identifier_authority": false,
+    "root_final_review": "PENDING",
+    "commit_authorization": "HELD_PENDING_ROOT_INTEGRATION",
+    "task_failed_card": "UNANSWERED"
+  },
+  "shard_check": {
+    "status": "pass",
+    "docs_checked": 98,
+    "shards_checked": 2167,
+    "failures": []
+  },
+  "checkpoint_scope_clarification": "The 19 runtime_artifact.* rows cite the runtime artifact checkpoint only for that family. concern.created is not in the execution88 lane; separate concern_record storage ownership and its missing named projector/consumer/checkpoint bindings cannot be satisfied by the runtime_artifact checkpoint.",
+  "card_summary": {
+    "unique_cards": 2,
+    "card_linked_rows": 20,
+    "task_failed": "UNANSWERED",
+    "runtime_artifact_retention": "UNANSWERED_QUEUED_NOT_PRESENTED",
+    "remaining_technical_rows": 68,
+    "technical_gaps_on_card_rows": "PRESERVED_NOT_WAIVED"
+  }
+}

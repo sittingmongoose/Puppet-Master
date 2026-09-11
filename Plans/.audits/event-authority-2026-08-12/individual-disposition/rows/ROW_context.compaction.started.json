@@ -2,8 +2,8 @@
   "event_type": "context.compaction.started",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to context.compaction.started. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-11T16:49:03.364813+00:00: The Command Catalog expressly retires the former started/completed/failed emission instruction and retains context.compaction.started as a non-emitting historical spelling. Existing in-progress result/receipt state remains visible. This is retirement of this exact current producer requirement, not an alias to the registered completion event. Current Plans evidence: Plans/UI_Command_Catalog.md:4604-4604. Application: reports/event-authority-20260911/step-09-semantic-exclusion-application.json. Semantic exclusion is recorded; the legacy CPU bucket and cohort pins remain because the frozen schema/validator has no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "membership_version": {
       "status": "UNKNOWN",
@@ -91,6 +91,11 @@
       "citation": "Plans/Automated_Testing_System.md:1371-1398",
       "status": "ok",
       "notes": "Accepted ATS-017 supplies exact event/result positive and negative acceptance checks."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:4604-4604",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
     }
   ],
   "owner_veto": null,

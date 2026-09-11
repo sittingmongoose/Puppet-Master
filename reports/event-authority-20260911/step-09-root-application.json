@@ -1,0 +1,3149 @@
+{
+  "schema_id": "pm.assurance.event_authority.step09_root_application.v1",
+  "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+  "reviewed_at_utc": "2026-09-11T17:23:09.080995+00:00",
+  "state": "PARTIAL_DISPOSITIONS_APPLIED_CAMPAIGN_INCOMPLETE",
+  "scope": 252,
+  "registered": 0,
+  "semantic_exclusions": 6,
+  "card_linked_rows": 20,
+  "unique_product_cards": 2,
+  "remaining": 226,
+  "represented_denominator_removals": 0,
+  "owner_batches": {
+    "Plans/Contracts_V0.md": {
+      "total": 9,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 9
+    },
+    "Plans/Executor_Protocol.md": {
+      "total": 16,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 16
+    },
+    "Plans/FileManager.md": {
+      "total": 12,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 12
+    },
+    "Plans/FileSafe.md": {
+      "total": 9,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 9
+    },
+    "Plans/FinalGUISpec.md": {
+      "total": 9,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 9
+    },
+    "Plans/Formatters_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    },
+    "Plans/GitHub_API_Auth_and_Flows.md": {
+      "total": 5,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 5
+    },
+    "Plans/LSPSupport.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    },
+    "Plans/Models_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    },
+    "Plans/Orchestrator_Page.md": {
+      "total": 7,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 7
+    },
+    "Plans/Personas.md": {
+      "total": 6,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 6
+    },
+    "Plans/Planning_Wizard.md": {
+      "total": 3,
+      "registered": 0,
+      "excluded": 3,
+      "carded": 0,
+      "remaining": 0
+    },
+    "Plans/Plugins_System.md": {
+      "total": 8,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 8
+    },
+    "Plans/Progression_Gates.md": {
+      "total": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4
+    },
+    "Plans/Project_System.md": {
+      "total": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/Prompt_Pipeline.md": {
+      "total": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/Runtime_Artifacts_Panel.md": {
+      "total": 19,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 19,
+      "remaining": 0
+    },
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": {
+      "total": 23,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 23
+    },
+    "Plans/Settings_System.md": {
+      "total": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/Source_Control_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    },
+    "Plans/ToDo_Runtime.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 1,
+      "carded": 0,
+      "remaining": 0
+    },
+    "Plans/Tools.md": {
+      "total": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4
+    },
+    "Plans/Widget_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    },
+    "Plans/WorktreeGitImprovement.md": {
+      "total": 3,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 3
+    },
+    "Plans/assistant-chat-design.md": {
+      "total": 21,
+      "registered": 0,
+      "excluded": 2,
+      "carded": 1,
+      "remaining": 18
+    },
+    "Plans/assistant-memory-subsystem.md": {
+      "total": 20,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 20
+    },
+    "Plans/chain-wizard-flexibility.md": {
+      "total": 8,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 8
+    },
+    "Plans/human-in-the-loop.md": {
+      "total": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4
+    },
+    "Plans/newtools.md": {
+      "total": 7,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 7
+    },
+    "Plans/orchestrator-subagent-integration.md": {
+      "total": 40,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 40
+    },
+    "Plans/storage-plan.md": {
+      "total": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2
+    },
+    "Plans/usage-feature.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1
+    }
+  },
+  "rows": [
+    {
+      "event_type": "debug.investigation.context_item_added",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 8
+      }
+    },
+    {
+      "event_type": "debug.investigation.context_item_state_changed",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 9
+      }
+    },
+    {
+      "event_type": "debug.investigation.exported",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 10
+      }
+    },
+    {
+      "event_type": "debug.investigation.imported",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 11
+      }
+    },
+    {
+      "event_type": "debug.investigation.instrumentation_state_changed",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 12
+      }
+    },
+    {
+      "event_type": "debug.investigation.started",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 13
+      }
+    },
+    {
+      "event_type": "debug.investigation.state_changed",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 14
+      }
+    },
+    {
+      "event_type": "debug.investigation.target_bound",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 15
+      }
+    },
+    {
+      "event_type": "debug.investigation.verification_recorded",
+      "primary_owner_doc": "Plans/Contracts_V0.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 16
+      }
+    },
+    {
+      "event_type": "attempt.completed",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 1
+      }
+    },
+    {
+      "event_type": "attempt.started",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 2
+      }
+    },
+    {
+      "event_type": "node.blocked",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 3
+      }
+    },
+    {
+      "event_type": "node.completed",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 4
+      }
+    },
+    {
+      "event_type": "node.started",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 5
+      }
+    },
+    {
+      "event_type": "node.unblocked",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 6
+      }
+    },
+    {
+      "event_type": "plan.decomposition_degraded",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 7
+      }
+    },
+    {
+      "event_type": "remediation.resolved",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 8
+      }
+    },
+    {
+      "event_type": "remediation.spawned",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 9
+      }
+    },
+    {
+      "event_type": "run.completed",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 10
+      }
+    },
+    {
+      "event_type": "run.graph_integrity_failed",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 11
+      }
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 12
+      }
+    },
+    {
+      "event_type": "run.node_backoff_started",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 13
+      }
+    },
+    {
+      "event_type": "run.node_ready",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 14
+      }
+    },
+    {
+      "event_type": "run.node_retry_scheduled",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 15
+      }
+    },
+    {
+      "event_type": "scheduler.pass",
+      "primary_owner_doc": "Plans/Executor_Protocol.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 16
+      }
+    },
+    {
+      "event_type": "file.copied",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 22
+      }
+    },
+    {
+      "event_type": "file.created",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 23
+      }
+    },
+    {
+      "event_type": "file.deleted",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 24
+      }
+    },
+    {
+      "event_type": "file.exported",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 25
+      }
+    },
+    {
+      "event_type": "file.moved",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 26
+      }
+    },
+    {
+      "event_type": "file.renamed",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 27
+      }
+    },
+    {
+      "event_type": "folder.copied",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 35
+      }
+    },
+    {
+      "event_type": "folder.created",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 36
+      }
+    },
+    {
+      "event_type": "folder.deleted",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 37
+      }
+    },
+    {
+      "event_type": "folder.exported",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 38
+      }
+    },
+    {
+      "event_type": "folder.moved",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 39
+      }
+    },
+    {
+      "event_type": "folder.renamed",
+      "primary_owner_doc": "Plans/FileManager.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 40
+      }
+    },
+    {
+      "event_type": "filesafe.command_denied",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 28
+      }
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 29
+      }
+    },
+    {
+      "event_type": "filesafe.destructive_override_granted",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 30
+      }
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 31
+      }
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 32
+      }
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 33
+      }
+    },
+    {
+      "event_type": "filesafe.policy_degraded",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 34
+      }
+    },
+    {
+      "event_type": "safe_point.created",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 17
+      }
+    },
+    {
+      "event_type": "safe_point.restored",
+      "primary_owner_doc": "Plans/FileSafe.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 18
+      }
+    },
+    {
+      "event_type": "alert.acknowledged",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 1
+      }
+    },
+    {
+      "event_type": "alert.dismissed",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 2
+      }
+    },
+    {
+      "event_type": "alert.rule_muted",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 3
+      }
+    },
+    {
+      "event_type": "alert.snoozed",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 4
+      }
+    },
+    {
+      "event_type": "bundle.annotation_state_changed",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 20
+      }
+    },
+    {
+      "event_type": "bundle.note_created",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 21
+      }
+    },
+    {
+      "event_type": "bundle.note_status_changed",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 22
+      }
+    },
+    {
+      "event_type": "panel.redocked",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 61
+      }
+    },
+    {
+      "event_type": "panel.undocked",
+      "primary_owner_doc": "Plans/FinalGUISpec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 62
+      }
+    },
+    {
+      "event_type": "format.applied",
+      "primary_owner_doc": "Plans/Formatters_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 41
+      }
+    },
+    {
+      "event_type": "auth.github.authenticated",
+      "primary_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 5
+      }
+    },
+    {
+      "event_type": "auth.github.device_code.issued",
+      "primary_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 6
+      }
+    },
+    {
+      "event_type": "auth.github.disconnected",
+      "primary_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 7
+      }
+    },
+    {
+      "event_type": "auth.github.failed",
+      "primary_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 8
+      }
+    },
+    {
+      "event_type": "auth.github.token.polling",
+      "primary_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 9
+      }
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "primary_owner_doc": "Plans/LSPSupport.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 47
+      }
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "primary_owner_doc": "Plans/Models_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 68
+      }
+    },
+    {
+      "event_type": "concern.assigned",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 46
+      }
+    },
+    {
+      "event_type": "concern.created",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 47
+      }
+    },
+    {
+      "event_type": "concern.evidence_linked",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 48
+      }
+    },
+    {
+      "event_type": "concern.promoted",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 49
+      }
+    },
+    {
+      "event_type": "concern.reopened",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 50
+      }
+    },
+    {
+      "event_type": "concern.resolved",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 51
+      }
+    },
+    {
+      "event_type": "concern.updated",
+      "primary_owner_doc": "Plans/Orchestrator_Page.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 52
+      }
+    },
+    {
+      "event_type": "persona.created",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 70
+      }
+    },
+    {
+      "event_type": "persona.deleted",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 71
+      }
+    },
+    {
+      "event_type": "persona.exported",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 72
+      }
+    },
+    {
+      "event_type": "persona.imported",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 73
+      }
+    },
+    {
+      "event_type": "persona.selected",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 74
+      }
+    },
+    {
+      "event_type": "persona.updated",
+      "primary_owner_doc": "Plans/Personas.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 75
+      }
+    },
+    {
+      "event_type": "onboarding.free_models_refresh_retried",
+      "primary_owner_doc": "Plans/Planning_Wizard.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 58
+      }
+    },
+    {
+      "event_type": "onboarding.free_models_refreshed",
+      "primary_owner_doc": "Plans/Planning_Wizard.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 59
+      }
+    },
+    {
+      "event_type": "onboarding.provider_setup_opened",
+      "primary_owner_doc": "Plans/Planning_Wizard.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 60
+      }
+    },
+    {
+      "event_type": "plugin.hook.blocked",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 76
+      }
+    },
+    {
+      "event_type": "plugin.hook.error",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 77
+      }
+    },
+    {
+      "event_type": "plugin.hook.invoked",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 78
+      }
+    },
+    {
+      "event_type": "plugin.load_failed",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 79
+      }
+    },
+    {
+      "event_type": "plugin.loaded",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 80
+      }
+    },
+    {
+      "event_type": "plugin.permission.override",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 81
+      }
+    },
+    {
+      "event_type": "plugin.tool.collision",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 82
+      }
+    },
+    {
+      "event_type": "plugin.tool.registered",
+      "primary_owner_doc": "Plans/Plugins_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 83
+      }
+    },
+    {
+      "event_type": "gate.evaluation_started",
+      "primary_owner_doc": "Plans/Progression_Gates.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 19
+      }
+    },
+    {
+      "event_type": "gate.failed",
+      "primary_owner_doc": "Plans/Progression_Gates.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 20
+      }
+    },
+    {
+      "event_type": "gate.passed",
+      "primary_owner_doc": "Plans/Progression_Gates.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 21
+      }
+    },
+    {
+      "event_type": "requirements.clarification_requested",
+      "primary_owner_doc": "Plans/Progression_Gates.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 22
+      }
+    },
+    {
+      "event_type": "project.added",
+      "primary_owner_doc": "Plans/Project_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 66
+      }
+    },
+    {
+      "event_type": "project.created",
+      "primary_owner_doc": "Plans/Project_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 67
+      }
+    },
+    {
+      "event_type": "subagent.context_rehydrated",
+      "primary_owner_doc": "Plans/Prompt_Pipeline.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 23
+      }
+    },
+    {
+      "event_type": "subagent.context_shrunk",
+      "primary_owner_doc": "Plans/Prompt_Pipeline.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 24
+      }
+    },
+    {
+      "event_type": "runtime_artifact.api_web_call",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 25
+      }
+    },
+    {
+      "event_type": "runtime_artifact.artifact_version",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 26
+      }
+    },
+    {
+      "event_type": "runtime_artifact.before_after_snapshot",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 27
+      }
+    },
+    {
+      "event_type": "runtime_artifact.browser_recording",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 28
+      }
+    },
+    {
+      "event_type": "runtime_artifact.code_diff",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 29
+      }
+    },
+    {
+      "event_type": "runtime_artifact.context_snapshot",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 30
+      }
+    },
+    {
+      "event_type": "runtime_artifact.cost_usage",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 31
+      }
+    },
+    {
+      "event_type": "runtime_artifact.document",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 32
+      }
+    },
+    {
+      "event_type": "runtime_artifact.evidence",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 33
+      }
+    },
+    {
+      "event_type": "runtime_artifact.failed_attempts",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 34
+      }
+    },
+    {
+      "event_type": "runtime_artifact.hitl_approval",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 35
+      }
+    },
+    {
+      "event_type": "runtime_artifact.implementation_plan",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 36
+      }
+    },
+    {
+      "event_type": "runtime_artifact.reasoning_summary",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 37
+      }
+    },
+    {
+      "event_type": "runtime_artifact.restore_point",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 38
+      }
+    },
+    {
+      "event_type": "runtime_artifact.screenshot",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 39
+      }
+    },
+    {
+      "event_type": "runtime_artifact.subagent_lineage",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 40
+      }
+    },
+    {
+      "event_type": "runtime_artifact.suggested_next_steps",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 41
+      }
+    },
+    {
+      "event_type": "runtime_artifact.tool_llm_trace",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 42
+      }
+    },
+    {
+      "event_type": "runtime_artifact.validation_test",
+      "primary_owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 43
+      }
+    },
+    {
+      "event_type": "browser.context_captured",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 10
+      }
+    },
+    {
+      "event_type": "browser.context_share_revoked",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 11
+      }
+    },
+    {
+      "event_type": "browser.context_shared",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 12
+      }
+    },
+    {
+      "event_type": "browser.session.closed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 13
+      }
+    },
+    {
+      "event_type": "browser.session.created",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 14
+      }
+    },
+    {
+      "event_type": "browser.session.navigated",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 15
+      }
+    },
+    {
+      "event_type": "browser.session.promoted",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 16
+      }
+    },
+    {
+      "event_type": "browser.session.resized",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 17
+      }
+    },
+    {
+      "event_type": "browser.session.state_changed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 18
+      }
+    },
+    {
+      "event_type": "browser.session.takeover_state_changed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 19
+      }
+    },
+    {
+      "event_type": "catalog.install.completed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 1
+      }
+    },
+    {
+      "event_type": "catalog.install.started",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 2
+      }
+    },
+    {
+      "event_type": "catalog.remove.completed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 3
+      }
+    },
+    {
+      "event_type": "catalog.remove.started",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 4
+      }
+    },
+    {
+      "event_type": "catalog.update.completed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 5
+      }
+    },
+    {
+      "event_type": "catalog.update.started",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 6
+      }
+    },
+    {
+      "event_type": "dev.session.restarting",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 17
+      }
+    },
+    {
+      "event_type": "dev.session.started",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 18
+      }
+    },
+    {
+      "event_type": "dev.session.stopped",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 19
+      }
+    },
+    {
+      "event_type": "dev.session.stopping",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 20
+      }
+    },
+    {
+      "event_type": "preview.session.refreshed",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 63
+      }
+    },
+    {
+      "event_type": "preview.session.started",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 64
+      }
+    },
+    {
+      "event_type": "preview.session.stopped",
+      "primary_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 65
+      }
+    },
+    {
+      "event_type": "settings.theme.updated",
+      "primary_owner_doc": "Plans/Settings_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 68
+      }
+    },
+    {
+      "event_type": "settings.updated",
+      "primary_owner_doc": "Plans/Settings_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 69
+      }
+    },
+    {
+      "event_type": "git.clone.completed",
+      "primary_owner_doc": "Plans/Source_Control_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 57
+      }
+    },
+    {
+      "event_type": "chat.plan_todo_updated",
+      "primary_owner_doc": "Plans/ToDo_Runtime.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 30
+      }
+    },
+    {
+      "event_type": "tool.denied",
+      "primary_owner_doc": "Plans/Tools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 85
+      }
+    },
+    {
+      "event_type": "tool.execution_completed",
+      "primary_owner_doc": "Plans/Tools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 86
+      }
+    },
+    {
+      "event_type": "tool.execution_started",
+      "primary_owner_doc": "Plans/Tools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 87
+      }
+    },
+    {
+      "event_type": "tool.invoked",
+      "primary_owner_doc": "Plans/Tools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 88
+      }
+    },
+    {
+      "event_type": "dashboard.widget_added",
+      "primary_owner_doc": "Plans/Widget_System.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 56
+      }
+    },
+    {
+      "event_type": "config.migrated",
+      "primary_owner_doc": "Plans/WorktreeGitImprovement.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 53
+      }
+    },
+    {
+      "event_type": "worktree.created",
+      "primary_owner_doc": "Plans/WorktreeGitImprovement.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 74
+      }
+    },
+    {
+      "event_type": "worktree.deleted",
+      "primary_owner_doc": "Plans/WorktreeGitImprovement.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 75
+      }
+    },
+    {
+      "event_type": "bundle.selection_forward_blocked",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 27
+      }
+    },
+    {
+      "event_type": "bundle.selection_sent_to_chat",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 28
+      }
+    },
+    {
+      "event_type": "chat.message",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 29
+      }
+    },
+    {
+      "event_type": "chat.response_stop_requested",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 31
+      }
+    },
+    {
+      "event_type": "chat.thread_archived",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 32
+      }
+    },
+    {
+      "event_type": "chat.thread_created",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 33
+      }
+    },
+    {
+      "event_type": "chat.thread_deleted",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 34
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_bound",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 35
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_create_failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 36
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_merge_failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 37
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_merged",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 38
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_created",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 39
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 40
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 41
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 42
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 43
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_renamed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 44
+      }
+    },
+    {
+      "event_type": "chat.thread_worktree_unbound",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 45
+      }
+    },
+    {
+      "event_type": "context.compaction.failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 54
+      }
+    },
+    {
+      "event_type": "context.compaction.started",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "excluded",
+      "disposition": "RECLASSIFY_TO_EXCLUDED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 55
+      }
+    },
+    {
+      "event_type": "task.failed",
+      "primary_owner_doc": "Plans/assistant-chat-design.md",
+      "outcome": "card",
+      "disposition": "NEEDS_OWNER_VETO",
+      "card_id": "EA-S09-EXEC-TASK-FAILURE",
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 44
+      }
+    },
+    {
+      "event_type": "memory.dedup_sweep.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 48
+      }
+    },
+    {
+      "event_type": "memory.dedup_sweep.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 49
+      }
+    },
+    {
+      "event_type": "memory.gist.discarded",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 50
+      }
+    },
+    {
+      "event_type": "memory.gist.pinned",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 51
+      }
+    },
+    {
+      "event_type": "memory.gist.unpinned",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 52
+      }
+    },
+    {
+      "event_type": "memory.gist.updated",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 53
+      }
+    },
+    {
+      "event_type": "memory.gist.verification_failed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 54
+      }
+    },
+    {
+      "event_type": "memory.gist.verification_requested",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 55
+      }
+    },
+    {
+      "event_type": "memory.gist.verified",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 56
+      }
+    },
+    {
+      "event_type": "memory.gist_state_changed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 57
+      }
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 58
+      }
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 59
+      }
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 60
+      }
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 61
+      }
+    },
+    {
+      "event_type": "memory.monthly_summary.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 62
+      }
+    },
+    {
+      "event_type": "memory.monthly_summary.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 63
+      }
+    },
+    {
+      "event_type": "memory.prune_archive.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 64
+      }
+    },
+    {
+      "event_type": "memory.prune_archive.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 65
+      }
+    },
+    {
+      "event_type": "memory.verification_sweep.completed",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 66
+      }
+    },
+    {
+      "event_type": "memory.verification_sweep.started",
+      "primary_owner_doc": "Plans/assistant-memory-subsystem.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 67
+      }
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 23
+      }
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 24
+      }
+    },
+    {
+      "event_type": "bundle.revision_requested",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 25
+      }
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 26
+      }
+    },
+    {
+      "event_type": "wizard.blocked",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 70
+      }
+    },
+    {
+      "event_type": "wizard.deferred_payload.loaded",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 71
+      }
+    },
+    {
+      "event_type": "wizard.opened",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 72
+      }
+    },
+    {
+      "event_type": "wizard.unblocked",
+      "primary_owner_doc": "Plans/chain-wizard-flexibility.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+        "line": 73
+      }
+    },
+    {
+      "event_type": "approval.denied",
+      "primary_owner_doc": "Plans/human-in-the-loop.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 45
+      }
+    },
+    {
+      "event_type": "approval.granted",
+      "primary_owner_doc": "Plans/human-in-the-loop.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 46
+      }
+    },
+    {
+      "event_type": "approval.requested",
+      "primary_owner_doc": "Plans/human-in-the-loop.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 47
+      }
+    },
+    {
+      "event_type": "approval.timeout",
+      "primary_owner_doc": "Plans/human-in-the-loop.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 48
+      }
+    },
+    {
+      "event_type": "doctor.custom_headless.checked",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 21
+      }
+    },
+    {
+      "event_type": "live.artifact.created",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 42
+      }
+    },
+    {
+      "event_type": "live.session.completed",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 43
+      }
+    },
+    {
+      "event_type": "live.session.degraded",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 44
+      }
+    },
+    {
+      "event_type": "live.session.started",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 45
+      }
+    },
+    {
+      "event_type": "live.step.updated",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 46
+      }
+    },
+    {
+      "event_type": "tool.custom_headless.skipped",
+      "primary_owner_doc": "Plans/newtools.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 84
+      }
+    },
+    {
+      "event_type": "config.validation.failed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 7
+      }
+    },
+    {
+      "event_type": "coordination.agent_aborted",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 49
+      }
+    },
+    {
+      "event_type": "coordination.agent_crashed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 50
+      }
+    },
+    {
+      "event_type": "coordination.agent_file_ownership_updated",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 51
+      }
+    },
+    {
+      "event_type": "coordination.agent_operation_updated",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 52
+      }
+    },
+    {
+      "event_type": "coordination.agent_registered",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 53
+      }
+    },
+    {
+      "event_type": "coordination.agent_status_updated",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 54
+      }
+    },
+    {
+      "event_type": "coordination.agent_unregistered",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 55
+      }
+    },
+    {
+      "event_type": "crew.board_message_posted",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 56
+      }
+    },
+    {
+      "event_type": "crew.board_message_read",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 57
+      }
+    },
+    {
+      "event_type": "crew.board_messages_archived",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 58
+      }
+    },
+    {
+      "event_type": "crew.completed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 59
+      }
+    },
+    {
+      "event_type": "crew.coordination",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 60
+      }
+    },
+    {
+      "event_type": "crew.disbanded",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 61
+      }
+    },
+    {
+      "event_type": "crew.formed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 62
+      }
+    },
+    {
+      "event_type": "crew.member_added",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 63
+      }
+    },
+    {
+      "event_type": "crew.member_removed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 64
+      }
+    },
+    {
+      "event_type": "parser.error",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 69
+      }
+    },
+    {
+      "event_type": "phase.force_completed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 65
+      }
+    },
+    {
+      "event_type": "subagent.budget_warning",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 66
+      }
+    },
+    {
+      "event_type": "subagent.cancelled",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 67
+      }
+    },
+    {
+      "event_type": "subagent.completed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 68
+      }
+    },
+    {
+      "event_type": "subagent.context_warning",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 69
+      }
+    },
+    {
+      "event_type": "subagent.escalated",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 70
+      }
+    },
+    {
+      "event_type": "subagent.failed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 71
+      }
+    },
+    {
+      "event_type": "subagent.message_received",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 72
+      }
+    },
+    {
+      "event_type": "subagent.message_sent",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 73
+      }
+    },
+    {
+      "event_type": "subagent.model_switched",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 74
+      }
+    },
+    {
+      "event_type": "subagent.output_truncated",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 75
+      }
+    },
+    {
+      "event_type": "subagent.paused",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 76
+      }
+    },
+    {
+      "event_type": "subagent.progress",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 77
+      }
+    },
+    {
+      "event_type": "subagent.resumed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 78
+      }
+    },
+    {
+      "event_type": "subagent.retried",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 79
+      }
+    },
+    {
+      "event_type": "subagent.spawn_completed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 80
+      }
+    },
+    {
+      "event_type": "subagent.spawn_requested",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 81
+      }
+    },
+    {
+      "event_type": "subagent.spawned",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 82
+      }
+    },
+    {
+      "event_type": "subagent.started",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 83
+      }
+    },
+    {
+      "event_type": "subagent.timeout",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 84
+      }
+    },
+    {
+      "event_type": "subagent.tool_called",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 85
+      }
+    },
+    {
+      "event_type": "subagent.tool_completed",
+      "primary_owner_doc": "Plans/orchestrator-subagent-integration.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 86
+      }
+    },
+    {
+      "event_type": "coordination.debug_mirror_exported",
+      "primary_owner_doc": "Plans/storage-plan.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 87
+      }
+    },
+    {
+      "event_type": "run.background_enqueued",
+      "primary_owner_doc": "Plans/storage-plan.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+        "line": 88
+      }
+    },
+    {
+      "event_type": "usage.event",
+      "primary_owner_doc": "Plans/usage-feature.md",
+      "outcome": "remaining",
+      "disposition": "KEEP_QUARANTINED",
+      "card_id": null,
+      "detail_ref": {
+        "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+        "line": 89
+      }
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+    "claim_boundary": "source-bound static campaign application; no runtime, full-depth or seal claim",
+    "exact_population": 252,
+    "semantic_excluded": 6,
+    "card_rows": 20,
+    "unique_cards": 2,
+    "technical_remaining": 226,
+    "source_citations_checked": 1430,
+    "source_files": 77,
+    "ledger_checks": {
+      "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+        "rows": 321,
+        "changed": 26,
+        "other_lines_byte_identical": true
+      },
+      "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl": {
+        "rows": 528,
+        "changed": 26,
+        "other_lines_byte_identical": true
+      }
+    },
+    "preserved_inputs": {
+      "Plans/event_family_registry.json": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+      "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": "bd54afffc689146753daec474d6cdbc7ac663afaf21d842aad4fcf10255112d5",
+      "Plans/.audits/event-authority-2026-08-12/INDIVIDUAL_DISPOSITION_SCHEMA.md": "f29909447646863b2f91147523f503ae5e77f87f12e65b99eeb4c91c239157f6",
+      "Plans/.audits/event-authority-2026-08-12/census-adjudication/SCHEMA.md": "c2e8882495ec67dea09bc7c418582b4c1fa6de5a47c77f679424b6ba66e7babf"
+    },
+    "veto_records": 20,
+    "row_json_original_line_endings_preserved": true
+  },
+  "independent_validator": {
+    "pass": false,
+    "complete_denominator_known": false,
+    "contract_depth_complete": false,
+    "seal_prerequisites_met": false,
+    "failure_count": 6,
+    "failure_errors": [
+      "fresh_census_denominator_not_closed",
+      "individual_dispositions_evidence_gap_blocking",
+      "individual_dispositions_owner_veto_blocking",
+      "individual_dispositions_provisional",
+      "registered_contract_depth_incomplete",
+      "unexpected_august_set"
+    ],
+    "receipt": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator-receipts/event_authority_validator_receipt.json"
+  },
+  "shards": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2167,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "input_reports": [
+    {
+      "path": "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+      "sha256": "e2a40fb5f1fcd48a000d3bf764f4345f3cd5046e462f3a40a025f7c2509a575b"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-execution-cards.md",
+      "sha256": "55a3b6d2619b17e4f8f29b71758284366b423ddc94a57e282dffe886759b0aef"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-execution-receipt.json",
+      "sha256": "f18aa82da0cbddc0ba240323927a59f8a3faa7dd7b4f0afc7f0f3994dbf6a80d"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+      "sha256": "eb5c5504ee8596907b06bf6988446c3e22fc99185c17eed85a4604c74b512c2e"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-interaction-cards.md",
+      "sha256": "65ba7eb43936b78f8bbfcf319ffb4a675aa814d1dfc069375f84dab9a5d078ee"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-interaction-receipt.json",
+      "sha256": "bca97af2886f74177d7913c38849b7f533bb0409ff696233fc3c7fb7eb82ccca"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+      "sha256": "7fc9c1380a0353c14e098ff2942ad33d4944ab53de69782b7a9ae500a2533d00"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-extensions-cards.md",
+      "sha256": "adc58502b9b1e2e8d849a57e4f394a7693e83d6cb4e23f1e12b7dc0d3c9e78f6"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-extensions-receipt.json",
+      "sha256": "549262af9fcffd145c70527f0ddcd6e83afcff1a1ff1bbc4b98177cff03a062a"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-semantic-exclusion-application.json",
+      "sha256": "273b49e68e3591c47ef7e7acc789096a5fe5f6673976807686dc57e92da5de93"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-card-application.json",
+      "sha256": "c2e6572056769b456171c4127a306e3fd85631acae8d7efbe0cc0f604b4f8f1e"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "sha256": "662faffc7be8d554eef86eac0fdfa3a7e9eed8833fefd641025e2cec149f1529"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-binding-authority-scope.json",
+      "sha256": "6012f7c7f01ce1cccbb30f72fcc33d4367402245e686c109d6f95877707deeb4"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-binding-authority-question.md",
+      "sha256": "7e063e919d4c566999b9b310c28acac3b8844aaa6fb41f9f85dbf4f8030f7424"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/root-application-validation.json",
+      "sha256": "ba96d3b8b69c1b832f03c0b0dad181a5c79b3a07a6f8cc9d3dbbd99fd3848b71"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator.stdout",
+      "sha256": "b0b68b5a71e2cbbc2f04c83d9ea95d7038b7eda444ff800e35b479ed1294d500"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator-receipts/event_authority_validator_receipt.json",
+      "sha256": "69692ae7bf6d30fec2d6291beae04e6d290c8b288c396e9a21fff6429bfaffb0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/shard-check.stdout",
+      "sha256": "30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644"
+    }
+  ],
+  "product_answers_inferred": false,
+  "general_binding_identifier_authority_inferred": false,
+  "step10_started": false,
+  "governance_sealed": false,
+  "cost": "Three Astra medium review agents plus root adjudication and integration; billing data unavailable."
+}

@@ -1,0 +1,725 @@
+{
+  "schema_id": "pm.assurance.event_authority.step09_card_application.v1",
+  "applied_at_utc": "2026-09-11T16:55:03.900393+00:00",
+  "authority_ref": "Plans/Decision_Log.md#DL-039",
+  "card_form_ref": "Plans/Decision_Log.md#DL-036",
+  "scope": "Twenty individually evidenced rows returned on two owner-batched product cards; answers remain blank",
+  "row_count": 20,
+  "unique_card_count": 2,
+  "applications": [
+    {
+      "event_type": "runtime_artifact.api_web_call",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 225,
+      "prior_ledger_raw_line_sha256": "5b0dbfdfa1d8d5ff7f0c930a3534da63b41b0eb995ca1d80a07c4299f625c60d",
+      "source_citations": [
+        {
+          "line_end": 71,
+          "line_start": 71,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "db3043e7b4c6af96a3ea1ce2a26edd72f9a4812d85946e3357e9a6056a26252f"
+    },
+    {
+      "event_type": "runtime_artifact.artifact_version",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 226,
+      "prior_ledger_raw_line_sha256": "e7d0f23f164e86c561b68917142379d698f77146f796b5bad133d789e2a998f8",
+      "source_citations": [
+        {
+          "line_end": 72,
+          "line_start": 72,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "77aec53399e541dffc4f334f31d5a6b80acc56ed527034819a71f51a2e9be376"
+    },
+    {
+      "event_type": "runtime_artifact.before_after_snapshot",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 227,
+      "prior_ledger_raw_line_sha256": "8ca71e1f510b1fa10267121f67c2e5c0afdf665dc2ef71542b87338e8dd55af6",
+      "source_citations": [
+        {
+          "line_end": 69,
+          "line_start": 69,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "16e9604394d38dee610d3dd5478eade2444abf5361c493f3b3d8481c5c836b06"
+    },
+    {
+      "event_type": "runtime_artifact.browser_recording",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 228,
+      "prior_ledger_raw_line_sha256": "9db4f3f26e420953f46a0f3c0c678b3fe637adea0e25007842d5f99e6c54cd15",
+      "source_citations": [
+        {
+          "line_end": 62,
+          "line_start": 62,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "79730174fd5f57a8ab913c5701a77ad3f95fd2df9ffc36e884bceca5ef9f7e91"
+    },
+    {
+      "event_type": "runtime_artifact.code_diff",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 229,
+      "prior_ledger_raw_line_sha256": "55b287d399dacdcea302793d4cc511161792655e70f360db2f5ab79ac03cbc45",
+      "source_citations": [
+        {
+          "line_end": 54,
+          "line_start": 54,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "826fd628383aedc2b4a409946a58288242d7db58be3beac231f33f7a60ae4cc7"
+    },
+    {
+      "event_type": "runtime_artifact.context_snapshot",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 230,
+      "prior_ledger_raw_line_sha256": "9890b2e16a5bf97e4a1198475316b26b153a53c01942e9b3468b081baf3b2635",
+      "source_citations": [
+        {
+          "line_end": 64,
+          "line_start": 64,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "f90e7c658551923707fa5c9762647a3795faf0cfa337dc5a8808663c79acfcdd"
+    },
+    {
+      "event_type": "runtime_artifact.cost_usage",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 231,
+      "prior_ledger_raw_line_sha256": "4e8c098944b7349c3915a5260de13e0ba822ec50e04e5c0f5c8fc289f9abd352",
+      "source_citations": [
+        {
+          "line_end": 65,
+          "line_start": 65,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "61c5ac0cb278c450af8e87c4c8e6d110d8528db25658535d1d61b2a6a77a7272"
+    },
+    {
+      "event_type": "runtime_artifact.document",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 232,
+      "prior_ledger_raw_line_sha256": "5e245585e029477dfb7adf788d7a88448ad63037c2098523e352162bcd2ce3b4",
+      "source_citations": [
+        {
+          "line_end": 60,
+          "line_start": 60,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "234ec748a8ae20596787e7d3d83e92ace27a9fea33f6e68e71d7d7538e8d9a5f"
+    },
+    {
+      "event_type": "runtime_artifact.evidence",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 233,
+      "prior_ledger_raw_line_sha256": "15a747b31f5d42062719328f9a6ca9cdca5f03f51e08f7bd1d7a9442fb7446de",
+      "source_citations": [
+        {
+          "line_end": 59,
+          "line_start": 59,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "232b814d0afedc166ecf5021a5e7400945199d3ba33a584bc0507503e7e013ac"
+    },
+    {
+      "event_type": "runtime_artifact.failed_attempts",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 234,
+      "prior_ledger_raw_line_sha256": "e341a530dd0c0c43c4cdc442d643ecfff42449810dbb61f2ac72c564f705f37f",
+      "source_citations": [
+        {
+          "line_end": 67,
+          "line_start": 67,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "1b1a20e28f9d3a2ead5fffd8a3f2c1539f5768f480a158319021ab46c89ef137"
+    },
+    {
+      "event_type": "runtime_artifact.hitl_approval",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 235,
+      "prior_ledger_raw_line_sha256": "cd4f6c522404849293cbbabe163388fa5c604d18542577c34f7f5801305beced",
+      "source_citations": [
+        {
+          "line_end": 66,
+          "line_start": 66,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "3a0577b737319a9c7eb71e1f293b779d625cb6d62c2944fe3a83bcddfa9ca6b9"
+    },
+    {
+      "event_type": "runtime_artifact.implementation_plan",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 236,
+      "prior_ledger_raw_line_sha256": "d6e5516469b41367bcf02840f265e5624774004fe46d4d538b63b999f36272a7",
+      "source_citations": [
+        {
+          "line_end": 55,
+          "line_start": 55,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "91898c1b16a878c8cf3de47dc4c43c0bfd8d2dd830b9d618814f23d95d9eba4e"
+    },
+    {
+      "event_type": "runtime_artifact.reasoning_summary",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 237,
+      "prior_ledger_raw_line_sha256": "a5d72febf4ef4b95dfddd243e0fd28ce0fc0170f2667ffbf4efe9f041fefaeb2",
+      "source_citations": [
+        {
+          "line_end": 56,
+          "line_start": 56,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "3d1f1db0e062e1fe78b6d86fb1b092c93585a09507cd7b2e5c96cb412eab49a9"
+    },
+    {
+      "event_type": "runtime_artifact.restore_point",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 238,
+      "prior_ledger_raw_line_sha256": "e5afbfe611f05351f078b0fed3f27f3a8ad7c78b04b063e2d2799b5456a3766b",
+      "source_citations": [
+        {
+          "line_end": 61,
+          "line_start": 61,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "20b06836827d16420ae3d2cad58a11e93fa56e8b269cf62c8a3934ffd6850b43"
+    },
+    {
+      "event_type": "runtime_artifact.screenshot",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 239,
+      "prior_ledger_raw_line_sha256": "9ec9e6d8fa8bf34bd25e864f5bc01f3367325e1652525905941fe1e4149f6f2e",
+      "source_citations": [
+        {
+          "line_end": 58,
+          "line_start": 58,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "037ae4f3a6fe30c2c6679751b17671e0614660c9be0ce4b27d5f067194515324"
+    },
+    {
+      "event_type": "runtime_artifact.subagent_lineage",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 240,
+      "prior_ledger_raw_line_sha256": "3f776c8128cae47697d2c612c17a89d22a1cefc803d8ee4e37a964ab27a85912",
+      "source_citations": [
+        {
+          "line_end": 68,
+          "line_start": 68,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "bdb4c155db53884993258e46b8daa844492e3cd90002d192402b23938507ddf4"
+    },
+    {
+      "event_type": "runtime_artifact.suggested_next_steps",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 241,
+      "prior_ledger_raw_line_sha256": "bf20d6fcb69aef31939f9d86f76530f303dba0079407ad0158ce29b7cdebe7ab",
+      "source_citations": [
+        {
+          "line_end": 70,
+          "line_start": 70,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "cd31b35092d00961d795b26e5b59e6f9f156ddb13c272e7c6fc39103b391b429"
+    },
+    {
+      "event_type": "runtime_artifact.tool_llm_trace",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 242,
+      "prior_ledger_raw_line_sha256": "de47090046ccf70acaac95b2cad6db15bfa3d748e2880447e04bb85f2092d2ff",
+      "source_citations": [
+        {
+          "line_end": 63,
+          "line_start": 63,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "8fc2ad849a86f6f633578f2feb48e2a73f0093015a217c86b2737abd1ad76cdc"
+    },
+    {
+      "event_type": "runtime_artifact.validation_test",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION",
+      "card_ref": "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+      "stable_veto_id": "OV-EA-CPU-RUNTIME-ARTIFACT-RETENTION",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 243,
+      "prior_ledger_raw_line_sha256": "1b38516646dedd8ee08184a73f04a822eac9eab9c8567ecb3e7a5d026a8e17a1",
+      "source_citations": [
+        {
+          "line_end": 57,
+          "line_start": 57,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "exact_token",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 2456,
+          "line_start": 2454,
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "purpose": "explicit_retention_recommendation_not_assignment",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74"
+        },
+        {
+          "line_end": 1535,
+          "line_start": 1535,
+          "path": "Plans/storage-plan.md",
+          "purpose": "unknown_policy_indefinite_materially_incomplete",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+        }
+      ],
+      "retained_evidence_sha256": "d48cf8eda08202fc96cf85450717c8f21e687e612c85f00d0ae5a120aacdd63a"
+    },
+    {
+      "event_type": "task.failed",
+      "outcome": "card",
+      "card_id": "EA-S09-EXEC-TASK-FAILURE",
+      "card_ref": "reports/event-authority-20260911/step-09-execution-cards.md",
+      "stable_veto_id": "OV-EA-CPU-TASK-FAILURE-HISTORY",
+      "response": null,
+      "presentation_status": "artifact_available_queued_for_one_at_a_time_prompt",
+      "prior_ledger_line": 278,
+      "prior_ledger_raw_line_sha256": "533045056296b32090c450e1ea64057da20ce433842e1056299a3ff92dfe0619",
+      "source_citations": [
+        {
+          "line_end": 1374,
+          "line_start": 1374,
+          "path": "Plans/assistant-chat-design.md",
+          "purpose": "exact_token",
+          "sha256": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4"
+        },
+        {
+          "line_end": 1792,
+          "line_start": 1786,
+          "path": "Plans/assistant-chat-design.md",
+          "purpose": "canonical_child_projection",
+          "sha256": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4"
+        },
+        {
+          "line_end": 1826,
+          "line_start": 1826,
+          "path": "Plans/assistant-chat-design.md",
+          "purpose": "projection_lifecycle",
+          "sha256": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4"
+        },
+        {
+          "line_end": 2987,
+          "line_start": 2987,
+          "path": "Plans/Contracts_V0.md",
+          "purpose": "distinct_unregistered_child_failure_name",
+          "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6"
+        }
+      ],
+      "retained_evidence_sha256": "7cdf0fae183564d1e96c6e23721edaec739fd20e9f81a0a6f8ea5d3a503adea6"
+    }
+  ],
+  "answer_inferred": false,
+  "registry_admissions": 0,
+  "bucket_or_denominator_removals": 0,
+  "all_retained_evidence_and_cohort_pins_preserved": true,
+  "technical_binding_work_waived": false,
+  "runtime_enabled": false,
+  "governance_sealed": false
+}

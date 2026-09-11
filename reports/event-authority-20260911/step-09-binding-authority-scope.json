@@ -1,0 +1,1078 @@
+{
+  "canonical_source_base": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "counts": {
+    "total": 252,
+    "source_semantic_exclusions": 6,
+    "source_card_rows": 20,
+    "unique_pending_product_questions": 2,
+    "source_remaining_keep_quarantined": 226,
+    "new_registrations": 0,
+    "denominator_removals": 0
+  },
+  "technical_scope_exact_event_types": [
+    "alert.acknowledged",
+    "alert.dismissed",
+    "alert.rule_muted",
+    "alert.snoozed",
+    "approval.denied",
+    "approval.granted",
+    "approval.requested",
+    "approval.timeout",
+    "attempt.completed",
+    "attempt.started",
+    "auth.github.authenticated",
+    "auth.github.device_code.issued",
+    "auth.github.disconnected",
+    "auth.github.failed",
+    "auth.github.token.polling",
+    "browser.context_captured",
+    "browser.context_share_revoked",
+    "browser.context_shared",
+    "browser.session.closed",
+    "browser.session.created",
+    "browser.session.navigated",
+    "browser.session.promoted",
+    "browser.session.resized",
+    "browser.session.state_changed",
+    "browser.session.takeover_state_changed",
+    "bundle.annotation_state_changed",
+    "bundle.note_created",
+    "bundle.note_status_changed",
+    "bundle.revision_completed",
+    "bundle.revision_interrupted",
+    "bundle.revision_requested",
+    "bundle.revision_started",
+    "bundle.selection_forward_blocked",
+    "bundle.selection_sent_to_chat",
+    "catalog.install.completed",
+    "catalog.install.started",
+    "catalog.remove.completed",
+    "catalog.remove.started",
+    "catalog.update.completed",
+    "catalog.update.started",
+    "chat.message",
+    "chat.response_stop_requested",
+    "chat.thread_archived",
+    "chat.thread_created",
+    "chat.thread_deleted",
+    "chat.thread_worktree_bound",
+    "chat.thread_worktree_create_failed",
+    "chat.thread_worktree_merge_failed",
+    "chat.thread_worktree_merged",
+    "chat.thread_worktree_pr_created",
+    "chat.thread_worktree_pr_failed",
+    "chat.thread_worktree_pre_merge_test_failed",
+    "chat.thread_worktree_pre_merge_test_passed",
+    "chat.thread_worktree_pre_merge_test_started",
+    "chat.thread_worktree_renamed",
+    "chat.thread_worktree_unbound",
+    "concern.assigned",
+    "concern.created",
+    "concern.evidence_linked",
+    "concern.promoted",
+    "concern.reopened",
+    "concern.resolved",
+    "concern.updated",
+    "config.migrated",
+    "config.validation.failed",
+    "coordination.agent_aborted",
+    "coordination.agent_crashed",
+    "coordination.agent_file_ownership_updated",
+    "coordination.agent_operation_updated",
+    "coordination.agent_registered",
+    "coordination.agent_status_updated",
+    "coordination.agent_unregistered",
+    "coordination.debug_mirror_exported",
+    "crew.board_message_posted",
+    "crew.board_message_read",
+    "crew.board_messages_archived",
+    "crew.completed",
+    "crew.coordination",
+    "crew.disbanded",
+    "crew.formed",
+    "crew.member_added",
+    "crew.member_removed",
+    "dashboard.widget_added",
+    "debug.investigation.context_item_added",
+    "debug.investigation.context_item_state_changed",
+    "debug.investigation.exported",
+    "debug.investigation.imported",
+    "debug.investigation.instrumentation_state_changed",
+    "debug.investigation.started",
+    "debug.investigation.state_changed",
+    "debug.investigation.target_bound",
+    "debug.investigation.verification_recorded",
+    "dev.session.restarting",
+    "dev.session.started",
+    "dev.session.stopped",
+    "dev.session.stopping",
+    "doctor.custom_headless.checked",
+    "file.copied",
+    "file.created",
+    "file.deleted",
+    "file.exported",
+    "file.moved",
+    "file.renamed",
+    "filesafe.command_denied",
+    "filesafe.destructive_override_denied",
+    "filesafe.destructive_override_granted",
+    "filesafe.destructive_override_requested",
+    "filesafe.guard_init_failed",
+    "filesafe.path_denied",
+    "filesafe.policy_degraded",
+    "folder.copied",
+    "folder.created",
+    "folder.deleted",
+    "folder.exported",
+    "folder.moved",
+    "folder.renamed",
+    "format.applied",
+    "gate.evaluation_started",
+    "gate.failed",
+    "gate.passed",
+    "git.clone.completed",
+    "live.artifact.created",
+    "live.session.completed",
+    "live.session.degraded",
+    "live.session.started",
+    "live.step.updated",
+    "lsp.server.lifecycle_changed",
+    "memory.dedup_sweep.completed",
+    "memory.dedup_sweep.started",
+    "memory.gist.discarded",
+    "memory.gist.pinned",
+    "memory.gist.unpinned",
+    "memory.gist.updated",
+    "memory.gist.verification_failed",
+    "memory.gist.verification_requested",
+    "memory.gist.verified",
+    "memory.gist_state_changed",
+    "memory.index.lexical.rebuild.completed",
+    "memory.index.lexical.rebuild.started",
+    "memory.index.semantic.rebuild.completed",
+    "memory.index.semantic.rebuild.started",
+    "memory.monthly_summary.completed",
+    "memory.monthly_summary.started",
+    "memory.prune_archive.completed",
+    "memory.prune_archive.started",
+    "memory.verification_sweep.completed",
+    "memory.verification_sweep.started",
+    "model.catalog_refreshed",
+    "node.blocked",
+    "node.completed",
+    "node.started",
+    "node.unblocked",
+    "panel.redocked",
+    "panel.undocked",
+    "parser.error",
+    "persona.created",
+    "persona.deleted",
+    "persona.exported",
+    "persona.imported",
+    "persona.selected",
+    "persona.updated",
+    "phase.force_completed",
+    "plan.decomposition_degraded",
+    "plugin.hook.blocked",
+    "plugin.hook.error",
+    "plugin.hook.invoked",
+    "plugin.load_failed",
+    "plugin.loaded",
+    "plugin.permission.override",
+    "plugin.tool.collision",
+    "plugin.tool.registered",
+    "preview.session.refreshed",
+    "preview.session.started",
+    "preview.session.stopped",
+    "project.added",
+    "project.created",
+    "remediation.resolved",
+    "remediation.spawned",
+    "requirements.clarification_requested",
+    "run.background_enqueued",
+    "run.completed",
+    "run.graph_integrity_failed",
+    "run.node_backoff_expired",
+    "run.node_backoff_started",
+    "run.node_ready",
+    "run.node_retry_scheduled",
+    "safe_point.created",
+    "safe_point.restored",
+    "scheduler.pass",
+    "settings.theme.updated",
+    "settings.updated",
+    "subagent.budget_warning",
+    "subagent.cancelled",
+    "subagent.completed",
+    "subagent.context_rehydrated",
+    "subagent.context_shrunk",
+    "subagent.context_warning",
+    "subagent.escalated",
+    "subagent.failed",
+    "subagent.message_received",
+    "subagent.message_sent",
+    "subagent.model_switched",
+    "subagent.output_truncated",
+    "subagent.paused",
+    "subagent.progress",
+    "subagent.resumed",
+    "subagent.retried",
+    "subagent.spawn_completed",
+    "subagent.spawn_requested",
+    "subagent.spawned",
+    "subagent.started",
+    "subagent.timeout",
+    "subagent.tool_called",
+    "subagent.tool_completed",
+    "tool.custom_headless.skipped",
+    "tool.denied",
+    "tool.execution_completed",
+    "tool.execution_started",
+    "tool.invoked",
+    "usage.event",
+    "wizard.blocked",
+    "wizard.deferred_payload.loaded",
+    "wizard.opened",
+    "wizard.unblocked",
+    "worktree.created",
+    "worktree.deleted"
+  ],
+  "pending_card_scope_exact_event_types": [
+    "runtime_artifact.api_web_call",
+    "runtime_artifact.artifact_version",
+    "runtime_artifact.before_after_snapshot",
+    "runtime_artifact.browser_recording",
+    "runtime_artifact.code_diff",
+    "runtime_artifact.context_snapshot",
+    "runtime_artifact.cost_usage",
+    "runtime_artifact.document",
+    "runtime_artifact.evidence",
+    "runtime_artifact.failed_attempts",
+    "runtime_artifact.hitl_approval",
+    "runtime_artifact.implementation_plan",
+    "runtime_artifact.reasoning_summary",
+    "runtime_artifact.restore_point",
+    "runtime_artifact.screenshot",
+    "runtime_artifact.subagent_lineage",
+    "runtime_artifact.suggested_next_steps",
+    "runtime_artifact.tool_llm_trace",
+    "runtime_artifact.validation_test",
+    "task.failed"
+  ],
+  "excluded_from_new_contract_scope": [
+    "chat.plan_todo_updated",
+    "context.compaction.failed",
+    "context.compaction.started",
+    "onboarding.free_models_refresh_retried",
+    "onboarding.free_models_refreshed",
+    "onboarding.provider_setup_opened"
+  ],
+  "absence_count": "Not measured for the full scope. Three targeted investigations establish specific missing bindings; 285 is the proposed work scope, not a count of absent identifier sets.",
+  "investigated_cases": [
+    {
+      "event_type": "concern.created",
+      "status": "one of 226 technical rows",
+      "investigation_ref": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/concern-created-exhaustive-search.json",
+        "sha256": "a938d0c88ecde4fb7de5675386d83a9444fa5fb23dfba400cb89e7a9c52f97c4"
+      },
+      "search_scope": {
+        "files": 330,
+        "excluded_parts": [
+          "dot-prefixed",
+          "ledgers",
+          "_shards",
+          "bootstrap"
+        ],
+        "patterns": [
+          "(?i)concern",
+          "(?i)runtime[_ .-]?artifact",
+          "(?i)projector[_ .-]?(id|version)",
+          "(?i)consumer[_ .-]?(id|version)",
+          "(?i)checkpoint[_ .-]?(id|key|owner)",
+          "handlers::concern::create",
+          "pm\\.concern_event\\.concern_created\\.schema\\.v1"
+        ]
+      },
+      "found": [
+        "cmd.concern.create",
+        "handlers::concern::create",
+        "pm.concern_event.concern_created.schema.v1",
+        "concern_record.v1:{project_id}:{concern_id}",
+        "pm.storage_value.concern_record.v1",
+        "concern_projection conceptual layer"
+      ],
+      "source_refs": [
+        "Plans/UI_Command_Catalog.md:8092",
+        "Plans/Wiring_Matrix.production.json:18748",
+        "Plans/event_payloads/concern/concern_created.schema.json:3,36",
+        "Plans/storage_value_registry.json:4405\u20134411",
+        "Plans/Orchestrator_Page.md:360\u2013372",
+        "Plans/storage-plan.md:564"
+      ],
+      "gap": "No exact versioned concern.created consumer/projector/checkpoint binding was established by the exhaustive scoped search. concern_record value_schema_ref remains deferred; command handler/schema identity does not supply the missing event reader/cursor.",
+      "forbidden_inference": "Do not use projector.checkpoint.runtime_artifacts:{project_id}; it belongs to a distinct artifact family."
+    },
+    {
+      "event_type": "runtime_artifact.document",
+      "status": "one of 20 unanswered-card rows, not one of 226 technical-only rows; retention decision does not waive technical gaps",
+      "investigation_ref": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/runtime-artifact-document-binding/runtime-artifact-document-binding-result.json",
+        "sha256": "0ac1a75a45331689e9d94f38684e58c72d4a716ddbd2b7b4e96cc17bbef953c4"
+      },
+      "search_scope": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/runtime-artifact-document-binding/source-search-bf898b160815.json",
+        "sha256": "77b20354342b3165137f9152bb6a2f8b6bb193b35518a6b97ee50b4956781e8f",
+        "files": 328,
+        "matching_lines": 82,
+        "scope": "All tracked top-level Plans .md/.json except Spec_Lock, plus Plans/event_payloads/**/*.json; excludes ledgers, audits, shards, evidence, index and pipeline output. Other nested schemas not searched unless top-level references resolve to them.",
+        "patterns": [
+          "runtime_artifact\\.document",
+          "artifacts_index",
+          "artifacts_project_state",
+          "projector\\.checkpoint\\.runtime_artifacts",
+          "runtime_artifact_projector_families",
+          "Runtime[ _-]?Artifact(?:s)?[ _-]?(?:Projector|Consumer|Reader)",
+          "Runtime artifact projector",
+          "Document artifact writer",
+          "Runtime Artifacts projector",
+          "artifact.{0,50}(?:consumer_id|projector_id|checkpoint_version|binding_version)",
+          "(?:consumer_id|projector_id|checkpoint_version|binding_version).{0,50}artifact"
+        ]
+      },
+      "found": {
+        "payload_schema_id": "pm.runtime_artifact.document.schema.v1",
+        "payload_type_required": [
+          "document_ref"
+        ],
+        "primary_owner": "Plans/Runtime_Artifacts_Panel.md",
+        "persistence_owner": "Plans/storage-plan.md",
+        "producer_role": "Document artifact writer",
+        "consumer_roles": [
+          "Runtime Artifacts projector",
+          "document viewer"
+        ],
+        "projection_keys": [
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "artifacts_project_state.v1:{project_id}"
+        ],
+        "checkpoint_key": "projector.checkpoint.runtime_artifacts:{project_id}",
+        "registry_family_id": "runtime_artifact_projector_families",
+        "registry_json_pointer": "/families/17",
+        "value_schema_id": "pm.storage_value.runtime_artifact_projector_families.v1",
+        "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/runtime_artifact_projector_families",
+        "family_status": "deferred_not_build_blocking",
+        "retention_policy_for_projection": "RP-PROJECTION-3GEN",
+        "schema_version": "1.0.0",
+        "schema_version_source_pointer": "/families/17/schema_version"
+      },
+      "source_refs": [
+        "Plans/Runtime_Artifacts_Panel.md:2454\u20132456,2467,2480",
+        "Plans/storage-plan.md:1209\u20131237",
+        "Plans/storage_value_registry.json#/families/17"
+      ],
+      "gap": "Exact artifact index/checkpoint keys exist; descriptive Document artifact writer/Runtime Artifacts projector/document viewer and deferred grouped registry family schema_version 1.0.0 do not establish consumer/projector binding IDs/versions or closed checkpoint semantics.",
+      "forbidden_inference": "Do not promote a schema/family ID or descriptive role to a binding ID. Retention card remains unanswered; no policy assignment is applied."
+    },
+    {
+      "event_type": "run.started",
+      "registered_status": "Remains registered; no re-admission or membership change proposed.",
+      "existing_contract": "Executor immutable start barrier, closedv2payload, project scope/runtime snapshot equality, same-semantic-start idempotency and RP-RUNTIME-365D@1.0.0 are established.",
+      "finding": "No complete exact versioned run.started consumer/projector/checkpoint binding found in the scoped current canonical search and targeted registry/owner inspection. Registered status does not fill that missing definition.",
+      "missing_definition_fields": [
+        "exact consumer identifier and binding version for stated run graph/history/usage/recovery roles",
+        "exact projector identifier/version with run.started owned effect",
+        "checkpoint key/version instantiated for this consumer, closed currentness/cursor schema and event-specific atomic advance/replay join"
+      ],
+      "non_substitutes": [
+        "requested_effective_runtime.v1:{scope_partition}:{snapshot_id}:{snapshot_sha256} is snapshot authority, not consumer checkpoint",
+        "run:<run_id> is legacy baseline for migration readers, not a current replay contract",
+        "goal_run_projection and coordination checkpoint belong to different event families",
+        "generic projector algorithm and global EventRecord dedupe currentness cannot substitute for an exact event-consumer checkpoint"
+      ],
+      "search_capture": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-binding-current/source-search-1ebf8d985123.json",
+        "sha256": "45abbd02cbb177835230152df54006b3a8c9bf899065fe1332b3fccd44e5a52f",
+        "file_count": 328,
+        "match_count": 94,
+        "scope": "All tracked top-level Plans .md/.json except Spec_Lock, plus Plans/event_payloads/**/*.json; excludes ledgers, audits, shards, evidence, index and pipeline output. Other nested schemas not searched unless top-level references resolve to them.",
+        "patterns": [
+          "run\\.started",
+          "(run|executor|run.?graph|orchestrator).{0,90}(consumer[_ .-]?(id|version)|projector[_ .-]?(id|version)|checkpoint[_ .-]?(key|version))",
+          "(consumer[_ .-]?(id|version)|projector[_ .-]?(id|version)|checkpoint[_ .-]?(key|version)).{0,90}(run|executor|run.?graph|orchestrator)",
+          "projector\\.checkpoint\\.(?:run|executor|orchestrator)",
+          "run[_ .-]?projection",
+          "executor[_ .-]?(projector|consumer)",
+          "run[_ .-]?(projector|consumer)",
+          "orchestrator\\.run.\\{run_id\\}",
+          "event-family-run-started",
+          "event_payload_run_started"
+        ]
+      },
+      "limits": "Fresh narrow review covers run.started only; the exact39 set comparison is membership evidence, not renewed39-row depth/absence proof. No new names, versions, schema changes, registrations, retention decision, runtime acceptance or product card.",
+      "source_refs": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+          "line_start": 935,
+          "line_end": 935,
+          "purpose": "exact producer and broad consumers"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+          "line_start": 320,
+          "line_end": 326,
+          "purpose": "immutable snapshot identity and equality"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "line_start": 7217,
+          "line_end": 7221,
+          "purpose": "run-start immutable barrier and idempotency"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1550,
+          "line_end": 1555,
+          "purpose": "generic projector order and checkpoint write guarantee"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1573,
+          "line_end": 1578,
+          "purpose": "generic atomicity and runtime-marker distinction"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 17777,
+          "line_end": 17784,
+          "purpose": "existing exact retention assignment"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1587,
+          "line_end": 1593,
+          "purpose": "analytics scans name run.completed not this event"
+        }
+      ],
+      "investigation_ref": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-binding-current/run-started-current-binding-check.json",
+        "sha256": "3f41c6789463e793ea681483199aad2b429ec89959296e7de3db87d8e03712ad"
+      }
+    }
+  ],
+  "schema_id": "pm.assurance.event_authority.proposed_binding_scope.v1",
+  "status": "UNANSWERED_PROPOSED_SCOPE_ONLY",
+  "exact_candidate_count": 285,
+  "source_report": "reports/event-authority-20260911/step-09-root-application.json",
+  "raw_scope_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/authority-clarification-current/current-authority-scope.json",
+    "sha256": "7927d3a2a2defdb973a4c7a2fba5f350bd43a3bbb077706fb65dbbef06d5fea9"
+  },
+  "registered_depth_scope_exact_event_types": [
+    "goal.blocked",
+    "goal.cancelled",
+    "goal.child_status_changed",
+    "goal.completed",
+    "goal.created",
+    "goal.degraded",
+    "goal.evidence_captured",
+    "goal.progressed",
+    "goal.receipt_recorded",
+    "goal.replanned",
+    "goal.scheduled",
+    "goal.stopped",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal.verification_decided",
+    "goal_run.blocked",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.replanned",
+    "goal_run.started",
+    "goal_run.stopped",
+    "platform.capability_evaluated",
+    "restore_point.applied",
+    "restore_point.corrupt",
+    "restore_point.created",
+    "restore_point.deleted",
+    "restore_point.expired",
+    "run.started",
+    "safe_point.recovery_unavailable",
+    "seglog.event_appended",
+    "storage.boot_recovery",
+    "storage.compaction_lifecycle_changed",
+    "storage.deletion_lifecycle_changed",
+    "storage.integrity_detected",
+    "storage.recovery_applied",
+    "storage.retention_hold_changed",
+    "storage.value_quarantine_changed",
+    "terminal.workgroup_moved",
+    "workspace.layout_changed"
+  ],
+  "registered_source_commit": "1ebf8d985123db473408a989f8a0b0572e307d81",
+  "exact_unadmitted_candidate_count": 246,
+  "scope_count_meaning": "39 already registered families for depth only, 226 unadmitted technical rows and 20 independently product-gated rows; no claim that 285 identifier sets are absent.",
+  "registered_membership_change_proposed": false,
+  "scope_addition_authorized": false,
+  "registered_scope_comparison": {
+    "old_assessment_commit": "4869b4cbaaa9e5452a1b16b68ce92b9f269df738",
+    "old_assessment_path": "reports/event-authority-20260911/step-08-depth-assessment.json",
+    "old_assessment_file_sha256": "34e9295cb93da5551ffb44156dd31607f0abae28cc9361d53c52a184482cd05e",
+    "current_registry_sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+    "current_registered_count": 40,
+    "excluded_from_comparison": "context.compaction.completed",
+    "current_remaining39_exactly_equal_old39": true,
+    "exact_event_types": [
+      "goal.blocked",
+      "goal.cancelled",
+      "goal.child_status_changed",
+      "goal.completed",
+      "goal.created",
+      "goal.degraded",
+      "goal.evidence_captured",
+      "goal.progressed",
+      "goal.receipt_recorded",
+      "goal.replanned",
+      "goal.scheduled",
+      "goal.stopped",
+      "goal.tool_check_recorded",
+      "goal.updated",
+      "goal.verification_decided",
+      "goal_run.blocked",
+      "goal_run.cancelled",
+      "goal_run.certified",
+      "goal_run.replanned",
+      "goal_run.started",
+      "goal_run.stopped",
+      "platform.capability_evaluated",
+      "restore_point.applied",
+      "restore_point.corrupt",
+      "restore_point.created",
+      "restore_point.deleted",
+      "restore_point.expired",
+      "run.started",
+      "safe_point.recovery_unavailable",
+      "seglog.event_appended",
+      "storage.boot_recovery",
+      "storage.compaction_lifecycle_changed",
+      "storage.deletion_lifecycle_changed",
+      "storage.integrity_detected",
+      "storage.recovery_applied",
+      "storage.retention_hold_changed",
+      "storage.value_quarantine_changed",
+      "terminal.workgroup_moved",
+      "workspace.layout_changed"
+    ]
+  },
+  "unadmitted_scope_raw_snapshot_note": "Raw 246-scope capture predates this proposed registered-depth addition; it is retained unchanged. Registered additions are separately sourced by run.started investigation and exact membership comparison.",
+  "owner_batches": {
+    "Plans/Contracts_V0.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "debug.investigation.context_item_added",
+        "debug.investigation.context_item_state_changed",
+        "debug.investigation.exported",
+        "debug.investigation.imported",
+        "debug.investigation.instrumentation_state_changed",
+        "debug.investigation.started",
+        "debug.investigation.state_changed",
+        "debug.investigation.target_bound",
+        "debug.investigation.verification_recorded"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Executor_Protocol.md": {
+      "registered_depth_only": [
+        "run.started"
+      ],
+      "unadmitted_technical": [
+        "attempt.completed",
+        "attempt.started",
+        "node.blocked",
+        "node.completed",
+        "node.started",
+        "node.unblocked",
+        "plan.decomposition_degraded",
+        "remediation.resolved",
+        "remediation.spawned",
+        "run.completed",
+        "run.graph_integrity_failed",
+        "run.node_backoff_expired",
+        "run.node_backoff_started",
+        "run.node_ready",
+        "run.node_retry_scheduled",
+        "scheduler.pass"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/FileManager.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "file.copied",
+        "file.created",
+        "file.deleted",
+        "file.exported",
+        "file.moved",
+        "file.renamed",
+        "folder.copied",
+        "folder.created",
+        "folder.deleted",
+        "folder.exported",
+        "folder.moved",
+        "folder.renamed"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/FileSafe.md": {
+      "registered_depth_only": [
+        "safe_point.recovery_unavailable"
+      ],
+      "unadmitted_technical": [
+        "filesafe.command_denied",
+        "filesafe.destructive_override_denied",
+        "filesafe.destructive_override_granted",
+        "filesafe.destructive_override_requested",
+        "filesafe.guard_init_failed",
+        "filesafe.path_denied",
+        "filesafe.policy_degraded",
+        "safe_point.created",
+        "safe_point.restored"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/FinalGUISpec.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "alert.acknowledged",
+        "alert.dismissed",
+        "alert.rule_muted",
+        "alert.snoozed",
+        "bundle.annotation_state_changed",
+        "bundle.note_created",
+        "bundle.note_status_changed",
+        "panel.redocked",
+        "panel.undocked"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary": {
+      "registered_depth_only": [
+        "workspace.layout_changed"
+      ],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Formatters_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "format.applied"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/GitHub_API_Auth_and_Flows.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "auth.github.authenticated",
+        "auth.github.device_code.issued",
+        "auth.github.disconnected",
+        "auth.github.failed",
+        "auth.github.token.polling"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima": {
+      "registered_depth_only": [
+        "goal.blocked",
+        "goal.cancelled",
+        "goal.child_status_changed",
+        "goal.completed",
+        "goal.created",
+        "goal.degraded",
+        "goal.evidence_captured",
+        "goal.progressed",
+        "goal.receipt_recorded",
+        "goal.replanned",
+        "goal.scheduled",
+        "goal.stopped",
+        "goal.tool_check_recorded",
+        "goal.updated",
+        "goal.verification_decided",
+        "goal_run.blocked",
+        "goal_run.cancelled",
+        "goal_run.certified",
+        "goal_run.replanned",
+        "goal_run.started",
+        "goal_run.stopped"
+      ],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/LSPSupport.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "lsp.server.lifecycle_changed"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Models_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "model.catalog_refreshed"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Orchestrator_Page.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "concern.assigned",
+        "concern.created",
+        "concern.evidence_linked",
+        "concern.promoted",
+        "concern.reopened",
+        "concern.resolved",
+        "concern.updated"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Personas.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "persona.created",
+        "persona.deleted",
+        "persona.exported",
+        "persona.imported",
+        "persona.selected",
+        "persona.updated"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Plugins_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "plugin.hook.blocked",
+        "plugin.hook.error",
+        "plugin.hook.invoked",
+        "plugin.load_failed",
+        "plugin.loaded",
+        "plugin.permission.override",
+        "plugin.tool.collision",
+        "plugin.tool.registered"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Progression_Gates.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "gate.evaluation_started",
+        "gate.failed",
+        "gate.passed",
+        "requirements.clarification_requested"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Project_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "project.added",
+        "project.created"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Prompt_Pipeline.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "subagent.context_rehydrated",
+        "subagent.context_shrunk"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Runtime_Artifacts_Panel.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": [
+        "runtime_artifact.api_web_call",
+        "runtime_artifact.artifact_version",
+        "runtime_artifact.before_after_snapshot",
+        "runtime_artifact.browser_recording",
+        "runtime_artifact.code_diff",
+        "runtime_artifact.context_snapshot",
+        "runtime_artifact.cost_usage",
+        "runtime_artifact.document",
+        "runtime_artifact.evidence",
+        "runtime_artifact.failed_attempts",
+        "runtime_artifact.hitl_approval",
+        "runtime_artifact.implementation_plan",
+        "runtime_artifact.reasoning_summary",
+        "runtime_artifact.restore_point",
+        "runtime_artifact.screenshot",
+        "runtime_artifact.subagent_lineage",
+        "runtime_artifact.suggested_next_steps",
+        "runtime_artifact.tool_llm_trace",
+        "runtime_artifact.validation_test"
+      ]
+    },
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "browser.context_captured",
+        "browser.context_share_revoked",
+        "browser.context_shared",
+        "browser.session.closed",
+        "browser.session.created",
+        "browser.session.navigated",
+        "browser.session.promoted",
+        "browser.session.resized",
+        "browser.session.state_changed",
+        "browser.session.takeover_state_changed",
+        "catalog.install.completed",
+        "catalog.install.started",
+        "catalog.remove.completed",
+        "catalog.remove.started",
+        "catalog.update.completed",
+        "catalog.update.started",
+        "dev.session.restarting",
+        "dev.session.started",
+        "dev.session.stopped",
+        "dev.session.stopping",
+        "preview.session.refreshed",
+        "preview.session.started",
+        "preview.session.stopped"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation": {
+      "registered_depth_only": [
+        "terminal.workgroup_moved"
+      ],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Settings_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "settings.theme.updated",
+        "settings.updated"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Source_Control_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "git.clone.completed"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Tools.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "tool.denied",
+        "tool.execution_completed",
+        "tool.execution_started",
+        "tool.invoked"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/Widget_System.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "dashboard.widget_added"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/WorktreeGitImprovement.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "config.migrated",
+        "worktree.created",
+        "worktree.deleted"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/assistant-chat-design.md": {
+      "registered_depth_only": [
+        "restore_point.applied",
+        "restore_point.corrupt",
+        "restore_point.created",
+        "restore_point.deleted",
+        "restore_point.expired"
+      ],
+      "unadmitted_technical": [
+        "bundle.selection_forward_blocked",
+        "bundle.selection_sent_to_chat",
+        "chat.message",
+        "chat.response_stop_requested",
+        "chat.thread_archived",
+        "chat.thread_created",
+        "chat.thread_deleted",
+        "chat.thread_worktree_bound",
+        "chat.thread_worktree_create_failed",
+        "chat.thread_worktree_merge_failed",
+        "chat.thread_worktree_merged",
+        "chat.thread_worktree_pr_created",
+        "chat.thread_worktree_pr_failed",
+        "chat.thread_worktree_pre_merge_test_failed",
+        "chat.thread_worktree_pre_merge_test_passed",
+        "chat.thread_worktree_pre_merge_test_started",
+        "chat.thread_worktree_renamed",
+        "chat.thread_worktree_unbound"
+      ],
+      "unadmitted_pending_product_card": [
+        "task.failed"
+      ]
+    },
+    "Plans/assistant-memory-subsystem.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "memory.dedup_sweep.completed",
+        "memory.dedup_sweep.started",
+        "memory.gist.discarded",
+        "memory.gist.pinned",
+        "memory.gist.unpinned",
+        "memory.gist.updated",
+        "memory.gist.verification_failed",
+        "memory.gist.verification_requested",
+        "memory.gist.verified",
+        "memory.gist_state_changed",
+        "memory.index.lexical.rebuild.completed",
+        "memory.index.lexical.rebuild.started",
+        "memory.index.semantic.rebuild.completed",
+        "memory.index.semantic.rebuild.started",
+        "memory.monthly_summary.completed",
+        "memory.monthly_summary.started",
+        "memory.prune_archive.completed",
+        "memory.prune_archive.started",
+        "memory.verification_sweep.completed",
+        "memory.verification_sweep.started"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/chain-wizard-flexibility.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "bundle.revision_completed",
+        "bundle.revision_interrupted",
+        "bundle.revision_requested",
+        "bundle.revision_started",
+        "wizard.blocked",
+        "wizard.deferred_payload.loaded",
+        "wizard.opened",
+        "wizard.unblocked"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/human-in-the-loop.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "approval.denied",
+        "approval.granted",
+        "approval.requested",
+        "approval.timeout"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/newtools.md": {
+      "registered_depth_only": [
+        "platform.capability_evaluated"
+      ],
+      "unadmitted_technical": [
+        "doctor.custom_headless.checked",
+        "live.artifact.created",
+        "live.session.completed",
+        "live.session.degraded",
+        "live.session.started",
+        "live.step.updated",
+        "tool.custom_headless.skipped"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/orchestrator-subagent-integration.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "config.validation.failed",
+        "coordination.agent_aborted",
+        "coordination.agent_crashed",
+        "coordination.agent_file_ownership_updated",
+        "coordination.agent_operation_updated",
+        "coordination.agent_registered",
+        "coordination.agent_status_updated",
+        "coordination.agent_unregistered",
+        "crew.board_message_posted",
+        "crew.board_message_read",
+        "crew.board_messages_archived",
+        "crew.completed",
+        "crew.coordination",
+        "crew.disbanded",
+        "crew.formed",
+        "crew.member_added",
+        "crew.member_removed",
+        "parser.error",
+        "phase.force_completed",
+        "subagent.budget_warning",
+        "subagent.cancelled",
+        "subagent.completed",
+        "subagent.context_warning",
+        "subagent.escalated",
+        "subagent.failed",
+        "subagent.message_received",
+        "subagent.message_sent",
+        "subagent.model_switched",
+        "subagent.output_truncated",
+        "subagent.paused",
+        "subagent.progress",
+        "subagent.resumed",
+        "subagent.retried",
+        "subagent.spawn_completed",
+        "subagent.spawn_requested",
+        "subagent.spawned",
+        "subagent.started",
+        "subagent.timeout",
+        "subagent.tool_called",
+        "subagent.tool_completed"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/storage-plan.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "coordination.debug_mirror_exported",
+        "run.background_enqueued"
+      ],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/storage-plan.md#225-eventrecord-persistence-boundary": {
+      "registered_depth_only": [
+        "seglog.event_appended"
+      ],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe": {
+      "registered_depth_only": [
+        "storage.boot_recovery",
+        "storage.compaction_lifecycle_changed",
+        "storage.deletion_lifecycle_changed",
+        "storage.integrity_detected",
+        "storage.recovery_applied",
+        "storage.retention_hold_changed",
+        "storage.value_quarantine_changed"
+      ],
+      "unadmitted_technical": [],
+      "unadmitted_pending_product_card": []
+    },
+    "Plans/usage-feature.md": {
+      "registered_depth_only": [],
+      "unadmitted_technical": [
+        "usage.event"
+      ],
+      "unadmitted_pending_product_card": []
+    }
+  },
+  "root_review_base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f"
+}

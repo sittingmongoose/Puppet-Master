@@ -2,8 +2,8 @@
   "event_type": "onboarding.free_models_refreshed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to onboarding.free_models_refreshed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "RECLASSIFY_TO_EXCLUDED",
+  "disposition_rationale": "DL-039 Step 9 individual semantic adjudication at 2026-09-11T16:49:03.364813+00:00: The exact free-model refresh effect is retained only in the retired cmd.onboarding.free_models.refresh row. The current catalog replaces those former command rows with typed local Onboarding actions and routes actual work to existing target-owner commands; this retired effect receives no producer or production row. Current Plans evidence: Plans/UI_Command_Catalog.md:8112-8115; Plans/UI_Command_Catalog.md:8119-8119. Application: reports/event-authority-20260911/step-09-semantic-exclusion-application.json. Semantic exclusion is recorded; the legacy CPU bucket and cohort pins remain because the frozen schema/validator has no J248 exclusion category. No denominator removal, contract-depth pass or seal is claimed.",
   "evidence": {
     "membership_version": {
       "status": "UNKNOWN",
@@ -81,6 +81,16 @@
       "citation": "Plans/Wiring_Matrix.production.json:17335-17341",
       "status": "ok",
       "notes": "Checked for the exact `onboarding.free_models_refreshed` declaration and only the field-local facts credited in this row."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8112-8115",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
+    },
+    {
+      "citation": "Plans/UI_Command_Catalog.md:8119-8119",
+      "status": "ok",
+      "notes": "Current individual semantic retirement evidence; does not convert retained contract-depth cells to PASS."
     }
   ],
   "owner_veto": null,

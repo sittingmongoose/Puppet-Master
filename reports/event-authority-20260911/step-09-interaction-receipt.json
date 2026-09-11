@@ -1,0 +1,103 @@
+{
+  "assigned": 75,
+  "base_commit": "1ebf8d985123db473408a989f8a0b0572e307d81",
+  "by_owner": {
+    "Plans/FinalGUISpec.md": {
+      "TECHNICAL_BLOCKED": 9
+    },
+    "Plans/GitHub_API_Auth_and_Flows.md": {
+      "TECHNICAL_BLOCKED": 5
+    },
+    "Plans/Orchestrator_Page.md": {
+      "TECHNICAL_BLOCKED": 7
+    },
+    "Plans/Planning_Wizard.md": {
+      "EXCLUDE_CANDIDATE": 3
+    },
+    "Plans/Project_System.md": {
+      "TECHNICAL_BLOCKED": 2
+    },
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": {
+      "TECHNICAL_BLOCKED": 13
+    },
+    "Plans/Settings_System.md": {
+      "TECHNICAL_BLOCKED": 2
+    },
+    "Plans/Source_Control_System.md": {
+      "TECHNICAL_BLOCKED": 1
+    },
+    "Plans/ToDo_Runtime.md": {
+      "EXCLUDE_CANDIDATE": 1
+    },
+    "Plans/Widget_System.md": {
+      "TECHNICAL_BLOCKED": 1
+    },
+    "Plans/WorktreeGitImprovement.md": {
+      "TECHNICAL_BLOCKED": 3
+    },
+    "Plans/assistant-chat-design.md": {
+      "EXCLUDE_CANDIDATE": 2,
+      "TECHNICAL_BLOCKED": 18
+    },
+    "Plans/chain-wizard-flexibility.md": {
+      "TECHNICAL_BLOCKED": 8
+    }
+  },
+  "carded": 0,
+  "checks": {
+    "card_links": "PASS: zero pending cards; two exact genuine approval response refs and applied owner boundaries, no response records changed",
+    "changed_passage_review": "PASS: 389 selected excerpts unchanged from prior b240 review; 12 changed/new passages reread for the two approved owner decisions",
+    "citation_hash_and_exact_excerpt": "PASS: 401 current source-hashed exact excerpts; two historical Decision Log captures bridged by source_refresh; every row retains a tight exact-token citation.",
+    "exact_set": "PASS: 75 unique rows equal assigned manifest lane",
+    "exclusion_drafts": "PASS: six exact-token drafts with whole-file hashes",
+    "outcome_totals": "PASS: 69 technical + 0 pending-card + 6 exclusion candidates; actual registered=excluded=0",
+    "scope": "PASS: only three assigned report paths untracked; all canon unchanged",
+    "shards": "PASS: 98 docs, 2167 shards",
+    "source_currentness": "PASS: all 401 cited spans checked against 1ebf8d985123db473408a989f8a0b0572e307d81; 399 whole-source hashes unchanged, two Decision Log hashes refreshed with byte-identical quoted spans and a hashed historical-capture bridge."
+  },
+  "citation_refresh": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/post-owner-amendment-citation-refresh.json",
+    "sha256": "7375888dd57ee444ace85edbe2c6abb03255b8a840d7bc3ba9fbab4f9805d758"
+  },
+  "exact_set_sha256": "06af5d38feb5a7b7130358ee42bffa1284ca0df7aa877135afa49f5b61b48f3d",
+  "excluded": 0,
+  "exclusion_drafts": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/exclusion-drafts.jsonl",
+    "sha256": "33c45998d777a14f3aac6b6404c6863b68d755dd29a9511b6c817960641a5663"
+  },
+  "limitations": [
+    "TECHNICAL_BLOCKED is unfinished authorized contract work, not a final disposition or product decision.",
+    "Six exclusion candidates require root review and recorded application; frozen cohort accounting cannot be rewritten by this report.",
+    "No full registration candidate is claimed; no consumer, projector or checkpoint identifier was invented.",
+    "Current live registry has 40 families after Step 6 completion-only admission. The unchanged validator still permits only the two August additions beyond Known37 and reports unexpected_august_set; this review neither alters nor works around it.",
+    "All 401 cited spans were checked against 1ebf8d985123db473408a989f8a0b0572e307d81. The two Decision Log whole-source hashes changed after DL-043; both quoted spans remain byte-identical. Original selected excerpts and preflight capture manifest remain historical evidence, linked through the hashed source_refresh receipt.",
+    "All canonical documents, live registry, disposition rows, validators and governance artifacts remain unchanged."
+  ],
+  "new_cards": 0,
+  "proposed_outcomes": {
+    "EXCLUDE_CANDIDATE": 6,
+    "TECHNICAL_BLOCKED": 69
+  },
+  "raw_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/capture-manifest.json",
+    "sha256": "5ed0212e73a3b475062bab4711a36652cab1b2ca726407f630b8c35587515b91"
+  },
+  "registered": 0,
+  "remaining": 75,
+  "resolved_decisions": [
+    "LC-CHAT-TODO-MIGRATION",
+    "LC-SETTINGS-IDENTITY"
+  ],
+  "reused_cards": [],
+  "reviewed": 75,
+  "selected_excerpts": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/selected-excerpts.jsonl",
+    "sha256": "56f8e6bab59e268781d69b4c4c5cc667b888bd60e162f8825995a7bd7e5252d7"
+  },
+  "source_refresh": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/main1ebf-source-refresh.json",
+    "sha256": "1fa2b97e9da2896d80fc823aebec38688ebb601b12e46a5c6bc5c256afb54954"
+  },
+  "status": "CANDIDATE_RESEARCH_NOT_FINAL_DISPOSITIONS",
+  "usage": "Actual token and dollar usage unavailable; no estimate fabricated."
+}

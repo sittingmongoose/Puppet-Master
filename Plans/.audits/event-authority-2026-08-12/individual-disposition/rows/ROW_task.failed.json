@@ -2,8 +2,8 @@
   "event_type": "task.failed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to task.failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "NEEDS_OWNER_VETO",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Task/subagent card failure emits this exact event with error detail, but the source does not settle separate durable EventRecord persistence. Other chat clauses require cards to project canonical child history. No exact alias to subagent.failed is asserted or permitted by unregistered-target similarity. This exact row is returned on the owner-batched plain-language card EA-S09-EXEC-TASK-FAILURE in reports/event-authority-20260911/step-09-execution-cards.md. No answer, approval, retention assignment, registry admission or technical depth pass is inferred. Existing buckets, cohort pins and retained evidence remain unchanged. Application: reports/event-authority-20260911/step-09-card-application.json.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -86,9 +86,42 @@
       "citation": "Plans/Contracts_V0.md:895-903",
       "status": "ok",
       "notes": "States task lifecycle events persist through the canonical event stream and projections do not replace durable records."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:1374-1374",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:1786-1792",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/assistant-chat-design.md:1826-1826",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:2987-2987",
+      "status": "ok",
+      "notes": "Current individual product-choice evidence; no missing technical cell is promoted to PASS."
     }
   ],
-  "owner_veto": null,
+  "owner_veto": {
+    "stable_id": "OV-EA-CPU-TASK-FAILURE-HISTORY",
+    "field_or_decision": "persistence_boundary",
+    "question": "Should task.failed be a presentation notification backed by canonical child-run history, or a separately persisted EventRecord family with its own replayable task-failure history?",
+    "options": [
+      "A: presentation notification over canonical child-run history",
+      "B: separate persisted task.failed history",
+      "C: another explicit scope boundary"
+    ],
+    "evidence_gap": "Assistant Chat requires the exact failure signal but does not settle its separate EventRecord persistence boundary; canonical child-run projection is separately required and no exact alias is established.",
+    "event_types": [
+      "task.failed"
+    ]
+  },
   "bulk_registration": false,
   "analogy_used": false,
   "inference_used": false,

@@ -1,0 +1,269 @@
+{
+  "lane": "extensions",
+  "assigned": 89,
+  "reviewed": 89,
+  "registered": 0,
+  "excluded": 0,
+  "carded": 0,
+  "remaining": 89,
+  "proposed_counts": {
+    "TECHNICAL_BLOCKED": 89
+  },
+  "by_owner": {
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": {
+      "total": 10,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 10,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 10
+      }
+    },
+    "Plans/orchestrator-subagent-integration.md": {
+      "total": 2,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 2,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 2
+      }
+    },
+    "Plans/Contracts_V0.md": {
+      "total": 9,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 9,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 9
+      }
+    },
+    "Plans/newtools.md": {
+      "total": 7,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 7,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 7
+      }
+    },
+    "Plans/FileManager.md": {
+      "total": 12,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 12,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 12
+      }
+    },
+    "Plans/FileSafe.md": {
+      "total": 7,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 7,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 7
+      }
+    },
+    "Plans/Formatters_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 1
+      }
+    },
+    "Plans/LSPSupport.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 1
+      }
+    },
+    "Plans/assistant-memory-subsystem.md": {
+      "total": 20,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 20,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 20
+      }
+    },
+    "Plans/Models_System.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 1
+      }
+    },
+    "Plans/Personas.md": {
+      "total": 6,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 6,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 6
+      }
+    },
+    "Plans/Plugins_System.md": {
+      "total": 8,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 8,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 8
+      }
+    },
+    "Plans/Tools.md": {
+      "total": 4,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 4,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 4
+      }
+    },
+    "Plans/usage-feature.md": {
+      "total": 1,
+      "registered": 0,
+      "excluded": 0,
+      "carded": 0,
+      "remaining": 1,
+      "proposed": {
+        "TECHNICAL_BLOCKED": 1
+      }
+    }
+  },
+  "fully_closed_registration_candidates": 0,
+  "closed_static_file_payload_schemas": 11,
+  "authority": "Candidate review only; no canonical or recorded disposition changes. TECHNICAL_BLOCKED is unfinished, never a fourth final outcome.",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/campaign-preflight/routing-manifest.json",
+    "sha256": "7a99f0dff5c6d376aa0bccb8fe5d7f320885f7f48ee3a8beb7b5869e109eba5f",
+    "json_pointer": "/lanes/extensions"
+  },
+  "reports": [
+    {
+      "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+      "sha256": "7fc9c1380a0353c14e098ff2942ad33d4944ab53de69782b7a9ae500a2533d00"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-09-extensions-cards.md",
+      "sha256": "adc58502b9b1e2e8d849a57e4f394a7693e83d6cb4e23f1e12b7dc0d3c9e78f6"
+    }
+  ],
+  "draft_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/individual-contract-drafts-bf898b160815-all89technical.json",
+    "sha256": "b226f2484756057915605566b258e71e082170b56d8592a425df7707f3ccc1d8"
+  },
+  "source_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/exact-matches.json",
+    "sha256": "66cdfe8e6361dc4f72fc0f6f3d1c3b3f04ec5be89aed9b9ea920b28f2000b552",
+    "authority": "Historical exact-token scan lineage only; current whole-source hashes and quotes are in refreshed draft_capture."
+  },
+  "constraints": [
+    "Frozen independent validator admits live-minus-Known37 exactly two August rows; Step6 admission makes its existing conflict explicit. Do not alter validator or generalize Step6 identifiers/retention to these rows.",
+    "Stop before commit for root final report review. Step6 landed; no canonical edit or new identifier is authorized in this refresh."
+  ],
+  "verification": {
+    "exact_set_order_uniqueness": "PASS",
+    "source_hashes_tight_spans": "PASS",
+    "draft_capture_hash_and_pointers": "PASS",
+    "card_links": "PASS: no cards",
+    "shard_check": {
+      "status": "PASS",
+      "docs_checked": 98,
+      "shards_checked": 2167,
+      "failures": []
+    },
+    "external_quote_custody": "PASS: full quotes only in hashed external draft capture; compact report citations contain pointers",
+    "refreshed_source_hashes_and_exact_quote_spans": "PASS",
+    "plugin_individual_readjudication": "PASS: all8 exact owner rows plus450\u2013470/4270 reviewed; permission.override243 also inspected; no explicit final exclusion boundary."
+  },
+  "billing": "Dollar/token usage unavailable.",
+  "reviewed_base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "registry_count_at_review": 40,
+  "refresh": {
+    "previous_base_commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
+    "changed_whole_source_hashes": [
+      "Plans/Contracts_V0.md",
+      "Plans/Tools.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/storage-plan.md"
+    ],
+    "cited_passages_changed": false,
+    "shifted_spans": [
+      [
+        "Plans/UI_Command_Catalog.md",
+        8089,
+        8099
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8070,
+        8080
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8072,
+        8082
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8076,
+        8086
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8075,
+        8085
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8073,
+        8083
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        8071,
+        8081
+      ]
+    ],
+    "adjudication": "Cited text remains exact. Current Step8 owner repairs do not establish any new complete contract or exclusion for these89 tokens. All89 remain technical; plugin conditional non-emission is not final exclusion."
+  },
+  "withdrawn_draft_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/individual-contract-drafts-b240dd93e2eb.json",
+    "sha256": "6efa22f5fad7ad55d815df6919e35db063f0ccca335139cfc0daa35c7ce5262b",
+    "authority": "Historical candidate lineage only; eight exclusion proposals were withdrawn, never recorded final outcomes."
+  },
+  "refresh_history": [
+    {
+      "previous_base_commit": "3f02e24d7aa90fc527ba4e9c280252ac40c0b1e1",
+      "changed_whole_source_hashes": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "cited_passages_changed": false,
+      "shifted_spans": [],
+      "adjudication": "All cited passages remain exact. On root review, eight plugin exclusion candidates were withdrawn: conditional non-emission is not final retirement/exclusion. All89 remain unfinished technical work; no new product choice or card is evidenced."
+    }
+  ]
+}
