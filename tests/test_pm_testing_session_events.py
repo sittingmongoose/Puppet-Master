@@ -55,10 +55,11 @@ class TestingSessionEventTests(unittest.TestCase):
         failures = owner.event_family_registry_data_failures(
             registry, gate.load("Plans/event_family_registry.schema.json"),
             path_label="test:session-events", include_residuals=False)
-        # The historical readiness pin is intentionally not a fresh seal.
+        # The approved DL-040 carry-forward pins 40 families, not this branch's
+        # 93-family registry, and does not grant a fresh readiness seal.
         self.assertEqual({failure["error"] for failure in failures},
                          {"event_family_registry_kernel_row_count_mismatch"})
-        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 39)
+        self.assertEqual(owner.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 40)
 
     def test_transport_aliases_and_conflicts_are_denied_without_remembering_identity(self):
         for case in gate.fixture_cases():

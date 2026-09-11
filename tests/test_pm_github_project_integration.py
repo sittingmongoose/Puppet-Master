@@ -228,7 +228,9 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
             GATE.load("Plans/event_family_registry.json"), GATE.load("Plans/event_family_registry.schema.json"),
             path_label="test:github-project-events", include_residuals=False)
         self.assertEqual([row["error"] for row in failures], ["event_family_registry_kernel_row_count_mismatch"])
-        self.assertEqual(readiness.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 39)
+        # Preserve main's separately approved DL-040 checkpoint; do not lift it
+        # to this branch's 93 registry rows or admit the emit-only candidates.
+        self.assertEqual(readiness.EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT, 40)
 
 
 if __name__ == "__main__":
