@@ -1,0 +1,17 @@
+{
+  "schema": "jujutsu.d2_preflight.publication.v1",
+  "created_at": "2026-09-11T03:25:51.106190+00:00",
+  "status": "D2_PREFLIGHT_ONLY_NO_CAMPAIGNS",
+  "files": {
+    "budget_probe_sanitized.json": "7fb19760e9bb4ccba8efbe1a585a6d0868a0405dad153388e16b0833f82de857",
+    "monitored_cost_proposal.md": "3f2447d00ca044575e474753f0177e576a12e68eb03388c41486f722e03852fd",
+    "pricing_basis.md": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d",
+    "source_manifest.json": "8944014404529c857065655f7fe2b1455c8f0a451e9a62cd36b07444261efda3",
+    "summary.md": "6e9ae0b6ba9df405310bea42886e13fcb3b363b3e6fbcb28f2ea71d78cf489c4",
+    "validation_receipt.json": "0a906bf2acde2914ce05c6aa8ced35613c3b920d806983065659b3b4c3791f61"
+  },
+  "frozen_protocol_sha256": "570abec19007627eb77b548bebf0122316a495f7cf09ded22f1bb23f368dae9c",
+  "source_snapshot": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "d1_commit": "179c7a0ee673d66a984037b68dc974ee15228bdd",
+  "raw_captures_included": false
+}

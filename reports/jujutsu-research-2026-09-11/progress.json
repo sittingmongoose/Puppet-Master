@@ -1,0 +1,48 @@
+{
+  "schema": "jujutsu.checkpoint_progress.v1",
+  "captured_at": "2026-09-11T03:27:27.363278+00:00",
+  "processing_start": "2026-09-11T03:06:26Z",
+  "human_waiting_seconds_at_capture": 0,
+  "completion_point": "After deliverable4; not reached",
+  "d1": {
+    "status": "complete_pushed",
+    "commit": "179c7a0ee673d66a984037b68dc974ee15228bdd",
+    "branch": "research/jujutsu-20260911",
+    "report": "d1/README.md"
+  },
+  "d2": {
+    "status": "preflight_only_no_campaigns",
+    "report": "d2-preflight/summary.md",
+    "scheduler_tests": "12/12 PASS; independent review PASS",
+    "blocker": "No verified native monetary enforcement for the at-most campaign caps. Goal tokenBudget excludes cached input and permits a final response after budgetLimited."
+  },
+  "d3": {
+    "status": "pending_arms"
+  },
+  "d4": {
+    "status": "pending_adjudication"
+  },
+  "premium": {
+    "admitted_jobs": 0,
+    "campaign_usage_usd": 0,
+    "status": "not_started"
+  },
+  "hybrid": {
+    "admitted_jobs": 0,
+    "campaign_usage_usd": 0,
+    "status": "not_started"
+  },
+  "non_arm": {
+    "standard_api_equivalent_observed_usd": 25.341994,
+    "unknown_tier_fast_scenario_observed_usd": 50.519216,
+    "basis": "Preserved2026-09-08; inclusive input subtracts cache categories; output includes reasoning once",
+    "includes_probe_standard_usd": 0.164772,
+    "actual_cash_usd": null,
+    "in_flight_usage_usd": null,
+    "complete_cost_certified": false,
+    "receipt": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/preflight_usage_preserved.json",
+    "receipt_sha256": "e5e3b746c9217e5b780c769cbb2a0aa4fc336a8beffd88ef5bbe00dbf490a036"
+  },
+  "governance": "No Plans edits, derived regeneration or reseal; main landing not attempted.",
+  "scope_note": "This is partial progress, not completion of deliverables2\u20134 or the required checkpoint."
+}
