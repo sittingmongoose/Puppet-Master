@@ -1,0 +1,61 @@
+# Step 08 — live registered depth assessment
+
+State: **INCOMPLETE**. All 39 registered families were freshly assessed across 12 criteria (468 cells). No family has complete depth. All 39 exact consumer/checkpoint cells remain unclosed and route to six owner-batched unresolved-binding work records (completion already authorized; no approval sought).
+
+Contract evidence counts: ABSENT 39, CONFLICT 42, PARTIAL 186, PASS 201. PASS means a supported contract criterion, never runtime verification. Oracle execution is UNPROVEN for every row.
+
+The immutable historical 185/444 structured-field baseline is not replaced or directly compared with these counts. This assessment separates registry structure, exact normative owner prose, listed-only references, and absent bindings. Registry schema closure is not widened to manufacture depth fields.
+
+The authoritative 21 Goal schemas remain registered. Their older typed state/role/child/budget matrix is not an active-write exemption from current Goal V2 precedence. Goal conflicts route to the root currentness adjudication; the work records do not reopen retirement. August consumer veto remains effective.
+
+The retained currentness helper hardcodes historical depth and zero materialized fresh rows. It is unchanged. This report is a separate evidence layer and does not restamp closure, governance, or readiness.
+
+| Event | PASS | PARTIAL | ABSENT | CONFLICT | Unresolved binding record |
+|---|---:|---:|---:|---:|---|
+| goal_run.blocked | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal_run.cancelled | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal_run.certified | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal_run.replanned | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal_run.started | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal_run.stopped | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.blocked | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.cancelled | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.child_status_changed | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.completed | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.created | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.degraded | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.evidence_captured | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.progressed | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.receipt_recorded | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.replanned | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.scheduled | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.stopped | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.tool_check_recorded | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.updated | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| goal.verification_decided | 3 | 6 | 1 | 2 | EA-S8-GOAL-BINDING |
+| platform.capability_evaluated | 7 | 4 | 1 | 0 | EA-S8-PLATFORM-BINDING |
+| restore_point.applied | 9 | 2 | 1 | 0 | EA-S8-RESTORE-BINDING |
+| restore_point.corrupt | 7 | 4 | 1 | 0 | EA-S8-RESTORE-BINDING |
+| restore_point.created | 9 | 2 | 1 | 0 | EA-S8-RESTORE-BINDING |
+| restore_point.deleted | 9 | 2 | 1 | 0 | EA-S8-RESTORE-BINDING |
+| restore_point.expired | 7 | 4 | 1 | 0 | EA-S8-RESTORE-BINDING |
+| run.started | 9 | 2 | 1 | 0 | EA-S8-EXECUTOR-BINDING |
+| safe_point.recovery_unavailable | 7 | 4 | 1 | 0 | EA-S8-EXECUTOR-BINDING |
+| seglog.event_appended | 9 | 2 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.boot_recovery | 8 | 3 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.compaction_lifecycle_changed | 7 | 4 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.deletion_lifecycle_changed | 8 | 3 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.integrity_detected | 8 | 3 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.recovery_applied | 8 | 3 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.retention_hold_changed | 7 | 4 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| storage.value_quarantine_changed | 7 | 4 | 1 | 0 | EA-S8-STORAGE-BINDING |
+| workspace.layout_changed | 6 | 5 | 1 | 0 | EA-S8-AUGUST-BINDING |
+| terminal.workgroup_moved | 6 | 5 | 1 | 0 | EA-S8-AUGUST-BINDING |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/depth/source-excerpts.json`, SHA-256 `89b6be4ffe13981f4ba58db3b00f71eb3d6541bc2b726675c21e965b446050c7`. Source catalog in `step-08-depth-assessment.json` records canonical path, SHA-256, line span and registry JSON pointer. The raw excerpt bundle is external and is not committed.
+
+Validation: exact registry membership equality; 39 rows × 12 unique criteria; all schema references resolved and JSON Schema meta-validation passed; source SHA-256 recorded; all incomplete consumer cells route to a work record. These are assessment integrity checks, not runtime oracle execution.
+
+Redaction/custody remains PARTIAL for every family: shared redaction rules do not establish complete custody lifecycle/provenance. Compatibility/withdrawal remains PARTIAL: aliases and forward-only migration do not establish a withdrawal protocol. Goal matrix and normative oracle evidence now cites exact per-event spans.
+
+Cost: Astra medium assessment plus root review; billing data unavailable.
