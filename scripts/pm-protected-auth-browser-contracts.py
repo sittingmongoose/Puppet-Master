@@ -13,12 +13,15 @@ from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
 SCHEMA_PATH = PLANS / "protected_auth_browser_contracts.schema.json"
 FIXTURE_PATH = PLANS / "protected_auth_browser_contract_fixtures.json"
+EXPANSION_SCHEMA_PATH = PLANS / "shared_integration_runtime_expansion_contracts.schema.json"
 
 
 def read_json(path: Path) -> Any:
@@ -43,10 +46,29 @@ def errors_for(validator: Draft202012Validator, value: Any) -> list[dict[str, st
     ]
 
 
-def definition_validator(schema: dict[str, Any], name: str) -> Draft202012Validator:
+def offline_schema_registry() -> Registry:
+    """Resolve the existing SIR owner composition, never a network schema."""
+    expansion = read_json(EXPANSION_SCHEMA_PATH)
+    Draft202012Validator.check_schema(expansion)
+    expansion_uri = expansion.get("$id")
+    if not isinstance(expansion_uri, str) or not expansion_uri:
+        raise ValueError("shared integration expansion schema has no canonical $id")
+    return Registry(
+        retrieve=lambda uri: (_ for _ in ()).throw(
+            ValueError(f"unregistered schema URI: {uri}")
+        )
+    ).with_resource(expansion_uri, Resource.from_contents(expansion))
+
+
+def definition_validator(
+    schema: dict[str, Any], name: str, registry: Registry
+) -> Draft202012Validator:
+    if not isinstance(name, str) or not name or name not in schema["$defs"]:
+        raise ValueError(f"unknown or malformed fixture definition: {name!r}")
     return Draft202012Validator(
         {**schema["$defs"][name], "$defs": schema["$defs"]},
         format_checker=FormatChecker(),
+        registry=registry,
     )
 
 
@@ -54,25 +76,33 @@ def validate() -> dict[str, Any]:
     schema = read_json(SCHEMA_PATH)
     fixtures = read_json(FIXTURE_PATH)
     Draft202012Validator.check_schema(schema)
-    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    registry = offline_schema_registry()
+    validator = Draft202012Validator(
+        schema, format_checker=FormatChecker(), registry=registry
+    )
 
     failures: list[dict[str, Any]] = []
-    for fixture in fixtures["valid"]:
-        errors = errors_for(validator, fixture["value"])
-        if errors:
-            failures.append(
-                {"fixture": fixture["name"], "expected": "valid", "errors": errors}
-            )
-    for fixture in fixtures["invalid"]:
-        errors = errors_for(validator, fixture["value"])
-        if not errors:
-            failures.append(
-                {
+    for expected in ("valid", "invalid"):
+        for fixture in fixtures[expected]:
+            try:
+                selected = (
+                    definition_validator(schema, fixture["definition"], registry)
+                    if "definition" in fixture else validator
+                )
+                errors = errors_for(selected, fixture["value"])
+            except (KeyError, TypeError, ValueError, Unresolvable) as exc:
+                # A broken selector or unresolved owner is a checker failure,
+                # never evidence that a negative payload was correctly rejected.
+                failures.append({
                     "fixture": fixture["name"],
-                    "expected": "invalid",
-                    "errors": [],
-                }
-            )
+                    "expected": "resolvable_fixture_schema",
+                    "errors": [{"pointer": "$", "message": str(exc)}],
+                })
+                continue
+            if bool(errors) == (expected == "valid"):
+                failures.append({
+                    "fixture": fixture["name"], "expected": expected, "errors": errors
+                })
 
     # Existing browser producers must independently reject the protected class.
     cross_schema_checks = (
@@ -131,10 +161,26 @@ def validate() -> dict[str, Any]:
     for path, definition_name, protected_value in cross_schema_checks:
         foreign_schema = read_json(path)
         Draft202012Validator.check_schema(foreign_schema)
-        foreign_errors = errors_for(
-            definition_validator(foreign_schema, definition_name), protected_value
+        foreign_validator = definition_validator(foreign_schema, definition_name, registry)
+        ordinary_value = {**protected_value, "session_security_class": "ordinary"}
+        if "session_class" in ordinary_value:
+            ordinary_value["session_class"] = "testing"
+        ordinary_errors = errors_for(foreign_validator, ordinary_value)
+        if ordinary_errors:
+            failures.append({
+                "fixture": f"{path.name}#{definition_name}",
+                "expected": "ordinary_positive_control_valid",
+                "errors": ordinary_errors,
+            })
+        # Isolate the security discriminator as well as the original protected
+        # shape; an unrelated session_class error is not sufficient evidence.
+        security_errors = errors_for(
+            foreign_validator, {**ordinary_value, "session_security_class": "protected_auth"}
         )
-        if not foreign_errors:
+        foreign_errors = errors_for(
+            foreign_validator, protected_value
+        )
+        if not foreign_errors or not security_errors:
             failures.append(
                 {
                     "fixture": f"{path.name}#{definition_name}",
@@ -148,6 +194,7 @@ def validate() -> dict[str, Any]:
         "valid_fixture_count": len(fixtures["valid"]),
         "invalid_fixture_count": len(fixtures["invalid"]),
         "cross_schema_rejection_count": len(cross_schema_checks),
+        "cross_schema_positive_control_count": len(cross_schema_checks),
         "failures": failures,
         "passed": not failures,
         "scope": "pre_build_static_contract_only",

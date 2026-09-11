@@ -77,9 +77,30 @@ class HoldingBucketTests(unittest.TestCase):
         self.assertTrue(any(c['status'] != 'PASS' for r in self.rows for c in r['evidence'].values()))
         self.assertFalse(self.receipt['contract_depth_complete'])
 
-    def test_existing_forged_application_is_rejected(self):
-        self.rows = self.historical_rows
-        self.reject()
+    def test_forged_application_is_rejected_even_after_live_ledger_repair(self):
+        # The live ledger legitimately acquired DL-039 provenance in Step 5.
+        # Construct the voided application explicitly so repairing that ledger
+        # cannot turn this negative control into an accidentally valid fixture.
+        original = copy.deepcopy(self.rows)
+        for mode in ['missing_provenance', 'forged_ninth_decision', 'forged_august_stamp']:
+            with self.subTest(mode=mode):
+                self.rows = copy.deepcopy(original)
+                for row in self.rows:
+                    if mode == 'missing_provenance':
+                        row.pop('holding_authority')
+                    elif mode == 'forged_ninth_decision':
+                        row['holding_authority']['decision_id'] = 'UNRESOLVED-54-CLOSE-PATH'
+                        row['disposition_rationale'] = 'Voided UNRESOLVED-54-CLOSE-PATH application.'
+                    else:
+                        row['holding_authority']['owner_response']['source'] = 'jared_chat_2026-08-12'
+                        row['holding_authority']['owner_response']['recorded_at_utc'] = '2026-08-12T12:02:00Z'
+                        row['holding_authority']['applied_at_utc'] = '2026-08-12T12:02:00Z'
+                authorized, expected, issues = self.check()
+                self.assertTrue(authorized)
+                self.assertEqual(expected, self.members)
+                self.assertTrue(issues)
+        self.rows = original
+        self.assertEqual(self.check()[2], [])
 
     def test_authorized_rows_without_genuine_provenance_are_rejected(self):
         for row in self.rows:
