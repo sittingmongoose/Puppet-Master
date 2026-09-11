@@ -1,5 +1,5 @@
 {
-  "$schema": "https://puppetmaster.local/schemas/browser_event_admission/1.1.0/browser_event_admission.schema.json",
+  "$schema": "https://puppetmaster.local/schemas/browser_event_admission/1.2.0/browser_event_admission.schema.json",
   "schema_id": "pm.browser_event_admission.v1",
   "admission_id": "BROWSER-SECTION15-53-20260910",
   "scope": "exact_section15_required_event_families_only",
@@ -49,8 +49,8 @@
   ],
   "global_event_denominator": "UNKNOWN_OPEN",
   "known37_assignment_disposition": "Historical RET-K37-ASSIGNMENT-001 and the historical thirty-nine-family fingerprint are unchanged; neither describes admission of these fifty-three prepared contracts. The separately approved compaction-completion family is retained.",
-  "physical_record_admission": "Not granted: payload owner-record refs require their own storage-family admission before native persistence.",
-  "claim_boundary": "Prepared payload and consumer contracts, not event admission. Each family remains quarantined until its complete owner/Storage contract, independent product gates, exact schema bindings, positive/negative semantic checks and root review close in its own Storage landing. Static fixtures and declared refs prove neither native execution nor resolved producer/consumer/checkpoint authority. No physical storage-family admission, runtime proof, billing, benchmark, readiness, global currentness or seal is granted.",
+  "physical_record_admission": "SP-266 separately defines only the derived browser_workspace_created_index_checkpoint. Payload owner-record refs, Browser session/profile and other canonical Browser records still require their own storage-family admission before native persistence.",
+  "claim_boundary": "Row-local static contract admission only. browser.workspace.created has its reviewed SMPFS-167/SP-266 binding and exact central row; the other52 remain prepared_not_admitted and quarantined. Each later family requires its own complete owner/Storage contract, product gates, exact schemas, semantic checks, root review and separate landing. Only the separately registered SP-266 derived checkpoint is added; no canonical Browser owner record, native producer, runtime durability/security, billing, benchmark, readiness, global currentness or seal is proved.",
   "source_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
   "validation_command": "python3 scripts/pm-browser-event-admission.py",
   "rows": [
@@ -58,8 +58,8 @@
       "event_type": "browser.workspace.created",
       "family_id": "event-family-browser-workspace-created",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
       "producer_component": "BrowserRuntimeService.workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "A new ordinary workspace identity is committed after permission and scope admission.",
@@ -82,12 +82,14 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+        "Plans/storage-plan.md#SP-266",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution"
       ],
-      "consumer_rule": "Validate envelope, unique registered payload ID, exact scope parity, payload and owner transition before checkpoint advance. Usage receives redacted operational attribution refs only. Prompt Pipeline attaches nothing solely because this event exists; independently authorized bounded chips/artifact refs use its existing admission path.",
+      "consumer_rule": "SMPFS-167 and SP-266 define the exact historical workspace-inventory reader and its independently fenced filtered checkpoint. Validate original source bytes, complete selected index coverage, exact payload scope and current access/deletion before checkpoint publication. The read has no independent durable or live-runtime effect. UF-103 and PP-091 retain separate admission; this event creates neither UsageRecords nor prompt attachments.",
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
@@ -97,7 +99,8 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_workspace_created",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
     },
     {
       "event_type": "browser.workspace.reset",

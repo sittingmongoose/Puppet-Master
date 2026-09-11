@@ -1,0 +1,501 @@
+{
+  "schema_id": "pm.browser_workspace_created_contract_fixtures.v1",
+  "claim_boundary": "Explicit synthetic resolved-value and transaction-model fixtures only. No authenticated native producer, permission resolution, verified Storage bytes, crash durability, runtime availability, event admission, visual or readiness proof.",
+  "creation_fixture": {
+    "event_case_id": "browser_event_workspace_created",
+    "request": {
+      "schema_id": "pm.browser_program.command_request.v1",
+      "record_kind": "browser_command_request",
+      "command_instance_id": "command-browser-fixture",
+      "idempotency_key": "browser-transition-1",
+      "scope": {
+        "command_id": "cmd.browser.workspace.create",
+        "lineage": {
+          "project_id": "project-browser",
+          "run_id": null,
+          "attempt_id": null,
+          "home_server_id": "server-browser",
+          "execution_host_id": "host-browser",
+          "execution_environment_id": "environment-browser",
+          "source_location_id": "source-browser"
+        },
+        "browser_session_id": "session-browser",
+        "session_security_class": "ordinary",
+        "workspace_policy_ref": "policy:workspace-fixture",
+        "capability_profile_id": "capability-browser-fixture"
+      },
+      "permission_snapshot_ref": "policy:browser-permission",
+      "filesafe_decision_ref": "filesafe:browser-fixture",
+      "requested_at_utc": "2026-09-11T12:00:00Z"
+    },
+    "result": {
+      "schema_id": "pm.browser_program.command_result.v1",
+      "record_kind": "browser_command_result",
+      "command_instance_id": "command-browser-fixture",
+      "scope": {
+        "command_id": "cmd.browser.workspace.create",
+        "lineage": {
+          "project_id": "project-browser",
+          "run_id": null,
+          "attempt_id": null,
+          "home_server_id": "server-browser",
+          "execution_host_id": "host-browser",
+          "execution_environment_id": "environment-browser",
+          "source_location_id": "source-browser"
+        },
+        "browser_session_id": "session-browser",
+        "session_security_class": "ordinary",
+        "workspace_policy_ref": "policy:workspace-fixture",
+        "capability_profile_id": "capability-browser-fixture",
+        "browser_workspace_id": "workspace-browser"
+      },
+      "outcome": "succeeded",
+      "effect_state": "effects_reconciled",
+      "result_refs": [
+        "workspace:browser-fixture"
+      ],
+      "dispatch_receipt_ref": "receipt:browser-workspace_created",
+      "completed_at_utc": "2026-09-11T12:00:01Z"
+    },
+    "witness": {
+      "node_id": null,
+      "command_instance_id": "command-browser-fixture",
+      "idempotency_key": "browser-transition-1",
+      "owner_record_ref": "record:browser-workspace_created",
+      "transition_receipt_ref": "receipt:browser-workspace_created",
+      "permission_snapshot_ref": "policy:browser-permission",
+      "capability_snapshot_ref": "policy:browser-capability",
+      "filesafe_decision_ref": "filesafe:browser-fixture",
+      "workspace_policy_ref": "policy:workspace-fixture",
+      "capability_profile_id": "capability-browser-fixture",
+      "workspace_ref": "workspace:browser-fixture",
+      "workspace_id": "workspace-browser",
+      "workspace_generation": 4,
+      "producer_component": "BrowserRuntimeService.workspace",
+      "producer_authenticated": true,
+      "permission_current": true,
+      "filesafe_allowed": true,
+      "capability_current": true,
+      "scope_current": true,
+      "unused_workspace_identity": true,
+      "resource_isolated": true,
+      "resource_unexposed": true
+    }
+  },
+  "checkpoint_fixture": {
+    "schema_id": "pm.storage_value.browser_workspace_created_index_checkpoint.v1",
+    "schema_version": "1.0.0",
+    "checkpoint_id": "browser.workspace.created",
+    "storage_instance_id": "12345678-1234-1234-1234-123456789012",
+    "project_id": "project-browser",
+    "scope_partition": "project~cHJvamVjdC1icm93c2Vy",
+    "projector_id": "storage.browser_workspace_created_index.v1",
+    "projector_version": "1.0.0",
+    "event_type": "browser.workspace.created",
+    "index_schema_id": "pm.storage_value.event_record_index.v2",
+    "index_schema_version": "2.0.0",
+    "index_checkpoint_ref": "checkpoint:event-record-index-fixture",
+    "current_selection_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "first_retained_sequence_id": 1,
+    "index_through_sequence_id": 5,
+    "filter_complete": true,
+    "state": "current",
+    "health": "healthy",
+    "source_cursor": {
+      "manifest_generation": 1,
+      "recovery_epoch": 0,
+      "segment_generation": 1,
+      "segment_name": "seg-000001-00000000000000000001.active",
+      "byte_offset": 512,
+      "last_sequence_id": 5,
+      "last_event_id": "event:verified-range-through-5",
+      "survivor_prefix_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "projector_schema_version": "1.0.0"
+    },
+    "updated_at_utc": "2026-09-11T12:01:00Z",
+    "withdrawn_at_utc": null
+  },
+  "observation_fixture": {
+    "resolved_checkpoint_fields": {
+      "storage_instance_id": "12345678-1234-1234-1234-123456789012",
+      "project_id": "project-browser",
+      "scope_partition": "project~cHJvamVjdC1icm93c2Vy",
+      "index_checkpoint_ref": "checkpoint:event-record-index-fixture",
+      "current_selection_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "first_retained_sequence_id": 1,
+      "index_through_sequence_id": 5,
+      "source_cursor": {
+        "manifest_generation": 1,
+        "recovery_epoch": 0,
+        "segment_generation": 1,
+        "segment_name": "seg-000001-00000000000000000001.active",
+        "byte_offset": 512,
+        "last_sequence_id": 5,
+        "last_event_id": "event:verified-range-through-5",
+        "survivor_prefix_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "projector_schema_version": "1.0.0"
+      },
+      "health": "healthy"
+    },
+    "prior_checkpoint_sha256": null,
+    "empty_range_verified": false,
+    "index_published": true,
+    "range_complete": true,
+    "source_verified": true,
+    "dedupe_verified": true,
+    "access_allowed": true,
+    "deletion_allows_audit": true,
+    "binding_supported": true,
+    "before_commit_fence_current": true
+  },
+  "creation_invalid": [
+    {
+      "case_id": "wrong_event",
+      "target": "event",
+      "pointer": "/event_type",
+      "value": "browser.workspace.reset",
+      "expected_error": "wrong_creation_event"
+    },
+    {
+      "case_id": "reset_state",
+      "target": "event",
+      "pointer": "/payload/facts/workspace_state",
+      "value": "reset",
+      "expected_error": "not_new_workspace_identity"
+    },
+    {
+      "case_id": "predecessor_on_create",
+      "target": "event",
+      "pointer": "/payload/facts/prior_workspace_generation",
+      "value": 3,
+      "expected_error": "not_new_workspace_identity"
+    },
+    {
+      "case_id": "missing_workspace",
+      "target": "event",
+      "pointer": "/payload/context/browser_workspace_id",
+      "value": null,
+      "expected_error": "creation_subject_missing"
+    },
+    {
+      "case_id": "run_without_attempt",
+      "target": "event",
+      "pointer": "/payload/context/run_id",
+      "value": "run:fixture",
+      "expected_error": "creation_run_attempt_mismatch"
+    },
+    {
+      "case_id": "project_join",
+      "target": "event",
+      "pointer": "/payload/context/project_id",
+      "value": "project-other",
+      "expected_error": "creation_lineage_mismatch"
+    },
+    {
+      "case_id": "host_join",
+      "target": "event",
+      "pointer": "/payload/context/execution_host_id",
+      "value": "host-other",
+      "expected_error": "creation_lineage_mismatch"
+    },
+    {
+      "case_id": "node_join",
+      "target": "event",
+      "pointer": "/payload/context/node_id",
+      "value": "node-other",
+      "expected_error": "creation_node_lineage_mismatch"
+    },
+    {
+      "case_id": "result_workspace",
+      "target": "result",
+      "pointer": "/scope/browser_workspace_id",
+      "value": "workspace-other",
+      "expected_error": "creation_result_workspace_mismatch"
+    },
+    {
+      "case_id": "instance_join",
+      "target": "result",
+      "pointer": "/command_instance_id",
+      "value": "command-other",
+      "expected_error": "creation_command_instance_mismatch"
+    },
+    {
+      "case_id": "idempotency_join",
+      "target": "request",
+      "pointer": "/idempotency_key",
+      "value": "key-other",
+      "expected_error": "creation_idempotency_mismatch"
+    },
+    {
+      "case_id": "failed_result",
+      "target": "result",
+      "pointer": "/outcome",
+      "value": "failed",
+      "expected_error": "creation_not_successful_reconciled"
+    },
+    {
+      "case_id": "no_effect_result",
+      "target": "result",
+      "pointer": "/effect_state",
+      "value": "no_effect",
+      "expected_error": "creation_not_successful_reconciled"
+    },
+    {
+      "case_id": "owner_receipt",
+      "target": "witness",
+      "pointer": "/owner_record_ref",
+      "value": "record:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "transition_receipt",
+      "target": "witness",
+      "pointer": "/transition_receipt_ref",
+      "value": "receipt:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "permission_ref",
+      "target": "witness",
+      "pointer": "/permission_snapshot_ref",
+      "value": "policy:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "capability_ref",
+      "target": "witness",
+      "pointer": "/capability_snapshot_ref",
+      "value": "capability:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "filesafe_ref",
+      "target": "witness",
+      "pointer": "/filesafe_decision_ref",
+      "value": "filesafe:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "workspace_policy_ref",
+      "target": "witness",
+      "pointer": "/workspace_policy_ref",
+      "value": "policy:other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "capability_profile",
+      "target": "witness",
+      "pointer": "/capability_profile_id",
+      "value": "profile-other",
+      "expected_error": "creation_resolved_reference_mismatch"
+    },
+    {
+      "case_id": "missing_workspace_ref",
+      "target": "result",
+      "pointer": "/result_refs",
+      "value": [],
+      "expected_error": "creation_workspace_result_ref_missing"
+    },
+    {
+      "case_id": "generation_join",
+      "target": "witness",
+      "pointer": "/workspace_generation",
+      "value": 99,
+      "expected_error": "creation_committed_identity_mismatch"
+    },
+    {
+      "case_id": "producer_component",
+      "target": "witness",
+      "pointer": "/producer_component",
+      "value": "Client",
+      "expected_error": "creation_producer_mismatch"
+    },
+    {
+      "case_id": "request_schema",
+      "target": "request",
+      "pointer": "/schema_id",
+      "value": "unknown",
+      "expected_error": "browser_command_request_schema"
+    },
+    {
+      "case_id": "result_schema",
+      "target": "result",
+      "pointer": "/schema_id",
+      "value": "unknown",
+      "expected_error": "browser_command_result_schema"
+    },
+    {
+      "case_id": "protected_session",
+      "target": "request",
+      "pointer": "/scope/session_security_class",
+      "value": "protected_auth",
+      "expected_error": "browser_command_request_schema"
+    },
+    {
+      "case_id": "producer_authenticated",
+      "target": "witness",
+      "pointer": "/producer_authenticated",
+      "value": false,
+      "expected_error": "creation_witness:producer_authenticated"
+    },
+    {
+      "case_id": "permission_current",
+      "target": "witness",
+      "pointer": "/permission_current",
+      "value": false,
+      "expected_error": "creation_witness:permission_current"
+    },
+    {
+      "case_id": "filesafe_allowed",
+      "target": "witness",
+      "pointer": "/filesafe_allowed",
+      "value": false,
+      "expected_error": "creation_witness:filesafe_allowed"
+    },
+    {
+      "case_id": "capability_current",
+      "target": "witness",
+      "pointer": "/capability_current",
+      "value": false,
+      "expected_error": "creation_witness:capability_current"
+    },
+    {
+      "case_id": "scope_current",
+      "target": "witness",
+      "pointer": "/scope_current",
+      "value": false,
+      "expected_error": "creation_witness:scope_current"
+    },
+    {
+      "case_id": "unused_workspace_identity",
+      "target": "witness",
+      "pointer": "/unused_workspace_identity",
+      "value": false,
+      "expected_error": "creation_witness:unused_workspace_identity"
+    },
+    {
+      "case_id": "resource_isolated",
+      "target": "witness",
+      "pointer": "/resource_isolated",
+      "value": false,
+      "expected_error": "creation_witness:resource_isolated"
+    },
+    {
+      "case_id": "resource_unexposed",
+      "target": "witness",
+      "pointer": "/resource_unexposed",
+      "value": false,
+      "expected_error": "creation_witness:resource_unexposed"
+    }
+  ],
+  "checkpoint_invalid": [
+    {
+      "case_id": "invalid_observation_time",
+      "pointer": "/updated_at_utc",
+      "value": "not-a-time",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "future_schema",
+      "pointer": "/schema_version",
+      "value": "2.0.0",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "sibling_event",
+      "pointer": "/event_type",
+      "value": "browser.workspace.reset",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "sibling_projector",
+      "pointer": "/projector_id",
+      "value": "storage.run_started_index.v1",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "wrong_partition",
+      "pointer": "/scope_partition",
+      "value": "project~b3RoZXI",
+      "expected_error": "checkpoint_scope_partition"
+    },
+    {
+      "case_id": "reversed_range",
+      "pointer": "/first_retained_sequence_id",
+      "value": 6,
+      "expected_error": "checkpoint_range_or_cursor"
+    },
+    {
+      "case_id": "through_cursor_mismatch",
+      "pointer": "/index_through_sequence_id",
+      "value": 6,
+      "expected_error": "checkpoint_range_or_cursor"
+    },
+    {
+      "case_id": "null_cursor_with_bounds",
+      "pointer": "/source_cursor",
+      "value": null,
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "null_first_with_cursor",
+      "pointer": "/first_retained_sequence_id",
+      "value": null,
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "current_incomplete",
+      "pointer": "/filter_complete",
+      "value": false,
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "current_degraded",
+      "pointer": "/health",
+      "value": "degraded",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "current_with_withdrawal",
+      "pointer": "/withdrawn_at_utc",
+      "value": "2026-09-11T12:01:00Z",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "withdrawn_without_anchor",
+      "pointer": "/state",
+      "value": "withdrawn",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "invalid_cursor_segment",
+      "pointer": "/source_cursor/segment_name",
+      "value": "unverified-segment",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "negative_cursor",
+      "pointer": "/source_cursor/byte_offset",
+      "value": -1,
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "invalid_digest",
+      "pointer": "/current_selection_sha256",
+      "value": "short",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "protected_auth_ref",
+      "pointer": "/index_checkpoint_ref",
+      "value": "AuthBrowserSession:secret",
+      "expected_error": "checkpoint_schema"
+    },
+    {
+      "case_id": "extra_checkpoint_content",
+      "pointer": "/content",
+      "value": "page body",
+      "expected_error": "checkpoint_schema"
+    }
+  ]
+}

@@ -292,10 +292,12 @@ class OnboardingStorageTests(unittest.TestCase):
 
     def test_existing_family_and_retention_census_is_unchanged(self):
         families = self.registry["families"]
-        self.assertEqual(len(families), 89)
-        self.assertEqual(len({row["family_id"] for row in families}), 89)
+        self.assertEqual(len(families), 90)
+        self.assertEqual(len({row["family_id"] for row in families}), 90)
         added = [row for row in families if row["family_id"] == "run_started_index_checkpoint"]
-        prior = [row for row in families if row["family_id"] != "run_started_index_checkpoint"]
+        browser_checkpoint = [row for row in families if row["family_id"] == "browser_workspace_created_index_checkpoint"]
+        self.assertEqual(len(browser_checkpoint), 1)
+        prior = [row for row in families if row["family_id"] not in {"run_started_index_checkpoint", "browser_workspace_created_index_checkpoint"}]
         self.assertEqual(len(added), 1)
         self.assertEqual(len(prior), 88)
         # Pin ordered semantic bytes from 7db6a87c60, including the corrected
@@ -304,6 +306,10 @@ class OnboardingStorageTests(unittest.TestCase):
             return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
         self.assertEqual(canonical_digest(prior), "91e394fed0c152620b9b64a92fe2572103b60c01e63f62d5bdece0d93b137730")
         self.assertEqual(canonical_digest(added[0]), "04cd5eaaeaa937b76706cf061bad80e64950976e8c55fb36b8086fd39f580af7")
+        spec = importlib.util.spec_from_file_location("browser_created_storage_pin", ROOT / "scripts/pm_browser_workspace_created.py")
+        browser = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(browser)
+        self.assertEqual(browser_checkpoint[0], browser.expected_storage_family())
         self.assertEqual(len(self.registry["retention_policies"]), 24)
         self.assertEqual(self.storage.validate(self.registry), [])
         failures, counts = GATE.validate_onboarding_storage_contract()

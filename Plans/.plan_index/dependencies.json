@@ -5649,6 +5649,7 @@
     "RAS-012",
     "WM-057",
     "PP-091",
+    "SMPFS-167",
     "SP-262",
     "OSI-232",
     "OSI-408",
@@ -5681,6 +5682,7 @@
     "OSI-180",
     "OSI-181",
     "OSI-177",
+    "SP-266",
     "CRAU-094",
     "CRAU-098",
     "CRAU-101",
@@ -60222,6 +60224,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-167",
+      "to": "CV-332"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-167",
+      "to": "DL-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-167",
+      "to": "SMPFS-166"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -65534,6 +65551,26 @@
       "edge_type": "depends_on",
       "from": "SP-265",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-266",
+      "to": "CV-332"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-266",
+      "to": "DL-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-266",
+      "to": "SMPFS-167"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-266",
+      "to": "SP-262"
     },
     {
       "edge_type": "depends_on",
@@ -94301,7 +94338,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T18:48:56Z",
+  "generated_at_utc": "2026-09-11T19:37:17Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -187532,6 +187569,23 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "browser_workspace_created_single_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-167",
+      "reasoning_tier": "high",
+      "risk_class": "browser_workspace_creation_or_replay_authority_escape",
+      "source_location": {
+        "heading": "SMPFS-167 - Workspace-created transition and historical inventory consumer",
+        "heading_level": 3,
+        "heading_line": 11448,
+        "line": 11450,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "storage_generated_residual_tail",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -191997,6 +192051,23 @@
         "heading_level": 3,
         "heading_line": 19381,
         "line": 19383,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "browser_workspace_created_single_family_storage",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-266",
+      "reasoning_tier": "high",
+      "risk_class": "browser_workspace_created_source_or_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "SP-266 - Browser workspace-created single-family persistence binding",
+        "heading_level": 3,
+        "heading_line": 19579,
+        "line": 19581,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -205133,10 +205204,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14906,
+    "depends_on_edge_count": 14913,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17555,
-    "node_count": 6519,
+    "edge_count": 17562,
+    "node_count": 6521,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
