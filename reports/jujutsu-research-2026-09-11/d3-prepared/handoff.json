@@ -1,0 +1,39 @@
+{
+  "at": "2026-09-11T13:50:14.871041+00:00",
+  "status": "partial_budget_guard_stop_before_adjudication",
+  "checkpoint_reached": false,
+  "non_arm_observed_api_equivalent_usd": 59.065252,
+  "non_arm_cap_usd": 60,
+  "operational_reserve_usd": 2.0,
+  "reserve_is_not_spend": true,
+  "allowance_stop_reason": "Non-arm observed usage plus operational reservation threshold",
+  "actual_cash_usd": null,
+  "named_xhigh_disputes": 0,
+  "d1": "complete_pushed",
+  "d2": "complete_partial_campaigns_frozen_pushed",
+  "d3": "blind_inputs_prepared_classification_pending",
+  "d4": "pending_no_corrections_landed_no_decision_packet",
+  "d5": "pending_answers_after_d4",
+  "receipts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-verification.json",
+      "sha256": "d111acf4f0a7c6c92d63f7c846f5d0a70ca374d387ac84582f52660c62dece88"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/documents.json",
+      "sha256": "c742ef646ceda1ed1ec0416ef19afd67f8942ab87d8d0c006eb5feebf7447e96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-provenance.json",
+      "sha256": "159680ff04faed7e3382c97c9628c94f9ec73aecaa46b66378125fef9f3485d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/global_allowance.json",
+      "sha256": "139bb43eccb9bbc3cf24ac6ccfee7b371cd5cbaf43653739de53e967de94157d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/native_usage_snapshot.json",
+      "sha256": "143ad4608175121870d1dd30e8523f2ad12d477387ee1166c334d3ff054bae30"
+    }
+  ]
+}
