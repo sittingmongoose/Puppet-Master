@@ -7,7 +7,7 @@
   ],
   "july_classification": "emit_candidate_machine_contract_triple_bound",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Owner EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (no registry admit) + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: EMIT-PERSIST-026 ACCEPT_EMIT_OBLIGATION_ONLY (keep NEEDS_MORE_EVIDENCE; no registry admit) applied 2026-09-11T14:10:58.582468+00:00 to plan_compile.run_created_or_bound. Exact receipt-bound holding member; no registry or denominator admission and no depth closure. Emit obligation only; persistence evidence remains open.",
   "evidence": {
     "membership_version": {
       "status": "FAIL",
@@ -70,6 +70,13 @@
       "note": "event_test_requirements state a future assert that `cmd.planning_wizard.approve_and_build` emits `plan_compile.run_created_or_bound` with command_id, origin, correlation_id, and handler target; this is open requirement text, not a completed positive/negative oracle pair."
     }
   },
+  "provisional": false,
+  "emit_meta": {
+    "ui_command_id": "cmd.planning_wizard.approve_and_build",
+    "wiring_entry_id": "catalog.planning_wizard_approve_and_build",
+    "merge_wave": "triple_bound_24"
+  },
+  "merged_at_utc": "2026-08-12T07:02:44Z",
   "citations_checked": [
     {
       "citation": "closed-world-census/admission/TRIPLE_BOUND_EMIT_MERGE.json",
@@ -128,7 +135,6 @@
   "inference_used": false,
   "independent_of_od_ea_003": true,
   "source_overlay": "TripleBoundEmitMerge",
-  "provisional": false,
   "fresh_census_merged": true,
   "fresh_census_status": "unresolved_emit_candidate_deepened",
   "quality_notes": [
@@ -138,9 +144,19 @@
     "No admission, registry append, analogy, or owner/producer inference used."
   ],
   "source_deepener": "DeepenEmit24",
-  "emit_meta": {
-    "ui_command_id": "cmd.planning_wizard.approve_and_build",
-    "wiring_entry_id": "catalog.planning_wizard_approve_and_build",
-    "merge_wave": "triple_bound_24"
+  "deepen_merge_source": "DeepenEmit24",
+  "deepen_merged_at_utc": "2026-08-12T07:33:52Z",
+  "holding_authority": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "EMIT-PERSIST-026",
+    "owner_response": {
+      "chosen_option": "ACCEPT_EMIT_OBLIGATION_ONLY (keep NEEDS_MORE_EVIDENCE; no registry admit)",
+      "decided_by": "Jared",
+      "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+      "source": "jared_chat_2026-09-10"
+    },
+    "implementation_receipt": "reports/event-authority-20260911/step-03-holding-bucket-receipt.json",
+    "implementation_receipt_sha256": "d7800b98e7304f1f2853ea786f6b438b7df5753c3f62fd365f50c7a55d0ca8b3",
+    "applied_at_utc": "2026-09-11T14:10:58.582468+00:00"
   }
 }

@@ -1,27 +1,33 @@
 {
   "schema_id": "pm.assurance.event_authority.individual_disposition_coverage.v1",
-  "generated_at_utc": "2026-08-12T12:06:14Z",
+  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
   "ledger_rows": 321,
   "unique_event_types": 321,
-  "provisional_count": 0,
-  "nonprovisional_count": 321,
+  "provisional_count": 2,
+  "nonprovisional_count": 319,
   "by_bucket": {
-    "confirmed_persisted_unregistered": 252,
-    "quarantined_not_admitted": 57,
-    "alias": 12
+    "confirmed_persisted_unregistered": 253,
+    "quarantined_not_admitted": 54,
+    "alias": 12,
+    "august": 2
   },
   "by_disposition": {
-    "KEEP_QUARANTINED": 309,
-    "RECLASSIFY_ALIAS": 12
+    "KEEP_QUARANTINED": 306,
+    "RECLASSIFY_ALIAS": 12,
+    "NEEDS_MORE_EVIDENCE": 1,
+    "KEEP_REGISTERED": 2
   },
-  "provisional_events": [],
+  "provisional_events": [
+    "terminal.workgroup_moved",
+    "workspace.layout_changed"
+  ],
   "needs_owner_veto_count": 0,
-  "needs_more_evidence_count": 0,
+  "needs_more_evidence_count": 1,
   "reclassify_alias_count": 12,
-  "keep_registered_count": 0,
+  "keep_registered_count": 2,
   "alias_bucket_count": 12,
   "unresolved_bucket_count": 0,
-  "note": "Rebuilt after owner apply 2026-08-12. 252 CPU KEEP_QUARANTINED admitted-candidate; 57 quarantined_not_admitted; 12 alias; 0 unresolved/veto/evidence-gap/provisional.",
-  "keep_quarantined_count": 309,
-  "quarantined_not_admitted_bucket_count": 57
+  "note": "Plans/Decision_Log.md#DL-039 Step 5: 54 receipt-bound holding rows, 2 registered/provisional August rows, and 1 blocked compaction escalation restored. Remaining 252 CPU and 12 alias lines unchanged. Depth remains open.",
+  "keep_quarantined_count": 306,
+  "quarantined_not_admitted_bucket_count": 54
 }

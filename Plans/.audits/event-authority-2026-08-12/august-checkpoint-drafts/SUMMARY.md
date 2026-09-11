@@ -13,12 +13,12 @@ Canonical draft artifacts for the two remaining provisional August IndividualDis
 
 | Event | `veto_status` | `consumers_checkpoints` | Invented IDs | Registry append |
 |---|---|---|---|---|
-| `workspace.layout_changed` | **PENDING** | **UNKNOWN** | none | not authorized |
-| `terminal.workgroup_moved` | **PENDING** | **UNKNOWN** | none | not authorized |
+| `workspace.layout_changed` | **VETO_KEEP_REGISTERED_PROVISIONAL** | **UNKNOWN** | none | not authorized |
+| `terminal.workgroup_moved` | **VETO_KEEP_REGISTERED_PROVISIONAL** | **UNKNOWN** | none | not authorized |
 
 Acceptance:
 
-- Draft-level `consumers_checkpoints=UNKNOWN` means owner choice is still pending; the corresponding IndividualDisposition rows stay `evidence.consumers_checkpoints.status=OWNER_REQUIRED` and `provisional=true` until that owner choice is applied.
+- Draft-level `consumers_checkpoints=UNKNOWN` records retained depth gaps after DL-039 applied the genuine `VETO_KEEP_REGISTERED_PROVISIONAL` answers. The corresponding IndividualDisposition rows remain `evidence.consumers_checkpoints.status=OWNER_REQUIRED` and `provisional=true`.
 - Draft artifacts exist for both events: **yes**
 - No `scripts/**` edits: **yes**
 - No invented consumer IDs without citation trail: **yes** (all ID fields remain `null`; descriptive registry strings are explicitly not promoted)
@@ -53,14 +53,14 @@ Checkpoint guarantees at `Plans/storage-plan.md:1541-1546` add: no duplicate sem
 | `workspace.layout_changed` | `home_workspace_layout` (`Plans/storage_value_registry.json:10717-10738`) | Proves presentation record key/schema; does not attest EventRecord consumer ID or checkpoint |
 | `terminal.workgroup_moved` | `terminal_workgroup_record` (`Plans/storage_value_registry.json:4281-4314`) | Proves workgroup metadata row exists; not attested as EventRecord consumer output. `home_workspace_layout` explicitly must not copy pane trees/PTYs (`Plans/storage-plan.md:17810-17814`) |
 
-## What owner must decide (owner sheet IDs)
+## Applied owner decisions and remaining depth (owner sheet IDs)
 
 Until these are attested with Plans citations, keep both rows `consumers_checkpoints=OWNER_REQUIRED` and `provisional=true`.
 
 | Owner sheet ID | Event | Decision |
 |---|---|---|
-| `AUG-CP-WLC-001` | `workspace.layout_changed` | Choose one of the owner-sheet outcomes: affirm the cited draft as the exact consumer/checkpoint contract, keep the family registered but provisional, or reclassify it out of registry |
-| `AUG-CP-TWM-001` | `terminal.workgroup_moved` | Choose one of the owner-sheet outcomes: affirm the cited draft as the exact consumer/checkpoint contract, keep the family registered but provisional, or reclassify it out of registry |
+| `AUG-CP-WLC-001` | `workspace.layout_changed` | DL-039 applied `VETO_KEEP_REGISTERED_PROVISIONAL`; event-specific consumer/checkpoint authority remains open |
+| `AUG-CP-TWM-001` | `terminal.workgroup_moved` | DL-039 applied `VETO_KEEP_REGISTERED_PROVISIONAL`; event-specific consumer/checkpoint authority remains open |
 
 Post-owner effect on the validator:
 
@@ -94,3 +94,5 @@ Post-owner effect on the validator:
 - `deepen/FixAugustIndivRows` rows unchanged (`provisional=true` retained)
 
 Generated: 2026-08-12 (AugustCPDraft)
+
+Step 5 applied at 2026-09-11T14:10:58.582468+00:00: both genuine owner choices are recorded without inventing IDs. Existing citation strings and required-field gaps are retained; this application is not fresh citation deepening.

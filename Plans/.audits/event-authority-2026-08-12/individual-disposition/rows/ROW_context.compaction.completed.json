@@ -1,9 +1,9 @@
 {
   "event_type": "context.compaction.completed",
-  "bucket": "quarantined_not_admitted",
+  "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Owner COMPACT-001 KEEP_UNREGISTERED_NO_PERSIST + UNRESOLVED-54-CLOSE-PATH applied 2026-08-12T12:05:08Z. Wiring no-persist controlling. Left CPU admitted set. july248 pin retained. Not registry admit.",
+  "disposition": "NEEDS_MORE_EVIDENCE",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: COMPACT-001 ESCALATE_AS_PERSISTED_FAMILY applied 2026-09-11T14:10:58.582468+00:00. Restore context.compaction.completed to the working persisted-unregistered census population. Escalation remains blocked pending owner-backed EventRecord/seglog authority and the complete event-specific EA contract in Step 6; retained Profile B evidence gaps are unchanged. No live-registry admission or depth closure.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -111,7 +111,21 @@
   "cohort_pins": [
     "july248"
   ],
-  "working_bucket": "quarantined_not_admitted",
+  "working_bucket": "confirmed_persisted_unregistered",
   "fresh_census_merged": false,
-  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge",
+  "phase1_application": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "COMPACT-001",
+    "owner_response": {
+      "chosen_option": "ESCALATE_AS_PERSISTED_FAMILY (requires owner-backed EventRecord/seglog authority + complete EA contract; not supported by current evidence)",
+      "decided_by": "Jared",
+      "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+      "source": "jared_chat_2026-09-10"
+    },
+    "applied_at_utc": "2026-09-11T14:10:58.582468+00:00",
+    "step": 5,
+    "outcome": "evidence_gap_pending_step6",
+    "report": "reports/event-authority-20260911/step-05-phase1-application.json"
+  }
 }

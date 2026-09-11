@@ -1,18 +1,18 @@
 {
   "schema_id": "pm.assurance.event_authority.census_adjudication_coverage.v1",
-  "generated_at_utc": "2026-08-12T12:06:14Z",
+  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
   "ledger": "census-adjudication/LEDGER.jsonl",
   "total_rows": 528,
   "category_counts": {
-    "registered_keep": 37,
-    "quarantined_not_admitted": 57,
-    "persisted_unregistered_quarantine": 252,
+    "registered_keep": 39,
+    "persisted_unregistered_quarantine": 253,
+    "quarantined_not_admitted": 54,
     "alias": 12,
     "exact_excluded": 63,
     "non_exact_excluded": 26,
     "rejected_lexical_candidate": 81
   },
-  "admitted_persisted_event_families_count": 252,
+  "admitted_persisted_event_families_count": 255,
   "admitted_equality_ledger": "individual-disposition/LEDGER.jsonl",
   "partition_ok": true,
   "individual_disposition_unresolved_bucket_count": 0,
@@ -29,5 +29,5 @@
       "closed-world-census/rejected-lexical/FALSE_LEXICAL_RESTORE.json"
     ]
   },
-  "note": "Rebuilt after owner apply: registered_keep=37 Known37 only; QNA=57; CPU quarantine=252; unresolved=0."
+  "note": "Plans/Decision_Log.md#DL-039 Step 5: registered_keep=39, persisted_unregistered_quarantine=253, quarantined_not_admitted=54; provisional August2 and blocked compaction retain depth gaps. Denominator is open."
 }

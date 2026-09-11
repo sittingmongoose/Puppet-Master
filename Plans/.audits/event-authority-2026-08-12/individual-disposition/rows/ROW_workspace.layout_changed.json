@@ -1,13 +1,13 @@
 {
   "event_type": "workspace.layout_changed",
-  "bucket": "quarantined_not_admitted",
-  "working_bucket": "quarantined_not_admitted",
+  "bucket": "august",
+  "working_bucket": "august",
   "cohort_pins": [
     "august2"
   ],
   "july_classification": "live_registry_august",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Owner AUG-CP RECLASSIFY_OUT_OF_REGISTRY applied 2026-08-12T12:05:08Z. Removed from live registry. Not Known37. Not admitted. august2 pin retained.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: AUG-CP-WLC-001 VETO_KEEP_REGISTERED_PROVISIONAL applied 2026-09-11T14:10:58.582468+00:00. Keep workspace.layout_changed registered and provisional; consumer/checkpoint authority remains UNKNOWN/OWNER_REQUIRED. No inferred IDs or depth closure.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -57,7 +57,7 @@
     "consumers_checkpoints": {
       "status": "OWNER_REQUIRED",
       "citation": "Plans/storage-plan.md:1510-1546",
-      "note": "DEPTH GAP (AugustDepthClose): only shared projector/checkpoint mechanics are cited; Plans/event_family_registry.schema.json defines family membership only and does not supply event-specific workspace.layout_changed consumer bindings or checkpoint key/schema/version authority. Invent no consumer ID; pending owner choice is tracked in OWNER_DECISION_SHEET AUG-CP-WLC-001."
+      "note": "DEPTH GAP: Plans/Decision_Log.md#DL-039 AUG-CP-WLC-001 applies VETO_KEEP_REGISTERED_PROVISIONAL. Shared mechanics do not supply event-specific workspace.layout_changed consumer/projector or checkpoint key/schema/version authority. OWNER_REQUIRED remains; invent no IDs."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -128,13 +128,33 @@
   "inference_used": false,
   "independent_of_od_ea_003": true,
   "source_overlay": "AugustDepthClose",
-  "provisional": false,
+  "provisional": true,
   "quality_notes": [
     "CiteAuthorityLibs field-local citation matrix applied (combined citation strings in citation fields, not notes-only).",
     "producer uses bounded Wiring_Matrix.production.json handler+expected_event_types ranges (not FinalGUISpec/Section15 alone).",
-    "consumers_checkpoints remains OWNER_REQUIRED with shared-mechanics citation only; event_family_registry.schema.json is explicitly non-authoritative for checkpoint bindings; pending owner choice is tracked in AUG-CP-WLC-001, not row-local owner_veto.",
-    "provisional=true until the owner chooses an August checkpoint option and any attested event-specific consumer/checkpoint fields are applied."
+    "AUG-CP-WLC-001 owner choice is applied; provisional=true persists because event-specific consumer/checkpoint depth remains OWNER_REQUIRED."
   ],
   "fresh_census_merged": false,
-  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge"
+  "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge",
+  "august_checkpoint_draft": {
+    "assignment_id": "AUG-CP-001",
+    "artifact_path": "Plans/.audits/event-authority-2026-08-12/august-checkpoint-drafts/AUGUST_CHECKPOINT_DRAFTS.jsonl",
+    "veto_status": "VETO_KEEP_REGISTERED_PROVISIONAL",
+    "consumers_checkpoints": "UNKNOWN",
+    "linked_at_utc": "2026-08-12T07:10:54Z"
+  },
+  "phase1_application": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "AUG-CP-WLC-001",
+    "owner_response": {
+      "chosen_option": "VETO_KEEP_REGISTERED_PROVISIONAL (retain registered_keep; consumers_checkpoints remain UNKNOWN)",
+      "decided_by": "Jared",
+      "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+      "source": "jared_chat_2026-09-10"
+    },
+    "applied_at_utc": "2026-09-11T14:10:58.582468+00:00",
+    "step": 5,
+    "outcome": "KEEP_REGISTERED_PROVISIONAL_DEPTH_OPEN",
+    "report": "reports/event-authority-20260911/step-05-phase1-application.json"
+  }
 }

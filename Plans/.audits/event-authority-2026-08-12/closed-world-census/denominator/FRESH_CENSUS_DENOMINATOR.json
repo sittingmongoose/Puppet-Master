@@ -1,8 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.fresh_census_denominator.v2",
-  "generated_at_utc": "2026-08-12T12:12:19Z",
-  "closed": true,
-  "close_blocked_by": [],
+  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
+  "closed": false,
+  "close_blocked_by": [
+    "registered_contract_depth_incomplete: August consumer/checkpoint authority remains OWNER_REQUIRED",
+    "individual_dispositions_provisional: 2 August rows",
+    "individual_dispositions_evidence_gap_blocking: context.compaction.completed escalation requires Step 6 contract and retained CPU gaps remain"
+  ],
   "admission_rule": "DIRECT_EVENT_TYPE_BINDING_REQUIRED",
   "freeze_digest_sha256": "b93ef8493d91b69beefbcfc9498e72fc01af9cabbbcd9259e684f3c15e540d56",
   "admitted_persisted_event_families": {
@@ -73,6 +77,7 @@
       "concern.updated",
       "config.migrated",
       "config.validation.failed",
+      "context.compaction.completed",
       "context.compaction.failed",
       "context.compaction.started",
       "coordination.agent_aborted",
@@ -247,6 +252,7 @@
       "subagent.tool_called",
       "subagent.tool_completed",
       "task.failed",
+      "terminal.workgroup_moved",
       "tool.custom_headless.skipped",
       "tool.denied",
       "tool.execution_completed",
@@ -257,13 +263,14 @@
       "wizard.deferred_payload.loaded",
       "wizard.opened",
       "wizard.unblocked",
+      "workspace.layout_changed",
       "worktree.created",
       "worktree.deleted"
     ],
-    "expected_working_count": 252,
+    "expected_working_count": 255,
     "composition": {
-      "persisted_unregistered_quarantine": 252,
-      "august_live_registered": 0,
+      "persisted_unregistered_quarantine": 253,
+      "august_live_registered": 2,
       "quarantined_not_admitted": 0
     },
     "exact_equality_ledger": "individual-disposition/LEDGER.jsonl",
@@ -275,7 +282,6 @@
       "event_types": [
         "chat.message.submitted",
         "chat.thread_title_generated",
-        "context.compaction.completed",
         "diag.compaction_immune_overflow",
         "docker.auth.browser_login.cancelled",
         "docker.auth.browser_login.device_code_issued",
@@ -319,7 +325,6 @@
         "runtime_continuity.route_resolved",
         "skill.invocation_timed_out",
         "subagent.parallel_group_failed",
-        "terminal.workgroup_moved",
         "testing.capability_policy.updated",
         "testing.session.backgrounded",
         "testing.session.opened",
@@ -328,16 +333,44 @@
         "testing.visibility_policy.updated",
         "unraid.template.generation.completed",
         "usage.cost_adjusted",
-        "usage.cost_clamped",
-        "workspace.layout_changed"
+        "usage.cost_clamped"
       ],
       "includes_july40_unresolved": 0,
       "includes_owner_veto_unresolved": 0,
       "includes_evidence_gap_unresolved": 0,
-      "includes_emit_restores": 0,
+      "includes_emit_restores": 26,
       "emit_restore_event_types": [],
-      "note": "Owner UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET: 57 rows (28 J40 + 26 EMIT + compact + 2 August reclassified) tracked as quarantined_not_admitted, not admitted, not unresolved. Alias 12 unchanged. Unresolved bucket empty.",
-      "quarantined_not_admitted_tracking_count": 57
+      "note": "54 receipt-bound holding members only; 12 aliases are tracked separately. Persistence/EA depth remains open.",
+      "quarantined_not_admitted_tracking_count": 54,
+      "emit_candidates_count": 26,
+      "emit_candidates_event_types": [
+        "docker.host.access_open_requested",
+        "docker.host.instance_lifecycle_requested",
+        "docker.host.instance_retention_recorded",
+        "docker.host.preflight_requested",
+        "docker.host.profile_saved",
+        "docker.host.receipt_opened",
+        "docker.host.refresh_requested",
+        "docker.host.session_launch_requested",
+        "docker.hosts_route_opened",
+        "github.actions.dispatch_readiness_validated",
+        "github.actions.readiness_compared",
+        "github.repo.create_requested",
+        "health.route_opened",
+        "plan_compile.run_created_or_bound",
+        "planning.approval_cas_receipt.written",
+        "planning.plan_approved",
+        "prd_builder.approval_snapshot.created",
+        "prd_builder.prd_pack_approved",
+        "project.github_repo_bound",
+        "remote.reconnect.requested",
+        "testing.capability_policy.updated",
+        "testing.session.backgrounded",
+        "testing.session.opened",
+        "testing.session.redaction_inspected",
+        "testing.session.watch_started",
+        "testing.visibility_policy.updated"
+      ]
     }
   },
   "census_adjudication_partition": {
@@ -372,7 +405,7 @@
   "progress_union_not_denominator": {
     "note": "Progress tracking only. Validator MUST NOT treat this as a floor for complete_denominator_known.",
     "census_adjudication_total_rows": 528,
-    "admitted_persisted_working_count": 252,
+    "admitted_persisted_working_count": 255,
     "individual_disposition_tracking_count": 321,
     "rejected_lexical_path": "closed-world-census/rejected-lexical/REJECTED_LEXICAL_CANDIDATES.json",
     "fresh_clean_residuals_status": "REJECTED_LEXICAL_CANDIDATE_NOT_DENOMINATOR",
@@ -446,6 +479,7 @@
     "concern.updated",
     "config.migrated",
     "config.validation.failed",
+    "context.compaction.completed",
     "context.compaction.failed",
     "context.compaction.started",
     "coordination.agent_aborted",
@@ -620,6 +654,7 @@
     "subagent.tool_called",
     "subagent.tool_completed",
     "task.failed",
+    "terminal.workgroup_moved",
     "tool.custom_headless.skipped",
     "tool.denied",
     "tool.execution_completed",
@@ -630,10 +665,12 @@
     "wizard.deferred_payload.loaded",
     "wizard.opened",
     "wizard.unblocked",
+    "workspace.layout_changed",
     "worktree.created",
     "worktree.deleted"
   ],
   "exact_equality_rule": "DEPRECATED alias: see admitted_persisted_event_families.exact_equality_rule. Do not require IndividualDisposition to equal july68/july26.",
-  "sealed_at_utc": "2026-08-12T12:12:19Z",
-  "seal_note": "Phase 2 artifact seal after independent validator named_checks.seal_prerequisites_met=true (receipt 2026-08-12T12:11:50Z). freeze_digest_sha256 unchanged. Checkpoint close is the next validator run."
+  "reopened_at_utc": "2026-09-11T14:10:58.582468+00:00",
+  "reopen_authority_ref": "Plans/Decision_Log.md#DL-039",
+  "reopen_reason": "Step 5 genuine owner-response application; prior seal is decertified by DECERTIFICATION.md. Classification repair supplies no replacement seal."
 }

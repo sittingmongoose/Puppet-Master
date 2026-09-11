@@ -7,7 +7,7 @@
   ],
   "july_classification": "emit_only",
   "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Owner J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT + UNRESOLVED-54-CLOSE-PATH NEW_NON_ADMITTED_QUARANTINE_BUCKET applied 2026-08-12T12:05:08Z. Not admitted. Not unresolved.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: J40-VETO-BATCH CONFIRM_UNRESOLVED_NO_ADMIT applied 2026-09-11T14:10:58.582468+00:00 to docker.auth.browser_login.polling. Exact receipt-bound holding member; no registry or denominator admission and no depth closure. Unresolved source authority remains a depth gap.",
   "evidence": {
     "owner_doc": {
       "status": "OWNER_REQUIRED",
@@ -93,5 +93,18 @@
     "Independently adjudicated from row-local cited evidence.",
     "PASS is limited to the exact field proposition established by the citation; minimum or included fields are not treated as closed schemas.",
     "No admission, registry append, owner inference, producer inference, analogy, or OD-EA-003 dependence."
-  ]
+  ],
+  "holding_authority": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "J40-VETO-BATCH",
+    "owner_response": {
+      "chosen_option": "CONFIRM_UNRESOLVED_NO_ADMIT",
+      "decided_by": "Jared",
+      "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+      "source": "jared_chat_2026-09-10"
+    },
+    "implementation_receipt": "reports/event-authority-20260911/step-03-holding-bucket-receipt.json",
+    "implementation_receipt_sha256": "d7800b98e7304f1f2853ea786f6b438b7df5753c3f62fd365f50c7a55d0ca8b3",
+    "applied_at_utc": "2026-09-11T14:10:58.582468+00:00"
+  }
 }

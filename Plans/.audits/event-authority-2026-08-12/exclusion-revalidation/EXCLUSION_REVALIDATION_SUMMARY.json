@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.exclusion_revalidation_summary.v1",
-  "generated_at_utc": "2026-08-12T12:05:08Z",
+  "generated_at_utc": "2026-09-11T14:10:58.582468+00:00",
   "july68_pin_count": 68,
   "july26_pin_count": 26,
   "total_rows": 94,
@@ -9,5 +9,14 @@
   "all_revalidated": true,
   "auth_github_reclass_count": 5,
   "failures": [],
-  "artifact": "Plans/.audits/event-authority-2026-08-12/exclusion-revalidation/EXCLUSION_REVALIDATION_LEDGER.jsonl"
+  "artifact": "Plans/.audits/event-authority-2026-08-12/exclusion-revalidation/EXCLUSION_REVALIDATION_LEDGER.jsonl",
+  "phase1_application": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "updated_events": [
+      "done.budget_exceeded",
+      "stop.identical_failure"
+    ],
+    "unchanged_rows": 92,
+    "note": "94 PASS is a ledger-derived rollup, not a new 94-row citation-depth revalidation. Genuine answers applied only to the named two rows."
+  }
 }
