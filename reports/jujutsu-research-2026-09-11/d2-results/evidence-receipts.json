@@ -68,8 +68,10 @@
     "sha256": "24e0c5a31531cc257f1ab25b37f23d00c8259799a366669c13a7d9c33f9e5e5d"
   },
   {
-    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/extract_usage.py",
-    "sha256": "a0a995c3665500df7c8dc4df5710bbbdd193b30d639bb8c193d6b09247510a40"
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/resume-audit/extract_usage.proposed.py",
+    "sha256": "a0a995c3665500df7c8dc4df5710bbbdd193b30d639bb8c193d6b09247510a40",
+    "original_live_path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/extract_usage.py",
+    "path_correction_reason": "The live meter subsequently registered D3/D4 reviewers. This preserved proposal is byte-identical to the D2 meter already identified by this unchanged SHA-256; valuations are unchanged."
   },
   {
     "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze.json",

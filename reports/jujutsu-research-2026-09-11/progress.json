@@ -1,6 +1,6 @@
 {
-  "at": "2026-09-11T15:28:31.779282+00:00",
-  "status": "d4_verified_branch_bundle_pending_serialized_main_landing",
+  "at": "2026-09-11T15:39:52.222930+00:00",
+  "status": "d4_final_rebased_preflight_ready_for_main_landing",
   "checkpoint_reached": false,
   "non_arm_observed_api_equivalent_usd": 159.710216,
   "non_arm_cap_usd": 180,
@@ -12,7 +12,7 @@
   "d1": "complete_pushed",
   "d2": "complete_partial_campaigns_frozen_pushed",
   "d3": "complete_independent_review_passed_comparison_published",
-  "d4": "one_correction_compiled_independently_reviewed_verified_and_packet_published_pending_main_landing",
+  "d4": "one_correction_and_packet_verified_after_rebase_pending_main_push_and_cleanup",
   "d5": "pending_Jared_answers_fresh_worktree_required",
   "budget_extension": "d3-prepared/allowance-extension.json",
   "accounting_snapshot_captured_at": "2026-09-11T15:29:21.781492+00:00",
@@ -30,5 +30,6 @@
   "accounting_evidence": {
     "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d4/prelanding-accounting.json",
     "sha256": "30007d4f5145f13974f987c5d846ccd63a56104b6605448cadcbecdf1121b700"
-  }
+  },
+  "landing_preflight_ref": "d4/landing-preflight.json"
 }
