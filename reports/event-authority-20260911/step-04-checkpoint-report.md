@@ -1,0 +1,5 @@
+# Step 4 — Approved PNC-019 registry baseline
+
+Recorded Jared’s DL-039 approval of registry revision `2026-08-27.1` (39 families; `workspace.layout_changed` payload 1.1.0) at the existing PNC-019 readiness checkpoint input. Only the approved revision constant and provenance comments changed; validation functions and both clearance flags are unchanged. Generated the buildability and node-readiness projections. The checkpoint mismatch clears, while denominator, contract depth, stale source/receipt, storage-tier, and Spec Lock blockers remain. Focused negative controls pass and the shard check passes. Readiness validation returns 1 with 65 residual findings; currentness validation returns 1 with `evidence_valid=false` and `event_authority_closed=false`. No registry admission, full certification, runtime, WorkNodes, validator logic change, freeze/closure restamp, or governance seal is claimed. Exact evidence paths and SHA-256 digests are in `step-04-checkpoint-receipt.json`.
+
+Cost: one GPT-6 Astra medium agent; token and dollar usage unavailable.

@@ -1,0 +1,164 @@
+{
+  "schema_id": "pm.assurance.event_authority.checkpoint_approval.v1",
+  "step": 4,
+  "authority_ref": "Plans/Decision_Log.md#DL-039",
+  "approved_by": "Jared",
+  "approval_conversation_date": "2026-09-10",
+  "applier_task": "/root/step04_checkpoint",
+  "base_commit": "1fded9a48edd23c503a3bd3febcd7ec754cb6786",
+  "approved_checkpoint": {
+    "registry_revision": "2026-08-27.1",
+    "registered_kernel_rows": 39,
+    "workspace.layout_changed_payload_version": "1.1.0",
+    "registry_sha256": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123"
+  },
+  "implementation": {
+    "path": "scripts/pm_pnc019_currentness.py",
+    "change": "Approved registry revision datum and adjacent provenance comments only; every function, class, predicate and clearance flag unchanged.",
+    "before_sha256": "3ec270220e09f61e7e122a294ddf7ddad007905f28f95416c13860700dc3b15c",
+    "after_sha256": "dfa86c8d46ffc689670476145147cdf1515c9a456411719dbebf66648b5fea17",
+    "function_and_class_ast_sha256": "9bcf5fc2de36a1a6c5a25a33f2e1910d855c9b9075a09318a14188d028e0a4a7"
+  },
+  "projection_commands": [
+    "python3 scripts/pm-implementation-readiness.py generate",
+    "python3 scripts/pm-plan-index.py generate",
+    "python3 scripts/pm-implementation-readiness.py generate"
+  ],
+  "validation": {
+    "focused_checks": {
+      "approved_baseline_only_clears_checkpoint": true,
+      "stale_revision": true,
+      "future_revision": true,
+      "wrong_schema": true,
+      "wrong_version": true,
+      "changed_family_count": true,
+      "unchanged:Plans/event_family_registry.json": true,
+      "unchanged:Plans/Spec_Lock.json": true,
+      "unchanged:Plans/.implementation_readiness/pnc019_certification_receipt.json": true,
+      "unchanged:Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": true,
+      "unchanged:reports/event-authority-20260911/step-03-holding-bucket-receipt.json": true,
+      "validation_function_and_class_ast_unchanged": true
+    },
+    "shard_check": "pass",
+    "readiness_validate_exit_code": 1,
+    "readiness_failures_by_code": {
+      "pnc019_source_hash_stale": 16,
+      "event_authority_currentness_source_drift": 37,
+      "event_authority_currentness_validator_drift": 1,
+      "event_denominator_unresolved": 2,
+      "event_family_contract_depth_unresolved": 2,
+      "storage_value_registry_tier_counts_mismatch": 1,
+      "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+      "storage_value_registry_spec_lock_hash_stale": 3,
+      "implementation_readiness_self_tests_failed": 1
+    },
+    "currentness_validate_exit_code": 1,
+    "checkpoint_changed_requires_fresh_approval_cleared": true,
+    "buildability_gate_passed": false,
+    "complete_denominator_known": false,
+    "contract_depth_complete": false
+  },
+  "claim_boundary": {
+    "registry_admission": false,
+    "pnc019_certified": false,
+    "runtime_enabled": false,
+    "worknodes_created": false,
+    "spec_lock_sealed": false,
+    "independent_validator_changed": false,
+    "freeze_or_closure_hash_restamps": false
+  },
+  "derived_side_effects": "Only timestamp changes in coverage_report.json, dependencies.json and doc_cards.json were preserved as an external diff and reverted to HEAD with parent authorization. Retained currentness is accessed through an ignored local symlink; no new machine paths are published in projections.",
+  "evidence": {
+    "check_checkpoint.py": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/check_checkpoint.py",
+      "sha256": "432214645a442c157ec63e86bcc272a1987c7a0eb5477144a294aa450e768fe0"
+    },
+    "checkpoint-before.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/checkpoint-before.json",
+      "sha256": "cdd409af8dbb74085a814a770dba50f743a6bd845c12a969d17db8ae00c13506"
+    },
+    "checkpoint-checks.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/checkpoint-checks.json",
+      "sha256": "d6c290962da6e59c1da483e0c33f6fddec52af2b4d75bf1aa08058e3e4480e57"
+    },
+    "currentness-after.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/currentness-after.json",
+      "sha256": "5e89c6c8f3b09f0458ee26b9dcc0847082b1fa9a24c890a410818d2d7db92e9d"
+    },
+    "currentness-after.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/currentness-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "currentness-before.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/currentness-before.json",
+      "sha256": "5e89c6c8f3b09f0458ee26b9dcc0847082b1fa9a24c890a410818d2d7db92e9d"
+    },
+    "currentness-before.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/currentness-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "index-generate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/index-generate.json",
+      "sha256": "24d99ff0b1014d7b447285660ef22d6be9030465adca6dbf8b76e60e92dd6afb"
+    },
+    "index-generate.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/index-generate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "node-readiness-generated.diff": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/node-readiness-generated.diff",
+      "sha256": "eff15e97d94df8082132c317c7187df0e34f1d9a65e6250e012d134554265311"
+    },
+    "preflight-pins.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/preflight-pins.json",
+      "sha256": "e7e7ab3e50a7e0d0e4885eaea2624723511235f9b16c9c700ec6f1f539c22906"
+    },
+    "readiness-generate-final.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-generate-final.json",
+      "sha256": "c769ddcffe95e90a80c3ed3969f0052870fe55279487614294d38ec5520e745a"
+    },
+    "readiness-generate-final.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-generate-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-generate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-generate.json",
+      "sha256": "999a20bee4d09148e17631ad9dfe139b0decdc6de1ecb3750a2a0a6a8b0490c2"
+    },
+    "readiness-generate.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-generate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-validate-final.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-validate-final.json",
+      "sha256": "9f8a9860eef6f26ca209ac46087a348482bb00d1661cc98ac07a74944fc3689e"
+    },
+    "readiness-validate-final.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-validate-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-validate.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-validate.json",
+      "sha256": "4e7a23a3ee1801177e22200e49b5d18b07cee806637f562c353403c6a4e65121"
+    },
+    "readiness-validate.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/readiness-validate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "shard-check.txt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/shard-check.txt",
+      "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872"
+    },
+    "unrelated-index-generated.diff": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-04/unrelated-index-generated.diff",
+      "sha256": "8b29932d8ca9a215674b598738c31fd33346283c46eb83e3246c784cafa8d409"
+    }
+  },
+  "cost": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "token_usage": null,
+    "usd": null,
+    "note": "Per-agent token and dollar usage unavailable; no cost invented."
+  }
+}
