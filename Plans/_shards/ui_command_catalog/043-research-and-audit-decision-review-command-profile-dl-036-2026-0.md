@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12938-L13086
+Source lines: L12938-L13097
 
-Source SHA256: `8284a6915b69ac969ca00e2b73620818e820e0b00edddb3bffd456be606cdd05`
+Source SHA256: `3d25fad71807e4fec63b0b0dc24ff8d61a7fb8567ff2264c5a6db5f89688e104`
 
 ---
 
@@ -157,3 +157,14 @@ and recording controls retain receipt-only domain-event dispositions. No new nat
 handler, visual design, command, storage family, runtime proof or readiness is claimed.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Automated_Testing_System.md#ATS-049, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+
+The existing `cmd.project.new_github_repo` and its sole planned
+`handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
+Project action request/result family. No second field-list DTO, generic create
+command or Project Composition command is introduced. The two registered events
+are separate owner transitions, not unconditional dispatch success. The central
+response preserves the application-scoped creation operation while its typed
+terminal result identifies the actual committed Project. Native availability
+remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007

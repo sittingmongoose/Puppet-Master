@@ -4846,6 +4846,7 @@
     "GLI-003",
     "NPLAN-002",
     "NPLAN-004",
+    "GI-042",
     "PJCT-003",
     "SRV-002",
     "PSB-005",
@@ -6267,6 +6268,7 @@
     "PJCT-007",
     "UIW-012",
     "BRS-003",
+    "PJCT-008",
     "PWIZ-021",
     "DR-039",
     "F3-515",
@@ -26584,6 +26586,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "GI-042",
+      "to": "GI-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GI-042",
+      "to": "PJCT-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GI-042",
+      "to": "PJCT-002"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "GLI-001",
       "to": "FGI-001"
     },
@@ -39541,6 +39558,26 @@
       "edge_type": "depends_on",
       "from": "PJCT-007",
       "to": "SSYS-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PJCT-008",
+      "to": "GI-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PJCT-008",
+      "to": "PJCT-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PJCT-008",
+      "to": "PJCT-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PJCT-008",
+      "to": "PJCT-007"
     },
     {
       "edge_type": "depends_on",
@@ -89309,6 +89346,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "GI-042",
+      "to": "PJCT-008"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "GLI-001",
       "to": "GLI-002"
     },
@@ -93163,7 +93205,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T17:03:56Z",
+  "generated_at_utc": "2026-09-11T17:04:26Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -142228,6 +142270,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "existing_github_creation_transition_admission",
+      "gui_related": false,
+      "owner_doc": "Plans/GitHub_Integration.md",
+      "plan_unit_id": "GI-042",
+      "reasoning_tier": "high",
+      "risk_class": "duplicate_remote_effect_or_false_project_creation",
+      "source_location": {
+        "heading": "GI-042 - Existing GitHub creation intake and transition admission",
+        "heading_level": 3,
+        "heading_line": 2577,
+        "line": 2579,
+        "path": "Plans/GitHub_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "gitlab_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/GitLab_Integration.md",
@@ -169647,6 +169706,23 @@
       },
       "status": "accepted",
       "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "existing_github_project_creation_handoff",
+      "gui_related": false,
+      "owner_doc": "Plans/Project_System.md",
+      "plan_unit_id": "PJCT-008",
+      "reasoning_tier": "high",
+      "risk_class": "premature_project_publication_or_duplicate_remote_effect",
+      "source_location": {
+        "heading": "PJCT-008 - Typed GitHub-to-Project commit and event binding",
+        "heading_level": 3,
+        "heading_line": 499,
+        "line": 501,
+        "path": "Plans/Project_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "repo",
@@ -203094,12 +203170,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14690,
+    "depends_on_edge_count": 14697,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17338,
-    "node_count": 6466,
+    "edge_count": 17346,
+    "node_count": 6468,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2648,
+    "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

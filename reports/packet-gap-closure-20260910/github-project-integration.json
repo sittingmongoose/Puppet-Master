@@ -1,0 +1,867 @@
+{
+  "schema_id": "pm.packet_gap_closure.github_project_integration.v1",
+  "date": "2026-09-11",
+  "status": "targeted_static_integration_complete_broader_review_open",
+  "preceding_commit": "024ad199ea7e5d88fc3115f800ee9ca68d163e49",
+  "branch_at_validation": "fix/packet-gap-closure-20260911-reconciled",
+  "claim_boundary": "Owner/schema/fixture/central-response and declared production-wiring integration only. This is not native handler/API/storage/restart proof, global Event Authority closure, a completed packet audit, readiness admission, or a governance seal.",
+  "completed_this_batch": [
+    "GI-042 binds approved GitHub API intake to the existing Project request family and an application-scoped creation operation without a provisional Project ID.",
+    "PJCT-008 binds actual listed Project commit/readback and exact repository/registration/readback receipts to the existing terminal Project result and central response.",
+    "The two existing required event names have separate closed metadata payloads, producer/scope/receipt/currentness checks, original-intake binding, retention and no-effect replay contracts.",
+    "The existing catalog row and production placement now consume their actual request/result and admitted event owners; old unconditional two-events-on-dispatch assertions are replaced by distinct owner transitions."
+  ],
+  "targeted_non_design_findings": {
+    "CAP_CONTRACT_001": {
+      "status": "repaired_static_only",
+      "commands": 7,
+      "placements": 11,
+      "prior_report": "reports/packet-gap-closure-20260910/evidence-consumer-integration.json",
+      "prior_commit": "e123b34405"
+    },
+    "CAP_EVENT_001": {
+      "status": "admitted_static_only",
+      "events": 4,
+      "prior_report": "reports/packet-gap-closure-20260910/testing-session-event-integration.json",
+      "prior_commit": "024ad199ea"
+    },
+    "PROJECT_EVENT_001": {
+      "status": "admitted_static_only",
+      "events": 2,
+      "placements": 1,
+      "owner_refs": [
+        "Plans/GitHub_Integration.md#GI-042",
+        "Plans/Project_System.md#PJCT-008"
+      ]
+    }
+  },
+  "verification": {
+    "github_project_tests": {
+      "passed": 13
+    },
+    "central_response_tests": {
+      "passed": 12
+    },
+    "testing_event_tests": {
+      "passed": 9
+    },
+    "evidence_command_tests": {
+      "passed": 9
+    },
+    "touch_and_whole_inventory_tests": {
+      "passed": 19
+    },
+    "targeted_test_methods_total": 62,
+    "owner_contract_matrix": {
+      "status": "pass",
+      "contract_pairs": 26,
+      "positive": 1009,
+      "negative": 3298,
+      "internal_self_tests": 12
+    },
+    "github_event_admission": {
+      "status": "pass",
+      "positive": 2,
+      "negative": 74
+    },
+    "testing_event_admission": {
+      "status": "pass",
+      "positive": 4,
+      "negative": 124
+    },
+    "browser_event_admission": {
+      "status": "pass",
+      "positive": 53,
+      "negative": 576
+    },
+    "central_response": {
+      "status": "pass",
+      "positive": 25,
+      "negative": 64,
+      "outcome_states": 8
+    },
+    "standard_wiring": {
+      "status": "pass"
+    },
+    "standard_touch_closure": {
+      "status": "pass"
+    },
+    "shards": {
+      "status": "pass",
+      "documents": 98,
+      "shards": 2182
+    },
+    "plan_index": {
+      "status": "pass",
+      "plan_units": 6463,
+      "acceptance_units": 24703,
+      "readiness": "blocked_runtime_certification_incomplete"
+    }
+  },
+  "whole_inventory": {
+    "command_ids": 1080,
+    "production_intent_rows": 1144,
+    "commands_in_packet_touch": 467,
+    "commands_outside_packet_touch": 613,
+    "rows_with_request_and_result_refs": 400,
+    "rows_without_both_refs": 744,
+    "touch_rows": 644,
+    "touch_profiles": 133,
+    "structural_errors": 0,
+    "semantic_review_completed": false,
+    "native_adapters_proven": 0
+  },
+  "event_accounting": {
+    "registry_families": 98,
+    "distinct_wiring_event_names": 95,
+    "unmatched_expected_event_names": 61,
+    "unmatched": [
+      {
+        "event_type": "account_switch_event",
+        "wiring_rows": [
+          "catalog.account_select_profile"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "alert.acknowledged",
+        "wiring_rows": [
+          "catalog.alert_acknowledge"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "alert.dismissed",
+        "wiring_rows": [
+          "catalog.alert_dismiss"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "alert.rule_muted",
+        "wiring_rows": [
+          "catalog.alert_mute_rule"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "alert.snoozed",
+        "wiring_rows": [
+          "catalog.alert_snooze"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.context_captured",
+        "wiring_rows": [
+          "catalog.browser_add_selection_full_screenshot_to_chat",
+          "catalog.browser_add_selection_screenshot_to_chat",
+          "catalog.browser_add_selection_to_chat",
+          "catalog.browser_pick_element_for_chat"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.context_share_revoked",
+        "wiring_rows": [
+          "catalog.browser_revoke_share_with_agent"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.context_shared",
+        "wiring_rows": [
+          "catalog.browser_share_with_agent"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.session.closed",
+        "wiring_rows": [
+          "catalog.browser_keep_closed"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.session.created",
+        "wiring_rows": [
+          "catalog.browser_open_detached_preview",
+          "catalog.browser_open_workspace_preview",
+          "home.editor_panel_1.open_browser",
+          "home.editor_panel_2.open_browser",
+          "home.editor_panel_3.open_browser",
+          "home.editor_panel_4.open_browser",
+          "home.more_options.open_browser_panel_1",
+          "home.more_options.open_browser_panel_2",
+          "home.more_options.open_browser_panel_3",
+          "home.more_options.open_browser_panel_4"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.session.promoted",
+        "wiring_rows": [
+          "catalog.browser_promote_to_normal_browsing"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.session.state_changed",
+        "wiring_rows": [
+          "catalog.browser_detach_browser_tab",
+          "catalog.browser_open_detached_preview",
+          "catalog.browser_open_workspace_preview",
+          "catalog.browser_reopen",
+          "catalog.browser_retry",
+          "home.editor_panel_1.open_browser",
+          "home.editor_panel_2.open_browser",
+          "home.editor_panel_3.open_browser",
+          "home.editor_panel_4.open_browser",
+          "home.more_options.open_browser_panel_1",
+          "home.more_options.open_browser_panel_2",
+          "home.more_options.open_browser_panel_3",
+          "home.more_options.open_browser_panel_4"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "browser.session.takeover_state_changed",
+        "wiring_rows": [
+          "catalog.browser_let_agent_continue",
+          "catalog.browser_pause_agent",
+          "catalog.browser_stop_agent_keep_browser",
+          "catalog.browser_take_over"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "chat.message.submitted",
+        "wiring_rows": [
+          "catalog.chat_send"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.assigned",
+        "wiring_rows": [
+          "catalog.concern_assign"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.created",
+        "wiring_rows": [
+          "catalog.concern_create"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.evidence_linked",
+        "wiring_rows": [
+          "catalog.concern_link_evidence"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.promoted",
+        "wiring_rows": [
+          "catalog.concern_promote"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.reopened",
+        "wiring_rows": [
+          "catalog.concern_reopen"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.resolved",
+        "wiring_rows": [
+          "catalog.concern_resolve"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "concern.updated",
+        "wiring_rows": [
+          "catalog.concern_update"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "dashboard.widget_added",
+        "wiring_rows": [
+          "catalog.dashboard_add_widget"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "dev.session.stopped",
+        "wiring_rows": [
+          "catalog.browser_stop_agent_keep_browser"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.access_open_requested",
+        "wiring_rows": [
+          "catalog.docker_host_access_open_app"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.instance_lifecycle_requested",
+        "wiring_rows": [
+          "catalog.docker_host_instance_restart",
+          "catalog.docker_host_instance_start",
+          "catalog.docker_host_instance_stop"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.instance_retention_recorded",
+        "wiring_rows": [
+          "catalog.docker_host_instance_retain"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.preflight_requested",
+        "wiring_rows": [
+          "catalog.docker_host_preflight"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.profile_saved",
+        "wiring_rows": [
+          "catalog.docker_host_profile_save"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.receipt_opened",
+        "wiring_rows": [
+          "catalog.docker_host_receipt_open"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.refresh_requested",
+        "wiring_rows": [
+          "catalog.docker_host_refresh"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.host.session_launch_requested",
+        "wiring_rows": [
+          "catalog.docker_host_session_launch"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "docker.hosts_route_opened",
+        "wiring_rows": [
+          "catalog.docker_hosts_open"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "file.created",
+        "wiring_rows": [
+          "catalog.file_new_file"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "file.deleted",
+        "wiring_rows": [
+          "catalog.file_delete"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "file.renamed",
+        "wiring_rows": [
+          "catalog.file_rename"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "folder.created",
+        "wiring_rows": [
+          "catalog.file_new_folder"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "github.actions.dispatch_readiness_validated",
+        "wiring_rows": [
+          "catalog.github_actions_validate_dispatch_readiness"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "github.actions.readiness_compared",
+        "wiring_rows": [
+          "catalog.github_actions_compare_last_success"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "health.route_opened",
+        "wiring_rows": [
+          "catalog.health_provider_setup_open"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "model.catalog_refreshed",
+        "wiring_rows": [
+          "catalog.model_refresh"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "node.unblocked",
+        "wiring_rows": [
+          "catalog.runtime_approve",
+          "catalog.runtime_resume_after_prerequisite"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "panel.redocked",
+        "wiring_rows": [
+          "catalog.panel_redock"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "panel.undocked",
+        "wiring_rows": [
+          "catalog.panel_undock",
+          "home.chat.pop_out",
+          "home.dashboard.pop_out",
+          "home.editor_panel_1.pop_out",
+          "home.editor_panel_2.pop_out",
+          "home.editor_panel_3.pop_out",
+          "home.editor_panel_4.pop_out"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.created",
+        "wiring_rows": [
+          "catalog.persona_create",
+          "catalog.persona_duplicate"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.deleted",
+        "wiring_rows": [
+          "catalog.persona_delete"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.exported",
+        "wiring_rows": [
+          "catalog.persona_export"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.imported",
+        "wiring_rows": [
+          "catalog.persona_import"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.selected",
+        "wiring_rows": [
+          "catalog.persona_select"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "persona.updated",
+        "wiring_rows": [
+          "catalog.persona_update"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "plan_compile.run_created_or_bound",
+        "wiring_rows": [
+          "catalog.planning_wizard_approve_and_build",
+          "planning.wizard.final_review.approve_and_build"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "planning.approval_cas_receipt.written",
+        "wiring_rows": [
+          "catalog.planning_wizard_approve_and_build",
+          "planning.wizard.final_review.approve_and_build"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "planning.plan_approved",
+        "wiring_rows": [
+          "catalog.planning_wizard_approve_and_build",
+          "planning.wizard.final_review.approve_and_build"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "prd_builder.approval_snapshot.created",
+        "wiring_rows": [
+          "catalog.prd_builder_approve_for_planning_wizard"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "prd_builder.prd_pack_approved",
+        "wiring_rows": [
+          "catalog.prd_builder_approve_for_planning_wizard"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "runtime_artifact.created",
+        "wiring_rows": [
+          "catalog.browser_add_full_screenshot_to_chat",
+          "catalog.browser_add_screenshot_to_chat",
+          "catalog.browser_add_selection_full_screenshot_to_chat",
+          "catalog.browser_add_selection_screenshot_to_chat"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "safe_point.restored",
+        "wiring_rows": [
+          "catalog.orchestrator_restore_safe_point_then_retry",
+          "catalog.orchestrator_safe_point_retry",
+          "catalog.runtime_restore_safe_point_then_retry"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "scheduler.pass",
+        "wiring_rows": [
+          "catalog.orchestrator_resume",
+          "catalog.runtime_resume_after_prerequisite",
+          "catalog.runtime_start_fresh_attempt"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "settings.theme.updated",
+        "wiring_rows": [
+          "catalog.theme_reset",
+          "catalog.theme_set_accent",
+          "catalog.theme_set_density",
+          "catalog.theme_set_mode"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "settings.updated",
+        "wiring_rows": [
+          "catalog.settings_agent_rules_dry_method_default_guard_set"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "testing.capability_policy.updated",
+        "wiring_rows": [
+          "catalog.testing_capability_policy_set",
+          "settings.testing.capability_policy"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      },
+      {
+        "event_type": "testing.visibility_policy.updated",
+        "wiring_rows": [
+          "catalog.testing_visibility_policy_set",
+          "settings.testing.visibility_policy"
+        ],
+        "classification": "not_adjudicated_here_no_registry_admission"
+      }
+    ],
+    "meaning": "Direct current-name lookup only, not persistence classification or a 61-family admission proposal. DL-039 emit-only/unresolved/pending cohorts retain their dispositions."
+  },
+  "registry_preservation": {
+    "prior_family_prefix_count": 96,
+    "prior_family_prefix_sha256": "9b3b0cebf471111ecc1c859e7eb434e729599d5680a7e75a38e76e1ea46bba0c",
+    "prefix_preserved": true,
+    "current_registered_families": 98,
+    "historical_kernel_pin": 39,
+    "kernel_pin_changed": false,
+    "global_event_denominator": "UNKNOWN_OPEN",
+    "new_physical_family": false,
+    "retention_policy": "RP-AUTHORITY-INDEFINITE@1.0.0"
+  },
+  "formal_audit": {
+    "status": "incomplete_new_source_freeze_required",
+    "historical_reviewed_cells": 2730,
+    "historical_expected_cells": 13429,
+    "historical_unreviewed_cells": 10699,
+    "historical_reviewed_chunks": 21,
+    "historical_expected_chunks": 151,
+    "historical_report": "reports/packet-gap-closure-20260910/formal-audit-progress-20260911.json",
+    "historical_receipts_or_verdicts_rewritten": false,
+    "current_complete_suite_verdicts": false
+  },
+  "full_governance": {
+    "status": "fail",
+    "passed_checks": 25,
+    "failed_checks": 11,
+    "checks": {
+      "check_project_artifact_requirements": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "check_shards": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "json_syntax": {
+        "status": "fail",
+        "failure_count": 1
+      },
+      "lint_banned_phrases": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "lint_contractrefs": {
+        "status": "fail",
+        "failure_count": 1
+      },
+      "lint_path_refs": {
+        "status": "fail",
+        "failure_count": 10
+      },
+      "validate_audit_closure": {
+        "status": "fail",
+        "failure_count": 201
+      },
+      "validate_audit_status_index": {
+        "status": "fail",
+        "failure_count": 1
+      },
+      "validate_auto_decisions": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_browser_event_admission": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_case_l_non_event_materialization": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_evidence": {
+        "status": "fail",
+        "failure_count": 1246
+      },
+      "validate_filesafe_security_policy": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_github_project_integration": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_gui_asset_policy": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_implementation_readiness": {
+        "status": "fail",
+        "failure_count": 36
+      },
+      "validate_new_contracts": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_plan_graph": {
+        "status": "fail",
+        "failure_count": 1246
+      },
+      "validate_plan_migration": {
+        "status": "fail",
+        "failure_count": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "status": "fail",
+        "failure_count": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_project_output_fixtures": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_server_command_gap": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_testing_session_event_admission": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_touch_closure": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_ui_command_response": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_usage_contract_drift": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_web_capability_contracts": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_wiring_matrix": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "validate_working_notebook_contracts": {
+        "status": "pass",
+        "failure_count": 0
+      },
+      "verify_spec_lock": {
+        "status": "fail",
+        "failure_count": 23
+      }
+    },
+    "raw_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/non-design-integration-run-gates-20260911-0430.json",
+      "sha256": "3fba2b733db5a6a58b73bdc9c8cfac9d6e8126a033d2811a928d7ac8519733e8"
+    },
+    "explanation": "Missing raw-capture/GUI fixture inputs and an audit reference, stale Spec Lock/evidence/graph/closure/index/migration/readiness baselines remain. No seal or historical receipt refresh was authorized. All targeted new integration checks, wiring, Touch Closure and shard checks passed in this same run."
+  },
+  "boundaries": {
+    "settings_or_concept_files_changed": false,
+    "onboarding_or_tour_design_changed": false,
+    "native_runtime_implemented": false,
+    "worknodes_or_nodeseeds_created": false,
+    "spec_lock_or_governance_evidence_regenerated": false,
+    "dl039_bulk_admission_performed": false
+  },
+  "source_inputs": [
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "sha256": "a8d9c1a920d9cc7c09bed2758a8ee8f04033f1d5e5ef34362b0e9dfe25bcb5ca"
+    },
+    {
+      "path": "Plans/Project_System.md",
+      "sha256": "dd952dcc2c5166307b8ea6cc434760efd8c757f7fcadaea2131634a3ad35f1d8"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "9b2478d627663bbbd012a2b304b36559aea02cc7545c2f4e157853be0b6d4e03"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "cc2aa46c181b697877fb478ca6013b48bf6e2a03e467013b004f55b42116d462"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "864d41c8b595669532c20f16e5360dcb0d0c823677417308005d4be1020395c0"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "d1dc80191d305ec1440f65c8053efbe027adf37df41ce6177a9ce86bb9eed970"
+    },
+    {
+      "path": "Plans/github_project_event_admission.json",
+      "sha256": "b9007a5a9f1f67a3ccd8d036f86c2d39381a4919c38857a31ba5ab796c604960"
+    },
+    {
+      "path": "Plans/github_project_event_payloads.schema.json",
+      "sha256": "b26800171c1d004e642cf86d0d54f82cdbe1db1854e86a11f9b611e16d7147f0"
+    },
+    {
+      "path": "Plans/github_project_event_fixtures.json",
+      "sha256": "37e744bc404976620ff326b2a56c4f226d98f30b8839ec29b021f20decf87005"
+    },
+    {
+      "path": "Plans/project_system_contracts.schema.json",
+      "sha256": "d3da35930fc33652bd24a180fb0c020b26b89f37348f18c931f45310a6a55058"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "734d53fc402d247076149eaab26e9852ebfdd2c275fb5e911bad242e01a1d2d6"
+    },
+    {
+      "path": "Plans/ui_command_response_fixtures.json",
+      "sha256": "59d328711a3319c78c3fc0670afcb26d79cd25496427eb99423d91862eeab3df"
+    },
+    {
+      "path": "scripts/pm_project_forge_contract.py",
+      "sha256": "33b57bbb5e625bee405682aff7e9d901a94c44a5c9bc783363010df013e90177"
+    },
+    {
+      "path": "scripts/pm-github-project-integration.py",
+      "sha256": "2e86a8a7fc4506ffe561712b56c76da02a46d9164d2e2576d0f2e6367f290285"
+    },
+    {
+      "path": "scripts/pm_ui_command_response.py",
+      "sha256": "621a323d67ce5f04ffe76effb2cbe0474861fb80fc4755f9052623f12eb0b7ea"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "47c3ef032868db26eccf18b1509378724b3b8cfd21e910f98c233e893468fc27"
+    },
+    {
+      "path": "tests/test_pm_github_project_integration.py",
+      "sha256": "ffdbc1e2261d91b4ffc471df75a32c9e2469de08e9823f72b4cb561694c8f988"
+    },
+    {
+      "path": "tests/test_pm_ui_command_response.py",
+      "sha256": "6903c10c79158dcbd86fd17d46cb591354dc55a46bb7ff8ac0e8efa138508cd8"
+    }
+  ],
+  "next_work": [
+    "Classify the 61 unmatched production-wiring event names through their owners and existing DL-039 dispositions; direct-name absence is not permission for bulk registration.",
+    "Review the 744 placements without paired machine refs for their actual owner contracts or valid local/route dispositions; inventory accounting alone does not close them.",
+    "Freeze a current canonical snapshot and finish all remaining packet/source and per-dimension review cases; preserve prior judgments as historical evidence.",
+    "Leave Settings and Onboarding/Tour visual decisions to their current owners; reserve governance reseal/native certification for their authorized phases."
+  ]
+}

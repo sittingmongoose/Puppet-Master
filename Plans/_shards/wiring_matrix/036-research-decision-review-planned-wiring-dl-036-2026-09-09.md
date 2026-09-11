@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4435-L4708
+Source lines: L4435-L4729
 
-Source SHA256: `ae7269e1dcd11a02faf9923588d40f44cb51db22e382e6d771a52e843934f91d`
+Source SHA256: `c54cc869d5c77961e7c9cd6707cb055129e493b1f75313fcf6e8a07539fe21a3`
 
 ---
 
@@ -282,3 +282,24 @@ and command replay results emit none. Other Testing/recording event dispositions
 are unchanged, and static event admission does not supply a native producer.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-004, ContractName:Plans/Commands_System.md
+
+### Existing GitHub Project-Creation Wiring — 2026-09-11
+
+`catalog.project_new_github_repo` retains `cmd.project.new_github_repo`, its sole
+planned `handlers::github::project_new_repo`, existing selector/disabled projection
+and one placement. Request/result refs now resolve the existing Project action
+family, consuming GI-042 / PJCT-008. Its event effect binds exact rows 0/1 in
+`Plans/github_project_event_admission.json`: application-scoped approved intake
+first, actual Project-scoped committed/readback binding only after owner success.
+Generic click-emits-both assertions are superseded; pending, rejection, cancellation,
+unknown effects and replay cannot fabricate Project completion. The central
+response joins the existing application-scoped operation to its owner result,
+without changing operation scope to the returned Project ID. PJCT-007 remains
+required for Onboarding callers. Static checks do not prove native availability.
+
+This is one repaired consumer, not a new command or row. The inventory remains
+1,080 IDs and 1,144 placements. Touch row `TOUCH-PJCT-003` remains partial because
+native owner dispatch, authenticated receipt resolution and runtime evidence are
+absent; none of these counts establishes whole-inventory integration closure.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Commands_System.md
