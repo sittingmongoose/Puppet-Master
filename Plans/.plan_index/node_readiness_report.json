@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14906,
+    "depends_on_edge_count": 14913,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17555,
-    "node_count": 6519,
+    "edge_count": 17562,
+    "node_count": 6521,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T19:17:23Z",
+  "generated_at_utc": "2026-09-11T19:43:28Z",
   "gui_related_units": {
     "count": 3151,
     "units": [
@@ -34685,10 +34685,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6519,
+  "plan_unit_count": 6521,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1975,
+      "high": 1977,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35031,6 +35031,8 @@
       "browser_stale_cleanup_and_consumer_map": 1,
       "browser_visible_run_contract": 1,
       "browser_web_boundary_drift": 1,
+      "browser_workspace_created_source_or_checkpoint_authority_drift": 1,
+      "browser_workspace_creation_or_replay_authority_escape": 1,
       "browser_workspace_isolation_or_controller_escape": 1,
       "bsd_manager_presentation_drift": 1,
       "bsd_mode_default_drift": 1,
@@ -38434,7 +38436,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6328,
+      "accepted": 6330,
       "retired": 182,
       "superseded": 9
     },
@@ -38488,7 +38490,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 34,
+      "owner_boundary": 35,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -38501,7 +38503,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5177,
+      "requirement": 5178,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38571,7 +38573,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+        "expected": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38589,7 +38591,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "65afb2c8432181f47b675f3f781eaa9676f9a8effa9ec434201288d37e021963",
+        "expected": "6fd73e9787d7e8fc0c676cb1414836e5ed74dae8a2bdcf606f33cf3030c095cb",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38657,8 +38659,37 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/dl044-followups-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/browser-workspace-created-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
+      },
+      {
+        "actual_checkpoint": {
+          "registered_kernel_rows": 41,
+          "registry_revision": "2026-09-11.2",
+          "registry_schema_id": "pm.event_family_registry.v1",
+          "registry_schema_version": "2.0.0"
+        },
+        "denominator_status": "UNKNOWN_OPEN",
+        "error": "event_authority_checkpoint_changed_requires_fresh_approval",
+        "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
+        "evidence_refs": [
+          {
+            "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
+            "claim": "UNKNOWN_OPEN current status",
+            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
+          },
+          {
+            "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
+            "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
+            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
+          }
+        ],
+        "expected_checkpoint": {
+          "registered_kernel_rows": 40,
+          "registry_revision": "2026-09-11.1",
+          "registry_schema_id": "pm.event_family_registry.v1",
+          "registry_schema_version": "2.0.0"
+        }
       },
       {
         "bulk_registration_allowed": false,
@@ -38681,7 +38712,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 40
+        "registered_kernel_rows": 41
       },
       {
         "bulk_registration_allowed": false,
@@ -38700,7 +38731,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 40
+        "registered_kernel_rows": 41
       }
     ],
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",

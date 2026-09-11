@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-09-11.1",
+  "registry_revision": "2026-09-11.2",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -2431,6 +2431,61 @@
         "Plans/storage-plan.md#SP-259",
         "Plans/Shared_Integration_Runtime.md#SIR-038",
         "Plans/event_payload_context_compaction_completed.schema.json#"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-browser-workspace-created",
+      "family_revision": "1.0.0",
+      "event_type": "browser.workspace.created",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.workspace_created.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/workspace_created",
+        "schema_id": "pm.browser_event.workspace_created.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/0",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167",
+        "Plans/browser_event_payloads.schema.json#/$defs/workspace_created",
+        "Plans/storage-plan.md#SP-266",
+        "Plans/Decision_Log.md#DL-046",
+        "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding",
+        "reports/packet-gap-closure-20260910/browser-workspace-created-root-review-20260911.json"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

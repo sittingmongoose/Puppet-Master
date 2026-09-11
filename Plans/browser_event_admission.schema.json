@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://puppetmaster.local/schemas/browser_event_admission/1.1.0/browser_event_admission.schema.json",
+  "$id": "https://puppetmaster.local/schemas/browser_event_admission/1.2.0/browser_event_admission.schema.json",
   "title": "Scoped Browser prepared contracts and per-family admission decisions",
   "type": "object",
   "additionalProperties": false,
@@ -25,7 +25,7 @@
   ],
   "properties": {
     "$schema": {
-      "const": "https://puppetmaster.local/schemas/browser_event_admission/1.1.0/browser_event_admission.schema.json"
+      "const": "https://puppetmaster.local/schemas/browser_event_admission/1.2.0/browser_event_admission.schema.json"
     },
     "schema_id": {
       "const": "pm.browser_event_admission.v1"
@@ -323,8 +323,16 @@
           },
           "runtime_producer_status": {
             "const": "unimplemented_not_proven"
+          },
+          "authority_contract_ref": {
+            "type": "string",
+            "pattern": "^Plans/[a-z0-9_]+\\.schema\\.json#/x-pm-event-authority-binding$"
           }
-        }
+        },
+        "allOf": [{
+          "if": {"properties": {"admission_status": {"const": "admitted_static_contract"}}, "required": ["admission_status"]},
+          "then": {"required": ["authority_contract_ref"]}
+        }]
       }
     }
   }

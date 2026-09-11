@@ -219,6 +219,28 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         self.assertEqual(report["registry_family_count"], 41)
         self.assertFalse(report["admission_complete"])
 
+    def test_sibling_cannot_borrow_the_created_depth_binding(self):
+        context, registry = all_prepared_snapshot()
+        sibling = context[0]["rows"][1]
+        sibling["admission_status"] = "admitted_static_contract"
+        sibling["authority_contract_ref"] = "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
+        family = synthetic_family(sibling)
+        value = event(sibling["event_type"])
+        self.assertIn("complete_browser_authority_binding_missing", GATE.event_failures(value, producer(value), context, families={sibling["event_type"]: family}))
+        registry["families"].append(family)
+        with patch.object(GATE, "contract_context", return_value=context), registry_snapshot(registry):
+            report = GATE.validate()
+        self.assertEqual(report["status"], "fail")
+        self.assertIn("complete_browser_authority_binding_missing", {row["error"] for row in report["failures"]})
+
+    def test_created_requires_exact_depth_ref_beyond_label_and_central_row(self):
+        context, _ = all_prepared_snapshot()
+        row = context[0]["rows"][0]
+        row["admission_status"] = "admitted_static_contract"
+        row.pop("authority_contract_ref", None)
+        value = event(row["event_type"])
+        self.assertIn("browser_authority_contract_ref_missing_or_mismatched", GATE.event_failures(value, producer(value), context, families={row["event_type"]: synthetic_family(row)}))
+
 
 class BrowserEventAdmissionTests(unittest.TestCase):
     def setUp(self):

@@ -15031,10 +15031,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 66,
+        "False": 67,
         "True": 100
       },
-      "heading_count": 256,
+      "heading_count": 260,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -15070,9 +15070,9 @@
         "future Testing evidence harness",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current"
       ],
-      "line_count": 11353,
+      "line_count": 11483,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-      "plan_unit_count": 166,
+      "plan_unit_count": 167,
       "plan_unit_ids": [
         "SMPFS-002",
         "SMPFS-003",
@@ -15239,7 +15239,8 @@
         "SMPFS-163",
         "SMPFS-164",
         "SMPFS-165",
-        "SMPFS-166"
+        "SMPFS-166",
+        "SMPFS-167"
       ],
       "reasoning_tiers": [
         "high",
@@ -15273,6 +15274,7 @@
         "browser_runtime_drift",
         "browser_script_compiler_or_authority_escape",
         "browser_web_boundary_drift",
+        "browser_workspace_creation_or_replay_authority_escape",
         "browser_workspace_isolation_or_controller_escape",
         "capability_digest_or_human_step_projection_drift",
         "catalog_lifecycle_drift",
@@ -15375,10 +15377,10 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "3b42ad563a048eb635cc57e735186666c4cf91e59da9c2208cfd6504231a2a86",
+      "sha256": "522aeec49afa52ccfc3331e84437298993ec9ddbabf18739e558737a3d2fb76a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 164,
+        "accepted": 165,
         "retired": 2
       },
       "title": "Section 15 Promoted Features Spec",
@@ -15386,7 +15388,7 @@
         "command_binding": 2,
         "compatibility_disposition": 2,
         "constraint": 3,
-        "owner_boundary": 2,
+        "owner_boundary": 3,
         "requirement": 157
       },
       "validation_surfaces": [
@@ -15420,6 +15422,8 @@
         "Plans/Automated_Testing_System.md — DL-035 terminal acceptance fixtures (future execution)",
         "Plans/Wiring_Matrix.production.json",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/browser_workspace_created_contract_fixtures.json",
+        "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
         "Plans/section15_browser_program_contract_fixtures.json",
@@ -15481,6 +15485,7 @@
         "scrollback is not model context",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_program_semantics.py",
+        "tests/test_pm_browser_workspace_created.py",
         "tmux passthrough marks command-block confidence degraded when unverified"
       ]
     },
@@ -16382,10 +16387,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 163,
+        "False": 164,
         "True": 100
       },
-      "heading_count": 474,
+      "heading_count": 479,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16413,6 +16418,7 @@
         "Plans/assistant-chat-design.md",
         "Plans/browser_event_admission.json",
         "Plans/browser_event_payloads.schema.json",
+        "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/event_family_registry.json",
         "Plans/event_record.schema.json",
         "Plans/goal_runtime_events.schema.json",
@@ -16443,9 +16449,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19436,
+      "line_count": 19617,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 263,
+      "plan_unit_count": 264,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16709,7 +16715,8 @@
         "SP-262",
         "SP-260",
         "SP-261",
-        "SP-265"
+        "SP-265",
+        "SP-266"
       ],
       "reasoning_tiers": [
         "high",
@@ -16717,6 +16724,7 @@
       ],
       "risk_classes": [
         "browser_event_retention_anchor_or_physical_admission_escape",
+        "browser_workspace_created_source_or_checkpoint_authority_drift",
         "compaction_completion_authority",
         "containerized_host_storage_drift",
         "cross_domain_secret_leak_identity_collision_or_false_persistence_proof",
@@ -16768,17 +16776,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "96d1c05d4fb0cf0e198f11b53a2a75c30b85f20bd894d585bd8074b4eab5b79f",
+      "sha256": "68a38a9652d4ee69fabebb4b4254f75398447ed2dd17347178e677ad9ba7a7b2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 260,
+        "accepted": 261,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 239,
+        "requirement": 240,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 9,
@@ -16813,6 +16821,8 @@
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/browser_event_admission_fixtures.json",
+        "Plans/browser_workspace_created_contract_fixtures.json",
+        "Plans/browser_workspace_created_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
@@ -16873,6 +16883,7 @@
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
+        "tests/test_pm_browser_workspace_created.py",
         "tests/test_pm_onboarding_phases.py"
       ]
     },
@@ -18742,7 +18753,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T19:17:23Z",
+  "generated_at_utc": "2026-09-11T19:43:27Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18750,13 +18761,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3368,
+      "False": 3370,
       "True": 3151
     },
-    "plan_unit_count": 6519,
+    "plan_unit_count": 6521,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6328,
+      "accepted": 6330,
       "retired": 182,
       "superseded": 9
     },
@@ -18810,7 +18821,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 34,
+      "owner_boundary": 35,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -18823,7 +18834,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5177,
+      "requirement": 5178,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

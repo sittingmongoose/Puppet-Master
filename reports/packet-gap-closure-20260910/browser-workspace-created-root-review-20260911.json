@@ -1,0 +1,153 @@
+{
+  "schema_id": "pm.browser_single_family_root_review.v1",
+  "review_id": "BROWSER-WORKSPACE-CREATED-ROOT-20260911",
+  "event_type": "browser.workspace.created",
+  "reviewed_at_utc": "2026-09-11 19:36:10 UTC",
+  "source_base_commit": "99c03d502a742421c57c66ab0e8e5b7d6649f064",
+  "decision": "approve_exact_single_family_static_contract_admission",
+  "definition_authority": "Plans/Decision_Log.md#DL-046",
+  "reviewer": "root",
+  "scope": "One Browser family and its separately defined derived checkpoint only; the other52 prepared Browser families remain denied. This is a root contract review, not the independent Event Authority governance validator or native execution.",
+  "existing_first_search": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-workspace-created-search-20260911-ql4IEO/scoped-search.json",
+    "sha256": "33f30c96eef17c1b89e5e61beaa3ba305e6ab2ae099216c467be21a87410e30c",
+    "scope": "18 explicitly named canonical files at99c03d502a; per-family queries and partial contracts. No universal absence inference."
+  },
+  "adjudication": [
+    {
+      "axis": "producer_and_commit",
+      "result": "accepted_static_contract",
+      "refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167"
+      ],
+      "reason": "Authenticated exact ordinary BrowserRuntimeService; real request/result/receipt scope and permission/capability joins; unused isolated identity staged behind barrier AppendReceipt. Proven noncreation is event-silent; uncertain append is reconciled and committed facts survive lost acknowledgement."
+    },
+    {
+      "axis": "consumer_projector_checkpoint",
+      "result": "accepted_new_technical_definitions",
+      "refs": [
+        "Plans/storage-plan.md#SP-266",
+        "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
+      ],
+      "reason": "New exact inventory reader and Storage binding with one separately materialized derived checkpoint; existing generic index reused in its owned role only. No shared-runtime domain widening, sibling identifier borrowing, canonical Browser session/profile family, UsageRecord or prompt effect."
+    },
+    {
+      "axis": "identity_replay_currentness_recovery",
+      "result": "accepted_static_contract",
+      "reason": "Original EventRecord identity/digest and exact payload scope; complete CURRENT-selected source range, survivor cursor, fenced CAS and revalidated disclosure. Empty range requires independent proof; historical creation never proves live workspace/controller/permission. Unsupported, corrupt, missing, stale or withdrawn evidence fences readers; only derived state rebuilds."
+    },
+    {
+      "axis": "retention_and_deletion",
+      "result": "existing_policy_preserved",
+      "reason": "Source keeps SP262 RP-AUTHORITY-INDEFINITE@1.0.0; index source-coupled; derived checkpoint existing RP-PROJECTION-3GEN@1.0.0 with first-withdrawal terminal anchor. No retention policy definition or content/deletion choice changes; tombstones/access precede disclosure and recovery."
+    },
+    {
+      "axis": "schema_and_semantic_checks",
+      "result": "pass_static_only",
+      "reason": "Unique existing closed payload plus exact new closed checkpoint sidecar/offline materialization.34 creation negatives,18 checkpoint negatives,3 fixture positives;36 family tests include barriers/retries/recovered-state validation and exact historical scope. Generic Browser tests also deny borrowed sibling bindings."
+    }
+  ],
+  "review_corrections": [
+    "Qualified zero-append claims for append uncertainty/postcommit failure.",
+    "Required schema/completeness validation of recovered checkpoints before disclosure.",
+    "Added explicit timestamp syntax/calendar checks because installed FormatChecker did not reject malformed time.",
+    "Added direct reuse of Browser envelope/payload validation in creation preflight and historical reads."
+  ],
+  "pre_admission_source_pins": [
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "522aeec49afa52ccfc3331e84437298993ec9ddbabf18739e558737a3d2fb76a"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "68a38a9652d4ee69fabebb4b4254f75398447ed2dd17347178e677ad9ba7a7b2"
+    },
+    {
+      "path": "Plans/browser_workspace_created_contracts.schema.json",
+      "sha256": "0be9ff6f77fba79156d65afa6c73bf2055c103a651f0237dd289f5d765ee0409"
+    },
+    {
+      "path": "Plans/browser_workspace_created_contract_fixtures.json",
+      "sha256": "be14d9e4c52443300b63665af50187edeca8138d5ef228ce14d9acf7567f7e8a"
+    },
+    {
+      "path": "scripts/pm_browser_workspace_created.py",
+      "sha256": "f27da85961cde0b1955fd77133abb0cb2278579f9bc8b14157a031fba2fb9c9c"
+    },
+    {
+      "path": "scripts/pm-browser-event-admission.py",
+      "sha256": "d28a7170403dfbedfbec57537641d7fee09ee05def97550a151ec3d1f521bf59"
+    },
+    {
+      "path": "tests/test_pm_browser_workspace_created.py",
+      "sha256": "4591b7be1a65898c098ef1e1c129ce27eadb28fa1e6a6d31cc84023f251d33b4"
+    },
+    {
+      "path": "tests/test_pm_browser_event_admission.py",
+      "sha256": "4df6ab89d5bf374a0b862a0c539945c7ff9724f1aff159a2d0d9a437af7387b1"
+    },
+    {
+      "path": "Plans/browser_event_admission.json",
+      "sha256": "fc8edef1a99a200948c20a61d4b3b72dba611db9098a9e0281941a9e710ab324"
+    },
+    {
+      "path": "Plans/browser_event_admission.schema.json",
+      "sha256": "c6896b57a9dad5ab205d647bbbf4d69e29cfe094b33deea17408ba36db6b7cb1"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "6fd73e9787d7e8fc0c676cb1414836e5ed74dae8a2bdcf606f33cf3030c095cb"
+    },
+    {
+      "path": "Plans/browser_event_payloads.schema.json",
+      "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/section15_browser_program_contracts.schema.json",
+      "sha256": "d947af57f9fe2ddb538bc0e3b619b7b743bc8503e2681db18309bad0e4184684"
+    }
+  ],
+  "preservation_before_membership_change": {
+    "event_registry_entire_unchanged": true,
+    "event_rows": 40,
+    "storage_prior_89_unchanged": true,
+    "new_storage_families": [
+      "browser_workspace_created_index_checkpoint"
+    ],
+    "all_24_retention_policies_unchanged": true,
+    "other_52_browser_rows_unchanged": true,
+    "command_bindings_unchanged": true
+  },
+  "focused_verification": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=tests python3 -B -m unittest test_pm_browser_event_admission test_pm_browser_workspace_created test_pm_onboarding_phases -v",
+    "tests_run": 108,
+    "passed": 108,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 60.68,
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-workspace-created-review-20260911-lrt325/pre-admission-focused-tests.log",
+      "sha256": "dff21de583994f0455e1e9088701de8abe321c2b14a4eaa3e017ea24814c7566"
+    }
+  },
+  "upstream_to_rebase": {
+    "commit": "f23c165ff84785fd8368c6fb16513559e4a334e0",
+    "review": "Root read current DL044/UIW004/vocabulary-validator/test changes and both production/Touch deltas. DL046 and Browser entries are unchanged; final rebase and current checks remain required before landing."
+  },
+  "admission_application": "This review precedes the exact prepared_not_admitted -> admitted_static_contract transition and addition of one central family row. Final membership, rebase and verification are recorded separately; this file is not a bulk gate or seal.",
+  "remaining_proof": [
+    "Native authenticated producer and receipt resolution",
+    "Native barrier/resource isolation, crash recovery and dedupe",
+    "Real source-byte/currentness and redb atomicity",
+    "Native permissions, deletion, retention and withdrawal execution",
+    "Other52 Browser family contracts/admissions",
+    "Formal13416-case packet audit",
+    "PNC019/currentness/readiness and governance seal"
+  ],
+  "native_proven": false,
+  "governance_sealed": false
+}

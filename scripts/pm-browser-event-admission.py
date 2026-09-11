@@ -33,6 +33,23 @@ def envelope_oracle():
     return module
 
 
+@lru_cache(maxsize=1)
+def workspace_created_authority():
+    path = ROOT / "scripts/pm_browser_workspace_created.py"
+    spec = importlib.util.spec_from_file_location("browser_workspace_created_authority", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def authority_binding_failures(row):
+    # The sole implemented depth binding is intentionally exact, not a Browser
+    # prefix, sibling-ID interpolation, or arbitrary ref-driven module loader.
+    if row["event_type"] != "browser.workspace.created":
+        return ["complete_browser_authority_binding_missing"]
+    return workspace_created_authority().binding_failures(row, root=ROOT)
+
+
 def load_json(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
@@ -94,6 +111,8 @@ def semantic_failures(payload):
     if event == "browser.workspace.reset":
         if facts["prior_workspace_generation"] is None or facts["prior_workspace_generation"] >= facts["workspace_generation"]:
             failures.append("workspace_generation_not_advanced")
+    if event == "browser.workspace.created" and facts["prior_workspace_generation"] is not None:
+        failures.append("not_new_workspace_identity")
     if "prior_page_generation" in facts and facts["prior_page_generation"] is not None:
         if facts["prior_page_generation"] > context["page_generation"]:
             failures.append("page_generation_regressed")
@@ -178,6 +197,8 @@ def candidate_failures(event, producer_component, context):
     """Check prepared payload semantics without granting EventRecord admission."""
     admission, _, _, envelope, validators = context
     failures = []
+    if not isinstance(event, dict):
+        return ["envelope_schema"]
     rows = {row["event_type"]: row for row in admission["rows"]}
     row = rows.get(event.get("event_type"))
     if row is None:
@@ -185,12 +206,17 @@ def candidate_failures(event, producer_component, context):
     if list(Draft202012Validator(envelope, format_checker=FormatChecker()).iter_errors(event)):
         failures.append("envelope_schema")
     payload = event.get("payload", {})
+    if not isinstance(payload, dict):
+        return failures + ["payload_schema"]
     if list(validators[event["event_type"]].iter_errors(payload)):
         failures.append("payload_schema")
     if producer_component != row["producer_component"]:
         failures.append("producer_not_authorized")
+    payload_context = payload.get("context", {})
+    if not isinstance(payload_context, dict):
+        return failures + ["payload_schema", "envelope_scope"]
     if event.get("scope_kind") != "project" or any(
-        event.get(field) != payload.get("context", {}).get(field) for field in IDENTITIES
+        event.get(field) != payload_context.get(field) for field in IDENTITIES
     ):
         failures.append("envelope_scope")
     if event.get("payload_schema_id") != row["payload_schema_ref"]["schema_id"] or payload.get("event_type") != event["event_type"]:
@@ -244,6 +270,8 @@ def central_binding_failures(row, family, row_index):
 def event_failures(event, producer_component, context, *, families=None):
     """Admission-enforcing check, distinct from candidate shape/semantics."""
     failures = candidate_failures(event, producer_component, context)
+    if not isinstance(event, dict):
+        return failures + ["event_not_admitted"]
     matches = [(index, row) for index, row in enumerate(context[0]["rows"]) if row["event_type"] == event.get("event_type")]
     if len(matches) != 1:
         return failures + ["event_not_admitted"]
@@ -258,7 +286,7 @@ def event_failures(event, producer_component, context, *, families=None):
         family = matching_families[0]
     else:
         family = families.get(row["event_type"])
-    return failures + central_binding_failures(row, family, row_index)
+    return failures + central_binding_failures(row, family, row_index) + authority_binding_failures(row)
 
 
 class ReplayOracle:
@@ -382,6 +410,8 @@ def validate(*, payloads_only=False):
             continue
         for error in central_binding_failures(row, families.get(row["event_type"]), row_index):
             failures.append({"event_type": row["event_type"], "error": error})
+        for error in authority_binding_failures(row):
+            failures.append({"event_type": row["event_type"], "error": error})
     fixtures = load_json("Plans/browser_event_admission_fixtures.json")
     by_id = {case["case_id"]: case for case in fixtures["valid"]}
     if set(case["event_type"] for case in fixtures["valid"]) != required_events or len(by_id) != 53:
@@ -415,6 +445,12 @@ def validate(*, payloads_only=False):
             failures.append({"case_id": case["case_id"], "error": "negative_not_rejected_for_expected_reason", "details": errors})
     for error in Draft202012Validator(load_json("Plans/event_family_registry.schema.json")).iter_errors(registry):
         failures.append({"error": "central_registry_schema", "detail": error.message})
+    authority_reports = []
+    if "browser.workspace.created" in admitted_events:
+        report = workspace_created_authority().validate_fixture_contracts(root=ROOT)
+        authority_reports.append(report)
+        for failure in report["failures"]:
+            failures.append({"event_type": "browser.workspace.created", "error": "workspace_created_static_contract", "detail": failure})
     return {
         "schema_id": "pm.browser_event_admission_report.v1",
         "status": "fail" if failures else ("payloads_valid_registry_not_claimed" if payloads_only else "pass"),
@@ -425,6 +461,7 @@ def validate(*, payloads_only=False):
         "registry_family_count": len(registry["families"]), "preexisting_family_rows_unchanged": len(existing) == 39 and fingerprint(existing) == admission["preexisting_family_rows_sha256"],
         "positive_cases": len(fixtures["valid"]), "negative_cases": len(fixtures["invalid"]),
         "command_event_bindings_checked": len(command_bindings),
+        "single_family_authority_reports": authority_reports,
         "global_event_denominator": "UNKNOWN_OPEN", "runtime_producer_proven": False, "governance_sealed": False,
         "failures": failures,
     }
