@@ -1,0 +1,28 @@
+{
+  "status": "PASS_METADATA_AND_SCOPE",
+  "base_commit": "050f220474c8bca5ccd376d12e998e3bcd8195d2",
+  "changed_physical_row": "restore_point_retention_summary",
+  "only_registry_field_changed": "consumers",
+  "added_current_reader_routes": [
+    "projector.chat.restore_point_created@2.0.0",
+    "reader.chat.restore_point_history@2.0.0",
+    "reader.runtime_artifacts.restore_point_record@2.0.0"
+  ],
+  "prior_consumer_routes_preserved": [
+    "projector.chat.restore_point_created@1.0.0",
+    "reader.chat.restore_point_history@1.0.0",
+    "reader.runtime_artifacts.restore_point_record@1.0.0",
+    "Storage restore-point retention/recovery"
+  ],
+  "branch_summary_route": "EXCLUDED",
+  "physical_families": 95,
+  "retention_policies": 24,
+  "all_other_registry_values_preserved": true,
+  "only_changed_plan_unit": "SP-269",
+  "only_changed_plan_unit_field": "canonical_text",
+  "all_acceptance_criteria_preserved": true,
+  "summary_schema_key_writer_values_policies_unchanged": true,
+  "new_native_runs": 0,
+  "native": "NOT_RUN",
+  "new_depth_closures": 0
+}

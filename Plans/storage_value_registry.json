@@ -27808,7 +27808,10 @@
         "projector.chat.restore_point_created@1.0.0",
         "reader.chat.restore_point_history@1.0.0",
         "reader.runtime_artifacts.restore_point_record@1.0.0",
-        "Storage restore-point retention/recovery"
+        "Storage restore-point retention/recovery",
+        "projector.chat.restore_point_created@2.0.0",
+        "reader.chat.restore_point_history@2.0.0",
+        "reader.runtime_artifacts.restore_point_record@2.0.0"
       ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",

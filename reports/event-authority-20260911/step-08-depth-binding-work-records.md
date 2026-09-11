@@ -2,7 +2,7 @@
 
 This depth work is already authorized. These records request no permission, approval or answer. Missing identifiers are technical contract blockers, not new product decisions. A record closes only when its exact binding evidence exists in canonical owner contracts and passes a fresh assessment.
 
-All registered families remain depth-incomplete. Generic projector ordering cannot substitute for event-specific consumer identity, checkpoint key/version, durable advance ordering and replay behavior. Existing registration, retention and current Goal V2 retirement decisions remain settled.
+Current supplement: `run.started` and `restore_point.created` have completed individual normative depth through the explicitly adopted SP-278 contract; see [current depth and limits](step-08-depth-report.md). Their sibling families remain open. The six work records below preserve the initial assessment and required work, not current claims that those two rows remain unclosed. Generic projector ordering cannot substitute for event-specific consumer identity, checkpoint key/version, durable advance ordering and replay behavior. Existing registration, retention and current Goal V2 retirement decisions remain settled.
 
 ## EA-S8-GOAL-BINDING — Goal consumer/checkpoint evidence
 

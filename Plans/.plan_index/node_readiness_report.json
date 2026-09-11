@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T21:26:32Z",
+  "generated_at_utc": "2026-09-11T21:52:04Z",
   "gui_related_units": {
     "count": 3156,
     "units": [
@@ -38657,7 +38657,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "ea9ab8612ef1948675896d716a69e3f8a4529278a323ddf653e939509eebdffc",
+        "expected": "1ca234e24cedba0233714de0a68a0efc115a3ef46eec4a8c2c6896000f45b445",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38725,7 +38725,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-index-adoption-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-home-layout-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {

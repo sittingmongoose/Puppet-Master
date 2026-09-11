@@ -19813,6 +19813,8 @@ This is a NEW shared technical prerequisite under `DL-045`, owned by Storage SP-
 
 The physical family is `restore_point_retention_summary@1.0.0`, key `restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}`, value `pm.storage_value.restore_point_retention_summary.v1@1.0.0`. `scope_partition` is exactly `project~` plus unpadded base64url of exact UTF-8 `project_id`. Its inline closed `value_schema` is registered with the family before any writer or reader depends on it. New writer binding is `writer.storage.restore_point_retention_summary@1.0.0`. This writer is a Storage retention action, not a producer of any new EventRecord. The value is canonical, content-free and non-rebuildable; required summary custody is included in mandatory canonical backup/recovery. It is not a derived artifact or a second logical restore point.
 
+**Current readers of the unchanged v1 summary.** For `restore_point.created`, the explicitly adopted `projector.chat.restore_point_created@2.0.0`, `reader.chat.restore_point_history@2.0.0` and `reader.runtime_artifacts.restore_point_record@2.0.0` read this same `pm.storage_value.restore_point_retention_summary.v1@1.0.0` through SP-281/SP-278 and the complete current source/index token. The physical registry names these current routes alongside the retained v1 compatibility bindings and Storage retention/recovery owner. This reader adoption changes no summary schema, key, writer, original authority predicate, retained value or retention policy, and admits no sibling event reader. `reader.chat.branch_from_restore` at either version accepts no terminal-summary result and gains no summary consumer route or branch authority. A future versioned summary requires its own explicit writer and reader adoption; the current reader version alone does not select one.
+
 The exact fields are the inline schema: immutable project/point/ref/original-hash identity; `representation = retained_hash_summary`; actual storage instance; an owner-verified native-or-supported-historical capture-hash relation; original created and terminal event IDs, schema IDs, payload/semantic/frame digests and verified source coordinates; existing policy ID/version/expiry action; a complete owner reference-release fact; eligibility selection/time/count and eligible-set digest; exactly one complete evaluation for each named hold/ref class; exact canonical family/key/schema/encoding/value-byte digests removed in the transaction; owner-proven flags identifying required creation/deletion companions; and the retiring actor, operation, owner gate revision, summary transaction and commit time/source generation.
 
 These are embedded durable owner decision facts. Original evidence refs/IDs are supplemental lineage, not the only available proof after lawful source-manifest retirement. `value_bytes_sha256` is SHA-256 of the exact validated canonical encoded value bytes read for the named key, using its registered encoding; it is distinct from immutable `original_record_hash`. Event payload and frame digests are SHA-256 of the exact canonical payload/frame bytes actually verified under their owners. No digest is substituted for an unperformed check. The writer must validate the real records and receipt/source authority before recording these facts; schema-shaped, self-issued or pointer-only claims cannot create a summary. The snapshot captures only minimal content-free identity, digest and decision facts needed for future terminal verification, not original command/input, title, transcript, attachment/file bytes, runtime queue, secrets or raw machine paths.
@@ -19847,9 +19849,17 @@ plan_unit_id: SP-269
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage defines one canonical content-free restore-point retention summary family as the existing retain_hash_summary policy residue. A single owner-authorized redb transaction writes complete validated terminal identity, hash, release, hold, selection and exact retired-custody facts while removing only the named eligible point and companion keys. The summary permits typed passive terminal traversal after lawful removal without requiring those removed rows, and never supplies live completion, action, reconstruction or source visibility.
+canonical_text: Storage defines one canonical content-free restore-point retention summary family as the
+  existing retain_hash_summary policy residue. A single owner-authorized redb transaction writes complete
+  validated terminal identity, hash, release, hold, selection and exact retired-custody facts while removing
+  only the named eligible point and companion keys. The summary permits typed passive terminal traversal
+  after lawful removal without requiring those removed rows, and never supplies live completion, action,
+  reconstruction or source visibility. For restore_point.created, the explicitly adopted SP-281 v2 projector
+  and passive history/Runtime Artifacts readers consume the unchanged v1 summary through SP-278; branch-from-restore
+  rejects this result, and no summary format or sibling-reader adoption is inferred.
 gui_related: false
-gui_classification_reason: This unit defines canonical storage custody, atomic retirement and passive reader proof.
+gui_classification_reason: This unit defines canonical storage custody, atomic retirement and passive
+  reader proof.
 split_recommended: false
 depends_on:
 - SP-242
@@ -19857,12 +19867,18 @@ depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact registered summary key, closed value schema and mandatory-backup recovery are required before use; generic storage deletion scope is not a substitute.
-- Owner-proven release plus 7776000 seconds, all holds, 2048 logical points and oldest-eligible selection remain unchanged; residue gains no independent TTL, timer, policy or hold.
-- Summary publication and exact listed redb removals commit together or not at all; pending native custody, changed owner revisions and unexplained loss fail closed.
-- Embedded content-free validated facts survive lawful original-manifest retirement and are not mere unresolved proof pointers.
-- Typed terminal traversal is distinct from present native and supported historical completion and cannot authorize an action or resurrect source content.
-- Missing required canonical summary custody is disclosed recovery loss, not an invitation to reconstruct a point from events.
+- Exact registered summary key, closed value schema and mandatory-backup recovery are required before
+  use; generic storage deletion scope is not a substitute.
+- Owner-proven release plus 7776000 seconds, all holds, 2048 logical points and oldest-eligible selection
+  remain unchanged; residue gains no independent TTL, timer, policy or hold.
+- Summary publication and exact listed redb removals commit together or not at all; pending native custody,
+  changed owner revisions and unexplained loss fail closed.
+- Embedded content-free validated facts survive lawful original-manifest retirement and are not mere unresolved
+  proof pointers.
+- Typed terminal traversal is distinct from present native and supported historical completion and cannot
+  authorize an action or resurrect source content.
+- Missing required canonical summary custody is disclosed recovery loss, not an invitation to reconstruct
+  a point from events.
 validation_surfaces:
 - Plans/storage_value_registry.json
 - Plans/restore_point_retention_summary_fixtures.json
@@ -19886,8 +19902,10 @@ preserved_exact_tokens:
 - restore_point_retention_summary
 - terminal_retention_summary
 negative_constraints:
-- No new event admission, lifecycle edge, source-body deletion command, retention policy, independent summary TTL, runtime proof or governance seal.
-- No inference of release or successful retirement from missing rows, wall time, pointer-only claims or deleted-source UI state.
+- No new event admission, lifecycle edge, source-body deletion command, retention policy, independent
+  summary TTL, runtime proof or governance seal.
+- No inference of release or successful retirement from missing rows, wall time, pointer-only claims or
+  deleted-source UI state.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/storage-plan.md
