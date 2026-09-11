@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-11T13:49:13.771366+00:00",
+  "documents": 206,
+  "bytes": 1053201,
+  "document_hash_mismatches": [],
+  "known_arm_model_label_matches": [],
+  "provenance_document_coverage_complete": true,
+  "semantic_adjudication_started": false,
+  "finding_classification_status": "pending",
+  "method": "Deterministic byte-identical deduplication and explicit arm/model label removal only; no finding judgments or recall scores inferred.",
+  "input_manifest": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/documents.json",
+  "input_manifest_sha256": "c742ef646ceda1ed1ec0416ef19afd67f8942ab87d8d0c006eb5feebf7447e96",
+  "hidden_provenance": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-provenance.json",
+  "hidden_provenance_sha256": "159680ff04faed7e3382c97c9628c94f9ec73aecaa46b66378125fef9f3485d4"
+}

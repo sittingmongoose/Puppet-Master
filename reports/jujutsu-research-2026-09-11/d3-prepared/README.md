@@ -1,0 +1,9 @@
+# Jujutsu blind-adjudication handoff — incomplete
+
+Deliverable 2 is frozen and pushed. The two arms produced 206 unique normalized documents totaling 1,053,201 bytes after deterministic exact-body deduplication. Reports, output leads, input leads, source lists and handoffs are included. The blind index preserves document hashes; the separate provenance map preserves original arm, path, phase and original byte hash. All hashes match and the explicit arm/model-label scan passes. Protocol assignments, tool help and the common brief remain in the complete freeze but are not finding documents.
+
+No finding classification has started. There is no corrections set, decision packet, comparison recall score or canonical landing. This is a partial result before the requested deliverable 4 checkpoint. A future adjudicator must read the blind corpus and frozen case, classify the complete deduplicated union, and freeze those judgments before arm labels are reattached. Pending and interrupted intake must remain in scope.
+
+The existing non-arm monetary guard denies further admission because observed usage plus its operational reserve reaches the $60 allowance. The reserve is not money spent. The exact captured amount and evidence hashes are in `handoff.json`; actual cash is unknown. Native counter epochs were recovered additively from explicit complete receipts, with no reset of earlier charges.
+
+Next required work remains the full brief: blind Medium adjudication; corrections and every optional capability/product choice in the plain packet and companion; per-arm union-relative recall and stage-loss/coverage comparison; independent ledger review; currentness re-adjudication; canonical corrections, derived regeneration and authorized serialized landing. No packet item is pre-approved. The latest AGENTS.md landing procedure includes verification of committed HEAD before pushing despite unrelated dirty-working-tree shard failures.
