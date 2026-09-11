@@ -1,6 +1,6 @@
 {
   "phase": "d5",
-  "status": "reviewed_authoring_batch_ready_for_rebase_and_landing",
+  "status": "reviewed_rebased_owner_batch_for_landing",
   "dispositions": 44,
   "classes": {
     "accepted_for_planning": 29,
@@ -19,5 +19,7 @@
     "RBS-001: shared integration owner-route table explicitly retains common Source Control, Git and Jujutsu semantic owners."
   ],
   "governance_status": "failures_recorded_no_reseal",
-  "campaign_work": "Original frozen results untouched; protocol repair and continuation are subsequent separately reported phases."
+  "campaign_work": "Original frozen results untouched; protocol repair and continuation are subsequent separately reported phases.",
+  "reviewed_main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "owner_commit": "50f3d42397e0fdd20cee49bca00ffa55fb079be2"
 }

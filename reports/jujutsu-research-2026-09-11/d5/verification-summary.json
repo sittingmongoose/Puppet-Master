@@ -1,6 +1,6 @@
 {
   "schema": "jj.d5.verification.v1",
-  "at": "2026-09-11T17:58:48.361739+00:00",
+  "at": "2026-09-11T18:08:52.811172+00:00",
   "status": "authoring_review_pass_governance_not_sealed",
   "independent_review": {
     "status": "pass",
@@ -2214,6 +2214,86 @@
   },
   "checks": [
     {
+      "name": "rebased-gates",
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "start": "2026-09-11T18:03:40.020746+00:00",
+      "end": "2026-09-11T18:07:15.501686+00:00",
+      "returncode": 1,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/rebased-gates.stdout.txt",
+      "stdout_sha256": "d63177b64343f76854c625a99dd8021ef2411ae3fbbbf9a796ab4365357c97b6",
+      "stderr_sha256": "6d0979eaa987d703d5fabdf688006fccf820320c4318abde386038b21dc7125b"
+    },
+    {
+      "name": "rebased-index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "start": "2026-09-11T18:03:40.021118+00:00",
+      "end": "2026-09-11T18:04:03.714815+00:00",
+      "returncode": 0,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/rebased-index-validate.stdout.txt",
+      "stdout_sha256": "21248da5dc6e712a8406db09785b3ec8325f06325c24931136dee8a68e1d4ac9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rebased-shards-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "start": "2026-09-11T18:03:40.021575+00:00",
+      "end": "2026-09-11T18:03:45.883555+00:00",
+      "returncode": 0,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/rebased-shards-check.stdout.txt",
+      "stdout_sha256": "753bbecc3a84987e1d830eebf4ee5e9824cb3a02d531049c0690a08d8cbd6e0b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ledger_validation": {
+    "errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
+    ],
+    "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+    "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+    "status": "fail",
+    "summary": {
+      "atoms": 44,
+      "compile_queue_items": 12,
+      "corrections": 0,
+      "decisions": 44,
+      "events": 3,
+      "plan_units_checked": 1924,
+      "questions": 0
+    },
+    "warnings": []
+  },
+  "limitations": [
+    "Four edited native owner documents are absent from the existing sharding configuration; coverage was not expanded.",
+    "Full governance gates and compiled-ledger governance coverage remain failing; see the gate assessment and exact receipts.",
+    "Runtime certification remains incomplete. No governance seal or runtime artifacts are created.",
+    "Temporary tooling inputs are byte-identical copies of existing shared-checkout inputs and are excluded from commits."
+  ],
+  "tooling_input_materialization": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/tooling-inputs/worktree-materialization.json",
+    "sha256": "5a4da4eddcf7a10ef440f66cf1797213b22c44412407a89d584dc124f0743abd"
+  },
+  "ledger_validation_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/ledger-final-before-rebase.json",
+    "sha256": "f761fea4e40ae5a83171d52c11dcefe55c6a74ab4974565e954c672781739d4d"
+  },
+  "pre_rebase_checks": [
+    {
       "name": "final-gates",
       "command": [
         "python3",
@@ -2258,38 +2338,8 @@
       "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
-  "ledger_validation": {
-    "errors": [
-      "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
-      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
-      "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
-    ],
-    "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-    "schema_id": "pm.bootstrap_ledger_validator_report.v1",
-    "status": "fail",
-    "summary": {
-      "atoms": 44,
-      "compile_queue_items": 12,
-      "corrections": 0,
-      "decisions": 44,
-      "events": 3,
-      "plan_units_checked": 1924,
-      "questions": 0
-    },
-    "warnings": []
-  },
-  "limitations": [
-    "Four edited native owner documents are absent from the existing sharding configuration; coverage was not expanded.",
-    "Full governance gates and compiled-ledger governance coverage remain failing; see the gate assessment and exact receipts.",
-    "Runtime certification remains incomplete. No governance seal or runtime artifacts are created.",
-    "Temporary tooling inputs are byte-identical copies of existing shared-checkout inputs and are excluded from commits."
-  ],
-  "tooling_input_materialization": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/tooling-inputs/worktree-materialization.json",
-    "sha256": "5a4da4eddcf7a10ef440f66cf1797213b22c44412407a89d584dc124f0743abd"
-  },
-  "ledger_validation_evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/ledger-final-before-rebase.json",
-    "sha256": "f761fea4e40ae5a83171d52c11dcefe55c6a74ab4974565e954c672781739d4d"
-  }
+  "reviewed_main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "rebased_application_ref": "rebased-application.json",
+  "rebased_index_scope_ref": "index-scope-rebased.json",
+  "rebased_gate_assessment_ref": "rebased-gate-assessment.json"
 }

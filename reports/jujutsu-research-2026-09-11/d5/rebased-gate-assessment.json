@@ -1,0 +1,452 @@
+{
+  "status": "rebased_delta_classified",
+  "overall_gate_status": "fail",
+  "exit_code": 1,
+  "completed_at": "2026-09-11T18:07:15.501686+00:00",
+  "comparison": "Previous final pre-rebase D5 gate versus D5 rebased onto cc6d4a9aca",
+  "previous_failed_checks": 11,
+  "rebased_failed_checks": 11,
+  "new_failed_check_names": [],
+  "resolved_failed_check_names": [],
+  "conclusion": "No new D5-specific semantic failure is demonstrated by this bounded delta. Adopted main introduces a visible Touch disagreement for retired cmd.github.pr.create primary wiring plus two additional locked-path hash failures. Existing environment, compaction fixture, stale governance, migration and readiness failures persist. Overall gates remain red.",
+  "checks": [
+    {
+      "check": "json_syntax",
+      "previous_count": 16,
+      "rebased_count": 16,
+      "identical_displayed_rows": 16,
+      "explanation": "All 16 missing raw-capture rows exactly unchanged; environmental custody paths remain unavailable in worktree.",
+      "changed_displayed_rows": []
+    },
+    {
+      "check": "verify_spec_lock",
+      "previous_count": 19,
+      "rebased_count": 21,
+      "identical_displayed_rows": 16,
+      "explanation": "21 versus 19 stale hashes. Newly failed paths Wiring_Matrix.schema.json and scripts/pm-plans-verify.py are adopted-main changes. Updated current hashes for UI_Command_Catalog.md, Wiring_Matrix.md and UI_Wiring_Rules.md also reflect adopted main combined with D5. Historical lock remains unchanged.",
+      "changed_displayed_rows": [
+        {
+          "actual": "69f878743253f8b232830d8fbe19db0e79271ce2110dffce9f68f0a7fb5af31a",
+          "error": "stale_hash",
+          "expected": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9",
+          "path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": "5143aa3167261bf3dbbe915086c1e37a315e577113b1f538a4a871bc1e352784",
+          "error": "stale_hash",
+          "expected": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08",
+          "path": "Plans/Wiring_Matrix.schema.json"
+        },
+        {
+          "actual": "0058eff18af43b495b659ed78b0d1c7fe78b83167cd9c0a8c662ba3372b3c620",
+          "error": "stale_hash",
+          "expected": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4",
+          "path": "scripts/pm-plans-verify.py"
+        },
+        {
+          "actual": "c57ce447c5aeae4f6080689ba4e65d8631c2f0ff8f522a5cd0fda61764725201",
+          "error": "stale_hash",
+          "expected": "d108a46be70fbc2c9a91dc216f291f8238ed1201412f6582a4ad93a1ccad03f6",
+          "path": "Plans/Wiring_Matrix.md"
+        },
+        {
+          "actual": "ab72a564c10d41a77e937675747f9e9756162d74fe03e7f95f7315794c323613",
+          "error": "stale_hash",
+          "expected": "b8367d078b36f222790f922a8751e07ad425eabf2f120618c6f8beb2c381f7d3",
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      ]
+    },
+    {
+      "check": "validate_plan_graph",
+      "previous_count": 50,
+      "rebased_count": 50,
+      "identical_displayed_rows": 50,
+      "explanation": "All 50 displayed historical artifact hash failures unchanged.",
+      "changed_displayed_rows": []
+    },
+    {
+      "check": "validate_evidence",
+      "previous_count": 50,
+      "rebased_count": 50,
+      "identical_displayed_rows": 50,
+      "explanation": "All 50 displayed historical artifact hash failures unchanged.",
+      "changed_displayed_rows": []
+    },
+    {
+      "check": "lint_path_refs",
+      "previous_count": 2,
+      "rebased_count": 2,
+      "identical_displayed_rows": 1,
+      "explanation": "Same two missing scratchpad surfaces; only SMPFS-151 index line changes 5444 to 5446 after two adopted Decision Log units.",
+      "changed_displayed_rows": [
+        {
+          "error": "implementation_surface_missing_or_untyped",
+          "implementation_surface": "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current",
+          "line": 5446,
+          "path": "Plans/.plan_index/plan_units.jsonl",
+          "plan_unit_id": "SMPFS-151",
+          "surface_error": "missing_ref"
+        }
+      ]
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "previous_count": 50,
+      "rebased_count": 50,
+      "identical_displayed_rows": 47,
+      "explanation": "47 of 50 displayed rows identical. Changed PNC019/UI Command Catalog and production Wiring current hashes plus Decision Log Event Authority drift follow adopted main. Prior stale buildability projection remains; no new runtime success claimed.",
+      "changed_displayed_rows": [
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "69f878743253f8b232830d8fbe19db0e79271ce2110dffce9f68f0a7fb5af31a",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Command_Catalog.md"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "363bbb90307e5485593c07478954610a04d01f4f730d811de35538dc589d8c83",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/Wiring_Matrix.production.json"
+        },
+        {
+          "actual": null,
+          "error": "pnc019_source_hash_stale",
+          "expected": "ab72a564c10d41a77e937675747f9e9756162d74fe03e7f95f7315794c323613",
+          "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+          "source_path": "Plans/UI_Wiring_Rules.md"
+        }
+      ]
+    },
+    {
+      "check": "validate_plan_migration",
+      "previous_count": 50,
+      "rebased_count": 50,
+      "identical_displayed_rows": 49,
+      "explanation": "49 of 50 rows identical; Decision_Log.md stale migration hash changes following adopted DL-044/DL-045. Historical migration not repaired.",
+      "changed_displayed_rows": [
+        {
+          "actual": "4fb42282de1cd0ebc263609e0487ef584d2f0663e3aa41ec7d1bf9b5f74d3f98",
+          "doc_index": 1,
+          "doc_path": "Plans/Decision_Log.md",
+          "error": "stale_batch_report_sha256_after",
+          "expected": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5",
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+          "row": 43
+        }
+      ]
+    },
+    {
+      "check": "validate_pm7_gui_fixtures",
+      "previous_count": 3,
+      "rebased_count": 3,
+      "identical_displayed_rows": 3,
+      "explanation": "All three exact prior compaction event/fixture disagreement rows unchanged.",
+      "changed_displayed_rows": []
+    },
+    {
+      "check": "validate_touch_closure",
+      "previous_count": 5,
+      "rebased_count": 5,
+      "identical_displayed_rows": 2,
+      "explanation": "Two exact prior rows retained, three strings changed. New cmd.github.pr.create missing-primary-wiring/handler entries follow adopted DL-044 explicit compatibility alias conversion and primary row removal. This is an adopted-main Touch-consumer disagreement, not a D5 Jujutsu route addition. Existing denominator mismatch now reports 1152 production rows after main removed two rows. Do not restore retired primary wiring to green this check.",
+      "changed_displayed_rows": [
+        "actionable Touch primary commands lack production wiring: ['cmd.github.pr.create', 'cmd.settings.agent_rules.dry_method_default_guard.set']",
+        "actionable Touch commands do not resolve to exactly one handler identity: {'cmd.github.pr.create': [], 'cmd.settings.agent_rules.dry_method_default_guard.set': []}",
+        "resolved server/Egolite closure denominator drift: expected {'row_count': 606, 'profile_count': 93, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1154}, found {'row_count': 606, 'profile_count': 93, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1152}"
+      ]
+    },
+    {
+      "check": "validate_audit_closure",
+      "previous_count": 50,
+      "rebased_count": 50,
+      "identical_displayed_rows": 43,
+      "explanation": "43 of 50 displayed rows identical; seven current ledger-registry/index hashes change after rebase/reprojection. Historical closure evidence remains untouched.",
+      "changed_displayed_rows": [
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:27: owner_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored b80a57aab4e80d176bb6b8c980dba3c572625899706696431f03addc5278b645, current 0b08636aec19174375971c52877cf339e127d584a508d6720f7dacb4ed4fafcd)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:29: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:30: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:31: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:32: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:33: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        },
+        {
+          "detail": "Plans/.audits/_semantic_closure_registry.jsonl:34: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 2c2c1c3507922e8338c95bafdfb0b0de4281b5923a7a50298b97c82988dd201d, current 4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8)",
+          "error": "audit_closure_validator_error",
+          "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+        }
+      ]
+    },
+    {
+      "check": "validate_audit_status_index",
+      "previous_count": 1,
+      "rebased_count": 1,
+      "identical_displayed_rows": 1,
+      "explanation": "Single exact prior stale audit index failure unchanged.",
+      "changed_displayed_rows": []
+    }
+  ],
+  "adopted_main_paths": [
+    "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/OWNER_VETOES.jsonl",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_chat.plan_todo_updated.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.failed.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.started.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_onboarding.free_models_refresh_retried.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_onboarding.free_models_refreshed.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_onboarding.provider_setup_opened.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.api_web_call.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.artifact_version.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.before_after_snapshot.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.browser_recording.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.code_diff.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.context_snapshot.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.cost_usage.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.document.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.evidence.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.failed_attempts.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.hitl_approval.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.implementation_plan.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.reasoning_summary.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.restore_point.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.screenshot.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.subagent_lineage.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.suggested_next_steps.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.tool_llm_trace.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_runtime_artifact.validation_test.json",
+    "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_task.failed.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/Decision_Log.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Wiring_Matrix.production.exclusions.json",
+    "Plans/Wiring_Matrix.production.json",
+    "Plans/Wiring_Matrix.schema.json",
+    "Plans/_shards/decision_log/00-index.md",
+    "Plans/_shards/decision_log/001-preamble.md",
+    "Plans/_shards/decision_log/002-purpose.md",
+    "Plans/_shards/decision_log/003-entries.md",
+    "Plans/_shards/decision_log/004-owner-consumer-map.md",
+    "Plans/_shards/decision_log/005-planunits.md",
+    "Plans/_shards/decision_log/006-migration-coverage.md",
+    "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+    "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+    "Plans/_shards/decision_log/manifest.json",
+    "Plans/_shards/ui_command_catalog/00-index.md",
+    "Plans/_shards/ui_command_catalog/001-preamble.md",
+    "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
+    "Plans/_shards/ui_command_catalog/003-0.-scope.md",
+    "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
+    "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
+    "Plans/_shards/ui_command_catalog/006-references.md",
+    "Plans/_shards/ui_command_catalog/007-owner-consumer-map.md",
+    "Plans/_shards/ui_command_catalog/008-planunits.md",
+    "Plans/_shards/ui_command_catalog/009-migration-coverage.md",
+    "Plans/_shards/ui_command_catalog/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
+    "Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+    "Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+    "Plans/_shards/ui_command_catalog/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+    "Plans/_shards/ui_command_catalog/015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+    "Plans/_shards/ui_command_catalog/016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+    "Plans/_shards/ui_command_catalog/017-fable-gui-command-contract-closure-addendum-2026-07-07.md",
+    "Plans/_shards/ui_command_catalog/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+    "Plans/_shards/ui_command_catalog/019-usage-gui-propagation-addendum-2026-07-09.md",
+    "Plans/_shards/ui_command_catalog/020-pmconcept6-control-census-command-addendum-2026-07-16.md",
+    "Plans/_shards/ui_command_catalog/021-case-l-command-registration-and-storage-gate-propagation-2026-07.md",
+    "Plans/_shards/ui_command_catalog/022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+    "Plans/_shards/ui_command_catalog/023-run-debug-revival-addendum-2026-07-27.md",
+    "Plans/_shards/ui_command_catalog/024-guided-tour-local-focus-route-catalog-disposition-2026-09-01.md",
+    "Plans/_shards/ui_command_catalog/025-agent-plugin-lifecycle-ui-catalog-addendum-2026-09-01.md",
+    "Plans/_shards/ui_command_catalog/026-cross-owner-product-onboarding-and-settings-consumer-catalog-add.md",
+    "Plans/_shards/ui_command_catalog/027-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
+    "Plans/_shards/ui_command_catalog/028-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md",
+    "Plans/_shards/ui_command_catalog/029-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md",
+    "Plans/_shards/ui_command_catalog/030-shared-runtime-command-catalog-addendum-2026-08-13.md",
+    "Plans/_shards/ui_command_catalog/031-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md",
+    "Plans/_shards/ui_command_catalog/032-pmconcept7-command-reuse-and-view-local-disposition-addendum-202.md",
+    "Plans/_shards/ui_command_catalog/033-server-egolite-exact-command-and-reverse-consumer-catalog-addend.md",
+    "Plans/_shards/ui_command_catalog/034-central-touch-reverse-gui-catalog-addendum-2026-09-01.md",
+    "Plans/_shards/ui_command_catalog/035-connectiondraft-catalog-and-reverse-consumer-addendum-2026-09-02.md",
+    "Plans/_shards/ui_command_catalog/036-post-integration-auth-alias-catalog-closure-2026-09-02.md",
+    "Plans/_shards/ui_command_catalog/037-neutral-source-control-concrete-catalog-completion-2026-09-02.md",
+    "Plans/_shards/ui_command_catalog/038-puppet-master-assistant-redesign-command-registration-2026-09-03.md",
+    "Plans/_shards/ui_command_catalog/039-additive-correction-v4-revised-command-rows-2026-09-03.md",
+    "Plans/_shards/ui_command_catalog/040-working-notebook-command-rows-addendum-2026-09-05.md",
+    "Plans/_shards/ui_command_catalog/041-cumulative-v3-ui-command-catalog-dispositions-and-re-use-2026-09.md",
+    "Plans/_shards/ui_command_catalog/042-accepted-terminal-research-action-candidates-dl-035-2026-09-09.md",
+    "Plans/_shards/ui_command_catalog/043-research-and-audit-decision-review-command-profile-dl-036-2026-0.md",
+    "Plans/_shards/ui_command_catalog/manifest.json",
+    "Plans/_shards/ui_wiring_rules/00-index.md",
+    "Plans/_shards/ui_wiring_rules/001-preamble.md",
+    "Plans/_shards/ui_wiring_rules/002-0.-scope.md",
+    "Plans/_shards/ui_wiring_rules/003-owner-consumer-map.md",
+    "Plans/_shards/ui_wiring_rules/004-planunits.md",
+    "Plans/_shards/ui_wiring_rules/005-1.-rule-1-ui-command-dispatch-only.md",
+    "Plans/_shards/ui_wiring_rules/006-2.-rule-2-one-element-one-command.md",
+    "Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md",
+    "Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md",
+    "Plans/_shards/ui_wiring_rules/009-5.-autonomous-verification-strategy.md",
+    "Plans/_shards/ui_wiring_rules/010-6.-references.md",
+    "Plans/_shards/ui_wiring_rules/011-migration-coverage.md",
+    "Plans/_shards/ui_wiring_rules/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+    "Plans/_shards/ui_wiring_rules/013-pmconcept7-home-workspace-wiring-rules-2026-08-04.md",
+    "Plans/_shards/ui_wiring_rules/014-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
+    "Plans/_shards/ui_wiring_rules/015-shared-runtime-receipt-projection-wiring-addendum-2026-08-13.md",
+    "Plans/_shards/ui_wiring_rules/016-pmconcept7-transactional-interaction-and-shared-seat-wiring-adde.md",
+    "Plans/_shards/ui_wiring_rules/017-typed-controls-exact-owner-routes-and-shared-hover-overlay-adden.md",
+    "Plans/_shards/ui_wiring_rules/018-settings-command-and-route-only-action-wiring-addendum-2026-08-3.md",
+    "Plans/_shards/ui_wiring_rules/019-product-onboarding-typed-local-action-wiring-addendum-2026-09-01.md",
+    "Plans/_shards/ui_wiring_rules/020-server-egolite-alias-local-action-and-handler-truth-rules-2026-0.md",
+    "Plans/_shards/ui_wiring_rules/021-central-touch-command-gui-closure-rule-addendum-2026-09-01.md",
+    "Plans/_shards/ui_wiring_rules/022-puppet-master-assistant-redesign-wiring-rules-2026-09-03.md",
+    "Plans/_shards/ui_wiring_rules/023-assistant-redesign-what-belongs-in-the-production-wiring-matrix-.md",
+    "Plans/_shards/ui_wiring_rules/024-additive-correction-v4-wiring-coverage-and-the-internal-producer.md",
+    "Plans/_shards/ui_wiring_rules/025-working-notebook-wiring-disposition-addendum-2026-09-05.md",
+    "Plans/_shards/ui_wiring_rules/026-cumulative-v3-production-wiring-and-action-chaining-specificatio.md",
+    "Plans/_shards/ui_wiring_rules/027-terminal-research-dispatch-rules-dl-035-2026-09-09.md",
+    "Plans/_shards/ui_wiring_rules/028-research-decision-review-dispatch-and-resume-dl-036-2026-09-09.md",
+    "Plans/_shards/ui_wiring_rules/manifest.json",
+    "Plans/_shards/wiring_matrix/00-index.md",
+    "Plans/_shards/wiring_matrix/001-preamble.md",
+    "Plans/_shards/wiring_matrix/002-canonical-owner-section-requirements.md",
+    "Plans/_shards/wiring_matrix/003-0.-scope.md",
+    "Plans/_shards/wiring_matrix/004-1.-template.md",
+    "Plans/_shards/wiring_matrix/005-2.-example-entries.md",
+    "Plans/_shards/wiring_matrix/006-3.-json-example.md",
+    "Plans/_shards/wiring_matrix/007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md",
+    "Plans/_shards/wiring_matrix/008-4.-verification.md",
+    "Plans/_shards/wiring_matrix/009-references.md",
+    "Plans/_shards/wiring_matrix/010-scheduler-remediation-event-wiring-addendum-2026-03-08.md",
+    "Plans/_shards/wiring_matrix/011-runtime-recovery-wiring-requirements-2026-03-09.md",
+    "Plans/_shards/wiring_matrix/012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md",
+    "Plans/_shards/wiring_matrix/013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md",
+    "Plans/_shards/wiring_matrix/014-runtime-recovery-producer-consumer-wiring.md",
+    "Plans/_shards/wiring_matrix/015-source-control-github-actions-and-docker-manager-wiring-addendum.md",
+    "Plans/_shards/wiring_matrix/016-route-aware-wiring-reconciliation.md",
+    "Plans/_shards/wiring_matrix/017-owner-consumer-map.md",
+    "Plans/_shards/wiring_matrix/018-planunits.md",
+    "Plans/_shards/wiring_matrix/019-migration-coverage.md",
+    "Plans/_shards/wiring_matrix/020-ledger-compile-addendum-pldg-20260615-001.md",
+    "Plans/_shards/wiring_matrix/021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "Plans/_shards/wiring_matrix/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+    "Plans/_shards/wiring_matrix/023-usage-gui-propagation-addendum-2026-07-09.md",
+    "Plans/_shards/wiring_matrix/024-fable-production-wiring-repair-addendum-2026-07-07.md",
+    "Plans/_shards/wiring_matrix/025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+    "Plans/_shards/wiring_matrix/026-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+    "Plans/_shards/wiring_matrix/027-u11-prism-ii-usage-wiring-addendum-2026-08-18.md",
+    "Plans/_shards/wiring_matrix/028-pmconcept7-settled-interaction-production-wiring-addendum-2026-0.md",
+    "Plans/_shards/wiring_matrix/029-packet-owner-command-and-touch-closure-wiring-addendum-2026-08-3.md",
+    "Plans/_shards/wiring_matrix/030-guided-tour-typed-local-route-wiring-disposition-2026-09-01.md",
+    "Plans/_shards/wiring_matrix/031-agent-plugin-production-intent-and-consumer-wiring-addendum-2026.md",
+    "Plans/_shards/wiring_matrix/032-cross-owner-setup-restore-server-pairing-and-protected-auth-wiri.md",
+    "Plans/_shards/wiring_matrix/033-server-egolite-production-intent-wiring-addendum-2026-09-01.md",
+    "Plans/_shards/wiring_matrix/034-central-touch-production-wiring-closure-addendum-2026-09-01.md",
+    "Plans/_shards/wiring_matrix/035-terminal-research-planned-wiring-dl-035-2026-09-09.md",
+    "Plans/_shards/wiring_matrix/036-research-decision-review-planned-wiring-dl-036-2026-09-09.md",
+    "Plans/_shards/wiring_matrix/manifest.json",
+    "reports/event-authority-20260911/decision-responses.jsonl",
+    "reports/event-authority-20260911/step-08-09-binding-authority-approval.json",
+    "reports/event-authority-20260911/step-09-binding-authority-question.md",
+    "reports/event-authority-20260911/step-09-binding-authority-scope.json",
+    "reports/event-authority-20260911/step-09-card-application.json",
+    "reports/event-authority-20260911/step-09-execution-cards.md",
+    "reports/event-authority-20260911/step-09-execution-receipt.json",
+    "reports/event-authority-20260911/step-09-execution-rows.jsonl",
+    "reports/event-authority-20260911/step-09-extensions-cards.md",
+    "reports/event-authority-20260911/step-09-extensions-receipt.json",
+    "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
+    "reports/event-authority-20260911/step-09-interaction-cards.md",
+    "reports/event-authority-20260911/step-09-interaction-receipt.json",
+    "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
+    "reports/event-authority-20260911/step-09-review-packet.md",
+    "reports/event-authority-20260911/step-09-root-application.json",
+    "reports/event-authority-20260911/step-09-runtime-artifact-retention-card.md",
+    "reports/event-authority-20260911/step-09-semantic-exclusion-application.json",
+    "scripts/pm-plans-verify.py"
+  ],
+  "adopted_main_evidence": [
+    {
+      "revision": "cc6d4a9aca",
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1"
+    },
+    {
+      "revision": "cc6d4a9aca",
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "363bbb90307e5485593c07478954610a04d01f4f730d811de35538dc589d8c83"
+    },
+    {
+      "revision": "cc6d4a9aca",
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "sha256": "5143aa3167261bf3dbbe915086c1e37a315e577113b1f538a4a871bc1e352784"
+    },
+    {
+      "revision": "cc6d4a9aca",
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "0058eff18af43b495b659ed78b0d1c7fe78b83167cd9c0a8c662ba3372b3c620"
+    },
+    {
+      "revision": "cc6d4a9aca",
+      "path": "Plans/Decision_Log.md",
+      "sha256": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/rebased-gates.stdout.txt",
+      "sha256": "d63177b64343f76854c625a99dd8021ef2411ae3fbbbf9a796ab4365357c97b6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/rebased-gates.receipt.json",
+      "sha256": "d38eb420fd492c31678fbc0cedb2b32efb9fed61723f8e07cac0678fb7c66f38"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/final-gates.stdout.txt",
+      "sha256": "05cec2990a562250b12b238fe9efa2fae86420cf7c1a77428c59662cb2590504"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/final-gates.receipt.json",
+      "sha256": "15bf82f1895ba016833b85f06f97e211b17e93afd605373658e1eed77516691f"
+    }
+  ],
+  "boundaries": [
+    "Only recorded failure deltas and relevant adopted-main diff inspected; no repository/gate changes or repairs.",
+    "Failure arrays capped at 50; this does not prove absence of undisplayed failure details.",
+    "DL-044 compatibility alias must remain an alias; remediation belongs to its Touch consumer owner and must not resurrect removed primary wiring.",
+    "Previous final-gate-assessment.json is preserved unchanged."
+  ]
+}

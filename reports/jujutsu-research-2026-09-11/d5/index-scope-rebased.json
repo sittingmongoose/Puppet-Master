@@ -1,0 +1,352 @@
+{
+  "schema": "jj.d5.generated_index_scope.v1",
+  "scope_pass": true,
+  "comparison_origin_main": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "authorized_docs": [
+    "Plans/Backup_Restore_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Forge_Integrations.md",
+    "Plans/Jujutsu_Integration.md",
+    "Plans/Permissions_System.md",
+    "Plans/Shared_Integration_Runtime.md",
+    "Plans/Source_Control_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/storage-plan.md"
+  ],
+  "generated_files": [
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "origin_main_sha256": "b11fe5e3977dad9b1cb0196f2a231c2ece1daeab0c43ffbe3fd7fb1f7ecbe980",
+      "working_sha256": "4638d8f31d7e223f02c5fcc1b3e6513508dc6c79d91e48383ef931440f5b2dd8"
+    },
+    {
+      "path": "Plans/.plan_index/acceptance_units.jsonl",
+      "origin_main_sha256": "59f6d3b97243b7a81508363841c6657bfad45b8af81fd368ca8a81fb5672e092",
+      "working_sha256": "00ec765c06c0efb4bf1ce03fee9d7ecc7e14515ff467b6c95f286a8b95ed8a38"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "origin_main_sha256": "357eb2999b42ee58cbb71841050fd82e6ee35880d78ccaca3c3b2298e250293e",
+      "working_sha256": "c0ce87a01577646caa27409668ca4a5dea233c36efa5311610cec94cad05fb04"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "origin_main_sha256": "f099fef353674ddbf9a966ea1e2ec74a690ead71d3b49a3dba23205159959a31",
+      "working_sha256": "3b3e23d235275c386f597d1f8d9918fca099d3e61cbb396b2199739261708060"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "origin_main_sha256": "00cce9b05e7625e9c821b46fa1e7b8591b4e1d5ecefbebbe3e03e0676bdc2269",
+      "working_sha256": "e21eaf3d0dd556026318e2b36223916321dbb29b13536329f419a1f61cca1c5e"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "origin_main_sha256": "4a4a827248e4ef9ca816f7e90b5eb0049da765b9cdb6ac57fd5e008b8836731d",
+      "working_sha256": "7592b924feea728facecc8938abc9e7eafc8fad347aa5959475d04f1ea53effa"
+    }
+  ],
+  "plan_units": {
+    "before": 6443,
+    "after": 6485,
+    "added": 42,
+    "removed": 0,
+    "existing_changed": 1882,
+    "existing_changes_classification": "source_doc_sha256 only, all in 13 authorized docs",
+    "existing_changed_by_owner": {
+      "Plans/Contracts_V0.md": 329,
+      "Plans/FinalGUISpec.md": 551,
+      "Plans/storage-plan.md": 259,
+      "Plans/Permissions_System.md": 141,
+      "Plans/Backup_Restore_System.md": 20,
+      "Plans/FileSafe.md": 210,
+      "Plans/UI_Command_Catalog.md": 161,
+      "Plans/Shared_Integration_Runtime.md": 37,
+      "Plans/Wiring_Matrix.md": 53,
+      "Plans/Forge_Integrations.md": 15,
+      "Plans/FileManager.md": 81,
+      "Plans/Source_Control_System.md": 17,
+      "Plans/Jujutsu_Integration.md": 8
+    },
+    "exact_added_ids_match_42": true,
+    "added_ids": [
+      "BRS-021",
+      "BRS-022",
+      "CV-330",
+      "CV-331",
+      "F-082",
+      "F-083",
+      "F2-211",
+      "F2-212",
+      "F3-552",
+      "F3-553",
+      "F3-554",
+      "F3-555",
+      "F3-556",
+      "F3-557",
+      "F3-558",
+      "F3-559",
+      "F3-560",
+      "FGI-016",
+      "FGI-017",
+      "JJI-009",
+      "JJI-010",
+      "JJI-011",
+      "JJI-012",
+      "JJI-013",
+      "JJI-014",
+      "JJI-015",
+      "JJI-016",
+      "JJI-017",
+      "JJI-018",
+      "JJI-019",
+      "JJI-020",
+      "PS-142",
+      "PS-143",
+      "SCS-018",
+      "SCS-019",
+      "SCS-020",
+      "SCS-021",
+      "SP-260",
+      "SP-261",
+      "UCC-162",
+      "UCC-163",
+      "WM-054"
+    ]
+  },
+  "acceptance_units": {
+    "added": 224,
+    "removed": 0,
+    "existing_changed": 0,
+    "classification": "224 criteria belong only to the42newunits"
+  },
+  "doc_cards": {
+    "changed_docs": {
+      "Plans/Shared_Integration_Runtime.md": [
+        "sha256"
+      ],
+      "Plans/Permissions_System.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/FileManager.md": [
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/storage-plan.md": [
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/FinalGUISpec.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Backup_Restore_System.md": [
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Contracts_V0.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Jujutsu_Integration.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Wiring_Matrix.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Forge_Integrations.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/UI_Command_Catalog.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/Source_Control_System.md": [
+        "implementation_surfaces",
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ],
+      "Plans/FileSafe.md": [
+        "gui_related_counts",
+        "plan_unit_count",
+        "validation_surfaces",
+        "line_count",
+        "plan_unit_ids",
+        "heading_count",
+        "status_counts",
+        "unit_type_counts",
+        "risk_classes",
+        "sha256"
+      ]
+    },
+    "unrelated_changes": []
+  },
+  "dependencies": {
+    "added_nodes": 42,
+    "changed_existing_nodes": 0,
+    "added_edges": 196,
+    "removed_edges": 0,
+    "new_edges_all_touch_added_units": true,
+    "build_order_classification": "regenerated topological order and counts derive from42newnodes and their edges",
+    "cycle_blockers": [],
+    "unresolved_references": []
+  },
+  "global_derivative_changes": {
+    "timestamps": "generation timestamp changed in four JSON report files",
+    "counts": "6443 -> 6485 live units; 42 new units change field coverage, doc aggregates, risk/reasoning, GUI and dependency summaries",
+    "migration_coverage": "only live_plan_unit_count and unique_live_plan_unit_count changed from 6443 to 6485",
+    "readiness": "existing lifecycle certification remains incomplete; no readiness promotion or new executable artifacts",
+    "readiness_failure_count_before": 84,
+    "readiness_failure_count_after": 89,
+    "readiness_new_records": [
+      {
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "69f878743253f8b232830d8fbe19db0e79271ce2110dffce9f68f0a7fb5af31a",
+        "source_path": "Plans/UI_Command_Catalog.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Permissions_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
+      }
+    ],
+    "readiness_replaced_records": [
+      {
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1",
+        "source_path": "Plans/UI_Command_Catalog.md"
+      }
+    ],
+    "readiness_reason": "Five new event-authority source-drift diagnostics arise from authorized owner edits; one prior UI catalog source-hash diagnostic updates its expected hash. Forge source drift is already present in origin/main after its reviewed alias change. Governance evidence is intentionally not resealed. These are derived diagnostics, not unrelated canon edits."
+  },
+  "material_scope_issues": [],
+  "limitations": [
+    "Read-only generated-index diff scope check; not a runtime or governance certification.",
+    "Parent independently owns generation, semantic review, gates and final landing."
+  ],
+  "rebase_evidence": {
+    "rebased_application_sha256": "847b270123cea884fbc58cc7048a74d2514c84c8926e717f324f6aeeb5f473ff",
+    "working_HEAD": "50f3d42397e0fdd20cee49bca00ffa55fb079be2",
+    "expected_origin_main": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+    "baseline_match": true
+  }
+}
