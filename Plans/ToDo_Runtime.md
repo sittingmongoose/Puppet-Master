@@ -411,7 +411,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/ToDo_Runtime.md
 canonical_text: >-
-  Recovery recomputes item status from durable TodoWorkBinding and TodoTransition records rather than from conversation context; a restart mid-run leaves an item in_progress with its binding intact and the controller transitions it exactly once when the executing owner reports the terminal result. Replay of a committed transition is idempotent on transition_id, and a binding reporting recovery_required leaves the item in_progress and surfaces the condition rather than silently completing or reverting. Migration drops verification state and creates an explicit validation To-Do where the verification was real work, maps replanned to pending or skipped with a recorded cause, maps canceled to skipped with a reason, drops source-group and done-category membership into the receipt, converts whole-list snapshots to per-item records with import-marked transitions, and splits cross-thread aggregations back to their owning threads, quarantining any item whose thread edge cannot validate. Migration never marks an item completed on the strength of a legacy snapshot alone.
+  Recovery recomputes item status from durable TodoWorkBinding and TodoTransition records rather than from conversation context; a restart mid-run leaves an item in_progress with its binding intact and the controller transitions it exactly once when the executing owner reports the terminal result. Replay of a committed transition is idempotent on transition_id, and a binding reporting recovery_required leaves the item in_progress and surfaces the condition rather than silently completing or reverting. Migration drops verification state and creates an explicit validation To-Do where the verification was real work, maps replanned to pending or skipped with a recorded cause, maps canceled to skipped with a reason, drops source-group and done-category membership into the receipt, requires separately validated conversion of whole-list snapshots to per-item records, with import-marked transition representation still blocked by the cause-enum gap recorded in TDR-012, and splits cross-thread aggregations back to their owning threads, quarantining any item whose thread edge cannot validate. Migration never marks an item completed on the strength of a legacy snapshot alone.
 gui_related: false
 gui_classification_reason: Recovery and migration are storage and controller operations with no surface of their own.
 depends_on: [TDR-006]
@@ -612,6 +612,87 @@ No event carries a verification state, a source group label, or a done category,
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
 
+### Historical Chat TODO mutation compatibility and future event mapping
+
+DL-042 records the genuine user approval of LC-CHAT-TODO-MIGRATION option A at `2026-09-11T16:23:08.849454Z` (`LC-CHAT-TODO-MIGRATION-RESPONSE-001`). The approved option preserves `chat.plan_todo_updated` as historical readable identity. It is not an alias for any `todo.*` event. Historical envelopes, event identity, field spelling, old/new values and source attribution remain identifiable as their original record; readers never rewrite them in place, relabel them as controller outcomes, or manufacture an admitted work binding, revision, outcome receipt or completion from them. Historical readability applies under existing access, deletion and retention policy; it grants neither indefinite retention nor new append authority. The existing proposed static payload schema is a bounded shape reference, not evidence that historical records were emitted, centrally admitted, or all have that exact shape/version. Unknown or invalid historical shapes receive a truthful unsupported or invalid read result under Storage rules; they do not mutate the current list.
+
+Future durable To-Do changes are emitted only by the `ToDoController`, after owner validation and central admission of the individually appropriate event families. The table maps the exact existing historical payload `field` values to future semantic handling, not to replay aliases. Tool proposals and legacy fields never bypass current graph, scope, work-evidence, permission or revision checks.
+
+| Existing historical `field` operation | Future controller operation and candidate event after admission | Required boundary |
+|---|---|---|
+| `item_created` | Validated creation of one `TodoItemV2` → `todo.created` | Stable owning thread and item identity; a new proposal entry starts `pending`. A legacy embedded item is not copied wholesale into V2. |
+| `item_removed` | Validated removal from the current list → `todo.removed_from_current_list` | Preserve historical identity; do not equate removal with completion, skip, physical deletion or cancellation of active work. Apply replacement disposition checks where relevant. |
+| `title` | Validated current item title update → `todo.updated` | Change the current title against the expected revision; title matching is not scope or work identity. |
+| `summary` | No established `TodoItemV2` destination | Retain historical readability. A future mutation remains unmapped until the owner defines its current destination; do not add a retired/unsupported field or silently fold it into title/expected_outcome. |
+| `status` | Independently justified per-item transition → `todo.status_changed` | Exactly one `TodoTransition` per actual status change, with current cause, evidence and expected/committed revisions. No bulk status event; no bare historical or provider status assertion. |
+| `dependencies` | Validated change to current `depends_on` → `todo.dependency_changed` | Validate candidate graph and exact thread edges before atomic commit. Preserve historical spelling in historical records; no blind field rename during replay. |
+| `order_index` | Validated change to current `display_order` → `todo.reordered` | Display order only; do not infer or modify dependency, parent, parallel group or status. Preserve original field spelling in historical records. |
+| `owner_hint` | No established `TodoItemV2` destination | Retain historical readability. A hint cannot create or rebind `TodoWorkBinding`; the current work owner and admission evidence must supply exact binding identity. |
+| `verification_hint` | No established `TodoItemV2` destination | Retain historical readability without reviving verification state, columns, or completion authority. Where verification is actual work, use the existing migration rule for a separate validation To-Do and recorded lineage. A hint alone proves neither work nor outcome. |
+| `notes` | No established `TodoItemV2` destination | Retain historical readability. Neither notes nor their edits imply a status transition; no new current field is created by this mapping. |
+
+Current work admission has no direct historical `field` operation: a validated `TodoWorkBinding` uses `todo.work_bound` after admission; any resulting status change also has its own `TodoTransition` and `todo.status_changed`. Do not infer binding from `owner_hint`, title or position. The controller's existing add, split, reorder, dependency, skip and reopen proposals are decomposed into their actual validated per-item creations, updates, removals, binding changes and transitions. There is no new split, replacement or bulk status event. A split/restructure preserves or explicitly resolves active work through the existing list replacement disposition; it never silently drops an omitted item.
+
+The status transition causes remain exactly `work_admitted`, `outcome_satisfied`, `dependency_changed`, `external_block`, `explicit_skip`, `retry`, `reopen`, and `child_rollup`. A recoverable attempt with unchanged status produces no invented status transition. A rollup that actually changes a parent status is individually recorded against current graph membership. Reopen, skip, external block, unblock and retry retain their existing cause/evidence rules; none is an unconditional conversion from a legacy string. Bulk completion without an accepted outcome receipt for each item fails atomically.
+
+Currentness is checked using current list revision, expected item revision, exact work binding, Plan version and run epoch where applicable. Late or stale inputs remain rejected evidence and never overwrite current state by timestamp. An atomic list replacement retains, rebinds, cancels at a safe boundary, or refuses each active work reference before committing; provider whole-list snapshots remain proposals. Rejected proposals emit no successful mutation event. Opening To-Do Activity, toggling a parent, opening work and `todoread` are non-mutating and emit no To-Do mutation event.
+
+Each of the seven named future event families requires its own central registration, closed versioned payload schema, producer/consumer/projector and checkpoint bindings, replay/idempotency semantics and retention policy before EventRecord emission. This approval supplies no missing binding identifiers and admits no family by itself. Until the affected families and atomic transaction/replay contract are admitted, the controller uses only the already specified typed result, receipt and projection boundaries; it does not fall back to new `chat.plan_todo_updated` appends or simulate durable events. A compound mutation cannot partially publish an admitted subset as a complete durable mutation history. The owner admission must define complete atomic visibility for all affected event records and projections before execution consumes a revised list.
+
+Historical conversion into current state is a separately receipted, validated migration, not event aliasing. It cannot synthesize outcome satisfaction or a completed item from a whole-list snapshot. Historical records retain their identity even where a migration receipt links to current records. Existing legacy conversion prose that requests `cause_kind=import` does not authorize that value: the current `TodoTransition.cause_kind` enum excludes `import`. That import representation remains a technical contract gap and must be closed explicitly before synthesizing such transitions.
+
+
+### TDR-012 - Historical Chat TODO Identity And Future Mutation Mapping
+
+```yaml
+plan_unit_id: TDR-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/ToDo_Runtime.md
+canonical_text: >-
+  DL-042 preserves chat.plan_todo_updated as historical readable identity without automatic aliasing or new legacy append authority. The adjacent per-operation mapping is normative: item_created maps to todo.created, item_removed to todo.removed_from_current_list, title to todo.updated, independently justified status to todo.status_changed, dependencies to current depends_on and todo.dependency_changed, and order_index to current display_order and todo.reordered. Historical summary, owner_hint, verification_hint, and notes have no established TodoItemV2 destination and remain explicit technical gaps. Current work admission uses todo.work_bound with an exact TodoWorkBinding; it is never inferred from historical hints. Each future event requires separate central admission and complete schema, append, replay, retention, projection and checkpoint bindings before emission. Historical reads preserve original identity and never manufacture current revisions, bindings or outcome proof. Controller proposal-only, graph/currentness, per-item evidence, atomic mutation and no-bulk-status rules remain unchanged. The existing import cause representation remains a technical gap because import is absent from the current TodoTransition cause enum.
+gui_related: false
+gui_classification_reason: This amendment defines event migration and authority boundaries without changing current GUI behavior.
+depends_on: [TDR-005, TDR-007, TDR-008, TDR-009]
+unblocks: []
+acceptance_criteria:
+  - All ten historical field operations retain readable original identity and have an explicit mapped or unresolved current destination.
+  - Historical read, provider proposal and permission approval cannot assert current status, revisions, work bindings or completion evidence.
+  - Every future event remains emission-gated until its individual central admission and complete bindings are established.
+  - Compound mutations cannot publish an admitted subset as complete durable history; stale events never overwrite current state by timestamp.
+  - No missing import cause, payload field, consumer, projector or checkpoint identifier is synthesized by this approval.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+risk_class: todo_event_migration_authority_drift
+reasoning_tier: high
+context_scope: todo_historical_event_compatibility
+implementation_surfaces: [Plans/ToDo_Runtime.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/assistant-chat-design.md, Plans/Tools.md]
+node_compile_hint: {mode: todo_event_migration_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - Plans/Decision_Log.md#DL-042
+  - LC-CHAT-TODO-MIGRATION-RESPONSE-001
+preserved_exact_tokens:
+  - chat.plan_todo_updated
+  - item_created
+  - item_removed
+  - title
+  - summary
+  - status
+  - dependencies
+  - order_index
+  - owner_hint
+  - verification_hint
+  - notes
+negative_constraints:
+  - Do not automatically alias historical events or emit new legacy events as an admission fallback.
+  - Do not create bulk status events, restore retired fields, or relax controller proposal-only authority.
+  - Do not treat this mapping approval as registry admission or allocation of missing runtime binding identifiers.
+owner_hints: [Plans/ToDo_Runtime.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/assistant-chat-design.md, Plans/Tools.md]
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
 ## 4. Integration Surfaces
 
 ### Provider-native To-Do reconciliation
@@ -668,7 +749,7 @@ Migration from the previous model:
 - items carrying a `replanned` status map to `pending` with a recorded cause, or to `skipped` where the item is genuinely no longer required;
 - items carrying `canceled` map to `skipped` with a recorded reason;
 - source-group labels and done-category membership are dropped and recorded in the migration receipt;
-- whole-list snapshots are converted to per-item records with synthesized transitions whose `cause_kind` is recorded as an import, never as `outcome_satisfied`;
+- whole-list snapshot conversion requires per-item records and separately receipted migration; the previous requirement for synthesized transitions whose `cause_kind` is an import remains unimplemented contract lineage because `import` is absent from the closed cause enum (TDR-012). Do not synthesize these transitions until that representation is explicitly closed, and never substitute `outcome_satisfied`;
 - cross-thread aggregations are split back to their owning threads, and an item whose thread edge cannot validate quarantines rather than being assigned to a guess.
 
 Migration never marks an item `completed` on the strength of a legacy whole-list snapshot alone.

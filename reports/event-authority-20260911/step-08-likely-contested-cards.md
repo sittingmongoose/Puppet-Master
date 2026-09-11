@@ -22,9 +22,11 @@ Research only, based on current source at `4869b4cbaaa9e5452a1b16b68ce92b9f269df
 
 **Current evidence:** `Plans/UI_Command_Catalog.md:7624`, `Plans/Wiring_Matrix.md:3720`, `Plans/Wiring_Matrix.production.json:55477`, `Plans/Settings_System.md:785`, `Plans/UI_Wiring_Rules.md:895`. Source hashes and additional exact occurrences are in each JSONL row; adjacent controlling text is in the external selected-passages capture.
 
-**Response:** Approve / Deny / Deny with changes / Ask a question. **Status: PENDING.**
+**Response:** Approve / Deny / Deny with changes / Ask a question. **Status: APPROVED AND APPLIED; EVENT CONTRACT WORK REMAINS.**
 
-**Answer: ______**
+**Answer: Approve — Jared, 2026-09-11T16:19:32.266939Z.**
+
+Exact response: `decision-responses.jsonl`, `LC-SETTINGS-IDENTITY-RESPONSE-001`. Approval selects common `settings.updated` with the exact setting key and current transaction identity. Payload/binding work remains required before registration.
 
 ## Chat plan and To-Do history — LC-CHAT-TODO-MIGRATION
 
@@ -46,6 +48,8 @@ Research only, based on current source at `4869b4cbaaa9e5452a1b16b68ce92b9f269df
 
 **Current evidence:** `Plans/Contracts_V0.md:1470`, `Plans/storage-plan.md:1773`, `Plans/ToDo_Runtime.md:605`, `Plans/ToDo_Runtime.md:607`, `Plans/Tools.md:2419`. Source hashes and adjacent controlling text are recorded with the rows.
 
-**Response:** Approve / Deny / Deny with changes / Ask a question. **Status: PENDING.**
+**Response:** Approve / Deny / Deny with changes / Ask a question. **Status: APPROVED AND APPLIED; EVENT CONTRACT WORK REMAINS.**
 
-**Answer: ______**
+**Answer: Approve — Jared, 2026-09-11T16:23:08.849454Z.**
+
+Exact response: `decision-responses.jsonl`, `LC-CHAT-TODO-MIGRATION-RESPONSE-001`. Approval preserves historical chat records and selects an individual mapping for future mutations after admission. Contract work remains required.

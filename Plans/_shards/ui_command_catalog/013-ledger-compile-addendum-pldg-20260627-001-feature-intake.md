@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7535-L7677
+Source lines: L7535-L7687
 
-Source SHA256: `05fc873e4f374c8af7ecb6edc20e87d03f77b4817e04e117c409d494db3607cc`
+Source SHA256: `d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5`
 
 ---
 
@@ -99,18 +99,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The DRY Method Settings command catalog defines `cmd.settings.agent_rules.dry_method_default_guard.set` with payload
-  `{ scope: "application", value: "enabled" | "disabled_by_user" }`, emitted event
-  `settings.agent_rules.dry_method_default_guard.updated`, visible surfaces Settings > General > Agent Rules and
-  Assistant Chat DRY disclosure, and help copy explaining what the toggle changes. The command turns off only PM's
-  default reuse-first DRY guard; it does not disable explicit project/user instructions, safety, secrets, source
-  authority, governance, permissions, source-control hygiene, or receipt provenance.
+  Under DL-041, the DRY Method toggle's eventual mutation path reuses cmd.settings.transaction.preview and
+  cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
+  mapping from the exact guard key to a valid ordinary setting_id and its writer exists, the toggle is disabled
+  with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve the exact guard identity
+  app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user. The approved future event
+  identity for this change is settings.updated, carrying that exact setting key and the existing transaction_id
+  from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids, revisions and
+  receipt_ref under the current owner contract. Event Authority must independently admit a closed payload and
+  producer/consumer binding before emission; this naming choice does not register a family. The historical
+  settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage, not an
+  automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
+  is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings > General >
+  Agent Rules and Assistant Chat DRY disclosure preserve their help copy: disabling the default reuse-first guard
+  does not disable explicit project/user instructions, safety, secrets, source authority, governance, permissions,
+  source-control hygiene, or receipt provenance.
 gui_related: true
 gui_classification_reason: Defines a user-visible Settings command, toggle payload, event, and help copy.
 depends_on: [CV-299, SP-223]
 unblocks: [WM-040, ATS-018]
 acceptance_criteria:
-  - The DRY Method toggle has one stable command id and payload enum.
+  - Until the exact guard-key/writer mapping is owner-proven, the toggle is disabled with owner_contract_missing and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is reintroduced.
+  - Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only without an assumed payload alias.
   - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
   - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
 validation_surfaces:

@@ -1467,7 +1467,7 @@ Batch web operations preserve one parent audit event for the batch and child aud
 
 Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Producer-specific request/completion names such as `subagent.spawn_requested` and `subagent.spawn_completed` preserve the same PM lineage envelope as `subagent.spawned` and `subagent.completed` instead of creating a parallel chat namespace. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
 
-`chat.plan_todo_updated` minimal payload schema is `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }` for durable TODO mutations. Structural item creation, removal, or reordering may emit one event per affected `todo_id`, but every event must retain `plan_id`, changed `field`, `old_value`, `new_value`, and the mutation source.
+The historical `chat.plan_todo_updated` payload shape is `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }` for durable TODO mutations. These historical fields remain readable under TDR-012; future structural changes use its individually mapped events only after admission. The legacy shape does not authorize new appends or supply current revision/work evidence.
 
 Verbose investigation and browser evidence payloads are reference-first by default: raw logs, full trace payloads, full DOM dumps, request `/response` bodies, cookies, `/storage` values, and binary blobs must not auto-inline into model context unless an owner contract grants a bounded preview or explicit attachment path.
 
@@ -8818,7 +8818,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Tool payloads consumed by storage, tools, and chat carry runtime_snapshot,
-  task_id, subagent_type, resumed, chat.plan_todo_updated, /turn, /todo, and
+  task_id, subagent_type, resumed, historical chat.plan_todo_updated identity under TDR-012, /turn, /todo, and
   /tokens when those fields participate in runtime or chat projection, and the
   snapshot fields remain cross-cutting payload extensions.
 gui_related: false
@@ -8827,7 +8827,7 @@ split_recommended: true
 depends_on: [CV-026, CV-044, CV-101]
 unblocks: [CV-116, CV-117, CV-118]
 acceptance_criteria:
-  - runtime_snapshot, task_id, subagent_type, resumed, chat.plan_todo_updated, /turn, /todo, and /tokens fields are preserved where they participate in projection.
+  - runtime_snapshot, task_id, subagent_type, resumed, historical chat.plan_todo_updated identity under TDR-012, /turn, /todo, and /tokens fields are preserved where they participate in projection.
   - Storage, tools, and chat consume the shared payload extension fields.
   - Runtime snapshot fields are cross-cutting payload extensions rather than local tool-result decorations.
 validation_surfaces:
@@ -8922,20 +8922,16 @@ plan_unit_id: CV-117
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: >-
-  chat.plan_todo_updated persists durable TODO field mutations with plan_id,
-  todo_id, field, old_value, new_value, and source so creation, removal, or
-  reordering events retain identity, changed field, old/new values, and mutation
-  source.
+canonical_text: "Historical chat.plan_todo_updated payloads retain plan_id, todo_id, field, old_value, new_value, and source under their original readable identity. The proposed static shape grants no append authority. Future controller mutations follow TDR-012 per-operation mapping only after individual event admission; Contracts retains shared EventRecord envelope ownership."
 gui_related: true
 gui_classification_reason: This unit affects visible chat plan/TODO mutation projections.
 split_recommended: true
 depends_on: [CV-115]
 unblocks: []
 acceptance_criteria:
-  - chat.plan_todo_updated minimal payload schema includes plan_id, todo_id, field, old_value, new_value, and source.
-  - Structural item creation, removal, or reordering may emit one event per affected todo_id.
-  - Every mutation event retains plan_id, changed field, old_value, new_value, and source.
+  - "Historical chat.plan_todo_updated payload identity and the six legacy fields remain readable under existing Storage policy."
+  - "Structural item creation, removal, or reordering follows the individually mapped TDR-012 event only after admission; no automatic alias or fallback legacy append is allowed."
+  - "Historical values never manufacture current revisions, work bindings or outcome evidence."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -21505,3 +21501,10 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/Shared_Integration_Runtime.md
 ```
+
+
+## DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)
+
+Contracts retains the shared EventRecord envelope and historical six-field payload shape reference for `chat.plan_todo_updated`; the proposed static schema is not append authority or proof of every historical writer shape. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete approved mapping, compatibility semantics and admission gaps. No automatic alias or new legacy append is authorized.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L893-L958
+Source lines: L893-L960
 
-Source SHA256: `d986040d92b297ae8682fa6569fd2cc6c25faa26497c785130c4b3e475fb195d`
+Source SHA256: `683459c0727eb26dc581b46d93d03d310d3886a13c76b365ac66f4cd8ae13975`
 
 ---
 
@@ -29,6 +29,8 @@ Settings wiring has exactly five canonical commands and five specialized route-o
 | `settings.doctor.remediation.open` | `manager_id=doctor`, `detail_id=check:{check_id}` | Opens one exact owner remediation route. It does not execute a probe, repair, permission change, install, or mutation. | `pm.settings_route_return.v1`; current origin context/focus only. |
 
 Each route-only action carries `effect=route_only` and `owner_operation_authorized=false`. All ten rows require stable role/name, keyboard and pointer parity, current availability and disabled-reason projection, one dispatch at most, deterministic focus return, stale-generation rejection, and a bounded receipt/result assertion with no unexpected persisted EventRecord. A disabled action dispatches zero commands. Concept simulation remains simulation and earns no handler or native-wiring credit.
+
+Under DL-041, the DRY default-guard toggle may use the existing preview/apply transaction sequence only after the exact owner-key-to-valid-setting-ID and writer mapping is proven; until then, `owner_contract_missing` disables mutation dispatch and setting writes. `cmd.settings.agent_rules.dry_method_default_guard.set` is retired source lineage and must not have a primary production row, handler or dispatch alias. The selected future event name is `settings.updated`, preserving `app.agent_rules.dry_method_default_guard` and the current result `transaction_id` plus its request/Project/revision/receipt joins. This naming decision does not change current transaction `expected_event_types=[]` before independent Event Authority admission, revive the obsolete per-setting production row, or establish an alias from `settings.agent_rules.dry_method_default_guard.updated`.
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-019, ContractName:Plans/Commands_System.md#CS-069, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/Wiring_Matrix.production.json
 

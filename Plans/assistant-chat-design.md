@@ -666,11 +666,11 @@ ContractRef: Plans/FinalGUISpec.md#15.4 Planning panel widget (sticky sidebar)
 
 Core rules:
 - Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
-- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
-- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and historical readability of `chat.plan_todo_updated`; future durable controller mutations follow the per-operation TDR-012 mapping only after individual admission.
+- Historical `chat.plan_todo_updated` follows the TDR-012 readable-identity boundary; future normalized TODO mutations follow its individually admitted event mapping, and `todoread` must not survive as a `source_surface` mutation source.
 - Visible plan/checklist review is checklist-forward execution-tracker behavior: Plan and Deep Plan show a reviewable plan artifact plus the normalized TODO/checklist projection before execution, keep live execution progress connected to that projection, and do not hide planning inside an opaque unified planning/execution loop.
 - Plan/TODO review exposes `/add/remove/reorder` structural controls before approval; after approval, structural edits require a new revision while status-only execution progress remains thread-visible through the sticky panel and `chat.plan_todo_updated` history.
-- User edits to a Deep Plan artifact reconcile through PM-extracted `/diffs`: TODO changes are normalized into the thread TODO list, emitted through `chat.plan_todo_updated`, and execution continues from the updated TODO projection rather than from a stale artifact copy.
+- User edits to a Deep Plan artifact reconcile through PM-extracted `/diffs`: TODO changes are normalized into the thread TODO list, committed by ToDoController under TDR-012, with future durable events emitted only after individual admission, and execution continues from the updated TODO projection rather than from a stale artifact copy.
 - Thread `/run-level` plan state distinguishes draft, approved, executing, completed, blocked, and superseded states; `/replans` create explicit new draft/revision records instead of mutating prior plan history invisibly.
 - Competitive rationale: Cursor is the closest comparator because it emphasizes explicit Plan mode, visible plan/checklist review, and live execution progress; Codex is weaker as a direct checklist-forward template because its planning/execution loop is more unified; Claude Code remains relevant for visible task/todo management patterns but does not become PM's primary planning template without stronger direct-doc evidence.
 
@@ -797,13 +797,13 @@ This section consumes the linked owner contract and stays aligned with it.
 Core rules:
 - Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
 - TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
-- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+- Historical `chat.plan_todo_updated` follows the TDR-012 readable-identity boundary; future normalized TODO mutations follow its individually admitted event mapping, and `todoread` must not survive as a `source_surface` mutation source.
 - TODO items include `order_index` and `notes`; `order_index` owns item-level ordering, while `notes` carry reviewer or execution context without changing status.
 - Legacy optional spellings `notes?` and `order_index?` normalize to canonical `notes` and `order_index`; this intentionally retires the source `?` suffix rather than dropping notes or ordering.
 - Structural edit means adding, removing, reordering, or replacing TODO items; status update means changing item execution state or notes without changing the item set.
-- When the auto-use heuristic fires mid-conversation, on-trigger behavior may populate or refresh the TODO projection when a plan artifact changes, but it must emit `chat.plan_todo_updated` before execution observes the revised list and must keep the plan panel state reviewable.
+- When the auto-use heuristic fires mid-conversation, on-trigger behavior may populate or refresh the TODO projection when a plan artifact changes, but execution must observe only the committed current controller projection under TDR-012 and must keep the plan panel state reviewable.
 - Outside Plan and Deep Plan, non-Plan execution may auto-use `todowrite` when the task is multi-step enough to benefit from visible tracking, including dependency-bearing work, multi-file or multi-subsystem work, delegated subagent or crew execution, or an explicit user request to track progress.
-- `todowrite` auto-use on-trigger behavior emits a tool call with proposed TODO items. If auto-approved by the resolved permission preset, items are created silently and `chat.plan_todo_updated` records the mutation; if ask-mode, the user sees an approval prompt listing the proposed TODO items before creation.
+- `todowrite` auto-use on-trigger behavior emits a tool call with proposed TODO items. If auto-approved by the resolved permission preset, proposals are processed without an extra approval prompt, and only controller-validated changes commit under TDR-012; if ask-mode, the user sees an approval prompt listing the proposed TODO items before creation.
 - `Superseded TODO N/N` is a plan-level summary for superseded plan revisions, not an item-level TODO status; `superseded` stays out of the active TODO status enum.
 - `verification_hint` may be item-level or plan-level, but the payload must label the scope instead of relying on position in the rendered panel.
 - Legacy tool payloads `todos: Array<{ id?, content, status? }>` and `todos: Array<{ id, content, status }>` normalize into the Assistant TODO schema with `todo_id`, `title`, `summary`, `dependencies[]`, `owner_hint`, and `verification_hint`; `TODO` remains the visible checklist concept, not a second schema.
@@ -5220,7 +5220,7 @@ plan_unit_id: ACD-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, chat.plan_todo_updated emissions, Deep Plan diff reconciliation, run-level states, and explicit replans.
+canonical_text: "Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, Deep Plan diff reconciliation, run-level states, and explicit replans. Historical chat.plan_todo_updated stays readable; future controller mutations follow TDR-012 only after individual event admission."
 gui_related: false
 gui_classification_reason: Revision history, mutation events, and plan state persistence are backend/data behavior rather than visual implementation.
 depends_on: [ACD-032]
@@ -5228,7 +5228,7 @@ unblocks: [ACD-043, ACD-044]
 acceptance_criteria:
   - Structural edits after approval create a new revision rather than invisibly mutating approved history.
   - Deep Plan artifact edits resync the TODO projection through PM-extracted diffs.
-  - chat.plan_todo_updated records durable normalized TODO mutations.
+  - Historical chat.plan_todo_updated stays readable; future mutations follow the TDR-012 mapping only after individual admission.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5652,7 +5652,7 @@ gui_classification_reason: TODO tool mutation, read behavior, and execution gati
 depends_on: [ACD-043]
 unblocks: [ACD-045]
 acceptance_criteria:
-  - todowrite can create, reorder, and update TODO statuses or notes through the normalized schema.
+  - todowrite proposes changes to ToDoController; it cannot directly assert status or introduce notes as a current V2 field (TDR-012).
   - todoread returns the current normalized list for the active thread or run.
   - Editing Deep Plan markdown updates the normalized TODO projection before execution begins.
 validation_surfaces:
@@ -5691,7 +5691,7 @@ plan_unit_id: ACD-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: TODO auto-use may propose or refresh TODOs for multi-step work, emits proposed items through the resolved permission posture, records chat.plan_todo_updated, and keeps plan-panel state reviewable before execution observes revisions.
+canonical_text: "TODO auto-use may propose or refresh TODOs for multi-step work through the resolved permission posture and controller validation, and keeps state reviewable before execution observes committed revisions. Historical chat.plan_todo_updated remains readable; future durable mutation events follow TDR-012 only after individual admission."
 gui_related: true
 gui_classification_reason: Proposed TODO approval prompts and reviewable plan-panel state are user-visible Assistant Chat behavior.
 depends_on: [ACD-043, ACD-044]
@@ -5699,7 +5699,7 @@ unblocks: []
 acceptance_criteria:
   - Auto-use on-trigger behavior emits proposed TODO items.
   - Ask-mode displays an approval prompt listing proposed TODO items before creation.
-  - Execution observes revised TODOs only after chat.plan_todo_updated records the mutation.
+  - Execution observes only the committed current controller projection under the TDR-012 atomic visibility and individual event admission boundaries.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -25338,3 +25338,10 @@ owner_hints:
   - Plans/Shared_Integration_Runtime.md
   - Plans/Prompt_Pipeline.md
 ```
+
+
+## DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)
+
+Chat consumes the committed current `ToDoController` projection at the applicable revisions. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete approved migration mapping; historical `chat.plan_todo_updated` stays readable without granting direct writer authority to Chat or changing current GUI behavior.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md

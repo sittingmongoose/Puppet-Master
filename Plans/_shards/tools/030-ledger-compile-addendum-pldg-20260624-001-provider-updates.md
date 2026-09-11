@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2610-L11073
+Source lines: L2610-L11072
 
-Source SHA256: `f184b9325f823a984b7eaf731ec462d3716de09e767f6480d03ec145027175db`
+Source SHA256: `e3d73fe4f4cde68957321dfa11bb0111c4d350a1908ae16fc7650ff2d2c454a3`
 
 ---
 
@@ -1333,8 +1333,7 @@ plan_unit_id: T-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`todowrite` and `todoread` use the normalized TODO schema for Plan and Deep Plan, persist explicit revision
-  states, emit `chat.plan_todo_updated`, and must not be blanket-denied in ask/plan mode unless stricter presets apply.'
+canonical_text: "todowrite and todoread use the normalized TODO contract for Plan and Deep Plan with explicit revision states and must not be blanket-denied in ask/plan mode unless stricter presets apply. todowrite proposes changes to ToDoController; todoread reads its projection. Historical chat.plan_todo_updated remains readable; future durable mutations follow TDR-012 only after individual admission."
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: true

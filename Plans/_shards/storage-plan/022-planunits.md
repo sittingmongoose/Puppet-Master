@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L2356-L15012
 
-Source SHA256: `8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9`
+Source SHA256: `550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b`
 
 ---
 
@@ -9026,7 +9026,7 @@ plan_unit_id: SP-155
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, bounded revision history, and chat.plan_todo_updated for durable TODO mutations.
+canonical_text: "Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, and bounded revision history. Historical chat.plan_todo_updated remains readable; future mutation persistence follows TDR-012 only after individual event admission."
 gui_related: true
 gui_classification_reason: This unit preserves user-visible Plan/Deep Plan TODO projection and panel behavior.
 split_recommended: false
@@ -9152,7 +9152,7 @@ plan_unit_id: SP-157
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The Assistant chat TODO panel shows verification_hint per item, compact inline progress examples, and durable plan refresh behavior so auto-use heuristic changes emit chat.plan_todo_updated before execution and do not silently replace the current panel.
+canonical_text: "The historical TODO panel verification_hint and compact inline progress examples remain source lineage under the current ToDo_Runtime presentation owner. Auto-use refreshes reach execution only through the committed current controller projection. Historical chat.plan_todo_updated is readable; new durable events follow TDR-012 admission and atomic visibility boundaries without restoring unsupported item fields."
 gui_related: true
 gui_classification_reason: This unit preserves visible TODO panel verification hints and compact progress behavior.
 split_recommended: false
@@ -9211,7 +9211,7 @@ plan_unit_id: SP-158
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Durable TODO mutation events persist plan/todo ids, changed field, old/new values, and mutation source, while the Assistant chat plan panel remains the visible source-of-truth and storage owns durable normalized TODO projection consumed by related surfaces.
+canonical_text: "Historical chat.plan_todo_updated retains plan/todo ids, changed field, old/new values and mutation source. Storage owns durable normalized TODO projection consumed by related surfaces; ToDoController owns current state. Future mutation persistence and complete atomic visibility before execution follow TDR-012 after individual event admission."
 gui_related: true
 gui_classification_reason: This unit preserves visible TODO source-of-truth behavior and backend durable mutation event payloads.
 split_recommended: false

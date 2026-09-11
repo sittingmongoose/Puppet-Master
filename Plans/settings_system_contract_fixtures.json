@@ -1320,10 +1320,10 @@
       "route_ref": "route:settings/dry-method",
       "search_aliases": ["dry method", "reuse first", "duplication guard", "agent rules"],
       "summary_projection_schema_ref": "#/$defs/settings_owner_projection",
-      "owner_action_ids": ["cmd.settings.agent_rules.dry_method_default_guard.set"],
+      "owner_action_ids": ["cmd.settings.transaction.preview", "cmd.settings.transaction.apply"],
       "required_target_fields": ["project_id"],
       "hydration_policy": "cached_bounded_summary_then_selected_details",
-      "owner_gap_reason": "The visible default guard cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules."
+      "owner_gap_reason": "DL-041: owner_contract_missing disables this guard mutation until the exact owner key is mapped to a valid Settings setting_id and writer; no mutation dispatch or setting write is allowed before that proof. The existing preview/apply action IDs are intended targets, not executable authority. The visible default guard cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules."
     }
   },
   "named_visible_state_projections": {

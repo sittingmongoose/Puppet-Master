@@ -606,7 +606,7 @@ Core rules:
 - The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
 - The answer `source?` field is LOCKED and INCLUDED as an optional field with enum values `"option"`, `"other"`, and `"freeform"`.
 - `questionnaire` and `/questionnaire` mode use `options?: Array<{id, label, description?}>` for selectable answers; `string[]` options are backwards-compatible only for legacy `single_question` callers and must be normalized to object-array options before storage or multi-question rendering.
-- Question and questionnaire flows preserve bounded draft `/answer` state, submitted answer state, and answer-source metadata as tool payloads that storage persists; Tools owns the tool envelope while `Plans/storage-plan.md` owns the durable `chat.plan_todo_updated` and questionnaire projections.
+- Question and questionnaire flows preserve bounded draft `/answer` state, submitted answer state, and answer-source metadata as tool payloads that storage persists; Tools owns the tool envelope while `Plans/storage-plan.md` owns historical `chat.plan_todo_updated` reads and questionnaire projections; future TODO mutations follow TDR-012.
 - Implementation-readiness for the shared question-flow / multi-question-flow requires question-card behavior to stay aligned across Assistant, Interviewer, and document-builder / visual-module flows: required-by-default items keep the flow incomplete until answered, dismiss-to-pause returns an explicit dismissed/paused status, and `Other` remains the freeform path rather than a fabricated option answer.
 - The v1 input envelope accepts `mode?: "single_question" | "questionnaire"`, `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, `allow_other?: boolean` as a legacy alias for `allow_freeform`, and `allow_multi_select?: boolean` as a legacy alias for `multi_select`; each `QuestionItem` carries at minimum `question_id`, canonical display `question`, legacy alias `text: string`, optional `description?: string`, `options?: Array<{ id, label, description? }>`, `required?` default true, `multi_select?` default false, `allow_freeform?` default true, `allow_other?` as the freeform legacy alias, `placeholder?`, `default_values?`, and response constraints. Legacy `answer: string` output is normalized into the canonical answer array.
 - Legacy `string-answer` and `answer: string` callers are compatibility-only; the already-decided canonical path is the multi-question envelope. Source shorthand `questions: [...]` is normalized to `questions: Array<QuestionItem>` before validation or question-card rendering.
@@ -650,11 +650,11 @@ This section defines the canonical contract for this surface.
 
 Core rules:
 - Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
-- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and historical readability of `chat.plan_todo_updated`; future durable controller mutations follow the per-operation TDR-012 mapping only after individual admission.
 - TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
 - Ask/Plan presets must not carry inherited blanket-denies or a blanket-deny rule for `question`, `todowrite`, `todoread`, or the six web operation tools; the mode-dependent access matrix for plan-mode web tool access and Deep Plan mode availability must show these tools as available unless stricter explicit presets such as read-only or no-network deny them by policy.
-- `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the tool creates items silently; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.
-- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+- `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the controller validates the proposals without an extra approval prompt before committing any item changes; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.
+- Historical `chat.plan_todo_updated` follows the TDR-012 readable-identity boundary; future normalized TODO mutations follow its individually admitted event mapping, and `todoread` must not survive as a `source_surface` mutation source.
 - TODO is the SSOT for plan execution state across single-agent, crew, and subagent runs. `/revise` creates an explicit new draft/revision instead of mutating approved history invisibly; sticky-panel-vs-inline-progress is a UI division, not a second TODO state model. The sticky-card / execution-tracker surface owns the full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions, while inline-progress chat messages stay compact and link back to the sticky panel.
 - **Superseded by `## 15`:** the SSOT sentence above is retained as source lineage only. The canonical To-Do list, item identity, statuses, hierarchy, dependencies, work bindings, transitions, rollups, and recovery are owned by `Plans/ToDo_Runtime.md`. In this document `todowrite` and every provider-native `TodoWrite` equivalent are proposal endpoints reconciled by the `ToDoController` against the canonical list, and `todoread` is a projection read. Whole-list replacement is import compatibility and diagnostics only; individually receipted item transitions carrying item-level cause evidence are the live authority. See `### 15.1` and `### 15.2`.
 
@@ -3932,8 +3932,7 @@ plan_unit_id: T-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`todowrite` and `todoread` use the normalized TODO schema for Plan and Deep Plan, persist explicit revision
-  states, emit `chat.plan_todo_updated`, and must not be blanket-denied in ask/plan mode unless stricter presets apply.'
+canonical_text: "todowrite and todoread use the normalized TODO contract for Plan and Deep Plan with explicit revision states and must not be blanket-denied in ask/plan mode unless stricter presets apply. todowrite proposes changes to ToDoController; todoread reads its projection. Historical chat.plan_todo_updated remains readable; future durable mutations follow TDR-012 only after individual admission."
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: true
@@ -12857,3 +12856,10 @@ owner_hints: [Plans/Tools.md, Plans/Working_Notebook.md]
 ```
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Working_Notebook.md, ContractName:Plans/Permissions_System.md
+
+
+## DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)
+
+Tools retains proposal-only `todowrite` authority and non-mutating `todoread` projection reads under T-179. Permission approval authorizes proposal processing, not direct canonical writes. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete approved historical-read/future-event mapping and its admission gates.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md

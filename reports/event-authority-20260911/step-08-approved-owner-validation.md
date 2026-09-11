@@ -1,0 +1,9 @@
+# Step 8 — Two approved owner choices applied
+
+Jared’s genuine Settings approval (16:19:32.266939 UTC) and To-Do migration approval (16:23:08.849454 UTC) are recorded as DL-041 and DL-042. Earlier answer chronology is preserved. The Settings owner selects `settings.updated` for future DRY guard changes, preserves the exact guard key and existing transaction identity, retires the obsolete per-setting production row, and keeps writes disabled until a valid setting-ID/writer mapping exists. TDR-012 maps ten historical To-Do field operations individually, preserves historical read identity, and gates each future event on its own full contract and admission. Four unsupported historical fields remain history; the existing import-cause gap is explicit.
+
+The unchanged schema validator passed 24 contract pairs, 930 positive cases and 3,121 rejected negative cases. Wiring validation passed. All 1,555 PlanUnit YAML blocks in the ten edited owner documents parse; all ten static legacy field enum values are represented. Registry bytes and both relevant existing schemas are unchanged. The production wiring diff removes exactly one retired row. Shard/index generation passed; no WorkNodes or NodeSeeds were created and runtime certification remains blocked.
+
+Contract-reference lint still fails on the existing missing audit report referenced by `Plans/00-plans-index.md:72`. This packet does not repair or conceal that failure, change validators, close event depth or seal governance. The application JSON contains exact source hashes, external evidence paths plus SHA-256, genuine response IDs, and all remaining contract limitations. Current card status is applied with event-contract work remaining; the older report snapshots retain their original review time.
+
+Cost: two Astra medium authors plus root adjudication, review, verification and landing. Actual billed tokens and monetary cost are unavailable.

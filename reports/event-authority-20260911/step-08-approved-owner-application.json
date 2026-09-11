@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.assurance.event_authority.approved_owner_application.v1",
+  "applied_at_utc": "2026-09-11T16:37:34.147846+00:00",
+  "base_commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
+  "step": 8,
+  "scope": "Apply two genuine owner choices; no event registration or depth closure",
+  "decisions": [
+    {
+      "card_id": "LC-SETTINGS-IDENTITY",
+      "response_id": "LC-SETTINGS-IDENTITY-RESPONSE-001",
+      "response": "Approve",
+      "responded_by": "Jared",
+      "responded_at_utc": "2026-09-11T16:19:32.266939Z",
+      "authority_ref": "Plans/Decision_Log.md#DL-041",
+      "application": "common Settings event name and explicit retired-command/history boundary"
+    },
+    {
+      "card_id": "LC-CHAT-TODO-MIGRATION",
+      "response_id": "LC-CHAT-TODO-MIGRATION-RESPONSE-001",
+      "response": "Approve",
+      "responded_by": "Jared",
+      "responded_at_utc": "2026-09-11T16:23:08.849454Z",
+      "authority_ref": "Plans/Decision_Log.md#DL-042",
+      "application": "historical read identity and individual future To-Do mutation mapping"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "sha256": "9f21cf0df8aa4f46e488769486a7ffd5b90aad5e0b71a9fba4e26f7275ace995"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5"
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "sha256": "683459c0727eb26dc581b46d93d03d310d3886a13c76b365ac66f4cd8ae13975"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "fd7f9ededd719643900f5bd58593f3141bf6b03eea696368bc22b9aacebdbe5f"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "sha256": "c55a4bcf1fdd44922049ba9b48173470803b9fd29688e236a3dc2551ea6e3a50"
+    },
+    {
+      "path": "Plans/settings_system_contract_fixtures.json",
+      "sha256": "fa58fa37a320dc7274f472a4031d0d6ac9710c292e9f966a865e4a4628435c91"
+    },
+    {
+      "path": "Plans/ToDo_Runtime.md",
+      "sha256": "329c3ed3d2944035c404ba8d56b705f175a2ab2c325cf6a2d58ca7bcf88aea20"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "sha256": "e3d73fe4f4cde68957321dfa11bb0111c4d350a1908ae16fc7650ff2d2c454a3"
+    }
+  ],
+  "checks": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-wiring-check.json",
+      "sha256": "1ed1348e017a5e26668361f77b57ed76e4e3e5a98efbe4999e99bbeeba8e9989",
+      "status": "pass",
+      "claim_boundary": "static governance check"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-schema-check.json",
+      "sha256": "f4e3db9db3ca0cf1ef056d4319f7625d9e4ceb5d11be51e27550504e64c66d0a",
+      "status": "pass",
+      "claim_boundary": "static_schema_and_fixture_consistency_only"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-contractrefs-check.json",
+      "sha256": "93838bb91ad2e7fa95e39ffce615a7be50e0b33ff105f53e85bbf2c258c33f58",
+      "status": "fail",
+      "claim_boundary": "static governance check"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-focused-checks.json",
+      "sha256": "687161262a86dc4abd295f4c484bed7cee477b3d729495fe007c44a31b57204b",
+      "status": "pass",
+      "claim_boundary": "Static approved owner amendment checks; no native runtime acceptance"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-shard-generation.stdout",
+      "sha256": "c7bcb94f976406c46f3b44f854c27a848a10ed4db067d93a1ee844ab1e6aa5fe",
+      "status": "pass",
+      "claim_boundary": "static governance check"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-index-generation.stdout",
+      "sha256": "fc0aed0e4dd6da561ec58fe693b90d54b794eb96522754ab2a57464f5440ca37",
+      "status": "pass",
+      "claim_boundary": "static governance check"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/approved-owner-shard-check.stdout",
+      "sha256": "30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644",
+      "status": "pass",
+      "claim_boundary": "derived shard body/path check"
+    }
+  ],
+  "registry": {
+    "families": 40,
+    "unchanged_from_base": true,
+    "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a"
+  },
+  "remaining_technical_work": [
+    "Settings exact owner-key-to-valid-setting-ID and writer mapping; existing owner_contract_missing prevents mutation dispatch and writes until established.",
+    "Settings full event payload and producer/consumer/projector/checkpoint, scope, custody, retention and oracle bindings remain unclosed.",
+    "To-Do future seven event families need separate full contracts and individual admission; compound mutations require complete atomic publication and replay.",
+    "Four historical fields have no V2 destination; historical reads are preserved without new current fields.",
+    "Legacy import transition representation conflicts with the existing closed cause enum; this patch does not widen it."
+  ],
+  "verification_limits": [
+    "Schema and fixture checks prove static consistency only; no native implementation, persistence-depth or live replay evidence is claimed.",
+    "Contract-reference lint fails only on the existing missing Plans index audit-report link, outside these edits.",
+    "Existing independent Event Authority validator and currentness/PNC/readiness blockers remain; no validator or governance seal is changed."
+  ],
+  "protected_boundaries": {
+    "runtime_enabled": false,
+    "worknodes_created": false,
+    "nodeseeds_created": false,
+    "registry_admissions": 0,
+    "spec_lock_changed": false,
+    "freeze_or_closure_hash_restamped": false,
+    "validators_changed": false
+  },
+  "cost": {
+    "bulk_authors": "two Astra medium agents",
+    "root_work": "hard owner adjudication, scope review, validation and landing",
+    "billed_usage": "unavailable"
+  }
+}

@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3593-L22202
 
-Source SHA256: `35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c`
+Source SHA256: `808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4`
 
 ---
 
@@ -1638,7 +1638,7 @@ plan_unit_id: ACD-034
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, chat.plan_todo_updated emissions, Deep Plan diff reconciliation, run-level states, and explicit replans.
+canonical_text: "Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, Deep Plan diff reconciliation, run-level states, and explicit replans. Historical chat.plan_todo_updated stays readable; future controller mutations follow TDR-012 only after individual event admission."
 gui_related: false
 gui_classification_reason: Revision history, mutation events, and plan state persistence are backend/data behavior rather than visual implementation.
 depends_on: [ACD-032]
@@ -1646,7 +1646,7 @@ unblocks: [ACD-043, ACD-044]
 acceptance_criteria:
   - Structural edits after approval create a new revision rather than invisibly mutating approved history.
   - Deep Plan artifact edits resync the TODO projection through PM-extracted diffs.
-  - chat.plan_todo_updated records durable normalized TODO mutations.
+  - Historical chat.plan_todo_updated stays readable; future mutations follow the TDR-012 mapping only after individual admission.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2070,7 +2070,7 @@ gui_classification_reason: TODO tool mutation, read behavior, and execution gati
 depends_on: [ACD-043]
 unblocks: [ACD-045]
 acceptance_criteria:
-  - todowrite can create, reorder, and update TODO statuses or notes through the normalized schema.
+  - todowrite proposes changes to ToDoController; it cannot directly assert status or introduce notes as a current V2 field (TDR-012).
   - todoread returns the current normalized list for the active thread or run.
   - Editing Deep Plan markdown updates the normalized TODO projection before execution begins.
 validation_surfaces:
@@ -2109,7 +2109,7 @@ plan_unit_id: ACD-045
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: TODO auto-use may propose or refresh TODOs for multi-step work, emits proposed items through the resolved permission posture, records chat.plan_todo_updated, and keeps plan-panel state reviewable before execution observes revisions.
+canonical_text: "TODO auto-use may propose or refresh TODOs for multi-step work through the resolved permission posture and controller validation, and keeps state reviewable before execution observes committed revisions. Historical chat.plan_todo_updated remains readable; future durable mutation events follow TDR-012 only after individual admission."
 gui_related: true
 gui_classification_reason: Proposed TODO approval prompts and reviewable plan-panel state are user-visible Assistant Chat behavior.
 depends_on: [ACD-043, ACD-044]
@@ -2117,7 +2117,7 @@ unblocks: []
 acceptance_criteria:
   - Auto-use on-trigger behavior emits proposed TODO items.
   - Ask-mode displays an approval prompt listing proposed TODO items before creation.
-  - Execution observes revised TODOs only after chat.plan_todo_updated records the mutation.
+  - Execution observes only the committed current controller projection under the TDR-012 atomic visibility and individual event admission boundaries.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

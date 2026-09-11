@@ -3719,19 +3719,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  DRY Method settings wiring maps `cmd.settings.agent_rules.dry_method_default_guard.set` from Settings > General >
-  Agent Rules to `app.agent_rules.dry_method_default_guard` storage, emits
-  `settings.agent_rules.dry_method_default_guard.updated`, refreshes Assistant Chat and run-detail DRY disclosure
-  projections, binds the SSYS-023 Settings consumer to the same requested/effective owner projection, and records receipt
-  provenance for enabled and disabled_by_user states. This wiring does not generate
-  wiring JSON and does not disable explicit instructions, safety, secrets, source authority, governance, permissions,
-  or source-control hygiene when the default DRY guard is turned off.
+  Under DL-041, the eventual DRY Method mutation path reuses the existing cmd.settings.transaction.preview and
+  cmd.settings.transaction.apply sequence for the exact app.agent_rules.dry_method_default_guard identity,
+  preserving enabled | disabled_by_user and default enabled. The approved future event spelling is
+  settings.updated; its eventual closed contract must preserve this exact key and the existing transaction_id,
+  request_id, project_id, changed_setting_ids, revisions and receipt_ref of pm.settings_transaction_result.v1.
+  Settings and Storage retain scope and persistence authority; the app. spelling cannot manufacture an
+  application-scoped transaction or bypass the current Project/currentness/permission boundary. The exact
+  owner key is not automatically a valid ordinary setting_id: do not insert it into changed_setting_ids, silently
+  substitute memory.assembly.dry-method-guard, or claim a closed writer mapping until owner evidence establishes it.
+  Until that mapping and writer are proven, owner_contract_missing disables the toggle and prevents mutation
+  command dispatch and setting writes; naming agreement alone cannot enable the action. Until separate
+  Event Authority admission, no settings.updated EventRecord is emitted. Assistant Chat and run-detail DRY
+  disclosure projections continue to consume owner readback and receipts, and SSYS-023 renders the same
+  requested/effective owner projection. The retired cmd.settings.agent_rules.dry_method_default_guard.set row
+  cannot grant dispatch, handler or emission authority. Historical settings.agent_rules.dry_method_default_guard.updated
+  records remain read-only lineage; no automatic alias or payload rewrite is introduced. Turning off the default
+  guard preserves receipt provenance and all explicit instructions, safety, secrets, source authority, governance,
+  permissions and source-control hygiene.
 gui_related: true
 gui_classification_reason: Defines user-visible settings toggle wiring and disclosure refresh behavior.
 depends_on: [UCC-104, CV-299, SP-223, ACD-429, SSYS-023]
 unblocks: [ATS-018]
 acceptance_criteria:
-  - The Settings toggle writes only enabled or disabled_by_user to the DRY default-guard setting.
+  - Missing owner-key/writer mapping yields owner_contract_missing with zero mutation dispatches and writes. Only after the mapping is proven may the existing transaction sequence write enabled or disabled_by_user under current owner scope, revision and receipt rules.
+  - Only settings.updated is the approved future event name for that change; independent admission is required, and historical dedicated names are not automatic aliases.
   - Assistant Chat and run-detail disclosures refresh after the setting changes.
   - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
   - Settings renders the same requested/effective DRY owner projection and never becomes a second DRY owner.

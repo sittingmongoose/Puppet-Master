@@ -1735,9 +1735,9 @@ This section defines the canonical contract for this surface.
 
 Core rules:
 - Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
-- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and historical readability of `chat.plan_todo_updated`; future durable controller mutations follow the per-operation TDR-012 mapping only after individual admission.
 - TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
-- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+- Historical `chat.plan_todo_updated` follows the TDR-012 readable-identity boundary; future normalized TODO mutations follow its individually admitted event mapping, and `todoread` must not survive as a `source_surface` mutation source.
 
 Fields:
 - Q&A loop
@@ -1769,8 +1769,8 @@ Fields:
 - Legacy XV2 inline progress strings such as `Superseded TODO N/M` and `Superseded TODO 5/5` are plan-level visibility labels for superseded plans, not TODO item statuses; individual TODOs keep their last item status.
 - The panel shows `verification_hint` per TODO item row; a plan-level summary is not a substitute unless a separate plan-level field is defined.
 - Inline progress stays compact and must not duplicate the full checklist on every turn; examples include `Started TODO 2/5`, `Completed TODO 2/5`, `Blocked TODO 3/5`, `Skipped TODO 4/5`, and `Superseded TODO 5/5`.
-- When the auto-use heuristic fires mid-conversation, storage records the resulting TODO projection as a draft or refreshed plan state and emits `chat.plan_todo_updated` before execution observes the changed list; it must not silently replace the current plan panel without a durable event.
-- Durable TODO mutation events persist `chat.plan_todo_updated` with minimal payload schema `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }`. Storage retains `plan_id`, `todo_id`, changed `field`, `old_value`, `new_value`, and mutation `source` so replay can distinguish agent edits from user edits.
+- When the auto-use heuristic fires mid-conversation, storage records the resulting TODO projection as a draft or refreshed plan state under the TDR-012 controller and admission boundaries before execution observes the changed list; it must not silently replace the current projection without the required committed owner state.
+- Historical `chat.plan_todo_updated` mutation records remain readable with legacy payload shape `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }`. Storage preserves these historical fields and source attribution under existing policy. TDR-012 governs future per-operation mapping and the complete atomic mutation/projection boundary; historical reads cannot replay as current controller authority or authorize new legacy appends.
 - The Assistant chat plan panel remains the `/source-of-truth` for visible TODO execution state, while storage owns the durable normalized TODO projection. `/todo/tool` activity, `todoread`, `todowrite`, question cards, web activity cards, assistant runtime disclosures, and other `/consumer` surfaces all obey the same persistence boundary.
 - User edits and reorder operations are pre-approval structural changes. After execution begins, reorder or status corrections create a new TODO revision event instead of mutating the approved plan in place.
 ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
@@ -11371,7 +11371,7 @@ plan_unit_id: SP-155
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, bounded revision history, and chat.plan_todo_updated for durable TODO mutations.
+canonical_text: "Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, and bounded revision history. Historical chat.plan_todo_updated remains readable; future mutation persistence follows TDR-012 only after individual event admission."
 gui_related: true
 gui_classification_reason: This unit preserves user-visible Plan/Deep Plan TODO projection and panel behavior.
 split_recommended: false
@@ -11497,7 +11497,7 @@ plan_unit_id: SP-157
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: The Assistant chat TODO panel shows verification_hint per item, compact inline progress examples, and durable plan refresh behavior so auto-use heuristic changes emit chat.plan_todo_updated before execution and do not silently replace the current panel.
+canonical_text: "The historical TODO panel verification_hint and compact inline progress examples remain source lineage under the current ToDo_Runtime presentation owner. Auto-use refreshes reach execution only through the committed current controller projection. Historical chat.plan_todo_updated is readable; new durable events follow TDR-012 admission and atomic visibility boundaries without restoring unsupported item fields."
 gui_related: true
 gui_classification_reason: This unit preserves visible TODO panel verification hints and compact progress behavior.
 split_recommended: false
@@ -11556,7 +11556,7 @@ plan_unit_id: SP-158
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Durable TODO mutation events persist plan/todo ids, changed field, old/new values, and mutation source, while the Assistant chat plan panel remains the visible source-of-truth and storage owns durable normalized TODO projection consumed by related surfaces.
+canonical_text: "Historical chat.plan_todo_updated retains plan/todo ids, changed field, old/new values and mutation source. Storage owns durable normalized TODO projection consumed by related surfaces; ToDoController owns current state. Future mutation persistence and complete atomic visibility before execution follow TDR-012 after individual event admission."
 gui_related: true
 gui_classification_reason: This unit preserves visible TODO source-of-truth behavior and backend durable mutation event payloads.
 split_recommended: false
@@ -19082,3 +19082,10 @@ owner_hints:
   - Plans/Shared_Integration_Runtime.md
   - Plans/Contracts_V0.md
 ```
+
+
+## DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)
+
+Storage preserves historical `chat.plan_todo_updated` reads under existing access, retention and deletion rules. TDR-012 in `Plans/ToDo_Runtime.md` owns the complete mapping. Storage must establish the complete atomic mutation/projection boundary before execution consumes revised state; incomplete future event admission cannot fall back to legacy appends or partial durable publication.
+
+ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Decision_Log.md
