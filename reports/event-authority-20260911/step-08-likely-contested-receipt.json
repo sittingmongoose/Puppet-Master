@@ -1,0 +1,73 @@
+{
+  "admissions": 0,
+  "all_existing_252_step09_rows_preserved": true,
+  "base_commit": "4869b4cbaaa9e5452a1b16b68ce92b9f269df738",
+  "canon_registry_validator_freeze_closure_changes": false,
+  "cards_sha256": "dde81634c2a658a7be621b7bce1eb8ee0b298850d96f74d72a7529ea9929c7b0",
+  "classification_counts": {
+    "artifact_timeline_event_not_admitted_eventrecord": 2,
+    "cancellation_signal_persistence_unproven": 1,
+    "dl039_holding": 9,
+    "emit_candidate_persistence_unproven": 11,
+    "event_identity_conflict": 2,
+    "example_only_unsupported_spelling": 1,
+    "explicit_forbidden_generic_candidate": 1,
+    "explicit_forbidden_non_event": 1,
+    "historical_nonemitting_candidate": 1,
+    "payload_outcome_not_event": 2,
+    "persisted_candidate": 31,
+    "persisted_candidate_identity_conflict": 1,
+    "persisted_intent_candidate": 1,
+    "semantic_name_requires_registration": 20
+  },
+  "governance_counts": {
+    "existing_cpu_quarantine_preserved_step09": 45,
+    "existing_dl039_holding_preserved": 9,
+    "new_research_only_no_admission": 30
+  },
+  "pending_decision_cards": [
+    "LC-SETTINGS-IDENTITY",
+    "LC-CHAT-TODO-MIGRATION"
+  ],
+  "queue_counts": {
+    "contested": 9,
+    "likely_persisted": 75
+  },
+  "raw_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/likely-contested/capture-manifest.json",
+      "sha256": "1ee28573cdca9a7aaeadfa7fe15619b074cda1703a723d022b2784b180f348f1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/likely-contested/queue-lineage.jsonl",
+      "sha256": "2a98f474070193fd4c681783c5bd86707fc07b80e4524251d50747bb4be1241c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/likely-contested/rg-exact-discovery.jsonl",
+      "sha256": "a4c6c687a55593c800114dd8e0c07b5c70949d063dba2f767057d289e07ff7d2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/likely-contested/selected-passages.jsonl",
+      "sha256": "bfb4bc8b3056881c436a294db6737345b36697c7737d8bb0a8ae3ca00e6f1f2b"
+    }
+  ],
+  "report_sha256": "23b9fb7e48cdfe99436bd83e748397741890356dbb90568b59f2098081d05809",
+  "rows": 84,
+  "runtime_tests": "NOT_RUN",
+  "scope": "Step 8 likely/contested current-source research only",
+  "verification": {
+    "all_rows_have_current_md_evidence": true,
+    "all_source_hashes_match": true,
+    "card_source_locations_and_exact_command_ids": "pass; five canonical IDs verified against Settings owner; production JSON pointers resolve",
+    "changed_paths_scope": "exactly three report files; no canonical or generated files changed",
+    "exact_queue_set_84": true,
+    "individual_dispositions_authored": true,
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2159,
+      "status": "pass"
+    },
+    "verified_source_references": 712
+  }
+}
