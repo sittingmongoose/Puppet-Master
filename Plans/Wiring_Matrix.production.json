@@ -29857,7 +29857,8 @@
         "The panel command stays distinct from the thread-bound cmd.chat.worktree.pr and does not fabricate a thread_id",
         "cmd.forge.review.create must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.forge.review.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures."
+        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures.",
+        "When the selected adapter's provider_matrix_profile.review_vocabulary is null, the action is unavailable and never renders a blank label."
       ],
       "evidence_required": "Production wiring contract for cmd.forge.review.create; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.forge_review_create.availability",
@@ -29976,7 +29977,8 @@
         "Merge is distinct from the worktree-local cmd.chat.worktree.merge and records the remote merge receipt",
         "cmd.forge.review.merge must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.forge.review.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures."
+        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures.",
+        "When the selected adapter's provider_matrix_profile.review_vocabulary is null, the action is unavailable and never renders a blank label."
       ],
       "evidence_required": "Production wiring contract for cmd.forge.review.merge; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.forge_review_merge.availability",

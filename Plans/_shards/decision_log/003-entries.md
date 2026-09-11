@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L643
+Source lines: L13-L645
 
-Source SHA256: `83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef`
+Source SHA256: `c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f`
 
 ---
 
@@ -550,6 +550,8 @@ The options were:
 The answer is option 1. One user action has one command; provider differences remain in the adapter. Review labels use the selected repository adapter's existing review noun and display vocabulary, following the automation shell's use of its selected binding adapter. Create and merge retain the command catalog's guards and provider-owner routes. The legacy create spelling still follows its recorded retirement path into the compatibility alias, and thread-bound worktree commands keep their separate scope.
 
 This buys consistent provider wording and an executable check against the existing provider fixtures. It costs an optional wiring vocabulary object, template rendering in validation, and maintenance of alias normalization before availability, permission, telemetry, receipts, and dispatch. No new readiness predicate is needed on the adapter. The validator rejects provider names and review nouns in generic rows and prints the rendered labels; “Merge merge request” is the expected merge label for a provider whose review noun is “merge request”. This records planning and validation changes only, with no runtime enablement or governance seal.
+
+On 2026-09-11, branch `plans/dl044-followups-20260911` refined the already reconciled `TCP-GITHUB-PR` profile with explicit adapter-owned authority and guards, command/Forge owner references, and alias migration and validation coverage. The same follow-up hardened the wiring vocabulary check with required review-command vocabulary, validated source/field bindings, per-noun fixture rendering, explicit null-vocabulary unavailability, and unittest coverage registered in `.gitignore`.
 
 ### DL-045: Bounded Event Authority technical binding definitions for Steps 8–9
 

@@ -553,6 +553,8 @@ The answer is option 1. One user action has one command; provider differences re
 
 This buys consistent provider wording and an executable check against the existing provider fixtures. It costs an optional wiring vocabulary object, template rendering in validation, and maintenance of alias normalization before availability, permission, telemetry, receipts, and dispatch. No new readiness predicate is needed on the adapter. The validator rejects provider names and review nouns in generic rows and prints the rendered labels; “Merge merge request” is the expected merge label for a provider whose review noun is “merge request”. This records planning and validation changes only, with no runtime enablement or governance seal.
 
+On 2026-09-11, branch `plans/dl044-followups-20260911` refined the already reconciled `TCP-GITHUB-PR` profile with explicit adapter-owned authority and guards, command/Forge owner references, and alias migration and validation coverage. The same follow-up hardened the wiring vocabulary check with required review-command vocabulary, validated source/field bindings, per-noun fixture rendering, explicit null-vocabulary unavailability, and unittest coverage registered in `.gitignore`.
+
 ### DL-045: Bounded Event Authority technical binding definitions for Steps 8–9
 
 On 2026-09-11 at **17:38:05.609154 UTC**, Jared answered exactly **“Approve the bounded proposal”** to the Technical contract authority Steps 8–9 question (`call_DvY9cAd5SBCN8ACboljCpno8`). The genuine response is `EA-BINDINGS-285-RESPONSE-001` in `reports/event-authority-20260911/decision-responses.jsonl`.
@@ -2913,6 +2915,7 @@ validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 -m unittest tests.test_pm_wiring_vocabulary
 risk_class: forge_wiring_provider_vocabulary_drift
 reasoning_tier: high
 context_scope: forge_review_wiring_vocabulary
@@ -2926,6 +2929,9 @@ implementation_surfaces:
   - Plans/UI_Wiring_Rules.md
   - Plans/Forge_Integrations.md
   - scripts/pm-plans-verify.py
+  - Plans/touch_closure.json
+  - .gitignore
+  - tests/test_pm_wiring_vocabulary.py
 node_compile_hint:
   mode: forge_review_wiring_decision_record
   create_worknodes: false

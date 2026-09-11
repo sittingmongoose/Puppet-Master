@@ -3799,6 +3799,150 @@ USAGE_ROUTE_PASSTHROUGH_FIELDS = {
 }
 
 
+def validate_wiring_vocabulary(entries: dict[str, Any], forge_fixtures: dict[str, Any]) -> dict[str, Any]:
+    """Check parsed vocabulary inputs without I/O or mutation; report labels and unavailable profiles."""
+    failures: list[dict[str, Any]] = []
+    matrix_path = "Plans/Wiring_Matrix.production.json"
+    fixtures_path = "Plans/forge_integration_contract_fixtures.json"
+    required_commands = {"cmd.forge.review.create", "cmd.forge.review.merge"}
+    source_fields = {
+        "selected_repository_adapter": "review_noun",
+        "selected_automation_binding_adapter": "pipeline_noun",
+    }
+    provider_name_re = re.compile(r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket)\b", re.IGNORECASE)
+    provider_literal_re = re.compile(
+        r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket|pull requests?|merge requests?)\b",
+        re.IGNORECASE,
+    )
+    profiles: list[dict[str, Any]] = []
+    valid_fixtures = forge_fixtures.get("valid", []) if isinstance(forge_fixtures, dict) else []
+    for fixture in valid_fixtures if isinstance(valid_fixtures, list) else []:
+        if not isinstance(fixture, dict) or fixture.get("definition") != "provider_capability_matrix":
+            continue
+        value = fixture.get("value")
+        candidates = value.get("profiles", []) if isinstance(value, dict) else []
+        if isinstance(candidates, list):
+            profiles.extend(profile for profile in candidates if isinstance(profile, dict))
+
+    generic_forge_rows = 0
+    provider_literal_rows: set[str] = set()
+    provider_literal_hits = 0
+    rendered_vocabulary_labels: dict[str, list[str]] = {}
+    unavailable_vocabulary_profiles: dict[str, list[str]] = {}
+    for key, row in entries.items():
+        if not isinstance(row, dict):
+            continue  # Row shape is checked by the matrix validator.
+        row_path = f"{matrix_path}#/entries/{key}"
+        command_id = str(row.get("ui_command_id", ""))
+        if command_id.startswith("cmd.forge."):
+            generic_forge_rows += 1
+            text_fields = [("ui_location", row.get("ui_location")), ("evidence_required", row.get("evidence_required"))]
+            acceptance_checks = row.get("acceptance_checks", [])
+            if isinstance(acceptance_checks, list):
+                text_fields.extend((f"acceptance_checks[{index}]", value) for index, value in enumerate(acceptance_checks))
+            for field, value in text_fields:
+                if not isinstance(value, str):
+                    continue
+                for match in provider_literal_re.finditer(value):
+                    provider_literal_rows.add(key)
+                    provider_literal_hits += 1
+                    failures.append({
+                        "path": row_path, "entry_id": key, "command_id": command_id,
+                        "field": field, "matched_text": match.group(0),
+                        "error": "wiring_provider_literal_on_generic_command",
+                    })
+
+        vocabulary = row.get("vocabulary")
+        if command_id in required_commands and not isinstance(vocabulary, dict):
+            failures.append({
+                "path": row_path, "entry_id": key, "command_id": command_id,
+                "error": "wiring_vocabulary_required_missing",
+            })
+            continue
+        if "vocabulary" not in row:
+            continue
+        vocabulary = vocabulary if isinstance(vocabulary, dict) else {}
+        noun_source = vocabulary.get("noun_source")
+        noun_field = vocabulary.get("noun_field")
+        binding_valid = (
+            isinstance(noun_source, str) and noun_source in source_fields
+            and noun_field == source_fields[noun_source]
+        )
+        if not binding_valid:
+            failures.append({
+                "path": row_path, "entry_id": key, "noun_source": noun_source, "noun_field": noun_field,
+                "error": "wiring_vocabulary_binding_mismatch",
+            })
+        template = vocabulary.get("label_template")
+        template_valid = isinstance(template, str) and "{noun}" in template
+        if not template_valid:
+            failures.append({
+                "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                "error": "wiring_vocabulary_template_missing_noun",
+            })
+        if isinstance(template, str):
+            for match in provider_literal_re.finditer(template):
+                failures.append({
+                    "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                    "matched_text": match.group(0), "error": "wiring_vocabulary_template_literal",
+                })
+        if not binding_valid or not template_valid:
+            continue
+
+        rendered_labels: set[str] = set()
+        unavailable_profiles: set[str] = set()
+        # Adapter enum tokens and automation_service descriptions are not display vocabulary.
+        # The current fixture contract has no pipeline display forms; adoption must close this gap.
+        if noun_field == "pipeline_noun":
+            failures.append({
+                "path": fixtures_path, "entry_id": key,
+                "error": "wiring_vocabulary_missing_pipeline_fixtures",
+            })
+        elif not profiles:
+            failures.append({
+                "path": fixtures_path, "entry_id": key,
+                "error": "wiring_vocabulary_missing_review_fixtures",
+            })
+        else:
+            display_field = "review_vocabulary"
+            for index, profile in enumerate(profiles):
+                profile_id = str(profile.get("profile_id", f"profile[{index}]"))
+                if display_field in profile and profile[display_field] is None:
+                    unavailable_profiles.add(profile_id)
+                    continue
+                noun = profile.get(display_field)
+                if not isinstance(noun, str) or not noun.strip():
+                    failures.append({
+                        "path": fixtures_path, "entry_id": key, "profile_id": profile_id,
+                        "noun_field": noun_field, "display_field": display_field,
+                        "error": "wiring_vocabulary_unsupported_noun",
+                    })
+                    continue
+                rendered_labels.add(template.replace("{noun}", noun.strip().lower()))
+        rendered_vocabulary_labels[key] = sorted(rendered_labels)
+        unavailable_vocabulary_profiles[key] = sorted(unavailable_profiles)
+        for label in sorted(rendered_labels):
+            for match in provider_name_re.finditer(label):
+                failures.append({
+                    "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                    "rendered_label": label, "matched_text": match.group(0),
+                    "error": "wiring_vocabulary_rendered_provider_name",
+                })
+
+    return {
+        "failures": failures,
+        "generic_forge_row_count": generic_forge_rows,
+        "wiring_provider_literal_row_count": len(provider_literal_rows),
+        "wiring_provider_literal_hit_count": provider_literal_hits,
+        "vocabulary_review_profile_count": sum(
+            isinstance(profile.get("review_vocabulary"), str) and bool(profile["review_vocabulary"].strip())
+            for profile in profiles
+        ),
+        "rendered_vocabulary_labels": rendered_vocabulary_labels,
+        "unavailable_vocabulary_profiles": unavailable_vocabulary_profiles,
+    }
+
+
 def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     matrix_path = PLANS / "Wiring_Matrix.production.json"
@@ -3849,23 +3993,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     production_commands: set[str] = set()
     event_rows = 0
     typed_contract_rows = 0
-    provider_name_re = re.compile(r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket)\b", re.IGNORECASE)
-    provider_literal_re = re.compile(
-        r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket|pull requests?|merge requests?)\b",
-        re.IGNORECASE,
-    )
-    forge_fixtures = load_json(forge_fixtures_path)
-    review_vocabularies = [
-        profile["review_vocabulary"]
-        for fixture in forge_fixtures.get("valid", [])
-        if fixture.get("definition") == "provider_capability_matrix"
-        for profile in fixture.get("value", {}).get("profiles", [])
-        if isinstance(profile.get("review_vocabulary"), str) and profile["review_vocabulary"].strip()
-    ]
-    generic_forge_rows = 0
-    provider_literal_rows: set[str] = set()
-    provider_literal_hits = 0
-    rendered_vocabulary_labels: dict[str, list[str]] = {}
+    vocabulary_report = validate_wiring_vocabulary(entries, load_json(forge_fixtures_path))
+    failures.extend(vocabulary_report["failures"])
 
     for key, row in entries.items():
         row_path = f"{rel(matrix_path)}#/entries/{key}"
@@ -3874,52 +4003,6 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
             continue
         command_id = str(row.get("ui_command_id", ""))
         production_commands.add(command_id)
-        if command_id.startswith("cmd.forge."):
-            generic_forge_rows += 1
-            text_fields = [("ui_location", row.get("ui_location")), ("evidence_required", row.get("evidence_required"))]
-            acceptance_checks = row.get("acceptance_checks", [])
-            if isinstance(acceptance_checks, list):
-                text_fields.extend((f"acceptance_checks[{index}]", value) for index, value in enumerate(acceptance_checks))
-            for field, value in text_fields:
-                if not isinstance(value, str):
-                    continue
-                for match in provider_literal_re.finditer(value):
-                    provider_literal_rows.add(key)
-                    provider_literal_hits += 1
-                    failures.append({
-                        "path": row_path, "entry_id": key, "command_id": command_id,
-                        "field": field, "matched_text": match.group(0),
-                        "error": "wiring_provider_literal_on_generic_command",
-                    })
-
-        if "vocabulary" in row:
-            vocabulary = row["vocabulary"]
-            template = vocabulary.get("label_template") if isinstance(vocabulary, dict) else None
-            if not isinstance(template, str) or "{noun}" not in template:
-                failures.append({
-                    "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
-                    "error": "wiring_vocabulary_template_missing_noun",
-                })
-            else:
-                for match in provider_literal_re.finditer(template):
-                    failures.append({
-                        "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
-                        "matched_text": match.group(0), "error": "wiring_vocabulary_template_literal",
-                    })
-                if not review_vocabularies:
-                    failures.append({
-                        "path": rel(forge_fixtures_path), "entry_id": key,
-                        "error": "wiring_vocabulary_missing_review_fixtures",
-                    })
-                rendered_labels = sorted({template.replace("{noun}", noun.lower()) for noun in review_vocabularies})
-                rendered_vocabulary_labels[key] = rendered_labels
-                for label in rendered_labels:
-                    for match in provider_name_re.finditer(label):
-                        failures.append({
-                            "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
-                            "rendered_label": label, "matched_text": match.group(0),
-                            "error": "wiring_vocabulary_rendered_provider_name",
-                        })
         if wiring_command_excluded(command_id, excluded_tokens):
             failures.append({"path": row_path, "command_id": command_id, "error": "excluded_command_has_peer_production_wiring"})
         if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
@@ -4209,11 +4292,7 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         typed_contract_row_count=typed_contract_rows,
         missing_catalog_command_count=len(missing_commands),
         uncataloged_production_command_count=len(uncataloged_production_commands),
-        generic_forge_row_count=generic_forge_rows,
-        wiring_provider_literal_row_count=len(provider_literal_rows),
-        wiring_provider_literal_hit_count=provider_literal_hits,
-        vocabulary_review_profile_count=len(review_vocabularies),
-        rendered_vocabulary_labels=rendered_vocabulary_labels,
+        **{key: value for key, value in vocabulary_report.items() if key != "failures"},
     )
 
 
@@ -7128,7 +7207,7 @@ def main() -> int:
     if args.command == "validate-wiring-matrix":
         output_fields.update({
             "generic_forge_row_count", "wiring_provider_literal_row_count", "wiring_provider_literal_hit_count",
-            "vocabulary_review_profile_count", "rendered_vocabulary_labels",
+            "vocabulary_review_profile_count", "rendered_vocabulary_labels", "unavailable_vocabulary_profiles",
         })
     print(json.dumps({k: report[k] for k in report if k in output_fields}, indent=2, sort_keys=True))
     return 0 if report.get("status") == "pass" else 1

@@ -5130,6 +5130,7 @@
       },
       "heading_count": 92,
       "implementation_surfaces": [
+        ".gitignore",
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Backup_Restore_System.md",
@@ -5183,9 +5184,11 @@
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
-        "scripts/pm-plans-verify.py"
+        "Plans/touch_closure.json",
+        "scripts/pm-plans-verify.py",
+        "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3223,
+      "line_count": 3229,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 43,
       "plan_unit_ids": [
@@ -5282,7 +5285,7 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef",
+      "sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 43
@@ -5302,6 +5305,7 @@
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
+        "python3 -m unittest tests.test_pm_wiring_vocabulary",
         "python3 scripts/pm-browser-event-admission.py",
         "python3 scripts/pm-event-authority-currentness.py validate",
         "python3 scripts/pm-plan-index.py validate",
@@ -17792,7 +17796,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1716,
+      "line_count": 1732,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -17849,7 +17853,7 @@
         "unwired_gui",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "1f8799c0afc91fbe57b7db091212fe405b45611c649e2bb61ba86ec8b0aa3dc2",
+      "sha256": "6c3f0f5bed62d1beda720f51d06e53470c29670422c509a914cd559089dc6666",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -17908,7 +17912,7 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
-        "python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, noun templates, and rendered labels against every non-null review vocabulary in the Forge provider contract fixtures.",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, required vocabulary objects, source/field bindings, noun templates, per-noun-field fixture rendering, and null-review-vocabulary unavailability.",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
@@ -18738,7 +18742,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T18:48:57Z",
+  "generated_at_utc": "2026-09-11T19:17:23Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

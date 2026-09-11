@@ -4510,7 +4510,8 @@
         "Plans/Decision_Log.md#DL-044",
         "Plans/UI_Command_Catalog.md#UCC-122",
         "Plans/UI_Command_Catalog.md#UCC-132",
-        "Plans/Forge_Integrations.md#FGI-008"
+        "Plans/Forge_Integrations.md#FGI-008",
+        "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-017"
       ],
       "owner_plan": "Plans/Forge_Integrations.md",
       "plan_unit": "FGI-008",
@@ -4518,10 +4519,10 @@
       "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
       "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
       "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
-      "availability_rule": "Normalize cmd.github.pr.create to cmd.forge.review.create {provider: github} before availability, permission, telemetry, receipt, and dispatch. Consume the canonical target guard forge_capability_current && auth_valid && repository_current; no independent GitHub guard.",
-      "permission_gate": "Forge and Permissions owners gate the normalized target; the selected GitHub adapter retains provider API/auth behavior without granting the alias independent authority.",
+      "availability_rule": "Normalize cmd.github.pr.create to cmd.forge.review.create {provider: github} before availability, permission, telemetry, receipt, and dispatch. Consume the canonical command catalog guard forge_capability_current && auth_valid && repository_current; the GitHub adapter defines each predicate against the exact GitHub account, repository, source/target revision, auth, remote, and capability. No independent GitHub guard.",
+      "permission_gate": "Forge and Permissions owners gate the normalized target; Plans/GitHub_API_Auth_and_Flows.md owns the selected GitHub adapter's API/auth contribution, with exact authorized GitHub account and repository authority retained by the adapter. The alias grants no independent authority.",
       "disabled_reason_rule": "Project the canonical Forge target's typed auth, permission, currentness, capability, and provider disabled reasons after normalization.",
-      "handler_owner": "Planned compatibility normalizer only; normalize to cmd.forge.review.create before permission and dispatch. handlers::forge::review_create remains the sole domain handler; no source registration, second handler, or independent wiring.",
+      "handler_owner": "cmd.github.pr.create is a compatibility alias of cmd.forge.review.create with provider github under DL-044. The handler is the generic Forge review-create route; GitHub-specific behavior is supplied by the GitHub adapter, not by a second handler. handlers::forge::review_create remains the sole planned domain handler. The alias has no production wiring row of its own and is wired through catalog.forge_review_create. Plans/UI_Command_Catalog.md#UCC-132 is the command contract; no dedicated GitHub PR-create command PlanUnit exists in Plans/GitHub_Integration.md. GI-031 supplies optional GitHub PR promotion context only.",
       "handler_status": "specified",
       "wiring_status": "specified",
       "production_or_simulation": "Static alias and canonical production-intent contract only; actual provider payload normalization, native normalizer, API execution, and runtime evidence are not proved or admitted here.",
@@ -4549,7 +4550,9 @@
       "test_refs": [
         "Plans/UI_Command_Catalog.md#UCC-122",
         "Plans/UI_Command_Catalog.md#UCC-132",
-        "tests/test_pm_touch_closure_source.py#ForgeReviewAliasConsumerTests"
+        "tests/test_pm_touch_closure_source.py#ForgeReviewAliasConsumerTests",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "Plans/UI_Command_Catalog.md#UCC-132 acceptance_criteria: cmd.github.pr.create and cmd.source_control.pr.create normalize to cmd.forge.review.create with provider github; cmd.chat.worktree.pr retains its distinct thread-bound scope, and git.create_pr retains its retirement lineage."
       ],
       "evidence_refs": [
         "static_owner_contract_and_alias_binding_only; native normalization and execution evidence absent"

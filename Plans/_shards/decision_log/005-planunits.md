@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L651-L3195
+Source lines: L653-L3201
 
-Source SHA256: `83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef`
+Source SHA256: `c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f`
 
 ---
 
@@ -2273,6 +2273,7 @@ validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 -m unittest tests.test_pm_wiring_vocabulary
 risk_class: forge_wiring_provider_vocabulary_drift
 reasoning_tier: high
 context_scope: forge_review_wiring_vocabulary
@@ -2286,6 +2287,9 @@ implementation_surfaces:
   - Plans/UI_Wiring_Rules.md
   - Plans/Forge_Integrations.md
   - scripts/pm-plans-verify.py
+  - Plans/touch_closure.json
+  - .gitignore
+  - tests/test_pm_wiring_vocabulary.py
 node_compile_hint:
   mode: forge_review_wiring_decision_record
   create_worknodes: false

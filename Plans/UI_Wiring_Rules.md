@@ -277,11 +277,27 @@ acceptance_criteria:
     display form, following the automation shell precedent provider_noun_source = selected_automation_binding_adapter
     in Plans/forge_integration_contracts.schema.json#/$defs/automation_shell_projection. Actions & Pipelines
     and the Git remote name Origin are not provider-literal violations.
+  - >-
+    The vocabulary object is required on every row whose ui_command_id is in the required command set
+    [cmd.forge.review.create, cmd.forge.review.merge]; omission fails with wiring_vocabulary_required_missing.
+    When pipeline-family rows adopt a provider-varying label, their command IDs join this required set.
+  - >-
+    The vocabulary binding must pair selected_repository_adapter with review_noun, or
+    selected_automation_binding_adapter with pipeline_noun; any other source/field pair fails with
+    wiring_vocabulary_binding_mismatch. Render each row by its noun_field: review_noun uses each
+    non-null provider_matrix_profile.review_vocabulary in Plans/forge_integration_contract_fixtures.json,
+    while pipeline_noun uses pipeline noun display forms. If pipeline display vocabulary is absent from
+    the fixtures, report wiring_vocabulary_missing_pipeline_fixtures as a required gap; never substitute
+    review nouns. A profile lacking the referenced noun is unsupported.
+  - >-
+    A selected adapter whose provider_matrix_profile.review_vocabulary is null makes the review action
+    unavailable, including generic Git profiles. Skip that profile's label rendering without a validation
+    failure and report it as unavailable; never render a blank label.
 validation_surfaces:
   - Plans/Wiring_Matrix.schema.json
   - GATE-010 schema validation
   - python3 scripts/pm-plans-verify.py lint-contractrefs
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, noun templates, and rendered labels against every non-null review vocabulary in the Forge provider contract fixtures.
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, required vocabulary objects, source/field bindings, noun templates, per-noun-field fixture rendering, and null-review-vocabulary unavailability.
 risk_class: matrix_schema_drift
 reasoning_tier: standard
 context_scope: wiring_matrix
