@@ -2567,7 +2567,10 @@ def event_family_payload_schema(family: dict[str, Any]) -> tuple[dict[str, Any] 
         if pointer not in {"#", ""}:
             if not isinstance(pointer, str) or not pointer.startswith("#/"):
                 return None, None
-            schema = resolve_local_schema_ref(schema, pointer[1:])
+            # json_pointer_value consumes the slash-prefixed JSON Pointer;
+            # resolve_local_schema_ref requires the leading '#' instead.
+            # Dropping '#' before the latter falsely hid every $defs payload.
+            schema = json_pointer_value(schema, pointer[1:])
         if not isinstance(schema, dict):
             return None, None
         return schema, schema.get("$id") or schema.get("schema_id")
