@@ -499,6 +499,18 @@
               },
               "source_location_ref": {
                 "$ref": "#/$defs/safe_ref"
+              },
+              "expected_project_revision": {
+                "type": "null"
+              },
+              "expected_project_currentness_sha256": {
+                "type": "null"
+              },
+              "permission_snapshot_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "filesafe_evidence_ref": {
+                "$ref": "#/$defs/safe_ref"
               }
             }
           }
@@ -1007,6 +1019,94 @@
                         "not_attempted",
                         "rolled_back"
                       ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "cmd.project.new_github_repo"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "rejected",
+                  "cancelled"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "accepted"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    },
+                    "project_revision": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "project_currentness_sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "lifecycle": {
+                      "const": "listed"
+                    },
+                    "persistence_disposition": {
+                      "const": "persisted"
+                    },
+                    "receipt_refs": {
+                      "minItems": 3
+                    },
+                    "error_code": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_revision": {
+                      "type": "null"
+                    },
+                    "project_currentness_sha256": {
+                      "type": "null"
+                    },
+                    "lifecycle": {
+                      "type": "null"
+                    },
+                    "persistence_disposition": {
+                      "enum": [
+                        "not_attempted",
+                        "rolled_back"
+                      ]
+                    },
+                    "error_code": {
+                      "type": "string"
                     }
                   }
                 }
