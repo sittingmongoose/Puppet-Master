@@ -1,0 +1,277 @@
+{
+  "schema_id": "pm.non_design_contract_corrections_report.v1",
+  "review_date": "2026-09-11",
+  "review_base_commit": "3f3657819075cc0042200f21ade4ac28093d06bb",
+  "status": "scoped_corrections_verified_global_audit_open",
+  "claim_boundary": "Plans, schemas, candidate validation and static owner/response/wiring joins only. No native dispatch, authenticated request/receipt lookup, effects, persistence/recovery, visual approval, Event Authority global closure, readiness or governance seal is established.",
+  "authority_correction": {
+    "authority_ref": "Plans/Decision_Log.md#DL-039",
+    "decision_id": "EMIT-PERSIST-026",
+    "genuine_owner_disposition": "ACCEPT_EMIT_OBLIGATION_ONLY",
+    "correction": "Withdraw the six memberships introduced in this integration branch; preserve their closed candidate payloads and command-result contracts without persisted-event authority.",
+    "withdrawn_event_types": [
+      "testing.session.opened",
+      "testing.session.watch_started",
+      "testing.session.backgrounded",
+      "testing.session.redaction_inspected",
+      "github.repo.create_requested",
+      "project.github_repo_bound"
+    ],
+    "registry_before": 98,
+    "registry_after": 92,
+    "retained_rows_unchanged": true,
+    "retained_rows_canonical_sha256": "99c53d0bf95bac68e57bb60f7df54e0b48e46884ac33511ee3a9a9ee33bb2c69",
+    "browser_admissions_preserved": 53,
+    "admitted_events_in_this_correction": 0,
+    "candidate_boundary": "Valid candidates and malformed, duplicate, changed-ID and restart inputs remain quarantined; no identity consumption, projection or checkpoint advance. Candidate negative checks run independently of the mandatory no-admission guard.",
+    "retention_boundary": "Proposed RP-AUTHORITY-INDEFINITE/Case L metadata is not an operative assignment or physical-family registration.",
+    "historical_evidence_unchanged": true,
+    "holding_receipt_and_independent_validator_unchanged": true,
+    "supersedes_current_admission_claims_in": [
+      "reports/packet-gap-closure-20260910/testing-session-event-integration.json",
+      "reports/packet-gap-closure-20260910/github-project-integration.json"
+    ],
+    "global_denominator": "UNKNOWN_OPEN"
+  },
+  "source_control": {
+    "canonical_commands": 19,
+    "scalar_corrections": [
+      "A succeeded result cannot carry an unknown effect.",
+      "Unknown errors cannot masquerade as known/retryable effects; reconciliation does not permit a retry action.",
+      "Every established terminal result requires a non-secret operation receipt; pre-attempt availability/error records remain separate."
+    ],
+    "central_corrections": [
+      "Exact typed family and nested command binding; no local-projection substitution.",
+      "Original request/result command instance, discriminated scope, idempotency and return-context equality.",
+      "Exact central Project/topology and optional Plan/Goal lineage; absent owner lineage cannot invent central identity.",
+      "Owner status and unresolved effects control the central terminal projection; no_effect is not an owner-verified no_op.",
+      "The central receipt must be the owner's original operation receipt, including replay."
+    ],
+    "before_fix": "An aligned valid bundle passed, but five schema-valid counterexamples also passed: foreign Project, substituted receipt, failed-as-success, unknown-as-success and nested wrong command. The initial new test run had 31 failing subtests.",
+    "after_fix": "All five counterexamples are rejected; 12 central tests pass, including 19 commands x 6 terminal states. Seven scalar tests pass separately.",
+    "normalization_boundary": "The normalized request/hash is a trusted fixture resolution, not a new request DTO or digest policy. Native request, permission/lease, receipt and backend resolution remains unproved."
+  },
+  "screenshot_consumers": {
+    "placements_changed": 4,
+    "expected_artifact_event": "runtime_artifact.screenshot",
+    "owner_ref": "Plans/Runtime_Artifacts_Panel.md#RAP-054",
+    "forbidden_generic_event": "runtime_artifact.created",
+    "admission_status": "pending",
+    "boundary": "Existing consumer intent only. Protected content is excluded; absent native capture/persistence and real owner-resolved Project/run/attempt identity remains handler_unavailable. No identifiers or runtime success are fabricated."
+  },
+  "verification": {
+    "full_unittest": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tests -p 'test_pm*.py' -v",
+      "modules": 33,
+      "tests": 427,
+      "passed": 418,
+      "failures": 0,
+      "errors": 9,
+      "exit_code": 1,
+      "duration_seconds": 192.218,
+      "error_scope": "All nine are Pnc019CurrentnessTests.setUp failures: missing Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/final-unittest-20260911-g3zt5u/stderr.log",
+        "sha256": "4a52919164cfb3ea2c83f6da45a178e90e5cc58abf2e005ea0b50800f283514d"
+      }
+    },
+    "new_contracts": {
+      "status": "pass",
+      "contract_pairs": 26,
+      "positive_cases": 1009,
+      "negative_cases_rejected": 3302,
+      "internal_self_tests_passed": 12,
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/non-design-verification-20260911-VBlksE/new-contracts-after-scm.json",
+        "sha256": "76694b17b246de3fbeaf33cb8afe2b2f5caee84473a420490bccccf080e2d27e"
+      }
+    },
+    "source_control_tests": {
+      "status": "pass",
+      "test_methods": 19,
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/non-design-verification-20260911-VBlksE/source-control-final-tests.log",
+        "sha256": "1a29099b97485451a8d62c567aaabcf7f1af8ffbdff379517073f1d482e6c3a0"
+      }
+    },
+    "central_fixture_gate": {
+      "status": "pass",
+      "positive_cases": 25,
+      "negative_cases": 64,
+      "scope": "Existing central fixture pack; the new SCM matrix is covered by the separately listed tests, not added to this count.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/non-design-verification-20260911-VBlksE/ui-command-response-after-scm.json",
+        "sha256": "10b8e45d41a2465795af95c7bb5aa1f3e4e266ac667643d102feb40c1f8126b8"
+      }
+    },
+    "emit_only_tests": {
+      "status": "pass",
+      "boundary_methods": 13,
+      "testing_methods": 10,
+      "github_methods": 15,
+      "testing_negative_candidates": 124,
+      "github_negative_candidates": 74
+    },
+    "screenshot_tests": {
+      "status": "pass",
+      "methods": 5
+    },
+    "aggregate_report_regression": {
+      "status": "pass",
+      "methods": 5,
+      "correction": "Return both Testing and GitHub compact audit entries instead of omitting checks that already ran."
+    },
+    "generated_outputs": {
+      "shard_check": "pass",
+      "index_validation": "pass",
+      "sharded_docs": 98,
+      "shards": 2182,
+      "plan_units": 6463,
+      "acceptance_units": 24712,
+      "changed_shard_owners": [
+        "automated_testing_system",
+        "github_integration",
+        "ui_command_catalog",
+        "wiring_matrix"
+      ],
+      "unrelated_shard_changes": 0
+    },
+    "broader_governance_checkpoint": {
+      "status": "fail",
+      "timing": "After emit-only/screenshot/scalar corrections, before the central SCM adapter and compact aggregate-report fix.",
+      "passed_checks": 25,
+      "total_checks": 36,
+      "failures": "Missing baseline governance/GUI/audit inputs; stale Spec Lock, evidence, graph, migration, closure and audit-index artifacts; historical 39-family and old-revision readiness assumptions. No new ATS-049/GI-042/PJCT-008 reference failure was found in retained samples.",
+      "failure_counts_by_check": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "verify_spec_lock": 25,
+        "validate_evidence": 1246,
+        "validate_plan_graph": 1246,
+        "validate_implementation_readiness": 36,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1
+      },
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/non-design-verification-20260911-VBlksE/run-gates.json",
+        "sha256": "5114e9eb18ac6a509ab8737829ac5e77e222d4791e9bd2a64f89e15afe954778"
+      },
+      "limits": "Large groups retain bounded samples; evidence/graph failures overlap. This is not a claim to have individually reviewed every omitted sample or resealed governance."
+    }
+  },
+  "formal_packet_audit": {
+    "completed": false,
+    "historical_review_workbook": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-closure-20260911-r2-unarchive",
+    "historical_manifest_sha256": "4267717e04b80925a178761ac2e4f75493829e924f96b6d55da14022ba10fe2a",
+    "historical_reviewed_cases": 2730,
+    "historical_total_cases": 13429,
+    "historical_unreviewed_cases": 10699,
+    "current_source_freeze_required": true,
+    "boundary": "Historical judgments are not restamped for this changed source snapshot. A fresh census and evidence-bound case-by-case review remain required; this correction report is not that completed audit."
+  },
+  "source_pins": [
+    {
+      "path": ".gitignore",
+      "sha256": "4c218cfd880e0f188208b1628a59788736b6366e8b5e1d044004cc9a3d3a447a"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "10b0afdf4d693bd04d82cc3c832144021eaeb1366e51b00a27a694fef9d54a14"
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "sha256": "a128627d85b0eb7cafb591dd7f33e769fcad42a272294631f99c93f272a50e4c"
+    },
+    {
+      "path": "Plans/Project_System.md",
+      "sha256": "df863f9f529da70b8c06cff18f7917ca9f9ea8f3d01220762022f29c5d5019b4"
+    },
+    {
+      "path": "Plans/Source_Control_System.md",
+      "sha256": "b2ea19865b93c2030935b29f11040d26ad920d61ee8abd968cce66576b4f6a60"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "7008e0dde6ca8cce7eb1e7cb515e2581df5ebaf5f4defd92b5d148fb8c193ac5"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "723beb16e784bc6c6b24a01d60ea27a6dbdcd1f96d851ed8a76b35f21f6e16f4"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "23011b2cecea872e21b6a75d3eed14bc81bcf2d1c6b74c46f35e3b7a41a9ae88"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "211da6517d47bed6f1c593c1874f71749722af1f066cba43e7767f9a35755dc9"
+    },
+    {
+      "path": "Plans/github_project_event_admission.json",
+      "sha256": "3dd205e39da07eb48236adc552759a9e15a27ba6b68dff406d4cc807156b6e9e"
+    },
+    {
+      "path": "Plans/source_control_contract_fixtures.json",
+      "sha256": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642"
+    },
+    {
+      "path": "Plans/source_control_contracts.schema.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a"
+    },
+    {
+      "path": "Plans/testing_session_event_admission.json",
+      "sha256": "02dc66ffdbf7b672309df30c044297c350d40302d4c75b88d2d190e1e28a419f"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "78efae69ca926918d2794bdff93d017db701866b2e9ca9e2dad84ba8388eafaf"
+    },
+    {
+      "path": "scripts/pm-github-project-integration.py",
+      "sha256": "840700fca07912b9d90a7674f70b7a9a69de2acd6cbbb002b7f20b976d2d3f8a"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "f2ae0d16ecea5b07c5c50c4e0c2684c26abec972e2ebd02d689da6ad47737c4f"
+    },
+    {
+      "path": "scripts/pm-testing-session-event-admission.py",
+      "sha256": "bd1252ba29a0f0198a1ae429b6316c87f82004783c6ba39ad83db906742003c9"
+    },
+    {
+      "path": "scripts/pm_emit_only_event_contract.py",
+      "sha256": "c7dadc2fdfcac31299d667054a93cb8a906c350a8cd3b47c37810c03be82fbf3"
+    },
+    {
+      "path": "scripts/pm_ui_command_response.py",
+      "sha256": "4144030011e298a815b6e5149a672bd998a0f333b0066fbbf7c3ed1d597edabe"
+    },
+    {
+      "path": "tests/test_pm_browser_screenshot_wiring.py",
+      "sha256": "fe417e888e1b187741541d5baf6645007d37a2de61c86db6bd7429a224f2eb6f"
+    },
+    {
+      "path": "tests/test_pm_emit_only_event_boundaries.py",
+      "sha256": "22d285f6f24d3bd2a14571a186766c122ee49c9612eb3ea01a65cde9ee85851f"
+    },
+    {
+      "path": "tests/test_pm_github_project_integration.py",
+      "sha256": "bac7a1fe05af2eea7c6716f4efbfd6da023b48ff91ef7ae667ad5fe60f8a644a"
+    },
+    {
+      "path": "tests/test_pm_source_control_effects.py",
+      "sha256": "2c8ddfd1954c04290348beb307c87716c2025cd1e9231a81073785b1b57b52d8"
+    },
+    {
+      "path": "tests/test_pm_source_control_response.py",
+      "sha256": "3ca78e6511f1768d43d530964151683433d625096a3056c0a20706a427dfa815"
+    },
+    {
+      "path": "tests/test_pm_testing_session_events.py",
+      "sha256": "7660ee2381f407c910ab89fb7d3f9b7d6914e235665a8c78694eb9c4f22dee53"
+    }
+  ]
+}

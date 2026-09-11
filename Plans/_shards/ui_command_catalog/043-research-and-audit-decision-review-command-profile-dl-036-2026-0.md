@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12938-L13097
+Source lines: L12940-L13102
 
-Source SHA256: `3d25fad71807e4fec63b0b0dc24ff8d61a7fb8567ff2264c5a6db5f89688e104`
+Source SHA256: `a12e194425a3532cf1fdae549e8b2fe9434034e3a7917f1a2a9f2633083a3a69`
 
 ---
 
@@ -151,8 +151,9 @@ Typed requests and results are mandatory at these placements; the former generic
 "typed contract or route/open disposition" fallback does not apply. Existing
 selectors project the typed owner availability/error, including `handler_unavailable`.
 Recording row scope remains record-only versus live-subject. Existing session event
-obligations consume the separate ATS-049 admission in
-`Plans/testing_session_event_admission.json`; export
+obligations consume the ATS-049 / DL-039 emit-only, `quarantined_not_admitted`
+disposition in `Plans/testing_session_event_admission.json`; payload validity does
+not authorize EventRecord append, replay, identity consumption or checkpoint advance. Export
 and recording controls retain receipt-only domain-event dispositions. No new native
 handler, visual design, command, storage family, runtime proof or readiness is claimed.
 
@@ -161,10 +162,12 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractNam
 The existing `cmd.project.new_github_repo` and its sole planned
 `handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
 Project action request/result family. No second field-list DTO, generic create
-command or Project Composition command is introduced. The two registered events
-are separate owner transitions, not unconditional dispatch success. The central
+command or Project Composition command is introduced. The two send-only obligations
+are separate owner transitions, not unconditional dispatch success; both remain
+`quarantined_not_admitted` under DL-039, without EventRecord append/replay authority.
+The central
 response preserves the application-scoped creation operation while its typed
 terminal result identifies the actual committed Project. Native availability
 remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
 
-ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007
