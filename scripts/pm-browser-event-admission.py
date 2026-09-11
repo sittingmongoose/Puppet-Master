@@ -42,12 +42,23 @@ def workspace_created_authority():
     return module
 
 
+@lru_cache(maxsize=1)
+def workspace_reset_authority():
+    path = ROOT / "scripts/pm_browser_workspace_reset.py"
+    spec = importlib.util.spec_from_file_location("browser_workspace_reset_authority", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def authority_binding_failures(row):
-    # The sole implemented depth binding is intentionally exact, not a Browser
-    # prefix, sibling-ID interpolation, or arbitrary ref-driven module loader.
-    if row["event_type"] != "browser.workspace.created":
-        return ["complete_browser_authority_binding_missing"]
-    return workspace_created_authority().binding_failures(row, root=ROOT)
+    # Exact individually reviewed bindings only, never prefix/sibling expansion
+    # or an arbitrary ref-driven module loader. These are not native proof.
+    if row["event_type"] == "browser.workspace.created":
+        return workspace_created_authority().binding_failures(row, root=ROOT)
+    if row["event_type"] == "browser.workspace.reset":
+        return workspace_reset_authority().binding_failures(row, root=ROOT)
+    return ["complete_browser_authority_binding_missing"]
 
 
 def load_json(path):
@@ -451,6 +462,11 @@ def validate(*, payloads_only=False):
         authority_reports.append(report)
         for failure in report["failures"]:
             failures.append({"event_type": "browser.workspace.created", "error": "workspace_created_static_contract", "detail": failure})
+    if "browser.workspace.reset" in admitted_events:
+        report = workspace_reset_authority().validate_fixture_contracts(root=ROOT)
+        authority_reports.append(report)
+        for failure in report["failures"]:
+            failures.append({"event_type": "browser.workspace.reset", "error": "workspace_reset_static_contract", "detail": failure})
     return {
         "schema_id": "pm.browser_event_admission_report.v1",
         "status": "fail" if failures else ("payloads_valid_registry_not_claimed" if payloads_only else "pass"),

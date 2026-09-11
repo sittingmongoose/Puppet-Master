@@ -1,0 +1,342 @@
+{
+  "schema_id": "pm.browser_workspace_reset_contract_fixtures.v1",
+  "claim_boundary": "Authored synthetic resolved-value and checkpoint-model cases. The generic source fixture is a separate mixed-scope no-reset positive control, not end-to-end proof that a reset has been indexed. Same-key generation transactions, capacity, current hold/ref enumeration and fences are explicit adapter assumptions in the model, not authenticated native receipts. Native producer authentication, owner-result custody, source parsing, redb transactions, retention execution and durability remain NOT_RUN.",
+  "reset_fixture": {
+    "event_case_id": "browser_event_workspace_reset",
+    "request": {
+      "schema_id": "pm.browser_program.command_request.v1",
+      "record_kind": "browser_command_request",
+      "command_instance_id": "command-reset-fixture",
+      "idempotency_key": "browser-transition-1",
+      "scope": {
+        "command_id": "cmd.browser.workspace.reset",
+        "lineage": {
+          "project_id": "project-browser",
+          "run_id": null,
+          "attempt_id": null,
+          "home_server_id": "server-browser",
+          "execution_host_id": "host-browser",
+          "execution_environment_id": "environment-browser",
+          "source_location_id": "source-browser"
+        },
+        "browser_session_id": "session-browser",
+        "session_security_class": "ordinary",
+        "browser_workspace_id": "workspace-browser",
+        "expected_workspace_revision": 41,
+        "controller_authority": {
+          "lease_id": "lease:reset-fixture",
+          "lease_generation": 7,
+          "lease_epoch": 11,
+          "holder_id": "holder:reset-fixture"
+        }
+      },
+      "permission_snapshot_ref": "policy:browser-permission",
+      "filesafe_decision_ref": "filesafe:reset-fixture",
+      "requested_at_utc": "2026-09-11T12:00:00Z"
+    },
+    "result": {
+      "schema_id": "pm.browser_program.command_result.v1",
+      "record_kind": "browser_command_result",
+      "command_instance_id": "command-reset-fixture",
+      "scope": {
+        "command_id": "cmd.browser.workspace.reset",
+        "lineage": {
+          "project_id": "project-browser",
+          "run_id": null,
+          "attempt_id": null,
+          "home_server_id": "server-browser",
+          "execution_host_id": "host-browser",
+          "execution_environment_id": "environment-browser",
+          "source_location_id": "source-browser"
+        },
+        "browser_session_id": "session-browser",
+        "session_security_class": "ordinary",
+        "browser_workspace_id": "workspace-browser",
+        "expected_workspace_revision": 41,
+        "controller_authority": {
+          "lease_id": "lease:reset-fixture",
+          "lease_generation": 7,
+          "lease_epoch": 11,
+          "holder_id": "holder:reset-fixture"
+        }
+      },
+      "outcome": "succeeded",
+      "effect_state": "effects_reconciled",
+      "result_refs": [
+        "workspace:reset-fixture"
+      ],
+      "dispatch_receipt_ref": "receipt:browser-workspace_reset",
+      "completed_at_utc": "2026-09-11T12:00:01Z"
+    },
+    "transition": {
+      "schema_id": "pm.browser.workspace_reset.resolved_transition.v1",
+      "command_instance_id": "command-reset-fixture",
+      "idempotency_key": "browser-transition-1",
+      "node_id": null,
+      "context": {
+        "project_id": "project-browser",
+        "thread_id": null,
+        "run_id": null,
+        "node_id": null,
+        "attempt_id": null,
+        "plan_id": null,
+        "goal_id": null,
+        "agent_id": null,
+        "home_server_id": "server-browser",
+        "execution_host_id": "host-browser",
+        "execution_environment_id": "environment-browser",
+        "source_location_id": "source-browser",
+        "browser_session_id": "session-browser",
+        "browser_workspace_id": "workspace-browser",
+        "browser_page_id": null,
+        "page_generation": null,
+        "program_id": null,
+        "segment_id": null,
+        "program_workspace_id": null,
+        "routine_id": null,
+        "session_security_class": "ordinary"
+      },
+      "subject": {
+        "project_id": "project-browser",
+        "home_server_id": "server-browser",
+        "execution_host_id": "host-browser",
+        "execution_environment_id": "environment-browser",
+        "source_location_id": "source-browser",
+        "browser_session_id": "session-browser",
+        "browser_workspace_id": "workspace-browser"
+      },
+      "workspace_ref": "workspace:reset-fixture",
+      "owner_record_ref": "record:browser-workspace_reset",
+      "transition_receipt_ref": "receipt:browser-workspace_reset",
+      "permission_snapshot_ref": "policy:browser-permission",
+      "capability_snapshot_ref": "policy:browser-capability",
+      "filesafe_decision_ref": "filesafe:reset-fixture",
+      "checked_workspace_revision": 41,
+      "prior_workspace_generation": 3,
+      "workspace_generation": 4,
+      "controller_authority": {
+        "lease_id": "lease:reset-fixture",
+        "lease_generation": 7,
+        "lease_epoch": 11,
+        "holder_id": "holder:reset-fixture"
+      },
+      "new_generation_committed": true,
+      "old_projections_fenced": true
+    },
+    "witness": {
+      "producer_component": "BrowserRuntimeService.workspace",
+      "producer_authenticated": true,
+      "original_request_resolved": true,
+      "original_result_resolved": true,
+      "transition_receipt_resolved": true,
+      "permission_valid_at_transition": true,
+      "filesafe_allowed_at_transition": true,
+      "capability_valid_at_transition": true,
+      "controller_valid_at_transition": true,
+      "scope_valid_at_transition": true,
+      "current_result_access": true
+    }
+  },
+  "generic_fixture_source": {
+    "path": "Plans/event_record_index_checkpoint_contract_fixtures.json",
+    "json_pointer": "#/positive/initial_mixed_scope"
+  },
+  "reset_invalid": [
+    {
+      "case_id": "reset_wrong_command",
+      "target": "request",
+      "pointer": "/scope/command_id",
+      "value": "cmd.browser.workspace.close",
+      "expected_error": "reset_command_mismatch"
+    },
+    {
+      "case_id": "reset_wrong_instance",
+      "target": "result",
+      "pointer": "/command_instance_id",
+      "value": "different",
+      "expected_error": "reset_command_instance_mismatch"
+    },
+    {
+      "case_id": "reset_wrong_key",
+      "target": "transition",
+      "pointer": "/idempotency_key",
+      "value": "different",
+      "expected_error": "reset_idempotency_mismatch"
+    },
+    {
+      "case_id": "reset_revision_is_not_generation",
+      "target": "transition",
+      "pointer": "/checked_workspace_revision",
+      "value": 3,
+      "expected_error": "reset_revision_join"
+    },
+    {
+      "case_id": "reset_prior_generation",
+      "target": "transition",
+      "pointer": "/prior_workspace_generation",
+      "value": 2,
+      "expected_error": "reset_generation_join"
+    },
+    {
+      "case_id": "reset_after_generation",
+      "target": "transition",
+      "pointer": "/workspace_generation",
+      "value": 8,
+      "expected_error": "reset_generation_join"
+    },
+    {
+      "case_id": "reset_regressing_generation",
+      "target": "transition",
+      "pointer": "/workspace_generation",
+      "value": 2,
+      "expected_error": "reset_generation_join"
+    },
+    {
+      "case_id": "reset_fence_missing",
+      "target": "transition",
+      "pointer": "/old_projections_fenced",
+      "value": false,
+      "expected_error": "resolved_transition_schema"
+    },
+    {
+      "case_id": "reset_commit_unproved",
+      "target": "transition",
+      "pointer": "/new_generation_committed",
+      "value": false,
+      "expected_error": "resolved_transition_schema"
+    },
+    {
+      "case_id": "reset_controller_epoch",
+      "target": "transition",
+      "pointer": "/controller_authority/lease_epoch",
+      "value": 12,
+      "expected_error": "reset_controller_join"
+    },
+    {
+      "case_id": "reset_wrong_workspace",
+      "target": "transition",
+      "pointer": "/subject/browser_workspace_id",
+      "value": "workspace:other",
+      "expected_error": "reset_resolved_subject_mismatch"
+    },
+    {
+      "case_id": "reset_wrong_host",
+      "target": "transition",
+      "pointer": "/subject/execution_host_id",
+      "value": "host:other",
+      "expected_error": "reset_resolved_subject_mismatch"
+    },
+    {
+      "case_id": "reset_wrong_node",
+      "target": "transition",
+      "pointer": "/node_id",
+      "value": "node:other",
+      "expected_error": "reset_resolved_subject_mismatch"
+    },
+    {
+      "case_id": "reset_receipt_mismatch",
+      "target": "result",
+      "pointer": "/dispatch_receipt_ref",
+      "value": "receipt:other",
+      "expected_error": "reset_dispatch_receipt_join"
+    },
+    {
+      "case_id": "reset_result_ref_missing",
+      "target": "result",
+      "pointer": "/result_refs",
+      "value": [],
+      "expected_error": "reset_workspace_result_ref"
+    },
+    {
+      "case_id": "reset_blocked_result",
+      "target": "result",
+      "pointer": "/outcome",
+      "value": "blocked",
+      "expected_error": "reset_not_successful_reconciled"
+    },
+    {
+      "case_id": "reset_no_effect_result",
+      "target": "result",
+      "pointer": "/effect_state",
+      "value": "no_effect",
+      "expected_error": "reset_not_successful_reconciled"
+    },
+    {
+      "case_id": "reset_permission_mismatch",
+      "target": "transition",
+      "pointer": "/permission_snapshot_ref",
+      "value": "policy:other",
+      "expected_error": "reset_reference_join:permission_snapshot_ref"
+    },
+    {
+      "case_id": "reset_filesafe_mismatch",
+      "target": "transition",
+      "pointer": "/filesafe_decision_ref",
+      "value": "filesafe:other",
+      "expected_error": "reset_filesafe_join"
+    },
+    {
+      "case_id": "reset_unproved_producer_authenticated",
+      "target": "witness",
+      "pointer": "/producer_authenticated",
+      "value": false,
+      "expected_error": "reset_witness:producer_authenticated"
+    },
+    {
+      "case_id": "reset_unproved_original_request_resolved",
+      "target": "witness",
+      "pointer": "/original_request_resolved",
+      "value": false,
+      "expected_error": "reset_witness:original_request_resolved"
+    },
+    {
+      "case_id": "reset_unproved_original_result_resolved",
+      "target": "witness",
+      "pointer": "/original_result_resolved",
+      "value": false,
+      "expected_error": "reset_witness:original_result_resolved"
+    },
+    {
+      "case_id": "reset_unproved_transition_receipt_resolved",
+      "target": "witness",
+      "pointer": "/transition_receipt_resolved",
+      "value": false,
+      "expected_error": "reset_witness:transition_receipt_resolved"
+    },
+    {
+      "case_id": "reset_unproved_permission_valid_at_transition",
+      "target": "witness",
+      "pointer": "/permission_valid_at_transition",
+      "value": false,
+      "expected_error": "reset_witness:permission_valid_at_transition"
+    },
+    {
+      "case_id": "reset_unproved_filesafe_allowed_at_transition",
+      "target": "witness",
+      "pointer": "/filesafe_allowed_at_transition",
+      "value": false,
+      "expected_error": "reset_witness:filesafe_allowed_at_transition"
+    },
+    {
+      "case_id": "reset_unproved_capability_valid_at_transition",
+      "target": "witness",
+      "pointer": "/capability_valid_at_transition",
+      "value": false,
+      "expected_error": "reset_witness:capability_valid_at_transition"
+    },
+    {
+      "case_id": "reset_unproved_controller_valid_at_transition",
+      "target": "witness",
+      "pointer": "/controller_valid_at_transition",
+      "value": false,
+      "expected_error": "reset_witness:controller_valid_at_transition"
+    },
+    {
+      "case_id": "reset_unproved_scope_valid_at_transition",
+      "target": "witness",
+      "pointer": "/scope_valid_at_transition",
+      "value": false,
+      "expected_error": "reset_witness:scope_valid_at_transition"
+    }
+  ]
+}

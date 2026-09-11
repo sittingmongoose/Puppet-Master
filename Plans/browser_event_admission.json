@@ -106,8 +106,8 @@
       "event_type": "browser.workspace.reset",
       "family_id": "event-family-browser-workspace-reset",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
-      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168",
       "producer_component": "BrowserRuntimeService.workspace",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
       "transition_rule": "The exact workspace reset commits a new owner generation and invalidates prior page/controller projections.",
@@ -130,12 +130,15 @@
       "compatibility_rule": "No event aliases or legacy extensions are admitted. Unknown or legacy candidates remain quarantined without checkpoint advance; migration requires a separately admitted transform.",
       "replay_rule": "EventRecord 2.0 identity, sequence and idempotency remain authoritative. Replay projects retained facts only; it must not re-run effects, re-grant leases, re-publish captures, change current generations, or manufacture UsageRecords.",
       "consumer_contract_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168",
+        "Plans/storage-plan.md#SP-282",
+        "Plans/storage-plan.md#SP-278",
         "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md#318a-pm-browser-script-browserprogram-and-local-execution"
       ],
-      "consumer_rule": "Validate envelope, unique registered payload ID, exact scope parity, payload and owner transition before checkpoint advance. Usage receives redacted operational attribution refs only. Prompt Pipeline attaches nothing solely because this event exists; independently authorized bounded chips/artifact refs use its existing admission path.",
+      "consumer_rule": "SMPFS-168 and SP-282 define the exact historical reset-boundary reader and its filtered checkpoint, explicitly adopting SP-278's complete root/generation/anchor/frontier/source/read token. Validate complete captured coverage, exact Project/reset source identity and current access/deletion before checkpoint CAS and disclosure. This is no current Browser generation/controller authority, independent durable Browser projection, UsageRecord or prompt attachment.",
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
@@ -145,7 +148,8 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_workspace_reset",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/browser_workspace_reset_contracts.schema.json#/x-pm-event-authority-binding"
     },
     {
       "event_type": "browser.workspace.closed",
