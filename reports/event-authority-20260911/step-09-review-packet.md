@@ -1,6 +1,6 @@
 # Step 9 — partial dispositions and complete review inventory
 
-Reviewed against `c423c3890d3b6feb4ce4e0d8daa57c8532bd045f` on 2026-09-11. This records progress; Step 9 is incomplete.
+Reviewed against `45b9d3984f0247e17669eee3a83bf8c4c0a32b66` on 2026-09-11. This records progress; Step 9 is incomplete.
 
 All 252 assigned events were individually reviewed. This landing records six cited semantic exclusions and twenty rows on two unanswered product cards. No event was registered. The remaining 226 retain KEEP_QUARANTINED with their specific technical gaps and evidence listed in the three row reports. Technical work remaining is not a fourth final outcome.
 
@@ -395,9 +395,9 @@ The review applies no general authority to invent consumer, projector or checkpo
 
 Raw verification evidence (path plus SHA-256):
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/root-application-validation.json` — `ba96d3b8b69c1b832f03c0b0dad181a5c79b3a07a6f8cc9d3dbbd99fd3848b71`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator.stdout` — `b0b68b5a71e2cbbc2f04c83d9ea95d7038b7eda444ff800e35b479ed1294d500`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator-receipts/event_authority_validator_receipt.json` — `69692ae7bf6d30fec2d6291beae04e6d290c8b288c396e9a21fff6429bfaffb0`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/shard-check.stdout` — `30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/root-application-validation.json` — `308e4085cdd9d3bf04cde66918e930da2660a84832c5330fdd1e72657b1e1ad1`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/independent-validator.stdout` — `96751a1728d1b5163fcce7e7c6fd0952d9eec0baae946237cdaefdf18f654ed1`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/independent-validator-receipts/event_authority_validator_receipt.json` — `a9a8c8a9e56b158e260998f68f983e51f63d68d9c14081cefc236eefd13d68ed`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/shard-check.stdout` — `30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644`
 
 Cost: three Astra medium review agents plus root adjudication and integration; token/dollar billing unavailable.

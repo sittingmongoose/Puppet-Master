@@ -1,6 +1,6 @@
 # Step 9 interaction owner review
 
-All 75 exact assigned names were reviewed against current owner text. Source currentness was verified against `1ebf8d985123db473408a989f8a0b0572e307d81`: all 401 cited spans are unchanged; the two Decision Log whole-file hash updates are linked to preserved historical excerpts through the receipt’s hashed `source_refresh`. This is candidate research: zero admissions and zero recorded exclusions. Six exclusion drafts and 69 unfinished technical contracts remain for root review. Both former product cards are approved and their owner reconciliations applied; no pending card remains in this lane.
+All 75 exact assigned names were reviewed against current owner text. Source currentness was verified against `45b9d3984f0247e17669eee3a83bf8c4c0a32b66`: all 401 quoted spans remain byte-identical; 50 source hashes were refreshed and two UI Wiring Rules spans relocated. The receipt’s hashed `source_refresh` and `source_refresh_history` preserve the original excerpts and prior bridge. This is candidate research: zero admissions and zero recorded exclusions. Six exclusion drafts and 69 unfinished technical contracts remain for root review. Both former product cards are approved and their owner reconciliations applied; no pending card remains in this lane.
 
 TECHNICAL_BLOCKED is work still owed, not a fourth final disposition. Missing payload, producer, checkpoint or replay bindings do not justify asking permission to finish the contract.
 

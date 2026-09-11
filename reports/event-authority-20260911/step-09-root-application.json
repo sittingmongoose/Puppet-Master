@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.assurance.event_authority.step09_root_application.v1",
-  "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
-  "reviewed_at_utc": "2026-09-11T17:23:09.080995+00:00",
+  "base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
+  "reviewed_at_utc": "2026-09-11T17:31:53.262046+00:00",
   "state": "PARTIAL_DISPOSITIONS_APPLIED_CAMPAIGN_INCOMPLETE",
   "scope": 252,
   "registered": 0,
@@ -3012,7 +3012,7 @@
   ],
   "validation": {
     "status": "pass",
-    "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+    "base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
     "claim_boundary": "source-bound static campaign application; no runtime, full-depth or seal claim",
     "exact_population": 252,
     "semantic_excluded": 6,
@@ -3056,7 +3056,7 @@
       "registered_contract_depth_incomplete",
       "unexpected_august_set"
     ],
-    "receipt": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator-receipts/event_authority_validator_receipt.json"
+    "receipt": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/independent-validator-receipts/event_authority_validator_receipt.json"
   },
   "shards": {
     "docs_checked": 98,
@@ -3076,23 +3076,23 @@
     },
     {
       "path": "reports/event-authority-20260911/step-09-execution-receipt.json",
-      "sha256": "f18aa82da0cbddc0ba240323927a59f8a3faa7dd7b4f0afc7f0f3994dbf6a80d"
+      "sha256": "1e9dbf93bf36672033d9f9ca9e071eca45e9a21082ac38c6ff53706c9ee74966"
     },
     {
       "path": "reports/event-authority-20260911/step-09-interaction-rows.jsonl",
-      "sha256": "eb5c5504ee8596907b06bf6988446c3e22fc99185c17eed85a4604c74b512c2e"
+      "sha256": "c8d45272eb25534981ca34c7d5f187f8c337063af04358b72eb0c2af0d0159d5"
     },
     {
       "path": "reports/event-authority-20260911/step-09-interaction-cards.md",
-      "sha256": "65ba7eb43936b78f8bbfcf319ffb4a675aa814d1dfc069375f84dab9a5d078ee"
+      "sha256": "ce99859cc87831ba4fec72aa5d35c612ffcc39e91cfded56a4f289ca879f2039"
     },
     {
       "path": "reports/event-authority-20260911/step-09-interaction-receipt.json",
-      "sha256": "bca97af2886f74177d7913c38849b7f533bb0409ff696233fc3c7fb7eb82ccca"
+      "sha256": "0c2048851233397973429bdc6f2e9951e574dccd44c8bb7f48ae2924e29ef4bd"
     },
     {
       "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
-      "sha256": "7fc9c1380a0353c14e098ff2942ad33d4944ab53de69782b7a9ae500a2533d00"
+      "sha256": "fee1a5fc14b6f3d4e150fa9404a22927957a2ecb655f6b0fceeac153dfdb17e8"
     },
     {
       "path": "reports/event-authority-20260911/step-09-extensions-cards.md",
@@ -3100,11 +3100,11 @@
     },
     {
       "path": "reports/event-authority-20260911/step-09-extensions-receipt.json",
-      "sha256": "549262af9fcffd145c70527f0ddcd6e83afcff1a1ff1bbc4b98177cff03a062a"
+      "sha256": "9904f371eba6b31b3d20107b9afc375959c9525dfe62697b762751cca80207f9"
     },
     {
       "path": "reports/event-authority-20260911/step-09-semantic-exclusion-application.json",
-      "sha256": "273b49e68e3591c47ef7e7acc789096a5fe5f6673976807686dc57e92da5de93"
+      "sha256": "0fde2044db740f6d3389fece94bbcf7484690b7a3cbcde4e0d61f389cfe1c29b"
     },
     {
       "path": "reports/event-authority-20260911/step-09-card-application.json",
@@ -3116,7 +3116,7 @@
     },
     {
       "path": "reports/event-authority-20260911/step-09-binding-authority-scope.json",
-      "sha256": "6012f7c7f01ce1cccbb30f72fcc33d4367402245e686c109d6f95877707deeb4"
+      "sha256": "9ecfdcb99773d13c4d3d5d5dca56c033f8199f12ae2a1e20091b20045669a159"
     },
     {
       "path": "reports/event-authority-20260911/step-09-binding-authority-question.md",
@@ -3125,19 +3125,19 @@
   ],
   "raw_evidence": [
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/root-application-validation.json",
-      "sha256": "ba96d3b8b69c1b832f03c0b0dad181a5c79b3a07a6f8cc9d3dbbd99fd3848b71"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/root-application-validation.json",
+      "sha256": "308e4085cdd9d3bf04cde66918e930da2660a84832c5330fdd1e72657b1e1ad1"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator.stdout",
-      "sha256": "b0b68b5a71e2cbbc2f04c83d9ea95d7038b7eda444ff800e35b479ed1294d500"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/independent-validator.stdout",
+      "sha256": "96751a1728d1b5163fcce7e7c6fd0952d9eec0baae946237cdaefdf18f654ed1"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/independent-validator-receipts/event_authority_validator_receipt.json",
-      "sha256": "69692ae7bf6d30fec2d6291beae04e6d290c8b288c396e9a21fff6429bfaffb0"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/independent-validator-receipts/event_authority_validator_receipt.json",
+      "sha256": "a9a8c8a9e56b158e260998f68f983e51f63d68d9c14081cefc236eefd13d68ed"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-c423/shard-check.stdout",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/final-integration/post-rebase-45b/shard-check.stdout",
       "sha256": "30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644"
     }
   ],

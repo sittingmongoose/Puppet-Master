@@ -1,6 +1,6 @@
 {
   "assigned": 75,
-  "base_commit": "1ebf8d985123db473408a989f8a0b0572e307d81",
+  "base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
   "by_owner": {
     "Plans/FinalGUISpec.md": {
       "TECHNICAL_BLOCKED": 9
@@ -47,13 +47,13 @@
   "checks": {
     "card_links": "PASS: zero pending cards; two exact genuine approval response refs and applied owner boundaries, no response records changed",
     "changed_passage_review": "PASS: 389 selected excerpts unchanged from prior b240 review; 12 changed/new passages reread for the two approved owner decisions",
-    "citation_hash_and_exact_excerpt": "PASS: 401 current source-hashed exact excerpts; two historical Decision Log captures bridged by source_refresh; every row retains a tight exact-token citation.",
+    "citation_hash_and_exact_excerpt": "PASS: all 401 current citations retain exact historical quoted bytes, bridged by source_refresh and source_refresh_history where source hashes or line positions changed; no JSON-pointer citations.",
     "exact_set": "PASS: 75 unique rows equal assigned manifest lane",
     "exclusion_drafts": "PASS: six exact-token drafts with whole-file hashes",
     "outcome_totals": "PASS: 69 technical + 0 pending-card + 6 exclusion candidates; actual registered=excluded=0",
     "scope": "PASS: only three assigned report paths untracked; all canon unchanged",
     "shards": "PASS: 98 docs, 2167 shards",
-    "source_currentness": "PASS: all 401 cited spans checked against 1ebf8d985123db473408a989f8a0b0572e307d81; 399 whole-source hashes unchanged, two Decision Log hashes refreshed with byte-identical quoted spans and a hashed historical-capture bridge."
+    "source_currentness": "PASS: all 401 cited spans checked against 45b9d3984f0247e17669eee3a83bf8c4c0a32b66; 351 whole-source hashes unchanged, 50 source hashes refreshed, two UI Wiring Rules spans relocated with byte-identical quotes. Prior 1ebf bridge and original captures preserved."
   },
   "citation_refresh": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/post-owner-amendment-citation-refresh.json",
@@ -70,7 +70,7 @@
     "Six exclusion candidates require root review and recorded application; frozen cohort accounting cannot be rewritten by this report.",
     "No full registration candidate is claimed; no consumer, projector or checkpoint identifier was invented.",
     "Current live registry has 40 families after Step 6 completion-only admission. The unchanged validator still permits only the two August additions beyond Known37 and reports unexpected_august_set; this review neither alters nor works around it.",
-    "All 401 cited spans were checked against 1ebf8d985123db473408a989f8a0b0572e307d81. The two Decision Log whole-source hashes changed after DL-043; both quoted spans remain byte-identical. Original selected excerpts and preflight capture manifest remain historical evidence, linked through the hashed source_refresh receipt.",
+    "All 401 cited spans were checked against 45b9d3984f0247e17669eee3a83bf8c4c0a32b66. All quoted bytes remain unchanged; 50 whole-source hashes were refreshed and two UI Wiring Rules spans moved by ten lines. Original selected excerpts, preflight capture manifest and prior 1ebf bridge remain preserved historical evidence, linked through source_refresh and source_refresh_history.",
     "All canonical documents, live registry, disposition rows, validators and governance artifacts remain unchanged."
   ],
   "new_cards": 0,
@@ -95,9 +95,15 @@
     "sha256": "56f8e6bab59e268781d69b4c4c5cc667b888bd60e162f8825995a7bd7e5252d7"
   },
   "source_refresh": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/main1ebf-source-refresh.json",
-    "sha256": "1fa2b97e9da2896d80fc823aebec38688ebb601b12e46a5c6bc5c256afb54954"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/main45b-source-refresh.json",
+    "sha256": "9f8a0ddb227a05f1e451001c69389222c94df595d7fada2f3856708f5bf00b56"
   },
+  "source_refresh_history": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/interaction/main1ebf-source-refresh.json",
+      "sha256": "1fa2b97e9da2896d80fc823aebec38688ebb601b12e46a5c6bc5c256afb54954"
+    }
+  ],
   "status": "CANDIDATE_RESEARCH_NOT_FINAL_DISPOSITIONS",
   "usage": "Actual token and dollar usage unavailable; no estimate fabricated."
 }

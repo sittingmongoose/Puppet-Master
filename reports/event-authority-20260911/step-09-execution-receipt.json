@@ -105,12 +105,15 @@
     "changed_cited_ranges": 0
   },
   "currentness": {
-    "base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+    "base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
     "live_registry_event_families": 40,
     "new_general_binding_identifier_authority": false,
-    "root_final_review": "PENDING",
-    "commit_authorization": "HELD_PENDING_ROOT_INTEGRATION",
-    "task_failed_card": "UNANSWERED"
+    "root_final_review": "PENDING_POST_REBASE_INTEGRATION",
+    "commit_authorization": "HELD_ROOT_INTEGRATION",
+    "task_failed_card": "UNANSWERED",
+    "verified_worktree_head": "e54a2c8a5cf8838b331b489cfe050fe01540e592",
+    "historical_research_base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+    "exact_citation_refresh": "PASS_523_CITATIONS_33_SOURCES_NO_DRIFT"
   },
   "shard_check": {
     "status": "pass",
@@ -126,5 +129,16 @@
     "runtime_artifact_retention": "UNANSWERED_QUEUED_NOT_PRESENTED",
     "remaining_technical_rows": 68,
     "technical_gaps_on_card_rows": "PRESERVED_NOT_WAIVED"
+  },
+  "main45b_source_refresh_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step09/execution/main45b-source-refresh.json",
+    "sha256": "e4bbce12dea3cfb12e538fe73ee6359cbd0b2b3d700bdeccd20ae88e2dae4b1b",
+    "exact_rows": 88,
+    "structured_citations": 523,
+    "distinct_source_hashes": 33,
+    "resolved_type_schemas": 19,
+    "changed_cited_source_files": 0,
+    "changed_cited_passages": 0,
+    "changed_cited_ranges": 0
   }
 }

@@ -162,7 +162,7 @@
   "reports": [
     {
       "path": "reports/event-authority-20260911/step-09-extensions-rows.jsonl",
-      "sha256": "7fc9c1380a0353c14e098ff2942ad33d4944ab53de69782b7a9ae500a2533d00"
+      "sha256": "fee1a5fc14b6f3d4e150fa9404a22927957a2ecb655f6b0fceeac153dfdb17e8"
     },
     {
       "path": "reports/event-authority-20260911/step-09-extensions-cards.md",
@@ -170,8 +170,8 @@
     }
   ],
   "draft_capture": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/individual-contract-drafts-bf898b160815-all89technical.json",
-    "sha256": "b226f2484756057915605566b258e71e082170b56d8592a425df7707f3ccc1d8"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/individual-contract-drafts-main45b-all89technical.json",
+    "sha256": "afebfb66f80da1c82c2b225170a382f07150e8378203b44a86b8556cc775aa2f"
   },
   "source_capture": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/exact-matches.json",
@@ -187,66 +187,27 @@
     "source_hashes_tight_spans": "PASS",
     "draft_capture_hash_and_pointers": "PASS",
     "card_links": "PASS: no cards",
-    "shard_check": {
-      "status": "PASS",
-      "docs_checked": 98,
-      "shards_checked": 2167,
-      "failures": []
-    },
+    "shard_check": "root integration validation pending",
     "external_quote_custody": "PASS: full quotes only in hashed external draft capture; compact report citations contain pointers",
     "refreshed_source_hashes_and_exact_quote_spans": "PASS",
-    "plugin_individual_readjudication": "PASS: all8 exact owner rows plus450\u2013470/4270 reviewed; permission.override243 also inspected; no explicit final exclusion boundary."
+    "plugin_individual_readjudication": "PASS: all8 exact owner rows plus450\u2013470/4270 reviewed; permission.override243 also inspected; no explicit final exclusion boundary.",
+    "source_refresh_main45": "PASS: every source matches main45b, exact quote relocation unique, all11JSONschema referents semantically unchanged,89set/count unchanged"
   },
   "billing": "Dollar/token usage unavailable.",
-  "reviewed_base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "reviewed_base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
   "registry_count_at_review": 40,
   "refresh": {
-    "previous_base_commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
+    "previous_base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
     "changed_whole_source_hashes": [
-      "Plans/Contracts_V0.md",
-      "Plans/Tools.md",
-      "Plans/UI_Command_Catalog.md",
-      "Plans/storage-plan.md"
+      "Plans/UI_Command_Catalog.md"
     ],
     "cited_passages_changed": false,
-    "shifted_spans": [
-      [
-        "Plans/UI_Command_Catalog.md",
-        8089,
-        8099
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8070,
-        8080
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8072,
-        8082
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8076,
-        8086
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8075,
-        8085
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8073,
-        8083
-      ],
-      [
-        "Plans/UI_Command_Catalog.md",
-        8071,
-        8081
-      ]
-    ],
-    "adjudication": "Cited text remains exact. Current Step8 owner repairs do not establish any new complete contract or exclusion for these89 tokens. All89 remain technical; plugin conditional non-emission is not final exclusion."
+    "shifted_spans": [],
+    "adjudication": "All cited text and JSON referents unchanged;89technical outcomes preserved.",
+    "bridge": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/main45b-source-refresh.json",
+      "sha256": "a94825b9391b66611f81fb6638dcf3d4fa44b14aab2a2f21dac9f67a72c6b16d"
+    }
   },
   "withdrawn_draft_capture": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/extensions/individual-contract-drafts-b240dd93e2eb.json",
@@ -264,6 +225,55 @@
       "cited_passages_changed": false,
       "shifted_spans": [],
       "adjudication": "All cited passages remain exact. On root review, eight plugin exclusion candidates were withdrawn: conditional non-emission is not final retirement/exclusion. All89 remain unfinished technical work; no new product choice or card is evidenced."
+    },
+    {
+      "previous_base_commit": "b240dd93e2ebc44d4d7df468fb247cc0418082a8",
+      "changed_whole_source_hashes": [
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "cited_passages_changed": false,
+      "shifted_spans": [
+        [
+          "Plans/UI_Command_Catalog.md",
+          8089,
+          8099
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8070,
+          8080
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8072,
+          8082
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8076,
+          8086
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8075,
+          8085
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8073,
+          8083
+        ],
+        [
+          "Plans/UI_Command_Catalog.md",
+          8071,
+          8081
+        ]
+      ],
+      "adjudication": "Cited text remains exact. Current Step8 owner repairs do not establish any new complete contract or exclusion for these89 tokens. All89 remain technical; plugin conditional non-emission is not final exclusion."
     }
-  ]
+  ],
+  "integration_head_at_source_refresh": "e54a2c8a5cf8838b331b489cfe050fe01540e592"
 }

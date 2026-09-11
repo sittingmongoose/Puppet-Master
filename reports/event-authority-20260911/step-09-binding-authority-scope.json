@@ -311,7 +311,87 @@
         "Plans/storage-plan.md:564"
       ],
       "gap": "No exact versioned concern.created consumer/projector/checkpoint binding was established by the exhaustive scoped search. concern_record value_schema_ref remains deferred; command handler/schema identity does not supply the missing event reader/cursor.",
-      "forbidden_inference": "Do not use projector.checkpoint.runtime_artifacts:{project_id}; it belongs to a distinct artifact family."
+      "forbidden_inference": "Do not use projector.checkpoint.runtime_artifacts:{project_id}; it belongs to a distinct artifact family.",
+      "current_positive_source_refs": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "sha256": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1",
+          "line_start": 8092,
+          "line_end": 8092,
+          "historical_line_start": 8092,
+          "historical_line_end": 8092,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "a62a9fedb7c2bcd2a2c3d086743747c21ceddce17af2fae14c40470d90ecd160",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Wiring_Matrix.production.json",
+          "sha256": "363bbb90307e5485593c07478954610a04d01f4f730d811de35538dc589d8c83",
+          "line_start": 18748,
+          "line_end": 18748,
+          "historical_line_start": 18748,
+          "historical_line_end": 18748,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "34b4c0b418121e0cf87ea565b666090f404324297dc9fc0156074f62a766f1a0",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/event_payloads/concern/concern_created.schema.json",
+          "sha256": "9540029fe1cbda5ebcb9fd7b6cf89e4879762d5f2421c145ab26d4a38000d2fd",
+          "line_start": 3,
+          "line_end": 3,
+          "historical_line_start": 3,
+          "historical_line_end": 3,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "f873f627224cde12c38201e03cfa6eda9e653fb3b7b164bd2e6eef3c3de6e258",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/event_payloads/concern/concern_created.schema.json",
+          "sha256": "9540029fe1cbda5ebcb9fd7b6cf89e4879762d5f2421c145ab26d4a38000d2fd",
+          "line_start": 36,
+          "line_end": 36,
+          "historical_line_start": 36,
+          "historical_line_end": 36,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "0a5d154ae10028e676bf2b9a92e3d346b6be2c365995708ba3a06f9f8b7430a0",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "88183c7e864dde8816d0c55fdc976bc1f594079a1900f3213d2327e8664a3b1f",
+          "line_start": 4405,
+          "line_end": 4411,
+          "historical_line_start": 4405,
+          "historical_line_end": 4411,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "aca472055edea836fcf626026c54c6702dfff13a8358b8af1bcd8fb0ec6038f7",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "sha256": "cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689",
+          "line_start": 360,
+          "line_end": 372,
+          "historical_line_start": 360,
+          "historical_line_end": 372,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "50c759f9cbda43bbdeadb1aa7b267ba1a62c80f05dce822abbca2a779190ae16",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 564,
+          "line_end": 564,
+          "historical_line_start": 564,
+          "historical_line_end": 564,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "00ffb185121ab1995cd8d0f8a7d732149d27076bb923778bb936774dd2c61a93",
+          "unchanged": true
+        }
+      ],
+      "currentness_note": "Historical capture retained unchanged. Positive references and all changed source documents were rechecked against45bmain; current hashes are in current_positive_source_refs and the delta bridge. No newly supplied binding definition found within the documented scope."
     },
     {
       "event_type": "runtime_artifact.document",
@@ -372,7 +452,61 @@
         "Plans/storage_value_registry.json#/families/17"
       ],
       "gap": "Exact artifact index/checkpoint keys exist; descriptive Document artifact writer/Runtime Artifacts projector/document viewer and deferred grouped registry family schema_version 1.0.0 do not establish consumer/projector binding IDs/versions or closed checkpoint semantics.",
-      "forbidden_inference": "Do not promote a schema/family ID or descriptive role to a binding ID. Retention card remains unanswered; no policy assignment is applied."
+      "forbidden_inference": "Do not promote a schema/family ID or descriptive role to a binding ID. Retention card remains unanswered; no policy assignment is applied.",
+      "current_positive_source_refs": [
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74",
+          "line_start": 2454,
+          "line_end": 2456,
+          "historical_line_start": 2454,
+          "historical_line_end": 2456,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "e11772ce284f1d0bf826249b6e5820eb364e74ac5108f0ccada91ed698912311",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74",
+          "line_start": 2467,
+          "line_end": 2467,
+          "historical_line_start": 2467,
+          "historical_line_end": 2467,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "4fd5c7a3128c4460328560a0beba85b543050af4cea0c5a194ad923cbc90ddf2",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "2e9c5da5d0b21975070933d08b54fdbc6f97f72aa9f44ec426951fde6864de74",
+          "line_start": 2480,
+          "line_end": 2480,
+          "historical_line_start": 2480,
+          "historical_line_end": 2480,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "34ab6a7d0bfd43c82537d94f40da6e3f5878fd293fddac098a50fb433ad981cb",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1209,
+          "line_end": 1237,
+          "historical_line_start": 1209,
+          "historical_line_end": 1237,
+          "purpose": "preserved exact positive source reference",
+          "excerpt_sha256": "1c5b1ebccc59c0744d4579c8dc6e61fd6f6090c800b7f4f13f10598f61e29317",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "88183c7e864dde8816d0c55fdc976bc1f594079a1900f3213d2327e8664a3b1f",
+          "json_pointer": "/families/17",
+          "value_sha256": "2a56a93d8e4b72941c886b7db18d31598a72b9a94bcc6f997c6519ecb92c543b",
+          "unchanged": true
+        }
+      ],
+      "currentness_note": "Historical capture retained unchanged. Positive references and all changed source documents were rechecked against45bmain; current hashes are in current_positive_source_refs and the delta bridge. No newly supplied binding definition found within the documented scope."
     },
     {
       "event_type": "run.started",
@@ -464,7 +598,87 @@
       "investigation_ref": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-binding-current/run-started-current-binding-check.json",
         "sha256": "3f41c6789463e793ea681483199aad2b429ec89959296e7de3db87d8e03712ad"
-      }
+      },
+      "current_positive_source_refs": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+          "line_start": 935,
+          "line_end": 935,
+          "historical_line_start": 935,
+          "historical_line_end": 935,
+          "purpose": "exact producer and broad consumers",
+          "excerpt_sha256": "f72dbe128877cab3c6ede5f465428adb7c75f9e64b6ba1575aeb2ccf330156c4",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+          "line_start": 320,
+          "line_end": 326,
+          "historical_line_start": 320,
+          "historical_line_end": 326,
+          "purpose": "immutable snapshot identity and equality",
+          "excerpt_sha256": "3717a5d64d563b3c289eec8aa96271c153009e811135a5ed543f3cb65b2878c1",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+          "line_start": 7217,
+          "line_end": 7221,
+          "historical_line_start": 7217,
+          "historical_line_end": 7221,
+          "purpose": "run-start immutable barrier and idempotency",
+          "excerpt_sha256": "e45eb299cdc6d644cf13755d5d4407ec858b5901309f9bd983653085a1172423",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1550,
+          "line_end": 1555,
+          "historical_line_start": 1550,
+          "historical_line_end": 1555,
+          "purpose": "generic projector order and checkpoint write guarantee",
+          "excerpt_sha256": "479042312c45124e9ce68fc6b228c2e455795154341cd08daccb66bb4afa6702",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1573,
+          "line_end": 1578,
+          "historical_line_start": 1573,
+          "historical_line_end": 1578,
+          "purpose": "generic atomicity and runtime-marker distinction",
+          "excerpt_sha256": "bfedad818101dbbe483977c3e191a20737734e72ac8db6ffd3de1bc915c824ec",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 17777,
+          "line_end": 17784,
+          "historical_line_start": 17777,
+          "historical_line_end": 17784,
+          "purpose": "existing exact retention assignment",
+          "excerpt_sha256": "f261ca1ae74e803d6ec80a4b6e3dddc2efecf48226c535761eb426b26b04ff57",
+          "unchanged": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+          "line_start": 1587,
+          "line_end": 1593,
+          "historical_line_start": 1587,
+          "historical_line_end": 1593,
+          "purpose": "analytics scans name run.completed not this event",
+          "excerpt_sha256": "3905bcf93f7d5f684f909a178a247d557cf6b427e10734f37922f9a6f35a2acd",
+          "unchanged": true
+        }
+      ],
+      "currentness_note": "Historical capture retained unchanged. Positive references and all changed source documents were rechecked against45bmain; current hashes are in current_positive_source_refs and the delta bridge. No newly supplied binding definition found within the documented scope."
     }
   ],
   "schema_id": "pm.assurance.event_authority.proposed_binding_scope.v1",
@@ -1074,5 +1288,12 @@
       "unadmitted_pending_product_card": []
     }
   },
-  "root_review_base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f"
+  "root_review_base_commit": "45b9d3984f0247e17669eee3a83bf8c4c0a32b66",
+  "current_main45b_evidence_bridge": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-09/authority-clarification-current/main45b-source-refresh.json",
+    "sha256": "93eee5d868c7c551601f8ff8e7578f11f73ec0e6ce58081dc1b692a2842acde8",
+    "investigated_cases": 3,
+    "changed_source_documents_reviewed": 8,
+    "binding_conclusions_unchanged": true
+  }
 }
