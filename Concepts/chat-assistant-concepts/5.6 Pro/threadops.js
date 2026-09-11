@@ -1008,7 +1008,11 @@
 
   function overflowItems(ctx, m) {
     var t = ctx.thread || ctx.activeThread();
-    if (!t || !m || m.type !== 'text') return [];
+    // B14 regression repair: an ELI5 response is still a public conversational
+    // turn. Reuse the ordinary menu; do not widen this to workflow/receipt cards
+    // or infer record visibility from a title. Retry retains its own eligibility.
+    if (!t || !m || !['text','eli5-example-answer'].includes(m.type) ||
+        m.internalOnly || m.visibility === 'internal') return [];
     /* This module's own receipt and fold cards are system cards, not turns. */
     if (m.role === 'system') return [];
 

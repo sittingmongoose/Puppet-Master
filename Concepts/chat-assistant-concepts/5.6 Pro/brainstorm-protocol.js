@@ -22,6 +22,20 @@
    questionBank:{baselineLimit:r.config.questionLimit,grillExtension:r.config.grillExtension,grillMeEnabled:!!d.grillMe,askedIds:[],resolvedIds:[],duplicateIds:[],researchRoutedIds:input.evidence.map(e=>e.id),importedAnswers:clone(input.answers||[])},
    attempts:core(r).map(p=>({id:'bs-attempt-'+r.id+'-'+p.id,participantId:p.id,assignmentRevision:p.assignmentRevision,epoch:r.stopEpoch,sourceHash:input.sourceHash,status:'running',input:{sourceHash:input.sourceHash,peerProposals:[],peerIdentities:[]},proposal:null})),
    proposals:[],debates:[],evidenceChecks:[],votes:[],hardConstraintViolations:[],dissent:[],decision:null,synthesis:null};
+  // Batch 14: BrainStorm and its eventual Plan consume the same QuestionItem
+  // store. This is a projection adapter, not a second participant allowance.
+  const budgetKey='plan:brainstorm-plan-'+r.id,policy=window.PM56_QUESTION_BUDGET.defaults();
+  policy.deep_plan_limits.brainstorm=r.config.questionLimit;
+  policy.grill_me_extension=r.config.grillExtension;
+  const bound=P.budgetOwner.ensure(budgetKey,'brainstorm',!!d.grillMe,policy);
+  if(!bound.ok){r.brainstorm.budgetError=bound.error;return;}
+  const bank=r.brainstorm.questionBank;bank.budgetKey=budgetKey;
+  Object.defineProperties(bank,{
+   askedIds:{enumerable:true,configurable:true,get:()=>P.budgetOwner.get(budgetKey).order.slice()},
+   baselineLimit:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).base_limit},
+   grillExtension:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_extension},
+   grillMeEnabled:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_enabled,set:v=>P.budgetOwner.setGrill(budgetKey,!!v)}
+  });
   core(r).forEach(p=>{p.status='working';p.outcome=null;p.current='Independent proposal against the frozen brief';});
   r.expectedOutputs=[{id:'deep-plan-'+r.id,delivered:false}];
   say(r,'message','Recorded example: '+input.label+'. '+(input.answers||[]).length+' prior answers retained; no repeat questions.');

@@ -1,0 +1,174 @@
+{
+  "claim_boundary": "Exact concept action ownership and existing command correspondence only. Not central registration, native dispatch, EventRecord admission, durable storage or production permission proof.",
+  "new_canonical_commands": [],
+  "single_owners": {
+    "question_counter": "question-budget-protocol.js, through plans.js budgetOwner",
+    "discovery": "deep-plan-protocol.js",
+    "questionnaire": "existing questions.js/decision host with scoped B14 adapters",
+    "plan": "plans.js",
+    "todos": "todos.js",
+    "brainstorm": "existing brainstorm-protocol.js/collaboration.js with shared budget adapter",
+    "artifacts": "existing PM56_DATA.artifacts array and common editor",
+    "settings": "Unmodified Settings owner; defaults/local policy consumption only"
+  },
+  "local_actions": [
+    {
+      "action": "b14-start",
+      "classification": "CONCEPT_DEMO_ONLY",
+      "handler": "deep-plan-batch14.js:seed",
+      "trigger": "Explicit Demo Studio exercise selection",
+      "guard": "Creates only scoped fixture thread/artifacts/composer prefill; no discovery or Plan starts."
+    },
+    {
+      "action": "b14-hide-guide",
+      "classification": "LOCAL_PRESENTATION",
+      "handler": "guide visibility",
+      "trigger": "Guide dismiss",
+      "guard": "Does not cancel or drop the run."
+    },
+    {
+      "action": "b14-open",
+      "classification": "LOCAL_PRESENTATION",
+      "handler": "existing editor routing",
+      "trigger": "Transcript card / Plan source backlink",
+      "guard": "Explicit discovery ID, including inactive thread tabs."
+    },
+    {
+      "action": "b14-source",
+      "classification": "LOCAL_PRESENTATION",
+      "handler": "existing artifact editor",
+      "trigger": "Source rows",
+      "guard": "Actual shared artifact identity and bytes; no private viewer or store."
+    },
+    {
+      "action": "b14-questions",
+      "classification": "CONCEPT_OWNER_ADAPTER",
+      "handler": "deep-plan-protocol.js:present -> shared questionnaire",
+      "trigger": "Discovery controls",
+      "guard": "Collecting/current scope, no foreign questionnaire, eligible frontier, shared budget, stable IDs."
+    },
+    {
+      "action": "b14-grill",
+      "classification": "CONCEPT_OWNER_ADAPTER",
+      "handler": "question-budget-protocol.js:setGrill",
+      "trigger": "Discovery controls",
+      "guard": "Current collecting scope; count and answers unchanged."
+    },
+    {
+      "action": "b14-reuse",
+      "classification": "CONCEPT_DEMO_ONLY",
+      "handler": "deep-plan-protocol.js:reuse",
+      "trigger": "Recorded answer row",
+      "guard": "Actual supplied source identity, complete bytes, version and key checked; no unsourced free count."
+    },
+    {
+      "action": "b14-research",
+      "classification": "CONCEPT_DEMO_ONLY",
+      "handler": "deep-plan-protocol.js:beginResearch/completeResearch",
+      "trigger": "Fact row",
+      "guard": "Current source/epoch/scope and pending ticket; local JSON inspection, no provider call."
+    },
+    {
+      "action": "b14-preview",
+      "classification": "LOCAL_PREVIEW",
+      "handler": "deep-plan-protocol.js:payload",
+      "trigger": "Review Plan",
+      "guard": "No unanswered presented round or stale source; no Plan created."
+    },
+    {
+      "action": "b14-preview-cancel",
+      "classification": "LOCAL_PRESENTATION",
+      "handler": "preview map",
+      "trigger": "Preview footer",
+      "guard": "Deletes only transient preview."
+    },
+    {
+      "action": "b14-synthesize",
+      "classification": "CONCEPT_OWNER_ADAPTER",
+      "handler": "deep-plan-protocol.js:finish -> plans.js:createFromDiscovery",
+      "trigger": "Create this Plan",
+      "guard": "Exact preview/current-source/revision/scope, one current Plan; rejected callback no fabricated result."
+    },
+    {
+      "action": "b14-open-plan",
+      "classification": "LOCAL_PRESENTATION",
+      "handler": "plans.js:openDetails",
+      "trigger": "Completed discovery",
+      "guard": "Existing normal Plan tab with explicit Plan ID."
+    },
+    {
+      "action": "b14-cancel",
+      "classification": "CONCEPT_OWNER_ADAPTER",
+      "handler": "deep-plan-protocol.js:cancel",
+      "trigger": "Advanced disclosure",
+      "guard": "Fences pending results; preserves prior answers and source history."
+    },
+    {
+      "action": "b14-revise-source",
+      "classification": "CONCEPT_DEMO_ONLY",
+      "handler": "shared fixture artifact mutation",
+      "trigger": "Advanced local test controls",
+      "guard": "Only current collecting supplied exercise source; invalid JSON is no-change error."
+    },
+    {
+      "action": "b14-export",
+      "classification": "CONCEPT_EXPORT",
+      "handler": "discovery exact-object export",
+      "trigger": "Advanced disclosure",
+      "guard": "Uses document-bound run/thread/project; active thread cannot substitute identity."
+    }
+  ],
+  "reused_actions": [
+    {
+      "action": "send",
+      "canonical_correspondence": "Existing Assistant send/Plan request route",
+      "handler": "composer-state preSendHooks -> deep-plan-batch14:begin",
+      "guards": "Ordinary Assistant destination, Deep Thorough/Exhaustive, exact thread, nonempty accepted request; hold preserves buffer."
+    },
+    {
+      "action": "submit-questionnaire / next-question / close-decision / cancel-questionnaire / qs-open-flow",
+      "canonical_correspondence": "Existing shared questionnaire controls; no new public command family",
+      "handler": "B14 intercepts only its exact stable flow IDs; unrelated flows use original handlers",
+      "guards": "Complete answers, exact round and run, current scope, replay and draft preservation."
+    },
+    {
+      "action": "pd-build",
+      "canonical_correspondence": "cmd.chat.plan.build",
+      "handler": "plans.js:admitBuild -> todos.js:materializeForPlan",
+      "guards": "Plan eligibility in actual handler, source scope and revision, validated scoped-unit coverage/DAG, atomic To-Do refusal before approval effects."
+    },
+    {
+      "action": "pd-revise",
+      "canonical_correspondence": "Existing Plan Revise/composer command",
+      "handler": "Existing plans.js revision path",
+      "guards": "One Plan identity; V1 immutable; V2 ledger binding; no question count reset."
+    },
+    {
+      "action": "set-plan-strategy",
+      "canonical_correspondence": "cmd.chat.plan.strategy.set",
+      "handler": "Existing menu/strategy owner",
+      "guards": "Exactly six choices across two modes; unsupported pair fails closed."
+    },
+    {
+      "action": "message-more on eli5-example-answer",
+      "canonical_correspondence": "Existing message menu, branch and restore handlers",
+      "handler": "threadops.js:overflowItems",
+      "guards": "Explicit public reply type only; internalOnly/internal visibility excluded; does not expose workflow cards by title."
+    }
+  ],
+  "review_dimensions": {
+    "source_and_requirements": "BATCH_14_SOURCE_REVIEW.json and 30-row coverage delta.",
+    "canonical_owner": "Current Plans owners read; canonical documents unchanged.",
+    "single_dry_contract": "One question-budget protocol used by Plan and BrainStorm; no Settings fork.",
+    "command_or_typed_action": "Every new local action enumerated above; no invented cmd.* registration.",
+    "payload_result_error_availability_permissions": "Protocol/currentness guards and typed local failure; native permissions not claimed.",
+    "single_handler": "Each registered B14 action has one handler; shared actions are ownership-filtered adapters.",
+    "production_or_concept_wiring": "Concept only; production wiring unchanged.",
+    "gui_trigger_and_return": "Actual buttons, shared editor/artifact tabs, stable document IDs and composer state tested.",
+    "reverse_consumers": "Discovery card, editor, questionnaire, Plan inspector, Build, To-Dos, BrainStorm and source artifacts.",
+    "events_receipts_observable_work": "In-memory question/history/research receipts only; pending/rejected state visible, not EventRecords.",
+    "persistence_and_migration": "Session-only. Serialized reconstruction is a protocol test, not application restart or source-of-value migration.",
+    "tests_and_evidence": "tests/b14 and final evidence; unchanged prior suites rerun.",
+    "disposition_and_risk": "All 30 rows retain separate bounded proof and unverified native/full-clause status."
+  }
+}

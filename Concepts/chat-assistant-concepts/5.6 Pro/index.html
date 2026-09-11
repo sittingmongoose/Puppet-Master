@@ -9277,6 +9277,8 @@ button.qs-spine-slot.is-current::after{
   }
 }
 
+/* Question budgets own no visual surface; consumers use shared cards. */
+
 /* plans.css — feature module stylesheet. OWNER: Assistant-redesign wave (2026-09-03).
    Styles the `plan-doc` card rendered by plans.js: the two document projections,
    the single Build control, the historical compact card, and the four dialogs.
@@ -12658,6 +12660,36 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 .b13-convergence{padding:16px;border:1px solid var(--border-strong);border-radius:14px;margin:22px 0;background:var(--surface-2)}.b13-convergence h2{font-size:17px!important;margin:0 0 8px!important}.b13-convergence p{font-size:12px;line-height:1.6}.b13-technical{font-size:11px;color:var(--muted);margin:20px 0}.b13-technical summary{cursor:pointer;padding:8px 0}.b13-technical pre,.b13-source pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid var(--border);padding:14px;border-radius:12px;font-size:11px;line-height:1.65;background:var(--surface-2);max-width:100%;box-sizing:border-box}
 @keyframes b13-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 @media(max-width:600px){.b13-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.b13-lead{padding:13px}.b13-heading h1{font-size:21px!important}.b13-guide{padding:8px;font-size:10px}}
+
+/* Protocol owns no view. */
+
+/* Batch 14 uses the existing card and shared questionnaire visual grammar. */
+.deep14-workspace,.deep14-source{min-width:0;overflow-wrap:anywhere}
+.deep14-workspace header h1{font-size:24px;line-height:1.24;margin:8px 0 12px}
+.deep14-workspace header small,.deep14-quiet,.deep14-question small,.deep14-entry small{color:var(--muted);font-size:12px}
+.deep14-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0 10px}
+.deep14-stats span{padding:12px;border:1px solid var(--border);border-radius:12px;font-size:12px;background:var(--surface-2)}
+.deep14-stats strong{display:block;font-size:23px;line-height:1.3}
+.deep14-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.deep14-actions button{white-space:normal;max-width:100%}
+.deep14-section,.deep14-preview{border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:16px;min-width:0}
+.deep14-section h2,.deep14-preview h2{font-size:17px;margin:0 0 12px}
+.deep14-question{padding:12px 0;border-bottom:1px solid var(--border);min-width:0}
+.deep14-question:last-child{border-bottom:0;padding-bottom:0}
+.deep14-question small{display:block;margin-top:4px}
+.deep14-question p{margin:8px 0}
+.deep14-preview-body{max-height:340px;overflow:auto;padding-right:10px}
+.deep14-preview footer{display:flex;justify-content:flex-end;gap:8px;padding-top:16px}
+.deep14-preview h3{font-size:14px;margin:14px 0 8px}
+.deep14-warning{padding:12px;border:1px solid var(--border);border-radius:10px;font-size:13px;background:var(--surface-2)}
+.deep14-section pre,.deep14-source pre{white-space:pre-wrap;word-break:break-word;max-width:100%;font-size:11px}
+.deep14-entry{padding:18px;border:1px solid var(--border);border-radius:16px;margin:10px 0;min-width:0}
+.deep14-entry h3{margin:0 0 8px;font-size:16px}
+.deep14-guide{display:flex;align-items:center;gap:12px;margin:8px 12px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;font-size:12px;min-width:0}
+.deep14-guide span{flex:1;min-width:0;overflow-wrap:anywhere}
+@media(max-width:900px){.deep14-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.deep14-workspace header h1{font-size:21px}.deep14-section,.deep14-preview{padding:12px}}
+
+.deep14-workspace,.deep14-source{box-sizing:border-box;width:100%;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important}.deep14-section,.deep14-entry{background:var(--surface-2)}.deep14-question p{font-size:12px;line-height:1.6}.deep14-section>summary{cursor:pointer;font-size:12px;font-weight:600}.deep14-guide{background:var(--surface-2)}
 
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
@@ -23975,7 +24007,11 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function overflowItems(ctx, m) {
     var t = ctx.thread || ctx.activeThread();
-    if (!t || !m || m.type !== 'text') return [];
+    // B14 regression repair: an ELI5 response is still a public conversational
+    // turn. Reuse the ordinary menu; do not widen this to workflow/receipt cards
+    // or infer record visibility from a title. Retry retains its own eligibility.
+    if (!t || !m || !['text','eli5-example-answer'].includes(m.type) ||
+        m.internalOnly || m.visibility === 'internal') return [];
     /* This module's own receipt and fold cards are system cards, not turns. */
     if (m.role === 'system') return [];
 
@@ -28955,6 +28991,75 @@ window.PM56_EXT = window.PM56_EXT || {
 
 })();
 
+/* One concept QuestionItem budget owner. In-memory records, not native durability.
+ * Plan versions and participants never own counters. Rendering is a pure read.
+ * Legacy gallery booleans remain labelled fixture inputs; Deep Plan passes
+ * validated source-bearing resolutions through resolve(), never those shortcuts.
+ */
+(function(root){
+ 'use strict';
+ const BASE=Object.freeze({quick:3,standard:6,thorough:8,deep_thorough:10,deep_exhaustive:15,brainstorm:20});
+ const LABEL=Object.freeze({quick:'Plan · Quick',standard:'Plan · Standard',thorough:'Plan · Thorough',deep_thorough:'Deep Plan · Thorough',deep_exhaustive:'Deep Plan · Exhaustive',brainstorm:'Deep Plan · BrainStorm'});
+ const copy=x=>JSON.parse(JSON.stringify(x));
+ const error=e=>({ok:false,error:e,charged:false});
+ const id=s=>typeof s==='string'&&s.length>0&&s.length<=240&&!['__proto__','constructor','prototype'].includes(s);
+ function policy(x){
+  if(!x)return {policy_version:2,plan_limits:{quick:3,standard:6,thorough:8},deep_plan_limits:{thorough:10,exhaustive:15,brainstorm:20},grill_me_extension:25};
+  if(x.policy_version!==2||!x.plan_limits||!x.deep_plan_limits||Object.keys(x.plan_limits).sort().join()!=='quick,standard,thorough'||Object.keys(x.deep_plan_limits).sort().join()!=='brainstorm,exhaustive,thorough')return null;
+  if([...Object.values(x.plan_limits),...Object.values(x.deep_plan_limits)].some(n=>!Number.isInteger(n)||n<0||n>100)||!Number.isInteger(x.grill_me_extension)||x.grill_me_extension<0||x.grill_me_extension>100)return null;
+  return copy(x);
+ }
+ function factory(getStore){
+  const store=()=>typeof getStore==='function'?getStore():getStore;
+  const get=k=>Object.hasOwn(store().runs,k)?store().runs[k]:null;
+  function ensure(k,strategy,grill,p){
+   if(!id(k)||!Object.hasOwn(BASE,strategy)||(grill!==undefined&&typeof grill!=='boolean'))return error('invalid_question_budget_binding');
+   if(get(k))return get(k).strategy===strategy?{ok:true,reused:true,run:get(k)}:error('strategy_frozen');
+   const pol=policy(p);if(!pol)return error('invalid_question_budget_policy');
+   store().runs[k]={workflow_id:k,strategy,grill_me_enabled:!!grill,policy:pol,asked:{},order:[],resolutions:{},reused:0,research:0};
+   return {ok:true,run:get(k)};
+  }
+  function projection(k){
+   const r=get(k);if(!r)return null;
+   const p=r.policy||policy(),base=(r.strategy==='brainstorm'?p.deep_plan_limits.brainstorm:r.strategy.startsWith('deep_')?p.deep_plan_limits[r.strategy.slice(5)]:p.plan_limits[r.strategy]),eff=base+(r.grill_me_enabled?p.grill_me_extension:0),asked=Object.keys(r.asked).length,resolutions=Object.values(r.resolutions||{});
+   return {schema:'pm.assistant_plan.question_budget_projection.v1',workflow_id:k,strategy:r.strategy,strategy_label:LABEL[r.strategy],planning_kind:r.strategy.startsWith('deep')||r.strategy==='brainstorm'?'deep_plan':'plan',policy_version:p.policy_version,base_limit:base,grill_me_enabled:r.grill_me_enabled,grill_me_extension:p.grill_me_extension,effective_limit:eff,questions_asked:asked,questions_remaining:Math.max(0,eff-asked),reused_answer_count:resolutions.filter(x=>x.kind==='reused_answer').length,research_resolved_count:resolutions.filter(x=>x.kind==='research_resolved').length,exhausted:asked>=eff};
+  }
+  function admitMany(k,items){
+   const r=get(k);if(!r)return error('unknown_run');
+   if(!Array.isArray(items)||!items.length||items.some(x=>!x||!id(x.question_item_id)))return error('invalid_question_item');
+   const unique=new Map();
+   for(const x of items){
+    const old=unique.get(x.question_item_id)||(Object.hasOwn(r.asked,x.question_item_id)?r.asked[x.question_item_id]:null);
+    if(old&&typeof old==='object'&&((old.semantic_key&&x.semantic_key&&old.semantic_key!==x.semantic_key)||(old.prompt&&x.prompt&&old.prompt!==x.prompt)))return error('question_identity_conflict');
+    unique.set(x.question_item_id,x);
+   }
+   const fresh=[...unique.values()].filter(x=>!Object.hasOwn(r.asked,x.question_item_id)&&!Object.hasOwn(r.resolutions||{},x.question_item_id));
+   if(fresh.length>projection(k).questions_remaining)return {...error('question_budget_exhausted'),run_failed:false,projection:projection(k)};
+   for(const x of fresh){r.asked[x.question_item_id]=copy(x);r.order.push(x.question_item_id);}
+   return {ok:true,charged:!!fresh.length,charged_count:fresh.length,reason:fresh.length?'presented':'already_charged',projection:projection(k)};
+  }
+  function resolve(k,x){
+   const r=get(k);if(!r)return error('unknown_run');
+   if(!x||!id(x.question_item_id)||!['reused_answer','research_resolved'].includes(x.kind)||!id(x.source_ref)||!(typeof x.source_binding==='string'&&x.source_binding.length>0&&x.source_binding.length<=100000)||typeof x.answer!=='string'||!x.answer.trim())return error('resolution_evidence_required');
+   r.resolutions=r.resolutions||{};
+   const old=Object.hasOwn(r.resolutions,x.question_item_id)?r.resolutions[x.question_item_id]:null;
+   if(old)return JSON.stringify(old)===JSON.stringify(x)?{ok:true,reused:true,charged:false,projection:projection(k)}:error('resolution_identity_conflict');
+   if((Object.hasOwn(r.asked,x.question_item_id)?r.asked[x.question_item_id]:null))return error('already_presented_not_free_resolution');
+   r.resolutions[x.question_item_id]=copy(x);if(x.kind==='reused_answer')r.reused++;else r.research++;
+   return {ok:true,charged:false,reason:x.kind,projection:projection(k)};
+  }
+  function admit(k,x){
+   if(x?.resolved_from_prior_answer||x?.resolvable_by_research){
+    return resolve(k,{question_item_id:x.question_item_id,kind:x.resolved_from_prior_answer?'reused_answer':'research_resolved',source_ref:'fixture:legacy-counter-control',source_binding:'fixture-unverified',answer:'Legacy labelled counter fixture; not research or reuse proof.'});
+   }
+   return admitMany(k,[x]);
+  }
+  function setGrill(k,on){const r=get(k);if(!r||typeof on!=='boolean')return null;r.grill_me_enabled=on;return projection(k);}
+  return {ensure,projection,admitMany,admit,resolve,setGrill,get};
+ }
+ root.PM56_QUESTION_BUDGET={factory,defaults:()=>policy(),bases:()=>({...BASE}),labels:()=>({...LABEL}),validatePolicy:policy};
+})(typeof window==='undefined'?globalThis:window);
+
 /* plans.js — feature module.  OWNER: Assistant-redesign wave (2026-09-03) — Plan card agent.
  *
  * Load order (see build.py): data.js, motion.js, variants-*.js, then EVERY feature
@@ -29731,102 +29836,28 @@ window.PM56_EXT = window.PM56_EXT || {
      existing record. Reused answers and researched facts are counted
      separately and never consume the allowance.
      ===================================================================== */
-  var QBASE = {
-    quick:3, standard:6, thorough:8,
-    deep_thorough:10, deep_exhaustive:15, brainstorm:20
-  };
-  var QGRILL = 25;
-  var QLABEL = {
-    quick:'Plan · Quick', standard:'Plan · Standard', thorough:'Plan · Thorough',
-    deep_thorough:'Deep Plan · Thorough', deep_exhaustive:'Deep Plan · Exhaustive',
-    brainstorm:'Deep Plan · BrainStorm'
-  };
+  var QBASE = window.PM56_QUESTION_BUDGET.bases();
+  var QGRILL = window.PM56_QUESTION_BUDGET.defaults().grill_me_extension;
+  var QLABEL = window.PM56_QUESTION_BUDGET.labels();
   RT.questionBudget = RT.questionBudget || { runs:{}, seq:0 };
-
+  var budgetOwner=window.PM56_QUESTION_BUDGET.factory(function(){return RT.questionBudget;});
   function strategyKey(r){
-    var s=String(r&&r.strategy||'').toLowerCase();
-    if(s.indexOf('deep')===0){
-      if(s.indexOf('brainstorm')>=0) return 'brainstorm';
-      if(s.indexOf('exhaustive')>=0) return 'deep_exhaustive';
-      return 'deep_thorough';
-    }
-    if(s.indexOf('quick')>=0)    return 'quick';
-    if(s.indexOf('thorough')>=0) return 'thorough';
-    return 'standard';
+    var v=String(r&&r.strategy||'').toLowerCase();
+    if(QBASE[v]!=null)return v;
+    if(v.indexOf('deep')===0)return v.indexOf('brainstorm')>=0?'brainstorm':v.indexOf('exhaustive')>=0?'deep_exhaustive':'deep_thorough';
+    return v.indexOf('quick')>=0?'quick':v.indexOf('thorough')>=0?'thorough':'standard';
   }
-
-  /* Normalise ANY incoming strategy to one of the six current keys.
-     `strategyKey()` above reads a Plan RECORD; this reads a bare value, which
-     is what the exported `questionBudget()` entry point receives. Both paths
-     must agree, or the module's own callers see 10 for `Deep · Thorough`
-     while an outside caller handing over the same record field silently gets
-     `standard` 6 -- and the projection then echoes a retired label such as
-     `light` back as though it were an active strategy. Unknown input resolves
-     to a CURRENT key and is never stored verbatim. */
-  function normStrategy(v){
-    if(v==null) return null;
-    if(QBASE[v]!=null) return v;
-    return strategyKey({ strategy:v });
+  // Display-label compatibility is confined to this existing fixture API.
+  // New planning ingress validates workflow/strategy before allocating a run.
+  function questionBudget(workflowId,strategy,grill){
+    var prior=budgetOwner.get(workflowId),key=strategy==null?(prior?prior.strategy:'standard'):strategyKey({strategy:strategy});
+    var ensured=budgetOwner.ensure(workflowId,key,grill);
+    if(!ensured.ok)return null;
+    if(grill!=null)budgetOwner.setGrill(workflowId,!!grill);
+    return budgetOwner.projection(workflowId);
   }
-
-  /* One counter per RUN, shared by every participant. Plan revisions continue
-     the same counter; only a new Plan identity starts a new one. */
-  function budgetRun(workflowId, strategy, grill){
-    var m=RT.questionBudget.runs, key=normStrategy(strategy);
-    if(!m[workflowId]){
-      m[workflowId]={ workflow_id:workflowId, strategy:key||'standard', grill_me_enabled:!!grill,
-                      asked:{}, order:[], reused:0, research:0 };
-    }
-    var run=m[workflowId];
-    if(key) run.strategy=key;
-    if(grill!=null) run.grill_me_enabled=!!grill;
-    return run;
-  }
-
-  function questionBudget(workflowId, strategy, grill){
-    var run=budgetRun(workflowId, strategy, grill);
-    var base=QBASE[run.strategy]||QBASE.standard;
-    var eff=base+(run.grill_me_enabled?QGRILL:0);
-    var asked=run.order.length;
-    return {
-      schema:'pm.assistant_plan.question_budget_projection.v1',
-      workflow_id:run.workflow_id, strategy:run.strategy, strategy_label:QLABEL[run.strategy],
-      /* The two typed fields the correction's contract names and the earlier
-         shape omitted. `planning_kind` is DERIVED from the strategy, never
-         stored twice; `policy_version` is what makes a stored projection from
-         the retired 15/+10 policy detectable rather than silently rendered. */
-      planning_kind:(run.strategy.indexOf('deep')===0||run.strategy==='brainstorm')?'deep_plan':'plan',
-      policy_version:2,
-      base_limit:base, grill_me_enabled:run.grill_me_enabled, grill_me_extension:QGRILL,
-      effective_limit:eff, questions_asked:asked,
-      questions_remaining:Math.max(0, eff-asked),
-      reused_answer_count:run.reused, research_resolved_count:run.research,
-      exhausted:(eff-asked)<=0
-    };
-  }
-
-  /* QMAX-007/011/012/014. The single admission gate. */
-  function admitQuestion(workflowId, item){
-    var run=RT.questionBudget.runs[workflowId];
-    if(!run) return { ok:false, error:'unknown_run' };
-    if(run.asked[item.question_item_id])
-      return { ok:true, charged:false, reason:'already_charged', projection:questionBudget(workflowId) };
-    if(item.resolved_from_prior_answer){ run.reused++; return { ok:true, charged:false, reason:'reused_answer', projection:questionBudget(workflowId) }; }
-    if(item.resolvable_by_research){    run.research++; return { ok:true, charged:false, reason:'research_resolved', projection:questionBudget(workflowId) }; }
-    var proj=questionBudget(workflowId);
-    if(proj.exhausted)
-      /* Typed, and NOT a failure: no extra QuestionItem is persisted and the
-         planning run continues to synthesis. */
-      return { ok:false, error:'question_budget_exhausted', charged:false, run_failed:false, projection:proj };
-    run.asked[item.question_item_id]=true; run.order.push(item.question_item_id);
-    return { ok:true, charged:true, projection:questionBudget(workflowId) };
-  }
-  function setGrill(workflowId, on){
-    var run=RT.questionBudget.runs[workflowId]; if(!run) return null;
-    /* QMAX-009/010: the ceiling moves; asked and the answers never do. */
-    run.grill_me_enabled=!!on;
-    return questionBudget(workflowId);
-  }
+  function admitQuestion(workflowId,item){return budgetOwner.admit(workflowId,item);}
+  function setGrill(workflowId,on){return budgetOwner.setGrill(workflowId,!!on);}
 
   /* =====================================================================
      3A. PlanProgressProjection — Additive Correction v4 (PPROG-001..014)
@@ -30084,9 +30115,37 @@ window.PM56_EXT = window.PM56_EXT || {
      ({id, build_blocking:true, why}) or an unresolved To-Do carrying
      `build_blocking`; anything unresolved but not so classified stays visible
      and does not gate the control. */
+  // B14: validate the actual scoped templates before any Plan/To-Do mutation.
+  // The concept validation result is not a native compiler or readiness claim.
+  function discoveryBuildError(r){
+    if(!r.discoveryRunId) return null;
+    const scope=window.PM56_DEEP_PLAN?.scope(r.thread_id), bound=r.discoveryScope;
+    if(!bound||!scope||scope.projectId!==bound.projectId||scope.worktreeId!==bound.worktreeId)
+      return 'discovery_scope_changed';
+    if(!r.ledger||r.ledger.plan_version!==r.version) return 'ledger_version_mismatch';
+    const ss=steps(body(r)), units=list(r.planunits), ids=new Map(), covered=new Set();
+    if(!ss.length||units.length!==ss.length) return 'scoped_unit_coverage_mismatch';
+    for(const u of units){
+      if(!u||typeof u.id!=='string'||!u.id||ids.has(u.id)||typeof u.title!=='string'||!u.title.trim()||
+         !Array.isArray(u.acceptance)||!u.acceptance.length||u.acceptance.some(x=>typeof x!=='string'||!x.trim())||
+         !Array.isArray(u.deps)||new Set(u.deps).size!==u.deps.length||covered.has(u.step)||!ss.some(s=>s.plan_step_id===u.step))
+        return 'invalid_scoped_unit';
+      ids.set(u.id,u);covered.add(u.step);
+    }
+    const visited=new Set(), visiting=new Set();
+    function walk(id){if(visiting.has(id)||!ids.has(id))return false;if(visited.has(id))return true;visiting.add(id);if(!ids.get(id).deps.every(walk))return false;visiting.delete(id);visited.add(id);return true;}
+    if(!units.every(u=>walk(u.id)))return 'invalid_scoped_unit_dependencies';
+    for(const s of ss){const u=units.find(u=>u.step===s.plan_step_id),deps=u.deps.map(d=>ids.get(d).step).sort();
+      if(JSON.stringify(deps)!==JSON.stringify(list(s.depends_on).slice().sort()))return 'scoped_unit_step_mapping_mismatch';}
+    if(!todoApi()?.materializeForPlan)return 'todo_owner_unavailable';
+    return null;
+  }
+
   function buildBlockers(r){
     var out=list(r.blockers).filter(function(b){ return b && b.build_blocking && !b.resolved; })
       .map(function(b){ return { id:b.id||'blocker', why:b.why||'', source:'plan' }; });
+    var error=discoveryBuildError(r);
+    if(error)out.push({id:error,why:error.replaceAll('_',' '),source:'discovery'});
     var api=todoApi();
     if(api && api.get){
       var items=api.get(r.thread_id)||[];
@@ -30162,7 +30221,7 @@ window.PM56_EXT = window.PM56_EXT || {
        projector landed, so the key reads the projection's currentness. */
     var pk = r.approved ? progress(r).currentness_hash : 'unadmitted';
     return '<article class="system-card plan-doc pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-'+r.version+'-'+esc(r.status)+'-'+esc(r.view)+'-'+esc(pk)+'-'+((r.attention&&r.attention.kind)||'none')+'" data-plan-id="'+esc(r.plan_id)+'" data-topology="'+esc(r.topology||'agent')+'">'+
-      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.discoveryRunId?'<button class="text-button" data-action="b14-open" data-run="'+esc(r.discoveryRunId)+'">Open source discovery</button>':'')+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</article>';
@@ -30237,7 +30296,8 @@ window.PM56_EXT = window.PM56_EXT || {
       plan_id:r.plan_id, version:r.version, hash:hashOf(b),
       step_ids:steps(b).map(function(s){return s.plan_step_id;}),
       runtime:(ctx.selectedModel&&ctx.selectedModel()||{}).name||'Claude Sonnet 4.6',
-      permissions:ctx.state.permissions, worktree:ctx.state.worktree,
+      permissions:ctx.state.permissions, worktree:r.discoveryScope?r.discoveryScope.worktreeId:ctx.state.worktree,
+      ...(r.discoveryScope?{project_id:r.discoveryScope.projectId,thread_id:r.thread_id}:{}),
       at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),
       orchestrator:false
     };
@@ -30245,7 +30305,15 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function admitBuild(ctx,r,opts){
     opts=opts||{};
-    if(r.status!=='ready') return false;
+    if(r.status!=='ready'||!eligible(r).build) return false;
+    // Materialization is an atomic ToDo-owner operation. For a discovery Plan,
+    // reject its failure before approval, schedule invalidation or unit receipts.
+    var discoveryMade=null;
+    if(r.discoveryRunId){
+      discoveryMade=todoApi().materializeForPlan({plan_id:r.plan_id,thread_id:r.thread_id,version:r.version,
+        steps:steps(body(r)).map(s=>({id:s.plan_step_id,parent:s.parent_step_id,deps:list(s.depends_on),title:s.title,outcome:s.text}))});
+      if(!discoveryMade?.ok){ctx.toast('Build not admitted',discoveryMade?.error||'To-Do materialization refused');return false;}
+    }
     /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
        pending schedule for this Plan BEFORE the run is admitted, so a timer
        cannot deliver a second dispatch for work that has already started.
@@ -30268,13 +30336,13 @@ window.PM56_EXT = window.PM56_EXT || {
        creates no NodeSeeds or WorkNodes. */
     if(r.backend==='ledger_bound'){
       r.unitsMaterialized = { at:r.approved.at, scope:r.plan_id+'@V'+r.version,
-        count:list(r.planunits).length, validated:true, globalIndex:false, worknodes:0 };
+        count:list(r.planunits).length, validated:true, ...(r.discoveryRunId?{validation_kind:'local_scoped_template_validation',plan_hash:r.approved.hash,scope_kind:'assistant_deep_plan',nodeSeeds:0}:{}), globalIndex:false, worknodes:0 };
     }
     /* PPROG-002/013: the To-Dos are REAL, created through the ToDo owner, and
        they are what the projector derives from. A local build counter would
        have made the gutter a decoration rather than a projection. */
-    var api=todoApi(), made=null;
-    if(api && api.materializeForPlan){
+    var api=todoApi(), made=discoveryMade;
+    if(!discoveryMade && api && api.materializeForPlan){
       made = api.materializeForPlan({
         plan_id:r.plan_id, thread_id:r.thread_id, version:r.version,
         steps:steps(body(r)).map(function(s){
@@ -30283,7 +30351,7 @@ window.PM56_EXT = window.PM56_EXT || {
       });
     }
     r.todosCreated = { at:r.approved.at, from:(r.backend==='ledger_bound'?'planunits':'plan_steps'),
-                       count:(made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length),
+                       count:r.discoveryRunId?made.created:((made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length)),
                        reused:!!(made&&made.reused) };
     // A direct Plan build is not a Goal. Use its own linked transcript record.
     var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
@@ -30397,6 +30465,7 @@ window.PM56_EXT = window.PM56_EXT || {
       p('V'+(r.version+1)+' incorporates: '+feedback) ]);
     r.version = r.version+1;
     r.revisions[r.version] = next;
+    if(r.discoveryRunId&&r.ledger){r.ledger=JSON.parse(JSON.stringify(r.ledger));r.ledger.plan_version=r.version;r.ledger.entries.push({k:"correction",v:feedback,plan_version:r.version});}
     r.revisionLog.push({v:r.version, at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}), why:feedback});
     /* A revision invalidates anything bound to the exact old version -- the
        card's own binding AND every durable build schedule the scheduler holds.
@@ -30840,7 +30909,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
     'pd-build': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
-      if(!admitBuild(ctx,r)){ ctx.toast('Build is only available while the Plan is ready.'); return; }
+      if(!admitBuild(ctx,r)){ ctx.toast('Build not admitted', (eligible(r).blocked_by||[]).map(x=>x.why).join('; ')||'The Plan must be ready with valid current inputs.'); return; }
       ctx.toast('Build admitted · V'+r.version+' frozen at '+r.approved.hash);
       ctx.renderApp();
     },
@@ -31239,7 +31308,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var r = id && rec(id);
     if(!r) return '';
     return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+(window.PM56_BRAINSTORM_DEMOS?.planGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
-      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.discoveryRunId?'<button class="text-button" data-action="b14-open" data-run="'+esc(r.discoveryRunId)+'">Open source discovery</button>':'')+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</div>';
@@ -31274,6 +31343,28 @@ window.PM56_EXT = window.PM56_EXT || {
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
 
+  // B14: validate a complete current discovery handoff before creating one
+  // Plan. Candidate unit templates are not a materialized build bundle.
+  function createFromDiscovery(x){
+    const api=window.PM56_DEEP_PLAN, c=EXT.ctx(), prior=x&&rec(x.planId);
+    if(!api||!x)return {ok:false,error:'discovery_owner_unavailable'};
+    const expected=api.engine.payload(x.runId);
+    if(!expected.ok||JSON.stringify(expected.value)!==JSON.stringify(x))return {ok:false,error:'discovery_handoff_mismatch'};
+    if(prior)return prior.discoveryFingerprint===JSON.stringify(x)?{ok:true,reused:true,planId:x.planId}:{ok:false,error:'conflicting_plan_handoff'};
+    const t=c.state.threads.find(t=>t.id===x.threadId);
+    if(!t||t.projectId!==x.projectId||api.scope(x.threadId)?.worktreeId!==x.worktreeId)return {ok:false,error:'scope_changed'};
+    if(currentPlan(x.threadId))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const seen=new Set(), bs=steps(x.blocks);
+    if(bs.length!==x.steps.length||!bs.length)return {ok:false,error:'plan_step_coverage'};
+    for(const st of x.steps){if(seen.has(st.id)||!st.acceptance||st.dependsOn.some(d=>!seen.has(d))||!bs.find(b=>b.plan_step_id===st.id))return {ok:false,error:'invalid_plan_steps'};seen.add(st.id);}
+    const units=x.steps.map(st=>({id:'APU-'+x.planId+'-'+st.id,step:st.id,title:st.title,acceptance:[st.acceptance],negative:['Do not mutate source data or start work without explicit Build.'],deps:st.dependsOn.map(d=>'APU-'+x.planId+'-'+d)}));
+    const r=planRec({id:x.planId,thread:x.threadId,title:x.title,strategy:x.strategy==='deep_exhaustive'?'Deep · Exhaustive':'Deep · Thorough',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
+      ledger:{id:'ledger-'+x.runId,scope:'run',plan_version:1,status:'ready',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'discovery',ref:x.runId,note:'Local discovery; no native persistence or live research.'}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
+    r.project_id=x.projectId;r.discoveryScope={projectId:x.projectId,worktreeId:x.worktreeId};r.discoveryRunId=x.runId;r.discoveryFingerprint=JSON.stringify(x);r.grillMe=x.grillMe;r.blockers=JSON.parse(JSON.stringify(x.blockers));
+    P().records[x.planId]=r;t.messages.push({id:'plan-card-'+x.planId,role:'system',type:'plan-card-v2',planId:x.planId});
+    return {ok:true,planId:x.planId,version:1,hash:hashOf(body(r))};
+  }
+
   // B06: selected conclusion is admitted by the existing Plan owner. No Build.
   function createFromRoom(x){
     const checked=window.PM56_ROOM?.validatePromotion(x,'plan');
@@ -31295,6 +31386,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
   window.PM56_PLANS = {
     createFromRoom:createFromRoom,
+    createFromDiscovery:createFromDiscovery,
     createFromBrainstorm:createFromBrainstorm,
     get:rec, all:function(){ return P().records; },
     // Concept-only admission seam. The scheduler validates its due time and
@@ -31339,6 +31431,7 @@ window.PM56_EXT = window.PM56_EXT || {
     attention:function(id){ var r=rec(id); return r?attention(r):null; },
     executionReport:function(id){ var r=rec(id); return r?executionReport(r):null; },
     questionBudget:questionBudget,
+    budgetOwner:budgetOwner,
     admitQuestion:admitQuestion,
     setGrillMe:setGrill,
     questionBases:function(){ return JSON.parse(JSON.stringify(QBASE)); },
@@ -33060,7 +33153,7 @@ window.PM56_EXT = window.PM56_EXT || {
       },
       usage: { inputTokens: 214000, outputTokens: 31500, costUsd: 2.68 }
     });
-    bs.messages.push(mkMsg(bs, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Phase 1 (Intake and frontier): 9 of 15 baseline questions asked and resolved; 2 duplicates merged; 2 factual questions routed to research instead of asked. Grill Me is off, so the ceiling stays at 15.' }));
+    bs.messages.push(mkMsg(bs, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Phase 1 (Intake and frontier): Recorded history: 9 of 20 baseline questions asked and resolved; 2 duplicates merged; 2 factual questions routed to research instead of asked. Grill Me is off, so the ceiling stays at 20.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[0].id, senderName: bs.participants[0].name, messageType: 'response', body: 'Blind proposal submitted before seeing any other participant’s output: a PM-owned, health-checked failover ring.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[3].id, senderName: bs.participants[3].name, messageType: 'conflict', body: 'The early fully-automatic cross-account variant of the ring proposal violates a hard user constraint. Flagging it as disqualified regardless of how the vote goes.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[1].id, senderName: bs.participants[1].name, messageType: 'vote', body: 'Dissenting from where the room is leaning: the account-spend boundary has to be first-class, not a caller convention on top of the resolver.' }));
@@ -40755,6 +40848,20 @@ window.PM56_EXT = window.PM56_EXT || {
    questionBank:{baselineLimit:r.config.questionLimit,grillExtension:r.config.grillExtension,grillMeEnabled:!!d.grillMe,askedIds:[],resolvedIds:[],duplicateIds:[],researchRoutedIds:input.evidence.map(e=>e.id),importedAnswers:clone(input.answers||[])},
    attempts:core(r).map(p=>({id:'bs-attempt-'+r.id+'-'+p.id,participantId:p.id,assignmentRevision:p.assignmentRevision,epoch:r.stopEpoch,sourceHash:input.sourceHash,status:'running',input:{sourceHash:input.sourceHash,peerProposals:[],peerIdentities:[]},proposal:null})),
    proposals:[],debates:[],evidenceChecks:[],votes:[],hardConstraintViolations:[],dissent:[],decision:null,synthesis:null};
+  // Batch 14: BrainStorm and its eventual Plan consume the same QuestionItem
+  // store. This is a projection adapter, not a second participant allowance.
+  const budgetKey='plan:brainstorm-plan-'+r.id,policy=window.PM56_QUESTION_BUDGET.defaults();
+  policy.deep_plan_limits.brainstorm=r.config.questionLimit;
+  policy.grill_me_extension=r.config.grillExtension;
+  const bound=P.budgetOwner.ensure(budgetKey,'brainstorm',!!d.grillMe,policy);
+  if(!bound.ok){r.brainstorm.budgetError=bound.error;return;}
+  const bank=r.brainstorm.questionBank;bank.budgetKey=budgetKey;
+  Object.defineProperties(bank,{
+   askedIds:{enumerable:true,configurable:true,get:()=>P.budgetOwner.get(budgetKey).order.slice()},
+   baselineLimit:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).base_limit},
+   grillExtension:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_extension},
+   grillMeEnabled:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_enabled,set:v=>P.budgetOwner.setGrill(budgetKey,!!v)}
+  });
   core(r).forEach(p=>{p.status='working';p.outcome=null;p.current='Independent proposal against the frozen brief';});
   r.expectedOutputs=[{id:'deep-plan-'+r.id,delivered:false}];
   say(r,'message','Recorded example: '+input.label+'. '+(input.answers||[]).length+' prior answers retained; no repeat questions.');
@@ -42379,6 +42486,265 @@ window.PM56_EXT = window.PM56_EXT || {
   G.gallery=c=>'<section class="demo-section"><h3>Context Lens & Wonderer · Batch 13</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b13-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+previous(c);
   window.PM56_WONDERER={protocol,admit,convergence:r=>protocol.convergence(r),augmentPlan,sourceResult,research,playCore};
   window.PM56_BATCH13={start,flows,snapshot:tid=>copy(session(tid)||null),currentRun:()=>current(E.ctx())};
+})();
+
+/* Batch 14: local discovery/QuestionItem protocol. No providers, filesystem,
+ * native persistence, global PlanUnits, or governance writes. One injected
+ * budget owner; the existing Plan owner is the only Plan aggregate writer. */
+(function(root){
+ 'use strict';
+ const copy=x=>JSON.parse(JSON.stringify(x));
+ const fail=(error,extra={})=>({ok:false,error,...extra});
+ const validId=x=>typeof x==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,239}$/.test(x)&&!['__proto__','constructor','prototype'].includes(x);
+ // Fingerprints retain complete bytes; no noncryptographic digest is trusted
+ // instead of equality. Delivery SHA-256s are generated by the test harness.
+ const fingerprint=x=>JSON.stringify(x);
+ function strategy(workflow,value){
+  if(workflow==='plan'&&['quick','standard','thorough'].includes(value))return value;
+  if(workflow==='deep_plan'&&['thorough','exhaustive','brainstorm'].includes(value))return 'deep_'+value;
+  return null;
+ }
+ function factory({budget,source,scope}){
+  const runs=new Map();let serial=0;
+  const get=id=>runs.get(id);
+  function live(r){const s=scope(r.threadId);return !!s&&s.projectId===r.projectId&&s.worktreeId===r.worktreeId;}
+  function guard(r){return !r?fail('planning_run_missing'):!live(r)?fail('scope_changed'):r.status!=='collecting'?fail('planning_run_not_collecting'):null;}
+  function note(r,type,data){r.history.push({id:r.id+':receipt:'+(r.history.length+1),type,...copy(data)});}
+  function start(x){
+   if(!x||![x.id,x.planId,x.threadId,x.projectId].every(validId)||typeof x.worktreeId!=='string'||!x.worktreeId||typeof x.objective!=='string'||!x.objective.trim()||x.objective.length>12000||!['deep_thorough','deep_exhaustive'].includes(x.strategy)||typeof x.grillMe!=='boolean'||!Array.isArray(x.questions)||x.questions.length>100||(!Array.isArray(x.sourceIds)||x.sourceIds.some(s=>!validId(s))||new Set(x.sourceIds).size!==x.sourceIds.length))return fail('invalid_discovery_request');
+   if(runs.has(x.id))return fingerprint(runs.get(x.id).input)===fingerprint(x)?{ok:true,reused:true,run:runs.get(x.id)}:fail('start_identity_conflict');
+   if([...runs.values()].some(r=>r.planId===x.planId))return fail('plan_identity_already_bound');
+   if([...runs.values()].some(r=>r.threadId===x.threadId&&r.status==='collecting'))return fail('planning_already_active');
+   const keys=new Set(x.questions.map(q=>q.key));
+   for(const q of x.questions){if(!validId(q.key)||typeof q.prompt!=='string'||!q.prompt.trim()||q.prompt.length>4000||!['decision','fact'].includes(q.kind)||!Array.isArray(q.dependsOn)||q.dependsOn.some(k=>!keys.has(k)||k===q.key)||q.kind==='fact'&&!x.sourceIds.includes(q.sourceId)||q.kind==='decision'&&(!Array.isArray(q.options)||!q.options.length||q.options.length>6||q.options.some(o=>typeof o!=='string'||!o.trim()||o.length>500))||typeof q.build_blocker!=='boolean')return fail('invalid_question_spec');}
+   const visited=new Set(),visiting=new Set();function visit(k){if(visiting.has(k))return false;if(visited.has(k))return true;visiting.add(k);for(const d of x.questions.find(q=>q.key===k).dependsOn)if(!visit(d))return false;visiting.delete(k);visited.add(k);return true;}
+   if([...keys].some(k=>!visit(k)))return fail('question_dependency_cycle');
+   const r={id:x.id,planId:x.planId,threadId:x.threadId,projectId:x.projectId,worktreeId:x.worktreeId,strategy:x.strategy,objective:x.objective,status:'collecting',epoch:1,revision:0,questions:[],sourceIds:copy(x.sourceIds),evidence:[],pending:[],rounds:[],activeRound:null,history:[],input:copy(x),result:null};
+   if(!live(r))return fail('scope_changed');
+   for(const q of x.questions){const prior=r.questions.find(v=>v.key===q.key);if(prior){if(prior.kind!==q.kind||prior.sourceId!==q.sourceId||fingerprint(prior.options||[])!==fingerprint(q.options||[])||prior.build_blocker!==q.build_blocker||fingerprint(prior.dependsOn)!==fingerprint(q.dependsOn))return fail('semantic_key_conflict');prior.contributors.push(q.participant||'Planner');continue;}
+    r.questions.push({...copy(q),id:r.id+':q:'+q.key,contributors:[q.participant||'Planner'],state:'proposed',answer:null,sourceRef:null});}
+   const b=budget.ensure('plan:'+r.planId,r.strategy,x.grillMe,x.policy);if(!b.ok)return b;
+   runs.set(r.id,r);note(r,'started',{strategy:r.strategy});return {ok:true,run:r};
+  }
+  function view(id){const r=get(id);if(!r)return null;return {...copy(r),budget:budget.projection('plan:'+r.planId),current:live(r)};}
+  function setGrill(id,on){const r=get(id),g=guard(r);if(g)return g;if(typeof on!=='boolean')return fail('invalid_grill_value');const p=budget.setGrill('plan:'+r.planId,on);r.revision++;note(r,'grill_changed',{on,questions_asked:p.questions_asked});return {ok:true,projection:p};}
+  function sourceBinding(r,a){return a&&a.status!=='revoked'&&a.projectId===r.projectId&&(!a.threadId||a.threadId===r.threadId)&&typeof a.content==='string'&&a.content.length<=40000&&Number.isInteger(a.version)&&a.version>=0;}
+  function reuse(id,key,answer){
+   const r=get(id),g=guard(r);if(g)return g;const q=r.questions.find(q=>q.key===key),s=answer&&source(answer.sourceId);
+   if(!q||!['proposed','reused'].includes(q.state)||!sourceBinding(r,s)||!answer.answer||answer.key!==key)return fail('reuse_source_invalid');
+   let v;try{v=JSON.parse(s.content);}catch(_){return fail('reuse_source_invalid');}
+   const proven=v.answers?.find(a=>a.key===key&&a.answer===answer.answer);if(!proven)return fail('reuse_source_mismatch');
+   const binding=fingerprint({id:s.id,version:s.version,content:s.content});
+   const out=q.reuseCounted?{ok:true,reused:true,charged:false,projection:budget.projection('plan:'+r.planId)}:budget.resolve('plan:'+r.planId,{question_item_id:q.id,kind:'reused_answer',source_ref:s.id+':v'+s.version,source_binding:binding,answer:answer.answer});
+   if(!out.ok)return out;q.reuseCounted=true;q.state='reused';q.answer=answer.answer;q.sourceRef={id:s.id,version:s.version,binding};r.revision++;note(r,'answer_reused',{questionId:q.id,source:s.id,version:s.version,answer:answer.answer});return out;
+  }
+  function inspectSource(a){
+   let v;try{v=JSON.parse(a.content);}catch(_){return fail('source_not_valid_json');}
+   if(v.kind==='export_inventory'&&Array.isArray(v.fields)&&v.fields.length>0&&v.fields.length<=100&&v.fields.every(f=>typeof f.name==='string'&&typeof f.sensitive==='boolean')){
+    const included=v.fields.filter(f=>!f.sensitive).map(f=>f.name),excluded=v.fields.filter(f=>f.sensitive).map(f=>f.name);
+    return {ok:true,answer:included.length+' exportable fields; '+excluded.length+' sensitive fields excluded.',facts:{included,excluded},method:'Filtered the actual supplied inventory by its sensitive flags. No production dataset or network was accessed.'};
+   }
+   if(v.kind==='recorded_reference'&&typeof v.topic==='string'&&typeof v.excerpt==='string'&&v.excerpt.trim()&&typeof v.origin==='string')return {ok:true,answer:v.excerpt,facts:{topic:v.topic,origin:v.origin},method:'Read the supplied reference extract. Its external source was not independently fetched or current-verified in this run.'};
+   return fail('unsupported_source');
+  }
+  function beginResearch(id,key){
+   const r=get(id),g=guard(r);if(g)return g;const q=r.questions.find(q=>q.key===key);if(!q||q.kind!=='fact'||!q.sourceId)return fail('research_target_missing');
+   if(r.pending.some(p=>!p.finished&&p.key===key))return fail('research_already_pending');
+   const a=source(q.sourceId);if(!sourceBinding(r,a))return fail('research_source_unavailable');
+   const t={id:r.id+':research:'+(++serial),key,epoch:r.epoch,sourceId:a.id,version:a.version,content:a.content,binding:fingerprint({id:a.id,version:a.version,content:a.content}),finished:false};r.pending.push(t);q.state='researching';r.revision++;return {ok:true,ticket:copy(t)};
+  }
+  function completeResearch(id,ticketId){
+   const r=get(id);if(!r)return fail('planning_run_missing');const t=r.pending.find(t=>t.id===ticketId);if(!t)return fail('research_ticket_missing');if(t.finished)return fail('research_ticket_consumed');
+   const q=r.questions.find(q=>q.key===t.key),a=source(t.sourceId);t.finished=true;
+   const g=guard(r);if(g||t.epoch!==r.epoch||!sourceBinding(r,a)||t.binding!==fingerprint({id:a?.id,version:a?.version,content:a?.content})){
+    q.state='stale';const e=g?.error||'stale_research';note(r,'research_rejected',{ticketId,error:e});r.revision++;return fail(e);
+   }
+   const result=inspectSource(a);if(!result.ok){q.state='unresolved';q.researchError=result.error;note(r,'research_failed',{ticketId,error:result.error});r.revision++;return result;}
+   const evidence={id:t.id,questionId:q.id,sourceId:a.id,version:a.version,binding:t.binding,answer:result.answer,facts:result.facts,method:result.method};
+   // One distinct resolved fact is counted once, even across currentness checks.
+   if(!q.researchCounted){const out=budget.resolve('plan:'+r.planId,{question_item_id:q.id,kind:'research_resolved',source_ref:a.id+':v'+a.version,source_binding:t.binding,answer:result.answer});if(!out.ok){q.state='unresolved';return out;}q.researchCounted=true;}
+   q.state='researched';q.answer=result.answer;q.sourceRef={id:a.id,version:a.version,binding:t.binding};q.researchError=null;r.evidence.push(evidence);r.revision++;note(r,'research_completed',{ticketId,source:a.id,version:a.version});return {ok:true,evidence};
+  }
+  function currentSources(r){
+   return r.questions.filter(q=>q.sourceRef).filter(q=>{const a=source(q.sourceRef.id);return !sourceBinding(r,a)||fingerprint({id:a.id,version:a.version,content:a.content})!==q.sourceRef.binding;});
+  }
+  function resolved(q){return ['answered','reused','researched'].includes(q.state);}
+  function frontier(id){const r=get(id);if(!r)return [];return r.questions.filter(q=>q.kind==='decision'&&q.state==='proposed'&&q.dependsOn.every(k=>resolved(r.questions.find(v=>v.key===k))));}
+  function present(id){
+   const r=get(id),g=guard(r);if(g)return g;
+   if(r.activeRound){const round=r.rounds.find(x=>x.id===r.activeRound);return {ok:true,reused:true,round:copy(round)};}
+   // Reuse is part of admission, not dependent on a user remembering a demo
+   // button. Stable semantic keys are supplied by this bounded concept;
+   // general language equivalence remains the production resolver's job.
+   for(const q of r.questions.filter(q=>q.kind==='decision'&&q.state==='proposed')){
+    for(const sid of r.sourceIds){const a=source(sid);if(!sourceBinding(r,a))continue;let v;try{v=JSON.parse(a.content);}catch(_){continue;}const prior=Array.isArray(v.answers)&&v.answers.find(v=>v.key===q.key&&typeof v.answer==='string'&&v.answer.trim());if(prior){const o=reuse(id,q.key,{key:q.key,sourceId:sid,answer:prior.answer});if(o.ok)break;}}
+   }
+   const candidates=frontier(id);if(!candidates.length)return fail('no_question_frontier');
+   const policy=budget.projection('plan:'+r.planId),remaining=policy.questions_remaining;
+   // Grill Me presents the current decision frontier together; dependent
+   // questions wait for the next round. Budget exhaustion still bounds it.
+   const selected=candidates.slice(0,(policy.grill_me_enabled?remaining:Math.min(3,remaining))||1);
+   const out=budget.admitMany('plan:'+r.planId,selected.map(q=>({question_item_id:q.id,semantic_key:q.key,prompt:q.prompt,contributors:q.contributors})));
+   if(!out.ok){note(r,'question_budget_exhausted',{proposedIds:selected.map(q=>q.id)});return out;}
+   const round={id:r.id+':round:'+(r.rounds.length+1),questionIds:selected.map(q=>q.id),epoch:r.epoch,status:'presented',answers:{}};
+   r.rounds.push(round);r.activeRound=round.id;for(const q of selected)q.state='presented';r.revision++;note(r,'questions_presented',{roundId:round.id,questionIds:round.questionIds});return {ok:true,round:copy(round),projection:out.projection};
+  }
+  function submit(id,roundId,answers){
+   const r=get(id),g=guard(r);if(g)return g;const round=r.rounds.find(x=>x.id===roundId);if(!round||round.epoch!==r.epoch)return fail('stale_question_round');
+   if(!answers||typeof answers!=='object'||Array.isArray(answers)||Object.keys(answers).some(k=>!round.questionIds.includes(k)))return fail('invalid_answers');
+   if(round.status==='answered')return fingerprint(round.answers)===fingerprint(answers)?{ok:true,reused:true}:fail('answer_replay_conflict');
+   if(r.activeRound!==roundId)return fail('stale_question_round');
+   if(round.questionIds.some(k=>typeof answers[k]!=='string'||!answers[k].trim()||answers[k].length>4000))return fail('answers_required');
+   round.answers=copy(answers);round.status='answered';r.activeRound=null;
+   for(const q of r.questions.filter(q=>round.questionIds.includes(q.id))){q.answer=answers[q.id].trim();q.state='answered';}
+   r.revision++;note(r,'answers_committed',{roundId,questionIds:round.questionIds});return {ok:true};
+  }
+  function cancel(id){const r=get(id),g=guard(r);if(g)return g;r.status='cancelled';r.epoch++;note(r,'cancelled',{});return {ok:true};}
+  function readiness(id){
+   const r=get(id);if(!r)return fail('planning_run_missing');
+   const g=guard(r);if(g&&!(r.status==='synthesized'&&live(r)))return g;
+   const stale=currentSources(r);if(stale.length)return fail('stale_sources',{questionIds:stale.map(q=>q.id)});
+   if(r.activeRound)return fail('questionnaire_open');if(r.pending.some(t=>!t.finished))return fail('research_pending');
+   return {ok:true,openItems:r.questions.filter(q=>!resolved(q)),budget:budget.projection('plan:'+r.planId)};
+  }
+  function payload(id){
+   const r=get(id),ready=readiness(id);if(!ready.ok)return ready;
+   const h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text});
+   const generic=!['thorough','exhaustive','budget','blocker'].includes(r.input.scenario);
+   const blocks=[h('Objective'),p(r.objective),h('Decisions and source findings')];
+   r.questions.filter(resolved).forEach(q=>blocks.push(p(q.prompt+' — '+q.answer+(q.sourceRef?' [Source: '+q.sourceRef.id+' · V'+q.sourceRef.version+']':''))));
+   blocks.push(h('Alternatives'),p(generic?'Compare the smallest change with retaining the current behavior. A broader redesign requires additional evidence; none is invented by this local concept.':'Prefer a bounded, offline export with an explicit destination. A background auto-export is an alternative, but adds retention and scheduling obligations outside this task.'),h('Implementation and verification'));
+   const steps=generic?[{id:'inspect',title:'Inspect the scoped request',text:r.objective,dependsOn:[],acceptance:'Resolve the recorded decisions and inspect actual affected sources before implementation.'},{id:'implement',title:'Implement the agreed bounded change',text:'Follow the recorded decisions. Reconfirm scope and permissions; retain unrelated work.',dependsOn:['inspect'],acceptance:'The implementation matches the agreed outcome without unapproved scope expansion.'},{id:'verify',title:'Verify and retain a rollback path',text:'Execute appropriate checks on the real target; this concept contains no target execution evidence.',dependsOn:['implement'],acceptance:'Observed verification evidence supports the agreed outcome and recovery is rehearsed.'}]:[{id:'scope',title:'Define the export contract',text:'Use the recorded field inventory, user decisions, and open items; preserve existing collections.',dependsOn:[],acceptance:'Every included field has an explicit non-sensitive source mapping.'},{id:'export',title:'Implement the bounded export',text:'Stream the selected fields without modifying the source; keep cancellation safe.',dependsOn:['scope'],acceptance:'Cancellation leaves source data unchanged and incomplete output is not presented as complete.'},{id:'verify',title:'Verify and rehearse rollback',text:'Exercise empty, large, cancelled, malformed and permission-denied cases before rollout.',dependsOn:['export'],acceptance:'Validation results support the approved decisions; the old path remains restorable.'}];
+   steps.forEach(s=>blocks.push({t:'plan_step',plan_step_id:s.id,title:s.title,text:s.text,depends_on:s.dependsOn,parent_step_id:null,parallel_group_id:null}));
+   blocks.push(h('Risks and rollback'),p(generic?'Affected sources, permissions, failure modes, and rollback need real-target inspection. This local concept cannot supply unobserved findings or performance results.':'Protect sensitive fields, destination authorization, and interrupted output. Keep the old export path available until validation is complete. No performance claim is supported by this concept.'));
+   if(r.strategy==='deep_exhaustive')blocks.push(h('Exhaustive impact review'),{t:'table',head:['Dimension','Required follow-through'],rows:[['Compatibility and migration',generic?'Inspect the real compatibility and migration requirements; none have been established here.':'Version the export shape; no source database migration.'],['Security and privacy','Exclude sensitive fields; validate destination permission and redaction.'],['Performance','Measure peak memory, throughput and cancellation latency on target data.'],['Deployment and operations','Roll out reversibly; verify cleanup and failure receipts.'],['Adversarial and long-tail failures','Test destination loss, malformed rows, partial output and repeated cancellation.'],['External research','Supplied extracts are evidence inputs, not live or current-verified research.'] ]});
+   blocks.push(h('Open items'));
+   if(!ready.openItems.length)blocks.push(p('No unresolved decisions in this bounded exercise.'));
+   else ready.openItems.forEach(q=>blocks.push(p((q.build_blocker?'Build blocker: ':'Open, non-blocking: ')+q.prompt+' — '+(q.researchError||'No answer recorded.'))));
+   blocks.push(h('Question allowance'),p(ready.budget.questions_asked+' unique user questions presented of '+ready.budget.effective_limit+' currently allowed. '+ready.budget.reused_answer_count+' reused answer(s), '+ready.budget.research_resolved_count+' locally researched fact(s). The maximum is not a target.'));
+   const ledgerEntries=r.questions.map(q=>({k:resolved(q)?q.kind==='fact'?'research':'decision':'open_question',v:q.prompt+' — '+(q.answer||'Unresolved'),questionId:q.id,sourceRef:q.sourceRef||null}));
+   const sourceRefs=r.questions.filter(q=>q.sourceRef).map(q=>({ref:q.sourceRef.id+':v'+q.sourceRef.version,kind:q.state==='reused'?'prior_answer':'local_source',summary:q.answer}));
+   return {ok:true,value:{runId:r.id,planId:r.planId,threadId:r.threadId,projectId:r.projectId,worktreeId:r.worktreeId,strategy:r.strategy,title:r.objective,blocks,steps,ledgerEntries,sourceRefs,blockers:ready.openItems.filter(q=>q.build_blocker).map(q=>({id:q.id,why:q.prompt,build_blocking:true,resolved:false})),grillMe:ready.budget.grill_me_enabled,discoveryRevision:r.revision,epoch:r.epoch}};
+  }
+  function finish(id,expected,create){
+   const r=get(id);if(!r)return fail('planning_run_missing');if(r.result)return expected===r.acceptedFingerprint?{...r.result,ok:true,reused:true}:fail('synthesis_replay_conflict');
+   const p=payload(id);if(!p.ok)return p;if(expected!==fingerprint(p.value))return fail('stale_synthesis_preview');
+   const out=create(copy(p.value));if(!out.ok)return out;r.status='synthesized';r.acceptedFingerprint=expected;r.result=copy(out);note(r,'synthesized',{planId:out.planId});return out;
+  }
+  return {reset:()=>runs.clear(),start,get,view,setGrill,reuse,beginResearch,completeResearch,inspectSource,frontier,present,submit,cancel,readiness,payload,finish,currentSources,all:()=>[...runs.values()],fingerprint};
+ }
+ root.PM56_DEEP_CORE={factory,strategy,fingerprint};
+})(typeof window==='undefined'?globalThis:window);
+
+/* Batch 14: actual local discovery, shared questionnaire, Plan-owner handoff.
+ * No live provider, durable storage, production commands or native receipts.
+ * Sources and participant labels in exercises are explicitly supplied fixtures.
+ */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,D=window.PM56_DATA,P=window.PM56_PLANS,Q=window.PM56_QUESTION_BUDGET;
+ const clone=x=>JSON.parse(JSON.stringify(x)),sessions=new Map(),drafts=new Map(),previews=new Map(),timers=new Map(),opened=new Set();let serial=0;
+ const flows={thorough:{title:'A few decisions, a complete plan',detail:'Reuse an answer, inspect the inventory, and stop well before the limit.',strategy:'Thorough'},exhaustive:{title:'Research can become stale',detail:'Inspect a changed source before accepting a deeper plan.',strategy:'Exhaustive'},budget:{title:'One allowance, every participant',detail:'Reach the ceiling; add Grill Me without resetting the shared count.',strategy:'Thorough'},blocker:{title:'An open decision can block Build',detail:'Keep an unresolved safety decision visible instead of inventing an answer.',strategy:'Thorough'}};
+ const artifact=id=>D.artifacts.find(a=>a.id===id);
+ function scope(tid){const t=E.ctx().state.threads.find(t=>t.id===tid);return t?{projectId:t.projectId||'concept:project:default',worktreeId:t.worktreeId||t.worktree?.id||'concept:worktree:default'}:null;}
+ const engine=window.PM56_DEEP_CORE.factory({budget:P.budgetOwner,source:artifact,scope});
+ const refresh=()=>{const c=E.ctx();c.renderApp();c.renderOverlays();};
+ function result(c,o){if(!o?.ok)c.toast('No change made',(o?.error||'unavailable').replaceAll('_',' ')+'.');refresh();return o;}
+ const attrs=r=>' data-run="'+r.id+'"';
+ const button=(c,a,label,r,extra='',why='')=>'<button class="soft-button" data-action="'+a+'"'+(r?attrs(r):'')+' '+extra+(why?' disabled title="'+c.esc(why)+'"':'')+'>'+c.esc(label)+'</button>';
+ function addSource(t,suffix,name,value){const a={id:t.id+'-'+suffix,name,title:name,kind:'code',type:'text',extension:'json',updated:'Supplied local source',summary:'Source bytes supplied for this local exercise; no network or native persistence.',projectId:t.projectId,threadId:t.id,version:1,status:'ready',content:JSON.stringify(value,null,2),provenance:'Supplied local Batch 14 exercise. No network call or native persistence.'};D.artifacts.push(a);return a.id;}
+ function seed(c,flow){if(!flows[flow])return;hideQuestionnaire(c);const t=clone(c.state.threads.find(t=>t.id==='query')||c.thread),id='batch14-'+flow+'-'+(++serial);
+  Object.assign(t,{id,title:flows[flow].title+' · local example',projectId:'concept:batch14:'+serial,worktreeId:'concept:worktree:'+serial,status:'ready',pinned:false,archived:false,goalId:null,messages:[]});c.state.threads.push(t);
+  const sourceIds=[addSource(t,'answers','Recorded planning answer.json',{kind:'prior_answers',answers:[{key:'offline',answer:'The export must work without a network connection.'}]}),addSource(t,'inventory','Export field inventory.json',{kind:'export_inventory',fields:[{name:'title',sensitive:false},{name:'created_at',sensitive:false},{name:'tags',sensitive:false},{name:'private_notes',sensitive:true},{name:'access_token',sensitive:true}]})];
+  if(flow==='exhaustive')sourceIds.push(addSource(t,'reference','Supplied reference extract.json',{kind:'recorded_reference',topic:'Portable CSV interchange',origin:'RFC 4180, supplied illustrative extract; not fetched by this run',excerpt:'A CSV export should quote fields containing commas, quotes or line breaks and double embedded quotes. Verify the actual consumer before choosing a dialect.'}));
+  sessions.set(id,{threadId:id,flow,sourceIds,guide:true,runId:null,objective:flow==='blocker'?'Plan a safe offline collection export with an explicit destination permission decision.':'Plan a reversible offline collection export without leaking sensitive fields.'});
+  Object.assign(c.state,{demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};
+  c.switchThread(id);c.state.mode='Deep Plan';c.state.deepPlanStrategy=flows[flow].strategy;c.state.grillMe=false;c.state.composer=sessions.get(id).objective;refresh();
+ }
+ const decision=(key,prompt,dependsOn=[],blocker=false,options=['Use the recommendation','Choose a narrower scope'])=>({key,prompt,kind:'decision',dependsOn,build_blocker:blocker,participant:'Planner',options});
+ function specs(s){
+  if(!s)return [decision('outcome','What observable outcome should this change deliver?',[],true,['A verified improvement to the requested behavior','A researched recommendation only']),decision('scope','Which scope should the plan cover?',[],true,['The smallest reversible change','Broader alternatives, with explicit trade-offs'])];
+  if(['budget','blocker'].includes(s.flow)){
+   const names=['Which collection should be exported?','Which format should be the default?','How should duplicate entries be handled?','Which date representation should be used?','Which optional labels should be included?','How should a cancelled export be named?','What should happen if the destination exists?','Should the output include a schema version?','How should the export be ordered?','What rollout scope should be used?','Which rollback window should be retained?','Which destination permission policy should be required?'];
+   const choices=[['Current collection only','Explicitly selected collections'],['CSV with explicit quoting','JSON with a schema version'],['Keep the first stable ID','Preserve duplicates with their IDs'],['ISO 8601 in UTC','Original timezone with explicit offset'],['Public tags only','Omit optional labels'],['Delete incomplete output after safe cancellation','Keep a clearly marked recoverable partial'],['Ask before replacing','Use a unique timestamped name'],['Include a small version manifest','Include version metadata in the header'],['Creation time, then stable ID','Alphabetical title, then stable ID'],['Opt-in collection with fallback','Internal pilot before general rollout'],['Keep the previous path until validation completes','Keep a documented seven-day rollback window'],['Only an explicitly granted local folder','Reject protected and ungranted destinations']];
+   const qs=names.map((p,i)=>({...decision('decision-'+(i+1),p,i===10?['decision-10']:i===11?['decision-11']:[],s.flow==='blocker'&&i===11,choices[i]),participant:i>9?'Recorded Grill Me proposal':i%2?'Recorded planner B':'Recorded planner A'}));
+   // A differently worded proposal from a second participant uses one semantic
+   // question identity. No extra question or counter is manufactured.
+   qs.push({...clone(qs[0]),prompt:'Select the source collection.',participant:'Second recorded proposal'});return qs;
+  }
+  const qs=[decision('offline','Does the export require a network?'),{key:'fields',prompt:'Which supplied fields can be exported?',kind:'fact',dependsOn:[],sourceId:s.sourceIds[1],build_blocker:true,participant:'Researcher'},decision('format','Which export format should be primary?',['fields'],false,['CSV with explicit quoting','JSON with a schema version']),decision('rollout','How should the first rollout proceed?',['fields'],false,['Opt-in with a reversible fallback','One internal collection first'])];
+  if(s.flow==='exhaustive')qs.push({key:'reference',prompt:'What does the supplied interchange extract require?',kind:'fact',dependsOn:[],sourceId:s.sourceIds[2],build_blocker:false,participant:'Researcher'});return qs;
+ }
+ function begin(c,t,raw){const s=sessions.get(t.id);const strategy=window.PM56_DEEP_CORE.strategy('deep_plan',String(c.state.deepPlanStrategy||'Thorough').toLowerCase());
+  if(!['deep_thorough','deep_exhaustive'].includes(strategy))return {claimed:false};
+  if(P.current(t.id)){c.toast('Resolve the current Plan first','Use its existing Revise or Cancel control; the new request has not been sent.');return {claimed:true,preserveComposer:true};}
+  const sc=scope(t.id);if(!t.projectId)t.projectId=sc.projectId;
+  const id='discovery-'+(++serial),x={id,planId:'deep-plan-'+serial,threadId:t.id,...sc,objective:raw.replace(/^\/deep[-_]?plan\s*/i,'').trim(),strategy,grillMe:!!c.state.grillMe,questions:specs(s),sourceIds:s?.sourceIds||[],scenario:s?.flow||'custom'};
+  const o=engine.start(x);if(!o.ok){c.toast('Request not sent',o.error.replaceAll('_',' '));return {claimed:true,preserveComposer:true};}
+  if(s)s.runId=id;else sessions.set(t.id,{threadId:t.id,flow:'custom',sourceIds:[],guide:false,runId:id});
+  t.messages.push({id:id+'-request',role:'user',type:'text',body:raw},{id:id+'-entry',role:'assistant',type:'b14-discovery',runId:id});return {claimed:true,preserveComposer:false};
+ }
+ const composer=window.PM56_RUNTIME.composer;
+ composer.preSendHooks.push((c,t,raw)=>{const dest=composer.destination;if(dest&&dest.kind!=='assistant')return false;if(c.state.mode!=='Deep Plan'||String(c.state.deepPlanStrategy).toLowerCase()==='brainstorm')return false;if(!raw?.trim()||/^\/(?!deep[-_]?plan\b)/i.test(raw.trim()))return false;return begin(c,t,raw);});
+ function ownBinding(c){const b=c.state.b14QuestionBinding;return b&&c.state.questions?.[0]?.id?.startsWith(b.runId+':q:')?b:null;}
+ function remember(c){const b=ownBinding(c);if(b)drafts.set(b.roundId,clone(c.state.questions));}
+ function hideQuestionnaire(c){remember(c);if(ownBinding(c)){c.state.decision=null;c.state.b14QuestionBinding=null;}}
+ function showRound(c,r,round){hideQuestionnaire(c);if(c.thread.id!==r.threadId)c.switchThread(r.threadId);
+  const saved=drafts.get(round.id),qs=saved||round.questionIds.map(id=>{const q=r.questions.find(v=>v.id===id);return {id:q.id,type:'choice',prompt:q.prompt,detail:'Recommendation: '+q.options[0]+'. Recorded proposal: '+q.contributors.join(', ')+'.',options:q.options,required:true,answer:round.answers[id]||'',other:'',attachments:[]};});
+  const fid='b14-flow:'+round.id;let f=D.questionFlows.find(f=>f.id===fid);if(!f){f={id:fid,title:'Deep Plan · decision round '+r.rounds.length,threadId:r.threadId,state:'active',openedAt:'Local session',note:'One shared allowance. This questionnaire is an in-memory concept, not native persistence.',questions:clone(qs)};D.questionFlows.push(f);}
+  Object.assign(c.state,{decision:{type:'question'},questions:clone(qs),questionIndex:0,b14QuestionBinding:{runId:r.id,roundId:round.id,epoch:r.epoch}});c.state.editorRevealed=false;refresh();
+ }
+ function present(c,r){if(c.state.decision&&!ownBinding(c))return result(c,{ok:false,error:'another_questionnaire_open'});const o=engine.present(r.id);if(o.ok)showRound(c,r,o.round);else result(c,o);return o;}
+ E.chainAction('submit-questionnaire',c=>{const b=ownBinding(c);if(!b)return false;const r=engine.get(b.runId);if(!r||c.thread.id!==r.threadId)return result(c,{ok:false,error:'question_thread_changed'}),true;
+  const answers={};for(const q of c.state.questions)answers[q.id]=String(q.other?.trim()||q.answer||'');const o=engine.submit(b.runId,b.roundId,answers);if(!o.ok)return result(c,o),true;
+  drafts.set(b.roundId,clone(c.state.questions));const f=D.questionFlows.find(f=>f.id==='b14-flow:'+b.roundId);if(f){f.state='completed';f.questions=clone(c.state.questions);}hideQuestionnaire(c);
+  if(!o.reused)c.thread.messages.push({id:b.roundId+'-answers',role:'user',type:'text',body:'Planning decisions:\n'+Object.entries(answers).map(([id,a])=>r.questions.find(q=>q.id===id).prompt+' '+a).join('\n')});
+  c.openEditor('deep-discovery:'+r.id);refresh();return true;
+ });
+ for(const a of ['cancel-questionnaire','close-decision'])E.chainAction(a,c=>{if(!ownBinding(c))return false;hideQuestionnaire(c);refresh();return true;});
+ E.chainAction('qs-open-flow',(c,b)=>{const f=D.questionFlows.find(f=>f.id===b.dataset.flow);if(!f?.id.startsWith('b14-flow:')){remember(c);return false;}const rid=f.id.slice(9),r=engine.all().find(r=>r.rounds.some(x=>x.id===rid));if(!r)return true;const round=r.rounds.find(x=>x.id===rid);if(round.status==='answered'){c.openEditor('deep-discovery:'+r.id);c.toast('Recorded answers','The accepted decisions remain in discovery history. Revise a created Plan through its ordinary composer action.');return true;}showRound(c,r,round);return true;});
+ // Save answers at input/action boundaries before a thread switch can remove
+ // its questionnaire host. Other questionnaire families are never touched.
+ document.addEventListener('input',e=>{if(e.target?.dataset?.input==='question-other')queueMicrotask(()=>remember(E.ctx()));});
+ document.addEventListener('click',e=>{if(e.target?.closest?.('[data-action]'))queueMicrotask(()=>remember(E.ctx()));});
+ function research(c,r,key){const o=engine.beginResearch(r.id,key);if(!o.ok)return result(c,o);timers.set(o.ticket.id,setTimeout(()=>{timers.delete(o.ticket.id);const v=engine.completeResearch(r.id,o.ticket.id);if(!v.ok&&E.ctx().thread.id===r.threadId)E.ctx().toast('Source check rejected',v.error.replaceAll('_',' '));refresh();},900));refresh();return o;}
+ function workspace(c,r){if(!r)return '<article class="editor-doc"><h1>Discovery unavailable</h1></article>';
+  const v=engine.view(r.id),b=v.budget,ready=engine.readiness(r.id),s=sessions.get(r.threadId),preview=previews.get(r.id),active=r.status==='collecting'&&v.current,esc=c.esc;
+  const warning=!v.current?'The project or worktree binding changed. No stale action may proceed.':r.status==='cancelled'?'Discovery cancelled. Sources and answers are retained.':r.status==='synthesized'?'The Plan has been created. Build is a separate, explicit action.':'';
+  return '<article class="editor-doc deep14-workspace" data-deep-run="'+esc(r.id)+'"><header><small>Deep Plan · '+(r.strategy==='deep_exhaustive'?'Exhaustive':'Thorough')+' · local concept</small><h1>'+esc(r.objective)+'</h1><p>Inspect the sources, answer only what matters, then review one Plan. No work starts here.</p></header>'+
+   '<div class="deep14-stats"><span><strong data-budget="asked">'+b.questions_asked+'</strong> asked</span><span><strong data-budget="remaining">'+b.questions_remaining+'</strong> remaining</span><span><strong data-budget="reused">'+b.reused_answer_count+'</strong> reused</span><span><strong data-budget="researched">'+b.research_resolved_count+'</strong> researched</span></div>'+
+   '<p class="deep14-quiet">'+b.strategy_label+' · base '+b.base_limit+(b.grill_me_enabled?' + '+b.grill_me_extension+' Grill Me':'')+' = '+b.effective_limit+'. This is a ceiling, not a target.</p>'+(warning?'<p class="deep14-warning">'+esc(warning)+'</p>':'')+
+   '<div class="deep14-actions">'+button(c,'b14-questions',r.activeRound?'Continue questions':'Review next questions',r,'',!active?'Discovery is not current and collecting':'')+button(c,'b14-grill',b.grill_me_enabled?'Grill Me: On':'Grill Me: Off',r,'aria-pressed="'+b.grill_me_enabled+'"',!active?'Discovery is not current and collecting':'')+button(c,'b14-preview','Review Plan',r,'',!active?'Discovery is not current and collecting':!ready.ok?ready.error.replaceAll('_',' '):'')+'</div>'+
+   (b.exhausted?'<p class="deep14-warning">No questions remain at the current allowance. Research and synthesis can continue. Only an explicit unresolved Build blocker prevents Build.</p>':'')+
+   '<section class="deep14-section"><h2>Sources and decisions</h2>'+r.questions.map(q=>'<div class="deep14-question" data-question="'+esc(q.key)+'"><div><strong>'+esc(q.prompt)+'</strong><small>'+esc(({proposed:'Not asked',researching:'Checking source',researched:'Source checked',reused:'Reused answer',answered:'Answered',presented:'Awaiting your decision',stale:'Source changed',unresolved:'Unresolved'})[q.state]||q.state)+' · '+esc(q.contributors.join(' / '))+(q.build_blocker?' · required before Build':'')+'</small>'+(q.answer?'<p>'+esc(q.answer)+'</p>':'')+'</div><div class="deep14-actions">'+(q.kind==='fact'?button(c,'b14-research',q.state==='researching'?'Checking…':q.researchCounted?'Recheck source':'Research source',r,'data-key="'+esc(q.key)+'"',!active||q.state==='researching'?'Unavailable while not collecting or already checking':'')+button(c,'b14-source','Source',r,'data-source="'+esc(q.sourceId)+'"'):q.key==='offline'&&s?.sourceIds[0]?button(c,'b14-reuse',q.state==='reused'?'Recheck recorded answer':'Reuse recorded answer',r,'',!active||!['proposed','reused'].includes(q.state)?'Already presented or discovery unavailable':''):'')+'</div></div>').join('')+'</section>'+
+   (preview?'<section class="deep14-preview" data-k="deep14-preview:'+r.id+'"><h2>Review before creating</h2><p>This freezes the current answers, source versions and open items. Creating the Plan does not Build it.</p><div class="deep14-preview-body">'+preview.value.blocks.map(x=>x.t==='heading'?'<h3>'+esc(x.text)+'</h3>':x.t==='paragraph'?'<p>'+esc(x.text)+'</p>':x.t==='plan_step'?'<p><strong>'+esc(x.title)+'</strong> — '+esc(x.text)+'</p>':x.t==='table'?'<p>'+esc(x.rows.map(a=>a.join(': ')).join(' · '))+'</p>':'').join('')+'</div><footer>'+button(c,'b14-preview-cancel','Cancel preview',r)+button(c,'b14-synthesize','Create this Plan',r,'',!active?'Discovery is not current and collecting':'')+'</footer></section>':'')+
+   (r.result?'<div class="deep14-actions">'+button(c,'b14-open-plan','Open Plan',r)+'</div>':'')+
+   '<details class="deep14-section" data-deep-disclosure="'+esc(r.id)+'"'+(opened.has(r.id)?' open':'')+' data-k="deep14-details:'+r.id+'"><summary>Ledger, source checks and local test controls</summary><p>Run-scoped planning memory only. No canonical Plans, global index, NodeSeeds, WorkNodes or Orchestrator admission. Scoped unit templates are not materialized until explicit Build.</p>'+(s?.flow!=='custom'?button(c,'b14-revise-source','Revise supplied inventory',r,'',!active||!s?.sourceIds[1]?'No current exercise source':''):'')+button(c,'b14-export','Export local discovery record',r)+button(c,'b14-cancel','Cancel discovery',r,'',!active?'Discovery is not collecting':'')+'<pre>'+esc(JSON.stringify({run:r.id,plan:r.planId,scope:{project:r.projectId,worktree:r.worktreeId},epoch:r.epoch,revision:r.revision,budget:b,history:r.history,evidence:r.evidence},null,2))+'</pre></details></article>';
+ }
+ E.slot('transcriptMessage',c=>{if(c.m?.type!=='b14-discovery')return '';const r=engine.get(c.m.runId);if(!r)return '<p>Historical discovery reference; local source unavailable.</p>';const b=engine.view(r.id).budget;return '<section class="deep14-entry" data-k="deep14-entry:'+r.id+'"><h3>Deep Plan · discovery</h3><p>'+c.esc(r.objective)+'</p><small>'+c.esc(r.status)+' · '+b.questions_asked+' asked · '+b.questions_remaining+' remaining · session-only</small><div class="deep14-actions">'+button(c,'b14-open','Open discovery',r)+'</div></section>';});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('deep-discovery:')?'Deep Plan · discovery':'');
+ E.slot('editorDocument',c=>c.editorId?.startsWith('deep-discovery:')?workspace(c,engine.get(c.editorId.slice(15))):'');
+ E.slot('composerBelow',c=>{const s=sessions.get(c.thread.id);return s?.guide?'<div class="deep14-guide"><span><strong>'+c.esc(flows[s.flow]?.title||'Deep Plan')+'</strong> '+(s.runId?'Open discovery. The controls remain available after dismissing this guidance.':'Send the prefilled request through the ordinary composer to begin.')+'</span>'+button(c,'b14-hide-guide','Dismiss')+'</div>':'';});
+ E.action('b14-start',(c,b)=>{seed(c,b.dataset.flow);return true;});
+ E.action('b14-hide-guide',c=>{const s=sessions.get(c.thread.id);if(s)s.guide=false;refresh();return true;});
+ const withRun=(a,fn)=>E.action(a,(c,b)=>{const r=engine.get(b.dataset.run);if(r)fn(c,r,b);return true;});
+ withRun('b14-open',(c,r)=>c.openEditor('deep-discovery:'+r.id));
+ withRun('b14-source',(c,r,b)=>{if(r.sourceIds.includes(b.dataset.source))c.openEditor(b.dataset.source);});
+ withRun('b14-questions',present);
+ withRun('b14-grill',(c,r)=>result(c,engine.setGrill(r.id,!engine.view(r.id).budget.grill_me_enabled)));
+ withRun('b14-reuse',(c,r)=>{const sourceId=sessions.get(r.threadId)?.sourceIds[0],a=artifact(sourceId);let prior;try{prior=JSON.parse(a?.content).answers?.find(q=>q.key==='offline');}catch(_){}return result(c,engine.reuse(r.id,'offline',{key:'offline',answer:prior?.answer,sourceId}));});
+ withRun('b14-research',(c,r,b)=>research(c,r,b.dataset.key));
+ withRun('b14-preview',(c,r)=>{const p=engine.payload(r.id);if(!p.ok)return result(c,p);previews.set(r.id,{value:clone(p.value),fingerprint:engine.fingerprint(p.value)});refresh();});
+ withRun('b14-preview-cancel',(c,r)=>{previews.delete(r.id);refresh();});
+ withRun('b14-synthesize',(c,r)=>{const p=previews.get(r.id);if(!p)return result(c,{ok:false,error:'preview_required'});const o=engine.finish(r.id,p.fingerprint,x=>P.createFromDiscovery(x));if(o.ok){previews.delete(r.id);P.openDetails(c,o.planId);}result(c,o);});
+ withRun('b14-open-plan',(c,r)=>{if(r.result)P.openDetails(c,r.result.planId);});
+ withRun('b14-cancel',(c,r)=>{const o=engine.cancel(r.id);if(o.ok){if(ownBinding(c)?.runId===r.id)hideQuestionnaire(c);previews.delete(r.id);}result(c,o);});
+ withRun('b14-revise-source',(c,r)=>{const s=sessions.get(r.threadId),v=engine.view(r.id);if(!v.current||r.status!=='collecting'||!s||s.flow==='custom')return;const a=artifact(s.sourceIds[1]);let x;try{x=JSON.parse(a?.content);}catch(_){return result(c,{ok:false,error:'source_not_valid_json'});}if(!Array.isArray(x.fields))return result(c,{ok:false,error:'unsupported_source'});x.fields.push({name:'extra_field_'+a.version,sensitive:false});a.version++;a.content=JSON.stringify(x,null,2);refresh();});
+ withRun('b14-export',(c,r)=>{const text=JSON.stringify(engine.view(r.id),null,2),blob=new Blob([text],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=r.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
+ document.addEventListener('toggle',e=>{const id=e.target?.dataset?.deepDisclosure;if(id){if(e.target.open)opened.add(id);else opened.delete(id);}},true);
+ E.chainAction('reset-all',()=>{for(const t of timers.values())clearTimeout(t);timers.clear();sessions.clear();drafts.clear();previews.clear();opened.clear();engine.reset();return false;});
+ const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Deep Plan & question budgets · Batch 14</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b14-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_DEEP_PLAN={engine,scope,flows,snapshot:tid=>{const s=sessions.get(tid||E.ctx().thread.id);return s?.runId?engine.view(s.runId):null;},session:tid=>clone(sessions.get(tid||E.ctx().thread.id)||null)};
 })();
 </script>
   <script>(() => {

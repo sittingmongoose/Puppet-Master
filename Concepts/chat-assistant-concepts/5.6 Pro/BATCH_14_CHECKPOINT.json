@@ -1,0 +1,200 @@
+{
+  "batch_id": "assistant-demo-b14-deep-plan-question-budgets",
+  "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+  "baseline": "Supplied cumulative Batch 13 with B11 repair; published main remains B12 at reviewed pin.",
+  "baseline_archive_sha256": "5653654ecf444e9321b7a488ce5551b5c78323869e30348ce92fea19e1d887ba",
+  "observed_repository_head": "e1ff8230bbed75c97d5b222da357cebaa9124e72",
+  "html": {
+    "bytes": 3274182,
+    "sha256": "5a3a4776b194edc727112e7052b4b9dfeb20462f9e520595981b76088ce9fa60",
+    "git_blob": "b745a6d3aee15161c84c1c59a8f4d7c15b3b2338"
+  },
+  "scenario_ids": [
+    "B14-THOROUGH",
+    "B14-EXHAUSTIVE-STALE",
+    "B14-BUDGET",
+    "B14-BUILD-BLOCKER"
+  ],
+  "source_rows_accounted": 30,
+  "coverage_delta": "BATCH_14_COVERAGE_DELTA.json",
+  "wiring": "BATCH_14_WIRING.json",
+  "source_review": "BATCH_14_SOURCE_REVIEW.json",
+  "test_readiness_repair": "One B13 boundary test waits for entrance animation completion before its unchanged geometry assertion; final3/B13_TEST_READINESS_REPAIR.json and REGRESSION_RECONCILIATION.json preserve initial failures and baseline comparison.",
+  "tests": {
+    "protocol_cases": 79,
+    "workflow_cases": 4,
+    "workflow_assertions": 182,
+    "boundary_cases": 13,
+    "boundary_assertions": 103,
+    "settled_visual_checks": 21,
+    "layout_cells": 48,
+    "theme_count": 8,
+    "widths": [
+      700,
+      900,
+      1440
+    ],
+    "b01_b11_entrypoints": 23,
+    "b01_b11_assertions": 1357,
+    "b11_repair_cases": 12,
+    "b11_repair_assertions": 67,
+    "b12_protocol_cases": 34,
+    "b12_protocol_assertions": 173,
+    "b12_browser_cases": 20,
+    "b12_browser_assertions": 115,
+    "b13_protocol_cases": 69,
+    "b13_browser_and_boundary_cases": 12,
+    "b13_browser_and_boundary_assertions": 171,
+    "recording_assertions": 186,
+    "recordings": 4,
+    "recorded_frames": 3068,
+    "contact_sheets": 28
+  },
+  "protected_files": [
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "baseline_equal": true
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "baseline_equal": true
+    }
+  ],
+  "proof_status": "LOCAL_CONCEPT_ONLY",
+  "full_feature_acceptance": false,
+  "native_proof": false,
+  "canonical_plans_modified": false,
+  "settings_and_onboarding_modified": false,
+  "governance_modified": false,
+  "batch15_started": false,
+  "evidence_location": "Separate pm-b14-evidence.zip. final3/ records the final raw HTML identity; prior failed candidate and baseline ELI5 witnesses remain distinct.",
+  "motion": {
+    "uniform_smooth_60fps_accepted": false,
+    "claim_boundary": "60 Hz acquisition target, passthrough encoded timing, browser callbacks and long tasks are separate. No interpolation or CFR padding. No actual-paint instrumentation. Contact sheets cover every encoded frame; native-resolution individual inspection is selected, not exhaustive.",
+    "recordings": [
+      {
+        "scenario": "thorough",
+        "video_sha256": "865e328a4c419d351fb9484ffdd8c49285582ac522d11e9d6bd69e818f74cd55",
+        "frame_count": 512,
+        "encoded_intervals": {
+          "count": 511,
+          "median_ms": 16.999999999999904,
+          "p95_ms": 17.000000000000348,
+          "max_ms": 19.999999999999574,
+          "over25ms": 0,
+          "over50ms": 0
+        },
+        "browser_raf": {
+          "median_raf_ms": 16.69999999999891,
+          "max_raf_ms": 16.80000000000109,
+          "intervals_over_25ms": 0
+        },
+        "strict_identical_consecutive_decoded_pairs": 99,
+        "visual_review_status": "reviewed_contact_sheets_and_selected_native_frames"
+      },
+      {
+        "scenario": "exhaustive",
+        "video_sha256": "a1c555ebbb6c60b6fa88196239194cb2e74f8cc8795c5eb74a450f27d75c3973",
+        "frame_count": 752,
+        "encoded_intervals": {
+          "count": 751,
+          "median_ms": 16.99999999999946,
+          "p95_ms": 17.000000000001236,
+          "max_ms": 30.00000000000025,
+          "over25ms": 1,
+          "over50ms": 0
+        },
+        "browser_raf": {
+          "median_raf_ms": 16.69999999999891,
+          "max_raf_ms": 33.399999999999636,
+          "intervals_over_25ms": 3
+        },
+        "strict_identical_consecutive_decoded_pairs": 178,
+        "visual_review_status": "reviewed_contact_sheets_and_selected_native_frames"
+      },
+      {
+        "scenario": "budget",
+        "video_sha256": "c30aae0b4a2dc5ca1894e90bbd8fba09852930ce9b66e32efb076d052f8a5cac",
+        "frame_count": 902,
+        "encoded_intervals": {
+          "count": 901,
+          "median_ms": 16.99999999999946,
+          "p95_ms": 17.000000000001236,
+          "max_ms": 20.000000000000462,
+          "over25ms": 0,
+          "over50ms": 0
+        },
+        "browser_raf": {
+          "median_raf_ms": 16.69999999999891,
+          "max_raf_ms": 33.399999999999636,
+          "intervals_over_25ms": 4
+        },
+        "strict_identical_consecutive_decoded_pairs": 75,
+        "visual_review_status": "reviewed_contact_sheets_and_selected_native_frames"
+      },
+      {
+        "scenario": "blocker",
+        "video_sha256": "f1cbb48726b38c05e3ee2dc0e00d27944e9b011ad354ab77b92ea2e9db603568",
+        "frame_count": 902,
+        "encoded_intervals": {
+          "count": 901,
+          "median_ms": 16.99999999999946,
+          "p95_ms": 17.000000000001236,
+          "max_ms": 20.000000000000018,
+          "over25ms": 0,
+          "over50ms": 0
+        },
+        "browser_raf": {
+          "median_raf_ms": 16.69999999999891,
+          "max_raf_ms": 33.400000000001455,
+          "intervals_over_25ms": 4
+        },
+        "strict_identical_consecutive_decoded_pairs": 99,
+        "visual_review_status": "reviewed_contact_sheets_and_selected_native_frames"
+      }
+    ],
+    "review_ref": "final3/motion/VISUAL_REVIEW.json"
+  }
+}

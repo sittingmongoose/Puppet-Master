@@ -450,7 +450,7 @@
       },
       usage: { inputTokens: 214000, outputTokens: 31500, costUsd: 2.68 }
     });
-    bs.messages.push(mkMsg(bs, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Phase 1 (Intake and frontier): 9 of 15 baseline questions asked and resolved; 2 duplicates merged; 2 factual questions routed to research instead of asked. Grill Me is off, so the ceiling stays at 15.' }));
+    bs.messages.push(mkMsg(bs, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Phase 1 (Intake and frontier): Recorded history: 9 of 20 baseline questions asked and resolved; 2 duplicates merged; 2 factual questions routed to research instead of asked. Grill Me is off, so the ceiling stays at 20.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[0].id, senderName: bs.participants[0].name, messageType: 'response', body: 'Blind proposal submitted before seeing any other participant’s output: a PM-owned, health-checked failover ring.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[3].id, senderName: bs.participants[3].name, messageType: 'conflict', body: 'The early fully-automatic cross-account variant of the ring proposal violates a hard user constraint. Flagging it as disqualified regardless of how the vote goes.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[1].id, senderName: bs.participants[1].name, messageType: 'vote', body: 'Dissenting from where the room is leaning: the account-spend boundary has to be first-class, not a caller convention on top of the resolver.' }));

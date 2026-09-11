@@ -774,102 +774,28 @@
      existing record. Reused answers and researched facts are counted
      separately and never consume the allowance.
      ===================================================================== */
-  var QBASE = {
-    quick:3, standard:6, thorough:8,
-    deep_thorough:10, deep_exhaustive:15, brainstorm:20
-  };
-  var QGRILL = 25;
-  var QLABEL = {
-    quick:'Plan · Quick', standard:'Plan · Standard', thorough:'Plan · Thorough',
-    deep_thorough:'Deep Plan · Thorough', deep_exhaustive:'Deep Plan · Exhaustive',
-    brainstorm:'Deep Plan · BrainStorm'
-  };
+  var QBASE = window.PM56_QUESTION_BUDGET.bases();
+  var QGRILL = window.PM56_QUESTION_BUDGET.defaults().grill_me_extension;
+  var QLABEL = window.PM56_QUESTION_BUDGET.labels();
   RT.questionBudget = RT.questionBudget || { runs:{}, seq:0 };
-
+  var budgetOwner=window.PM56_QUESTION_BUDGET.factory(function(){return RT.questionBudget;});
   function strategyKey(r){
-    var s=String(r&&r.strategy||'').toLowerCase();
-    if(s.indexOf('deep')===0){
-      if(s.indexOf('brainstorm')>=0) return 'brainstorm';
-      if(s.indexOf('exhaustive')>=0) return 'deep_exhaustive';
-      return 'deep_thorough';
-    }
-    if(s.indexOf('quick')>=0)    return 'quick';
-    if(s.indexOf('thorough')>=0) return 'thorough';
-    return 'standard';
+    var v=String(r&&r.strategy||'').toLowerCase();
+    if(QBASE[v]!=null)return v;
+    if(v.indexOf('deep')===0)return v.indexOf('brainstorm')>=0?'brainstorm':v.indexOf('exhaustive')>=0?'deep_exhaustive':'deep_thorough';
+    return v.indexOf('quick')>=0?'quick':v.indexOf('thorough')>=0?'thorough':'standard';
   }
-
-  /* Normalise ANY incoming strategy to one of the six current keys.
-     `strategyKey()` above reads a Plan RECORD; this reads a bare value, which
-     is what the exported `questionBudget()` entry point receives. Both paths
-     must agree, or the module's own callers see 10 for `Deep · Thorough`
-     while an outside caller handing over the same record field silently gets
-     `standard` 6 -- and the projection then echoes a retired label such as
-     `light` back as though it were an active strategy. Unknown input resolves
-     to a CURRENT key and is never stored verbatim. */
-  function normStrategy(v){
-    if(v==null) return null;
-    if(QBASE[v]!=null) return v;
-    return strategyKey({ strategy:v });
+  // Display-label compatibility is confined to this existing fixture API.
+  // New planning ingress validates workflow/strategy before allocating a run.
+  function questionBudget(workflowId,strategy,grill){
+    var prior=budgetOwner.get(workflowId),key=strategy==null?(prior?prior.strategy:'standard'):strategyKey({strategy:strategy});
+    var ensured=budgetOwner.ensure(workflowId,key,grill);
+    if(!ensured.ok)return null;
+    if(grill!=null)budgetOwner.setGrill(workflowId,!!grill);
+    return budgetOwner.projection(workflowId);
   }
-
-  /* One counter per RUN, shared by every participant. Plan revisions continue
-     the same counter; only a new Plan identity starts a new one. */
-  function budgetRun(workflowId, strategy, grill){
-    var m=RT.questionBudget.runs, key=normStrategy(strategy);
-    if(!m[workflowId]){
-      m[workflowId]={ workflow_id:workflowId, strategy:key||'standard', grill_me_enabled:!!grill,
-                      asked:{}, order:[], reused:0, research:0 };
-    }
-    var run=m[workflowId];
-    if(key) run.strategy=key;
-    if(grill!=null) run.grill_me_enabled=!!grill;
-    return run;
-  }
-
-  function questionBudget(workflowId, strategy, grill){
-    var run=budgetRun(workflowId, strategy, grill);
-    var base=QBASE[run.strategy]||QBASE.standard;
-    var eff=base+(run.grill_me_enabled?QGRILL:0);
-    var asked=run.order.length;
-    return {
-      schema:'pm.assistant_plan.question_budget_projection.v1',
-      workflow_id:run.workflow_id, strategy:run.strategy, strategy_label:QLABEL[run.strategy],
-      /* The two typed fields the correction's contract names and the earlier
-         shape omitted. `planning_kind` is DERIVED from the strategy, never
-         stored twice; `policy_version` is what makes a stored projection from
-         the retired 15/+10 policy detectable rather than silently rendered. */
-      planning_kind:(run.strategy.indexOf('deep')===0||run.strategy==='brainstorm')?'deep_plan':'plan',
-      policy_version:2,
-      base_limit:base, grill_me_enabled:run.grill_me_enabled, grill_me_extension:QGRILL,
-      effective_limit:eff, questions_asked:asked,
-      questions_remaining:Math.max(0, eff-asked),
-      reused_answer_count:run.reused, research_resolved_count:run.research,
-      exhausted:(eff-asked)<=0
-    };
-  }
-
-  /* QMAX-007/011/012/014. The single admission gate. */
-  function admitQuestion(workflowId, item){
-    var run=RT.questionBudget.runs[workflowId];
-    if(!run) return { ok:false, error:'unknown_run' };
-    if(run.asked[item.question_item_id])
-      return { ok:true, charged:false, reason:'already_charged', projection:questionBudget(workflowId) };
-    if(item.resolved_from_prior_answer){ run.reused++; return { ok:true, charged:false, reason:'reused_answer', projection:questionBudget(workflowId) }; }
-    if(item.resolvable_by_research){    run.research++; return { ok:true, charged:false, reason:'research_resolved', projection:questionBudget(workflowId) }; }
-    var proj=questionBudget(workflowId);
-    if(proj.exhausted)
-      /* Typed, and NOT a failure: no extra QuestionItem is persisted and the
-         planning run continues to synthesis. */
-      return { ok:false, error:'question_budget_exhausted', charged:false, run_failed:false, projection:proj };
-    run.asked[item.question_item_id]=true; run.order.push(item.question_item_id);
-    return { ok:true, charged:true, projection:questionBudget(workflowId) };
-  }
-  function setGrill(workflowId, on){
-    var run=RT.questionBudget.runs[workflowId]; if(!run) return null;
-    /* QMAX-009/010: the ceiling moves; asked and the answers never do. */
-    run.grill_me_enabled=!!on;
-    return questionBudget(workflowId);
-  }
+  function admitQuestion(workflowId,item){return budgetOwner.admit(workflowId,item);}
+  function setGrill(workflowId,on){return budgetOwner.setGrill(workflowId,!!on);}
 
   /* =====================================================================
      3A. PlanProgressProjection — Additive Correction v4 (PPROG-001..014)
@@ -1127,9 +1053,37 @@
      ({id, build_blocking:true, why}) or an unresolved To-Do carrying
      `build_blocking`; anything unresolved but not so classified stays visible
      and does not gate the control. */
+  // B14: validate the actual scoped templates before any Plan/To-Do mutation.
+  // The concept validation result is not a native compiler or readiness claim.
+  function discoveryBuildError(r){
+    if(!r.discoveryRunId) return null;
+    const scope=window.PM56_DEEP_PLAN?.scope(r.thread_id), bound=r.discoveryScope;
+    if(!bound||!scope||scope.projectId!==bound.projectId||scope.worktreeId!==bound.worktreeId)
+      return 'discovery_scope_changed';
+    if(!r.ledger||r.ledger.plan_version!==r.version) return 'ledger_version_mismatch';
+    const ss=steps(body(r)), units=list(r.planunits), ids=new Map(), covered=new Set();
+    if(!ss.length||units.length!==ss.length) return 'scoped_unit_coverage_mismatch';
+    for(const u of units){
+      if(!u||typeof u.id!=='string'||!u.id||ids.has(u.id)||typeof u.title!=='string'||!u.title.trim()||
+         !Array.isArray(u.acceptance)||!u.acceptance.length||u.acceptance.some(x=>typeof x!=='string'||!x.trim())||
+         !Array.isArray(u.deps)||new Set(u.deps).size!==u.deps.length||covered.has(u.step)||!ss.some(s=>s.plan_step_id===u.step))
+        return 'invalid_scoped_unit';
+      ids.set(u.id,u);covered.add(u.step);
+    }
+    const visited=new Set(), visiting=new Set();
+    function walk(id){if(visiting.has(id)||!ids.has(id))return false;if(visited.has(id))return true;visiting.add(id);if(!ids.get(id).deps.every(walk))return false;visiting.delete(id);visited.add(id);return true;}
+    if(!units.every(u=>walk(u.id)))return 'invalid_scoped_unit_dependencies';
+    for(const s of ss){const u=units.find(u=>u.step===s.plan_step_id),deps=u.deps.map(d=>ids.get(d).step).sort();
+      if(JSON.stringify(deps)!==JSON.stringify(list(s.depends_on).slice().sort()))return 'scoped_unit_step_mapping_mismatch';}
+    if(!todoApi()?.materializeForPlan)return 'todo_owner_unavailable';
+    return null;
+  }
+
   function buildBlockers(r){
     var out=list(r.blockers).filter(function(b){ return b && b.build_blocking && !b.resolved; })
       .map(function(b){ return { id:b.id||'blocker', why:b.why||'', source:'plan' }; });
+    var error=discoveryBuildError(r);
+    if(error)out.push({id:error,why:error.replaceAll('_',' '),source:'discovery'});
     var api=todoApi();
     if(api && api.get){
       var items=api.get(r.thread_id)||[];
@@ -1205,7 +1159,7 @@
        projector landed, so the key reads the projection's currentness. */
     var pk = r.approved ? progress(r).currentness_hash : 'unadmitted';
     return '<article class="system-card plan-doc pd-'+esc(r.status)+'" data-k="pd-'+esc(r.plan_id)+'-'+r.version+'-'+esc(r.status)+'-'+esc(r.view)+'-'+esc(pk)+'-'+((r.attention&&r.attention.kind)||'none')+'" data-plan-id="'+esc(r.plan_id)+'" data-topology="'+esc(r.topology||'agent')+'">'+
-      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.discoveryRunId?'<button class="text-button" data-action="b14-open" data-run="'+esc(r.discoveryRunId)+'">Open source discovery</button>':'')+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</article>';
@@ -1280,7 +1234,8 @@
       plan_id:r.plan_id, version:r.version, hash:hashOf(b),
       step_ids:steps(b).map(function(s){return s.plan_step_id;}),
       runtime:(ctx.selectedModel&&ctx.selectedModel()||{}).name||'Claude Sonnet 4.6',
-      permissions:ctx.state.permissions, worktree:ctx.state.worktree,
+      permissions:ctx.state.permissions, worktree:r.discoveryScope?r.discoveryScope.worktreeId:ctx.state.worktree,
+      ...(r.discoveryScope?{project_id:r.discoveryScope.projectId,thread_id:r.thread_id}:{}),
       at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}),
       orchestrator:false
     };
@@ -1288,7 +1243,15 @@
 
   function admitBuild(ctx,r,opts){
     opts=opts||{};
-    if(r.status!=='ready') return false;
+    if(r.status!=='ready'||!eligible(r).build) return false;
+    // Materialization is an atomic ToDo-owner operation. For a discovery Plan,
+    // reject its failure before approval, schedule invalidation or unit receipts.
+    var discoveryMade=null;
+    if(r.discoveryRunId){
+      discoveryMade=todoApi().materializeForPlan({plan_id:r.plan_id,thread_id:r.thread_id,version:r.version,
+        steps:steps(body(r)).map(s=>({id:s.plan_step_id,parent:s.parent_step_id,deps:list(s.depends_on),title:s.title,outcome:s.text}))});
+      if(!discoveryMade?.ok){ctx.toast('Build not admitted',discoveryMade?.error||'To-Do materialization refused');return false;}
+    }
     /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
        pending schedule for this Plan BEFORE the run is admitted, so a timer
        cannot deliver a second dispatch for work that has already started.
@@ -1311,13 +1274,13 @@
        creates no NodeSeeds or WorkNodes. */
     if(r.backend==='ledger_bound'){
       r.unitsMaterialized = { at:r.approved.at, scope:r.plan_id+'@V'+r.version,
-        count:list(r.planunits).length, validated:true, globalIndex:false, worknodes:0 };
+        count:list(r.planunits).length, validated:true, ...(r.discoveryRunId?{validation_kind:'local_scoped_template_validation',plan_hash:r.approved.hash,scope_kind:'assistant_deep_plan',nodeSeeds:0}:{}), globalIndex:false, worknodes:0 };
     }
     /* PPROG-002/013: the To-Dos are REAL, created through the ToDo owner, and
        they are what the projector derives from. A local build counter would
        have made the gutter a decoration rather than a projection. */
-    var api=todoApi(), made=null;
-    if(api && api.materializeForPlan){
+    var api=todoApi(), made=discoveryMade;
+    if(!discoveryMade && api && api.materializeForPlan){
       made = api.materializeForPlan({
         plan_id:r.plan_id, thread_id:r.thread_id, version:r.version,
         steps:steps(body(r)).map(function(s){
@@ -1326,7 +1289,7 @@
       });
     }
     r.todosCreated = { at:r.approved.at, from:(r.backend==='ledger_bound'?'planunits':'plan_steps'),
-                       count:(made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length),
+                       count:r.discoveryRunId?made.created:((made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length)),
                        reused:!!(made&&made.reused) };
     // A direct Plan build is not a Goal. Use its own linked transcript record.
     var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
@@ -1440,6 +1403,7 @@
       p('V'+(r.version+1)+' incorporates: '+feedback) ]);
     r.version = r.version+1;
     r.revisions[r.version] = next;
+    if(r.discoveryRunId&&r.ledger){r.ledger=JSON.parse(JSON.stringify(r.ledger));r.ledger.plan_version=r.version;r.ledger.entries.push({k:"correction",v:feedback,plan_version:r.version});}
     r.revisionLog.push({v:r.version, at:new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}), why:feedback});
     /* A revision invalidates anything bound to the exact old version -- the
        card's own binding AND every durable build schedule the scheduler holds.
@@ -1883,7 +1847,7 @@
 
     'pd-build': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
-      if(!admitBuild(ctx,r)){ ctx.toast('Build is only available while the Plan is ready.'); return; }
+      if(!admitBuild(ctx,r)){ ctx.toast('Build not admitted', (eligible(r).blocked_by||[]).map(x=>x.why).join('; ')||'The Plan must be ready with valid current inputs.'); return; }
       ctx.toast('Build admitted · V'+r.version+' frozen at '+r.approved.hash);
       ctx.renderApp();
     },
@@ -2282,7 +2246,7 @@
     var r = id && rec(id);
     if(!r) return '';
     return (window.PM56_SCHEDULE_DEMOS?.editorGuide(r.plan_id)||'')+(window.PM56_BRAINSTORM_DEMOS?.planGuide(r.plan_id)||'')+'<div class="plan-doc plan-doc-editor" data-plan-id="'+esc(r.plan_id)+'">'+
-      cardHeader(r)+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
+      cardHeader(r)+(r.discoveryRunId?'<button class="text-button" data-action="b14-open" data-run="'+esc(r.discoveryRunId)+'">Open source discovery</button>':'')+(r.roomSource?'<button class="text-button" data-action="room-open-discussion" data-run="'+esc(r.roomSource.runId)+'" data-message="'+esc(r.roomSource.messageId)+'">Open source message</button>':'')+(r.brainstormRunId?'<button class="text-button bs-backlink" data-action="brainstorm-open-results" data-run="'+esc(r.brainstormRunId)+'">Open source BrainStorm</button>':'')+
       '<div class="pd-body">'+(r.view==='markdown'?renderMarkdown(r):renderRich(r))+'</div>'+
       cardFooter(r)+
     '</div>';
@@ -2317,6 +2281,28 @@
     return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
   }
 
+  // B14: validate a complete current discovery handoff before creating one
+  // Plan. Candidate unit templates are not a materialized build bundle.
+  function createFromDiscovery(x){
+    const api=window.PM56_DEEP_PLAN, c=EXT.ctx(), prior=x&&rec(x.planId);
+    if(!api||!x)return {ok:false,error:'discovery_owner_unavailable'};
+    const expected=api.engine.payload(x.runId);
+    if(!expected.ok||JSON.stringify(expected.value)!==JSON.stringify(x))return {ok:false,error:'discovery_handoff_mismatch'};
+    if(prior)return prior.discoveryFingerprint===JSON.stringify(x)?{ok:true,reused:true,planId:x.planId}:{ok:false,error:'conflicting_plan_handoff'};
+    const t=c.state.threads.find(t=>t.id===x.threadId);
+    if(!t||t.projectId!==x.projectId||api.scope(x.threadId)?.worktreeId!==x.worktreeId)return {ok:false,error:'scope_changed'};
+    if(currentPlan(x.threadId))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const seen=new Set(), bs=steps(x.blocks);
+    if(bs.length!==x.steps.length||!bs.length)return {ok:false,error:'plan_step_coverage'};
+    for(const st of x.steps){if(seen.has(st.id)||!st.acceptance||st.dependsOn.some(d=>!seen.has(d))||!bs.find(b=>b.plan_step_id===st.id))return {ok:false,error:'invalid_plan_steps'};seen.add(st.id);}
+    const units=x.steps.map(st=>({id:'APU-'+x.planId+'-'+st.id,step:st.id,title:st.title,acceptance:[st.acceptance],negative:['Do not mutate source data or start work without explicit Build.'],deps:st.dependsOn.map(d=>'APU-'+x.planId+'-'+d)}));
+    const r=planRec({id:x.planId,thread:x.threadId,title:x.title,strategy:x.strategy==='deep_exhaustive'?'Deep · Exhaustive':'Deep · Thorough',backend:'ledger_bound',version:1,revisions:{1:JSON.parse(JSON.stringify(x.blocks))},status:'ready',current:true,planunits:units,
+      ledger:{id:'ledger-'+x.runId,scope:'run',plan_version:1,status:'ready',entries:JSON.parse(JSON.stringify(x.ledgerEntries))},sources:[{kind:'discovery',ref:x.runId,note:'Local discovery; no native persistence or live research.'}],research:JSON.parse(JSON.stringify(x.sourceRefs))});
+    r.project_id=x.projectId;r.discoveryScope={projectId:x.projectId,worktreeId:x.worktreeId};r.discoveryRunId=x.runId;r.discoveryFingerprint=JSON.stringify(x);r.grillMe=x.grillMe;r.blockers=JSON.parse(JSON.stringify(x.blockers));
+    P().records[x.planId]=r;t.messages.push({id:'plan-card-'+x.planId,role:'system',type:'plan-card-v2',planId:x.planId});
+    return {ok:true,planId:x.planId,version:1,hash:hashOf(body(r))};
+  }
+
   // B06: selected conclusion is admitted by the existing Plan owner. No Build.
   function createFromRoom(x){
     const checked=window.PM56_ROOM?.validatePromotion(x,'plan');
@@ -2338,6 +2324,7 @@
 
   window.PM56_PLANS = {
     createFromRoom:createFromRoom,
+    createFromDiscovery:createFromDiscovery,
     createFromBrainstorm:createFromBrainstorm,
     get:rec, all:function(){ return P().records; },
     // Concept-only admission seam. The scheduler validates its due time and
@@ -2382,6 +2369,7 @@
     attention:function(id){ var r=rec(id); return r?attention(r):null; },
     executionReport:function(id){ var r=rec(id); return r?executionReport(r):null; },
     questionBudget:questionBudget,
+    budgetOwner:budgetOwner,
     admitQuestion:admitQuestion,
     setGrillMe:setGrill,
     questionBases:function(){ return JSON.parse(JSON.stringify(QBASE)); },

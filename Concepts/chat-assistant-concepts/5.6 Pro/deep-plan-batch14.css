@@ -1,0 +1,27 @@
+/* Batch 14 uses the existing card and shared questionnaire visual grammar. */
+.deep14-workspace,.deep14-source{min-width:0;overflow-wrap:anywhere}
+.deep14-workspace header h1{font-size:24px;line-height:1.24;margin:8px 0 12px}
+.deep14-workspace header small,.deep14-quiet,.deep14-question small,.deep14-entry small{color:var(--muted);font-size:12px}
+.deep14-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0 10px}
+.deep14-stats span{padding:12px;border:1px solid var(--border);border-radius:12px;font-size:12px;background:var(--surface-2)}
+.deep14-stats strong{display:block;font-size:23px;line-height:1.3}
+.deep14-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.deep14-actions button{white-space:normal;max-width:100%}
+.deep14-section,.deep14-preview{border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:16px;min-width:0}
+.deep14-section h2,.deep14-preview h2{font-size:17px;margin:0 0 12px}
+.deep14-question{padding:12px 0;border-bottom:1px solid var(--border);min-width:0}
+.deep14-question:last-child{border-bottom:0;padding-bottom:0}
+.deep14-question small{display:block;margin-top:4px}
+.deep14-question p{margin:8px 0}
+.deep14-preview-body{max-height:340px;overflow:auto;padding-right:10px}
+.deep14-preview footer{display:flex;justify-content:flex-end;gap:8px;padding-top:16px}
+.deep14-preview h3{font-size:14px;margin:14px 0 8px}
+.deep14-warning{padding:12px;border:1px solid var(--border);border-radius:10px;font-size:13px;background:var(--surface-2)}
+.deep14-section pre,.deep14-source pre{white-space:pre-wrap;word-break:break-word;max-width:100%;font-size:11px}
+.deep14-entry{padding:18px;border:1px solid var(--border);border-radius:16px;margin:10px 0;min-width:0}
+.deep14-entry h3{margin:0 0 8px;font-size:16px}
+.deep14-guide{display:flex;align-items:center;gap:12px;margin:8px 12px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;font-size:12px;min-width:0}
+.deep14-guide span{flex:1;min-width:0;overflow-wrap:anywhere}
+@media(max-width:900px){.deep14-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.deep14-workspace header h1{font-size:21px}.deep14-section,.deep14-preview{padding:12px}}
+
+.deep14-workspace,.deep14-source{box-sizing:border-box;width:100%;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important}.deep14-section,.deep14-entry{background:var(--surface-2)}.deep14-question p{font-size:12px;line-height:1.6}.deep14-section>summary{cursor:pointer;font-size:12px;font-weight:600}.deep14-guide{background:var(--surface-2)}
