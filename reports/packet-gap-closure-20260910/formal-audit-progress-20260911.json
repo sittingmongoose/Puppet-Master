@@ -1,0 +1,102 @@
+{
+  "schema_id": "pm.packet_gap_closure.formal_audit_progress.v1",
+  "date": "2026-09-11",
+  "status": "incomplete_with_findings_and_product_choice_pending",
+  "implementation_snapshot": "cad2a317c1e52f4b3ce4b084f20bdf316ba12fc2",
+  "published_branch": "fix/packet-gap-closure-20260911-reconciled",
+  "claim_boundary": "This is a compact progress report, not a completed audit workbook, suite verdict, aggregate acceptance, native certification, Event Authority closure, readiness admission or governance seal. Unreviewed cases are not assigned a verdict.",
+  "completed_repairs": [
+    "Scoped static admission of the exact 53 Browser event families with conditional bindings for 15 existing commands, metadata-only payloads, lineage/retention/replay boundaries and unchanged preexisting 39 registry rows.",
+    "Onboarding draft/copy/late-commit contracts, bounded source account listing, current owner delegation and source-command dispositions.",
+    "Full Thread and phase-local Restore semantic contract corrections plus authenticated UI command-response correlation checks.",
+    "User-approved Project unarchive registry mutation, sole cmd.project.unarchive route, pre-gate legacy adapter, exact currentness/readback, no-change/replay no-write and removed/deletion-state refusal."
+  ],
+  "formal_review": {
+    "audit_dir": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-closure-20260911-r2-unarchive",
+    "manifest_sha256": "4267717e04b80925a178761ac2e4f75493829e924f96b6d55da14022ba10fe2a",
+    "expected_cells": 13429,
+    "source_packet_cells": 5057,
+    "touch_rows": 644,
+    "dimensions_per_touch_row": 13,
+    "expected_chunks": 151,
+    "reviewed_chunks": 21,
+    "reviewed_chunk_ids": "chunk-00087 through chunk-00107 inclusive",
+    "reviewed_cells": 2730,
+    "unique_reviewed_case_refs": 2730,
+    "counts": {"pass": 987, "partial": 1729, "fail": 14},
+    "unreviewed_cells": 10699,
+    "all_source_packet_chunks_reviewed": false,
+    "completed_suite_verdicts": false,
+    "aggregate_report_written": false,
+    "historical_receipts_overwritten": false,
+    "method": "Direct per-case judgments with authored literal dimension statuses and source-hashed evidence; mechanical binding/serialization validates exact case identities and does not select verdicts."
+  },
+  "open_findings": [
+    {
+      "id": "SETTINGS-FLOW-CHOICE-001",
+      "rows": ["TOUCH-SET-012", "TOUCH-SET-013"],
+      "issue": "Concept controls start Product Onboarding and Guided Tour directly, while current Settings local contracts define navigation-only delegation.",
+      "required_product_choice": "Should Run onboarding again and Replay guided tour start their named flow through its owner, or only open the corresponding Settings page?",
+      "status": "awaiting_user_direction_no_silent_behavior_change"
+    },
+    {
+      "id": "PROJECT-EVENT-001",
+      "rows": ["TOUCH-PJCT-003"],
+      "issue": "GitHub Project creation wiring requires github.repo.create_requested and project.github_repo_bound, neither admitted in the current Event registry.",
+      "status": "open_separate_event_owner_contract_required_not_covered_by_browser_admission"
+    },
+    {
+      "id": "CAP-CONTRACT-001",
+      "rows": ["TOUCH-CAP-009", "TOUCH-CAP-010", "TOUCH-CAP-011", "TOUCH-CAP-012", "TOUCH-CAP-013", "TOUCH-CAP-014", "TOUCH-CAP-015"],
+      "issue": "TCP-CAPTURE assigns seven older session/playback/export commands to a ten-ID schema that explicitly excludes them. Their production-intent rows do not bind request/result schemas. The owner explicitly preserves these seven as separate central consumers, so silently widening the ten-ID enum is not the repair.",
+      "status": "open_static_contract_and_profile_binding_gap"
+    },
+    {
+      "id": "CAP-EVENT-001",
+      "rows": ["TOUCH-CAP-009", "TOUCH-CAP-010", "TOUCH-CAP-011", "TOUCH-CAP-012"],
+      "issue": "Both production placements for each visible-session command require testing.session.opened, testing.session.watch_started, testing.session.backgrounded or testing.session.redaction_inspected, none present in the current Event registry.",
+      "status": "open_separate_event_owner_admission_gap"
+    },
+    {
+      "id": "BRW-RESIDUAL-001",
+      "rows": ["TOUCH-BRW-018", "TOUCH-BRW-019", "TOUCH-BRW-020"],
+      "issue": "Authentication row residual text still describes initiating-Client-only behavior without the approved SIR-032/RAS-015 hosted-Tailscale authorized-current-Client exception. The shared schema and profile already preserve the approved exception and no protected-content inheritance.",
+      "status": "open_residual_wording_correction_not_a_native_handoff_failure_claim"
+    }
+  ],
+  "accounting": {
+    "command_ids": 1080,
+    "production_intent_rows": 1144,
+    "commands_in_packet_touch": 467,
+    "commands_outside_packet_touch": 613,
+    "rows_with_request_and_result_pointers": 388,
+    "rows_missing_one_or_both_pointers": 756,
+    "meaning": "Whole-catalog structural accounting, not semantic completeness or executable wiring acceptance."
+  },
+  "verification": {
+    "focused_project_onboarding_touch_response_tests": {"passed": 86},
+    "owner_contract_matrix": {"positive": 991, "negative": 3240, "contract_pairs": 24, "internal_self_tests": 12, "status": "pass"},
+    "browser_admission": {"families": 53, "negative_cases": 576, "status": "pass_static_only"},
+    "broad_unittest_discovery": {"tests": 355, "passed": 346, "errors": 9, "status": "not_green", "error_cause": "Nine test_pm_pnc019_currentness setup errors require absent Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json; this task did not fabricate or seal it."},
+    "global_event_denominator": "UNKNOWN_OPEN",
+    "full_governance": "not_green_missing_or_stale_baseline_inputs_no_reseal"
+  },
+  "evidence": [
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-whole-accounting-20260911.json","sha256":"e9e2b11693a1997ebc7025ed0dec4ca3e2929d700db5bb89b760be1dbe47e4de"},
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-new-contracts-corrected-20260911.json","sha256":"3a32fb6eed09b52ae76d108f8485746433767ed578cc85f24cccc83be5ee6e38"},
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-unit-tests-corrected-20260911.log","sha256":"c8779bcad772c3ec0670ffd7a689c96a47f79c8e6f19f2e3c41a8c471b1414b1"},
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/all-named-unit-tests-unarchive-20260911.log","sha256":"bcf3e9d3dbd3d1568888ca28ec83777407c9c0531a2c0c480d8c47ebc10d7d29"},
+    {"path":"/mnt/Cursor/PM-Experiments/packet-audit-review-20260911/pending-browser-104-106.json","sha256":"a47d0faf1009a4671fe7abe244eddacb6bfde3c038915f080c65da35095a9dd3"},
+    {"path":"/mnt/Cursor/PM-Experiments/packet-audit-review-20260911/pending-capture-106-108.json","sha256":"136d3bf2f0e62a362f1fdf5d61920a048fe7ea56644d2836f4404eb19e8e2818"},
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-closure-20260911-r2-unarchive/review-work/results/chunk-00106.result.json","sha256":"3615c73ead1e983989b1baffbaae11d5ee40e833dc0df0a2c9090718e92d7c4f"},
+    {"path":"/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-closure-20260911-r2-unarchive/review-work/results/chunk-00107.result.json","sha256":"e4d1ea45909f4f66ac4209e70630168ac0d20c3f8ba34858ce66a879e488e554"}
+  ],
+  "remaining_work": [
+    "Resolve the Settings flow product choice and repair approved owner/consumer contracts without changing unrelated concept work.",
+    "Repair Capture consumer schema/profile routing and process non-Browser event gaps individually through their canonical owners; preserve DL-039 quarantine/no-bulk-admission decisions.",
+    "Correct stale residual wording while preserving native, GUI, provider, security, recovery and persistence evidence gaps.",
+    "Review the remaining 10699 exact case identities, including all source-packet chunks, against a current frozen snapshot.",
+    "Author each required separate suite verdict and aggregate result only after complete case coverage; do not infer formal completion from structural validators.",
+    "Reconcile with current main, regenerate derived artifacts if canonical source changes require it, and follow the shared-checkout landing and cleanup rules."
+  ]
+}
