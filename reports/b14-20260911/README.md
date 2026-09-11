@@ -1,6 +1,6 @@
 # Batch 14 integration verification
 
-Applied all 29 guarded Batch 14 paths with exact before/after SHA-256 matches, without modifying delivered payload bytes. The branch also carries previously verified Batch 13 through cherry-pick `62cacae740` (equivalent to original `fe7d8f0867`), because Batch 13 had not landed on main. Base main: `bc7569b3f5`.
+Applied all 29 guarded Batch 14 paths with exact before/after SHA-256 matches, without modifying delivered payload bytes. Verification began on main `bc7569b3f5` with Batch 13 cherry-pick `62cacae740` (equivalent to original `fe7d8f0867`), because Batch 13 had not landed. Main subsequently added the unrelated report commit `f8b43905fa`. The final landing branch carries unchanged Batch 13 and Batch 14 patches as `3a0fe68071` and `414a49ac50` on that newer main; the previously pushed branches were not rewritten.
 
 Batch 14 package SHA-256: `c176059115d6b5d6dd047bd33cee4d60e6d53bfcbced0dbd638001d348b047a1`.
 
