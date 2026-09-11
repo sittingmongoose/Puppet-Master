@@ -5871,6 +5871,7 @@
     "CRAU-080",
     "GRS-061",
     "F3-457",
+    "SMPFS-168",
     "SP-265",
     "ACD-086",
     "GRS-047",
@@ -5896,6 +5897,7 @@
     "OSI-419",
     "CRAU-083",
     "CV-335",
+    "SP-282",
     "EP-116",
     "OP-036",
     "RGV-019",
@@ -60425,6 +60427,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "CV-332"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "DL-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "SMPFS-166"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-168",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -65916,6 +65938,26 @@
     {
       "edge_type": "depends_on",
       "from": "SP-281",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-282",
+      "to": "DL-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-282",
+      "to": "SMPFS-168"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-282",
+      "to": "SP-262"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-282",
       "to": "SP-278"
     },
     {
@@ -94699,7 +94741,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T21:52:04Z",
+  "generated_at_utc": "2026-09-11T22:15:28Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -188100,6 +188142,23 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "browser_workspace_reset_single_family",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-168",
+      "reasoning_tier": "high",
+      "risk_class": "browser_reset_generation_replay_or_append_uncertainty",
+      "source_location": {
+        "heading": "SMPFS-168 - Workspace-reset transition and historical boundary consumer",
+        "heading_level": 3,
+        "heading_line": 11602,
+        "line": 11604,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "storage_generated_residual_tail",
       "gui_related": true,
       "owner_doc": "Plans/storage-plan.md",
@@ -192701,6 +192760,23 @@
         "heading_level": 3,
         "heading_line": 19721,
         "line": 19725,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "browser_workspace_reset_single_family",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-282",
+      "reasoning_tier": "high",
+      "risk_class": "stale_reset_projection_or_replayed_owner_effect",
+      "source_location": {
+        "heading": "SP-282 - Browser workspace-reset single-family persistence binding",
+        "heading_level": 3,
+        "heading_line": 20858,
+        "line": 20860,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -205837,10 +205913,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14980,
+    "depends_on_edge_count": 14988,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17631,
-    "node_count": 6537,
+    "edge_count": 17639,
+    "node_count": 6539,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

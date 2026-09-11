@@ -221,7 +221,7 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
 
     def test_sibling_cannot_borrow_the_created_depth_binding(self):
         context, registry = all_prepared_snapshot()
-        sibling = context[0]["rows"][1]
+        sibling = next(row for row in context[0]["rows"] if row["event_type"] == "browser.workspace.closed")
         sibling["admission_status"] = "admitted_static_contract"
         sibling["authority_contract_ref"] = "Plans/browser_workspace_created_contracts.schema.json#/x-pm-event-authority-binding"
         family = synthetic_family(sibling)

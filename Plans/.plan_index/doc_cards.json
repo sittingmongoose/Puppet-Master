@@ -15085,10 +15085,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 67,
+        "False": 68,
         "True": 100
       },
-      "heading_count": 260,
+      "heading_count": 265,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -15124,9 +15124,9 @@
         "future Testing evidence harness",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current"
       ],
-      "line_count": 11483,
+      "line_count": 11637,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-      "plan_unit_count": 167,
+      "plan_unit_count": 168,
       "plan_unit_ids": [
         "SMPFS-002",
         "SMPFS-003",
@@ -15294,7 +15294,8 @@
         "SMPFS-164",
         "SMPFS-165",
         "SMPFS-166",
-        "SMPFS-167"
+        "SMPFS-167",
+        "SMPFS-168"
       ],
       "reasoning_tiers": [
         "high",
@@ -15323,6 +15324,7 @@
         "browser_receipt_progress_wiring_or_migration_drift",
         "browser_record_schema_identity_ambiguity_or_protected_auth_escape",
         "browser_reference_disposition_drift",
+        "browser_reset_generation_replay_or_append_uncertainty",
         "browser_retargeting_drift",
         "browser_routing_routine_or_adapter_authority_drift",
         "browser_runtime_drift",
@@ -15431,10 +15433,10 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "522aeec49afa52ccfc3331e84437298993ec9ddbabf18739e558737a3d2fb76a",
+      "sha256": "972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 165,
+        "accepted": 166,
         "retired": 2
       },
       "title": "Section 15 Promoted Features Spec",
@@ -15442,7 +15444,7 @@
         "command_binding": 2,
         "compatibility_disposition": 2,
         "constraint": 3,
-        "owner_boundary": 3,
+        "owner_boundary": 4,
         "requirement": 157
       },
       "validation_surfaces": [
@@ -15478,6 +15480,8 @@
         "Plans/browser_event_admission_fixtures.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
+        "Plans/browser_workspace_reset_contract_fixtures.json",
+        "Plans/browser_workspace_reset_contracts.schema.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
         "Plans/section15_browser_program_contract_fixtures.json",
@@ -15540,6 +15544,7 @@
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_program_semantics.py",
         "tests/test_pm_browser_workspace_created.py",
+        "tests/test_pm_browser_workspace_reset.py",
         "tmux passthrough marks command-block confidence degraded when unverified"
       ]
     },
@@ -16447,10 +16452,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 171,
+        "False": 172,
         "True": 100
       },
-      "heading_count": 503,
+      "heading_count": 509,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16509,9 +16514,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 20666,
+      "line_count": 20896,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 271,
+      "plan_unit_count": 272,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16783,7 +16788,8 @@
         "SP-271",
         "SP-277",
         "SP-280",
-        "SP-278"
+        "SP-278",
+        "SP-282"
       ],
       "reasoning_tiers": [
         "high",
@@ -16834,6 +16840,7 @@
         "silent_data_loss",
         "source_history_identity_safety_or_false_recovery",
         "stale_onboarding_path_or_unconfirmed_owner_work_replayed",
+        "stale_reset_projection_or_replayed_owner_effect",
         "stale_widget_layout_or_preview_state_persistence",
         "storage_authority_or_schema_drift",
         "storage_coordination_canon_regression",
@@ -16850,17 +16857,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "466a078d4ffedee6b5ee26a4366e986b7a3eb3831e27818a60e105ca849440b6",
+      "sha256": "52ae76de5ed144388f39fe96ec8b82ebc782286cbd0860e1cb0fc6a39c434f38",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 268,
+        "accepted": 269,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 246,
+        "requirement": 247,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 10,
@@ -16899,6 +16906,8 @@
         "Plans/browser_event_admission_fixtures.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
+        "Plans/browser_workspace_reset_contract_fixtures.json",
+        "Plans/browser_workspace_reset_contracts.schema.json",
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
@@ -16980,6 +16989,7 @@
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
+        "tests/test_pm_browser_workspace_reset.py",
         "tests/test_pm_onboarding_phases.py"
       ]
     },
@@ -18851,7 +18861,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T21:52:04Z",
+  "generated_at_utc": "2026-09-11T22:15:28Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18859,13 +18869,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3381,
+      "False": 3383,
       "True": 3156
     },
-    "plan_unit_count": 6537,
+    "plan_unit_count": 6539,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6346,
+      "accepted": 6348,
       "retired": 182,
       "superseded": 9
     },
@@ -18919,7 +18929,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 35,
+      "owner_boundary": 36,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -18932,7 +18942,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5191,
+      "requirement": 5192,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

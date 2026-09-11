@@ -1,0 +1,716 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/browser_workspace_reset_contracts/1.0.0",
+  "title": "Browser workspace-reset resolved transition and filtered checkpoint",
+  "description": "New reset-only technical binding under DL-046. The transition view is an owner-resolved read projection, not a new physical record, proof of reference resolution or producer authentication. The checkpoint explicitly adopts SP-278; native source, runtime, durability and security obligations remain unexecuted.",
+  "x-pm-event-authority-binding": {
+    "event_type": "browser.workspace.reset",
+    "binding_version": "1.0.0",
+    "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168",
+    "storage_owner_ref": "Plans/storage-plan.md#SP-282",
+    "producer_component": "BrowserRuntimeService.workspace",
+    "consumer_id": "browser.workspace_inventory.reset.v1",
+    "consumer_version": "1.0.0",
+    "projector_id": "storage.browser_workspace_reset_index.v1",
+    "projector_version": "1.0.0",
+    "checkpoint_family_id": "browser_workspace_reset_index_checkpoint",
+    "checkpoint_key": "browser_workspace_reset_index_checkpoint.v1:{storage_instance_id}:{scope_partition}",
+    "checkpoint_schema_id": "pm.storage_value.browser_workspace_reset_index_checkpoint.v1",
+    "checkpoint_schema_version": "1.0.0",
+    "checkpoint_schema_pointer": "#/$defs/checkpoint",
+    "generic_index_owner_ref": "Plans/storage-plan.md#SP-278",
+    "generic_index_read_token_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token",
+    "source_payload_schema_ref": "Plans/browser_event_payloads.schema.json#/$defs/workspace_reset",
+    "source_payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+    "source_retention_policy_id": "RP-AUTHORITY-INDEFINITE",
+    "checkpoint_retention_policy_id": "RP-PROJECTION-3GEN",
+    "retention_policy_version": "1.0.0",
+    "definition_authority_ref": "Plans/Decision_Log.md#DL-046",
+    "definition_status": "newly_authored_owner_contract",
+    "native_proof": false
+  },
+  "$defs": {
+    "non_secret_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+      "not": {
+        "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "home_server_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "source_location_id",
+        "browser_session_id",
+        "browser_workspace_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "home_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "source_location_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "browser_session_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "browser_workspace_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        }
+      }
+    },
+    "resolved_transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_instance_id",
+        "idempotency_key",
+        "node_id",
+        "context",
+        "subject",
+        "workspace_ref",
+        "owner_record_ref",
+        "transition_receipt_ref",
+        "permission_snapshot_ref",
+        "capability_snapshot_ref",
+        "filesafe_decision_ref",
+        "checked_workspace_revision",
+        "prior_workspace_generation",
+        "workspace_generation",
+        "controller_authority",
+        "new_generation_committed",
+        "old_projections_fenced"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser.workspace_reset.resolved_transition.v1"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/schemas/browser_event_payloads/1.0.0/browser_event_payloads.schema.json#/$defs/context"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "node_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "subject": {
+          "$ref": "#/$defs/subject"
+        },
+        "workspace_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "owner_record_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "transition_receipt_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "permission_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "capability_snapshot_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "filesafe_decision_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checked_workspace_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "prior_workspace_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "workspace_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "controller_authority": {
+          "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/browser_controller_authority"
+        },
+        "new_generation_committed": {
+          "const": true
+        },
+        "old_projections_fenced": {
+          "const": true
+        }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "checkpoint_id",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "publication_id",
+        "published_at_utc",
+        "hold_refs",
+        "retired_generations"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.browser_workspace_reset_index_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "checkpoint_id": {
+          "const": "browser.workspace.reset"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.browser_workspace_reset_index.v1"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "browser.workspace.reset"
+        },
+        "index_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        },
+        "retired_generations": {
+          "type": "array",
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/retired_generation"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpoint_core": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "checkpoint_id",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "index_read_token",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "source_cursor",
+        "filter_complete",
+        "state",
+        "health",
+        "updated_at_utc",
+        "withdrawn_at_utc",
+        "publication_id",
+        "published_at_utc",
+        "hold_refs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.browser_workspace_reset_index_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "checkpoint_id": {
+          "const": "browser.workspace.reset"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 192
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.browser_workspace_reset_index.v1"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "browser.workspace.reset"
+        },
+        "index_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "first_retained_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "source_cursor": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/coverage/properties/last_frame"
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "updated_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "withdrawn_at_utc": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "published_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_secret_ref"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              },
+              "withdrawn_at_utc": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "withdrawn"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "withdrawn_at_utc": {
+                "$ref": "#/$defs/timestamp"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_cursor": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "source_cursor"
+            ]
+          },
+          "then": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "null"
+              },
+              "index_through_sequence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "first_retained_sequence_id": {
+                "type": "integer"
+              },
+              "index_through_sequence_id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "retired_generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint_core",
+        "successor_publication_id"
+      ],
+      "properties": {
+        "checkpoint_core": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/checkpoint_core"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "withdrawn"
+                }
+              }
+            }
+          ]
+        },
+        "successor_publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        }
+      }
+    },
+    "generation_transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "transaction_ref",
+        "checkpoint_key",
+        "before",
+        "after",
+        "selected_publication_id",
+        "committed_at_utc",
+        "status"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.browser.workspace_reset.checkpoint_generation_transaction.v1"
+        },
+        "transaction_ref": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "checkpoint_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "before": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/checkpoint"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after": {
+          "$ref": "#/$defs/checkpoint"
+        },
+        "selected_publication_id": {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        "committed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "status": {
+          "const": "committed"
+        }
+      }
+    }
+  }
+}

@@ -2492,6 +2492,62 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       }
+    },
+    {
+      "family_id": "event-family-browser-workspace-reset",
+      "family_revision": "1.0.0",
+      "event_type": "browser.workspace.reset",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.browser_event.workspace_reset.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "json_pointer": "#/$defs/workspace_reset",
+        "schema_id": "pm.browser_event.workspace_reset.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/context/project_id"
+          ],
+          "thread_id": [
+            "/payload/context/thread_id"
+          ],
+          "run_id": [
+            "/payload/context/run_id"
+          ],
+          "node_id": [
+            "/payload/context/node_id"
+          ],
+          "attempt_id": [
+            "/payload/context/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/browser_event_admission.json#/rows/1",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-168",
+        "Plans/browser_event_payloads.schema.json#/$defs/workspace_reset",
+        "Plans/storage-plan.md#SP-282",
+        "Plans/storage-plan.md#SP-278",
+        "Plans/Decision_Log.md#DL-046",
+        "Plans/browser_workspace_reset_contracts.schema.json#/x-pm-event-authority-binding",
+        "reports/packet-gap-closure-20260910/browser-workspace-reset-root-review-20260911.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
     }
   ],
   "retention_assignment_id": "RET-K37-ASSIGNMENT-001",

@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L11355-L11483
 
-Source SHA256: `522aeec49afa52ccfc3331e84437298993ec9ddbabf18739e558737a3d2fb76a`
+Source SHA256: `972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92`
 
 ---
 
@@ -14,7 +14,7 @@ The following are **newly authored technical owner definitions under DL-046**,
 limited to `browser.workspace.created`. The existing Section 3.18A workspace,
 command, isolation, permission and replay behavior remains the product authority.
 The previous generic consumer references were not concrete versioned bindings.
-No definition here applies to the other 52 prepared Browser families by analogy.
+No definition here applies to the other 52 Browser families by analogy.
 
 ### Producer, transition and acknowledgement
 
