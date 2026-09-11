@@ -1,0 +1,183 @@
+{
+  "schema_id": "pm.assurance.event_authority.goal_schema_authority.v1",
+  "generated_at_utc": "2026-09-11T14:31:54.887077+00:00",
+  "step": 7,
+  "base_commit": "513ca33d445fd740a1a67da503a6678ad1dcc641",
+  "authority_ref": "Plans/Decision_Log.md#DL-039",
+  "owner_doc": "Plans/Goal_Runtime_System.md",
+  "owner_plan_unit": "GRS-041",
+  "author_task": "/root/step03_holding_bucket",
+  "seal_applier_forbidden_task": "/root/step03_holding_bucket",
+  "schema_count": 21,
+  "status_before": "CANDIDATE DRAFT ONLY; held for EA-OC-010",
+  "status_after": "AUTHORITATIVE_PAYLOAD_SCHEMA",
+  "schema_changes": "Only the authority prefix of each root $comment; no schema keywords, validation values, IDs, references, or other comments changed.",
+  "schema_paths": [
+    "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+  ],
+  "owner_changes": [
+    "One status paragraph and ContractRef beside existing STATICALLY_MATERIALIZED boundary",
+    "One GRS-041 acceptance criterion and DL-039 source_lineage entry"
+  ],
+  "preserved_boundaries": [
+    "NON_EXECUTABLE_UNDER_THIS_TRANSACTION",
+    "eight-event central registration and payload-schema emission prerequisite",
+    "Goal V2 retirement and reader-only legacy handling",
+    "event-specific and cross-owner behavioral predicates",
+    "all252 Step9 campaign and unresolved Step6 compaction contract remain owed"
+  ],
+  "closure_claims": {
+    "contract_depth_complete": false,
+    "registry_admission": false,
+    "seal_authorized": false,
+    "PNC-019": false,
+    "runtime_authorized": false,
+    "buildability": false
+  },
+  "before_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/before.tar.gz",
+    "sha256": "1ed3e3ba4c34583ac7c4be039d271538fef5e3bf71c66562226271b8166ab0f1",
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/before-manifest.json",
+    "manifest_sha256": "25f3456efec577b04339de61fe0baf6de1c810d4ecc65a58db436da504a38d82"
+  },
+  "checks": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/authority-structural-checks.json",
+    "sha256": "150c747cf2881ddf87be6e707fa7de633d5acf2c1d00061fef20ac31d4d58585",
+    "pass": true,
+    "scope": "21 exact root-comment-only comparisons, 21 Draft 2020-12 metaschema checks, exact owner path/ID set, unchanged boundary passages and immutable artifacts; no runtime/depth proof."
+  },
+  "derived_checks": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/derived-scope-checks.json",
+    "sha256": "faa079d28f1bdb68b054c29ac21eb32d397d4515a4713d35e7cd3636b3f78d2e",
+    "pass": true
+  },
+  "changed_paths": [
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/_shards/goal_runtime_system/00-index.md",
+    "Plans/_shards/goal_runtime_system/001-preamble.md",
+    "Plans/_shards/goal_runtime_system/002-0.-scope.md",
+    "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
+    "Plans/_shards/goal_runtime_system/004-goal-v2-record-and-retired-fields.md",
+    "Plans/_shards/goal_runtime_system/005-durable-host-continuation.md",
+    "Plans/_shards/goal_runtime_system/006-goal-change-authority.md",
+    "Plans/_shards/goal_runtime_system/007-goal-activity-domain-surface.md",
+    "Plans/_shards/goal_runtime_system/008-internal-workflow-use-of-goal-v2.md",
+    "Plans/_shards/goal_runtime_system/009-retired-goal-structure-and-negative-ownership.md",
+    "Plans/_shards/goal_runtime_system/010-goal-v2-exact-commands-and-required-result-boundaries.md",
+    "Plans/_shards/goal_runtime_system/011-goal-v2-events.md",
+    "Plans/_shards/goal_runtime_system/012-goal-v1-to-v2-migration.md",
+    "Plans/_shards/goal_runtime_system/013-goal-v2-verification.md",
+    "Plans/_shards/goal_runtime_system/014-2.-canonical-planunits.md",
+    "Plans/_shards/goal_runtime_system/015-server-command-gap-owner-closure-goal-handoff-family-2026-09-01.md",
+    "Plans/_shards/goal_runtime_system/016-remaining-runtime-integration-addendum-2026-08-13.md",
+    "Plans/_shards/goal_runtime_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+    "Plans/_shards/goal_runtime_system/018-3.-contracts-schemas-events-or-data-shapes.md",
+    "Plans/_shards/goal_runtime_system/019-4.-integration-surfaces.md",
+    "Plans/_shards/goal_runtime_system/020-5.-validation-and-acceptance.md",
+    "Plans/_shards/goal_runtime_system/021-6.-plan-to-node-readiness.md",
+    "Plans/_shards/goal_runtime_system/022-7.-deferred-retired-compatibility-and-non-goals.md",
+    "Plans/_shards/goal_runtime_system/023-8.-source-lineage-and-governance.md",
+    "Plans/_shards/goal_runtime_system/024-ledger-compile-addendum-pldg-20260616-002.md",
+    "Plans/_shards/goal_runtime_system/025-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+    "Plans/_shards/goal_runtime_system/026-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+    "Plans/_shards/goal_runtime_system/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+    "Plans/_shards/goal_runtime_system/028-case-l-durable-goal-recovery-consumer-addendum-2026-07-17.md",
+    "Plans/_shards/goal_runtime_system/029-additive-correction-v4-goal-replay-lineage-completion-guards-and.md",
+    "Plans/_shards/goal_runtime_system/030-working-notebook-authority-boundary-addendum-2026-09-05.md",
+    "Plans/_shards/goal_runtime_system/031-cumulative-v3-goal-activity-detail-and-plan-binding-specificatio.md",
+    "Plans/_shards/goal_runtime_system/manifest.json",
+    "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_progressed.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_replanned.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_started.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+    "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+  ],
+  "regeneration": {
+    "shard_generate_exit": 0,
+    "index_generate_exit": 0,
+    "shard_check_exit": 0,
+    "own_shards_changed": 33,
+    "index_files_changed": 6,
+    "new_acceptance_unit": "GRS-041-A011",
+    "existing_acceptance_ids_preserved": true,
+    "runtime_currentness_failure_count_before": 56,
+    "runtime_currentness_failure_count_after": 77,
+    "new_currentness_source_drift_count": 21,
+    "note": "Retained currentness evidence correctly reports the 21 promoted schema byte changes as drift; the prior Goal owner hash failure is updated and no readiness failure is cleared. No governance receipt or source hash is refreshed.",
+    "input_provenance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/generation-input-provenance.json",
+      "sha256": "779b21d9d6241539178766c68ed283d164cdf20adf37366a3cf7ccb220165a0f"
+    },
+    "logs": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/shard-generate-final.log",
+        "sha256": "9d8eda53570d7b0e3f06f788d2113e293515014519ce18fe52c8bc89924d53c9"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/index-generate-final.log",
+        "sha256": "3b76ab325bbfd0a2bbd82ff392bc8ce3a6fd34a983a76813dba225fd463e4905"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-07/shard-check-final.log",
+        "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872"
+      }
+    ]
+  },
+  "external_executor": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step07-20260911/apply.py",
+      "sha256": "37de002df30bdd81fe0742a8f185809b2c3af1e15271b8abe50ac9912a05b6e9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step07-20260911/verify.py",
+      "sha256": "bbae1c63354b8aa62d93cde5cc2b42292d0d6dced31e9d93839782644e2534d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step07-20260911/check-derived.py",
+      "sha256": "345542b47b09685fc967ec3f165eadbaa96813a0a62c879225cc0ccdb82b33f5"
+    }
+  ],
+  "cost": "One Astra implementation agent with root review; token and monetary usage unavailable."
+}

@@ -2674,6 +2674,10 @@ These data-shape bullets are Goal Runtime feature-local constraints; adjacent ow
 
 Status: `STATICALLY_MATERIALIZED` for this canonical owner prose and its schema-decidable common-definition source. Transition, side-effect, replay, authority, currentness, provider/tool, persistence, gate, runtime, certification, and buildability behavior is `NON_EXECUTABLE_UNDER_THIS_TRANSACTION` unless an unchanged pre-existing read-only check demonstrably covers the clause. The legacy aggregate `Plans/goal_runtime_events.schema.json` remains reader-only input; new writes select exactly one self-contained v2 root per event at `Plans/event_payloads/goal_runtime/*.schema.json#`.
 
+Payload schema authority: under `Plans/Decision_Log.md#DL-039`, the exact 21 v2 row schemas listed in the machine-oriented materialization table below (`EA-UND-0001-GOAL..EA-UND-0021-GOAL`) are `AUTHORITATIVE_PAYLOAD_SCHEMA` as of 2026-09-11, owned by `Plans/Goal_Runtime_System.md`. This promotion replaces their former candidate/draft authority restriction; it changes no schema validation rule and establishes no registry admission, per-family Event Authority depth, executable behavior, certification, or buildability. The existing `NON_EXECUTABLE_UNDER_THIS_TRANSACTION` boundary, central registration prerequisite for emission, reader-only legacy handling, and Goal V2 retirement boundaries remain in force.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Goal_Runtime_System.md#GRS-041
+
 #### Goal Runtime v2 common schema-definition source
 
 ##### 3.1 JSON Schema construction
@@ -5094,6 +5098,12 @@ acceptance_criteria:
     Storage, and Automated Testing consumer propagation are complete before any
     generator or gate phase begins; existing checks may then run read-only and must
     report exact coverage and failures without widening mutation scope.
+  - >-
+    The exact 21 v2 row schemas listed for EA-UND-0001-GOAL through
+    EA-UND-0021-GOAL carry authoritative payload-schema status under DL-039
+    through this owner. Their validation structure and behavior/depth boundaries
+    are unchanged; authority promotion does not admit events, certify depth,
+    enable emission, or restore retired Goal constructs.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
@@ -5111,6 +5121,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-039
   - fablereport.md
   - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
   - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl

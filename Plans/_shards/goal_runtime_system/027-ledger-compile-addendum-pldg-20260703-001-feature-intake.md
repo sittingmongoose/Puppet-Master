@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4383-L5155
+Source lines: L4387-L5166
 
-Source SHA256: `45abc3145f7dbcd7553f64567d8befb856c2fc9b6043f74330126a93c4259b07`
+Source SHA256: `b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa`
 
 ---
 
@@ -722,6 +722,12 @@ acceptance_criteria:
     Storage, and Automated Testing consumer propagation are complete before any
     generator or gate phase begins; existing checks may then run read-only and must
     report exact coverage and failures without widening mutation scope.
+  - >-
+    The exact 21 v2 row schemas listed for EA-UND-0001-GOAL through
+    EA-UND-0021-GOAL carry authoritative payload-schema status under DL-039
+    through this owner. Their validation structure and behavior/depth boundaries
+    are unchanged; authority promotion does not admit events, certify depth,
+    enable emission, or restore retired Goal constructs.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
@@ -739,6 +745,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-039
   - fablereport.md
   - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
   - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl

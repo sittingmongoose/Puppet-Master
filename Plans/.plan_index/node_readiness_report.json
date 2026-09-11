@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T13:52:07Z",
+  "generated_at_utc": "2026-09-11T14:35:50Z",
   "gui_related_units": {
     "count": 3105,
     "units": [
@@ -17556,8 +17556,8 @@
         "source_location": {
           "heading": "GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation",
           "heading_level": 3,
-          "heading_line": 4246,
-          "line": 4248,
+          "heading_line": 4250,
+          "line": 4252,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17567,8 +17567,8 @@
         "source_location": {
           "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
           "heading_level": 3,
-          "heading_line": 4387,
-          "line": 4389,
+          "heading_line": 4391,
+          "line": 4393,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17578,8 +17578,8 @@
         "source_location": {
           "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 4465,
-          "line": 4467,
+          "heading_line": 4469,
+          "line": 4471,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17589,8 +17589,8 @@
         "source_location": {
           "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
           "heading_level": 3,
-          "heading_line": 4544,
-          "line": 4546,
+          "heading_line": 4548,
+          "line": 4550,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17600,8 +17600,8 @@
         "source_location": {
           "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
           "heading_level": 3,
-          "heading_line": 4641,
-          "line": 4643,
+          "heading_line": 4645,
+          "line": 4647,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17611,8 +17611,8 @@
         "source_location": {
           "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
           "heading_level": 3,
-          "heading_line": 4731,
-          "line": 4733,
+          "heading_line": 4735,
+          "line": 4737,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17622,8 +17622,8 @@
         "source_location": {
           "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
           "heading_level": 3,
-          "heading_line": 4823,
-          "line": 4825,
+          "heading_line": 4827,
+          "line": 4829,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17633,8 +17633,8 @@
         "source_location": {
           "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
           "heading_level": 3,
-          "heading_line": 4898,
-          "line": 4900,
+          "heading_line": 4902,
+          "line": 4904,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17644,8 +17644,8 @@
         "source_location": {
           "heading": "GRS-042 - Case L Canonical Goal Receipt Recovery Truth",
           "heading_level": 3,
-          "heading_line": 5197,
-          "line": 5199,
+          "heading_line": 5208,
+          "line": 5210,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17655,8 +17655,8 @@
         "source_location": {
           "heading": "GRS-043 - Case L Goal Event And Recovery Admission",
           "heading_level": 3,
-          "heading_line": 5248,
-          "line": 5250,
+          "heading_line": 5259,
+          "line": 5261,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17743,8 +17743,8 @@
         "source_location": {
           "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
           "heading_level": 3,
-          "heading_line": 5444,
-          "line": 5462,
+          "heading_line": 5455,
+          "line": 5473,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -38051,7 +38051,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "45abc3145f7dbcd7553f64567d8befb856c2fc9b6043f74330126a93c4259b07",
+        "expected": "b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38225,6 +38225,90 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
