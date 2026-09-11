@@ -52,7 +52,7 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-    "source_sha256": "f0be1b2f608cc9b8e0df77f188a6a94903b336fe367b1df9c541904f2cd68f7a",
+    "source_sha256": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
@@ -5872,23 +5872,26 @@
     {
       "profile_id": "TCP-DRY-METHOD",
       "requirement_refs": [
+        "Plans/Decision_Log.md#DL-041",
         "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040",
         "Plans/DRY_Rules.md#DR-040",
+        "Plans/Settings_System.md#SSYS-018",
         "Plans/Settings_System.md#SSYS-023"
       ],
-      "owner_plan": "Plans/UI_Command_Catalog.md",
-      "plan_unit": "UCC-104",
+      "owner_plan": "Plans/Settings_System.md",
+      "plan_unit": "SSYS-023",
       "dry_contract_ref": "Plans/DRY_Rules.md#DR-040",
-      "payload_schema_ref": "typed Project, requested guard state, expected revision and idempotency key",
-      "result_schema_ref": "requested and effective DRY guard projection with revision",
-      "error_schema_ref": "stale projection, permission, policy, safety, governance, or handler reason",
-      "availability_rule": "Exact Project and current requested/effective projection are required.",
+      "payload_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_owner_projection",
+      "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_named_visible_state_projection",
+      "error_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/disabled_reason",
+      "availability_rule": "DL-041: preserve exact guard identity app.agent_rules.dry_method_default_guard, values enabled | disabled_by_user and default enabled. Until the owner proves its mapping to a valid ordinary setting_id and writer, owner_contract_missing requires zero mutation dispatch and zero setting writes. The owner key is not itself a valid changed_setting_ids entry, does not imply application transaction scope and is not an inferred alias of memory.assembly.dry-method-guard. Exact Project/currentness/permission checks remain required after mapping proof.",
       "permission_gate": "The setting cannot weaken instructions, safety, secrets, source authority, governance, permissions, or source-control rules.",
-      "disabled_reason_rule": "Expose exact policy/currentness/permission/handler blocker and retain the effective guard.",
-      "handler_owner": "Agent-rules DRY guard owner through UCC-104; Settings remains a consumer.",
-      "handler_status": "specified",
-      "wiring_status": "specified",
-      "production_or_simulation": "Static catalog and production-intent row only.",
+      "disabled_reason_rule": "Expose owner_contract_missing for the unresolved guard-key/writer mapping, retain requested_default_guard and effective_default_guard with origin, scope, availability, owner_evidence, exceptions and consequence_disclosure, and preserve accessible explanation and effective guard state.",
+      "handler_owner": "Settings projection consumer under SSYS-023; the existing SSYS-018 transaction owner is only a future mutation target after guard-key/writer proof. No dedicated guard command, handler or dispatch alias exists.",
+      "handler_status": "absent",
+      "wiring_status": "absent",
+      "production_or_simulation": "Specified presentation and conditional future common-transaction consumption only. This guard has no executable writer binding or dedicated production row; no native hydration, dispatch, persistence, runtime or visual acceptance proof.",
       "gui_triggers": [
         "Settings DRY Method manager"
       ],
@@ -5896,25 +5899,32 @@
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/DRY_Rules.md",
+        "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040",
         "Plans/Wiring_Matrix.production.json"
       ],
-      "event_refs": [
-        "owner event only after admitted authority"
-      ],
+      "event_refs": [],
       "receipt_refs": [
-        "typed requested/effective result"
+        "Existing owner readback only while disabled; a settings_transaction_result receipt requires a proven setting mapping and an actual authorized common transaction."
       ],
       "observable_work": [],
       "persistence_refs": [
-        "agent-rules owner only"
+        "Plans/storage-plan.md#SP-223",
+        "Settings and Storage retain scope and writer authority; no setting ID, value write, revision or commit is inferred by this presentation row."
       ],
-      "migration_refs": [],
+      "migration_refs": [
+        "Plans/Decision_Log.md#DL-041",
+        "Historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; future settings.updated emission requires separate Event Authority admission."
+      ],
       "test_refs": [
         "Plans/settings_system_contract_fixtures.json",
-        "Plans/UI_Command_Catalog.md#UCC-104"
+        "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040",
+        "tests/test_pm_touch_closure_source.py"
       ],
       "evidence_refs": [
-        "static_catalog_and_wiring_only"
+        "Plans/settings_system_contract_fixtures.json#/named_visible_state_projections/dry-method",
+        "Static named projection only; guard-key/writer mapping and native execution remain unproved."
       ]
     },
     {
@@ -11261,14 +11271,6 @@
       "Canonical Search owner and production-intent row exist; native cache eviction, retention, recovery, and runtime evidence are absent."
     ],
     [
-      "TOUCH-DRY-001",
-      "TCP-DRY-METHOD",
-      "command",
-      "cmd.settings.agent_rules.dry_method_default_guard.set",
-      "partial",
-      "Canonical DRY guard catalog and production-intent row exist; native requested/effective owner handling and runtime evidence are absent."
-    ],
-    [
       "TOUCH-SETPROJ-001",
       "TCP-SET-NAMED-PROJECTION",
       "presentation",
@@ -11286,11 +11288,11 @@
     ],
     [
       "TOUCH-SETPROJ-003",
-      "TCP-SET-NAMED-PROJECTION",
+      "TCP-DRY-METHOD",
       "presentation",
       "settings.manager.dry-method",
       "partial",
-      "Schema and fixture projection only; native requested/effective hydration, accessibility, and Slint rendering evidence are absent."
+      "DL-041 consolidates retired TOUCH-DRY-001 here without removing the guard obligation. Preserve requested/effective state and exact app.agent_rules.dry_method_default_guard identity; owner_contract_missing requires zero mutation dispatch and zero setting writes until valid setting-ID and writer mapping is owner-proven. Native hydration, mutation, accessibility and Slint rendering proof remain absent."
     ],
     [
       "TOUCH-SGAPCMD-002",
@@ -13320,6 +13322,17 @@
         "Plans/Project_System.md#PJCT-003"
       ],
       "token": "cmd.project.create"
+    },
+    {
+      "classification": "forbidden",
+      "reason": "DL-041 retires the dedicated guard command and its former TOUCH-DRY-001 actionable row. Its full guard presentation and disabled-mutation obligation is retained by TOUCH-SETPROJ-003 / TCP-DRY-METHOD. Eventual common preview/apply reuse after owner mapping proof is not a dispatch alias; historical dedicated event spelling remains read-only lineage.",
+      "replacement": "",
+      "source_refs": [
+        "Plans/Decision_Log.md#DL-041",
+        "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040"
+      ],
+      "token": "cmd.settings.agent_rules.dry_method_default_guard.set"
     }
   ],
   "alias_bindings": {
