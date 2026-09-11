@@ -1,0 +1,80 @@
+{
+  "at": "2026-09-11T14:24:55.576629+00:00",
+  "status": "FAIL_PRE_CORRECTION_BASELINE",
+  "plans_edited": false,
+  "head": "af72fc8395212b31142d9fc92b87a626d89e4694",
+  "origin_main": "0db6e2627ca0b30435ced3341a1748e23aad7f55",
+  "effective_check_statuses": {
+    "check_project_artifact_requirements": "pass",
+    "check_shards": "pass",
+    "json_syntax": "fail",
+    "lint_banned_phrases": "pass",
+    "lint_contractrefs": "fail",
+    "lint_path_refs": "fail",
+    "validate_audit_closure": "fail",
+    "validate_audit_status_index": "fail",
+    "validate_auto_decisions": "pass",
+    "validate_case_l_non_event_materialization": "pass",
+    "validate_evidence": "fail",
+    "validate_filesafe_security_policy": "pass",
+    "validate_forge_backup_acceptance": "pass",
+    "validate_goal_runtime_event_fixtures": "pass",
+    "validate_gui_asset_policy": "pass",
+    "validate_implementation_readiness": "fail",
+    "validate_new_contracts": "pass",
+    "validate_plan_graph": "fail",
+    "validate_plan_migration": "fail",
+    "validate_plans_to_code_handoff_schema": "pass",
+    "validate_pm7_gui_fixtures": "fail",
+    "validate_prd_planning_runtime_contracts": "pass",
+    "validate_project_output_fixtures": "pass",
+    "validate_runtime_artifact_schemas": "pass",
+    "validate_server_command_gap": "pass",
+    "validate_touch_closure": "pass",
+    "validate_usage_contract_drift": "pass",
+    "validate_usage_gui_fixtures": "pass",
+    "validate_web_capability_contracts": "pass",
+    "validate_wiring_matrix": "pass",
+    "validate_working_notebook_contracts": "pass",
+    "verify_spec_lock": "fail"
+  },
+  "failed_checks": [
+    "json_syntax",
+    "lint_contractrefs",
+    "lint_path_refs",
+    "validate_audit_closure",
+    "validate_audit_status_index",
+    "validate_evidence",
+    "validate_implementation_readiness",
+    "validate_plan_graph",
+    "validate_plan_migration",
+    "validate_pm7_gui_fixtures",
+    "verify_spec_lock"
+  ],
+  "shards": "pass",
+  "missing_fixture_git_object_presence": {
+    "HEAD": {
+      "tests/fixtures/governance/raw_evidence_capture_modes.schema.json": false,
+      "tests/fixtures/pm7_shared/motion_frame_matrix.json": false
+    },
+    "origin/main": {
+      "tests/fixtures/governance/raw_evidence_capture_modes.schema.json": false,
+      "tests/fixtures/pm7_shared/motion_frame_matrix.json": false
+    }
+  },
+  "scope_note": "Initial aggregate lacked Concepts in sparse checkout; added Concepts and reran the two affected checks. Touch closure now passes. Path references still fail. Missing fixtures are absent from both committed trees. Other baseline failures include stale governance hashes and historical references; no reseal or unrelated repair attempted.",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/verification/pre-correction-gates.json",
+      "sha256": "d93d6dd51d7b643556bdd57b3332fa7b14c118435db2858d029c91e21bad09a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/verification/pre-correction-paths-with-concepts.json",
+      "sha256": "5195c3790abd8ecf008aa26bef1faaec75a4a62dae5d4610a9345ea487f55759"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/verification/pre-correction-touch-with-concepts.json",
+      "sha256": "6c3bda93ef65816626a9ae8f837f6800ba72d25ec0a2d79dffcb5a7f9a316fd1"
+    }
+  ]
+}
