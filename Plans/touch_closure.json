@@ -3456,7 +3456,7 @@
         "Plans/Test_Capture_and_Motion_Evidence.md"
       ],
       "event_refs": [
-        "Plans/Automated_Testing_System.md#ATS-049 and Plans/testing_session_event_admission.json admit exactly four existing session transitions. Export and recording viewer commands remain receipt-only; native producers are unimplemented."
+        "Plans/Automated_Testing_System.md#ATS-049 and Plans/testing_session_event_admission.json retain four exact send-only obligations, quarantined_not_admitted under Plans/Decision_Log.md#DL-039. Candidate validation grants no EventRecord append/replay, identity consumption or checkpoint advance. Export and recording viewer commands remain receipt-only; native producers are unimplemented."
       ],
       "receipt_refs": [
         "Typed settlement through Plans/ui_command_response.schema.json; accepted is pending; replay returns original identity."
@@ -3544,8 +3544,8 @@
       "payload_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request",
       "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result",
       "error_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_error",
-      "availability_rule": "Exact repository, backend, revision, workspace, writer lease, credential lease, and current capability are required.",
-      "permission_gate": "Permissions, FileSafe, writer lease, credential broker, repository authority, and confirmation apply.",
+      "availability_rule": "Consume SCS-003's exact command_id-discriminated scope and current capability. Repository/backend/revision/workspace, writer lease and credential lease are required only where that command's owner scope requires them; pre-repository and read-only commands do not inherit mutation-only leases or transport requirements.",
+      "permission_gate": "Permissions, FileSafe, repository authority and confirmation follow the exact owner command branch; writer leases and credential-broker transport authority apply only where required by SCS-003, never inferred for pre-repository or read-only commands.",
       "disabled_reason_rule": "Expose backend/repository/workspace missing, stale revision, lease conflict, permission, credential, setup, degraded, or recovery blocker.",
       "handler_owner": "Source Control System neutral router with one backend adapter; native handlers are absent. Sole future backend-detect, backend-select, and workspace-switch targets are handlers::source_control::backend_detect, handlers::source_control::backend_select, and handlers::source_control::workspace_switch; target strings are not native proof. The 8 commands added by the central Touch closure have sole future routes in Plans/Source_Control_System.md#SCS-010; target strings are not native proof.",
       "handler_status": "specified",
@@ -8098,7 +8098,7 @@
       "command",
       "cmd.project.new_github_repo",
       "partial",
-      "GI-042/PJCT-008 bind the existing forge intake, Project action request/result and two admitted event transitions; static joins pass, while native owner dispatch, authenticated receipt/readback resolution and runtime evidence remain absent."
+      "GI-042/PJCT-008 bind the existing forge intake and Project action request/result; the two candidate event obligations remain quarantined_not_admitted under DL-039 with no persisted append/replay authority. Static joins do not prove native owner dispatch, authenticated receipt/readback resolution or runtime evidence."
     ],
     [
       "TOUCH-PJCT-004",

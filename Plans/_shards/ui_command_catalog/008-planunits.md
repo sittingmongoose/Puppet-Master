@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1252-L6888
+Source lines: L1253-L6890
 
-Source SHA256: `c89d93a358e7bbe6d19c14a74bcb915913b3751569a48064b8dc8be2aaacd39c`
+Source SHA256: `030199497809c9b300e8e6de3495b2a319d95f0e31b518b762bc1bc95dc286e5`
 
 ---
 
@@ -3534,7 +3534,7 @@ plan_unit_id: UCC-064
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime artifact creation, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
+canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime_artifact.screenshot consumer intent subject to RAP-054 / Event Authority admission, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3582,7 +3582,8 @@ preserved_exact_tokens:
 negative_constraints:
 - share_with_agent and revoke_share_with_agent do not create browser.context_captured events and do not serialize page, selection, or element context without a separate explicit capture command.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- runtime_artifact.created is preserved only as forbidden compatibility/source lineage; RAP-054 excludes it from active screenshot event expectations.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md

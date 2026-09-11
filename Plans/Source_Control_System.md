@@ -143,6 +143,11 @@ acceptance_criteria:
   - Accepted async commands point to ObservableWork; terminal receipts carry before/after native revisions and event refs.
   - Command scopes preserve exact Project/Home Server/Host/Environment/Source Location/repository/backend/workspace/revision/currentness/lease/credential identities as applicable, while path/focus/newest/remote text and generic provider fields cannot satisfy identity.
   - Read-only and pre-repository commands do not inherit mutation-only writer or transport requirements; command-specific requirements are selected only by the exact command_id discriminator.
+  - A succeeded result cannot have effect_state=effect_unknown; an effect_unknown error cannot disguise itself as a known effect. Unknown effects keep retry_allowed=false and offer reconciliation without any retry action until effects are known.
+  - Every established terminal source_control_command_result carries a non-secret operation_receipt_ref, including blocked, failed, cancelled, recovery_required and effect_unknown. This is not a requirement for pre-attempt availability or error records.
+  - The CV-331 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.
+  - Optional plan_id and goal_id lineage map exactly to the central named_plan_id and goal_id; omission or null cannot authorize an invented non-null central identity. Run and agent lineage stay in the exact owner request/result scope without inventing fields in the closed central identity.
+  - Central projection maps succeeded to succeeded, blocked to rejected, failed/cancelled to their same terminal states, and recovery_required/effect_unknown to terminal_unknown and recovery_required. Any unresolved effect requires terminal_unknown regardless of a failed result label. no_effect alone is not an owner-verified no_op verdict.
 validation_surfaces: [Plans/source_control_contract_fixtures.json, writer and credential lease fixtures, stale lease tests, prompt suppression tests, command idempotency tests]
 risk_class: concurrent_mutation_or_credential_escape
 reasoning_tier: high
@@ -154,6 +159,14 @@ preserved_exact_tokens: [writer lease, generation, epoch, git-credential-puppet-
 negative_constraints: [Do not prompt for ambient credentials., Do not persist private keys or tokens., Do not treat expiry as cleanup proof., Do not retry an effect-unknown mutation automatically.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md, Plans/FileSafe.md]
 ```
+
+The source-control response fixture adapter consumes the central authenticated
+normalized request/hash binding; it is not a second request DTO or digest policy.
+Native admission must still resolve the actual request, applicable policy/leases,
+typed operation receipt and backend evidence. In-memory joins do not prove those
+lookups, persistence/recovery, Event Authority admission or native availability.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-331, ContractName:Plans/source_control_contracts.schema.json, ContractName:Plans/ui_command_response.schema.json
 
 ### SCS-004 - Exact-Environment Setup And Capability Certification
 
