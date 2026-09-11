@@ -269,6 +269,43 @@ def effective_guided_tour_bands(source: str) -> tuple[str, str, str]:
     return bands[0], bands[1], bands[2]
 
 
+def gap_repair_inventory() -> dict[str, tuple[str, str, str]]:
+    """Read only the explicitly admitted WM-056 command/profile/owner table."""
+    source = read("Plans/Wiring_Matrix.md")
+    start = "<!-- gap-repair-touch-inventory-20260910:start -->"
+    end = "<!-- gap-repair-touch-inventory-20260910:end -->"
+    if source.count(start) != 1 or source.count(end) != 1:
+        raise ValueError("gap-repair inventory requires one exact bounded table")
+    body = between(source, start, end).splitlines()[1:]
+    result = {}
+    profiles = set()
+    for line in body:
+        if not line.strip() or line in {
+            "| Canonical command | Touch profile | Canonical owner PlanUnit |",
+            "|---|---|---|",
+        }:
+            continue
+        match = re.fullmatch(
+            r"\| `(cmd\.[a-z0-9_.]+)` \| `(TCP-GAP-[0-9]{3})` \| `(Plans/[^`#]+\.md)#([A-Z][A-Z0-9]*-[0-9]{3})` \|",
+            line,
+        )
+        if match is None:
+            raise ValueError(f"invalid gap-repair inventory row: {line}")
+        command, profile, owner, unit = match.groups()
+        if command in result or profile in profiles:
+            raise ValueError("duplicate gap-repair command or profile")
+        result[command] = (profile, owner, unit)
+        profiles.add(profile)
+    if len(result) != 38:
+        raise ValueError(f"gap-repair inventory must contain its exact 38 commands, found {len(result)}")
+    catalog = read("Plans/UI_Command_Catalog.md")
+    missing = [command for command in result
+               if not re.search(r"^\| `" + re.escape(command) + r"` \|", catalog, re.M)]
+    if missing:
+        raise ValueError(f"gap-repair commands absent from primary catalog declarations: {missing}")
+    return result
+
+
 def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     """Build the independent expected action -> (profile, kind, disposition) map."""
 
@@ -543,6 +580,8 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     add("TCP-PLUGIN", "command", plugin)
     add("TCP-PERF", "command", {"cmd.environment.connect", "cmd.environment.reconnect", "cmd.environment.disconnect"})
     add("TCP-BSD", "command", {"cmd.bsd.set"})
+    for action, (profile, _owner, _unit) in gap_repair_inventory().items():
+        add(profile, "command", {action})
     add("TCP-USAGE", "command", {"cmd.nav.open_usage_subject"})
 
     system_source_path = "Concepts/pm7-tools/systems_integration_source.py"
@@ -1278,6 +1317,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             failures.append(
                 f"{action}: transitive disposition must be {expected_disposition}, found {row[4]}"
             )
+    try:
+        for action, (profile_id, owner, unit) in gap_repair_inventory().items():
+            profile = profiles.get(profile_id, {})
+            if profile.get("owner_plan") != owner or profile.get("plan_unit") != unit:
+                failures.append(f"{action}: gap-repair owner/profile must match the WM-056 table")
+    except ValueError as error:
+        failures.append(str(error))
     actionable_noncanonical_sources = sorted(non_actionable_sources & set(row_by_action))
     if actionable_noncanonical_sources:
         failures.append(
@@ -1432,12 +1478,18 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 2026-09-07: +4 rows (Show Me and three reused domain commands),
     # +2 owner profiles (Personas and Assistant Chat). No new production wiring,
     # aliases, exclusions, native handlers, or closure promotion is admitted.
+    # WM-056 (September 10): +38 partial rows and action-specific profiles:
+    # nine BSD, seven Lens, twenty-two owner-reference/sole-handler repairs.
+    # The standard wiring repair removes exactly eleven forbidden peer rows:
+    # cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings,
+    # retired cmd.chat.delete_message, and the file-only cmd.chat.add_file_reference
+    # alias whose target remains cmd.chat.attachment.add. Source cases are retained.
     exact_resolved_denominators = {
-        "row_count": 606,
-        "profile_count": 93,
+        "row_count": 644,
+        "profile_count": 131,
         "excluded_token_count": 58,
         "alias_binding_count": 64,
-        "production_wiring_entry_count": 1154,
+        "production_wiring_entry_count": 1143,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
@@ -1529,7 +1581,7 @@ def main() -> int:
             print(f"ERROR: {failure}", file=sys.stderr)
     else:
         print(
-            f"PASS: {REGISTRY_PATH} resolves {stats['row_count']} complete rows "
+            f"PASS: {REGISTRY_PATH} resolves {stats['row_count']} structurally populated rows "
             f"across {stats['profile_count']} DRY closure profiles; open residuals={stats['open_residual_count']}"
         )
     return 0 if not failures else 1

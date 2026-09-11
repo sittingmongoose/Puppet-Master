@@ -102,6 +102,95 @@ class Materializer:
                 depth=0,
             )
 
+        self._write_manifests(packet_hashes)
+
+    def run_manifest_directory(self, source: Path, manifest_sha256: str) -> None:
+        """Freeze an already unpacked packet, using its exact declared hashes.
+
+        Scratch slices and other unlisted workspace files are not packet inputs.
+        The two manifest/checksum files are retained as provenance, never presented
+        as an original archive. All inputs are verified before creating output.
+        """
+        source = source.resolve(strict=True)
+        if self.output.exists():
+            raise CustodyError(f"output already exists: {self.output}")
+        manifest_path = source / "manifest.json"
+        manifest_bytes = manifest_path.read_bytes()
+        if sha256_bytes(manifest_bytes) != manifest_sha256:
+            raise CustodyError("directory packet manifest hash mismatch")
+        try:
+            manifest = json.loads(manifest_bytes)
+        except (ValueError, UnicodeError) as error:
+            raise CustodyError(f"invalid directory packet manifest: {error}") from error
+        if not isinstance(manifest, dict):
+            raise CustodyError("directory packet manifest must be an object")
+        files = manifest.get("files")
+        if not isinstance(files, list) or not files:
+            raise CustodyError("directory packet manifest requires a nonempty files array")
+        verified: list[tuple[str, bytes]] = []
+        seen: set[str] = set()
+        for item in files:
+            if not isinstance(item, dict) or not isinstance(item.get("path"), str):
+                raise CustodyError("invalid directory packet file entry")
+            relative = PurePosixPath(*safe_parts(item["path"])).as_posix()
+            if relative in seen:
+                raise CustodyError(f"duplicate directory packet file: {relative}")
+            seen.add(relative)
+            path = source.joinpath(*safe_parts(relative))
+            if not path.resolve(strict=True).is_relative_to(source):
+                raise CustodyError(f"directory packet file escapes its root: {relative}")
+            data = path.read_bytes()
+            if type(item.get("bytes")) is not int or len(data) != item["bytes"]:
+                raise CustodyError(f"directory packet byte count mismatch: {relative}")
+            if sha256_bytes(data) != item.get("sha256"):
+                raise CustodyError(f"directory packet hash mismatch: {relative}")
+            verified.append((relative, data))
+        for relative in ("manifest.json", "SHA256SUMS.txt"):
+            if relative not in seen:
+                path = source / relative
+                if path.is_file():
+                    if not path.resolve(strict=True).is_relative_to(source):
+                        raise CustodyError(f"directory provenance escapes its root: {relative}")
+                    verified.append((relative, manifest_bytes if relative == "manifest.json" else path.read_bytes()))
+        source_id = f"DIR-01-{slug(source.name)}"
+        self.raw_root.mkdir(parents=True)
+        self.slice_root.mkdir(parents=True)
+        for relative, data in verified:
+            raw = self.raw_root / source_id / relative
+            raw.parent.mkdir(parents=True, exist_ok=True)
+            raw.write_bytes(data)
+            text = None
+            kind, decode_status = "binary", "not_text_extension"
+            if Path(relative).suffix.lower() in TEXT_EXTENSIONS:
+                try:
+                    text = data.decode("utf-8")
+                    kind, decode_status = "document", "utf8"
+                except UnicodeDecodeError:
+                    kind, decode_status = "undecodable_text", "utf8_decode_failed"
+            logical = f"{source.name}/{relative}"
+            entry = dict(archive_id=source_id, archive_chain=[], logical_path=logical,
+                         raw_relative_path=raw.relative_to(self.output).as_posix(),
+                         kind=kind, bytes=len(data), sha256=sha256_bytes(data),
+                         decode_status=decode_status)
+            if text is not None:
+                entry["line_count"] = len(text.splitlines())
+                self.documents.append(Document(
+                    document_id=f"DOC-{len(self.documents) + 1:04d}", archive_id=source_id,
+                    archive_chain=(), logical_path=logical,
+                    raw_relative_path=entry["raw_relative_path"], data=data, text=text,
+                ))
+            self.inventory.append(entry)
+        self._write_manifests([])
+        write_json(self.output / "directory_source.json", {
+            "schema_id": "pm.packet_custody.manifested_directory.v1",
+            "source_kind": "manifested_directory_not_original_archive",
+            "source_path": str(source), "manifest_path": str(manifest_path),
+            "manifest_sha256": manifest_sha256, "declared_file_count": len(files),
+            "retained_file_count": len(verified),
+            "claim_boundary": "Byte custody only, not source approval or implementation proof.",
+        })
+
+    def _write_manifests(self, packet_hashes: list[dict[str, Any]]) -> None:
         coverage_documents = [self._slice_document(document) for document in self.documents]
         write_json(self.output / "packet_hashes.json", {
             "schema_id": "pm.packet_custody.hashes.v1",
@@ -384,6 +473,10 @@ def parse_args() -> argparse.Namespace:
     materialize = subparsers.add_parser("materialize")
     materialize.add_argument("--output", type=Path, required=True)
     materialize.add_argument("--archive", action="append", type=Path, required=True)
+    directory = subparsers.add_parser("materialize-directory")
+    directory.add_argument("--source", type=Path, required=True)
+    directory.add_argument("--output", type=Path, required=True)
+    directory.add_argument("--manifest-sha256", required=True)
     verify_parser = subparsers.add_parser("verify")
     verify_parser.add_argument("root", type=Path)
     return parser.parse_args()
@@ -392,6 +485,13 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     try:
+        if args.command == "materialize-directory":
+            Materializer(args.output).run_manifest_directory(args.source, args.manifest_sha256)
+            errors = verify(args.output)
+            if errors:
+                raise CustodyError("post-materialization verification failed:\n" + "\n".join(errors))
+            print(f"PASS: directory source custody materialized and verified {args.output}")
+            return 0
         if args.command == "materialize":
             archives = [path.resolve(strict=True) for path in args.archive]
             if len(archives) != 8:
