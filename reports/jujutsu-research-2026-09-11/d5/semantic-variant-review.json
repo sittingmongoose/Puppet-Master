@@ -1,0 +1,2865 @@
+{
+  "review_kind": "independent_semantic_assembled_variant_review",
+  "reviewer": "jj_d5_semantic_review",
+  "created_at": "2026-09-11T17:42:20.963892+00:00",
+  "status": "pass_for_byte_exact_owner_application",
+  "manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/manifest.json",
+    "sha256": "a1851e2837bac657a8062998cb0e80dd976b665463ca432b0cf8609a0e8e7f6f"
+  },
+  "proposal_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/semantic/proposal-findings.json",
+    "sha256": "ea03697d74e124b595112462638f0de40c69ba71bb79040ce0ce986b6ca5b3ce"
+  },
+  "reviewed_file_variants": [
+    {
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Jujutsu_Integration.md",
+      "assembled_sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Jujutsu_Integration.md",
+      "addition_sha256": "9e5f4cb01cd5cf6af3503f31933c0fccff5b84278bb371adc9153b956b8170d6",
+      "base_sha256": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa"
+    },
+    {
+      "owner_doc": "Plans/Source_Control_System.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Source_Control_System.md",
+      "assembled_sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Source_Control_System.md",
+      "addition_sha256": "410283ea8fba5bae501c38874520df3d4dc6de37fb1d3ddaf9e83cb1483f6eaa",
+      "base_sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb"
+    },
+    {
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Forge_Integrations.md",
+      "assembled_sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Forge_Integrations.md",
+      "addition_sha256": "93293c54b1bf21f629e79203492d62502a3f6ea50b81f707847c3f06a0498f18",
+      "base_sha256": "fb5f9889bb6a3b702304cf026f75bf1865c65e98c64773a17aaa3c068e243d87"
+    },
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FinalGUISpec.md",
+      "assembled_sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FinalGUISpec.md",
+      "addition_sha256": "2fa406780d27d5416ded42fdfa957d5ee205bd4d415f8ac7c08c97ba12020df3",
+      "base_sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5"
+    },
+    {
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/UI_Command_Catalog.md",
+      "assembled_sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/UI_Command_Catalog.md",
+      "addition_sha256": "bb9a82d892e0bef390420ca415bb3492851e71d720ba91f4c832059b2e75473d",
+      "base_sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5"
+    },
+    {
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Wiring_Matrix.md",
+      "assembled_sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Wiring_Matrix.md",
+      "addition_sha256": "a64cf8a09d64af57ae0ea00485c5c9f5633cdb761b70042d66f6384c1a7f5263",
+      "base_sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e"
+    },
+    {
+      "owner_doc": "Plans/Contracts_V0.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Contracts_V0.md",
+      "assembled_sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Contracts_V0.md",
+      "addition_sha256": "9d456575210db9d717aa8cec9e29ed244d8b51a512edf2357dc08618e146f336",
+      "base_sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6"
+    },
+    {
+      "owner_doc": "Plans/Permissions_System.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Permissions_System.md",
+      "assembled_sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Permissions_System.md",
+      "addition_sha256": "bfc2af8da5a5ec491666d6a498fab361194fa11c62ed1e526684806f1ecadba1",
+      "base_sha256": "65f8cfc8efb2bacf69961629152d9bdba0f2c626c8121147d3ec11b2985f1c53"
+    },
+    {
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Backup_Restore_System.md",
+      "assembled_sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Backup_Restore_System.md",
+      "addition_sha256": "1843ec68c01262aaa48ccb494984f8045e851ad14290efde09d882c1888c4c4f",
+      "base_sha256": "7638c06e29a7bffa0cd6cce46f88902e000a56f7e3edf6c7c27cdcd7d6ccb089"
+    },
+    {
+      "owner_doc": "Plans/FileManager.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FileManager.md",
+      "assembled_sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FileManager.md",
+      "addition_sha256": "e7e0a20a184d96a214c659b8c40687e316b82b680a6678be9d5233230ec898e1",
+      "base_sha256": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6"
+    },
+    {
+      "owner_doc": "Plans/FileSafe.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FileSafe.md",
+      "assembled_sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FileSafe.md",
+      "addition_sha256": "2a528e17d50093736066d77eb3e0b1b63690eb07334fd61715150816cecb8754",
+      "base_sha256": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb"
+    },
+    {
+      "owner_doc": "Plans/storage-plan.md",
+      "assembled_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/storage-plan.md",
+      "assembled_sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+      "addition_path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/storage-plan.md",
+      "addition_sha256": "cd790e91ceb6e94d576d83f8ec7eea3fd9bb767ece66efc69be44718eeacd85e",
+      "base_sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b"
+    }
+  ],
+  "amendment_summary": {
+    "changed_dependency_lists": 15,
+    "added_dependency_edges": 46,
+    "required_repair": "SEM-001 closed",
+    "clarity_amendments": 3,
+    "other_existing_prose_changes": "One previously reviewed BRS default-index-exclusion exception",
+    "unreviewed_semantic_changes": 0
+  },
+  "findings": [],
+  "resolved_findings": [
+    {
+      "finding_id": "SEM-001",
+      "disposition": "closed_in_reviewed_variant",
+      "affected_units": [
+        "SCS-018"
+      ],
+      "resolution": "Reconciliation is required before retry; an applied effect returns its original result, an unapplied effect may retry with fresh fences, and an unresolved effect stays blocked."
+    }
+  ],
+  "decision_verdicts": [
+    {
+      "card_id": "J01",
+      "decision_id": "D002",
+      "name": "Named history markers",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add named markers on existing checkpoints",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-552",
+        "JJI-011",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Names annotate existing checkpoint/operation identities; duplicate labels and missing targets cannot retarget recovery."
+    },
+    {
+      "card_id": "J02",
+      "decision_id": "D003",
+      "name": "Grouped history actions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Group display and provide verified group undo",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-552",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Ordered applied members and partial outcomes support separately verified group undo without an atomic-batch claim."
+    },
+    {
+      "card_id": "J03",
+      "decision_id": "D004",
+      "name": "Recent actions and redo",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add recent actions and supported redo",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-552",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Recent navigation is bounded; redo requires an exact qualified relation and rejects changed or divergent native state."
+    },
+    {
+      "card_id": "J04",
+      "decision_id": "D005",
+      "name": "Filter operation history",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add simple action and time filters",
+      "plan_units": [
+        "CV-330",
+        "F3-552",
+        "JJI-011",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Simple action/time filtering preserves unknown/external operations, time basis, omissions and pagination; no operation query language added."
+    },
+    {
+      "card_id": "J05",
+      "decision_id": "D006",
+      "name": "Readable operation descriptions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add structured descriptions from existing receipts",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-552",
+        "JJI-011",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Descriptions derive from existing sanitized receipts and never create operations or become identity/idempotency."
+    },
+    {
+      "card_id": "J06",
+      "decision_id": "D007",
+      "name": "History storage maintenance",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Diagnose growth and offer explicit maintenance",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F2-211",
+        "F3-559",
+        "JJI-013",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Diagnostics and explicit authorized maintenance preserve retained closure and capture/GC fences; automatic pruning is excluded."
+    },
+    {
+      "card_id": "J07",
+      "decision_id": "D042",
+      "name": "Reverse one selected operation",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a separately labeled reverse-selected-operation action",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-553",
+        "JJI-012",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Reverse-selected-operation binds one exact historic operation against current state, rejects unsupported root/merge targets and remains distinct from sequential undo."
+    },
+    {
+      "card_id": "J08",
+      "decision_id": "D043",
+      "name": "Preview a rewrite before applying it",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an explicitly managed rewrite preview and apply workflow",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F-083",
+        "F2-211",
+        "F3-554",
+        "JJI-015",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Rewrite preview is an effectful managed lifecycle with isolation, custody, cleanup and separately revalidated application; it is neither read-only dry run nor backup alignment."
+    },
+    {
+      "card_id": "J09",
+      "decision_id": "D044",
+      "name": "Browse an earlier repository state",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a clearly labeled earlier-state browsing mode",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-554",
+        "JJI-010",
+        "JJI-020",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Earlier-state browsing coordinates graph/tree/content/bookmarks at one historical operation and cannot restore or substitute current objects."
+    },
+    {
+      "card_id": "J10",
+      "decision_id": "D037",
+      "name": "Export operation diagnostics",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add explicit sanitized export",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F2-212",
+        "F3-559",
+        "PS-142",
+        "SCS-018",
+        "SCS-021",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Explicit sanitized export creates an authorized artifact with bounded reviewed scope, destination and receipt; it does not upload or execute."
+    },
+    {
+      "card_id": "J11",
+      "decision_id": "D038",
+      "name": "View source-control commands",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an optional technical log view",
+      "plan_units": [
+        "CV-330",
+        "F2-212",
+        "F3-559",
+        "PS-142",
+        "SCS-018",
+        "SCS-021",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Optional bounded command log consumes redacted exact receipts; stdout and exit status never become authority."
+    },
+    {
+      "card_id": "J12",
+      "decision_id": "D010",
+      "name": "Combine divergent versions",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add guided convergence when supported",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Guided convergence binds exact divergent commits of one change and makes heuristic ambiguity and conflicts explicit."
+    },
+    {
+      "card_id": "J13",
+      "decision_id": "D011",
+      "name": "Duplicate a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a duplicate action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Duplication creates independent change identity from exact source and destination parents, with descendant effects qualified."
+    },
+    {
+      "card_id": "J14",
+      "decision_id": "D012",
+      "name": "Create a merge change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a merge action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Merge creation preserves selected parent identities, ordering and conflict consequences without a hidden Git alias."
+    },
+    {
+      "card_id": "J15",
+      "decision_id": "D013",
+      "name": "Absorb edits into earlier changes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add absorption with preview",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Absorption fixes dirty snapshot, per-hunk allocations and affected descendants before approval; ambiguous remainder stays visible."
+    },
+    {
+      "card_id": "J16",
+      "decision_id": "D014",
+      "name": "Back out a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a back-out action",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-016",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Back-out creates a compensating source change preserving intervening history; it is distinct from operation recovery."
+    },
+    {
+      "card_id": "J17",
+      "decision_id": "D015",
+      "name": "Compare versions of a change",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a version-to-version comparison",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "JJI-017",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Version comparison binds immutable endpoints and parent normalization, with explicit unsupported or missing baselines."
+    },
+    {
+      "card_id": "J18",
+      "decision_id": "D016",
+      "name": "Change evolution",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a focused evolution view",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "JJI-017",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Focused evolution follows bounded predecessor lineage and preserves divergence, abandonment and retention gaps."
+    },
+    {
+      "card_id": "J19",
+      "decision_id": "D031",
+      "name": "Edit history by dragging",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add previewed drag actions and keyboard equivalents",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-018",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Drag and keyboard produce the same exact previewed native intent, preserving multiselection, insert/move and descendant semantics."
+    },
+    {
+      "card_id": "J20",
+      "decision_id": "D019",
+      "name": "Scriptable partial changes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a structured hunk selection interface",
+      "plan_units": [
+        "CV-330",
+        "F2-211",
+        "F3-555",
+        "JJI-018",
+        "PS-142",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Structured hunk input shares native routes, exact snapshots and occurrence identities; duplicate text, truncation and unsupported file types cannot widen selection."
+    },
+    {
+      "card_id": "J21",
+      "decision_id": "D001",
+      "name": "Read-only repositories",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a supported read-only browsing mode",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-010",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Qualified physically read-only browsing prohibits original-store mutation and discloses unsupported or incomplete paths."
+    },
+    {
+      "card_id": "J22",
+      "decision_id": "D008",
+      "name": "Adopt existing workspaces",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add an explicit adoption and repair flow",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-014",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Explicit adoption/repair preserves native identity, previews mapping and individual effects, and exposes partial or quarantined state."
+    },
+    {
+      "card_id": "J23",
+      "decision_id": "D009",
+      "name": "Hide inactive workspaces",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add hide and unhide",
+      "plan_units": [
+        "CV-330",
+        "F-083",
+        "F2-211",
+        "F3-557",
+        "JJI-014",
+        "PS-142",
+        "SCS-018",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Hide/unhide is idempotent presentation metadata on stable workspace identity; it does not remove data or release authority."
+    },
+    {
+      "card_id": "J24",
+      "decision_id": "D036",
+      "name": "Very large repository backends",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Defer specialized storage",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Deferred specialized storage has no PlanUnit or new backend/library."
+    },
+    {
+      "card_id": "J25",
+      "decision_id": "D029",
+      "name": "Prioritize graph lanes",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add explicit lane priorities",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Native lane priorities intersect visible bounded graph identity and preserve stable layout/currentness."
+    },
+    {
+      "card_id": "J26",
+      "decision_id": "D030",
+      "name": "Help with history queries",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add native query assistance",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Version-qualified native query help remains bounded and distinct from query execution and operation-query language."
+    },
+    {
+      "card_id": "J27",
+      "decision_id": "D032",
+      "name": "Keep comparison context visible",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add pinned comparison and selected-change details",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-019",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Pins bind immutable comparison endpoints and selected details; refresh cannot silently retarget or invent staging."
+    },
+    {
+      "card_id": "J28",
+      "decision_id": "D017",
+      "name": "Line attribution and file history",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add bounded attribution and file history",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-020",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Bounded attribution and file history carry exact revision/path/range provenance and disclose rename and performance limitations."
+    },
+    {
+      "card_id": "J29",
+      "decision_id": "D018",
+      "name": "Review marks that survive edits",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add conservative matching with stale markers",
+      "plan_units": [
+        "CV-330",
+        "F3-556",
+        "SCS-018",
+        "SCS-020",
+        "SP-260",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Conservative matching preserves original immutable review evidence, adds derived unambiguous correspondence, and exposes stale/orphaned marks without moving hosted approval."
+    },
+    {
+      "card_id": "J30",
+      "decision_id": "D033",
+      "name": "Review a workspace with AI",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Use existing chat review workflows",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined specialized AI workspace-review workflow has no PlanUnit; existing chat review remains."
+    },
+    {
+      "card_id": "J31",
+      "decision_id": "D020",
+      "name": "New line endings in mixed-ending text",
+      "decision_class": "policy set",
+      "verbatim_answer": "Use the nearest existing line ending; preserve existing endings on ordinary Save.",
+      "plan_units": [
+        "F-082",
+        "F3-560"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Nearest-existing behavior is a required new-boundary policy; ordinary Save preserves surviving CRLF/LF/CR and optional paste normalization remains scoped."
+    },
+    {
+      "card_id": "J32",
+      "decision_id": "D021",
+      "name": "Use an external diff or merge editor",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep resolution inside Puppet Master",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external diff/merge editor has no PlanUnit; in-PM resolution remains unchanged."
+    },
+    {
+      "card_id": "J33",
+      "decision_id": "D027",
+      "name": "Publish unresolved conflicts",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Block by default; add an advanced path only for qualified compatible targets.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "JJI-019",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Default blocking and exact qualified-compatible-target condition are explicit acceptance criteria, with separate local conflict and publication truth."
+    },
+    {
+      "card_id": "J34",
+      "decision_id": "D028",
+      "name": "Resolve a conflicted bookmark",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add a guided picker only if it clarifies rather than hides the target states.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "JJI-019",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Picker must display all target alternatives and prove clarity; it uses admitted actions only and blocks stale or unrepresentable selections."
+    },
+    {
+      "card_id": "J35",
+      "decision_id": "D039",
+      "name": "Publish a stack of reviews",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add one explicitly supported forge workflow at a time.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "FGI-016",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "One supported forge workflow at a time is an admission condition; stack identities, partial publication/review outcomes and per-phase idempotency are preserved."
+    },
+    {
+      "card_id": "J36",
+      "decision_id": "D040",
+      "name": "Additional review services",
+      "decision_class": "accepted with the stated condition",
+      "verbatim_answer": "Add only for a concrete user workflow and keep local history independent.",
+      "plan_units": [
+        "CV-330",
+        "CV-331",
+        "F3-558",
+        "FGI-017",
+        "PS-143",
+        "SCS-018",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Additional service admission requires a concrete workflow with exact provider semantics and preserves independent local history; no provider is silently selected."
+    },
+    {
+      "card_id": "J37",
+      "decision_id": "D041",
+      "name": "Custom actions around publishing",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep publication within existing adapter behavior",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined custom publication actions have no PlanUnit or hook runner."
+    },
+    {
+      "card_id": "J38",
+      "decision_id": "D022",
+      "name": "How the adapter runs",
+      "decision_class": "architecture choice",
+      "verbatim_answer": "Own a separate internal service",
+      "plan_units": [
+        "CV-330",
+        "JJI-009",
+        "PS-142",
+        "SCS-018",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "PM owns a separate authenticated internal adapter service and engine/diff implementation; existing leases and routes remain authoritative."
+    },
+    {
+      "card_id": "J39",
+      "decision_id": "D023",
+      "name": "Reuse a diff library",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep an independently owned diff implementation",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined library reuse has no PlanUnit; the architecture unit retains the independently owned implementation constraint."
+    },
+    {
+      "card_id": "J40",
+      "decision_id": "D024",
+      "name": "Connect external IDEs",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep source-control interaction in Puppet Master",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external IDE connectivity has no PlanUnit or new endpoint."
+    },
+    {
+      "card_id": "J41",
+      "decision_id": "D025",
+      "name": "Shared source-control service",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Use existing owner services only",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined shared source-control service has no PlanUnit; existing internal owner-service routing remains."
+    },
+    {
+      "card_id": "J42",
+      "decision_id": "D026",
+      "name": "Connect other agent tools",
+      "decision_class": "declined or deferred",
+      "verbatim_answer": "Keep existing internal agent routes",
+      "plan_units": [],
+      "semantic_verdict": "declined_preserved",
+      "required_repairs": [],
+      "rationale": "Declined external-agent/MCP interface has no PlanUnit or alternate runtime route."
+    },
+    {
+      "card_id": "J43",
+      "decision_id": "D034",
+      "name": "Store or rebuild history indexes",
+      "decision_class": "policy set",
+      "verbatim_answer": "Prefer rebuilding correctness-critical indexes in the isolated drill; keep captured indexes only as an optional speed aid.",
+      "plan_units": [
+        "BRS-021",
+        "CV-331",
+        "F2-212",
+        "F3-560",
+        "SP-261"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Isolated drill must rebuild correctness-critical indexes and prove native closure without captured caches; optional speed-aid capture is narrow and scope-authorized."
+    },
+    {
+      "card_id": "J44",
+      "decision_id": "D035",
+      "name": "Complete missing repository data",
+      "decision_class": "accepted for planning",
+      "verbatim_answer": "Add a separately authorized completion workflow",
+      "plan_units": [
+        "BRS-022",
+        "CV-330",
+        "CV-331",
+        "F2-212",
+        "F3-560",
+        "PS-142",
+        "SP-261",
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "semantic_verdict": "preserved",
+      "required_repairs": [],
+      "rationale": "Missing-data completion is separately authorized transport, preserves exact scope and credentials, recaptures and verifies closure, and cannot activate restore or relabel old snapshots."
+    }
+  ],
+  "intake_companion_review": {
+    "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/reports/jujutsu-research-2026-09-11/d5/answered-companion.json",
+    "sha256": "721ca63bc28254a4439addfdbc7000689dc361679388bc2c0812cfb900ed18be",
+    "answer_and_class_fidelity": "pass_all_44",
+    "mapping_status_at_review": "pending_owner_compile_in_intake; final 44 decision mapping independently verified in assembled manifest"
+  },
+  "checks": [
+    {
+      "check": "manifest_matches_parent_supplied_sha",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Forge_Integrations.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Jujutsu_Integration.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Source_Control_System.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/manifest.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/Backup_Restore_System.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/FileManager.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/FileSafe.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/manifest.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/storage-plan.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Contracts_V0.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/FinalGUISpec.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Permissions_System.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/UI_Command_Catalog.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Wiring_Matrix.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original_reviewed_input_unchanged:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/manifest.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Jujutsu_Integration.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Jujutsu_Integration.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Jujutsu_Integration.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Jujutsu_Integration.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:JJI-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:JJI-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:JJI-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Jujutsu_Integration.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Jujutsu_Integration.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Source_Control_System.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Source_Control_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Source_Control_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Source_Control_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SCS-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SCS-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SCS-018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SCS-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SCS-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SCS-019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SCS-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SCS-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SCS-020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SCS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SCS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SCS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Source_Control_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Source_Control_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/native/Forge_Integrations.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Forge_Integrations.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Forge_Integrations.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Forge_Integrations.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:FGI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:FGI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:FGI-016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:FGI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:FGI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:FGI-017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Forge_Integrations.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Forge_Integrations.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/FinalGUISpec.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FinalGUISpec.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FinalGUISpec.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/FinalGUISpec.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-552",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-552",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-552",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-552",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-553",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-553",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-553",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-553",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-554",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-554",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-554",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-554",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-555",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-555",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-555",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-555",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-556",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-556",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-556",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-556",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-557",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-557",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-557",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-557",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-558",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-558",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-558",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-558",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-559",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-559",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-559",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-559",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F3-560",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:F3-560",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F3-560",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F3-560",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/FinalGUISpec.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/FinalGUISpec.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/UI_Command_Catalog.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/UI_Command_Catalog.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/UI_Command_Catalog.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/UI_Command_Catalog.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:UCC-162",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:UCC-162",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:UCC-162",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:UCC-162",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:UCC-163",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:UCC-163",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:UCC-163",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:UCC-163",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/UI_Command_Catalog.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/UI_Command_Catalog.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Wiring_Matrix.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Wiring_Matrix.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Wiring_Matrix.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Wiring_Matrix.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:WM-054",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:WM-054",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:WM-054",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:WM-054",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Wiring_Matrix.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Wiring_Matrix.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Contracts_V0.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Contracts_V0.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Contracts_V0.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Contracts_V0.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:CV-330",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:CV-330",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:CV-330",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:CV-330",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:CV-331",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:CV-331",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:CV-331",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:CV-331",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Contracts_V0.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Contracts_V0.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/surfaces/Permissions_System.append.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Permissions_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Permissions_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Permissions_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:PS-142",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:PS-142",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:PS-142",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:PS-142",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:PS-143",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_dependency_binding:PS-143",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:PS-143",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:PS-143",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Permissions_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Permissions_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/Backup_Restore_System.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/Backup_Restore_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/Backup_Restore_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/Backup_Restore_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:BRS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:BRS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:BRS-021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:BRS-022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:BRS-022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:BRS-022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/Backup_Restore_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_Backup_prose_replacement",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "approved_narrow_index_exception",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/Backup_Restore_System.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/FileManager.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FileManager.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FileManager.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/FileManager.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F-082",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F-082",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F-082",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F-083",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F-083",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F-083",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/FileManager.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/FileManager.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/FileSafe.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/FileSafe.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/FileSafe.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/FileSafe.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F2-211",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F2-211",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F2-211",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:F2-212",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:F2-212",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:F2-212",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/FileSafe.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/FileSafe.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/proposals/safety/storage-plan.addendum.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/additions/Plans/storage-plan.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "hash:/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/assembled/owners/Plans/storage-plan.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unit_identity:Plans/storage-plan.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SP-260",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SP-260",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SP-260",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "only_reviewed_field_changes:SP-261",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unchanged_lineage:SP-261",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "gui_related_boolean:SP-261",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "baseline_owner_sha:Plans/storage-plan.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_composition_no_unreviewed_prose:Plans/storage-plan.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_42_units_12_owners",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_46_added_dependency_edges",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "SEM001_closed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "OBS001_clarity_applied",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "OBS002_Backup_native_owner_clarity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "OBS002_Storage_native_owner_clarity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "D3_immutable",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "companion_44_decisions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D002",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D002",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D002",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D003",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D003",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D003",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D004",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D004",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D004",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D005",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D005",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D005",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D006",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D006",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D006",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D007",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D007",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D007",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D042",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D042",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D042",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D043",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D043",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D043",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D044",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D044",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D044",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D037",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D037",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D037",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D038",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D038",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D038",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D010",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D011",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D012",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D013",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D014",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D015",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D016",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D031",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D031",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D031",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D019",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D001",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D001",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D001",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D008",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D008",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D008",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D009",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D036",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D036",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D036",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D029",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D029",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D029",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D030",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D030",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D030",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D032",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D032",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D032",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D017",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D018",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D033",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D033",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D033",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D020",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D021",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D027",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D027",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D027",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D028",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D028",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D028",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D039",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D039",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D039",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D040",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D040",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D040",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D041",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D041",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D041",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D022",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D023",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D023",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D023",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D024",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D024",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D024",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D025",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D025",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D025",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D026",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D026",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D026",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D034",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D034",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D034",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "verbatim_answer_and_class:D035",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exact_decision_unit_mapping:D035",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "declined_empty_positive_present:D035",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "new_unit_dependency_graph_acyclic",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "remaining_certification_boundary": [
+    "Parent must apply these exact owner bytes after baseline SHA currentness recheck.",
+    "Verify application receipt and actual owner file hashes.",
+    "Verify final compiled ledger/answered-companion unit mappings match the reviewed assembled manifest; intake presently records pending_owner_compile.",
+    "No runtime, native evidence, current schema admission, readiness or governance seal is certified."
+  ]
+}

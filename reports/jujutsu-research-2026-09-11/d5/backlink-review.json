@@ -1,0 +1,103 @@
+{
+  "review_kind": "independent_bounded_owner_backlink_and_application_review",
+  "status": "pass",
+  "created_at": "2026-09-11T17:44:54.083408+00:00",
+  "application_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/owner-application.json",
+    "sha256": "34e4261c5be336a49a2f85e776b50f658080f3b388868bdb8b57a1036e38278b"
+  },
+  "verified_applied_owners": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Jujutsu_Integration.md",
+      "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Source_Control_System.md",
+      "sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Forge_Integrations.md",
+      "sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FinalGUISpec.md",
+      "sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/UI_Command_Catalog.md",
+      "sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Wiring_Matrix.md",
+      "sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Contracts_V0.md",
+      "sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Permissions_System.md",
+      "sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Backup_Restore_System.md",
+      "sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileManager.md",
+      "sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileSafe.md",
+      "sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06",
+      "application_receipt_matches": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/storage-plan.md",
+      "sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+      "application_receipt_matches": true
+    }
+  ],
+  "backlink_review": {
+    "finding_id": "RBS-001",
+    "source_scan": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/d5/review/reference-backlink-scan.json",
+    "source_scan_sha256": "9e9a15beb0a52fc48335d474b5db2d8233cc602ec81c33686aec1011f88ece2f",
+    "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+    "base_sha256": "a262a1e77b79f096be363d63b1531c1d3ad97b04d68e3b2a9cbf0b1ccdd26405",
+    "exact_before": "| Project content, Vault content, sync, move, and source-control semantics | `Plans/Project_Sync_and_Backbone.md` and `Plans/WorktreeGitImprovement.md` | Bind execution to canonical topology identities; never become a second content, sync, move, or Git authority. |",
+    "before_sha256": "7b8cbdf3055bdb1208d017078b573a5255dcf1a30d9b8aee6d90348d196a1da8",
+    "exact_after": "| Project content, Vault content, sync, move, and source-control semantics | `Plans/Project_Sync_and_Backbone.md`, `Plans/Source_Control_System.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/Jujutsu_Integration.md` | Bind execution to canonical topology identities; common source-control semantics remain Source Control, Git/worktree semantics remain WorktreeGitImprovement, and JJ-native semantics remain Jujutsu Integration; never become a second content, sync, move, Git, or Jujutsu authority. The separately owned internal Jujutsu adapter service retains JJI-009 semantics and SCS-018 admission gates while shared lifecycle and ObservableWork remain here. |",
+    "after_sha256": "e7811919dda0d8b375d46a6a3620362e9dfe1d3a8c1cfbe1e2930ea2c5ee36c7",
+    "expected_full_file_after_sha256": "735620bdc43ffebecb0afd8ad46d5ebe9cb88590ef32fab7d86ceb3f425593df",
+    "verdict": "approved_for_exact_single_row_replacement",
+    "semantic_reason": "Explicitly names existing Source Control common semantics, Git/worktree owner and Jujutsu-native owner, while preserving Shared Integration Runtime lifecycle/ObservableWork and non-domain-authority boundaries. JJI-009 internal service and SCS-018 planning admission are correctly consumed; no new PlanUnit, primitive or runtime admission is introduced.",
+    "supporting_passages": [
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+        "line": 22
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+        "line": 247
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Shared_Integration_Runtime.md",
+        "line": 415
+      },
+      "Plans/Jujutsu_Integration.md#JJI-009",
+      "Plans/Source_Control_System.md#SCS-018"
+    ]
+  },
+  "open_findings": [],
+  "remaining": "Verify this exact SIR row after application and final compiled ledger/answered-companion mappings."
+}

@@ -1,0 +1,280 @@
+{
+  "status": "final_pre_rebase_gate_failures_classified",
+  "scope": "Read-only comparison of recorded pre-rebase D5 final run with initial and hydrated baseline; not post-rebase certification or landing approval.",
+  "overall_gate_status": "fail",
+  "exit_code": 1,
+  "completed_at": "2026-09-11T17:58:26.042222+00:00",
+  "failed_check_counts": {
+    "initial_baseline": 18,
+    "hydrated_baseline": 12,
+    "final": 11
+  },
+  "conclusion": "No new D5 semantic/schema/wiring defect is demonstrated by the displayed final failures. Aggregate gates remain red: exact existing defects, existing historical hash failures with D5 hash changes, one newly reported stale buildability projection, and newly exposed missing raw-evidence paths. This is not a claim that every exact error was preexisting or that all gates passed.",
+  "checks": [
+    {
+      "check": "json_syntax",
+      "classification": "environmental_missing_raw_evidence",
+      "explanation": "Newly exposed detail after validator input materialization: 16 raw_capture_manifest_path_unresolved rows. These exact errors were not observable in initial/hydrated baseline because schema absence/symlink ValueError stopped validation earlier. All 16 paths exist under shared checkout external-custody symlink, absent from worktree; immutable manifest hash matches shared. No malformed D5 JSON is reported.",
+      "displayed_failures": 16,
+      "exact_rows_already_in_hydrated_baseline": 0,
+      "error_counts": {
+        "raw_capture_manifest_path_unresolved": 16
+      }
+    },
+    {
+      "check": "verify_spec_lock",
+      "classification": "existing_failure_with_D5_hash_changes",
+      "explanation": "Same 19 stale-lock path identities as hydrated baseline. Five actual hashes changed with D5; 14 rows identical. This is existing failure plus new hash fallout, not all preexisting byte-identical errors. No reseal authorized.",
+      "displayed_failures": 19,
+      "exact_rows_already_in_hydrated_baseline": 14,
+      "error_counts": {
+        "stale_hash": 19
+      }
+    },
+    {
+      "check": "validate_plan_graph",
+      "classification": "existing_failure_with_D5_hash_changes",
+      "explanation": "Historical evidence remains stale; only two of 50 displayed rows identical. Owner/shard regeneration changes referenced hashes. Evidence refresh remains outside D5.",
+      "displayed_failures": 50,
+      "exact_rows_already_in_hydrated_baseline": 2,
+      "error_counts": {
+        "artifact_hash_stale": 50
+      }
+    },
+    {
+      "check": "validate_evidence",
+      "classification": "existing_failure_with_D5_hash_changes",
+      "explanation": "Same historical evidence failure family as baseline; two of 50 displayed rows identical and remaining current artifact hashes changed. Do not claim all exact failures predate D5.",
+      "displayed_failures": 50,
+      "exact_rows_already_in_hydrated_baseline": 2,
+      "error_counts": {
+        "artifact_hash_stale": 50
+      }
+    },
+    {
+      "check": "lint_path_refs",
+      "classification": "preexisting_missing_historical_inputs",
+      "explanation": "The same ATS-020 and SMPFS-151 scratchpad implementation surfaces remain missing. Second PlanUnit index line moved, but unit/path/error identity is unchanged.",
+      "displayed_failures": 2,
+      "exact_rows_already_in_hydrated_baseline": 1,
+      "error_counts": {
+        "implementation_surface_missing_or_untyped": 2
+      }
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "classification": "new_stale_projection_plus_existing_currentness_failures",
+      "explanation": "Final adds buildability_gate_report_stale_or_not_canonical, not present in hydrated baseline. Validator compares saved report to current node snapshot/source hashes (pm-implementation-readiness.py 1244-1252 and 8159-8169), so this is expected stale derived-governance fallout after index/owner changes, not native runtime evidence. Existing PNC019 source-hash and Event Authority source-drift families persist with changed hashes/order. Do not run repair_command in this non-seal phase.",
+      "displayed_failures": 50,
+      "exact_rows_already_in_hydrated_baseline": 42,
+      "error_counts": {
+        "buildability_gate_report_stale_or_not_canonical": 1,
+        "pnc019_source_hash_stale": 16,
+        "event_authority_currentness_source_drift": 33
+      }
+    },
+    {
+      "check": "validate_plan_migration",
+      "classification": "existing_failure_with_D5_hash_changes",
+      "explanation": "Historical inventory/doc-set drift persists; 31 of 50 displayed rows identical. Nineteen stale batch bindings have changed current hashes from D5 owner updates. No historical migration rewrite authorized.",
+      "displayed_failures": 50,
+      "exact_rows_already_in_hydrated_baseline": 31,
+      "error_counts": {
+        "doc_count_mismatch": 1,
+        "inventory_doc_set_mismatch": 1,
+        "stale_batch_report_sha256_after": 48
+      }
+    },
+    {
+      "check": "validate_pm7_gui_fixtures",
+      "classification": "exact_preexisting_failures",
+      "explanation": "All three rows exactly match hydrated baseline: forbidden context.compaction.completed and two missing predecessor no-event fixtures. These are existing validator/current-canon disagreements, not D5 JJ changes.",
+      "displayed_failures": 3,
+      "exact_rows_already_in_hydrated_baseline": 3,
+      "error_counts": {
+        "forbidden_context_compaction_event_family": 1,
+        "missing_pm7_valid_command_fixtures": 1,
+        "missing_pm7_invalid_command_fixtures": 1
+      }
+    },
+    {
+      "check": "validate_touch_closure",
+      "classification": "exact_preexisting_failures",
+      "explanation": "All five failure strings exactly match hydrated baseline: settings disposition hash, missing settings wiring/handler, orphan settings command, and server/Egolite denominator mismatch.",
+      "displayed_failures": 5,
+      "exact_rows_already_in_hydrated_baseline": 5,
+      "error_counts": {
+        "text_failure": 5
+      }
+    },
+    {
+      "check": "validate_audit_closure",
+      "classification": "existing_failure_with_D5_hash_changes",
+      "explanation": "43 of 50 displayed rows identical. New current ledger_registry hash changes seven displayed historical closure errors; historical audit evidence is intentionally not resealed.",
+      "displayed_failures": 50,
+      "exact_rows_already_in_hydrated_baseline": 43,
+      "error_counts": {
+        "audit_closure_validator_error": 50
+      }
+    },
+    {
+      "check": "validate_audit_status_index",
+      "classification": "exact_preexisting_failure",
+      "explanation": "Single stale audit-status-index row exactly matches hydrated baseline.",
+      "displayed_failures": 1,
+      "exact_rows_already_in_hydrated_baseline": 1,
+      "error_counts": {
+        "stale_audit_status_index": 1
+      }
+    }
+  ],
+  "no_longer_failed_vs_hydrated": [
+    "validate_web_capability_contracts"
+  ],
+  "requested_target_checks_not_in_final_failure_list": {
+    "check_shards": true,
+    "validate_new_contracts": true,
+    "validate_forge_backup_acceptance": true,
+    "validate_web_capability_contracts": true,
+    "validate_working_notebook_contracts": true,
+    "validate_runtime_artifact_schemas": true,
+    "validate_goal_runtime_event_fixtures": true,
+    "validate_project_output_fixtures": true,
+    "validate_usage_gui_fixtures": true,
+    "lint_contractrefs": true
+  },
+  "tooling_input_materialization": {
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/tooling-inputs/worktree-materialization.json",
+    "manifest_sha256": "5a4da4eddcf7a10ef440f66cf1797213b22c44412407a89d584dc124f0743abd",
+    "files_verified": 45,
+    "all_regular_files_and_sha256_verified": true
+  },
+  "raw_capture_missing_paths": [
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_prefix.raw.jsonl",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_capture.raw.jsonl",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    },
+    {
+      "capture_path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+      "exists_in_shared_external_custody": true,
+      "exists_in_worktree": false
+    }
+  ],
+  "newly_reported_failure_requiring_honest_disclosure": {
+    "error": "buildability_gate_report_stale_or_not_canonical",
+    "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+    "repair_command": "python3 scripts/pm-implementation-readiness.py generate"
+  },
+  "next_steps": [
+    "Preserve final gate receipt and compare post-rebase owner/shard/index checks independently.",
+    "Keep missing external raw capture evidence classified as environment/tooling availability; do not copy raw evidence into commits to green json_syntax.",
+    "Keep stale buildability/Spec Lock/historical evidence/migration/audit outputs untouched unless designated governance seal is separately authorized.",
+    "Report required targeted checks separately from overall run-gates failure."
+  ],
+  "limitations": [
+    "Failures are capped to 50 displayed rows in several categories; changed ordering can hide additional/new exact rows.",
+    "Assessment did not rerun gates or modify repository or governance.",
+    "Currentness after subsequent rebase is not covered by this pre-rebase evidence."
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/final-gates.stdout.txt",
+      "sha256": "05cec2990a562250b12b238fe9efa2fae86420cf7c1a77428c59662cb2590504"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/final-gates.receipt.json",
+      "sha256": "15bf82f1895ba016833b85f06f97e211b17e93afd605373658e1eed77516691f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/baseline-hydrated.stdout.json",
+      "sha256": "b82b3aae0e126475fb551e73b26ae2bef1d5a1f9c4c0ecaa0079dccc17615210"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/baseline-gates.stdout.json",
+      "sha256": "b6ff5f7fad377230c6886c554bcbebcc55d38667efc46786cb62518219c9a744"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/tooling-inputs/worktree-materialization.json",
+      "sha256": "5a4da4eddcf7a10ef440f66cf1797213b22c44412407a89d584dc124f0743abd"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/scripts/pm-implementation-readiness.py",
+      "sha256": "6292e1c6973b80ad9774827e2d2ded017fbc54aa79a4a2d0ba9db4cf55763c2f"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/tests/fixtures/governance/raw_evidence_capture_modes.json",
+      "sha256": "c27b2de25d5b5d8ef9d4f8f05ad427b264157cec77d1a88c55f65a0b5562e075"
+    }
+  ]
+}

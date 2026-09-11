@@ -1,0 +1,43 @@
+{
+  "phase": "d5",
+  "captured_at": "2026-09-11T17:58:35.225187+00:00",
+  "captured_usd": 38.440998,
+  "cap_usd": 120,
+  "basis": "Preserved 2026-09-08 standard Astra API-equivalent; not cash billing",
+  "agents": [
+    {
+      "agent": "root",
+      "captured_usd": 14.928406,
+      "unreconciled_counter_gaps": 0
+    },
+    {
+      "agent": "native_proposals",
+      "captured_usd": 4.731446,
+      "unreconciled_counter_gaps": 0
+    },
+    {
+      "agent": "surface_proposals",
+      "captured_usd": 2.474336,
+      "unreconciled_counter_gaps": 0
+    },
+    {
+      "agent": "safety_proposals",
+      "captured_usd": 5.95226,
+      "unreconciled_counter_gaps": 0
+    },
+    {
+      "agent": "semantic_review",
+      "captured_usd": 10.35455,
+      "unreconciled_counter_gaps": 0
+    }
+  ],
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/accounting/d5-usage.json",
+    "sha256": "f9ee333def618c5a93c82fa3f8aceeaa72003175b9e5d8bafffb78ef8585fe8c"
+  },
+  "limitations": [
+    "Checkpoint before final landing operations; this is not final cash billing.",
+    "Unreported and interrupted-request usage remains unknown; operational headroom is not spent money."
+  ],
+  "phase_start": "2026-09-11T17:18:13.025531Z"
+}

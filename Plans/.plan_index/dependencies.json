@@ -2136,6 +2136,7 @@
     "DP-003",
     "EP-096",
     "F-067",
+    "F-082",
     "F-075",
     "F-073",
     "F-074",
@@ -5492,6 +5493,7 @@
     "RAS-004",
     "RAS-014",
     "SRV-012",
+    "SCS-018",
     "SMPFS-153",
     "SMPFS-155",
     "OSI-178",
@@ -5542,6 +5544,14 @@
     "PNC-021",
     "PWIZ-018",
     "RAS-009",
+    "JJI-009",
+    "JJI-011",
+    "JJI-012",
+    "JJI-014",
+    "JJI-015",
+    "JJI-016",
+    "JJI-019",
+    "SCS-021",
     "SMPFS-156",
     "OSI-193",
     "OSI-191",
@@ -5584,6 +5594,7 @@
     "UIW-009",
     "RAS-010",
     "RAS-011",
+    "FGI-016",
     "SMPFS-157",
     "PSMERA-018",
     "OSI-201",
@@ -6216,6 +6227,7 @@
     "CS-068",
     "MA-054",
     "RTIM-001",
+    "FGI-017",
     "GAAAF-017",
     "MA-055",
     "MA-056",
@@ -6314,6 +6326,7 @@
     "UIW-013",
     "BRS-011",
     "SSYS-014",
+    "F-083",
     "JJI-008",
     "CV-327",
     "N2-156",
@@ -6324,6 +6337,9 @@
     "SSYS-015",
     "SSYS-019",
     "BRS-017",
+    "F2-211",
+    "JJI-013",
+    "SP-260",
     "C-042",
     "PWIZ-026",
     "ATS-043",
@@ -6337,6 +6353,7 @@
     "SSYS-023",
     "CS-070",
     "BRS-020",
+    "BRS-021",
     "PJCT-005",
     "SIR-034",
     "C-045",
@@ -6347,6 +6364,7 @@
     "WM-046",
     "CS-071",
     "UCC-148",
+    "BRS-022",
     "PJCT-006",
     "SIR-035",
     "C-046",
@@ -6356,6 +6374,8 @@
     "CS-073",
     "UCC-149",
     "WM-047",
+    "F2-212",
+    "SP-261",
     "SIR-036",
     "C-047",
     "ATS-018",
@@ -6365,6 +6385,7 @@
     "CS-077",
     "UCC-151",
     "WM-048",
+    "PS-142",
     "EP-115",
     "SIR-037",
     "C-048",
@@ -6374,9 +6395,11 @@
     "UCC-155",
     "WM-050",
     "N2-154",
+    "PS-143",
     "MA-072",
     "PSB-006",
     "UCC-156",
+    "UCC-162",
     "UIW-016",
     "WM-051",
     "SSYS-024",
@@ -6409,6 +6432,10 @@
     "UIW-021",
     "UIW-022",
     "ATS-042",
+    "F3-552",
+    "F3-558",
+    "F3-559",
+    "F3-560",
     "SCS-017",
     "SSYS-029",
     "F3-545",
@@ -6418,22 +6445,37 @@
     "WM-053",
     "0PI-068",
     "F3-530",
+    "JJI-010",
+    "JJI-017",
+    "JJI-018",
     "SSYS-030",
     "F3-531",
+    "F3-554",
+    "F3-557",
+    "JJI-020",
+    "SCS-019",
+    "SCS-020",
+    "CV-330",
+    "F3-555",
     "SSYS-031",
     "F3-532",
     "F3-533",
     "F3-539",
+    "F3-553",
+    "F3-556",
+    "CV-331",
     "SSYS-032",
     "F3-534",
     "F3-535",
     "F3-541",
+    "UCC-163",
     "SSYS-033",
     "F3-536",
     "F3-538",
     "F3-540",
     "F3-537",
     "F3-542",
+    "WM-054",
     "BSD-028",
     "SSYS-034",
     "SSYS-035",
@@ -12676,6 +12718,51 @@
       "edge_type": "depends_on",
       "from": "BRS-020",
       "to": "SP-257"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "BRS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "BRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-021",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "BRS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "BRS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "BRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "BRS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-022",
+      "to": "SCS-014"
     },
     {
       "edge_type": "depends_on",
@@ -20694,6 +20781,81 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "JJI-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "JJI-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "JJI-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "JJI-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-330",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "BRS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "BRS-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "CV-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "FGI-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "FGI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "JJI-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "JJI-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "PS-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-331",
+      "to": "SCS-021"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -23389,6 +23551,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F-082",
+      "to": "F-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-082",
+      "to": "F-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-083",
+      "to": "F-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-083",
+      "to": "F-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-083",
+      "to": "F-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F-083",
+      "to": "F-081"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F2-188",
       "to": "CV-281"
     },
@@ -23696,6 +23888,31 @@
       "edge_type": "depends_on",
       "from": "F2-210",
       "to": "WN-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-211",
+      "to": "F2-209"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-211",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-212",
+      "to": "BRS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-212",
+      "to": "BRS-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-212",
+      "to": "F2-209"
     },
     {
       "edge_type": "depends_on",
@@ -25989,6 +26206,211 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F3-552",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-552",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-552",
+      "to": "JJI-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-552",
+      "to": "JJI-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-553",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-553",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-553",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-553",
+      "to": "JJI-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-553",
+      "to": "JJI-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "F-083"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "JJI-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-554",
+      "to": "JJI-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-555",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-555",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-555",
+      "to": "JJI-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-555",
+      "to": "JJI-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-556",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-556",
+      "to": "JJI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-556",
+      "to": "SCS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-556",
+      "to": "SCS-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-557",
+      "to": "F-083"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-557",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-557",
+      "to": "JJI-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-557",
+      "to": "JJI-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-558",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-558",
+      "to": "FGI-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-558",
+      "to": "FGI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-558",
+      "to": "JJI-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-558",
+      "to": "PS-138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-559",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-559",
+      "to": "JJI-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-559",
+      "to": "PS-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-559",
+      "to": "SCS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-560",
+      "to": "BRS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-560",
+      "to": "BRS-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-560",
+      "to": "F-082"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-560",
+      "to": "F3-529"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-560",
+      "to": "PS-139"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "FGI-001",
       "to": "PDS-003"
     },
@@ -26211,6 +26633,76 @@
       "edge_type": "depends_on",
       "from": "FGI-015",
       "to": "SIR-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "FGI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "FGI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "FGI-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "JJI-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-016",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "FGI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "FGI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "FGI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "FGI-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "SCS-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "SCS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "FGI-017",
+      "to": "SCS-018"
     },
     {
       "edge_type": "depends_on",
@@ -27461,6 +27953,271 @@
       "edge_type": "depends_on",
       "from": "JJI-008",
       "to": "SCS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-009",
+      "to": "JJI-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-009",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-009",
+      "to": "JJI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-009",
+      "to": "JJI-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-009",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-010",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-010",
+      "to": "JJI-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-010",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-010",
+      "to": "SCS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-010",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-011",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-011",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-011",
+      "to": "SCS-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-011",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-012",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-012",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-012",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-013",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-013",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-013",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-014",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-014",
+      "to": "JJI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-014",
+      "to": "JJI-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-014",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-015",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-015",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-015",
+      "to": "JJI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-015",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-015",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-016",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-016",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-016",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-016",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-017",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-017",
+      "to": "SCS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-017",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-018",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-018",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-018",
+      "to": "SCS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-018",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "FGI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "JJI-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "JJI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "JJI-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-019",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "JJI-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "JJI-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "JJI-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "JJI-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "JJI-020",
+      "to": "SCS-008"
     },
     {
       "edge_type": "depends_on",
@@ -45609,6 +46366,66 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "BRS-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "F2-211"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "F2-212"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "JJI-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "PS-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-142",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-143",
+      "to": "FGI-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-143",
+      "to": "FGI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-143",
+      "to": "JJI-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-143",
+      "to": "PS-138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-143",
+      "to": "PS-142"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PSB-001",
       "to": "SIR-002"
     },
@@ -53071,6 +53888,91 @@
       "edge_type": "depends_on",
       "from": "SCS-017",
       "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "JJI-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "SCS-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "SCS-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-018",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-019",
+      "to": "JJI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-019",
+      "to": "SCS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-019",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-020",
+      "to": "FGI-004"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-020",
+      "to": "JJI-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-020",
+      "to": "SCS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-020",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-021",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-021",
+      "to": "SCS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-021",
+      "to": "SCS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SCS-021",
+      "to": "SCS-018"
     },
     {
       "edge_type": "depends_on",
@@ -64164,6 +65066,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-260",
+      "to": "JJI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-260",
+      "to": "SP-253"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-260",
+      "to": "SP-254"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-261",
+      "to": "BRS-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-261",
+      "to": "BRS-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-261",
+      "to": "SP-254"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -71744,6 +72676,71 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-162",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-162",
+      "to": "SCS-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-162",
+      "to": "UCC-155"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-558"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-559"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "F3-560"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-163",
+      "to": "UCC-162"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -78761,6 +79758,31 @@
       "edge_type": "depends_on",
       "from": "WM-053",
       "to": "UIW-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "CV-330"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "JJI-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "JJI-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "UCC-162"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-054",
+      "to": "UCC-163"
     },
     {
       "edge_type": "depends_on",
@@ -92728,7 +93750,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T17:00:28Z",
+  "generated_at_utc": "2026-09-11T17:53:58Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -105991,6 +107013,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "jujutsu_d5_backup_restore_system",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-021",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "BRS-021 - Jujutsu History Index Rebuild Verification Policy",
+        "heading_level": 3,
+        "heading_line": 1128,
+        "line": 1130,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "jujutsu_d5_backup_restore_system",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-022",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "BRS-022 - Separately Authorized Missing Repository Data Completion",
+        "heading_level": 3,
+        "heading_line": 1183,
+        "line": 1185,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/BinaryLocator_Spec.md",
@@ -117058,6 +118114,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-330",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "CV-330 — Jujutsu Planned Action Envelope Consumer Boundary",
+        "heading_level": 3,
+        "heading_line": 21516,
+        "line": 21518,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-331",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "CV-331 — Qualified Publication And Recovery Envelope Boundaries",
+        "heading_level": 3,
+        "heading_line": 21629,
+        "line": 21631,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -126357,6 +127447,40 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "jujutsu_d5_filemanager",
+      "gui_related": false,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-082",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "F-082 - Nearest Existing Newline Policy",
+        "heading_level": 3,
+        "heading_line": 5080,
+        "line": 5082,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "jujutsu_d5_filemanager",
+      "gui_related": true,
+      "owner_doc": "Plans/FileManager.md",
+      "plan_unit_id": "F-083",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "F-083 - Native Historical And Read-Only File View Consumers",
+        "heading_level": 3,
+        "heading_line": 5130,
+        "line": 5132,
+        "path": "Plans/FileManager.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileSafe.md",
@@ -129921,6 +131045,40 @@
         "heading_level": 2,
         "heading_line": 14743,
         "line": 14747,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "jujutsu_d5_filesafe",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-211",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "F2-211 - Native History Mutation And Inspection Safety Consumers",
+        "heading_level": 3,
+        "heading_line": 14784,
+        "line": 14786,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "jujutsu_d5_filesafe",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-212",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "F2-212 - Operation Diagnostic And Completion Boundaries",
+        "heading_level": 3,
+        "heading_line": 14860,
+        "line": 14862,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -139294,6 +140452,159 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-552",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-552 — Operation History Navigation And Descriptions",
+        "heading_level": 3,
+        "heading_line": 37498,
+        "line": 37500,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-553",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-553 — Distinct Group Undo Redo And Selected Operation Reversal",
+        "heading_level": 3,
+        "heading_line": 37569,
+        "line": 37571,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-554",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-554 — Managed Rewrite Preview And Earlier State Browsing",
+        "heading_level": 3,
+        "heading_line": 37640,
+        "line": 37642,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-555",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-555 — Guided Change Editing And Structured Partial Selection",
+        "heading_level": 3,
+        "heading_line": 37711,
+        "line": 37713,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-556",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-556 — History Comparison Graph Assistance And Review Correspondence",
+        "heading_level": 3,
+        "heading_line": 37790,
+        "line": 37792,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-557",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-557 — Read Only Browsing Workspace Adoption And Visibility",
+        "heading_level": 3,
+        "heading_line": 37870,
+        "line": 37872,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-558",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-558 — Qualified Conflict Publication Bookmark Resolution And Review Stacks",
+        "heading_level": 3,
+        "heading_line": 37937,
+        "line": 37939,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-559",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-559 — History Maintenance And Sanitized Diagnostic Surfaces",
+        "heading_level": 3,
+        "heading_line": 38012,
+        "line": 38014,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-560",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "F3-560 — Line Ending And Backup Completion Policy Presentation",
+        "heading_level": 3,
+        "heading_line": 38079,
+        "line": 38081,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "common_forge_owner",
       "gui_related": true,
       "owner_doc": "Plans/Forge_Integrations.md",
@@ -139543,6 +140854,40 @@
         "heading_level": 3,
         "heading_line": 835,
         "line": 837,
+        "path": "Plans/Forge_Integrations.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "plan_unit_id": "FGI-016",
+      "reasoning_tier": "high",
+      "risk_class": "conditional_ordered_review_stack_workflow",
+      "source_location": {
+        "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
+        "heading_level": 3,
+        "heading_line": 907,
+        "line": 909,
+        "path": "Plans/Forge_Integrations.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "plan_unit_id": "FGI-017",
+      "reasoning_tier": "high",
+      "risk_class": "conditional_additional_review_service_admission",
+      "source_location": {
+        "heading": "FGI-017 - Conditional Additional Review Service Admission",
+        "heading_level": 3,
+        "heading_line": 977,
+        "line": 979,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -144371,6 +145716,210 @@
         "heading_level": 3,
         "heading_line": 442,
         "line": 444,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-009",
+      "reasoning_tier": "high",
+      "risk_class": "private_pm_owned_adapter_service",
+      "source_location": {
+        "heading": "JJI-009 - Private PM Owned Adapter Service",
+        "heading_level": 3,
+        "heading_line": 515,
+        "line": 517,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-010",
+      "reasoning_tier": "high",
+      "risk_class": "read_only_and_earlier_state_browsing",
+      "source_location": {
+        "heading": "JJI-010 - Read Only And Earlier State Browsing",
+        "heading_level": 3,
+        "heading_line": 581,
+        "line": 583,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-011",
+      "reasoning_tier": "high",
+      "risk_class": "named_checkpoints_and_receipt_based_history_metadata",
+      "source_location": {
+        "heading": "JJI-011 - Named Checkpoints And Receipt Based History Metadata",
+        "heading_level": 3,
+        "heading_line": 649,
+        "line": 651,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-012",
+      "reasoning_tier": "high",
+      "risk_class": "verified_group_undo_redo_and_selected_operation_reversal",
+      "source_location": {
+        "heading": "JJI-012 - Verified Group Undo Redo And Selected Operation Reversal",
+        "heading_level": 3,
+        "heading_line": 714,
+        "line": 716,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-013",
+      "reasoning_tier": "high",
+      "risk_class": "explicit_history_storage_maintenance",
+      "source_location": {
+        "heading": "JJI-013 - Explicit History Storage Maintenance",
+        "heading_level": 3,
+        "heading_line": 782,
+        "line": 784,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-014",
+      "reasoning_tier": "high",
+      "risk_class": "explicit_workspace_adoption_repair_and_visibility",
+      "source_location": {
+        "heading": "JJI-014 - Explicit Workspace Adoption Repair And Visibility",
+        "heading_level": 3,
+        "heading_line": 841,
+        "line": 843,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-015",
+      "reasoning_tier": "high",
+      "risk_class": "managed_rewrite_preview_and_apply_lifecycle",
+      "source_location": {
+        "heading": "JJI-015 - Managed Rewrite Preview And Apply Lifecycle",
+        "heading_level": 3,
+        "heading_line": 907,
+        "line": 909,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-016",
+      "reasoning_tier": "high",
+      "risk_class": "qualified_native_change_editing_semantics",
+      "source_location": {
+        "heading": "JJI-016 - Qualified Native Change Editing Semantics",
+        "heading_level": 3,
+        "heading_line": 972,
+        "line": 974,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-017",
+      "reasoning_tier": "high",
+      "risk_class": "version_comparison_and_focused_change_evolution",
+      "source_location": {
+        "heading": "JJI-017 - Version Comparison And Focused Change Evolution",
+        "heading_level": 3,
+        "heading_line": 1048,
+        "line": 1050,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-018",
+      "reasoning_tier": "high",
+      "risk_class": "exact_hunk_selection_and_graph_rewrite_intent",
+      "source_location": {
+        "heading": "JJI-018 - Exact Hunk Selection And Graph Rewrite Intent",
+        "heading_level": 3,
+        "heading_line": 1108,
+        "line": 1110,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-019",
+      "reasoning_tier": "high",
+      "risk_class": "conditional_conflict_publication_and_bookmark_resolution",
+      "source_location": {
+        "heading": "JJI-019 - Conditional Conflict Publication And Bookmark Resolution",
+        "heading_level": 3,
+        "heading_line": 1175,
+        "line": 1177,
+        "path": "Plans/Jujutsu_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "plan_unit_id": "JJI-020",
+      "reasoning_tier": "high",
+      "risk_class": "history_annotation_and_recovery_retention_boundary",
+      "source_location": {
+        "heading": "JJI-020 - History Annotation And Recovery Retention Boundary",
+        "heading_level": 3,
+        "heading_line": 1250,
+        "line": 1252,
         "path": "Plans/Jujutsu_Integration.md"
       },
       "status": "accepted",
@@ -176881,6 +178430,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-142",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "PS-142 — Jujutsu Action Specific Authorization And Read Boundaries",
+        "heading_level": 3,
+        "heading_line": 9529,
+        "line": 9531,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "security_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-143",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "PS-143 — Conditional Jujutsu Publication And Forge Workflow Authorization",
+        "heading_level": 3,
+        "heading_line": 9628,
+        "line": 9630,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "security_contract"
+    },
+    {
       "context_scope": "project_sync_owner_boundary",
       "gui_related": false,
       "owner_doc": "Plans/Project_Sync_and_Backbone.md",
@@ -181448,6 +183031,74 @@
         "heading_level": 3,
         "heading_line": 948,
         "line": 950,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": false,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-018",
+      "reasoning_tier": "high",
+      "risk_class": "d5_planning_admission_and_exact_effect_envelope",
+      "source_location": {
+        "heading": "SCS-018 - D5 Planning Admission And Exact Effect Envelope",
+        "heading_level": 3,
+        "heading_line": 1004,
+        "line": 1006,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-019",
+      "reasoning_tier": "high",
+      "risk_class": "bounded_graph_priorities_queries_and_pinned_comparison",
+      "source_location": {
+        "heading": "SCS-019 - Bounded Graph Priorities Queries And Pinned Comparison",
+        "heading_level": 3,
+        "heading_line": 1144,
+        "line": 1146,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-020",
+      "reasoning_tier": "high",
+      "risk_class": "bounded_attribution_file_history_and_conservative_review_matching",
+      "source_location": {
+        "heading": "SCS-020 - Bounded Attribution File History And Conservative Review Matching",
+        "heading_level": 3,
+        "heading_line": 1212,
+        "line": 1214,
+        "path": "Plans/Source_Control_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "jujutsu_d5_owner_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Source_Control_System.md",
+      "plan_unit_id": "SCS-021",
+      "reasoning_tier": "high",
+      "risk_class": "sanitized_diagnostic_export_and_optional_technical_log",
+      "source_location": {
+        "heading": "SCS-021 - Sanitized Diagnostic Export And Optional Technical Log",
+        "heading_level": 3,
+        "heading_line": 1280,
+        "line": 1282,
         "path": "Plans/Source_Control_System.md"
       },
       "status": "accepted",
@@ -189291,6 +190942,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "jujutsu_d5_storage-plan",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-260",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "SP-260 - Native History Metadata And Isolated View Persistence Boundary",
+        "heading_level": 3,
+        "heading_line": 19097,
+        "line": 19099,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "jujutsu_d5_storage-plan",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-261",
+      "reasoning_tier": "high",
+      "risk_class": "source_history_identity_safety_or_false_recovery",
+      "source_location": {
+        "heading": "SP-261 - History Index Rebuild And Completion Receipt Consumers",
+        "heading_level": 3,
+        "heading_line": 19177,
+        "line": 19179,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -197128,6 +198813,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-162",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "UCC-162 — Jujutsu Accepted Action Planning And Admission Boundary",
+        "heading_level": 3,
+        "heading_line": 13032,
+        "line": 13034,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-163",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "UCC-163 — Jujutsu Consumer Action Inventory And Return Context",
+        "heading_level": 3,
+        "heading_line": 13137,
+        "line": 13139,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "usage_feature_generated_tail_batch_197",
       "gui_related": false,
       "owner_doc": "Plans/usage-feature.md",
@@ -201548,6 +203267,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "dl043_accepted_jujutsu_planning",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-054",
+      "reasoning_tier": "high",
+      "risk_class": "jujutsu_identity_authority_or_effect_misrepresentation",
+      "source_location": {
+        "heading": "WM-054 — Jujutsu Planned Consumer Wiring And Observable Results",
+        "heading_level": 3,
+        "heading_line": 4510,
+        "line": 4512,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "working_notebook",
       "gui_related": false,
       "owner_doc": "Plans/Working_Notebook.md",
@@ -202234,10 +203970,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14608,
+    "depends_on_edge_count": 14804,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17256,
-    "node_count": 6441,
+    "edge_count": 17452,
+    "node_count": 6483,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0

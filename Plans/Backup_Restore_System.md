@@ -814,7 +814,7 @@ All BRS PlanUnits are Plans-only. They create no WorkNodes, NodeSeeds, executabl
 
 - The eleven destination families and the new-policy daily 7/4/6 seed are fixed here. Exact engine/transport version selection, provider-specific proven capability state, schedule widget vocabulary, RPO/RTO product claims, optional test-restore cadence, OAuth approvals/registrations, and crypto-suite release admission remain downstream implementation/security/release-owner integrations. The schema uses stable adapter, auth-owner, release-gate, and security-profile refs rather than inventing provider readiness.
 - Internal `backup:{backup_id}`, `recovery/`, `restore-points/`, Sync bundles, Settings snapshots, storage `MigrationReceipt`, JSON/JSONL export, and concept fixtures are not Full Server Backup or Project Backup.
-- Raw OS keychain/Credential Manager bytes, default CLI-profile payloads, cookies, machine-bound identities, live runtime, device geometry, and rebuildable indexes remain excluded.
+- Raw OS keychain/Credential Manager bytes, default CLI-profile payloads, cookies, machine-bound identities, live runtime, device geometry, and rebuildable indexes remain excluded by default. BRS-021 permits explicitly selected captured Jujutsu history indexes only as optional speed aids; correctness-critical rebuild in the isolated drill and complete native closure proof remain mandatory.
 - Restore does not silently install tools, authenticate profiles, administer external secret systems, choose new source paths, or claim unavailable integrations Ready.
 - Automatic writable multi-Server failover and live-database replication are rejected.
 - Static schemas/fixtures and Plans do not authorize production deletion, restore, key rotation, backup retention, or governance seal.
@@ -1120,3 +1120,126 @@ owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md]
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Project_System.md, ContractName:Plans/Settings_System.md
+
+## Jujutsu D5 Owner Requirements (2026-09-11)
+
+These accepted requirements consume the native owner in `Plans/Jujutsu_Integration.md` and the shared Source Control boundary; planning acceptance is not runtime or readiness evidence.
+
+### BRS-021 - Jujutsu History Index Rebuild Verification Policy
+
+```yaml
+plan_unit_id: BRS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Correctness-critical Jujutsu history indexes are rebuilt from retained native history in the isolated
+  restore drill. Captured indexes may be retained only as an optional speed aid with consistent capture and version
+  compatibility checks; they are neither recovery authority nor a substitute for verified object and retained-operation
+  closure. This is the DL-043 policy, not an optional verification feature. Backup consumes JJI-008 native closure
+  and isolated historical-operation verification, while Storage owns disposable material custody and native index rebuild execution remains with the Jujutsu owner through the PM-owned internal adapter service.
+gui_related: false
+gui_classification_reason: Defines safety, persistence, or verification behavior rather than visual presentation.
+depends_on:
+- BRS-017
+- BRS-019
+- JJI-008
+unblocks: []
+acceptance_criteria:
+- The isolated drill can prove required retained operation heads, views, objects, conflicts, and selected historical-operation
+  inspection/restore without relying on captured indexes; missing or corrupt history cannot be masked by a readable
+  cache.
+- Rebuild and historical restore run only in the disposable restored environment, never against the original active
+  repository; retained-operation and object verification remain required even when a captured compatible index accelerates
+  other reads.
+- Captured index omission does not count as omitted native history when reconstruction is proved; failed reconstruction,
+  unavailable native dependencies, incompatible format, or an incomplete drill stays an explicit unproved or failed
+  coverage result.
+- Optional speed-aid capture does not silently expand an existing backup policy, cloud upload scope, or historical
+  snapshot coverage label. Backup completion and activation retain BRS-019 gates.
+validation_surfaces:
+- future focused BRS-021 acceptance fixtures
+- python3 scripts/pm-plan-index.py validate
+risk_class: source_history_identity_safety_or_false_recovery
+reasoning_tier: high
+context_scope: jujutsu_d5_backup_restore_system
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d034
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- No runtime, event admission, physical storage-family admission, WorkNodes, NodeSeeds, automatic activation, or
+  readiness proof follows from this PlanUnit.
+owner_hints:
+- Plans/Backup_Restore_System.md
+- Plans/Jujutsu_Integration.md
+- Plans/Source_Control_System.md
+```
+
+### BRS-022 - Separately Authorized Missing Repository Data Completion
+
+```yaml
+plan_unit_id: BRS-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Backup offers a separately authorized workflow to obtain missing repository history or large-file
+  data for the exact selected source coverage. It consumes the Source Control transport owner and current credential
+  authorization, with explicit source, target, missing dependency scope, network cost and potentially large download
+  disclosure. Completion is an effectful operation separate from browse, verification, restore and activation. The
+  resulting native closure must be recaptured and verified before a new complete-coverage claim; existing incomplete
+  snapshots and receipts retain their historical truth.
+gui_related: false
+gui_classification_reason: Defines safety, persistence, or verification behavior rather than visual presentation.
+depends_on:
+- BRS-002
+- BRS-003
+- BRS-019
+- BRS-021
+- SCS-014
+- JJI-008
+unblocks: []
+acceptance_criteria:
+- Admission binds Project, repository, workspace/source Host, exact missing-dependency inventory, expected source
+  revision and authorized remote/credential refs. A changed source, target, remote binding, or scope requires current
+  preflight and authorization rather than silently broadening the operation.
+- Restored remote URLs, hooks, configuration, portable secrets, credential placeholders and foreign identities confer
+  no authority. Completion cannot silently reuse restored remotes or secrets, execute repository hooks, or bypass
+  current Permissions and FileSafe decisions.
+- Transport success or all-ref fetch does not prove closure for retained native operations. Verify every required
+  object, operation/view, retained abandoned or rewritten dependency, LFS/submodule/alternate/shared-store dependency
+  within the selected closure; unavailable data remains explicitly incomplete.
+- Persist exact attempt, retry/idempotency, partial download and verification outcome refs through existing owner
+  receipt boundaries. Cancellation, unavailable credentials/remotes, race or indeterminate transport outcome cannot
+  become complete source recovery.
+- No automatic activation, workload resume, backup-policy expansion, or replacement of the last complete backup
+  follows from download completion. Apply BRS-019 isolated verification and restore gates after closure proof.
+validation_surfaces:
+- future focused BRS-022 acceptance fixtures
+- python3 scripts/pm-plan-index.py validate
+risk_class: source_history_identity_safety_or_false_recovery
+reasoning_tier: high
+context_scope: jujutsu_d5_backup_restore_system
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d035
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- No runtime, event admission, physical storage-family admission, WorkNodes, NodeSeeds, automatic activation, or
+  readiness proof follows from this PlanUnit.
+owner_hints:
+- Plans/Backup_Restore_System.md
+- Plans/Jujutsu_Integration.md
+- Plans/Source_Control_System.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-043, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md

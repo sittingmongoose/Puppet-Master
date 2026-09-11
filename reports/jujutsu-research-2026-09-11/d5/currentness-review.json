@@ -1,0 +1,882 @@
+{
+  "review_kind": "independent_hard_currentness_readjudication",
+  "reviewer": "jj_d5_semantic_review",
+  "created_at": "2026-09-11T17:59:52.581613+00:00",
+  "status": "pass_no_D5_semantic_edits_required",
+  "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+  "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "reviewed_sources": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5",
+      "changed": true
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "fb5f9889bb6a3b702304cf026f75bf1865c65e98c64773a17aaa3c068e243d87",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "51bca3f34e86d1d980566ba1e07833df842325f5ac612bcfd5c78547cc08e190",
+      "changed": true
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1",
+      "changed": true
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "683459c0727eb26dc581b46d93d03d310d3886a13c76b365ac66f4cd8ae13975",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "ab72a564c10d41a77e937675747f9e9756162d74fe03e7f95f7315794c323613",
+      "changed": true
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "1e174cdc574c82377e7dc79cace28a169998a26825b2aad68fea1ffc36d77c68",
+      "changed": true
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "5143aa3167261bf3dbbe915086c1e37a315e577113b1f538a4a871bc1e352784",
+      "changed": true
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "fd7f9ededd719643900f5bd58593f3141bf6b03eea696368bc22b9aacebdbe5f",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "363bbb90307e5485593c07478954610a04d01f4f730d811de35538dc589d8c83",
+      "changed": true
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "c55a4bcf1fdd44922049ba9b48173470803b9fd29688e236a3dc2551ea6e3a50",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "90924265e36445040be2466f3cc7fc5885adcff33ce1803dbdd1ad940d421a4c",
+      "changed": true
+    },
+    {
+      "path": "Plans/forge_integration_contracts.schema.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "566118849cdc5cb4b11480e44805caef7ab35604cb38bbf59be9db77be9141cf",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "566118849cdc5cb4b11480e44805caef7ab35604cb38bbf59be9db77be9141cf",
+      "changed": false
+    },
+    {
+      "path": "Plans/forge_integration_contract_fixtures.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "a7826f763778df4e2b92e8963905250d89917a7ab3122854daec0e025ff426d8",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "a7826f763778df4e2b92e8963905250d89917a7ab3122854daec0e025ff426d8",
+      "changed": false
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "90606e6f6e025243d01286f556ed89418a18e581e88f08bde2159f66c0862444",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "90606e6f6e025243d01286f556ed89418a18e581e88f08bde2159f66c0862444",
+      "changed": false
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "base_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+      "base_sha256": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4",
+      "main_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "main_sha256": "0058eff18af43b495b659ed78b0d1c7fe78b83167cd9c0a8c662ba3372b3c620",
+      "changed": true
+    }
+  ],
+  "per_passage_conclusions": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "passage": "DL-035 approval prose",
+      "base": {
+        "start_line": 329,
+        "end_line": 355,
+        "sha256": "8c039b394145a7d5f63431e21494b4d3839a3db99d11ab7ca13f2cacea526448",
+        "text_length": 5074
+      },
+      "main": {
+        "start_line": 329,
+        "end_line": 355,
+        "sha256": "8c039b394145a7d5f63431e21494b4d3839a3db99d11ab7ca13f2cacea526448",
+        "text_length": 5074
+      },
+      "unchanged_passage": true,
+      "conclusion": "Unchanged PM-owned engine direction remains valid for D5 JJI-009 and the declined diff-library disposition.",
+      "affected_d5_units": [
+        "JJI-009"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "passage": "DL-043 approval prose",
+      "base": {
+        "start_line": 457,
+        "end_line": 538,
+        "sha256": "16323d0506b958a32abbb992dc452a34ea221239304da9814b0ea4d7f2f81241",
+        "text_length": 8335
+      },
+      "main": {
+        "start_line": 457,
+        "end_line": 538,
+        "sha256": "16323d0506b958a32abbb992dc452a34ea221239304da9814b0ea4d7f2f81241",
+        "text_length": 8335
+      },
+      "unchanged_passage": true,
+      "conclusion": "All 44 original dispositions and planning-only boundaries are unchanged.",
+      "affected_d5_units": [
+        "all_42_D5_PlanUnits"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "passage": "DL-044 approval and PlanUnit authority",
+      "base": null,
+      "main": {
+        "start_line": 540,
+        "end_line": 554,
+        "sha256": "44a54a780dc15beb52048df45b2028855812c75c8812bf3833790fccdaabef45",
+        "text_length": 2453
+      },
+      "unchanged_passage": false,
+      "conclusion": "New decision consolidates generic review create and adapter vocabulary. D5 contains no conflicting alias, GitHub-only guard, provider-specific primary command, or production row.",
+      "affected_d5_units": [
+        "FGI-016",
+        "FGI-017",
+        "F3-558",
+        "UCC-162",
+        "UCC-163",
+        "WM-054",
+        "CV-331",
+        "PS-143"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "passage": "DL-045 bounded technical authority",
+      "base": null,
+      "main": {
+        "start_line": 556,
+        "end_line": 612,
+        "sha256": "05547be11c022f25ecd46a224029e5b9db48f182b4aa1e3c0650ba3d07723b46",
+        "text_length": 13588
+      },
+      "unchanged_passage": false,
+      "conclusion": "New event-binding authority is separately scoped, creates no concrete binding or event admission, and does not relax D5 planned-versus-admitted boundaries.",
+      "affected_d5_units": [
+        "SCS-018",
+        "CV-330",
+        "CV-331",
+        "WM-054",
+        "SP-260",
+        "SP-261"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "passage": "Compatibility normalization",
+      "base": {
+        "start_line": 381,
+        "end_line": 390,
+        "sha256": "3735873390e5f0758a1fb6a386c07621717d28fe9c607774cfbeea4bc4d5d66c",
+        "text_length": 471
+      },
+      "main": {
+        "start_line": 381,
+        "end_line": 390,
+        "sha256": "2fe3328dc6e9e88c397e3429841e3029eeb7339e558459148f8d051aa38cc38a",
+        "text_length": 480
+      },
+      "unchanged_passage": false,
+      "conclusion": "Current main correctly normalizes cmd.github.pr.create to generic cmd.forge.review.create with provider github. Preserve this replacement while appending FGI-016/017.",
+      "affected_d5_units": [
+        "FGI-016",
+        "FGI-017"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "passage": "Selected adapter vocabulary",
+      "base": {
+        "start_line": 446,
+        "end_line": 448,
+        "sha256": "6915fe96d9092a4940d51f32247353c6dab5476f8cc23e424f8f3697b11a1d7e",
+        "text_length": 671
+      },
+      "main": {
+        "start_line": 446,
+        "end_line": 450,
+        "sha256": "5574db1e7ea2752e2c9bd0189061cb1597c4453e312c7d15d9bd68e62be3675f",
+        "text_length": 892
+      },
+      "unchanged_passage": false,
+      "conclusion": "The added vocabulary sentence is consistent with provider-specific detail and generic workflow requirements; D5 does not hardcode rendered generic review labels.",
+      "affected_d5_units": [
+        "FGI-016",
+        "FGI-017",
+        "F3-558"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "passage": "Generic review alias catalog",
+      "base": {
+        "start_line": 8507,
+        "end_line": 8518,
+        "sha256": "fbf9669cd6f39146fda40bdddf901bbfb3635a55c8d57c3da23ee37028831e2f",
+        "text_length": 1665
+      },
+      "main": {
+        "start_line": 8507,
+        "end_line": 8518,
+        "sha256": "3c5defc2857b17b43644c57af7da1ec2f0ee4f7054664616827ae6b751e42ade",
+        "text_length": 1831
+      },
+      "unchanged_passage": false,
+      "conclusion": "Preserve both provider-github aliases, catalog guards, pre-policy normalization and thread scope. D5 UCC-162 explicitly normalizes aliases before policy and introduces no primary command.",
+      "affected_d5_units": [
+        "UCC-162",
+        "UCC-163"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "passage": "UCC-122 review identity contract",
+      "base": {
+        "start_line": 9342,
+        "end_line": 9396,
+        "sha256": "10afd464e10293c6c1e391f98c2d137e880ee9042d94197aca9cdad955a40597",
+        "text_length": 2916
+      },
+      "main": {
+        "start_line": 9342,
+        "end_line": 9396,
+        "sha256": "fdf8d8b3e6ca46667a67a1b6348eb3d98a86b0e4dea09a07410b7ada7bfe9ca5",
+        "text_length": 3000
+      },
+      "unchanged_passage": false,
+      "conclusion": "Updated existing UCC-122 recognizes the GitHub alias; no D5 unit references the superseded three-distinct-live-create-scopes rule.",
+      "affected_d5_units": [
+        "UCC-162",
+        "UCC-163",
+        "WM-054"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "passage": "Worktree and GitHub rows",
+      "base": {
+        "start_line": 9869,
+        "end_line": 9880,
+        "sha256": "ab54de5973428b8a11c500aa1a0729a1deb0b5d357ea5ff4d96b52d1b20df72d",
+        "text_length": 1763
+      },
+      "main": {
+        "start_line": 9869,
+        "end_line": 9879,
+        "sha256": "5ee93bbab6788dd93250de2c8c2d42d5fa8433af336c01f731a95544df444403",
+        "text_length": 1578
+      },
+      "unchanged_passage": false,
+      "conclusion": "Preserve separate project/thread worktree scopes while retiring the GitHub create primary row; D5 workspace and hosted workflows do not collapse them.",
+      "affected_d5_units": [
+        "JJI-014",
+        "FGI-016",
+        "UCC-162",
+        "UCC-163"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "passage": "UCC-132 alias reconciliation",
+      "base": {
+        "start_line": 10233,
+        "end_line": 10284,
+        "sha256": "3cbfeda36893a32337d00854c4ffb82fbbb55841d91bd6b017df37106e311b3e",
+        "text_length": 2894
+      },
+      "main": {
+        "start_line": 10232,
+        "end_line": 10283,
+        "sha256": "99389e20f79627ea2e7f054b5a6c6c6f185f58206faa67974a3c4c82b251a5f7",
+        "text_length": 3038
+      },
+      "unchanged_passage": false,
+      "conclusion": "Main UCC-132 removes the old prohibition on aliasing GitHub create. D5 never restates the retired prohibition or adds a second handler.",
+      "affected_d5_units": [
+        "UCC-162",
+        "WM-054"
+      ],
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "passage": "UIW-006 authoritative WiringEntry vocabulary",
+      "base": {
+        "start_line": 258,
+        "end_line": 289,
+        "sha256": "b6a48322d567edb9ae3679e7a7c2614788c3aae6915c50dd688cdf44e43abd58",
+        "text_length": 2160
+      },
+      "main": {
+        "start_line": 258,
+        "end_line": 299,
+        "sha256": "757ce9087c57640b314bb7efb688753c2e17f3621ead8468e772fa10bba0a292",
+        "text_length": 3232
+      },
+      "unchanged_passage": false,
+      "conclusion": "Optional vocabulary and generic cmd.forge. literal restrictions apply to future admitted rows. D5 WM-054 is planned routing prose and adds no row that violates the rule.",
+      "affected_d5_units": [
+        "WM-054",
+        "UCC-162",
+        "UCC-163",
+        "F3-558"
+      ],
+      "required_semantic_changes": []
+    }
+  ],
+  "changed_hunk_reviews": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "hunk": "@@ -536,6 +536,80 @@",
+      "base_start_line": 536,
+      "base_line_count": 6,
+      "base_passage_sha256": "56fb35b8905f369b9657ed08470d290eebc96584955c812fb58c56b2721bc615",
+      "main_start_line": 536,
+      "main_line_count": 80,
+      "main_passage_sha256": "94ac50dbd6a747e864e7aeafd6fd2d136e01439f5dfce3a1bbcf90bd3598e12d",
+      "diff_hunk_sha256": "8840d5fac19ae2a5f5cf0c4e5b2ff481315b4ec09081770a52fd700fcd49e6f4",
+      "conclusion": "Only DL-044 and DL-045 prose/PlanUnits were added. DL-035/DL-043 are byte-identical at their passage level and remain valid D5 authority.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "hunk": "@@ -2774,6 +2848,146 @@",
+      "base_start_line": 2774,
+      "base_line_count": 6,
+      "base_passage_sha256": "ce5a4f887cb84aaa9720c34ea42784facc2320678182bef31bf6e405a609bbd1",
+      "main_start_line": 2848,
+      "main_line_count": 146,
+      "main_passage_sha256": "bce705e7d2d4d4630877b82ef3047406ffef044117fa8af04652fbf331c4b3ce",
+      "diff_hunk_sha256": "16062d145a0c6c29b7b28ad0cace5dee1546dd1df7b0cbea97f06a2099d8a3cd",
+      "conclusion": "Only DL-044 and DL-045 prose/PlanUnits were added. DL-035/DL-043 are byte-identical at their passage level and remain valid D5 authority.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "hunk": "@@ -383,7 +383,7 @@",
+      "base_start_line": 383,
+      "base_line_count": 7,
+      "base_passage_sha256": "231860f059aa89687235313288801a3bab932c220a038f2aee0660b3cdebaa72",
+      "main_start_line": 383,
+      "main_line_count": 7,
+      "main_passage_sha256": "2f516e9fcd3247350c643f1813cf7443b2a95bad41bdabe6e8a008a9ab6259e4",
+      "diff_hunk_sha256": "bed4ebbe4ab0f792163cf90983c8298f96b9a85fa28eec0ae98f5dc8c408f4a5",
+      "conclusion": "Alias normalization and repository-adapter vocabulary additions must survive rebase. FGI-016/017 remain semantically compatible without edits.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "hunk": "@@ -444,6 +444,8 @@",
+      "base_start_line": 444,
+      "base_line_count": 6,
+      "base_passage_sha256": "0bbdfc5672427c74367601f0d8ab554841601fa75c07bb8301d174c8419684f8",
+      "main_start_line": 444,
+      "main_line_count": 8,
+      "main_passage_sha256": "27a54ee6e4b314ae34eaf8fc3405fac0f1cd4b0807d79e9f17c4a7125a7dab76",
+      "diff_hunk_sha256": "2672abe635b7182469ef0a1ef7f27290c872be4cb818eade883ca0a7bd0c87ac",
+      "conclusion": "Alias normalization and repository-adapter vocabulary additions must survive rebase. FGI-016/017 remain semantically compatible without edits.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -8506,14 +8506,14 @@",
+      "base_start_line": 8506,
+      "base_line_count": 14,
+      "base_passage_sha256": "4937cbf5d49d78efbe1ddd1d77ba7c8e57658f1569ac3a67dba4af4f3cf32974",
+      "main_start_line": 8506,
+      "main_line_count": 14,
+      "main_passage_sha256": "bbd582ad8a1f4b3ebef095f468abbf328bdfec72649ce71f09370857e3bb01f0",
+      "diff_hunk_sha256": "5767a3fc86e000f99004ae4b3cdc8df94c2a5f32ce0737dde3688659d6108f6a",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -9346,7 +9346,7 @@",
+      "base_start_line": 9346,
+      "base_line_count": 7,
+      "base_passage_sha256": "e0241984e610d934e2192c8b2b868318e79fc45d202d1ecb242d99cc9c1e1063",
+      "main_start_line": 9346,
+      "main_line_count": 7,
+      "main_passage_sha256": "2b9c399f1fba2775af39b9ea044ce3f5dea430cfc8a69fc5245acdf27c390ef0",
+      "diff_hunk_sha256": "61faa8f91ebbf54071b012363d8a75bb9a4205a9b0c973304ea420b41ee62854",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -9357,7 +9357,7 @@",
+      "base_start_line": 9357,
+      "base_line_count": 7,
+      "base_passage_sha256": "e21c7f647f86eece7d1e65fa08b4bc6a4932d6fefc6e9d06b92a499ac862fe21",
+      "main_start_line": 9357,
+      "main_line_count": 7,
+      "main_passage_sha256": "9700dbafda0687d8102e3c7a62179a4e0272772eef91e2570dd2678b1156abab",
+      "diff_hunk_sha256": "e1c69a2c439301ab938b855475ec781b6a8b58758baf470f83796760f8e2f56c",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -9737,7 +9737,7 @@",
+      "base_start_line": 9737,
+      "base_line_count": 7,
+      "base_passage_sha256": "8a030ed1a96edb398e6cac185a8e15b8a69043d5e89200c658f8503da03f6f3b",
+      "main_start_line": 9737,
+      "main_line_count": 7,
+      "main_passage_sha256": "8547c9822dc734f5bf9614e9cdd930f1aae14671fba56446b15fcd87e40ae55d",
+      "diff_hunk_sha256": "1dd94da3f66f3c8e543c1dc70147b736fe43dff13ce52c644f2d952ecf397e77",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -9868,14 +9868,13 @@",
+      "base_start_line": 9868,
+      "base_line_count": 14,
+      "base_passage_sha256": "d9e03405ea428acd74e4eee3f7312c94aad27e96c43c2aca527608dcca636ee9",
+      "main_start_line": 9868,
+      "main_line_count": 13,
+      "main_passage_sha256": "ded4c29904560650a1767806a64e3c8d8f24159d223f20528650d5129e547a84",
+      "diff_hunk_sha256": "4d1f9030018fdf085cc6f30d66b357d08eb116048931cbe35b3cddd83999d7fd",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -10237,12 +10236,12 @@",
+      "base_start_line": 10237,
+      "base_line_count": 12,
+      "base_passage_sha256": "6643f4d655fadc9307e40e270d743427b9947ae48f740554eac95bf2f7d6755c",
+      "main_start_line": 10236,
+      "main_line_count": 12,
+      "main_passage_sha256": "93b4621a233f3e63c913f0da07e14ad7aaaa79ef1a38988333f5bb369c83e365",
+      "diff_hunk_sha256": "142cffeabddc7c919c5aa4967228f1682e7efc088b1732c975f02d722977bd0a",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -10250,7 +10249,7 @@",
+      "base_start_line": 10250,
+      "base_line_count": 7,
+      "base_passage_sha256": "6f58e3ba6e437c23a30bb29288886d22b11c927f71083e5176a0830bad2160e6",
+      "main_start_line": 10249,
+      "main_line_count": 7,
+      "main_passage_sha256": "7791f50d1643eb92c2e188a0e926327f69329f37441f0633b4d0a8d1b57d1006",
+      "diff_hunk_sha256": "b495f34f818626dd0b74ee70f112aee80f8aa5997b57b91df2d4d1a439e166a4",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "hunk": "@@ -10277,7 +10276,7 @@",
+      "base_start_line": 10277,
+      "base_line_count": 7,
+      "base_passage_sha256": "ef65b41c5a720b04b514dab1e2e3e3bf2397c63c2bb2ea600b941d50d95b85af",
+      "main_start_line": 10276,
+      "main_line_count": 7,
+      "main_passage_sha256": "551dbe2aaedfba7065d8c9209676cbc18497625bc2ea569a5829d46bc9b78c58",
+      "diff_hunk_sha256": "2d924b9d8b5391c982af205c1aefd69459c545d78f9f6caec6f16334e700f7c5",
+      "conclusion": "GitHub create loses primary-command/independent-guard status and becomes the generic Forge alias while preserving git.create_pr lineage and thread scope. D5 UCC-162/163 agree.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "hunk": "@@ -268,10 +268,20 @@",
+      "base_start_line": 268,
+      "base_line_count": 10,
+      "base_passage_sha256": "35b61891ebb8aabc0bf1834bc90898c24c30bf3b98a90e4c84695885e199f879",
+      "main_start_line": 268,
+      "main_line_count": 20,
+      "main_passage_sha256": "31c6bff763fc6ddb6c60dd28bb97bbbddfa62c37ce92bd6d942754aa3c25ac58",
+      "diff_hunk_sha256": "5f558882784724043e87b9046bb6bc5e2ef0a1d82068d993ff2cb6cac2a6eec0",
+      "conclusion": "UIW-006 now governs optional adapter vocabulary and provider-neutral generic-row fields. D5 adds no production rows or fixed generic review labels.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "hunk": "@@ -3367,7 +3367,7 @@",
+      "base_start_line": 3367,
+      "base_line_count": 7,
+      "base_passage_sha256": "1894a236b4ed887e303bd42ba4ddd43c5bb296ada3b1f54974e1ed58416d0508",
+      "main_start_line": 3367,
+      "main_line_count": 7,
+      "main_passage_sha256": "1491cef146177a156b51b13a8ad0e9615bf2ef76b0e28ceeefb1aafe7dfd1d16",
+      "diff_hunk_sha256": "814217ab462def3053f1c116ad2cfe2b15fa5a1853f2c25a9a51075b192189b5",
+      "conclusion": "The only change is an existing source_lineage production-file line reference from 2674 to 42762. Preserve it; WM-054 remains compatible.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "hunk": "@@ -70,6 +70,37 @@",
+      "base_start_line": 70,
+      "base_line_count": 6,
+      "base_passage_sha256": "a343096d7f81bd6a5653c9395c7b3cf25db6e00de1de425050d22c98f4481852",
+      "main_start_line": 70,
+      "main_line_count": 37,
+      "main_passage_sha256": "a408fbe03cca34478bf9b4701d26ec146037e6a605573a37d89b918f2e3a7471",
+      "diff_hunk_sha256": "561275ec9421623271a3d9a04f6d60b396dd64c0c0986d5f1be7ca157845934c",
+      "conclusion": "The optional closed vocabulary object is additive; required existing entry fields are unchanged. D5 does not extend or redefine the schema.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "hunk": "@@ -29846,16 +29846,22 @@",
+      "base_start_line": 29846,
+      "base_line_count": 16,
+      "base_passage_sha256": "5ede75f4cb4a75dc13d57692bfa75c7231a8f0e05b8984b883c677a8d9ddc07e",
+      "main_start_line": 29846,
+      "main_line_count": 22,
+      "main_passage_sha256": "e3cb701d312103f379e3afe38f35da4a84c0beef1bdc81513f0188dac00f3489",
+      "diff_hunk_sha256": "67475ed080e67941b61f775adf01ca18765450d0e0c55874d5fa4b8cbde79a4e",
+      "conclusion": "Exactly two generic review rows gain neutral text/catalog guards/vocabulary and the separate GitHub create row is removed. D5 contributes no production row; keep current main unchanged.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "hunk": "@@ -29959,16 +29965,22 @@",
+      "base_start_line": 29959,
+      "base_line_count": 16,
+      "base_passage_sha256": "6004b6755add13e47dcc06ebe548b21601fa9f660a03dcd79dad65a5dd29648a",
+      "main_start_line": 29965,
+      "main_line_count": 22,
+      "main_passage_sha256": "6c3131b198ba2038c2b85e65fb8c679468fadd1934fffb86e3536ecc7806d980",
+      "diff_hunk_sha256": "ca20510ba60bc9c02a8e5ce01e49d1b95655f4c306890ef7111cd543f0eab929",
+      "conclusion": "Exactly two generic review rows gain neutral text/catalog guards/vocabulary and the separate GitHub create row is removed. D5 contributes no production row; keep current main unchanged.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "hunk": "@@ -34302,73 +34314,6 @@",
+      "base_start_line": 34302,
+      "base_line_count": 73,
+      "base_passage_sha256": "311e2550758eed1c15aca3f0a1b55ffc4c3e3d321157af66d1e4275601db5df0",
+      "main_start_line": 34314,
+      "main_line_count": 6,
+      "main_passage_sha256": "4930106a8650bf2c7df55fa13ac828050939d1f915e0219aa264bf925e4c60e6",
+      "diff_hunk_sha256": "48dc1272e75f94bdbdf4aa081620abc66b95d077c3fadb41be86210da30e9a41",
+      "conclusion": "Exactly two generic review rows gain neutral text/catalog guards/vocabulary and the separate GitHub create row is removed. D5 contributes no production row; keep current main unchanged.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "hunk": "@@ -1,6 +1,7 @@",
+      "base_start_line": 1,
+      "base_line_count": 6,
+      "base_passage_sha256": "09982f55b908ce6daaef6fba33f677bdd6cf5815ec893e7f886c810d4a8c2ee0",
+      "main_start_line": 1,
+      "main_line_count": 7,
+      "main_passage_sha256": "3d3c1754397b599b1f1c40a26eff86f1ba1ce52096521d5aa086e568ca83deb0",
+      "diff_hunk_sha256": "46e82197de2a5a015a7118219d594abc31b42bde4e7d88f8d603034c8d356536",
+      "conclusion": "cmd.github.pr.create is now an explicitly documented compatibility-only exclusion. D5 does not remove or override it.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "hunk": "@@ -223,6 +224,7 @@",
+      "base_start_line": 223,
+      "base_line_count": 6,
+      "base_passage_sha256": "304d562b8b345a30c62865c99866618877aff3709fd7b78126a7ac31a2ec88c7",
+      "main_start_line": 224,
+      "main_line_count": 7,
+      "main_passage_sha256": "4deb76d339c8251504ec122294d42d294c49739e2b5cecb24900365c8e2ff024",
+      "diff_hunk_sha256": "317063f063a02690618b77be6da786f8d2736f1d3a140b4221026deb75d5399a",
+      "conclusion": "cmd.github.pr.create is now an explicitly documented compatibility-only exclusion. D5 does not remove or override it.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "hunk": "@@ -3799,8 +3799,9 @@",
+      "base_start_line": 3799,
+      "base_line_count": 8,
+      "base_passage_sha256": "7d45d42278cfc02944a1bbd8038565d1b498b249a7cda925ff90bfe4675b1107",
+      "main_start_line": 3799,
+      "main_line_count": 9,
+      "main_passage_sha256": "fc66ac973c45b27c8e43228302c13b41eb45fb5b4a8f2c47e57a398e792b7ad7",
+      "diff_hunk_sha256": "c80c263bf2d0dec7426b941a345857491d9059d06fe9e54a269cb5b6051328b5",
+      "conclusion": "Validator now rejects generic provider literals and validates noun templates against existing fixtures. D5 does not require validator changes; rerun this current validator after rebase as a parent gate.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "hunk": "@@ -3842,6 +3843,23 @@",
+      "base_start_line": 3842,
+      "base_line_count": 6,
+      "base_passage_sha256": "12320d20fd76e84c72ce0993c990a2d1c6fff629660787b2200864c9723d9235",
+      "main_start_line": 3843,
+      "main_line_count": 23,
+      "main_passage_sha256": "f1fb23b11c33dfd6b5182bec2eccee4a83ab3ba12494d0656102708f69ca4004",
+      "diff_hunk_sha256": "ea358065f64412250d35ec179e4ad985fcf8eb6caf5c8124731b972bbdb095be",
+      "conclusion": "Validator now rejects generic provider literals and validates noun templates against existing fixtures. D5 does not require validator changes; rerun this current validator after rebase as a parent gate.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "hunk": "@@ -3850,6 +3868,52 @@",
+      "base_start_line": 3850,
+      "base_line_count": 6,
+      "base_passage_sha256": "53f4751025424605a34c50b5f742e146dbe685634b3634d8c00890a6bbbc2cbe",
+      "main_start_line": 3868,
+      "main_line_count": 52,
+      "main_passage_sha256": "fc51643418f1c973c3e54d0b0c24347ceda0b894cda80b63de541f976d93e266",
+      "diff_hunk_sha256": "b894c001de8ec75a9e0e680d4987286bc895da9fb82917c72315528a47f427f2",
+      "conclusion": "Validator now rejects generic provider literals and validates noun templates against existing fixtures. D5 does not require validator changes; rerun this current validator after rebase as a parent gate.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "hunk": "@@ -4133,6 +4197,11 @@",
+      "base_start_line": 4133,
+      "base_line_count": 6,
+      "base_passage_sha256": "3257769b63659357aaa68ce75467439d244767d7ba1110d7f44939f060e40117",
+      "main_start_line": 4197,
+      "main_line_count": 11,
+      "main_passage_sha256": "fa1850c26e7655036980f8ffbde5b3d0877ef772b0dd929f3d19f1c6c0f7868c",
+      "diff_hunk_sha256": "f553ab06c817fb5967460e274953b8e2164731ff7dd502b719ac81dd6bcd6e82",
+      "conclusion": "Validator now rejects generic provider literals and validates noun templates against existing fixtures. D5 does not require validator changes; rerun this current validator after rebase as a parent gate.",
+      "required_semantic_changes": []
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "hunk": "@@ -6956,7 +7025,13 @@",
+      "base_start_line": 6956,
+      "base_line_count": 7,
+      "base_passage_sha256": "0b9db2ceae4c37856a819fd1e215ec8664d1de532a1bbb3330efdce8c73c329c",
+      "main_start_line": 7025,
+      "main_line_count": 13,
+      "main_passage_sha256": "17e95caead4f77e254e59b396740ea5f9488901f058f419d66331d8a417aaaac",
+      "diff_hunk_sha256": "43f9660354c2e146b58b1c119b46cb04e9ea62130a138d107183aeb7dd9390bb",
+      "conclusion": "Validator now rejects generic provider literals and validates noun templates against existing fixtures. D5 does not require validator changes; rerun this current validator after rebase as a parent gate.",
+      "required_semantic_changes": []
+    }
+  ],
+  "D5_currentness": {
+    "unit_count": 42,
+    "planunit_owners": 12,
+    "root_PlanUnit_id_collision_count": 0,
+    "collision_scan": "git grep exact plan_unit_id anchors for all 42 D5 IDs across current-main root Plans/*.md",
+    "actual_pre_rebase_D5_files": [
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Jujutsu_Integration.md",
+        "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+        "reviewed_pre_rebase_sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Source_Control_System.md",
+        "sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3",
+        "reviewed_pre_rebase_sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Forge_Integrations.md",
+        "sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097",
+        "reviewed_pre_rebase_sha256": "04d04903335224e10f51ef0329ab0f2bde82b54e3001b2be5714889fe9754097",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FinalGUISpec.md",
+        "sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+        "reviewed_pre_rebase_sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/UI_Command_Catalog.md",
+        "sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1",
+        "reviewed_pre_rebase_sha256": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Wiring_Matrix.md",
+        "sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088",
+        "reviewed_pre_rebase_sha256": "7a07b5b67712d1abc53a2c234c791783c78a5985371e88e92474ae4429cb8088",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Contracts_V0.md",
+        "sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+        "reviewed_pre_rebase_sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Permissions_System.md",
+        "sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+        "reviewed_pre_rebase_sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/Backup_Restore_System.md",
+        "sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167",
+        "reviewed_pre_rebase_sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileManager.md",
+        "sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc",
+        "reviewed_pre_rebase_sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/FileSafe.md",
+        "sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06",
+        "reviewed_pre_rebase_sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06",
+        "matches_reviewed_pre_rebase": true
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/Plans/storage-plan.md",
+        "sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+        "reviewed_pre_rebase_sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+        "matches_reviewed_pre_rebase": true
+      }
+    ]
+  },
+  "authoritative_wiring_delta": {
+    "production_rows_removed": [
+      "catalog.github_pr_create"
+    ],
+    "production_rows_added": [],
+    "production_rows_changed": [
+      "catalog.forge_review_create",
+      "catalog.forge_review_merge"
+    ],
+    "existing_WiringEntry_required_fields_unchanged": true,
+    "generic_changed_rows_provider_literal_free": true,
+    "adapter_noun_source": "selected_repository_adapter",
+    "adapter_noun_field": "review_noun",
+    "handler_effect_contract_and_state_selector_preserved": true
+  },
+  "semantic_conclusion": "DL-044 alias/vocabulary reconciliation and the current WiringEntry contract are fully compatible with all 42 D5 additions. D5 neither restores the removed GitHub primary action/guard nor emits conflicting generic row text, and requires future admission through current catalog/wiring owners. DL-035/DL-043 remain unchanged. DL-045 separately bounded event-binding work confers no D5 admission.",
+  "required_changes": [],
+  "expected_rebased_owner_hashes": [
+    {
+      "owner_doc": "Plans/Jujutsu_Integration.md",
+      "main_sha256": "9de793a69abf283a32ce419f925484d6a06698eceeebd6f2f11563ee97fe7aaa",
+      "expected_rebased_sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+      "d5_addition_sha256": "9e5f4cb01cd5cf6af3503f31933c0fccff5b84278bb371adc9153b956b8170d6",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/Source_Control_System.md",
+      "main_sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb",
+      "expected_rebased_sha256": "dfc68b230f510134d575b9ffd5c8f8587fd16d00d48466efd9d4583a8d3964c3",
+      "d5_addition_sha256": "410283ea8fba5bae501c38874520df3d4dc6de37fb1d3ddaf9e83cb1483f6eaa",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/Forge_Integrations.md",
+      "main_sha256": "51bca3f34e86d1d980566ba1e07833df842325f5ac612bcfd5c78547cc08e190",
+      "expected_rebased_sha256": "89aeaf085c1776e004f008b8ff33c99c31be2a8bf21fbf4bdbf527af42b1deea",
+      "d5_addition_sha256": "93293c54b1bf21f629e79203492d62502a3f6ea50b81f707847c3f06a0498f18",
+      "main_changed_since_D5_baseline": true
+    },
+    {
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "main_sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5",
+      "expected_rebased_sha256": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+      "d5_addition_sha256": "2fa406780d27d5416ded42fdfa957d5ee205bd4d415f8ac7c08c97ba12020df3",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "main_sha256": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1",
+      "expected_rebased_sha256": "69f878743253f8b232830d8fbe19db0e79271ce2110dffce9f68f0a7fb5af31a",
+      "d5_addition_sha256": "bb9a82d892e0bef390420ca415bb3492851e71d720ba91f4c832059b2e75473d",
+      "main_changed_since_D5_baseline": true
+    },
+    {
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "main_sha256": "1e174cdc574c82377e7dc79cace28a169998a26825b2aad68fea1ffc36d77c68",
+      "expected_rebased_sha256": "c57ce447c5aeae4f6080689ba4e65d8631c2f0ff8f522a5cd0fda61764725201",
+      "d5_addition_sha256": "a64cf8a09d64af57ae0ea00485c5c9f5633cdb761b70042d66f6384c1a7f5263",
+      "main_changed_since_D5_baseline": true
+    },
+    {
+      "owner_doc": "Plans/Contracts_V0.md",
+      "main_sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+      "expected_rebased_sha256": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+      "d5_addition_sha256": "9d456575210db9d717aa8cec9e29ed244d8b51a512edf2357dc08618e146f336",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/Permissions_System.md",
+      "main_sha256": "65f8cfc8efb2bacf69961629152d9bdba0f2c626c8121147d3ec11b2985f1c53",
+      "expected_rebased_sha256": "268972ec2c2406fd01166c743dcd8bbac9848781c4d5ae53876f7742f3e40582",
+      "d5_addition_sha256": "bfc2af8da5a5ec491666d6a498fab361194fa11c62ed1e526684806f1ecadba1",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "main_sha256": "7638c06e29a7bffa0cd6cce46f88902e000a56f7e3edf6c7c27cdcd7d6ccb089",
+      "expected_rebased_sha256": "83f3946013b3aca9c37579f915220d9fb6d2b97a8f173bcb81fe19b1cd351167",
+      "d5_addition_sha256": "1843ec68c01262aaa48ccb494984f8045e851ad14290efde09d882c1888c4c4f",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/FileManager.md",
+      "main_sha256": "97e57f4d228363a02b686b62bbf28caa177fb5bde9f17e0898a4fabec6fb96d6",
+      "expected_rebased_sha256": "841fcabc69480319a9c10d0db2f4fd08e2250d5487082a1d8a3e9fe9eaec24bc",
+      "d5_addition_sha256": "e7e0a20a184d96a214c659b8c40687e316b82b680a6678be9d5233230ec898e1",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/FileSafe.md",
+      "main_sha256": "e665850106a97f5c95b2bab2e2b2d799d02da3dfc1dcb755a19c30c060789abb",
+      "expected_rebased_sha256": "6d16dfafe642fb31ea1c6c55063ea55ccbfb9d2930b3b8be3e761f6fd4decb06",
+      "d5_addition_sha256": "2a528e17d50093736066d77eb3e0b1b63690eb07334fd61715150816cecb8754",
+      "main_changed_since_D5_baseline": false
+    },
+    {
+      "owner_doc": "Plans/storage-plan.md",
+      "main_sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+      "expected_rebased_sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+      "d5_addition_sha256": "cd790e91ceb6e94d576d83f8ec7eea3fd9bb767ece66efc69be44718eeacd85e",
+      "main_changed_since_D5_baseline": false
+    }
+  ],
+  "integration_requirements": [
+    "Replay D5 additions onto current main; do not copy old complete Forge_Integrations/UI_Command_Catalog/Wiring_Matrix variants over main because that would undo DL-044 and its lineage correction.",
+    "Preserve main Decision_Log DL-044/DL-045, UI_Wiring_Rules, Wiring_Matrix schema/production/exclusions and validator unchanged by D5.",
+    "Regenerate generated derivatives on the rebased branch; do not hand-merge them. Run current required gates and report actual results.",
+    "Old review/source manifests remain truthful snapshot evidence; this currentness report records the newer enclosing-file hashes instead of silently restamping old evidence."
+  ],
+  "certification_boundary": "This review certifies semantic compatibility against main cc6d4a9aca07e85487d80f32a4f25782ed1c68a2 before rebase. It does not certify the subsequent rebase bytes, gate outcome or landing. Further main changes or edits require bounded currentness review."
+}

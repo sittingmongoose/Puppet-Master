@@ -1,0 +1,2295 @@
+{
+  "schema": "jj.d5.verification.v1",
+  "at": "2026-09-11T17:58:48.361739+00:00",
+  "status": "authoring_review_pass_governance_not_sealed",
+  "independent_review": {
+    "status": "pass",
+    "checks": 382,
+    "counts": {
+      "decisions": 44,
+      "accepted_for_planning": 29,
+      "conditional": 4,
+      "policies": 2,
+      "architecture": 1,
+      "declined_or_deferred": 8,
+      "positive_dispositions": 36,
+      "new_plan_units": 42,
+      "planunit_owners": 12,
+      "touched_canonical_documents": 13
+    }
+  },
+  "derived_shard_scope": {
+    "status": "pass",
+    "at": "2026-09-11T17:50:48.089175+00:00",
+    "source_docs": [
+      "Plans/Contracts_V0.md",
+      "Plans/FileManager.md",
+      "Plans/FileSafe.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Permissions_System.md",
+      "Plans/Shared_Integration_Runtime.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/storage-plan.md"
+    ],
+    "changed_paths": [
+      {
+        "path": "Plans/_shards/contracts_v0/00-index.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/001-preamble.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/003-pmconcept7-home-workspace-openfile-placement-addendum-2026-08-04.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/004-known-37-case-l-owner-materialization-requested-effective-runtim.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/005-0.-scope.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/006-cross-surface-runtime-concern-and-route-open-contracts.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/007-1.-events-persisted.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/008-provider-model-capability-snapshot-reference-envelope.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/010-2.-provider-normalized-stream-non-persisted-contract.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/011-3.-tool-events-persisted.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/012-5.-context-management-instruction-scoping-attempt-journaling-par.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/013-6.-hitlrequest.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/014-7.-uicommand.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/015-8.-ui-scaling.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/016-usage-and-billing-contracts-addendum.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/017-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/018-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/019-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/020-canonical-runtime-event-outcome-and-action-contract-canonical-al.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/021-owner-consumer-map.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/022-planunits.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/023-pmconcept7-home-workspace-event-contracts-2026-08-04.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/024-known-37-goal-runtime-v2-schema-registration.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/025-migration-coverage.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260614-001.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260614-002.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260615-001.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260616-001.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260616-002.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/035-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/036-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/037-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/038-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/039-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/040-fable-residual-feature-contract-cleanup-addendum-2026-07-07.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/041-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/042-usage-gui-propagation-addendum-2026-07-09.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/043-case-l-durable-state-contract-addendum-2026-07-17.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/044-shared-integration-runtime-typed-envelope-addendum-2026-08-13.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/045-touch-closure-registry-boundary-addendum-2026-09-01.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/046-forge-backup-tsnet-route-scope-and-exact-return-addendum-2026-09.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/047-additive-correction-v4-admitted-shapes-and-effect-dispositions-2.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/048-research-decision-review-profile.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/049-compaction-completion-envelope-consumer-dl-039-and-dl-040.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/050-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/051-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/contracts_v0/manifest.json",
+        "source_doc": "Plans/Contracts_V0.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/00-index.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/001-preamble.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/002-change-summary.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/003-summary.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/004-table-of-contents.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/005-1.-file-manager-panel.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/006-2.-in-app-ide-style-editor-mvp.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/007-3.-mention-in-chat.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/008-4.-integration-file-manager-editor-and-chat.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/009-5.-open-targets-and-chooser-behavior.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/010-6.-preview-subjects-and-rendered-document-modes.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/011-7.-browser-and-terminal-handoff-boundaries.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/012-8.-image-viewer-and-html-preview.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/013-9.-tabs-editor-terminal-browser.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/014-10.-editor-navigation-and-semantic-affordances.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/015-11.-file-tree-actions-local-filter-and-chat-handoff.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/016-12.-source-control-handoff-compare-and-review.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/017-13.-preview-refresh-and-hot-reload-controls.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/018-14.-rendering-browser-preview-and-detached-preview-compatibility.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/020-owner-consumer-map.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/021-planunits.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/022-migration-coverage.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/023-ledger-compile-addendum-pldg-20260614-001.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/024-ledger-compile-addendum-pldg-20260614-002.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/025-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/026-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/027-pmconcept6-shell-sweep-addendum-2026-07-16.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/028-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/029-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/030-pmconcept7-home-workspace-reconciliation-2026-08-04.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/031-backup-v2-file-consumer-addendum-2026-09-01.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/032-additive-correction-v4-folder-attachments-through-the-shared-com.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/033-jujutsu-d5-owner-requirements-2026-09-11.md",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filemanager/manifest.json",
+        "source_doc": "Plans/FileManager.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/00-index.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/001-preamble.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/002-dry-method-compliance.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/003-rewrite-alignment-2026-02-21.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/004-executive-summary.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/005-table-of-contents.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/006-1.-architecture-overview.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/007-2.-implementation-details.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/008-3.-integration-with-platform-runner.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/009-4.-pattern-file.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/010-5.-configuration-options.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/011-6.-event-logging.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/012-7.-error-messages.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/013-8.-testing.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/014-9.-implementation-checklist.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/015-10.-relationship-to-other-plans.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/016-10a.-filesafe-and-assistant-yolo-mode.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/017-11.-additional-filesafe-features.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/018-12.-gaps-and-potential-issues.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/019-13.-enhancements.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/020-14.-historical-note-on-moved-context-compilation-canon.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/021-15.-system-integration-analysis.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/022-16.-references.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/023-17.-implementation-order-and-dependencies.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/024-runtime-blocked-state-integration-addendum-2026-03-08.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/027-owner-consumer-map.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/028-planunits.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/029-migration-coverage.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/030-ledger-compile-addendum-pldg-20260614-002.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/033-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/035-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/038-case-l-exact-restore-repair-addendum-2026-07-17.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/040-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/041-known-37-corruption-evidence-and-recovery-unavailable-owner-comp.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/042-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/043-shared-runtime-immutable-dispatch-binding-2026-08-13.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/044-working-notebook-capture-redaction-addendum-2026-09-05.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/045-jujutsu-d5-owner-requirements-2026-09-11.md",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/filesafe/manifest.json",
+        "source_doc": "Plans/FileSafe.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/00-index.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/001-preamble.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/003-table-of-contents.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/006-pmconcept7-home-workspace-control-reconciliation-2026-08-04.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/007-known-37-recovery-unavailable-gui-projection-2026-07-18.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/008-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/009-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/010-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/011-3.-master-layout.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/012-4.-navigation-architecture.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/013-5.-panel-system.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/014-6.-theme-system.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/015-7.-views-specification.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/016-8.-widget-catalog.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/017-9.-state-management.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/018-10.-ux-patterns.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/019-11.-anti-flickering-and-scroll-preservation.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/020-12.-responsive-design.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/021-13.-accessibility.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/022-14.-slint-file-organization.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/023-15.-persistence.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/024-16.-migration-mapping.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/025-17.-risks-and-mitigations.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/026-18.-promoted-features-formerly-future-considerations.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/027-appendix-a-cross-references.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/028-appendix-b-locked-decisions-summary.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/029-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/030-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/031-rendering-surface-addendum-2026-03-07.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/032-assistant-planning-ux-addendum-2026-03-08.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/033-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/035-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/036-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/037-canonical-blocked-recovery-behavior.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/038-compatibility-source-lineage-blocked-state-visual-distinction-an.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/039-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/040-owner-consumer-map.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/041-planunits.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/042-remaining-runtime-canon-closure-addendum-2026-08-14.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/043-shared-runtime-projection-addendum-2026-08-13.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/044-migration-coverage.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260614-001.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260614-002.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260615-001.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260616-001.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260616-002.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/050-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/054-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/055-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/056-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/057-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/058-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/059-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/060-usage-gui-propagation-addendum-2026-07-09.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/061-pmconcept6-concept-promotion-addendum-2026-07-11.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/062-pmconcept6-chat-polish-addendum-2026-07-16.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/063-theme-system-addendum-2026-07-16.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/064-settings-system-addendum-2026-07-16.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/065-pmconcept6-shell-sweep-addendum-2026-07-16.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/066-pmconcept7-concept-promotion-addendum-2026-07-23.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/067-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/068-run-debug-revival-addendum-2026-07-27.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/069-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/070-pmconcept7-user-polished-runtime-contract-addendum-2026-08-27.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/071-settings-product-onboarding-guided-tour-doctor-and-hover-present.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/072-forge-backup-tsnet-shared-gui-consumer-addendum-2026-09-01.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/073-source-control-and-provider-operational-gui-depth-repair-2026-09.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/074-puppet-master-assistant-redesign-gui-specification-2026-09-03.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/075-additive-correction-v4-assistant-correction-surfaces-2026-09-03.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/076-cumulative-v3-assistant-settings-gui-specification-2026-09-07.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/077-dl-035-terminal-research-consumer-planning-2026-09-09.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/078-dl-036-research-decision-card-presentation-2026-09-09.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/079-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/finalguispec/manifest.json",
+        "source_doc": "Plans/FinalGUISpec.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/00-index.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/001-preamble.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/005-1.-definitions-and-scope.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/006-2.-permission-actions.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/007-3.-granular-rules.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/009-4.-special-guards.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/010-5.-tool-permission-keys.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/012-7.-deterministic-defaults.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/013-8.-resolution-algorithm.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/014-9.-persistence-and-storage.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/015-10.-gui-requirements.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/016-10a.-security-model.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/018-12.-acceptance-criteria.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/022-owner-consumer-map.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/023-planunits.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/024-migration-coverage.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/036-fable-residual-permission-consent-cleanup-addendum-2026-07-07.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/037-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/038-case-l-permission-snapshot-and-recovery-consumer-addendum-2026-0.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/039-shared-runtime-dispatch-admission-boundary-2026-08-13.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/040-post-integration-forge-backup-and-connector-permission-addendum-.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/041-additive-correction-v4-sandboxed-plan-content-and-uncommitted-gr.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/042-working-notebook-restriction-propagation-addendum-2026-09-05.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/043-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/permissions_system/manifest.json",
+        "source_doc": "Plans/Permissions_System.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/00-index.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/001-preamble.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/002-1.-authority-and-scope.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/003-2.-platform-invariants.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/004-3.-canonical-shared-identities.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/005-4.-installation-and-capability-lifecycle.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/006-5.-durable-environment-connection-and-domain-synchronization.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/007-6.-durable-command-outbox.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/008-7.-cursor-replay-snapshot-live-buffering-and-coalescing.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/009-8.-runtimeresourcegovernor-and-observablework.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/010-9.-leases-and-operational-awareness.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/011-10.-debugsession-and-evalsession-shared-lifecycle.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/012-11.-provider-dispatch-admission.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/013-12.-time-traveling-conditional-rules.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/014-13.-back-seat-driver.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/015-14.-persistence-recovery-and-migration.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/016-15.-commands-wiring-dry-gui-and-usage.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/017-16.-verification-contract.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/018-17.-conflict-dispositions.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/019-18.-owner-consumer-map.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/020-19.-planunits.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/021-20.-migration-coverage.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/022-full-thread-performance-and-continuity-addendum-2026-08-31.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/023-command-contract-closure-addendum-connection-profiles-and-instal.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/024-retained-pkt-04-candidate-inventory-deferred-non-emitting-non-ca.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/025-server-wan-exact-command-owner-closure-addendum.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/026-shared-connection-central-route-binding-addendum-2026-09-01.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/027-central-sole-future-handler-binding-addendum-2026-09-01.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/028-expansion-compatibility-materialization-addendum-2026-09-01.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/029-forge-backup-automation-and-embedded-connector-consumer-addendum.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/030-connectiondraft-candidate-closure-addendum-2026-09-02.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/031-additive-correction-v4-provisioning-only-after-start-2026-09-03.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/032-working-notebook-transition-runtime-addendum-2026-09-05.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/033-compaction-completion-replay-binding-dl-040.md",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/shared_integration_runtime/manifest.json",
+        "source_doc": "Plans/Shared_Integration_Runtime.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/00-index.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/001-preamble.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/003-summary.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/004-table-of-contents.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/007-3.-implementation-checklist.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/013-version-history.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/021-owner-consumer-map.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/022-planunits.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/023-migration-coverage.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/045-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/046-additive-correction-v4-records-replay-and-migration-matrix-2026-.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/047-working-notebook-and-context-transition-storage-addendum-2026-09.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/048-research-decision-disposition-persistence.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/049-compaction-completion-persistence-contract-dl-039-and-dl-040.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/050-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/051-jujutsu-d5-owner-requirements-2026-09-11.md",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/storage-plan/manifest.json",
+        "source_doc": "Plans/storage-plan.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/00-index.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/001-preamble.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/003-0.-scope.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/006-references.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/007-owner-consumer-map.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/008-planunits.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/009-migration-coverage.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/017-fable-gui-command-contract-closure-addendum-2026-07-07.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/019-usage-gui-propagation-addendum-2026-07-09.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/020-pmconcept6-control-census-command-addendum-2026-07-16.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/021-case-l-command-registration-and-storage-gate-propagation-2026-07.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/022-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/023-run-debug-revival-addendum-2026-07-27.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/024-guided-tour-local-focus-route-catalog-disposition-2026-09-01.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/025-agent-plugin-lifecycle-ui-catalog-addendum-2026-09-01.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/026-cross-owner-product-onboarding-and-settings-consumer-catalog-add.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/027-pmconcept7-cozy-shelves-integration-addendum-2026-07-28.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/028-pmconcept7-deferred-token-hygiene-addendum-2026-07-29.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/029-pmconcept7-home-workspace-command-reconciliation-2026-08-04.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/030-shared-runtime-command-catalog-addendum-2026-08-13.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/031-u11-prism-ii-usage-command-registration-addendum-2026-08-18.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/032-pmconcept7-command-reuse-and-view-local-disposition-addendum-202.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/033-server-egolite-exact-command-and-reverse-consumer-catalog-addend.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/034-central-touch-reverse-gui-catalog-addendum-2026-09-01.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/035-connectiondraft-catalog-and-reverse-consumer-addendum-2026-09-02.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/036-post-integration-auth-alias-catalog-closure-2026-09-02.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/037-neutral-source-control-concrete-catalog-completion-2026-09-02.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/038-puppet-master-assistant-redesign-command-registration-2026-09-03.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/039-additive-correction-v4-revised-command-rows-2026-09-03.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/040-working-notebook-command-rows-addendum-2026-09-05.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/041-cumulative-v3-ui-command-catalog-dispositions-and-re-use-2026-09.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/042-accepted-terminal-research-action-candidates-dl-035-2026-09-09.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/043-research-and-audit-decision-review-command-profile-dl-036-2026-0.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/044-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/ui_command_catalog/manifest.json",
+        "source_doc": "Plans/UI_Command_Catalog.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/00-index.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/001-preamble.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/002-canonical-owner-section-requirements.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/003-0.-scope.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/004-1.-template.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/005-2.-example-entries.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/006-3.-json-example.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/007-gui-pmconcept-production-wiring-repair-addendum-2026-07-02.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/008-4.-verification.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/009-references.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/010-scheduler-remediation-event-wiring-addendum-2026-03-08.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/011-runtime-recovery-wiring-requirements-2026-03-09.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/012-canonical-runtime-event-wiring-canonical-alignment-2026-03-09.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/013-canonical-runtime-producer-consumer-and-action-wiring-canonical-.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/014-runtime-recovery-producer-consumer-wiring.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/015-source-control-github-actions-and-docker-manager-wiring-addendum.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/016-route-aware-wiring-reconciliation.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/017-owner-consumer-map.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/018-planunits.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/019-migration-coverage.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/020-ledger-compile-addendum-pldg-20260615-001.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/021-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/022-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/023-usage-gui-propagation-addendum-2026-07-09.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/024-fable-production-wiring-repair-addendum-2026-07-07.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/025-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/026-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/027-u11-prism-ii-usage-wiring-addendum-2026-08-18.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/028-pmconcept7-settled-interaction-production-wiring-addendum-2026-0.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/029-packet-owner-command-and-touch-closure-wiring-addendum-2026-08-3.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/030-guided-tour-typed-local-route-wiring-disposition-2026-09-01.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/031-agent-plugin-production-intent-and-consumer-wiring-addendum-2026.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/032-cross-owner-setup-restore-server-pairing-and-protected-auth-wiri.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/033-server-egolite-production-intent-wiring-addendum-2026-09-01.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/034-central-touch-production-wiring-closure-addendum-2026-09-01.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/035-terminal-research-planned-wiring-dl-035-2026-09-09.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/036-research-decision-review-planned-wiring-dl-036-2026-09-09.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/037-dl-043-accepted-jujutsu-surface-and-contract-planning-2026-09-11.md",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      },
+      {
+        "path": "Plans/_shards/wiring_matrix/manifest.json",
+        "source_doc": "Plans/Wiring_Matrix.md",
+        "allowed": true
+      }
+    ],
+    "stdout_sha256": "02f9219c8b0abfb8a8644ef67a4df1ab614920e5e31591ed06fc2463f4a3f307",
+    "unconfigured_edited_owners": [
+      "Plans/Backup_Restore_System.md",
+      "Plans/Forge_Integrations.md",
+      "Plans/Jujutsu_Integration.md",
+      "Plans/Source_Control_System.md"
+    ]
+  },
+  "checks": [
+    {
+      "name": "final-gates",
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "start": "2026-09-11T17:54:48.378462+00:00",
+      "end": "2026-09-11T17:58:26.042222+00:00",
+      "returncode": 1,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/final-gates.stdout.txt",
+      "stdout_sha256": "05cec2990a562250b12b238fe9efa2fae86420cf7c1a77428c59662cb2590504",
+      "stderr_sha256": "59280c926b5b54e5da7de19136b9da865c75ceaf8e3738e9ded9a61cdaa24e19"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "start": "2026-09-11T17:54:48.379079+00:00",
+      "end": "2026-09-11T17:55:11.958374+00:00",
+      "returncode": 0,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/index-validate.stdout.txt",
+      "stdout_sha256": "8cef58da54c80f0cea75a28ff1665ee14ff4eb82be88b639657441733658bdcb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "configured-shards-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "start": "2026-09-11T17:54:48.380476+00:00",
+      "end": "2026-09-11T17:54:54.496273+00:00",
+      "returncode": 0,
+      "stdout_path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/configured-shards-check.stdout.txt",
+      "stdout_sha256": "753bbecc3a84987e1d830eebf4ee5e9824cb3a02d531049c0690a08d8cbd6e0b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "ledger_validation": {
+    "errors": [
+      "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+      "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
+    ],
+    "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+    "schema_id": "pm.bootstrap_ledger_validator_report.v1",
+    "status": "fail",
+    "summary": {
+      "atoms": 44,
+      "compile_queue_items": 12,
+      "corrections": 0,
+      "decisions": 44,
+      "events": 3,
+      "plan_units_checked": 1924,
+      "questions": 0
+    },
+    "warnings": []
+  },
+  "limitations": [
+    "Four edited native owner documents are absent from the existing sharding configuration; coverage was not expanded.",
+    "Full governance gates and compiled-ledger governance coverage remain failing; see the gate assessment and exact receipts.",
+    "Runtime certification remains incomplete. No governance seal or runtime artifacts are created.",
+    "Temporary tooling inputs are byte-identical copies of existing shared-checkout inputs and are excluded from commits."
+  ],
+  "tooling_input_materialization": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/tooling-inputs/worktree-materialization.json",
+    "sha256": "5a4da4eddcf7a10ef440f66cf1797213b22c44412407a89d584dc124f0743abd"
+  },
+  "ledger_validation_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/ledger-final-before-rebase.json",
+    "sha256": "f761fea4e40ae5a83171d52c11dcefe55c6a74ab4974565e954c672781739d4d"
+  }
+}

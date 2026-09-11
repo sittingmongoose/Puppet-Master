@@ -1,13 +1,11 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+  "updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
   "open_questions": [],
   "deferred_questions": [],
   "open_blockers": [],
-  "remaining_work": [
-    "Validate intake, apply reviewed owner proposals with reciprocal source lineage, independently review all44 dispositions, then regenerate required derived files and land D5."
-  ],
+  "remaining_work": [],
   "declined_decisions": [
     "D036",
     "D033",
@@ -17,5 +15,10 @@
     "D024",
     "D025",
     "D026"
+  ],
+  "deferred_governance_validation_errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
   ]
 }

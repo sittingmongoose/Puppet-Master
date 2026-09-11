@@ -1,0 +1,874 @@
+{
+  "status": "assessed_read_only",
+  "baseline_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+  "baseline_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/d5/baseline-gates.stdout.json",
+    "sha256": "b6ff5f7fad377230c6886c554bcbebcc55d38667efc46786cb62518219c9a744",
+    "failed_checks": 18
+  },
+  "checks": [
+    {
+      "check": "json_syntax",
+      "classification": "missing_untracked_tooling_input",
+      "explanation": "Raw evidence capture schema is absent from Git at baseline; sparse expansion alone will not restore it.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "raw_capture_manifest_schema_unavailable": 1
+      }
+    },
+    {
+      "check": "verify_spec_lock",
+      "classification": "preexisting_governance_drift",
+      "explanation": "19 stale locked hashes predate D5; no reseal authorized.",
+      "displayed_failure_count": 19,
+      "error_counts": {
+        "stale_hash": 19
+      }
+    },
+    {
+      "check": "validate_plan_graph",
+      "classification": "preexisting_governance_drift",
+      "explanation": "50 displayed stale historical evidence artifact bindings; failure output is capped.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "artifact_hash_stale": 50
+      }
+    },
+    {
+      "check": "validate_evidence",
+      "classification": "preexisting_governance_drift",
+      "explanation": "Same 50 displayed historical evidence bindings; no evidence refresh authorized.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "artifact_hash_stale": 50
+      }
+    },
+    {
+      "check": "lint_contractrefs",
+      "classification": "missing_ignored_historical_input",
+      "explanation": "One ignored widget-followup audit_report.json exists in shared checkout; immutable tooling-input copy can satisfy existence, without altering canon.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "missing_ref": 1
+      }
+    },
+    {
+      "check": "lint_path_refs",
+      "classification": "mixed_sparse_and_preexisting_missing_paths",
+      "explanation": "Concepts and tracked tests are sparse-missing; some referenced scripts/fixtures are untracked historical inputs. Exact per-path classification included.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "missing_ref": 1,
+        "implementation_surface_missing_or_untyped": 49
+      }
+    },
+    {
+      "check": "validate_working_notebook_contracts",
+      "classification": "not_reproduced",
+      "explanation": "Baseline says fail with no failures; independent direct validator and wrapper reruns both PASS. Do not invent a notebook defect.",
+      "displayed_failure_count": 0,
+      "error_counts": {}
+    },
+    {
+      "check": "validate_implementation_readiness",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "Traceback specifically names tracked event_record legacy-normalization fixture; subsequent certification/currentness failures may remain after hydration.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "validator_no_output": 1
+      }
+    },
+    {
+      "check": "validate_plan_migration",
+      "classification": "preexisting_migration_drift",
+      "explanation": "Historical inventory 95 vs 72 and stale batch_report bindings; not missing tests and not authorized to rewrite history.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "doc_count_mismatch": 1,
+        "inventory_doc_set_mismatch": 1,
+        "stale_batch_report_sha256_after": 48
+      }
+    },
+    {
+      "check": "validate_runtime_artifact_schemas",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "Golden runtime artifact matrix exists in baseline Git.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "missing_runtime_artifact_fixture_matrix": 1
+      }
+    },
+    {
+      "check": "validate_goal_runtime_event_fixtures",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "Minimal goal event fixture exists in baseline Git.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "missing_goal_runtime_event_fixture": 1
+      }
+    },
+    {
+      "check": "validate_project_output_fixtures",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "All 12 reported missing project artifacts exist in baseline Git.",
+      "displayed_failure_count": 12,
+      "error_counts": {
+        "missing_project_output_fixture": 12
+      }
+    },
+    {
+      "check": "validate_usage_gui_fixtures",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "Golden usage matrix is tracked; downstream PM7 detailed presentation inputs include untracked files.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "missing_usage_gui_fixture_matrix": 1
+      }
+    },
+    {
+      "check": "validate_pm7_gui_fixtures",
+      "classification": "missing_untracked_tooling_input",
+      "explanation": "Traceback motion_frame_matrix.json is untracked; all seven shared PM7 fixture files plus detailed Usage fixture tree exist in shared checkout.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "invalid_validator_output": 1
+      }
+    },
+    {
+      "check": "validate_web_capability_contracts",
+      "classification": "sparse_missing_tracked_fixture",
+      "explanation": "Four evidence-file references and runtime matrix resolve to tracked fixture files.",
+      "displayed_failure_count": 5,
+      "error_counts": {
+        "missing_v3_finding_evidence_file": 4,
+        "missing_runtime_artifact_fixture_matrix": 1
+      }
+    },
+    {
+      "check": "validate_touch_closure",
+      "classification": "mixed_sparse_and_preexisting_contract_defects",
+      "explanation": "Missing tracked Concepts/pm7-tools/systems_integration_source.py causes extraction failure and inflated orphan list. Independent defects: TCR-SETTINGS-PACKET-COMMANDS disposition hash mismatch; cmd.settings.agent_rules.dry_method_default_guard.set lacks production wiring and sole handler.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "text_failure": 50
+      }
+    },
+    {
+      "check": "validate_audit_closure",
+      "classification": "preexisting_governance_drift",
+      "explanation": "Historical semantic closure registry owner/evidence hashes are stale; no reseal/registry rewrite authorized.",
+      "displayed_failure_count": 50,
+      "error_counts": {
+        "audit_closure_validator_error": 50
+      }
+    },
+    {
+      "check": "validate_audit_status_index",
+      "classification": "preexisting_governance_drift",
+      "explanation": "Existing audit status index is stale; not a sparse fixture failure.",
+      "displayed_failure_count": 1,
+      "error_counts": {
+        "stale_audit_status_index": 1
+      }
+    }
+  ],
+  "missing_path_classification": [
+    {
+      "path": "tests/fixtures/governance/raw_evidence_capture_modes.schema.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "d3fc0cda420a7ca417e5835d53d83fca67097c81769a85dcee0cccddb580d9fc"
+    },
+    {
+      "path": "Concepts/PMConcept.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "80a19bfb97f817a2faaf70d5a50963e8553117d13a5e6c8a05c0dd3b3f6e3e06"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "21002ce8cd73272d24598d3936319a59d63646389382a36890a137311963c057"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "588721519b0a8e5f530f165ee5420e9871accc3e5b3807e71156d7ecdedc792b"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "b1bbb411e2172ca8c248efe844eba71a8cedaf52537287a974bfe3411988457d"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "3ae348b117afe4dbba3c49cd595c3bddf5adda616cfce7b45392317fdb6361f7"
+    },
+    {
+      "path": "tests/test_pm_evidence_artifact_binding_modes.py",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "9ec99bcf493c0de29291d54c4adf583743f62d9c74ad325069559e36dbaa4332"
+    },
+    {
+      "path": "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "41c11a818c0a68a9042079af8fdfde0e1f10bc46f2f0621ef0521c9cfcb43656"
+    },
+    {
+      "path": "Concepts/pm7-tools/home_workspace_source.py",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "cba136d5192d396ecca9b92ac6dec00724f45bcf2342638b69d4816dba03a3fa"
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "45461a41d6a4220ad8652eb1ae8f27c6059ccbc9df80fe02efa4df697852261c"
+    },
+    {
+      "path": "tests/fixtures/usage_gui",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": null
+    },
+    {
+      "path": "tests/fixtures/pm7_shared",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": null
+    },
+    {
+      "path": "Concepts/pm7-tools/global_hover_tags_source.py",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "bb80451288db902a84762a2381ee52e3ad192f59c1bca5d61547ab39fe3db2ac"
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/hover_tags.mjs",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "224f657ce154a4e63aa070911c0d88b678b17769c8412f50d3f0c72b2c49b213"
+    },
+    {
+      "path": "Concepts/pm7-tools/verify/full_thread_performance.mjs",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "4a2f35cbbfc394efcf12edaf5c506454603eab2bb6d24122349b3029c8b49d69"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "12610e5374d0535e25a5766ccf8b9c3db921d01a21058b1a05763bf6b73a0852"
+    },
+    {
+      "path": "tests/test_pm_working_notebook_contracts.py",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "ae531483cb9b0960fa265d7828f556475fee4362690519a774eda976cee71a0b"
+    },
+    {
+      "path": "Concepts/pm7-tools/settings_refresh/managers/40-bsd.js",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "49b62b23fc8d3201ba439a43436adc2110bed657acbce224b3e1d3cfac96282b"
+    },
+    {
+      "path": "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "d66281294febb1f6f921f872283a368974dfdb579eb089bf93a759a80bb46e57"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/12-html-side-panels.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "93c1c49fef9e8c010e36831eaa92cf33145378611fcc17977b8b8e5ae6dd4c14"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "50c91ea869342392ecc26f635b048145bf8bfffb70c93aa35440bd0861d48240"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "3b92607fd9b650b6f493de7f3a907314ab3618e74fcbdd530b01e2a7165a5b70"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/02-css-tokens.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "87d2f9905b3a8d00b61839752a1c5f7c5855e0684c39908d50cc7608e9b84b51"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/09-css-bento-themes.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "8f3ac5fb3118e24d3d9adbda829eb84e7a8484f177d45c0e28a0e20d5cdfa1b1"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "b8a7bfa10c75c0e4b423a1a733c839776d909517abedbb729970a3c9472f8758"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/11-html-shell-open.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "31d120d1053f8a17d29cf90f6d76b033f52f0f8ad64c93a34ecda8d10973aba7"
+    },
+    {
+      "path": "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "c1b85cfe27886e3c50323a6aff33a9a3f899c9f024582f5188f50d46f1b7aa7b"
+    },
+    {
+      "path": "Concepts/pm6-build/contracts/HOOKS.md",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "048175ca38ff61c75ccfa8b332b79c381fc934aea2911496ad82483af8031e23"
+    },
+    {
+      "path": "Concepts/pm7-tools/build_pm7.py",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "22500ed4825441d481dcc0065e4304b736e7ba76cbaf7718785246a176c4b39a"
+    },
+    {
+      "path": "Concepts/pm7-tools/base/PM7-base.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "7bbc1932dbfbbee45bab9533a9fe41b96b13452720ea0fd29e43cbeab710d50d"
+    },
+    {
+      "path": "Concepts/PMConcept7.html",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "b019cf8dfed0e6d64f415bb5d71871d844cf58bbce16017ac82fb1e904ab0923"
+    },
+    {
+      "path": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "7205117546b7c7ae373acc4bea672234d6da280a657b56d17b3b090875473705"
+    },
+    {
+      "path": "tests/fixtures/goal_runtime_events/golden/minimal_goal_events.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "f222adbdfde77ecca76affb45638e735e2cfaca89b90fefd89b27e119b0ff71c"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/requirements.md",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "f08cbf5da318c4de3a39834ca9d2364c6f07fb272e2cb0ceab977d080d1519f5"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/contracts/index.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "8899ebbc7d79235429bfe9a9a6e5a2ca76f00e486928be16db4535eed5aed3f1"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan.md",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "12bb7e193428783c545fa1e0596e000775d9231354fa11eb2982df2d380b9166"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan_graph/index.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "1cf20518059fe45e549e3003a8c6087a70574f9a1b8f7823cc69ea1f08c1bd3e"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan_graph/nodes/node-fr-001.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "74b3b6edef777b88f1635480e33d817d2b057e249d9d9f8e4cd7734dd33df30c"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/acceptance_manifest.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "841b2d1ae0a917513b325fa70dbaff1aef37a46f4904ddc375c9dab7a110d1d5"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/auto_decisions.jsonl",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "210a7798451c1ddd75216f32f13dcd3fc4065b32c02db918dade35d12c180108"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_quality_report.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "255a8e08ccac346476a916859534bc32ac429234549109e7d677b553385a3ed7"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_coverage.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "866c589c6a2ec558df02e7066b5ab1fff3da6eddcdbd801083ada932df8001e0"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_coverage.md",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "4eb9a6367cb91f9f96760bec35d5eee8cbfd4bd360854fb1b5693cae0329e321"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/schema_payloads/test_strategy.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "351eb30a809dc6cdd99326df80dda7f461df5b5b3d9f2fbf2b1446a522dcda66"
+    },
+    {
+      "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/schema_payloads/gui_automation_manifest.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "23bd83c66f4bb5380fdf19869df6718e0ce964e1e9982f5b1f0620ea6c5527a8"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "a706d9197c881a5dca96b4d9c009bdc1d89f0e8f33a098bac992f06b01849ac1"
+    },
+    {
+      "path": "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "86c1637bad94a6402fc562d7edee895c551104bf0749a5d5c32433b531fb2990"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/motion_frame_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "274668cad2e7348764df7bb717796c62183af76f05c2c65c08e66b3a93d1fa7a"
+    },
+    {
+      "path": "Concepts/pm7-tools/systems_integration_source.py",
+      "tracked_at_baseline": true,
+      "available_in_shared": true,
+      "shared_sha256": "d5c3b96edc94cc6e50d0f72f68d612218d02c79b46b8009f740c8254af07841e"
+    }
+  ],
+  "verified_baseline_locked_hashes": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "baseline_sha256": "22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "baseline_sha256": "8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "baseline_sha256": "3f374edf82d5d67139a986a0b564487f9612ccb718f5065e30fda77e65c825a6",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "baseline_sha256": "b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "baseline_sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "scripts/pm-shard-plans.py",
+      "baseline_sha256": "1c6d64931699c2f0fa89addd5fb96119cdd02a68e0e85221c58ff3f0f3e2ecec",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Planning_Wizard.md",
+      "baseline_sha256": "075ddde45f65b24583fc7c8a13eb6833c2f8fa90a37f0744b31052f4a4c14e36",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "baseline_sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "baseline_sha256": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "baseline_sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "baseline_sha256": "6417b4bebe91fcbe41b0c28abb0a9c47ba09faf1473b695a0722540548f69e61",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "baseline_sha256": "b7f6b2ab890ac9b881f3ed75ad517fabfbd4d2aaa609ce0d218358059370fd04",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "baseline_sha256": "88183c7e864dde8816d0c55fdc976bc1f594079a1900f3213d2327e8664a3b1f",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "scripts/pm_pnc019_currentness.py",
+      "baseline_sha256": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "baseline_sha256": "550bfef88544dec7f9186e931f3568135af331220777ebaa0e44852961e0f30b",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "baseline_sha256": "4db908950fd355b040ad67c3e4730fd479bad8eb70cc34ed4b05c52e821d08b4",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/UI_Wiring_Rules.md",
+      "baseline_sha256": "683459c0727eb26dc581b46d93d03d310d3886a13c76b365ac66f4cd8ae13975",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "baseline_sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "matches_baseline_failure_actual": true
+    },
+    {
+      "path": "scripts/pm-shared-runtime-storage-materialize.py",
+      "baseline_sha256": "2e26da2415a6120afbd5065457cab66c1853ac9c670efbbf1f49027171dda100",
+      "matches_baseline_failure_actual": true
+    }
+  ],
+  "generator_inputs": {
+    "source_root": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness",
+    "target_relative_root": "Plans/.audits/event-authority-2026-08-13-currentness",
+    "recommendation": "Supply the exact current shared audit root as temporary ignored immutable tooling input (copy/hash-preserve, or immutable snapshot plus ignored symlink); never regenerate it, alter its hashes or claim authority clearance. All 14 receipt-bound artifact hashes verified; receipt itself separately hashed.",
+    "current_checkpoint": "2026-09-11.1; 40 registered kernel rows; 252 quarantined; UNKNOWN_OPEN; denominator and contract-depth clearance false",
+    "files": [
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "8f042ba5facf0f33a7f904b44a5b3f35976fb6c79890618d7e8dbedbc45f11a3"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "731458a6fa5b8dba2ef15a259e416037b914ee992494869d8a3fa9e62f6d56d8"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "7361d14c7d799c58441de921422b758fa6d998f92737af72daf2ebaaad86d8d6"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/README.md",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "a8629012f9074dd5a2e2dbffeebb9c203501c52aae43ea4baca6fb0ebe82e0ea"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_a.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "d4305411923dee2edfc2c8b822a9fb42eda33b320c64c7f84aaf16ce4cd134a3"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_b.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "f1279ec339fc3b20676e19787ab423ffaeaba3b7a58181828af5e94242cf7160"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_c.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "9528f134447acb50c2c8053855db64bbcfeb9bdbbc56cb1d9e52ce11eb10cc79"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_d.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "5b3af4d546e0aecca799ac38e0ae65ed81e356db18531baa7e7027dfb9cd66b2"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_e.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "52ad46cafed54f333ab144b7297ca2e188353adf38a3ee4488099e76f8acba2a"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_f.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "24585545a7234db0972ca58da2b8557416bab7ef74b75afbf318f6bfdb1c93d1"
+      },
+      {
+        "path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/source_groups/group_g.jsonl",
+        "tracked_at_baseline": false,
+        "available_in_shared": true,
+        "shared_sha256": "5e1f709cbf5a4f1bd19cec24d12b033cac79d4e0ce0e194d8babb13bdc0499db"
+      }
+    ],
+    "new_audit_root_required": false,
+    "source_code_evidence": [
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/scripts/pm_pnc019_currentness.py",
+        "sha256": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
+        "lines": "37,54-59,103-139"
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-d5-20260911/scripts/pm-plan-index.py",
+        "sha256": "f3c2bd1e881f538e730258a854943e16c729150d2f7485cfac98dd58d034f293",
+        "lines": "262-269"
+      }
+    ]
+  },
+  "additional_immutable_optional_tooling_inputs": [
+    {
+      "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "c27b2de25d5b5d8ef9d4f8f05ad427b264157cec77d1a88c55f65a0b5562e075"
+    },
+    {
+      "path": "tests/fixtures/governance/raw_evidence_capture_modes.schema.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "d3fc0cda420a7ca417e5835d53d83fca67097c81769a85dcee0cccddb580d9fc"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/assistant_context_continuity.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "8174434af1414f3dfa6eaed1843a93e9cd46fa6e340378b6d139e0dce16a73f7"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/home_workspace_transaction.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "93350e084ccfabb0f05ebf2cb7e5dc83980749c0663bf347ae009c24b7b5787a"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/motion_frame_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "274668cad2e7348764df7bb717796c62183af76f05c2c65c08e66b3a93d1fa7a"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/status_bar_contract.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "67c1f074ff605dbee30b1b92f265cb70b70c50ee2373e79a0ccd94ca12682bc1"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/surface_inventory.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "af01574ecdfce8e8af1dde60e84b938268116381f3bf81d271c5825a63c384b0"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/theme_surface_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "fea1b0026bcd5b650ead8fa5f199d7945553169b80099d6fd914ad03893a04c6"
+    },
+    {
+      "path": "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "12610e5374d0535e25a5766ccf8b9c3db921d01a21058b1a05763bf6b73a0852"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-CBP-001.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "6a07c87aa1a3dcd1c0d4beb45f73e6197a007d432ddf43c1dcd1daef18406382"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-CBP-002.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "148458360e10d6ee25ab33238d028928e5fdbe8906ed9a3f23db8507f6fed795"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-RAP-001.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "ba362bec12f4b9290ad5852a9f6e31a6a988caaa4054d921bb1aeade7cc3c4b3"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-RAW-001.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "51525421073241b5fd0f42807c10da45e6b52bd9fef00ecdd6f1076d3f097fce"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-ROUTE-001.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "cf369da613a072315f82794e386a7864e04478601b0503a6b67a6b66dc5af2cd"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-001.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "5024b75c5106e6fcc7cd96087d0148de7c66061754767f533fc27f723ced5b8c"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-002.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "f007594014224f66d5881d73cb439af5520ebdd423d2a50961d691cf5d21a133"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-003.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "79501b69be092fcc92179726cfc0c133d8083e4075ee24809843b7a9a2a3eb07"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-004.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "ddd4b3714350ffa1cabe3bf14eabadd8c1d9c6fa906607c050b0cabf888d0e21"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-005.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "4dcfde17c081534311598ace1cacd14bd67331663c5bc73195e1c3f49c8fd493"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-006.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "6ec6fbf5000b37a9f8b95505fd1dd80002c4c1da15619ba41883869f73d8cac5"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-007.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "1e792f9ee1c93187c85c6d98cee2d7e3a7d473287a681167adeed2c356502ad5"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/cases/GUI-USG-008.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "9a904c4a7c079bdc08baa13353cc4ef834bc050cb116661a22a2eb6a34f34669"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/curated_size_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "19abc13d7a87583022a1b575f4cbffa8031be02f490ad2d9006bedede3164d1c"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/interaction_transaction_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "fad9e5ffc87eb4d7999a152a4d731ac337bd684c90ec81a1e8ef22ee3d1a5b8c"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "9140bed3af3ba8356001b9808a58c5a0990ae70f42b731c5a275951562e7642c"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/room_disclosure_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "6c785b1994688998e5dcc3c13415983a1e35c8b7bbeae16086e0b25b1724a2e4"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/theme_width_matrix.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "c6223eae4676823a61082771e4af6e9719b92f7cecf441a3cd656bdeab00369d"
+    },
+    {
+      "path": "tests/fixtures/usage_gui/presentation/widget_content_tiers.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "373bb74feec05f7ccfa4868f9b73ec0be69620a8bbddebd34acfdfc847f53123"
+    },
+    {
+      "path": "tests/test_pm_evidence_artifact_binding_modes.py",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "9ec99bcf493c0de29291d54c4adf583743f62d9c74ad325069559e36dbaa4332"
+    },
+    {
+      "path": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json",
+      "tracked_at_baseline": false,
+      "available_in_shared": true,
+      "shared_sha256": "ef4eeb5f4c13a9baa23ed08f37c04a19c758dedc1dc84508b77169701ed2d294"
+    }
+  ],
+  "restore_policy": "Hydrate tracked tests/fixtures and Concepts from baseline Git. For untracked shared inputs copy only exact existing bytes into temporary ignored paths with hashes; never overwrite tracked fixture bytes or commit raw/history inputs. tests/test_pm_working_notebook_contracts.py is tracked and can be hydrated individually.",
+  "uncertified_coverage_boundary": "The 18-check baseline contains no explicit JJI/SCS/FGI/BRS uncertified-coverage failure. These owner/runtime verification statuses remain unproved by planning; validate-forge-backup-acceptance was not among baseline failures. If broader readiness later reports missing native evidence, treat it separately from syntax/fixture errors and preserve fail-closed PNC-019/Event Authority status.",
+  "suggested_next_checks": [
+    "After tracked hydration and immutable ignored-input exposure: json-syntax, validate-runtime-artifact-schemas, validate-goal-runtime-event-fixtures, validate-project-output-fixtures, validate-usage-gui-fixtures, validate-pm7-gui-fixtures, validate-web-capability-contracts.",
+    "Rerun lint-path-refs and validate-touch-closure with Concepts present to remove sparse artifacts and isolate real remaining defects.",
+    "Run validate-implementation-readiness after restoring legacy fixture to distinguish native certification/currentness requirements from its prior crash.",
+    "Notebook direct validator and validate-working-notebook-contracts wrapper already pass independently; no repair proposed.",
+    "Parent normal derived generation/checks may use immutable audit inputs; do not rerun or modify governance seal/historical migrations merely to remove known baseline red statuses."
+  ],
+  "limitations": [
+    "Assessment uses the recorded bounded failure output; 50-row lists may truncate additional failures.",
+    "No worktree, fixture, governance or historical artifact was modified. Only this review output was written."
+  ]
+}

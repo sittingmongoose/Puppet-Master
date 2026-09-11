@@ -897,3 +897,147 @@ negative_constraints:
   - Do not fabricate mutation success when an API is unsupported or unimplemented.
   - Do not claim live vendor currentness, runtime security, provider access, or admin implementation from static matrix/schema/fixtures.
 ```
+
+## DL-043 Accepted Jujutsu Planning Addendum - 2026-09-11
+
+This addendum compiles the specified DL-043 answers as accepted planning requirements. It does not change current command/provider enums, admit typed schema variants, register handlers/events, implement runtime behavior or claim readiness. Conditions remain acceptance criteria. Declined dispositions receive no PlanUnits. Cross-owner command, GUI, wiring, Contracts, Permissions/FileSafe and Backup amendments remain with their canonical owners.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/FinalGUISpec.md
+
+### FGI-016 - Conditional Ordered Review Stack Workflow
+
+```yaml
+plan_unit_id: FGI-016
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: Add one explicitly supported forge workflow at a time. Ordered review-stack publication is planned
+  only through a qualified workflow for an exact existing forge profile; neither all-provider support nor atomic
+  push-and-review creation is implied.
+gui_related: true
+gui_classification_reason: The unit defines user-visible history, selection, comparison, or availability behavior.
+depends_on:
+- FGI-003
+- FGI-004
+- FGI-010
+- SCS-015
+- SCS-016
+- SCS-018
+- JJI-019
+unblocks: []
+acceptance_criteria:
+- Each admitted workflow names its provider/instance/profile, repository/account/binding generation, native local
+  changes and immutable commits, ordered review dependencies, exact base/head mappings, publish refs/refspecs/URLs,
+  existing review IDs and per-phase capabilities. A preview shows every local/transport/hosted effect and expected
+  remote heads.
+- Publish and review create/update/link phases record intent and idempotency/correlation before each effect and
+  retain per-item receipts. A successful push followed by failed review creation is partial success with known published
+  refs, created review IDs and pending work, not rollback or total failure.
+- Unknown review/push effects block retry until exact SCS-016 reconciliation. Resume repeats only proven unapplied
+  phases; no duplicate reviews, force push, remote deletion or destructive compensation occurs automatically.
+- Rewrites require a fresh explicit mapping from old/new immutable commits to the existing exact review IDs and
+  bases. Changed remote head, reordered/removed change, merge-shaped stack, protected ref or unsupported base-link
+  behavior blocks or requests a newly previewed supported plan; no mapping by title or stable change ID alone.
+- Preserve FGI-004 immutable review versions, stale approvals, Draft-by-default agent behavior and separate Mark
+  Ready. Transport credential lease and hosted API credential/grant remain separately scoped; policy/CI/cost disclosure
+  and per-target authorization recheck for each phase.
+- 'Design default grounded in FGI-003/004: this unit establishes workflow qualification criteria without choosing
+  a forge or extending the closed command/provider enums. Unqualified workflows stay unavailable; publication remains
+  inside existing adapter behavior.'
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future push-success/review-failure, timeout-after-create, restart resume, rewritten stack, protected head, exact
+  base mapping and Draft policy fixtures
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: conditional_ordered_review_stack_workflow
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d039
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Forge_Integrations.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add one explicitly supported forge workflow at a time.
+```
+
+### FGI-017 - Conditional Additional Review Service Admission
+
+```yaml
+plan_unit_id: FGI-017
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Forge_Integrations.md
+canonical_text: Add only for a concrete user workflow and keep local history independent. Additional review services
+  are conditionally planned, with a concrete workflow and complete owner admission required before expanding the
+  existing closed provider envelope. A native upload command or adjacent library does not admit Gerrit or any other
+  provider.
+gui_related: false
+gui_classification_reason: The unit defines owner service, identity, authorization, or native effect semantics.
+depends_on:
+- FGI-001
+- FGI-003
+- FGI-004
+- FGI-015
+- SCS-011
+- SCS-012
+- SCS-018
+unblocks: []
+acceptance_criteria:
+- Before a service can become effective, record its concrete workflow, distinct provider/variant/instance/account/repository
+  identity, immutable change/review/revision vocabulary, authentication/credential scopes, read/upload/update/submit
+  semantics, policy and protected target checks, capability/version matrix, failure/retry/reconciliation and migration
+  boundaries under a named provider owner.
+- Extend exact enums, typed contracts, positive/negative fixtures, catalog, owner commands and central routing only
+  in a separate explicit admission step; generic_host is not a tunnel to unsupported hosted review behavior. Until
+  then preserve the current provider list and truthful unavailable/unknown states.
+- Local JJ change/operation history, checkpoint/Backup and workspace recovery remain functional independently of
+  online review setup, availability or credentials. Service outage or detachment never deletes local history or
+  changes local mutation authority.
+- Hosted review receipt/evidence uses FGI-004 immutable revisions and SCS-016 exact effect reconciliation; authentication,
+  idempotency, changed-head, cancellation and provider-native conflict limitations must be qualified for the concrete
+  workflow.
+- No external IDE client, public shared source-control service, MCP surface, third-party engine/diff library, automatic
+  provider choice or bespoke publishing hook is introduced by this condition.
+- Planning acceptance does not admit a command, schema variant, native handler, persisted event, supported version,
+  or runtime capability; SCS-018 admission requirements apply.
+validation_surfaces:
+- future concrete-workflow owner admission checklist, local-offline independence, provider identity/scopes, timeout
+  reconciliation and unsupported-provider negatives
+- future exact-version positive and negative fixtures; static prose is not runtime proof
+risk_class: conditional_additional_review_service_admission
+reasoning_tier: high
+context_scope: jujutsu_d5_owner_planning
+implementation_surfaces:
+- Plans/Forge_Integrations.md
+- future qualified owner adapter and typed contract extensions
+node_compile_hint:
+  mode: accepted_planning_pending_typed_admission
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d040
+- Plans/Decision_Log.md:DL-043
+negative_constraints:
+- Do not claim runtime, security, visual, or readiness proof from this planning acceptance.
+owner_hints:
+- Plans/Forge_Integrations.md
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+preserved_exact_tokens:
+- Add only for a concrete user workflow and keep local history independent.
+```

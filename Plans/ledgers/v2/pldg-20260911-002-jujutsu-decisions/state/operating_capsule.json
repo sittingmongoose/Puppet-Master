@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+  "updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
   "authority": "Live Plans are canon; this ledger is source lineage only.",
   "scope": "D5 DL-043 owner planning for36 positive dispositions, preserving all44 answers.",
   "negative_constraints": [
@@ -16,5 +16,5 @@
     "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/source_shards/answers.md",
     "Plans/Decision_Log.md#DL-043"
   ],
-  "next_action": "Validate intake, apply reviewed owner proposals with reciprocal source lineage, independently review all44 dispositions, then regenerate required derived files and land D5."
+  "next_action": "D5 owner authoring and independent review are complete. Follow the report for currentness and landing receipts; accounting repair and the separately reported continuation remain external follow-up phases."
 }

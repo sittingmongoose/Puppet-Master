@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14608,
+    "depends_on_edge_count": 14804,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17256,
-    "node_count": 6441,
+    "edge_count": 17452,
+    "node_count": 6483,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T17:12:34Z",
+  "generated_at_utc": "2026-09-11T17:53:59Z",
   "gui_related_units": {
-    "count": 3107,
+    "count": 3133,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -10280,6 +10280,17 @@
         }
       },
       {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-083",
+        "source_location": {
+          "heading": "F-083 - Native Historical And Read-Only File View Consumers",
+          "heading_level": 3,
+          "heading_line": 5130,
+          "line": 5132,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
         "owner_doc": "Plans/FileSafe.md",
         "plan_unit_id": "F2-003",
         "source_location": {
@@ -16275,6 +16286,105 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-552",
+        "source_location": {
+          "heading": "F3-552 — Operation History Navigation And Descriptions",
+          "heading_level": 3,
+          "heading_line": 37498,
+          "line": 37500,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-553",
+        "source_location": {
+          "heading": "F3-553 — Distinct Group Undo Redo And Selected Operation Reversal",
+          "heading_level": 3,
+          "heading_line": 37569,
+          "line": 37571,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-554",
+        "source_location": {
+          "heading": "F3-554 — Managed Rewrite Preview And Earlier State Browsing",
+          "heading_level": 3,
+          "heading_line": 37640,
+          "line": 37642,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-555",
+        "source_location": {
+          "heading": "F3-555 — Guided Change Editing And Structured Partial Selection",
+          "heading_level": 3,
+          "heading_line": 37711,
+          "line": 37713,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-556",
+        "source_location": {
+          "heading": "F3-556 — History Comparison Graph Assistance And Review Correspondence",
+          "heading_level": 3,
+          "heading_line": 37790,
+          "line": 37792,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-557",
+        "source_location": {
+          "heading": "F3-557 — Read Only Browsing Workspace Adoption And Visibility",
+          "heading_level": 3,
+          "heading_line": 37870,
+          "line": 37872,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-558",
+        "source_location": {
+          "heading": "F3-558 — Qualified Conflict Publication Bookmark Resolution And Review Stacks",
+          "heading_level": 3,
+          "heading_line": 37937,
+          "line": 37939,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-559",
+        "source_location": {
+          "heading": "F3-559 — History Maintenance And Sanitized Diagnostic Surfaces",
+          "heading_level": 3,
+          "heading_line": 38012,
+          "line": 38014,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-560",
+        "source_location": {
+          "heading": "F3-560 — Line Ending And Backup Completion Policy Presentation",
+          "heading_level": 3,
+          "heading_line": 38079,
+          "line": 38081,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Forge_Integrations.md",
         "plan_unit_id": "FGI-001",
         "source_location": {
@@ -16436,6 +16546,17 @@
           "heading_level": 3,
           "heading_line": 835,
           "line": 837,
+          "path": "Plans/Forge_Integrations.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Forge_Integrations.md",
+        "plan_unit_id": "FGI-016",
+        "source_location": {
+          "heading": "FGI-016 - Conditional Ordered Review Stack Workflow",
+          "heading_level": 3,
+          "heading_line": 907,
+          "line": 909,
           "path": "Plans/Forge_Integrations.md"
         }
       },
@@ -18152,6 +18273,105 @@
           "heading_level": 3,
           "heading_line": 442,
           "line": 444,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-010",
+        "source_location": {
+          "heading": "JJI-010 - Read Only And Earlier State Browsing",
+          "heading_level": 3,
+          "heading_line": 581,
+          "line": 583,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-011",
+        "source_location": {
+          "heading": "JJI-011 - Named Checkpoints And Receipt Based History Metadata",
+          "heading_level": 3,
+          "heading_line": 649,
+          "line": 651,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-012",
+        "source_location": {
+          "heading": "JJI-012 - Verified Group Undo Redo And Selected Operation Reversal",
+          "heading_level": 3,
+          "heading_line": 714,
+          "line": 716,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-013",
+        "source_location": {
+          "heading": "JJI-013 - Explicit History Storage Maintenance",
+          "heading_level": 3,
+          "heading_line": 782,
+          "line": 784,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-014",
+        "source_location": {
+          "heading": "JJI-014 - Explicit Workspace Adoption Repair And Visibility",
+          "heading_level": 3,
+          "heading_line": 841,
+          "line": 843,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-017",
+        "source_location": {
+          "heading": "JJI-017 - Version Comparison And Focused Change Evolution",
+          "heading_level": 3,
+          "heading_line": 1048,
+          "line": 1050,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-018",
+        "source_location": {
+          "heading": "JJI-018 - Exact Hunk Selection And Graph Rewrite Intent",
+          "heading_level": 3,
+          "heading_line": 1108,
+          "line": 1110,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-019",
+        "source_location": {
+          "heading": "JJI-019 - Conditional Conflict Publication And Bookmark Resolution",
+          "heading_level": 3,
+          "heading_line": 1175,
+          "line": 1177,
+          "path": "Plans/Jujutsu_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Jujutsu_Integration.md",
+        "plan_unit_id": "JJI-020",
+        "source_location": {
+          "heading": "JJI-020 - History Annotation And Recovery Retention Boundary",
+          "heading_level": 3,
+          "heading_line": 1250,
+          "line": 1252,
           "path": "Plans/Jujutsu_Integration.md"
         }
       },
@@ -26604,6 +26824,39 @@
         }
       },
       {
+        "owner_doc": "Plans/Source_Control_System.md",
+        "plan_unit_id": "SCS-019",
+        "source_location": {
+          "heading": "SCS-019 - Bounded Graph Priorities Queries And Pinned Comparison",
+          "heading_level": 3,
+          "heading_line": 1144,
+          "line": 1146,
+          "path": "Plans/Source_Control_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Source_Control_System.md",
+        "plan_unit_id": "SCS-020",
+        "source_location": {
+          "heading": "SCS-020 - Bounded Attribution File History And Conservative Review Matching",
+          "heading_level": 3,
+          "heading_line": 1212,
+          "line": 1214,
+          "path": "Plans/Source_Control_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Source_Control_System.md",
+        "plan_unit_id": "SCS-021",
+        "source_location": {
+          "heading": "SCS-021 - Sanitized Diagnostic Export And Optional Technical Log",
+          "heading_level": 3,
+          "heading_line": 1280,
+          "line": 1282,
+          "path": "Plans/Source_Control_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Shared_Integration_Runtime.md",
         "plan_unit_id": "SIR-005",
         "source_location": {
@@ -32170,6 +32423,28 @@
         }
       },
       {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-162",
+        "source_location": {
+          "heading": "UCC-162 — Jujutsu Accepted Action Planning And Admission Boundary",
+          "heading_level": 3,
+          "heading_line": 13032,
+          "line": 13034,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-163",
+        "source_location": {
+          "heading": "UCC-163 — Jujutsu Consumer Action Inventory And Return Context",
+          "heading_level": 3,
+          "heading_line": 13137,
+          "line": 13139,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
         "owner_doc": "Plans/usage-feature.md",
         "plan_unit_id": "UF-002",
         "source_location": {
@@ -33985,6 +34260,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-054",
+        "source_location": {
+          "heading": "WM-054 — Jujutsu Planned Consumer Wiring And Observable Results",
+          "heading_level": 3,
+          "heading_line": 4510,
+          "line": 4512,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Working_Notebook.md",
         "plan_unit_id": "WN-019",
         "source_location": {
@@ -34201,10 +34487,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6441,
+  "plan_unit_count": 6483,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1897,
+      "high": 1939,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -34498,6 +34784,8 @@
       "bootstrap_authority_overreach": 1,
       "bootstrap_operability": 1,
       "bootstrap_trust_copy_drift": 1,
+      "bounded_attribution_file_history_and_conservative_review_matching": 1,
+      "bounded_graph_priorities_queries_and_pinned_comparison": 1,
       "brainstorm": 2,
       "branch_navigation_ui_drift": 1,
       "branch_restore_lineage_drift": 1,
@@ -34852,8 +35140,11 @@
       "concurrent_mutation_or_credential_escape": 1,
       "concurrent_write_conflict": 1,
       "concurrent_write_loss": 1,
+      "conditional_additional_review_service_admission": 1,
+      "conditional_conflict_publication_and_bookmark_resolution": 1,
       "conditional_custom_headless_doctor_check": 1,
       "conditional_instruction_loop_and_authority": 1,
+      "conditional_ordered_review_stack_workflow": 1,
       "config_dirty_state_atomic_persistence": 1,
       "config_mapping_invention": 1,
       "config_message_variants_app_handlers": 1,
@@ -35030,6 +35321,7 @@
       "custom_headless_evidence_goal": 1,
       "custom_headless_verification_command_convention": 1,
       "custom_variant_config_schema": 1,
+      "d5_planning_admission_and_exact_effect_envelope": 1,
       "dae_isolation_drift": 1,
       "dae_kill_counting_drift": 1,
       "dae_policy_drift": 1,
@@ -35309,6 +35601,7 @@
       "evidence_run_definition_gap": 1,
       "evidence_staleness": 1,
       "evidence_visibility_drift": 1,
+      "exact_hunk_selection_and_graph_rewrite_intent": 1,
       "execution_approval_boundary": 1,
       "execution_authority_drift": 1,
       "execution_boundary": 12,
@@ -35338,6 +35631,8 @@
       "expanded_child_panel": 1,
       "expanded_dockerhub_auth_creation_flow": 1,
       "expander_contract_fork": 1,
+      "explicit_history_storage_maintenance": 1,
+      "explicit_workspace_adoption_repair_and_visibility": 1,
       "explore_agent_baseline": 1,
       "explorer_persona_scope_drift": 1,
       "expo_react_native_generated_plan_commands": 1,
@@ -35691,6 +35986,7 @@
       "historical_run_focus": 1,
       "historical_run_mode_ambiguity": 1,
       "history_action_authority_drift": 1,
+      "history_annotation_and_recovery_retention_boundary": 1,
       "history_artifact_link_loss": 1,
       "history_command_drift": 1,
       "history_contract_identity_drift": 1,
@@ -35843,6 +36139,7 @@
       "invocation_consent_drift": 1,
       "jj_revision_or_workspace_aliasing": 1,
       "jujutsu_as_git_alias_or_parallel_owner": 1,
+      "jujutsu_identity_authority_or_effect_misrepresentation": 16,
       "jujutsu_research_decision_drift": 1,
       "jujutsu_ui_or_migration_misrepresentation": 1,
       "justified_source_token_bank_residual": 1,
@@ -35909,6 +36206,7 @@
       "lsp_write_transaction_order_or_identity_drift": 1,
       "main_run_config_source_alignment": 1,
       "managed_repo_default_drift": 1,
+      "managed_rewrite_preview_and_apply_lifecycle": 1,
       "manager_kit_regression_or_registry_drift": 1,
       "manager_layout_inconsistency_or_context_loss": 1,
       "manager_presentation_regression_or_motion_flash": 1,
@@ -36038,6 +36336,7 @@
       "mutation_safety_boundary_drift": 1,
       "mutation_snapshot_poisoning": 1,
       "mvp_scope_drift": 1,
+      "named_checkpoints_and_receipt_based_history_metadata": 1,
       "named_plan_command_or_migration_false_success": 1,
       "named_plan_identity_or_child_owner_collapse": 1,
       "named_plan_link_false_runtime_implication": 1,
@@ -36502,6 +36801,7 @@
       "priority_rate_limits_throttling_diagnostics": 1,
       "priority_setup_gui_drift": 1,
       "priority_sticky_selection": 1,
+      "private_pm_owned_adapter_service": 1,
       "product_auth_copy_billing_blur": 1,
       "product_scope_drift": 1,
       "production_intent_wiring_and_claim_boundary": 1,
@@ -36711,6 +37011,7 @@
       "puppet_master_persona_delta_drift": 1,
       "pure_subagent_selector_api": 1,
       "push_retry_state_loss": 1,
+      "qualified_native_change_editing_semantics": 1,
       "quality_escalation_trigger_drift": 1,
       "quality_gate_severity_defaults_overrides": 1,
       "quality_report_determinism_drift": 1,
@@ -36730,6 +37031,7 @@
       "quota_pressure_semantics_drift": 1,
       "raw_derived_identity_or_provenance_fabrication": 1,
       "raw_evidence_context_inline": 1,
+      "read_only_and_earlier_state_browsing": 1,
       "read_only_escalation": 1,
       "read_only_mode_widening": 1,
       "read_only_profile_widening": 1,
@@ -37059,6 +37361,7 @@
       "same_cycle_scheduling_unblocked_remediation_work": 1,
       "same_session_reveal_drift": 1,
       "sanitization": 1,
+      "sanitized_diagnostic_export_and_optional_technical_log": 1,
       "save_coordination_state_serialization": 1,
       "save_state_with_lock_rust_example": 1,
       "scenario_coverage_drift": 1,
@@ -37281,6 +37584,7 @@
       "source_control_state": 2,
       "source_control_worktree_identity_drift": 1,
       "source_evidence_inventory": 1,
+      "source_history_identity_safety_or_false_recovery": 8,
       "source_lineage_boundary": 1,
       "source_lineage_changelog_drift": 1,
       "source_lineage_owner_gap_not_current_blocker": 1,
@@ -37764,7 +38068,9 @@
       "variant_definition": 1,
       "variants_section_anchor": 1,
       "verification_status_reintroduced": 1,
+      "verified_group_undo_redo_and_selected_operation_reversal": 1,
       "verify_tier_start_algorithm": 1,
+      "version_comparison_and_focused_change_evolution": 1,
       "virtualized_list_drift": 1,
       "visibility_rules": 1,
       "visible_browser_evidence_attachment": 1,
@@ -37903,7 +38209,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6250,
+      "accepted": 6292,
       "retired": 182,
       "superseded": 9
     },
@@ -37950,7 +38256,7 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 41,
+      "integration_contract": 73,
       "interaction_contract": 6,
       "invariant": 4,
       "migration_contract": 2,
@@ -37970,7 +38276,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5143,
+      "requirement": 5151,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -37978,7 +38284,7 @@
       "schema_contract": 59,
       "schema_mirror": 1,
       "security_constraint": 3,
-      "security_contract": 14,
+      "security_contract": 16,
       "security_requirement": 8,
       "selection_contract": 1,
       "selection_policy": 2,
@@ -38094,7 +38400,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+        "expected": "e4c23ee572a4c6025140e570dc9f0837a474d3ce1e7952c8f9414f2838ce59d1",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -38149,6 +38455,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Backup_Restore_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Collaborative_Workflows.md"
       },
       {
@@ -38173,7 +38483,19 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileManager.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FileSafe.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Forge_Integrations.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -38186,6 +38508,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/LSPSupport.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Permissions_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -38218,6 +38544,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Shared_Integration_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Source_Control_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

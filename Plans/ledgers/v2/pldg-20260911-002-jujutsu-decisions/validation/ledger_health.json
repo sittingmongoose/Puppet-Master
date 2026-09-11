@@ -1,18 +1,22 @@
 {
   "schema_id": "pm.bootstrap_ledger_state.v1",
   "ledger_id": "pldg-20260911-002-jujutsu-decisions",
-  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
-  "status": "pass_intake",
+  "updated_at_utc": "2026-09-11T17:58:48.361739+00:00",
+  "status": "fail_deferred_governance_coverage",
   "summary": {
-    "events": 1,
+    "events": 3,
     "design_atoms": 44,
     "decisions": 44,
     "open_questions": 0,
     "deferred_questions": 0,
     "open_blockers": 0,
-    "compile_queue_items": 0
+    "compile_queue_items": 12
   },
-  "validator_status": "pass",
-  "errors": [],
-  "notes": "All44 decisions validated before owner compilation; independent intake review passed; canonical compile and final review remain pending."
+  "validator_status": "fail",
+  "errors": [
+    "governance coverage targets missing from sharding_config sources: ['Plans/Backup_Restore_System.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from Spec_Lock coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileManager.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']",
+    "governance coverage targets missing from plan_graph coverage: ['Plans/Backup_Restore_System.md', 'Plans/FileSafe.md', 'Plans/Forge_Integrations.md', 'Plans/Jujutsu_Integration.md', 'Plans/Permissions_System.md', 'Plans/Source_Control_System.md']"
+  ],
+  "notes": "Compiled ledger has only pre-existing owner-coverage omissions in sharding_config, Spec_Lock and plan_graph. No source/projection/PlanUnit error found; no seal or runtime readiness claimed."
 }
