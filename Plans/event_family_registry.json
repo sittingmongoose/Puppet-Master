@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-09-11.1",
+  "registry_revision": "2026-09-11.2",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -5293,6 +5293,90 @@
         "Plans/testing_session_event_admission.json#/rows/3",
         "Plans/Automated_Testing_System.md#ATS-049",
         "Plans/testing_session_event_payloads.schema.json#/$defs/redaction_inspected"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-github-repo-create-requested",
+      "family_revision": "1.0.0",
+      "event_type": "github.repo.create_requested",
+      "scope_policy": "application_only",
+      "semantic_owner_doc": "Plans/GitHub_Integration.md#GI-042",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.github_project_event.create_requested.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/github_project_event_payloads.schema.json",
+        "json_pointer": "#/$defs/create_requested",
+        "schema_id": "pm.github_project_event.create_requested.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "actor_ref": [
+            "/payload/actor_ref"
+          ],
+          "project_id": [
+            "/payload/project_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/github_project_event_admission.json#/rows/0",
+        "Plans/GitHub_Integration.md#GI-042",
+        "Plans/github_project_event_payloads.schema.json#/$defs/create_requested"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-project-github-repo-bound",
+      "family_revision": "1.0.0",
+      "event_type": "project.github_repo_bound",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Project_System.md#PJCT-008",
+      "payload_owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "payload_schema_id": "pm.github_project_event.project_bound.schema.v1",
+      "payload_schema_ref": {
+        "path": "Plans/github_project_event_payloads.schema.json",
+        "json_pointer": "#/$defs/project_bound",
+        "schema_id": "pm.github_project_event.project_bound.schema.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "actor_ref": [
+            "/payload/actor_ref"
+          ],
+          "project_id": [
+            "/payload/project_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/github_project_event_admission.json#/rows/1",
+        "Plans/Project_System.md#PJCT-008",
+        "Plans/github_project_event_payloads.schema.json#/$defs/project_bound"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
