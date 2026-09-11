@@ -472,5 +472,141 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
             self.assertIsNone(validator.validate_repository_ref(profile[field]))
 
 
+class ForgeReviewAliasConsumerTests(unittest.TestCase):
+    """Static DL-044 consumer checks, not executed payload normalization proof."""
+
+    ALIAS = "cmd.github.pr.create"
+    TARGET = "cmd.forge.review.create"
+    REFS = ("Plans/Decision_Log.md#DL-044", "Plans/UI_Command_Catalog.md#UCC-122",
+            "Plans/UI_Command_Catalog.md#UCC-132", "Plans/Forge_Integrations.md#FGI-008")
+    SCHEMA = "Plans/forge_integration_contracts.schema.json#/$defs/"
+
+    def setUp(self):
+        self.registry = json.loads((ROOT / "Plans/touch_closure.json").read_text())
+        matrix = json.loads((ROOT / "Plans/Wiring_Matrix.production.json").read_text())
+        self.actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
+
+    def check(self, registry=None, actions=None):
+        return validator.forge_review_alias_failures(
+            self.registry if registry is None else registry,
+            self.actions if actions is None else actions)
+
+    def row(self, registry):
+        return next(row for row in registry["rows"] if row[0] == "TOUCH-GHPR-001")
+
+    def profile(self, registry):
+        return next(profile for profile in registry["profiles"]
+                    if profile["profile_id"] == "TCP-GITHUB-PR")
+
+    def test_exact_alias_preserves_existing_touch_obligation(self):
+        self.assertEqual(self.check(), [])
+        self.assertEqual(self.row(self.registry)[:5],
+                         ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
+        self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (643, 133))
+        binding = self.registry["alias_bindings"][self.ALIAS]
+        for field in ("exact_target", "availability_source", "handler_dispatch_token"):
+            self.assertEqual(binding[field], self.TARGET)
+        self.assertEqual(binding["canonical_handler_id"], "handlers::forge::review_create")
+        self.assertEqual(binding["normalization_phase"], "before_permission_and_dispatch")
+        self.assertEqual(binding["source_receipt_identity"],
+                         "preserve_invoked_alias_as_compatibility_source_only")
+        for field in ("source_registered", "independent_handler_allowed",
+                      "independent_wiring_allowed", "domain_event_emitted_by_alias"):
+            self.assertIs(binding[field], False)
+        self.assertNotIn(self.ALIAS, self.actions)
+
+    def test_primary_resurrection_and_missing_or_duplicate_alias_fail(self):
+        for field, value in ((2, "command"), (3, self.TARGET), (4, "implemented")):
+            registry = copy.deepcopy(self.registry)
+            self.row(registry)[field] = value
+            with self.subTest(field=field):
+                self.assertTrue(self.check(registry))
+        registry = copy.deepcopy(self.registry)
+        registry["alias_bindings"].pop(self.ALIAS)
+        self.assertTrue(self.check(registry))
+        registry = copy.deepcopy(self.registry)
+        duplicate = copy.deepcopy(self.row(registry))
+        duplicate[0] = "TOUCH-GHPR-002"
+        registry["rows"].append(duplicate)
+        self.assertTrue(self.check(registry))
+
+    def test_wrong_target_and_peer_production_fail(self):
+        for field, value in (("exact_target", "cmd.forge.review.merge"),
+                             ("availability_source", "cmd.forge.review.merge"),
+                             ("handler_dispatch_token", self.ALIAS),
+                             ("canonical_handler_id", "handlers::github::pr_create")):
+            registry = copy.deepcopy(self.registry)
+            registry["alias_bindings"][self.ALIAS][field] = value
+            with self.subTest(field=field):
+                self.assertTrue(self.check(registry))
+        self.assertTrue(self.check(actions=self.actions | {self.ALIAS}))
+
+    def test_independent_authority_or_event_flags_fail(self):
+        for field in ("source_registered", "independent_handler_allowed",
+                      "independent_wiring_allowed", "domain_event_emitted_by_alias"):
+            registry = copy.deepcopy(self.registry)
+            registry["alias_bindings"][self.ALIAS][field] = True
+            with self.subTest(field=field):
+                self.assertTrue(self.check(registry))
+        registry = copy.deepcopy(self.registry)
+        self.profile(registry)["event_refs"] = ["github.pr.created"]
+        self.assertTrue(self.check(registry))
+
+    def test_provider_gate_order_and_retirement_lineage_remain_explicit(self):
+        profile = self.profile(self.registry)
+        # The alias schema has no fixed-provider field. These are static owner
+        # constraints, not evidence that a dispatcher normalizes actual payloads.
+        text = json.dumps(profile)
+        for token in ("provider: github", "before", "availability", "permission", "telemetry",
+                      "receipt", "dispatch", "git.create_pr", "cmd.chat.worktree.pr",
+                      "cmd.chat.worktree.merge"):
+            self.assertIn(token, text)
+        for token in ("provider: github", "git.create_pr", "cmd.chat.worktree.pr",
+                      "cmd.chat.worktree.merge"):
+            registry = copy.deepcopy(self.registry)
+            replacement = json.loads(json.dumps(self.profile(registry)).replace(token, "omitted"))
+            self.profile(registry).update(replacement)
+            with self.subTest(missing=token):
+                self.assertTrue(self.check(registry))
+
+    def test_owner_schema_and_required_refs_cannot_drift(self):
+        profile = self.profile(self.registry)
+        expected = {"owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
+                    "payload_schema_ref": self.SCHEMA + "command_request",
+                    "result_schema_ref": self.SCHEMA + "command_receipt",
+                    "error_schema_ref": self.SCHEMA + "command_error_record"}
+        for field, value in expected.items():
+            self.assertEqual(profile[field], value)
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)[field] = "wrong_owner_or_schema"
+            with self.subTest(field=field):
+                self.assertTrue(self.check(registry))
+        for ref in self.REFS:
+            self.assertIn(ref, profile["requirement_refs"])
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)["requirement_refs"].remove(ref)
+            with self.subTest(missing_ref=ref):
+                self.assertTrue(self.check(registry))
+
+    def test_planned_normalizer_cannot_be_promoted_to_runtime_proof(self):
+        profile = self.profile(self.registry)
+        self.assertEqual((profile["handler_status"], profile["wiring_status"]), ("specified", "specified"))
+        self.assertEqual(profile["event_refs"], [])
+        for field, value in (("handler_status", "implemented"), ("handler_status", "verified"),
+                             ("wiring_status", "verified")):
+            registry = copy.deepcopy(self.registry)
+            self.profile(registry)[field] = value
+            with self.subTest(field=field, value=value):
+                self.assertTrue(self.check(registry))
+
+    def test_verify_composes_forge_alias_check_once(self):
+        sentinel = "DL-044 Forge review alias: synthetic integration sentinel"
+        with mock.patch.object(validator, "forge_review_alias_failures", return_value=[sentinel]) as check:
+            failures, _ = validator.verify()
+        check.assert_called_once()
+        self.assertIn(sentinel, failures)
+
+
 if __name__ == "__main__":
     unittest.main()

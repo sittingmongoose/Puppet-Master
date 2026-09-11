@@ -500,7 +500,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         "command",
         {f"cmd.installation.{suffix}" for suffix in ("install", "select", "verify", "repair", "rollback")},
     )
-    add("TCP-GITHUB-PR", "command", {"cmd.github.pr.create"})
+    add("TCP-GITHUB-PR", "command_alias", {"cmd.github.pr.create"})
     add("TCP-FORGE-PR-COMPAT", "command_alias", {"cmd.source_control.pr.create", "cmd.source_control.pr.merge"})
     add(
         "TCP-SIR-POST-AUTH-ALIAS",
@@ -1166,6 +1166,75 @@ def dry_guard_consumer_failures(
     return failures
 
 
+def forge_review_alias_failures(
+    registry: dict[str, Any], production_actions: set[str]
+) -> list[str]:
+    """Check DL-044's static alias consumer, not executed payload normalization."""
+
+    failures: list[str] = []
+    alias = "cmd.github.pr.create"
+    target = "cmd.forge.review.create"
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"DL-044 Forge review alias: {detail}")
+
+    def list_value(container: Any, key: str) -> list[Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, list) else []
+
+    rows = [row for row in list_value(registry, "rows") if isinstance(row, list) and len(row) == 6]
+    retained = [row for row in rows if row[0] == "TOUCH-GHPR-001"]
+    require(len(retained) == 1, "expected one retained GitHub create obligation")
+    require(sum(row[3] == alias for row in rows) == 1, "alias must not be omitted or duplicated")
+    for row in retained:
+        require(row[:5] == ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", alias, "partial"],
+                "retained obligation must remain a partial compatibility alias")
+    profiles = [profile for profile in list_value(registry, "profiles")
+                if isinstance(profile, dict) and profile.get("profile_id") == "TCP-GITHUB-PR"]
+    require(len(profiles) == 1, "expected one compatibility profile")
+    profile = profiles[0] if profiles else {}
+    schema_prefix = "Plans/forge_integration_contracts.schema.json#/$defs/"
+    for field, expected in {
+        "owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
+        "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
+        "payload_schema_ref": schema_prefix + "command_request",
+        "result_schema_ref": schema_prefix + "command_receipt",
+        "error_schema_ref": schema_prefix + "command_error_record",
+        "handler_status": "specified", "wiring_status": "specified", "event_refs": [],
+    }.items():
+        require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    for ref in (
+        "Plans/Decision_Log.md#DL-044", "Plans/UI_Command_Catalog.md#UCC-122",
+        "Plans/UI_Command_Catalog.md#UCC-132", "Plans/Forge_Integrations.md#FGI-008",
+    ):
+        require(ref in list_value(profile, "requirement_refs"), f"missing owner requirement {ref}")
+    availability = profile.get("availability_rule")
+    require(isinstance(availability, str) and all(token in availability for token in (
+        alias, target, "provider: github", "before availability, permission, telemetry, receipt, and dispatch",
+        "forge_capability_current && auth_valid && repository_current")),
+        "availability must preserve provider normalization before every canonical target gate")
+    profile_text = json.dumps(profile)
+    for token in ("git.create_pr", "cmd.chat.worktree.pr", "cmd.chat.worktree.merge"):
+        require(token in profile_text, f"missing retirement lineage or separate thread scope {token}")
+    aliases = registry.get("alias_bindings", {})
+    binding = aliases.get(alias, {}) if isinstance(aliases, dict) else {}
+    binding = binding if isinstance(binding, dict) else {}
+    for field, expected in {
+        "exact_target": target, "availability_source": target, "handler_dispatch_token": target,
+        "canonical_handler_id": "handlers::forge::review_create",
+        "normalization_phase": "before_permission_and_dispatch",
+        "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+    }.items():
+        require(binding.get(field) == expected, f"alias {field} must remain {expected!r}")
+    for field in ("source_registered", "independent_handler_allowed",
+                  "independent_wiring_allowed", "domain_event_emitted_by_alias"):
+        require(binding.get(field) is False, f"alias {field} must remain false")
+    require(alias not in production_actions, "alias cannot have peer primary production wiring")
+    require(target in production_actions, "canonical target must retain primary production wiring")
+    return failures
+
+
 def verify() -> tuple[list[str], dict[str, Any]]:
     failures: list[str] = []
     try:
@@ -1265,8 +1334,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             f"missing={sorted(alias_row_actions - set(alias_bindings))}, "
             f"unexpected={sorted(set(alias_bindings) - alias_row_actions)}"
         )
-    if len(alias_bindings) != 64:
-        failures.append(f"alias binding denominator drift: expected 64, found {len(alias_bindings)}")
+    if len(alias_bindings) != 65:
+        failures.append(f"alias binding denominator drift: expected 65, found {len(alias_bindings)}")
     for source, binding in alias_bindings.items():
         if not isinstance(binding, dict):
             failures.append(f"{source}: alias binding is not an object")
@@ -1335,6 +1404,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         failures.append(f"DRY guard Settings fixture failed to load: {error}")
         settings_document = {}
     failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
+    failures.extend(forge_review_alias_failures(registry, production_actions))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
         failures.append(
@@ -1607,14 +1677,16 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # row. Consolidate TOUCH-DRY-001 into the existing Settings presentation row:
     # 644 -> 643 obligations, 57 -> 58 exclusions, 1144 -> 1143 production rows.
     # Preserve the full guard obligation and its profile; do not invent an alias.
+    # DL-044 retains the GitHub create obligation/profile as a Forge alias:
+    # 64 -> 65 aliases, 1143 -> 1142 production rows; no new Touch row or proof.
     exact_resolved_denominators = {
         "row_count": 643,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 133,
         "excluded_token_count": 58,
-        "alias_binding_count": 64,
-        "production_wiring_entry_count": 1143,
+        "alias_binding_count": 65,
+        "production_wiring_entry_count": 1142,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
