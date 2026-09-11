@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.github_project_opaque_identity_compatibility.v1",
+  "date": "2026-09-11",
+  "status": "pass_static_only",
+  "preceding_commit": "56752b1bf1",
+  "preceding_report": "reports/packet-gap-closure-20260910/github-project-integration.json",
+  "correction": "Consume Full Thread Id for operation_id and resolved server_id, and Project non_empty_string for project_id. These are opaque owner-issued IDs, not safe_ref tokens; valid UUIDs beginning with digits must not be rejected by an invented alphabetic-reference restriction.",
+  "verification": {
+    "github_project_tests_passed": 14,
+    "central_response_tests_passed": 12,
+    "github_event_positives": 2,
+    "github_event_negative_cases": 74,
+    "standard_github_gate": "pass",
+    "standard_wiring_gate": "pass"
+  },
+  "source_inputs": [
+    {
+      "path": "Plans/github_project_event_payloads.schema.json",
+      "sha256": "c35a5394d507e734b0069e5dc67a5cef5e2cc54f1a85cfde531b74e57a773869"
+    },
+    {
+      "path": "scripts/pm_project_forge_contract.py",
+      "sha256": "13f3f4fac464c46ab75aee783e612109ad207b6721e9384c4b6f20ab68404d33"
+    },
+    {
+      "path": "tests/test_pm_github_project_integration.py",
+      "sha256": "c516ca44107fdee227b23f92d562f4510248c14376ffb2be52f353236ff927a6"
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea"
+    },
+    {
+      "path": "Plans/project_system_contracts.schema.json",
+      "sha256": "d3da35930fc33652bd24a180fb0c020b26b89f37348f18c931f45310a6a55058"
+    }
+  ],
+  "governance": {
+    "status": "not_sealed",
+    "last_full_run": "reports/packet-gap-closure-20260910/github-project-integration.json#/full_governance",
+    "last_full_run_snapshot": "preceding_commit_before_this_opaque_ID_compatibility_followup",
+    "full_governance_rerun_for_this_followup": false,
+    "historical_reports_rewritten": false
+  },
+  "claim_boundary": "Static request/result/event compatibility and fixture joins only; no new command, event family, physical family, owner authority, native handler/API/storage proof, readiness, or audit closure."
+}

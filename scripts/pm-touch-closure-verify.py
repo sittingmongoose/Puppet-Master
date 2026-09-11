@@ -67,7 +67,7 @@ REPOSITORY_LOCAL_PACKET_TOKENS = {
     "cmd.source_control.backup_history.open",
 }
 CONNECTION_DRAFT_LOCAL_PACKET_TOKENS = {"cmd.connection.draft.open_details"}
-ADJUDICATION_SHA256 = "d45da4082814b15fc92e6d7b074e6e10f429e1e3e090c4969a778564fac74fcd"
+ADJUDICATION_SHA256 = "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
 
 
 def load_json(path: Path) -> Any:
@@ -269,6 +269,43 @@ def effective_guided_tour_bands(source: str) -> tuple[str, str, str]:
     return bands[0], bands[1], bands[2]
 
 
+def gap_repair_inventory() -> dict[str, tuple[str, str, str]]:
+    """Read only the explicitly admitted WM-056 command/profile/owner table."""
+    source = read("Plans/Wiring_Matrix.md")
+    start = "<!-- gap-repair-touch-inventory-20260910:start -->"
+    end = "<!-- gap-repair-touch-inventory-20260910:end -->"
+    if source.count(start) != 1 or source.count(end) != 1:
+        raise ValueError("gap-repair inventory requires one exact bounded table")
+    body = between(source, start, end).splitlines()[1:]
+    result = {}
+    profiles = set()
+    for line in body:
+        if not line.strip() or line in {
+            "| Canonical command | Touch profile | Canonical owner PlanUnit |",
+            "|---|---|---|",
+        }:
+            continue
+        match = re.fullmatch(
+            r"\| `(cmd\.[a-z0-9_.]+)` \| `(TCP-GAP-[0-9]{3})` \| `(Plans/[^`#]+\.md)#([A-Z][A-Z0-9]*-[0-9]{3})` \|",
+            line,
+        )
+        if match is None:
+            raise ValueError(f"invalid gap-repair inventory row: {line}")
+        command, profile, owner, unit = match.groups()
+        if command in result or profile in profiles:
+            raise ValueError("duplicate gap-repair command or profile")
+        result[command] = (profile, owner, unit)
+        profiles.add(profile)
+    if len(result) != 38:
+        raise ValueError(f"gap-repair inventory must contain its exact 38 commands, found {len(result)}")
+    catalog = read("Plans/UI_Command_Catalog.md")
+    missing = [command for command in result
+               if not re.search(r"^\| `" + re.escape(command) + r"` \|", catalog, re.M)]
+    if missing:
+        raise ValueError(f"gap-repair commands absent from primary catalog declarations: {missing}")
+    return result
+
+
 def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     """Build the independent expected action -> (profile, kind, disposition) map."""
 
@@ -326,7 +363,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         schema_enum_actions(
             "Plans/project_system_contracts.schema.json",
             "/$defs/ProjectCompositionLocalActionId/enum",
-        ) - {"ui.project.restore_archived"},
+        ),
     )
     add(
         "TCP-NAMED",
@@ -404,7 +441,11 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
 
     capture_text = read("Plans/Test_Capture_and_Motion_Evidence.md")
     capture = tokens(between(capture_text, "Required command-catalog rows are:", "Browser recording aliases"))
-    add("TCP-CAPTURE", "command", {item for item in capture if item.startswith(("cmd.testing.", "cmd.artifacts."))})
+    testing_consumers = {"cmd.testing.session.open", "cmd.testing.session.watch", "cmd.testing.session.background", "cmd.testing.session.redaction.inspect", "cmd.testing.export_bundle"}
+    artifact_consumers = {"cmd.artifacts.play_recording", "cmd.artifacts.watch_recording"}
+    add("TCP-TESTING-EVIDENCE", "command", capture & testing_consumers)
+    add("TCP-ARTIFACT-RECORDING", "command", capture & artifact_consumers)
+    add("TCP-CAPTURE", "command", {item for item in capture if item.startswith(("cmd.testing.", "cmd.artifacts."))} - testing_consumers - artifact_consumers)
 
     scm_text = read("Plans/Source_Control_System.md")
     scm = tokens(between(scm_text, "The command owner must register the following exact primary identities:", "### 3.2 Canonical events"))
@@ -459,7 +500,7 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
         "command",
         {f"cmd.installation.{suffix}" for suffix in ("install", "select", "verify", "repair", "rollback")},
     )
-    add("TCP-GITHUB-PR", "command", {"cmd.github.pr.create"})
+    add("TCP-GITHUB-PR", "command_alias", {"cmd.github.pr.create"})
     add("TCP-FORGE-PR-COMPAT", "command_alias", {"cmd.source_control.pr.create", "cmd.source_control.pr.merge"})
     add(
         "TCP-SIR-POST-AUTH-ALIAS",
@@ -543,6 +584,8 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
     add("TCP-PLUGIN", "command", plugin)
     add("TCP-PERF", "command", {"cmd.environment.connect", "cmd.environment.reconnect", "cmd.environment.disconnect"})
     add("TCP-BSD", "command", {"cmd.bsd.set"})
+    for action, (profile, _owner, _unit) in gap_repair_inventory().items():
+        add(profile, "command", {action})
     add("TCP-USAGE", "command", {"cmd.nav.open_usage_subject"})
 
     system_source_path = "Concepts/pm7-tools/systems_integration_source.py"
@@ -955,9 +998,9 @@ def adjudication_inventory() -> tuple[
 
     exact_counts = {
         "approved_alias_to_exact": 43,
-        "new_canonical_required": 86,
+        "new_canonical_required": 87,
         "rejected_with_reason": 3,
-        "typed_local_ui_action": 39,
+        "typed_local_ui_action": 38,
     }
     exact_sir_counts = {
         "approved_alias_to_exact": 33,
@@ -982,10 +1025,10 @@ def adjudication_inventory() -> tuple[
         failures.append(
             f"server-gap alias target denominator drift: expected 19, found {len(set(alias_targets.values()))}"
         )
-    if len(excluded_sources) != 42:
+    if len(excluded_sources) != 41:
         failures.append(
             "server-gap typed-local/reject exclusion drift: "
-            f"expected 42 (39+3), found {len(excluded_sources)}"
+            f"expected 41 (38+3), found {len(excluded_sources)}"
         )
     stats = {
         "source_sha256": source_sha256,
@@ -1016,6 +1059,180 @@ def validate_repository_ref(ref: str) -> str | None:
     except (OSError, json.JSONDecodeError, ValueError) as error:
         return f"has unresolved JSON contract reference {ref}: {error}"
     return None
+
+
+def dry_guard_consumer_failures(
+    registry: dict[str, Any], settings_document: dict[str, Any], production_actions: set[str]
+) -> list[str]:
+    """Check DL-041's static consumer boundary, not native execution or admission."""
+
+    failures: list[str] = []
+    retired = "cmd.settings.agent_rules.dry_method_default_guard.set"
+    owner_key = "app.agent_rules.dry_method_default_guard"
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"DL-041 DRY guard: {detail}")
+
+    def object_value(container: Any, key: str) -> dict[str, Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, dict) else {}
+
+    def list_value(container: Any, key: str) -> list[Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, list) else []
+
+    rows = [row for row in list_value(registry, "rows") if isinstance(row, list) and len(row) == 6]
+    retained = [row for row in rows if row[0] == "TOUCH-SETPROJ-003"]
+    require(len(retained) == 1, "expected one retained Settings presentation obligation")
+    require(sum(row[3] == "settings.manager.dry-method" for row in rows) == 1,
+            "guard presentation must not be omitted or duplicated")
+    require(not any(row[0] == "TOUCH-DRY-001" or row[3] == retired for row in rows),
+            "retired dedicated command/row must not re-enter the actionable inventory")
+    for row in retained:
+        require(row[:5] == ["TOUCH-SETPROJ-003", "TCP-DRY-METHOD", "presentation",
+                            "settings.manager.dry-method", "partial"],
+                "retained obligation must use the partial DRY-specific presentation profile")
+        require(isinstance(row[5], str) and all(token in row[5] for token in (
+            owner_key, "owner_contract_missing", "zero mutation dispatch", "zero setting writes")),
+            "retained residual must preserve exact guard identity and the zero-mutation boundary")
+
+    profiles = [profile for profile in list_value(registry, "profiles")
+                if isinstance(profile, dict) and profile.get("profile_id") == "TCP-DRY-METHOD"]
+    require(len(profiles) == 1, "expected one DRY guard profile")
+    profile = profiles[0] if profiles else {}
+    schema_prefix = "Plans/settings_system_contracts.schema.json#/$defs/"
+    for field, expected in {
+        "owner_plan": "Plans/Settings_System.md",
+        "plan_unit": "SSYS-023",
+        "dry_contract_ref": "Plans/DRY_Rules.md#DR-040",
+        "payload_schema_ref": schema_prefix + "settings_owner_projection",
+        "result_schema_ref": schema_prefix + "settings_named_visible_state_projection",
+        "error_schema_ref": schema_prefix + "disabled_reason",
+        "handler_status": "absent",
+        "wiring_status": "absent",
+        "event_refs": [],
+    }.items():
+        require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    for ref in (
+        "Plans/Decision_Log.md#DL-041", "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040", "Plans/DRY_Rules.md#DR-040",
+        "Plans/Settings_System.md#SSYS-018", "Plans/Settings_System.md#SSYS-023",
+    ):
+        require(ref in list_value(profile, "requirement_refs"), f"missing owner requirement {ref}")
+    availability = profile.get("availability_rule")
+    require(isinstance(availability, str) and all(token in availability for token in (
+        owner_key, "enabled", "disabled_by_user", "default enabled", "owner_contract_missing",
+        "zero mutation dispatch", "zero setting writes")),
+        "availability must preserve exact identity, values/default and missing-writer boundary")
+
+    excluded = [item for item in list_value(registry, "excluded_tokens")
+                if isinstance(item, dict) and item.get("token") == retired]
+    require(len(excluded) == 1 and excluded[0].get("classification") == "forbidden"
+            and excluded[0].get("replacement") == "",
+            "retired command requires exactly one forbidden exclusion without a replacement")
+    aliases = object_value(registry, "alias_bindings")
+    require(retired not in aliases and not any(
+        isinstance(binding, dict) and binding.get("exact_target") == retired
+        for binding in aliases.values()), "retired command cannot be an alias source or target")
+    require(retired not in production_actions, "retired command cannot have production wiring")
+
+    descriptor = object_value(object_value(settings_document, "manager_registry"), "dry-method")
+    require(descriptor.get("owner_action_ids") == [
+        "cmd.settings.transaction.preview", "cmd.settings.transaction.apply"],
+        "only existing common transaction preview/apply may be intended future targets")
+    gap = descriptor.get("owner_gap_reason")
+    require(isinstance(gap, str) and all(token in gap for token in (
+        "owner_contract_missing", "no mutation dispatch", "setting write")),
+        "manager must retain the unresolved writer/key boundary, not authorize mutation")
+    projection = object_value(object_value(settings_document, "named_visible_state_projections"), "dry-method")
+    for field in (
+        "requested_default_guard", "effective_default_guard", "origin", "scope", "availability",
+        "disabled_reason", "owner_evidence", "exceptions", "consequence_disclosure",
+    ):
+        require(field in list_value(projection, "visible_state_fields"), f"missing visible guard field {field}")
+    require(projection.get("owner_action_policy") == "owner_admitted_command_or_typed_route_only",
+            "projection cannot grant independent mutation authority")
+    require(projection.get("settings_is_runtime_owner") is False,
+            "Settings projection must not become the runtime owner")
+    require(projection.get("raw_logs_included") is False, "projection must not expose raw logs")
+    for constraint in (
+        "do_not_weaken_instructions_or_safety",
+        "do_not_weaken_secrets_source_authority_governance_permissions_or_source_control",
+        "do_not_present_the_default_guard_as_a_universal_runtime_override",
+    ):
+        require(constraint in list_value(projection, "negative_constraints"),
+                f"missing safety boundary {constraint}")
+    return failures
+
+
+def forge_review_alias_failures(
+    registry: dict[str, Any], production_actions: set[str]
+) -> list[str]:
+    """Check DL-044's static alias consumer, not executed payload normalization."""
+
+    failures: list[str] = []
+    alias = "cmd.github.pr.create"
+    target = "cmd.forge.review.create"
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"DL-044 Forge review alias: {detail}")
+
+    def list_value(container: Any, key: str) -> list[Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, list) else []
+
+    rows = [row for row in list_value(registry, "rows") if isinstance(row, list) and len(row) == 6]
+    retained = [row for row in rows if row[0] == "TOUCH-GHPR-001"]
+    require(len(retained) == 1, "expected one retained GitHub create obligation")
+    require(sum(row[3] == alias for row in rows) == 1, "alias must not be omitted or duplicated")
+    for row in retained:
+        require(row[:5] == ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", alias, "partial"],
+                "retained obligation must remain a partial compatibility alias")
+    profiles = [profile for profile in list_value(registry, "profiles")
+                if isinstance(profile, dict) and profile.get("profile_id") == "TCP-GITHUB-PR"]
+    require(len(profiles) == 1, "expected one compatibility profile")
+    profile = profiles[0] if profiles else {}
+    schema_prefix = "Plans/forge_integration_contracts.schema.json#/$defs/"
+    for field, expected in {
+        "owner_plan": "Plans/Forge_Integrations.md", "plan_unit": "FGI-008",
+        "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
+        "payload_schema_ref": schema_prefix + "command_request",
+        "result_schema_ref": schema_prefix + "command_receipt",
+        "error_schema_ref": schema_prefix + "command_error_record",
+        "handler_status": "specified", "wiring_status": "specified", "event_refs": [],
+    }.items():
+        require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    for ref in (
+        "Plans/Decision_Log.md#DL-044", "Plans/UI_Command_Catalog.md#UCC-122",
+        "Plans/UI_Command_Catalog.md#UCC-132", "Plans/Forge_Integrations.md#FGI-008",
+    ):
+        require(ref in list_value(profile, "requirement_refs"), f"missing owner requirement {ref}")
+    availability = profile.get("availability_rule")
+    require(isinstance(availability, str) and all(token in availability for token in (
+        alias, target, "provider: github", "before availability, permission, telemetry, receipt, and dispatch",
+        "forge_capability_current && auth_valid && repository_current")),
+        "availability must preserve provider normalization before every canonical target gate")
+    profile_text = json.dumps(profile)
+    for token in ("git.create_pr", "cmd.chat.worktree.pr", "cmd.chat.worktree.merge"):
+        require(token in profile_text, f"missing retirement lineage or separate thread scope {token}")
+    aliases = registry.get("alias_bindings", {})
+    binding = aliases.get(alias, {}) if isinstance(aliases, dict) else {}
+    binding = binding if isinstance(binding, dict) else {}
+    for field, expected in {
+        "exact_target": target, "availability_source": target, "handler_dispatch_token": target,
+        "canonical_handler_id": "handlers::forge::review_create",
+        "normalization_phase": "before_permission_and_dispatch",
+        "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+    }.items():
+        require(binding.get(field) == expected, f"alias {field} must remain {expected!r}")
+    for field in ("source_registered", "independent_handler_allowed",
+                  "independent_wiring_allowed", "domain_event_emitted_by_alias"):
+        require(binding.get(field) is False, f"alias {field} must remain false")
+    require(alias not in production_actions, "alias cannot have peer primary production wiring")
+    require(target in production_actions, "canonical target must retain primary production wiring")
+    return failures
 
 
 def verify() -> tuple[list[str], dict[str, Any]]:
@@ -1117,8 +1334,8 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             f"missing={sorted(alias_row_actions - set(alias_bindings))}, "
             f"unexpected={sorted(set(alias_bindings) - alias_row_actions)}"
         )
-    if len(alias_bindings) != 64:
-        failures.append(f"alias binding denominator drift: expected 64, found {len(alias_bindings)}")
+    if len(alias_bindings) != 65:
+        failures.append(f"alias binding denominator drift: expected 65, found {len(alias_bindings)}")
     for source, binding in alias_bindings.items():
         if not isinstance(binding, dict):
             failures.append(f"{source}: alias binding is not an object")
@@ -1181,6 +1398,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
                             production_handlers_by_action[command_id].add(handler)
             except (OSError, json.JSONDecodeError) as error:
                 failures.append(f"production wiring cross-check failed to load: {error}")
+    try:
+        settings_document = load_json(ROOT / "Plans/settings_system_contract_fixtures.json")
+    except (OSError, json.JSONDecodeError) as error:
+        failures.append(f"DRY guard Settings fixture failed to load: {error}")
+        settings_document = {}
+    failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
+    failures.extend(forge_review_alias_failures(registry, production_actions))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
         failures.append(
@@ -1278,6 +1502,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
             failures.append(
                 f"{action}: transitive disposition must be {expected_disposition}, found {row[4]}"
             )
+    try:
+        for action, (profile_id, owner, unit) in gap_repair_inventory().items():
+            profile = profiles.get(profile_id, {})
+            if profile.get("owner_plan") != owner or profile.get("plan_unit") != unit:
+                failures.append(f"{action}: gap-repair owner/profile must match the WM-056 table")
+    except ValueError as error:
+        failures.append(str(error))
     actionable_noncanonical_sources = sorted(non_actionable_sources & set(row_by_action))
     if actionable_noncanonical_sources:
         failures.append(
@@ -1355,6 +1586,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "cmd.server",
         "cmd.installation.uninstall",
         "cmd.origin.review.create",
+        "cmd.settings.agent_rules.dry_method_default_guard.set",
         *RETIRED_PACKET_COMMANDS,
         *REJECTED_COMMAND_CANDIDATES,
         *REPOSITORY_LOCAL_PACKET_TOKENS,
@@ -1432,12 +1664,29 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # 2026-09-07: +4 rows (Show Me and three reused domain commands),
     # +2 owner profiles (Personas and Assistant Chat). No new production wiring,
     # aliases, exclusions, native handlers, or closure promotion is admitted.
+    # WM-056 (September 10): +38 partial rows and action-specific profiles:
+    # nine BSD, seven Lens, twenty-two owner-reference/sole-handler repairs.
+    # The standard wiring repair removes exactly eleven forbidden peer rows:
+    # cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings,
+    # retired cmd.chat.delete_message, and the file-only cmd.chat.add_file_reference
+    # alias whose target remains cmd.chat.attachment.add. Source cases are retained.
+    # USER-PROJECT-UNARCHIVE-REGISTRY-20260911 changes one existing Touch UI row
+    # to its Project-owner command, removes its command exclusion, and adds one
+    # production-intent row. No Touch row/profile, native proof or event is added.
+    # DL-041 (September 11) forbids the dedicated guard command and its production
+    # row. Consolidate TOUCH-DRY-001 into the existing Settings presentation row:
+    # 644 -> 643 obligations, 57 -> 58 exclusions, 1144 -> 1143 production rows.
+    # Preserve the full guard obligation and its profile; do not invent an alias.
+    # DL-044 retains the GitHub create obligation/profile as a Forge alias:
+    # 64 -> 65 aliases, 1143 -> 1142 production rows; no new Touch row or proof.
     exact_resolved_denominators = {
-        "row_count": 606,
-        "profile_count": 93,
+        "row_count": 643,
+        # ATS-048 / RAP-056 split seven existing consumers out of capture's
+        # ten-ID schema. No row, command, handler or evidence promotion added.
+        "profile_count": 133,
         "excluded_token_count": 58,
-        "alias_binding_count": 64,
-        "production_wiring_entry_count": 1154,
+        "alias_binding_count": 65,
+        "production_wiring_entry_count": 1142,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
@@ -1529,7 +1778,7 @@ def main() -> int:
             print(f"ERROR: {failure}", file=sys.stderr)
     else:
         print(
-            f"PASS: {REGISTRY_PATH} resolves {stats['row_count']} complete rows "
+            f"PASS: {REGISTRY_PATH} resolves {stats['row_count']} structurally populated rows "
             f"across {stats['profile_count']} DRY closure profiles; open residuals={stats['open_residual_count']}"
         )
     return 0 if not failures else 1

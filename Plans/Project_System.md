@@ -54,12 +54,23 @@ The existing command catalog remains command-ID authority. Project System consum
 | `cmd.project.new_github_repo` | Request forge/repository creation and register resulting Project | Git/forge/clone remain Source Control/GitHub-owned; failure does not fabricate Project success. |
 | `cmd.project.open` | Select/open an existing Project by `project_id` | Navigation only; cannot mutate Project content or runtime work. |
 | `cmd.project.archive` | Reversibly archive a listed Project | Never deletes working tree, Vault, backups, settings, plans, or evidence. |
+| `cmd.project.unarchive` | Persistently restore an archived Project to listed state | Changes only the existing Project's registry lifecycle and revision/currentness metadata; never restores files, backups, or runtime work. |
 | `cmd.project.remove` | Remove the Project from the visible list | List-only; never a data deletion. |
 | `cmd.project.refresh` | Refresh registry/list projections | Cached-first; cannot rewrite Project identity from path discovery. |
 | `cmd.project.open_settings` | Route to Project-bound Settings | Settings owns values and mutation. |
 | `cmd.project.delete_data` | Route a separately confirmed Storage-owned purge intent | Strong confirmation/holds/retention stay Storage-owned; it is not an alias of remove. |
 
-The exact owner-local typed UI action `ui.project.restore_archived` restores an archived row to `listed`. It is not yet a central command registration; the command catalog owner must register one command or explicitly normalize an existing action before runtime wiring. All requests carry the expected Project-registry revision and currentness hash; existing-Project actions also carry the expected Project revision and currentness hash. Mutating requests carry `project_id` when one exists, actor, permission snapshot, FileSafe evidence where applicable, idempotency key, initiating surface, and one closed exact return context containing caller surface, route, focus, invocation token, caller-context ref, expected caller revision, and continuation generation. A terminal result echoes that return context byte-for-byte. Caller close, Back, Skip, route change, or Client disconnect does not cancel dispatched owner work; an actual owner cancellation returns `outcome=cancelled`, preserves the exact return context, and leaves no half-listed row. Duplicate idempotency bindings return the original result; same key with different binding fails.
+All requests carry the expected Project-registry revision and currentness hash; existing-Project actions also carry the expected Project revision and currentness hash. Mutating requests carry `project_id` when one exists, actor, permission snapshot, FileSafe evidence where applicable, idempotency key, initiating surface, and one closed exact return context containing caller surface, route, focus, invocation token, caller-context ref, expected caller revision, and continuation generation. A terminal result echoes that return context byte-for-byte. Caller close, Back, Skip, route change, or Client disconnect does not cancel dispatched owner work; an actual owner cancellation returns `outcome=cancelled`, preserves the exact return context, and leaves no half-listed row. Duplicate idempotency bindings return the original result; same key with different binding fails.
+
+### 3.0 Archived Project restoration — approved registry mutation (2026-09-11)
+
+The user adjudication `USER-PROJECT-UNARCHIVE-REGISTRY-20260911` resolves the predecessor conflict between restoring a registry row and a non-mutating local action. `cmd.project.unarchive` is the one central Project-owner command, consuming the existing `project_action_request` / `project_action_result` family through the sole planned `handlers::project::unarchive` target. The retained entry token `ui.project.restore_archived` is a UI adapter only: it constructs that exact command before availability, permission, currentness, idempotency, and dispatch checks. It is neither a member of `ProjectCompositionLocalActionId` nor a second command, handler, production row, or local registry writer. Prior requests/results bearing the local action identity remain historical evidence; they cannot be replayed as authorized mutation requests.
+
+The request names an existing immutable `project_id`, current Project and registry revisions/hashes, actor, permission snapshot, idempotency binding, and exact return context. Creation, source, repository, Home Server, Settings-copy, and Onboarding-commit fields cannot widen this operation. The owner rechecks permission and currentness before the atomic `archived -> listed` transition in the existing `projects:v1` registry. Only lifecycle, the affected Project's update/revision/currentness metadata, and registry revision/currentness change. Identity, registration kind, display name, stable config, Vault/source/repository refs, Settings, files, backups, evidence, active-Project selection, and runtime lifecycle remain unchanged. Restoring visibility does not open the Project, re-register removed data, retry a deletion, restore a backup, or restart work.
+
+An accepted result follows successful persistence/readback, reports `lifecycle=listed`, `persistence_disposition=persisted`, the same Project identity, the updated Project/registry fences, and a correlated owner receipt. Dispatch acknowledgement is not this terminal result. The same already-committed idempotency binding returns its original result without another write; a fresh authorized request against an already listed Project returns `no_change` with unchanged revisions and a correlated readback receipt. Other lifecycle states, stale fences, permission denial, unavailable handlers, persistence failure, or uncertain recovery cannot report success. A rejected request performs no mutation; an owner cancellation before commit leaves no partial write, while caller navigation cannot cancel committed work. There is no fallback to an optimistic local-only list change. Receipt/projection evidence uses the existing owner result and storage family; no new EventRecord family is admitted. The action stays `handler_unavailable` until native dispatch, permission, persistence/readback, replay/restart, and reverse-consumer evidence exist.
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-073, ContractName:Plans/UI_Command_Catalog.md#UCC-151, ContractName:Plans/Wiring_Matrix.md#WM-050, ContractName:Plans/storage-plan.md
 
 ### 3.1 Product Onboarding First Project routing
 
@@ -74,6 +85,12 @@ Product Onboarding launches owner flows; it does not gain a Project wrapper comm
 | `jj_project` | Jujutsu executes the distinct `cmd.jujutsu.git.clone`; only its terminal receipt and identities may feed `cmd.project.add_existing {registration_kind=jujutsu_clone}`. It never normalizes to the ordinary Git clone. |
 | `ssh_project` or server-hosted content | Server/Remote Access verifies Server, route/trust, Source Location, and current connection first; `cmd.project.add_existing {registration_kind=ssh_remote}` registers those stable refs and owner receipts. Opening after registration is `cmd.project.open`. No `cmd.project.ssh.*` alias exists. |
 | `restore_project` | Backup/Restore owns `cmd.restore.preview` and the restore execution. Project System accepts only a verified terminal restore result through `cmd.project.add_existing {registration_kind=restore_same_project|restore_as_new}`; it does not accept a preview as registration success. |
+
+For the reviewed Onboarding commit, these exact mappings remain the only owner routes. New/add requests carry the Project-owned onboarding_setup_binding: queued plan/ref/reviewed revision/hash, draft/ref/revision, explicit commit consent, current preflight, and paired optional Settings draft-preview ref/hash. The draft is not a Project ID. Only after the user commits may the Project owner reserve the actual identity required by clone/restore/configuration/Settings child owners. Required work must settle under that one idempotency binding before registry publication as listed and usable. If Settings copy was selected, SSYS-036 rebinds the exact preview to the reserved identity, performs the ordinary apply/readback/rollback transaction, and contributes its terminal result. Failure remains failure/recovery-required, not a half-ready list row.
+
+The project_setup_commit_binding value is a Project-owned read model over the actual typed ProjectActionResult, its content hash, listed lifecycle, persistence disposition, Project/registry revisions and required child receipt/result refs. outcome=accepted alone is not Project completion. New/add require persisted state; opening an already listed Project keeps its distinct no-persist navigation disposition and verified listing receipt. A duplicate request returns the original identity/results. This read model admits no new physical receipt family, and Onboarding cannot write it as a success flag. After a verified commit, provider setup may start in that real Project; Back, Close, Skip or provider failure cannot undo it.
+
+Before executing an Onboarding creation request, Project System resolves the exact approved draft bytes identified by the setup binding and checks their digest. Content, history/backend and Settings choices come from that confirmed draft, not a consumer default. An explicit no-history choice does not initialize Git, and a Jujutsu choice is never silently substituted with Git; an unavailable required owner route blocks the commit. Legacy caller payload summaries such as optional `init_git` do not override the reviewed binding or establish a second Project request schema.
 
 Standalone versus containerized Server execution is not Project registration semantics. Project System records the selected Project Home Server reference but does not choose, create, or certify a standalone/container execution form; that residual stays with Server/Deployment owners and their central commands.
 
@@ -90,7 +107,7 @@ The Projects page, Project card, Project details, and Project-bound Settings may
 
 Every forward route and terminal reverse route preserves the initiating Project row/card identity, immutable `project_id`, repository/snapshot/capture-set selection when present, filter, focus target, invocation/continuation identity, initiating Client, expected caller revision, and Backup currentness. Back, close, Client disconnect, or navigation does not fabricate cancellation or success. Browse, history, compare, download, extract, export, and archive retrieval are non-restore operations: they neither mutate nor select the active Project, activate restored content, resume work, or execute content.
 
-These Project consumer routes use the Backup/Restore owner request/result/error/availability family and owner receipts or `ObservableWork` where applicable. They imply no Project or Backup `EventRecord`; `expected_event_types=[]` remains mandatory until Event Authority separately admits an exact family. All future Backup handlers remain `handler_unavailable` without source-hashed native evidence. Plan prose, command names, schemas, fixtures, route targets, and static wiring are future contract truth only, not proof of executable backup/restore, GUI implementation, persistence, provider readiness, or recovery safety.
+These Project consumer routes use the Backup/Restore owner request/result/error/availability family and owner receipts or `ObservableWork` where applicable. Required approval/recovery evidence means the exact BRS-023 phase-local prerequisite, including its narrowly validated emergency alternative; Project System does not grant consent, copy a recovery point, or infer rollback availability. It lists a restored Project only from the verified owner terminal receipt even when the owner has valid emergency consent. They imply no Project or Backup `EventRecord`; `expected_event_types=[]` remains mandatory until Event Authority separately admits an exact family. All future Backup handlers remain `handler_unavailable` without source-hashed native evidence. Plan prose, command names, schemas, fixtures, route targets, and static wiring are future contract truth only, not proof of executable backup/restore, GUI implementation, persistence, provider readiness, or recovery safety.
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-006, ContractName:Plans/Backup_Restore_System.md#BRS-014, ContractName:Plans/Backup_Restore_System.md#BRS-016, SchemaID:pm.backup_restore_system.contracts.v2, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Forge_Integrations.md
 
@@ -162,12 +179,13 @@ gui_classification_reason: Defines add/open/archive/remove/restore behavior, res
 depends_on: [PJCT-001]
 unblocks: []
 acceptance_criteria:
-  - Existing Project command IDs and the owner-local restore-archived action validate through the typed Project action schema and one owner result; clone and restore-preview commands remain in their named owners.
+  - Existing Project command IDs and cmd.project.unarchive validate through the typed Project action schema and one owner result; clone and restore-preview commands remain in their named owners.
   - Ordinary Git clone and Jujutsu clone produce distinct registration kinds and cannot normalize into one Project clone command.
   - Every caller return preserves exact route, focus, invocation token, caller revision, continuation generation, and registry/Project currentness fences; cancellation leaves no half-listed row.
-  - ui.project.restore_archived remains typed owner-local action until catalog registration is closed.
+  - cmd.project.unarchive persists only archived-to-listed registry metadata through the sole Project owner; ui.project.restore_archived is a pre-gate UI adapter without a local writer, peer handler, or independent production row.
+  - Successful unarchive preserves identity and all non-registry owners, proves listed persistence/readback and exact return, and never reports navigation-only success; stale/denied/non-archived-state requests fail closed, and replay/no-change does not write again.
   - Migration never deduplicates equal paths across distinct Hosts and never reuses a deleted project_id.
-validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/project_system_contract_fixtures.json, persistence and migration fixtures]
+validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/project_system_contract_fixtures.json, scripts/pm_project_unarchive_contract.py, tests/test_pm_project_unarchive.py, persistence and migration fixtures]
 risk_class: project_registration_or_migration_data_loss
 reasoning_tier: high
 context_scope: project_actions_persistence_migration
@@ -180,11 +198,11 @@ negative_constraints: [Do not persist secrets in ProjectRecord., Do not infer su
 
 ## 8. Stage boundary
 
-These PlanUnits and schemas materialize static canon only. They create no WorkNodes, NodeSeeds, executable queues, runtime handlers, Project rows, storage migrations, generated indexes, command registrations, production wiring, Slint implementation, backup, deletion, or certification evidence.
+These PlanUnits and schemas materialize static canon only. The catalog and production-intent declarations cited here are static registrations, not executable integration. They create no WorkNodes, NodeSeeds, executable queues, runtime handlers, Project rows, storage migrations, Slint implementation, backup, deletion, or certification evidence.
 
 ## 9. Server command-gap closure (2026-09-01)
 
-`ProjectRegistry/ProjectCompositionService` owns one DRY `ProjectCompositionCommandRequest|ProjectCompositionCommandResult|ProjectCompositionCommandError|ProjectCompositionCommandAvailability|ProjectCompositionDisabledReason|ProjectCompositionPermissionDecision` family in `Plans/project_system_contracts.schema.json`. The same schema owns exact `project_local_action_request|project_local_action_result` definitions for the three adjudicated local actions.
+`ProjectRegistry/ProjectCompositionService` owns one DRY `ProjectCompositionCommandRequest|ProjectCompositionCommandResult|ProjectCompositionCommandError|ProjectCompositionCommandAvailability|ProjectCompositionDisabledReason|ProjectCompositionPermissionDecision` family in `Plans/project_system_contracts.schema.json` for six duplication/template commands. The same schema owns exact `project_local_action_request|project_local_action_result` definitions for the two read-only local detail actions. The September 11 user adjudication routes row 128 through the existing Project lifecycle action family, not a duplicated composition or local-mutation family.
 
 | Row / packet line | Disposition | Exact retained semantic |
 |---|---|---|
@@ -193,14 +211,14 @@ These PlanUnits and schemas materialize static canon only. They create no WorkNo
 | 105 / `machine/command_census.json:1230` | `cmd.project.duplicate_with_history` -> `handlers::project::duplicate_with_history` | Create a new Project through verified backup/import with identity rewrite, explicit inclusion, and no duplicate execution lease. |
 | 117 / `machine/command_census.json:1308` | `cmd.project.open_details` -> `ui.project.open_details` | Open a bounded, redacted, lazy exact-Project projection without mutation. This is a typed local UI action with no semantic-domain handler or domain EventRecord. |
 | 118 / `machine/command_census.json:1314` | alias `cmd.project.remove_registration` -> `cmd.project.remove` | Remove only the registry/list entry while preserving Project data and external source content. Normalize before policy and dispatch; preserve the invoked spelling only in compatibility/source receipt identity; `independent_handler_allowed=false` and `independent_wiring_allowed=false`; the sole target handler remains `handlers::project::remove`. |
-| 128 / `machine/command_census.json:1374` | `cmd.project.unarchive` -> `ui.project.restore_archived` | Restore an archived row to listed state without recreating or moving Project data. It remains a typed local action, not a domain command/EventRecord producer. |
+| 128 / `machine/command_census.json:1374` | `cmd.project.unarchive` -> `handlers::project::unarchive` | Persist the existing Project registry row from archived to listed through the Project action family; preserve data and identity. The old `ui.project.restore_archived` entry only constructs this command before all gates. No new EventRecord is admitted. |
 | 129 / `machine/command_census.json:1380` | `cmd.project_template.create_project` -> `handlers::project::template_create_project` | Create a new Project from the portable, versioned, secret-free template after resolving placeholders. |
 | 130 / `machine/command_census.json:1386` | `cmd.project_template.delete` -> `handlers::project::template_delete` | Delete the exact template only after destructive confirmation, dependency, hold, and data-disposition checks. |
 | 131 / `machine/command_census.json:1392` | `cmd.project_template.open_details` -> `ui.project_template.open_details` | Open a bounded, redacted, lazy exact-template projection without mutation; no semantic-domain handler or domain EventRecord. |
 | 132 / `machine/command_census.json:1398` | `cmd.project_template.rename` -> `handlers::project::template_rename` | Rename the exact template without changing its stable identity or authority. |
 | 133 / `machine/command_census.json:1404` | `cmd.project_template.save` -> `handlers::project::template_save` | Save a portable, versioned, secret-free template from an exact current Project configuration. |
 
-All six new commands remain `handler_unavailable` until their named sole native handler, central registration, schema binding, permission/FileSafe route, production wiring, and receipt-or-separately-admitted-event disposition are proved. Async duplication/template work exposes `ObservableWork`; results preserve exact return context. Duplicate idempotency bindings, stale Project/template/registry generations, permission/FileSafe denial, restart/race ambiguity, identity collision, raw-secret input, or incomplete rollback evidence fail closed.
+All seven owner commands remain `handler_unavailable` until their named sole native handler, central registration, schema binding, permission/FileSafe route where applicable, production wiring, and receipt-or-separately-admitted-event disposition are proved. Async duplication/template work exposes `ObservableWork`; results preserve exact return context. Duplicate idempotency bindings, stale Project/template/registry generations, permission/FileSafe denial, restart/race ambiguity, identity collision, raw-secret input, or incomplete rollback evidence fail closed.
 
 The exact GUI consumers for all eleven rows are Projects page, K3 Project manager, Product Onboarding First Project, and palette/API.
 
@@ -214,8 +232,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_System.md
 canonical_text: >-
-  Project System owns six exact duplication/template commands through one closed ProjectComposition family, three
-  typed local actions, one pre-policy/pre-dispatch compatibility alias to cmd.project.remove, and one explicit generic
+  Project System owns six exact duplication/template commands through one closed ProjectComposition family,
+  cmd.project.unarchive through the existing Project action family, two read-only typed local actions,
+  one pre-policy/pre-dispatch compatibility alias to cmd.project.remove, and one explicit generic
   create rejection. Commands remain handler_unavailable until their named sole native handlers and full central
   integration exist; local actions and rejected spellings create no semantic-domain handler or EventRecord.
 gui_related: true
@@ -223,11 +242,12 @@ gui_classification_reason: Project/template actions, availability, details, arch
 depends_on: [PJCT-001, PJCT-002]
 unblocks: []
 acceptance_criteria:
-  - The owner contract and fixtures cover exactly six new commands, three local actions, one alias, and one rejected row from adjudication rows 103-105, 117-118, and 128-133.
+  - The owner contract and fixtures cover exactly seven commands, two local actions, one alias, and one rejected row from adjudication rows 103-105, 117-118, and 128-133, preserving every source row identity and semantic under the September 11 user correction.
   - Each command has one named sole handler and remains handler_unavailable without native integration evidence.
   - cmd.project.remove_registration normalizes before policy/dispatch to cmd.project.remove and receives no second handler, policy evaluation, or wiring row.
   - cmd.project.create stays explicitly rejected with the exact-path replacement set and no registration.
   - Local actions have typed request/results, mutate no domain state, invoke no semantic-domain handler, and emit no domain EventRecord.
+  - Row 128 is the Project registry mutation cmd.project.unarchive, not a local action; its old UI entry constructs the existing owner request before all gates and cannot independently mutate, dispatch, or emit an event.
 validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/project_system_contract_fixtures.json, focused Server owner-bundle-B validator]
 risk_class: project_composition_identity_or_alias_bypass
 reasoning_tier: high
@@ -364,3 +384,147 @@ owner_hints: [Plans/Project_System.md, Plans/Backup_Restore_System.md]
 ```
 
 ContractRef: ContractName:Plans/Project_System.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Working_Notebook.md
+
+### PJCT-007 - Reviewed Onboarding Commit And Provider Handoff
+
+```yaml
+plan_unit_id: PJCT-007
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Project_System.md
+canonical_text: Project System consumes one explicitly confirmed Onboarding draft through its existing new/open/add
+  command mapping and backend-native clone/SSH/restore child owners. A real identity may be reserved only after
+  commit consent. Publication as listed and usable waits for required configuration, content/history, Settings rebind/apply/readback
+  and terminal owner receipts. project_setup_commit_binding is an exact read model of the actual ProjectActionResult
+  and required receipt chain, never new physical commit authority. Provider setup requires that committed real Project
+  and cannot uncreate it on navigation or failure.
+gui_related: true
+gui_classification_reason: Determines the visible Review commit, truthful Project creation progress/listing and
+  provider handoff.
+depends_on:
+- PJCT-001
+- PJCT-002
+- SSYS-036
+unblocks: []
+acceptance_criteria:
+- Onboarding creation/add requests require the exact Project-owned setup/review/draft/consent/preflight binding;
+  no generic cmd.project.create or Onboarding wrapper is introduced.
+- Git clone, Jujutsu clone, existing folder, SSH source and restore retain distinct existing owner commands, registration
+  kinds and terminal receipts.
+- No Project/destination mutation happens before commit, and acceptance or provisional identity is not listed/persisted
+  completion.
+- Selected Settings copy must rebind and settle before listing; failures cannot publish a half-ready Project.
+- Resolve and hash-check the actual confirmed draft before effects; honor its history/backend choice without a
+  consumer-forced Git default, and block an unavailable required backend route instead of substituting one.
+- The provider handoff compares actual owner result ref/hash, command/instance/idempotency, Project/registry revisions,
+  lifecycle, persistence and receipt membership.
+- Same idempotency/binding yields original result and identity; conflict, stale revision, rejected/failed/cancelled
+  result or mismatched receipt fails closed.
+- Close/Back/provider Skip and failure preserve an already committed Project and do not replay the owner operation.
+validation_surfaces:
+- Plans/project_system_contract_fixtures.json
+- tests/test_pm_onboarding_phases.py
+- tests/test_pm_settings_draft_transfer.py
+- future native registration, child-owner rollback, idempotency and restart receipts; not_run
+risk_class: premature_project_publication_or_false_provider_context
+reasoning_tier: high
+context_scope: onboarding_project_commit
+implementation_surfaces:
+- Plans/Project_System.md
+- Plans/project_system_contracts.schema.json
+node_compile_hint:
+  mode: onboarding_project_commit_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/02_PROJECT_DRAFT_COPY_AND_COMMIT.md
+negative_constraints:
+- Do not mint a generic Project or Onboarding command or physical receipt family.
+- Do not confuse owner acceptance, preview or provisional identity with committed listing.
+- Do not fabricate child results, overwrite unrelated Project state or claim native persistence proof.
+```
+
+## 11. Existing GitHub creation handoff — PJCT-008
+
+`cmd.project.new_github_repo` consumes the existing `project_action_request` and
+`project_action_result` in `Plans/project_system_contracts.schema.json`, not the
+six-command Project Composition family. GI-042 owns forge/API and source preparation;
+Project Registry alone commits the Project. The existing sole planned handler is
+`handlers::github::project_new_repo`, unavailable until native owner routing/gates
+are proved. This section changes no Onboarding or Settings design.
+
+The request has no Project ID/fence before creation. It carries current registry
+fences, actor, permission/FileSafe refs, exact return context and stable idempotency
+binding. `source_ref` resolves the approved creation intent; `repository_ref` is
+its opaque owner binding, not proof a remote repository exists. The GitHub owner
+resolves its account, organization/owner, options and target source location.
+The Home Server reference must resolve through the Server owner, not be assumed
+equal to a Server ID. Onboarding still requires the complete PJCT-007 confirmed
+draft/Review/Settings chain; a matching ref alone is insufficient.
+
+Terminal `outcome=accepted` means the actual newly allocated Project is durably
+`listed` with `persistence_disposition=persisted`, Project revision/currentness
+and resulting registry fence. It is not dispatcher acceptance. The result echoes
+command instance and exact return context and includes distinct resolved repository
+creation, Project registration and readback receipts. Readback matches Project ID,
+forge-created kind, name, Home Server, source/repository bindings and fences; the
+local source is ready. Accepted registration advances the compared registry fence
+once. Stable config/immutable-ID checks remain PJCT-001; no foreign Project may
+be substituted. The central response joins the actual request digest, instance,
+operation/Server, idempotency key, result digest and registration receipt.
+
+The Full Thread creation operation remains application-scoped with null Project
+identity even after its result returns a Project. The candidate `project.github_repo_bound`
+payload describes a Project-scoped child fact of that same operation, not an identity
+rewrite. `ProjectRegistry.forge_registration` owns its send-only obligation after
+committed registration and verified readback. Its closed payload contains identity/fence/digest/receipt
+metadata only; the envelope Project ID equals the actual result. It joins GI-042
+intake by operation ID, original request digest and command-intake admission receipt.
+Row 1 of `Plans/github_project_event_admission.json` records the DL-039 emit-only,
+`quarantined_not_admitted` disposition. It grants no EventRecord registration,
+append, retention assignment, replay/projection or checkpoint authority. Even valid
+candidate deliveries leave identity/checkpoint state unchanged. Project commit and
+its owner receipts remain governed separately; no second ProjectRecord/store is created.
+
+Rejected/cancelled registration publishes no half-listed Project and proves the
+registry unchanged by this operation. A stale request may return the actual
+observed registry fence without pretending its expected fence was current. If a
+remote repository exists but preparation/registration fails or effects are
+uncertain, retain the existing owner operation/receipts and expose pending or
+recovery-required truth through the central outcome contract. Do not fabricate a
+settled Project result, automatically delete a repository, or run create again.
+Compensation remains separately approved and owner-routed. An unrelated existing
+repository is not successful creation no-change. Exact retry returns the original
+accepted result with `replayed=true`, no new API/clone/registry/event effects and
+no identity change. Changed content under the same binding fails closed. Navigation
+does not cancel owner work.
+
+### PJCT-008 - Typed GitHub-to-Project commit and event binding
+
+```yaml
+plan_unit_id: PJCT-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_System.md
+canonical_text: The existing new-GitHub-Project command joins GI-042 intake to the existing Project action family, an application-scoped creation operation, verified owner receipts and atomic listed Project readback; the Project-bound candidate payload follows that committed result but remains an emit-only, unadmitted obligation under DL-039.
+gui_related: false
+gui_classification_reason: Owner request/result, identity, receipt and event integration without presentation changes.
+depends_on: [PJCT-001, PJCT-002, PJCT-007, GI-042]
+unblocks: []
+acceptance_criteria:
+- No provisional Project ID, acknowledgement-as-success, foreign readback, changed return context, missing receipt or unresolved remote effect is accepted as completion.
+- Existing command, sole planned handler, typed family and placement remain; exact retries preserve original identity and execute no effects.
+- The Project-bound candidate joins the original application-scoped operation without changing that operation's identity or granting persisted-event admission.
+- EventRecord append/replay remains denied under DL-039 without identity consumption or checkpoint/projection changes, independently of candidate validity and command-result retry.
+- Static validation grants no native availability, runtime proof, readiness, WorkNodes or governance certification.
+validation_surfaces: [Plans/project_system_contracts.schema.json, Plans/github_project_event_payloads.schema.json, Plans/github_project_event_fixtures.json, scripts/pm-github-project-integration.py, tests/test_pm_github_project_integration.py]
+risk_class: premature_project_publication_or_duplicate_remote_effect
+reasoning_tier: high
+context_scope: existing_github_project_creation_handoff
+implementation_surfaces: [Plans/Project_System.md, Plans/GitHub_Integration.md, Plans/Wiring_Matrix.production.json, scripts/pm_project_forge_contract.py, scripts/pm_ui_command_response.py]
+node_compile_hint: {mode: static_owner_integration_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-039, Plans/Project_System.md#3-actions-commands-and-results, Plans/GitHub_Integration.md#GI-032, Plans/Wiring_Matrix.production.json#/entries/catalog.project_new_github_repo]
+negative_constraints: [No fake Project identity., No consumer-owned Project writer., No automatic repository deletion or duplicate create., No Onboarding or Settings design change., No native or global audit closure claim.]
+```
+
+ContractRef: ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-007, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe

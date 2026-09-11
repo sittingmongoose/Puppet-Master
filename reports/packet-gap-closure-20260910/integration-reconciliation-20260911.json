@@ -1,0 +1,307 @@
+{
+  "schema_id": "pm.non_design_integration_reconciliation_report.v1",
+  "review_date": "2026-09-11",
+  "status": "static_integration_verified_browser_landing_scope_question_open",
+  "implementation_snapshot": "133cf670137a56336d233d0b4089e5be96abaa20",
+  "integrated_main": "dc5ba81f422dfe71ecfa69f700d6c774f441b71a",
+  "newer_main_reviewed_not_integrated": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "published_branch": "fix/packet-gap-closure-20260911-landing-dc5",
+  "claim_boundary": "Plans, schemas, static conformance, candidate validation and owner/wiring/response accounting only. Not native execution, visual acceptance, a complete packet audit, global Event Authority currentness or depth, readiness admission, or a governance seal. No main landing is claimed.",
+  "historical_reports": "This report updates current integration counts and rebase/test reconciliation after non-design-contract-corrections-20260911.json. Earlier reports and raw captures remain unchanged and retain their own snapshot-specific meaning.",
+  "upstream_preservation": [
+    {
+      "decision": "DL-040",
+      "change": "Preserved the separately approved context.compaction.completed family, schema, command response and binding contract. The combined registry has 93 rather than the earlier 92 rows. Only collision-prone owned PlanUnit IDs were renumbered; upstream IDs and complete source bodies were preserved.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/compaction-reconciled-verification-20260911-5NXCup/source-parity.json",
+        "sha256": "0f1576b6971dbcdd6be9bd70a13007c5581f60839149199b3bd1d135eced554a"
+      }
+    },
+    {
+      "decision": "DL-041 / DL-042",
+      "change": "Preserved common Settings transaction targets and the unresolved DRY writer/key mapping; retained historical chat.plan_todo_updated readability without new legacy appends, inferred aliases, or widened To-Do fields. The merged Settings fixture differs from its older branch version only by the upstream DRY manager descriptor.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/settings-reconciled-verification-20260911-6YlcHs/source-parity.json",
+        "sha256": "23e5f84ed1f6876e57102638506790cd7ec0dec7cd4ae7fb049ee11ab050cf79"
+      }
+    },
+    {
+      "decision": "DL-043",
+      "change": "Preserved the Jujutsu research dispositions as planning decisions, not implementation or runtime proof."
+    },
+    {
+      "decision": "Approved PNC-019 carry-forward",
+      "change": "Preserved main's 40-family checkpoint at revision 2026-09-11.1 and false denominator/depth clearance flags. Corrected two owned tests that still expected 39. Did not lift that checkpoint to the branch's 93 rows or copy/fabricate its missing currentness receipt.",
+      "source_ref": "reports/event-authority-20260911/step-04-current-checkpoint.json"
+    },
+    {
+      "decision": "DL-044",
+      "change": "Preserved upstream neutral Forge review wiring, optional adapter vocabulary and validator checks. The manual merge retains both those checks and the owned excluded-peer-wiring guard, plus both GitHub-create and Chat-file-alias exclusion notes."
+    },
+    {
+      "decision": "Step 9 event review records",
+      "change": "All 45 incoming audit/report paths match dc5ba81 exactly; every other tracked path is unchanged from the pre-rebase implementation. Six semantic exclusions in that campaign are distinct from this branch's six emit-only candidates. Runtime-artifact retention and task-failure product cards remain unanswered.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/dc5-source-parity.json",
+        "sha256": "3e4cbd507f6726997b59ae12132a799957bc152b140c4cbef84f0381b913b416"
+      }
+    }
+  ],
+  "scoped_consumer_corrections": {
+    "dry_guard": {
+      "owner_ref": "Plans/Settings_System.md#SSYS-023",
+      "decision_ref": "Plans/Decision_Log.md#DL-041",
+      "retired_command": "cmd.settings.agent_rules.dry_method_default_guard.set",
+      "retained_touch": "TOUCH-SETPROJ-003",
+      "retained_action": "settings.manager.dry-method",
+      "profile": "TCP-DRY-METHOD",
+      "state": "partial_presentation_owner_contract_missing",
+      "change": "Consolidated the retired dedicated-command obligation into the existing Settings presentation obligation, preserving app.agent_rules.dry_method_default_guard, enabled/disabled_by_user and default enabled, all nine visible fields, safety constraints and zero mutation dispatch/zero setting writes. No replacement alias or independent writer is invented.",
+      "denominator_change": "644 to 643 Touch rows; 57 to 58 exclusions; 133 profiles retained; the full guard obligation remains.",
+      "regression_methods": 10
+    },
+    "github_review_alias": {
+      "owner_ref": "Plans/Forge_Integrations.md#FGI-008",
+      "decision_ref": "Plans/Decision_Log.md#DL-044",
+      "retained_touch": "TOUCH-GHPR-001",
+      "source": "cmd.github.pr.create",
+      "exact_target": "cmd.forge.review.create",
+      "provider_constraint": "provider: github",
+      "normalization_order": "before availability, permission, telemetry, receipt, and dispatch",
+      "canonical_handler": "handlers::forge::review_create",
+      "change": "Reclassified the existing row/profile as a partial compatibility alias, bound real Forge schema pointers, prohibited source registration/peer wiring/independent handler/event authority, and preserved git.create_pr retirement lineage and distinct cmd.chat.worktree.pr/merge scopes.",
+      "denominator_change": "64 to 65 aliases; production placements 1143 to 1142; no new Touch row or profile.",
+      "proof_limit": "The alias schema does not itself encode a fixed-provider payload transform. Exact provider normalization is an owner constraint; actual dispatcher execution and native/API proof remain absent.",
+      "regression_methods": 8
+    }
+  },
+  "event_accounting": {
+    "combined_registry_rows": 93,
+    "upstream_registered_rows": 40,
+    "scoped_browser_rows": 53,
+    "emit_only_events_absent": [
+      "testing.session.opened",
+      "testing.session.watch_started",
+      "testing.session.backgrounded",
+      "testing.session.redaction_inspected",
+      "github.repo.create_requested",
+      "project.github_repo_bound"
+    ],
+    "scope_warning": "The registry count is neither global denominator closure nor complete per-family depth. The approved currentness checkpoint remains 40, not 93.",
+    "screenshot_event": "runtime_artifact.screenshot",
+    "screenshot_state": "unregistered_pending_owner_retention_and_full_admission",
+    "screenshot_boundary": "The four corrected consumer placements reference the exact screenshot event, not runtime_artifact.created. This does not admit it or permit fabricated owner identities or capture success.",
+    "latest_DL045": {
+      "scope_commit": "dc5ba81f422dfe71ecfa69f700d6c774f441b71a",
+      "decision_commit": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+      "scope_families": 285,
+      "browser_intersection": 0,
+      "new_authority_inferred_for_browser": false,
+      "pending_clarification": "Asked whether DL-045's one-family-per-landing rule also applies to these 53 Browser families outside its exact frozen scope. Hold the main landing pending the answer; do not infer an exception or extend that approval.",
+      "schema_boundary": "The current Browser schema/default validator requires all 53 admitted rows and exact central membership. Its payloads-only mode claims zero admissions, but is not a partial-membership representation."
+    }
+  },
+  "accounting": {
+    "touch_rows": 643,
+    "touch_profiles": 133,
+    "touch_exclusions": 58,
+    "touch_kinds": {
+      "command": 466,
+      "ui_action": 105,
+      "command_alias": 65,
+      "presentation": 7
+    },
+    "open_touch_residuals": 643,
+    "actionable_primary_commands": 465,
+    "blocked_primary_commands": 1,
+    "production_placements": 1142,
+    "unique_production_commands": 1078,
+    "production_commands_in_touch": 465,
+    "production_commands_outside_touch": 613,
+    "placements_with_request_and_result_pointers": 400,
+    "placements_missing_one_or_both_pointers": 742,
+    "structural_owner_reference_handler_and_exclusion_errors": 0,
+    "boundary": "Every placement is structurally accounted for; no semantic verdict or native runtime completion follows from that census. Commands outside the packet remain counted rather than silently added to its denominator.",
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/dc5-whole-wiring-accounting.json",
+      "sha256": "494ca4f5e63a918687dd6b9b80eaf2c747419a0d161728d31888a5cae07bf4c7"
+    }
+  },
+  "verification": {
+    "full_unittest": {
+      "modules": 33,
+      "methods": 445,
+      "passed": 436,
+      "failures": 0,
+      "errors": 9,
+      "skips": 0,
+      "exit_code": 1,
+      "duration_seconds": 219.27,
+      "wall_seconds": 220.449,
+      "source_hashes_unchanged": 124,
+      "head_and_touch_unchanged": true,
+      "error_scope": "All nine Pnc019CurrentnessTests setup errors require absent Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/landing-unittest-dc5-20260911-ht4sidat/unittest.log",
+        "sha256": "2353c3d6670d985126a973dd0460fe005b2ed5d858ce77f3d34dc1fa28653fa3"
+      },
+      "summary": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/landing-unittest-dc5-20260911-ht4sidat/execution-summary.json",
+        "sha256": "9940b2451aa4d80972e66ee2feeb7328d6ce3132da4be2401df2245efe7c9262"
+      }
+    },
+    "focused_touch": {
+      "methods": 37,
+      "status": "pass",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/focused-tests.log",
+        "sha256": "6667ba154b729bdd61bb43027791889290eab184645274c02385adb01426b284"
+      }
+    },
+    "corrected_checkpoint_modules": {
+      "testing_methods": 10,
+      "github_methods": 15,
+      "status": "pass",
+      "prior_run": {
+        "methods": 445,
+        "passed": 434,
+        "failures": 2,
+        "errors": 9,
+        "reason": "The only two assertion failures were stale 39-family expectations after main's authorized 40-family carry-forward.",
+        "evidence": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/landing-unittest-dl044-20260911-xba53n9e/unittest.log",
+          "sha256": "7387d0b6d3cd6a3511cccde02cb39a8ffd0329ffa30d4784fb6a6ecf2db15349"
+        }
+      }
+    },
+    "shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2190,
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/shard-check.json",
+        "sha256": "7f86d2c52041f6ef16778d5528e479783c4e16fcc013f7e1d30d788adc0e79a9"
+      }
+    },
+    "index": {
+      "status": "pass",
+      "plan_units": 6470,
+      "acceptance_units": 24745,
+      "runtime_certification": "blocked_runtime_certification_incomplete",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/index-validate.json",
+        "sha256": "930df5eb4cca12e09738968068d8716787a86f0c4483da0176776c13c4c73dfd"
+      }
+    },
+    "run_gates": {
+      "status": "fail",
+      "passed_checks": 25,
+      "total_checks": 36,
+      "failure_counts": {
+        "json_syntax": 1,
+        "verify_spec_lock": 25,
+        "validate_plan_graph": 1289,
+        "validate_evidence": 1289,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_implementation_readiness": 36,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1
+      },
+      "scope": "Known missing governance/GUI/audit inputs and stale lock, evidence, graph, migration, readiness, closure and audit-index artifacts. Samples are bounded and evidence/graph failures overlap; no claim of individually reviewing omitted samples or resealing.",
+      "scoped_gates": "Browser, Testing, GitHub, central response, new contracts, wiring, Touch and shard checks pass.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/dc5-run-gates.json",
+        "sha256": "eb6dd164d0cb03a007617c517d0b1d249426871cca7dc10c76e83967ea18f475"
+      }
+    }
+  },
+  "formal_packet_audit": {
+    "completed": false,
+    "source_census_valid": true,
+    "source_packet_cases": 5057,
+    "touch_rows": 643,
+    "dimensions_per_touch_row": 13,
+    "touch_cases": 8359,
+    "total_cases": 13416,
+    "source_hash": "4ed94789b56e3e41c157266dc57a4a6aa33d63fbf69f43b488b460ff831515b6",
+    "current_case_verdicts_inferred_from_validators": 0,
+    "boundary": "R2/R3/R4 workbooks and provisional direct reviews remain preserved. No historical case is automatically restamped onto this changed Touch source. A current complete per-case workbook, separate suite verdicts and aggregate result are still required.",
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/dl044-verification-20260911-Jvjzx6/dc5-census.json",
+      "sha256": "32d5eaef8f7e8bdc2be00d7217098014e6c6cbd679a55a7bc2a4184c282656ab"
+    }
+  },
+  "source_pins": [
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "4ed94789b56e3e41c157266dc57a4a6aa33d63fbf69f43b488b460ff831515b6"
+    },
+    {
+      "path": "Plans/settings_system_contract_fixtures.json",
+      "sha256": "10e1ffd1062a9a3aebd5c418acc7289fb5bb3d0261ef08edc65a461a47685632"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "6f25aed6e6d699bf497f4444deeb846a336b127aa89e52a29492837e39264107"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "0bad23027ffcdfcfcabdff7130428419c075a76daf0f5ce26b2f4fc263c3881c"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.exclusions.json",
+      "sha256": "dcc9395c0fd35791b3dfca88c267ad5d16f900f4b539d5bfa282cde8427581b9"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.schema.json",
+      "sha256": "ced41d91296811960e611ca01e3d58a9fb74f285f1dbefd7eebdf5c4caf8e21e"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "63594f0b199a9683beb39c6b79e033becfda4d8599eeaba65ccc3cbde8aec12d"
+    },
+    {
+      "path": "Plans/Forge_Integrations.md",
+      "sha256": "ffcf4e9208db9f5c0350bc1c970f948f74d229b7df0bbe2b9f5fa9618604cec5"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd"
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "sha256": "e74d9bb2c6e1a7cf73345af91db4dee07b0ac271a3768ebc3921154b97fb53bc"
+    },
+    {
+      "path": "scripts/pm-touch-closure-verify.py",
+      "sha256": "7340f67677e4f8de3286a3d9552bfb78b473200153b479e32d5f2ba7c1b02a83"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "6175f90a0053927106385da350396398ea1cb52e9430f377c3272fb8c3af2056"
+    },
+    {
+      "path": "scripts/pm_pnc019_currentness.py",
+      "sha256": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1"
+    },
+    {
+      "path": "tests/test_pm_touch_closure_source.py",
+      "sha256": "80d8df9f83b82632708b46244369ae0766ec28b662f8c6d6b3c3c52d215bf321"
+    },
+    {
+      "path": "tests/test_pm_testing_session_events.py",
+      "sha256": "2d76ea03f782a64bd1526ea6e6fad87a26eebdce4f99bc10fe6463aecd0beebf"
+    },
+    {
+      "path": "tests/test_pm_github_project_integration.py",
+      "sha256": "418768a8cbe950cb630e77fa77c3506404f9b1830f3a08ba62befb1a99f836d1"
+    },
+    {
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "sha256": "b7f6b2ab890ac9b881f3ed75ad517fabfbd4d2aaa609ce0d218358059370fd04"
+    }
+  ]
+}

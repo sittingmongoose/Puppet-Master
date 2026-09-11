@@ -35,7 +35,7 @@ Cross-surface wiring reviews for Debug Mode and similar features must verify com
 
 Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. Usage route proof is selector-variant aware: event-primary rows require `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row requires `usage_attempt`/`attempt_id` and retains `usage_event_ref` as correlation. Both carry no `OpenSubject` and preserve applicable UsageRecord/runtime/provider/account refs. Current PMConcept7 aggregate provider/account/panel cards are local inspectors and have no route-contract row. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
 
-The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts.
+The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts. The production matrix's single root `response_contract_ref` binds every command row to the CV-333 central v2 response; each row's `result_schema_ref`, where materialized, still names its typed domain result. A shared response declaration does not establish missing typed owner adapters, native handler execution, valid event admission, or end-to-end UI proof.
 
 `GATE-010` route-aware verification includes schema validation, command coverage, handler resolution, `expected-event` emission, unknown-command rejection, architectural lints, wrapper normalization, argument passthrough, correlation passthrough, and route target kind checks.
 
@@ -983,13 +983,12 @@ The exact current typed-local action census is thirteen:
 Every actionable control emits exactly one of these IDs. They are not `UICommand`s, catalog aliases, handler names,
 EventRecords, or production-wiring rows.
 
-Each action emits one closed `pm.product_onboarding.action_request.v1` carrying the action/session/stage identity,
-expected revision, continuation generation, bounded choice, required `local_context`, optional owner route, actor,
-idempotency key, source surface, and exact return-focus identity. `local_context` contains only normalized, secret-free
-`intent`, optional `review_confirmation`, `scope`, `branch_kind`, `branch_step`, `selection_ref`, `target_ref`, `owner_operation_ref`,
-`owner_branch_ref`, `expanded`, `start_tour`, and `recovery_condition`. It has `additionalProperties=false` semantics:
+Each action emits one closed `pm.product_onboarding.action_request.v2` and consumes the exact PWIZ-021 owner definition
+for session/stage/currentness, local context, phase-specific command/preflight/commit bindings and focus identity.
+`local_context` remains normalized and secret-free; its required/null/gated fields are owned by that schema, not a
+second UI wiring field list. It has `additionalProperties=false` semantics:
 arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected and never logged or
-persisted. It resolves to one `pm.product_onboarding.action_result.v1` carrying
+persisted. It resolves to one `pm.product_onboarding.action_result.v2` carrying
 `status=applied|disabled|rejected`, before/after stage, resulting session status, closed local effect, session-write flag,
 optional continuation snapshot, ephemeral Details state, optional owner route/operation refs,
 `production_receipt_ref=null` for local choreography, `owner_mutation_claimed=false`, exact error/disabled reason, focus
@@ -1023,7 +1022,7 @@ non-completing Close, and ephemeral Details behavior at their declared
 evidence layers. They do not prove a native Slint controller, native Storage binding, dispatcher/handler execution,
 production persistence, runtime behavior, accessibility certification, motion quality, or visual acceptance.
 
-ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v1, SchemaID:pm.product_onboarding.action_result.v1
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Planning_Wizard.md#PWIZ-022, ContractName:Plans/UI_Command_Catalog.md#UCC-106, ContractName:Plans/Wiring_Matrix.md#WM-041, SchemaID:pm.product_onboarding.action_request.v2, SchemaID:pm.product_onboarding.action_result.v2
 
 ### UIW-015 - Product Onboarding typed-local request/result closure
 
@@ -1048,8 +1047,9 @@ depends_on: [PWIZ-021, PWIZ-022, UCC-106, WM-041, UIW-013]
 unblocks: []
 acceptance_criteria:
   - The exact action census is the thirteen named ui.onboarding.* IDs, and every authored control carries exactly one typed local action.
-  - Every request/result validates against pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 with closed applied, disabled, and rejected outcomes.
-  - local_context is required and closed to intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; missing/additional/arbitrary/raw/secret-bearing context is rejected.
+  - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 with closed applied, disabled, and rejected outcomes.
+  - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit bindings and their gated proofs; the wiring rule does not re-own a field list. Missing/additional/arbitrary/raw/secret-bearing context is rejected.
+  - UI controls preserve the bounded uncreated draft and Settings-owned copy preview until exact Review commit. Precommit routes require current owner-issued read-only or selected-source-auth admission and actual owner request validation; a route/ref string alone grants nothing. Paid-provider then Free Models setup uses the real committed Project; Close/resume/Back neither undo nor repeat its creation. Consume PWIZ-021, PJCT-007, SSYS-036, MACS-005, and MS-122.
   - more_ways stage disclosure and branch-local state updates cannot normalize into each other, and whole-session Skip cannot normalize into optional Project/Remote-Access Skip; exact request fields and result effects/statuses prove the selected variant.
   - Disabled/rejected results have no local effect, write, continuation, owner route, owner operation, or production receipt and expose exact accessible reasons.
   - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
@@ -1065,7 +1065,7 @@ source_lineage:
   - approved current Product Onboarding source/schema reconciliation
   - Plans/Planning_Wizard.md#PWIZ-021
   - Plans/product_onboarding_contracts.schema.json
-preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v1, pm.product_onboarding.action_result.v1, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
+preserved_exact_tokens: [ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, pm.product_onboarding.action_request.v2, pm.product_onboarding.action_result.v2, local_context, skip_product_onboarding, skip_optional_scope, toggle_setup_options, update_branch_state, session_skipped, optional_scope_skipped, cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, cmd.onboarding.skip]
 negative_constraints:
   - Do not register, alias, normalize, wire, or assign handlers to packet candidate cmd.onboarding.* tokens.
   - Do not fabricate an owner mutation, production receipt, EventRecord, or durable write from local Details or a disabled/rejected result.
@@ -1086,6 +1086,8 @@ The 171-row command-gap adjudication and six retained Egolite rows obey four clo
 
 Every intended GUI consumer uses owner data and the same command/action identity. Settings, Product Onboarding, and Doctor remain consumers/routers; they cannot privately authenticate, install, update, move, back up, restore, browse, test, or operate source control. Static concept JavaScript remains simulation only.
 
+USER-PROJECT-UNARCHIVE-REGISTRY-20260911 removes row 128 from presentation-only classification. The retained `ui.project.restore_archived` entry constructs `cmd.project.unarchive` through the existing Project request/result family before every gate; it is not a read-only local action, independent dispatch identity, or local registry writer. PJCT-002 owns persisted archived-to-listed semantics, and WM-050 binds its one production-intent route. All consumers remain disabled until the owner is available and show success only from its verified persisted/readback result.
+
 ### UIW-016 - Server And Egolite Exact Dispatch Boundary
 
 ```yaml
@@ -1101,6 +1103,7 @@ acceptance_criteria:
   - No visible control dispatches an alias, local predecessor, rejected spelling, or unregistered family root.
   - Every primary control and intended consumer uses the same exact target availability and accessible disabled reason.
   - Every typed local action has owner-local currentness/focus/return behavior and no domain mutation or EventRecord.
+  - Restoring an archived Project routes through cmd.project.unarchive before all gates; the old UI entry cannot privately save a registry change or fabricate navigation-only success, and receives no second handler or production row.
   - Concept simulation, schema validation, catalog presence, and planned target strings never claim native runtime readiness.
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, Concepts/pm7-tools/onboarding_cinematic_source.py, scripts/pm-touch-closure-verify.py]
 risk_class: ui_alias_bypass_or_phantom_runtime_claim
@@ -1678,3 +1681,36 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UIW-023 - Response Projection Wiring And Truthful Proof Boundaries
+
+```yaml
+plan_unit_id: UIW-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: "Every production command control consumes the central response projection while its typed owner result remains separate. UI acknowledgement, receipt-shaped fixtures and declared schema references are not native handler or effect proof."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-333, UCC-164]
+unblocks: []
+acceptance_criteria:
+  - "Use one production-root response_contract_ref and preserve each command row's owner request/result refs, normalization, state selector, disabled reasons, permissions and effect contract."
+  - "Render accepted/pending, verified terminal result and recovery-required distinctly; replay cannot imply another side effect."
+  - "Local actions do not invent owner-operation scope; pre-dispatch failures do not produce completion or domain events."
+  - "Check both run-gates and audit-governance integration and reject schema, cross-record identity, receipt, replay and generation mismatches."
+  - "Report declared global response coverage, explicit typed result refs and native proof separately; missing adapters or handlers remain unproven."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, scripts/pm-plans-verify.py]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015

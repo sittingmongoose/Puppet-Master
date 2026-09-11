@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.packet_gap_closure_result.v1",
+  "step": "runtime_and_restore_contracts",
+  "status": "scoped_static_contract_repairs_verified",
+  "base_commit": "400d97e71b06cf39ce7263772a84eeb7e4b62e4a",
+  "owner_docs": [
+    "Plans/Shared_Integration_Runtime.md",
+    "Plans/Backup_Restore_System.md",
+    "Plans/Project_System.md",
+    "Plans/FinalGUISpec.md"
+  ],
+  "new_plan_units": ["SIR-038", "SIR-039", "SIR-040", "SIR-041", "BRS-021"],
+  "repairs": [
+    "Full Thread acknowledgement and terminal-result proof prerequisites, required ObservableWork identity/activity/progress fields, projection bounds/currentness, and continuity identity/deduplication constraints.",
+    "Explicit GPU/media resource families and retained profile-first optimization order, heterogeneous-core scheduling, staged startup, hot/warm/cold residency, byte caps and duplicate-buffer avoidance requirements.",
+    "Phase-correct RestoreRun and RestoreReceipt prerequisites, all four existing restore modes, and narrowly scoped verified-unavailability plus human emergency consent without inventing a rollback point or sixth Backup receipt family.",
+    "Project and Final GUI consumers reference the Backup owner's shared prerequisite instead of maintaining incompatible local safety rules."
+  ],
+  "static_checks": {
+    "full_thread_regression_tests": 15,
+    "restore_phase_regression_tests": 10,
+    "runtime_identity_and_vocabulary_regression_tests": 11,
+    "forge_backup_regression_tests": 12,
+    "aggregate_contract_positive_cases": 950,
+    "aggregate_contract_negative_cases": 3145,
+    "sharded_sources_checked": 98,
+    "shards_checked": 2156,
+    "plan_units_indexed": 6437,
+    "new_plan_units": 5,
+    "unexpected_generated_owner_changes": [],
+    "edited_docs_not_in_current_shard_config": ["Plans/Backup_Restore_System.md", "Plans/Project_System.md"],
+    "index_status": "pass",
+    "node_readiness_status": "blocked_runtime_certification_incomplete"
+  },
+  "evidence": [
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/full-thread-tests.log", "sha256": "51076caf2ed70f81d8dd67acb8168902c73a34003a2e11eb3f063b47f7716553"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/restore-phase-tests.log", "sha256": "bc146e8b81d008609b2e57526fd27c56d9eca251d1dafb26c55af4a5597eb369"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-compatibility-tests.log", "sha256": "285fbcae7c105a0f0dcd6758b3069ddf0f54a0baf464d0c40f19ba6e3b632980"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/forge-backup-regressions.log", "sha256": "a8ea1d45c5087339088d7eebab8c12b52f50689494c3d1639bbc3623b3de060d"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-restore-contract-gate.json", "sha256": "f164bd1bc120168844e01d291b07341ab4b5e399d978798edd1531513b568937"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-restore-shards-generate.json", "sha256": "1bfa4636e41e1207cb443feea842fa83061464fed0af089b212d012a1d53dedf"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-restore-plan-index-generate.json", "sha256": "803775dd7f117921d49a949be0dac665bfd2f64a55c41f20925d686ef934d783"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-restore-shards-check.json", "sha256": "41481b06219aa296fde2425e396c3f1575b216018f48a53c3cddc9c08b9ccddc"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/runtime-restore-plan-index-check.json", "sha256": "a19e71585e739eca4e85e8f9188039b619033a949c2800bbf195066707247d47"}
+  ],
+  "source_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-02-pm-settings-dependency-and-work-correction-2026-08-13/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+    "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+  },
+  "outside_this_step": [
+    "Central UICommandResponse / CommandOutcome adoption and owner-result binding.",
+    "Browser event admission, representation-result metadata and Usage/Prompt consumers.",
+    "September 3 onboarding reconciliation and stale Guided Tour index summary.",
+    "Fresh complete multi-packet formal review and whole-command/UI-wiring/DRY checks."
+  ],
+  "claim_boundary": "Contract/schema/oracle regression evidence only. No native command, restore execution, human-consent signature validation, receipt-store lookup, provider call, security attack, GUI/Slint, empirical performance, readiness admission, global event currentness, historical-audit rewrite, or governance reseal is claimed."
+}

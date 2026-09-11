@@ -23,6 +23,9 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import urlparse
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_wiring_inventory import command_handler_bindings, wiring_command_excluded
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
@@ -560,6 +563,10 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_web_capability_contracts": "validate-web-capability-contracts",
     "validate_new_contracts": "validate-new-contracts",
     "validate_forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "validate_browser_event_admission": "validate-browser-event-admission",
+    "validate_testing_session_event_admission": "validate-testing-session-event-admission",
+    "validate_github_project_integration": "validate-github-project-integration",
+    "validate_ui_command_response": "validate-ui-command-response",
     "validate_working_notebook_contracts": "validate-working-notebook-contracts",
     "validate_server_command_gap": "validate-server-command-gap",
     "validate_touch_closure": "validate-touch-closure",
@@ -591,6 +598,10 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "web_capability_contracts": "validate-web-capability-contracts",
     "server_command_gap": "validate-server-command-gap",
     "forge_backup_acceptance": "validate-forge-backup-acceptance",
+    "browser_event_admission": "validate-browser-event-admission",
+    "testing_session_event_admission": "validate-testing-session-event-admission",
+    "github_project_integration": "validate-github-project-integration",
+    "ui_command_response": "validate-ui-command-response",
     "working_notebook_contracts": "validate-working-notebook-contracts",
     "touch_closure": "validate-touch-closure",
     "filesafe_security_policy": "validate-filesafe-security-policy",
@@ -615,6 +626,12 @@ _AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
     "server_command_gap",
     "validate_forge_backup_acceptance",
     "forge_backup_acceptance",
+    "validate_browser_event_admission",
+    "browser_event_admission",
+    "validate_testing_session_event_admission",
+    "testing_session_event_admission",
+    "validate_ui_command_response",
+    "ui_command_response",
     "validate_working_notebook_contracts",
     "working_notebook_contracts",
     "validate_touch_closure",
@@ -3719,10 +3736,10 @@ BROWSER_COMMAND_EXPECTED_EVENTS = {
     "cmd.browser.detach_browser_tab": ["browser.session.state_changed"],
     "cmd.browser.pick_element_for_chat": ["browser.context_captured"],
     "cmd.browser.add_selection_to_chat": ["browser.context_captured"],
-    "cmd.browser.add_selection_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
-    "cmd.browser.add_selection_full_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
-    "cmd.browser.add_screenshot_to_chat": ["runtime_artifact.created"],
-    "cmd.browser.add_full_screenshot_to_chat": ["runtime_artifact.created"],
+    "cmd.browser.add_selection_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.screenshot"],
+    "cmd.browser.add_selection_full_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.screenshot"],
+    "cmd.browser.add_screenshot_to_chat": ["runtime_artifact.screenshot"],
+    "cmd.browser.add_full_screenshot_to_chat": ["runtime_artifact.screenshot"],
     "cmd.browser.share_with_agent": ["browser.context_shared"],
     "cmd.browser.revoke_share_with_agent": ["browser.context_share_revoked"],
     "cmd.browser.take_over": ["browser.session.takeover_state_changed"],
@@ -3780,17 +3797,6 @@ USAGE_ROUTE_PASSTHROUGH_FIELDS = {
     "projection_freshness",
     "projection_health",
 }
-
-
-def wiring_command_excluded(command_id: str, excluded_tokens: list[str]) -> bool:
-    for token in excluded_tokens:
-        if "*" in token and fnmatch.fnmatchcase(command_id, token):
-            return True
-        if token.endswith("_") and command_id.startswith(token):
-            return True
-        if command_id == token:
-            return True
-    return False
 
 
 def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
@@ -3914,6 +3920,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                             "rendered_label": label, "matched_text": match.group(0),
                             "error": "wiring_vocabulary_rendered_provider_name",
                         })
+        if wiring_command_excluded(command_id, excluded_tokens):
+            failures.append({"path": row_path, "command_id": command_id, "error": "excluded_command_has_peer_production_wiring"})
         if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
             failures.append({"path": row_path, "command_id": command_id, "error": "retired_chat_usage_alias_in_production_wiring"})
         if RETIRED_WEB_COMMAND_RE.match(command_id):
@@ -4135,6 +4143,10 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                                 "error": "usage_local_aggregate_no_dispatch_disposition_missing",
                             }
                         )
+
+    for command_id, handlers in command_handler_bindings(entries).items():
+        if len(handlers) != 1 or not handlers[0]:
+            failures.append({"path": rel(matrix_path), "command_id": command_id, "handlers": handlers, "error": "command_has_no_sole_handler_identity"})
 
     if REJECTED_USAGE_PROVIDER_MANAGEMENT_COMMAND_ID in production_commands:
         failures.append(
@@ -6466,6 +6478,70 @@ def cmd_validate_forge_backup_acceptance(args: argparse.Namespace) -> dict[str, 
     )
 
 
+def cmd_validate_browser_event_admission(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate the exact scoped admission without clearing global Event Authority."""
+    validator = ROOT / "scripts" / "pm-browser-event-admission.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-browser-event-admission", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-browser-event-admission", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_testing_session_event_admission(args: argparse.Namespace) -> dict[str, Any]:
+    """Check four candidate contracts and DL-039 non-admission, not native proof."""
+    validator = ROOT / "scripts" / "pm-testing-session-event-admission.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-testing-session-event-admission", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-testing-session-event-admission", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_github_project_integration(args: argparse.Namespace) -> dict[str, Any]:
+    """Check GitHub/Project joins and emit-only non-admission, not native proof."""
+    validator = ROOT / "scripts" / "pm-github-project-integration.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-github-project-integration", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-github-project-integration", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
+def cmd_validate_ui_command_response(args: argparse.Namespace) -> dict[str, Any]:
+    """Validate central response joins without claiming native dispatcher proof."""
+    validator = ROOT / "scripts" / "pm-ui-command-response.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-ui-command-response", [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds, extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
+    return parse_validator_json(
+        "validate-ui-command-response", proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+
+
 def cmd_validate_working_notebook_contracts(args: argparse.Namespace) -> dict[str, Any]:
     """Validate Working Notebook contract schemas and static fixtures."""
     validator = ROOT / "scripts" / "pm-working-notebook-contracts.py"
@@ -6512,9 +6588,12 @@ def cmd_validate_server_command_gap(args: argparse.Namespace) -> dict[str, Any]:
         "negative_self_tests": 11,
     }
     expected_partition = {
-        "new_canonical_required": 86,
+        # USER-PROJECT-UNARCHIVE-REGISTRY-20260911 moved one retained source
+        # from typed-local to the approved existing-Project registry command.
+        # Source count stays 171; this wrapper must match the owner validator.
+        "new_canonical_required": 87,
         "approved_alias_to_exact": 43,
-        "typed_local_ui_action": 39,
+        "typed_local_ui_action": 38,
         "rejected_with_reason": 3,
     }
     success_candidate = proc.returncode == 0 and report.get("status") == "pass"
@@ -6814,6 +6893,10 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("validate_new_contracts", cmd_validate_new_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("validate_ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
@@ -6867,6 +6950,10 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("server_command_gap", cmd_validate_server_command_gap, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("forge_backup_acceptance", cmd_validate_forge_backup_acceptance, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("browser_event_admission", cmd_validate_browser_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("testing_session_event_admission", cmd_validate_testing_session_event_admission, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("github_project_integration", cmd_validate_github_project_integration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
+        ("ui_command_response", cmd_validate_ui_command_response, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("working_notebook_contracts", cmd_validate_working_notebook_contracts, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("case_l_non_event_materialization", cmd_validate_case_l_non_event_materialization, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
@@ -6922,6 +7009,10 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         server_command_gap=compact_gate_report(check_map["server_command_gap"]),
         forge_backup_acceptance=compact_gate_report(check_map["forge_backup_acceptance"]),
+        browser_event_admission=compact_gate_report(check_map["browser_event_admission"]),
+        testing_session_event_admission=compact_gate_report(check_map["testing_session_event_admission"]),
+        github_project_integration=compact_gate_report(check_map["github_project_integration"]),
+        ui_command_response=compact_gate_report(check_map["ui_command_response"]),
         working_notebook_contracts=compact_gate_report(check_map["working_notebook_contracts"]),
         touch_closure=compact_gate_report(check_map["touch_closure"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
@@ -6945,6 +7036,10 @@ COMMANDS = {
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "validate-new-contracts": cmd_validate_new_contracts,
     "validate-forge-backup-acceptance": cmd_validate_forge_backup_acceptance,
+    "validate-browser-event-admission": cmd_validate_browser_event_admission,
+    "validate-testing-session-event-admission": cmd_validate_testing_session_event_admission,
+    "validate-github-project-integration": cmd_validate_github_project_integration,
+    "validate-ui-command-response": cmd_validate_ui_command_response,
     "validate-working-notebook-contracts": cmd_validate_working_notebook_contracts,
     "validate-server-command-gap": cmd_validate_server_command_gap,
     "validate-touch-closure": cmd_validate_touch_closure,
@@ -6981,6 +7076,10 @@ def main() -> int:
         "validate-prd-planning-runtime-contracts",
         "validate-new-contracts",
         "validate-forge-backup-acceptance",
+        "validate-browser-event-admission",
+        "validate-testing-session-event-admission",
+        "validate-github-project-integration",
+        "validate-ui-command-response",
         "validate-working-notebook-contracts",
         "validate-server-command-gap",
         "validate-touch-closure",

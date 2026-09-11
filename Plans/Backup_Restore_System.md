@@ -263,7 +263,7 @@ source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:B02-B11
   - source_ref:packet:B5/22_SECURITY_AND_FAILURE_TEST_MATRIX.md
 preserved_exact_tokens: [planned, waiting_for_source, waiting_for_unlock, acquiring_capture_barrier, capturing, staged, encrypting_uploading, committing_remote_snapshot, verifying_structure, verifying_data, completed, partial, failed, cancelled, RecoveryPointReceipt, recovery_required]
-negative_constraints: [Do not call an unverified backup verified., Do not activate destructive work without the required recovery point., Do not infer success from missing journal or destination evidence., Do not inherit verification or drill evidence across snapshots., Do not collapse per-destination failure into aggregate success.]
+negative_constraints: [Do not call an unverified backup verified., Do not activate destructive work without the BRS-023 recovery prerequisite., Do not infer success from missing journal or destination evidence., Do not inherit verification or drill evidence across snapshots., Do not collapse per-destination failure into aggregate success.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/Shared_Integration_Runtime.md]
 ```
 
@@ -278,10 +278,11 @@ canonical_text: >-
   RestoreRun has exactly four mutating modes: as_new, in_place, selective, and server_full. Settings merge/replace is an
   orthogonal settings_strategy used only where the selected families support it. Browse, verify, download, extract,
   compare, export, and archive retrieval are separate read/delivery operations and never RestoreRun modes. Every mutating restore reads and verifies the manifest,
-  checks compatibility, produces RestorePreviewReceipt, obtains approval, creates and verifies a pre-restore recovery
-  point, stages into quarantine, verifies staged hashes and schema/storage compatibility, resolves identity, credentials,
-  and source locations, quiesces the target, atomically activates, rebuilds derived indexes/caches/projections, performs
-  post-restore verification, invalidates stale Client caches, and exposes rollback. Restore as New creates a new
+  checks compatibility, produces RestorePreviewReceipt, obtains approval, satisfies the BRS-023 verified recovery-point
+  prerequisite or its narrowly validated emergency-consent alternative, stages into quarantine, verifies staged hashes
+  and schema/storage compatibility, resolves identity, credentials, and source locations, quiesces the target, activates
+  atomically where supported or through a journaled recoverable boundary otherwise, rebuilds derived state, performs
+  post-restore verification, invalidates stale Client caches, and exposes rollback only when a real recovery point exists. Restore as New creates a new
   project_id and rewrites identity-bearing refs; selective restore accepts only independently valid families;
   Read-only browse/retrieve never activates content. Restart uses the phase journal to resume, rollback, quarantine, or recovery_required.
 gui_related: true
@@ -290,10 +291,11 @@ depends_on: [BRS-003, BRS-004, BRS-005]
 unblocks: [BRS-007, BRS-008, BRS-009]
 acceptance_criteria:
   - Browse/retrieve operations perform no activation and emit bounded read/delivery evidence independently of RestoreRun.
-  - in_place and server_full require a verified pre-restore recovery point and atomic activation/rollback boundary.
+  - Every mode requires the BRS-023 pre-staging recovery prerequisite; emergency consent never creates a recovery point or rollback capability, and activation truth follows BRS-019.
+  - All nineteen phases persist without requiring evidence from a future phase; completed and mutation-applied states retain their actual prerequisites and verification evidence.
   - as_new rewrites every identity-bearing reference and cannot collide with an existing project_id.
   - Derived state is rebuilt from canonical restored bytes and is never trusted as portable authority.
-validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, future restore-mode and per-phase crash tests]
+validation_surfaces: [Plans/backup_restore_system_contract_fixtures.json, tests/test_pm_restore_phase_contracts.py, future native restore-mode and per-phase crash tests]
 risk_class: destructive_restore_or_identity_collision
 reasoning_tier: high
 context_scope: restore_preview_modes_and_recovery
@@ -304,7 +306,7 @@ source_lineage:
   - source_ref:normalized-register:server-first-2026-08-31:B12-B16
   - source_ref:packet:B5/09_UPDATES_BACKUP_RESTORE_CONTRACT.md
 preserved_exact_tokens: [as_new, in_place, selective, server_full, settings_strategy, Browse never activates]
-negative_constraints: [Do not model browse or retrieve as a mutating restore mode., Do not restore in place without a verified recovery point., Do not activate unverified staged data., Do not trust portable derived indexes., Do not restore tsnet identity by default.]
+negative_constraints: [Do not model browse or retrieve as a mutating restore mode., Do not restore without the BRS-023 recovery prerequisite., Do not activate unverified staged data., Do not trust portable derived indexes., Do not restore tsnet identity by default.]
 owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md, Plans/Server_System.md]
 ```
 
@@ -717,6 +719,20 @@ Restore states are exactly `selecting_backup`, `reading_manifest`, `compatibilit
 
 RestoreRun modes are exactly `as_new`, `in_place`, `selective`, and `server_full`. `settings_strategy = not_applicable|merge|replace` is orthogonal. `verify_browse_only`, legacy settings-mode values, and their old labels are migration inputs only; browse/retrieve use `BackupBrowseOperation`.
 
+### 3.3.1 Phase-local evidence and emergency recovery prerequisite
+
+`RestoreRun` is durable from `selecting_backup`, before a backup or manifest is necessarily known. Fields remain present but nullable/empty until their phase can produce authoritative evidence. Entering `reading_manifest` requires a selected backup; `compatibility_check` requires immutable manifest/snapshot/source identity; `previewing` requires selected families; `waiting_for_approval` requires the preview receipt; `pre_restore_backup` requires owner approval; `staging` requires the recovery prerequisite below. Staged verification precedes identity resolution, which precedes credential resolution, then source-location resolution, quiescence, and activation. No phase fabricates a later receipt to satisfy schema validation.
+
+`mutation_applied` remains false through quiescence. When true, including on a `blocked` run or failed terminal receipt, it requires the original selection, preview/approval/recovery prerequisite, staged verification, identity/credential/source resolution, and recorded activation commit boundary. Complete additionally requires derived rebuild, post-restore verification, Client-cache invalidation, a terminal timestamp, and no failure claim. `blocked` before mutation may lack future evidence but must identify the failure. Phase journals and referenced owner receipts resolve the exact transition/retry history; timestamp/shape checks are not crash-recovery proof.
+
+The normal prerequisite is a verified `RecoveryPointReceipt` for the exact target. Only when the owner verifies that this recovery point is unavailable may the existing Permissions/confirmation flow obtain explicit human consent to proceed without it. This is not a general opt-out, an agent/NL grant, or consent inferred from the original Restore click. The human sees the exact mode, Server/Project target, selected preview, verified reason recovery is unavailable, risk of losing the previous state, and lack of rollback. Refusal leaves the target unchanged.
+
+The closed nested `emergency_recovery_consent` binds the existing human consent receipt, verified-unavailability evidence, human actor, authorization and validation receipts, `restore_run_id`, mode, exact Server/Project target set, idempotency key, preview/approval receipts, issue/validation/expiry times, intent `restore_without_pre_restore_recovery`, and scope `this_restore_only`. Validation requires `issued_at_utc <= validated_at_utc < expires_at_utc` and exact equality with the current request/run/receipt bindings; the request actor also matches. Before staging or a new mutation attempt, the owner resolves and revalidates the referenced human authority, currentness, preview, target, and unavailability evidence. A changed target, mode, preview, approval, expired/revoked authority, or new operation requires renewed explicit consent and never reuses the old binding.
+
+`restore_recovery_prerequisite` is shared by run, mutating request, and mutation-applied receipt schemas: exactly one actual recovery receipt or validated emergency-consent binding is present. The preview and safety projection retain `recovery_point_required=true` as the normal default and explicitly expose `emergency_recovery_exception=verified_unavailability_and_scoped_human_consent_only`; a preview does not grant consent. Consent is a reference-bound value under the existing human authority, not a sixth Backup receipt family, secret, new command, or EventRecord. It cannot waive owner approval, destructive confirmation, currentness, target leases, quiescence, FileSafe, staged verification, or protected credentials. `cmd.restore.rollback`, `rollback_available`, and `rolling_back` still require a real verified recovery point and rollback reference; an emergency restore reports rollback unavailable.
+
+Static oracles validate phase prerequisites, direct target/receipt joins, and time ordering. Runtime authority lookup, signed/authorized receipt resolution, crash recovery at every phase, activation atomicity, disk restoration, and rollback remain unproved until executable evidence exists.
+
 ### 3.4 Event Authority candidates
 
 The following names are candidate event identities for Event Authority adjudication, not accepted or admitted
@@ -745,9 +761,9 @@ The post-integration admission adds exactly these 16 Backup-owned primaries:
 
 `cmd.backup.destination.discover`, `cmd.backup.retention.preview`, `cmd.backup.prune`, `cmd.backup.unlock`, `cmd.backup.file.download`, `cmd.backup.extract`, `cmd.backup.file.compare`, `cmd.backup.export`, `cmd.backup.archive.retrieve`, `cmd.backup.recovery_key.export`, `cmd.backup.recovery_key.copy`, `cmd.backup.recovery_key.print`, `cmd.backup.recovery_key.test`, `cmd.backup.recovery_key.acknowledge_saved`, `cmd.backup.recovery_key.rotate`, `cmd.backup.recovery_key.reencrypt`.
 
-Destructive requests bind target identities/generations, manifest and preview receipt, expected policy/revision, idempotency/correlation, permission/FileSafe/confirmation, and required `RecoveryPointReceipt`. Secret selection and recovery credentials use protected input channels and never ordinary command payload/history.
+Destructive restore requests bind target identities/generations, manifest and preview receipt, expected policy/revision, idempotency/correlation, permission/FileSafe/confirmation, and the BRS-023 recovery prerequisite. Rollback still requires an actual `RecoveryPointReceipt`. Secret selection and recovery credentials use protected input channels and never ordinary command payload/history.
 
-`Plans/backup_restore_system_contracts.schema.json` now defines one generic discriminated `BackupRestoreCommandRequest`, `BackupRestoreCommandResult`, `BackupRestoreCommandError`, and `BackupRestoreCommandAvailability` family over exactly these 41 IDs. The conditional request branches require currentness for every action; repository/destination/policy revisions; exact snapshot/capture-set/RecoverySet/run/preview identities; target Server/Project/Host/Environment/Client and family fields; protected-channel refs for unlock/key actions; retention candidate hash/lease/confirmation for prune; archive consent; and recovery-point, approval, confirmation, and preview-currentness receipts for mutating restores. Full Server secret portability remains explicit opt-in and reference-only through encrypted `PortableSecretEnvelope`; repository recovery uses redacted `RecoverySetPublicRecord` plus protected key-delivery refs. Raw keys, passwords, tokens, cookies, auth URLs/codes, callback/session material, protected-browser content, and foreign absolute paths are not ordinary command fields.
+`Plans/backup_restore_system_contracts.schema.json` now defines one generic discriminated `BackupRestoreCommandRequest`, `BackupRestoreCommandResult`, `BackupRestoreCommandError`, and `BackupRestoreCommandAvailability` family over exactly these 41 IDs. The conditional request branches require currentness for every action; repository/destination/policy revisions; exact snapshot/capture-set/RecoverySet/run/preview identities; target Server/Project/Host/Environment/Client and family fields; protected-channel refs for unlock/key actions; retention candidate hash/lease/confirmation for prune; archive consent; and the BRS-023 recovery prerequisite plus approval, confirmation, and preview-currentness receipts for mutating restores. Full Server secret portability remains explicit opt-in and reference-only through encrypted `PortableSecretEnvelope`; repository recovery uses redacted `RecoverySetPublicRecord` plus protected key-delivery refs. Raw keys, passwords, tokens, cookies, auth URLs/codes, callback/session material, protected-browser content, and foreign absolute paths are not ordinary command fields.
 
 These are static owner contracts only. All 41 command-catalog rows and their consumer/reverse rows must agree centrally; Event Authority admissions, native sole handlers, executable production wiring, real destination adapters, backup bytes, restore/rollback/quarantine execution, protected key delivery, and raw runtime receipts remain absent. A schema-valid command therefore remains `handler_unavailable` when its exact native registration or runtime prerequisite is missing. `expected_event_types=[]` remains mandatory until Event Authority separately admits an exact event and payload.
 
@@ -1036,7 +1052,7 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Backup_Restore_System.md
 canonical_text: >-
-  Fresh or ordinary recovery follows one bounded order: choose/import destination or untrusted Kit, validate locator/trust, authenticate storage, select an existing repository, unlock through protected Recovery Key submission, load encrypted manifests, select an immutable snapshot, inspect exact coverage/compatibility, preview, and only then restore. SnapshotBrowser is paginated/read-only and treats text, diff, history, HTML, macros, hooks, symlinks, and artifacts as untrusted content. Restore as New, in place, selective, and Full Server modes retain dependency closure, current target revision, path/identity mapping, migrations, disk space, profile/key readiness, secret exclusion, suspended work, owner approval, verified pre-restore recovery, target leases, staged verification, FileSafe decisions, and rollback. RestoreRun persists immutable selection, phase/retry/validation/outcome receipts on the recovery coordinator and survives Client loss or Full Server replacement through an external recovery endpoint/token. RuntimeResourceGovernor, ObservableWork, durable outbox, per-repository writer/maintenance leases, phase-aware cancellation, cautious stale-lock recovery, retention holds, prune preview, separate destructive authorization, and cold-retrieval consent remain shared-owner consumers.
+  Fresh or ordinary recovery follows one bounded order: choose/import destination or untrusted Kit, validate locator/trust, authenticate storage, select an existing repository, unlock through protected Recovery Key submission, load encrypted manifests, select an immutable snapshot, inspect exact coverage/compatibility, preview, and only then restore. SnapshotBrowser is paginated/read-only and treats text, diff, history, HTML, macros, hooks, symlinks, and artifacts as untrusted content. Restore as New, in place, selective, and Full Server modes retain dependency closure, current target revision, path/identity mapping, migrations, disk space, profile/key readiness, secret exclusion, suspended work, owner approval, the BRS-023 recovery prerequisite, target leases, staged verification, FileSafe decisions, and truthful rollback availability. RestoreRun persists immutable selection, phase/retry/validation/outcome receipts on the recovery coordinator and survives Client loss or Full Server replacement through an external recovery endpoint/token. RuntimeResourceGovernor, ObservableWork, durable outbox, per-repository writer/maintenance leases, phase-aware cancellation, cautious stale-lock recovery, retention holds, prune preview, separate destructive authorization, and cold-retrieval consent remain shared-owner consumers.
 gui_related: true
 gui_classification_reason: SnapshotBrowser, RestorePreview, DestinationCard, ScopeCoverageSummary, RecoveryKitHandoff, VerificationBadge, RetentionPreview, ObservableWorkProgress, costs, failures, and exact completion axes are visible.
 depends_on: [BRS-006, BRS-014, BRS-015, BRS-017, BRS-018, SIR-032]
@@ -1045,7 +1061,7 @@ acceptance_criteria:
   - A Kit is bounded untrusted input; a new endpoint is reviewed before credentials are sent, unreachable or apparently empty repositories are never initialized, and wrong account/key/repository, missing manifest, revoked access, corruption, and unsupported future format are distinct recoverable errors.
   - Snapshot selection binds immutable snapshot_id rather than latest; search/filter includes Project, capture date/time/timezone, host/source, verification and scope; details include PM/source/JJ coverage, unavailable sources, retention/hold, restore-test result, size, and retrieval conditions.
   - Previewed content cannot execute, escape path bounds, enter an active workspace, or reach agents without separate permission; large trees paginate and symlink/reparse/HTML/script/macro/hook hazards fail closed.
-  - Restore apply requires current owner approval, pre-restore recovery or explicit emergency consent, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote activation uses a journaled recoverable boundary rather than a false atomic claim.
+  - Restore apply requires current owner approval, the BRS-023 verified recovery-point or scoped verified-unavailability/human-consent prerequisite, target leases/quiescence, staged verification, and atomic activation where supported; cross-filesystem/remote activation uses a journaled recoverable boundary rather than a false atomic claim.
   - FileSafe adjudicates traversal, case/Unicode collisions, reserved names, executable bits, UID/GID/ACL/xattrs, absolute remaps, unsafe Git/JJ config, and untrusted hooks. Every crash/failure exposes the old state, rollback, quarantine, or a precise recovery boundary.
   - RestoreRun persists selection and per-source/destination phase, retry, validation, and outcome; completion separately reports data restored, source verified, indexes rebuilt, auth missing, and workloads paused. Client disconnect, UI refresh, or process-memory loss cannot fabricate resume or success.
   - RuntimeResourceGovernor preserves interactive/resume/approval reserve across capture, compression, encryption, hashing, IO, network, staging, retries, and process leases. Provider throttling, full staging queues, metered/time-window policy, and cost alerts stop/defer boundedly without hard-coded cloud prices.
@@ -1120,6 +1136,48 @@ owner_hints: [Plans/Backup_Restore_System.md, Plans/storage-plan.md]
 ```
 
 ContractRef: ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Project_System.md, ContractName:Plans/Settings_System.md
+
+### BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent
+
+```yaml
+plan_unit_id: BRS-023
+unit_type: recovery_requirement
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: >-
+  Every RestoreRun phase persists only evidence available at that phase. Staging requires the shared
+  restore_recovery_prerequisite: a verified target recovery receipt, or verified unavailability plus
+  current explicitly authorized human consent bound to this restore, mode, target, preview, approval,
+  and idempotency identity. Mutation and completion preserve prior prerequisites and owner verification;
+  emergency consent does not create recovery or rollback capability and waives no other safety gate.
+gui_related: true
+gui_classification_reason: Phase progress, explicit risk/consent, blocked states, and truthful rollback availability are visible.
+depends_on: [BRS-006, BRS-008, BRS-019, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - All nineteen phases have direct positive fixtures and validate in all four retained modes without fabricated future evidence.
+  - Early blocked runs/receipts can omit unproduced evidence; mutation-applied and complete states cannot use that exception to shed prerequisites.
+  - Mutating commands, run records, previews, and receipts consume the same recovery prerequisite and retain exact mode discrimination.
+  - Consent requires verified unavailability, human authority, current receipt validation, bounded expiry, exact identity/target/preview/approval/idempotency binding, explicit risk acknowledgement, and this_restore_only scope.
+  - Normal recovery stays the default; refusal does not mutate the target and consent never enables cmd.restore.rollback or claims a recovery point.
+  - Project, GUI, catalog, and wiring consumers preserve the owner contract and do not introduce another consent service, command, receipt family, or EventRecord.
+validation_surfaces: [Plans/backup_restore_system_contracts.schema.json, Plans/backup_restore_system_contract_fixtures.json, scripts/pm_restore_semantics.py, tests/test_pm_restore_phase_contracts.py, future native per-phase crash and human-authority validation traces]
+risk_class: fabricated_recovery_or_unscoped_destructive_consent
+reasoning_tier: high
+context_scope: restore_phase_and_emergency_prerequisite
+implementation_surfaces: [Plans/Backup_Restore_System.md, Plans/backup_restore_system_contracts.schema.json, Plans/Project_System.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: restore_phase_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - source_ref:packet:2026-09-01:REST-006
+  - source_ref:packet:2026-09-01:REST-009
+preserved_exact_tokens: [RestoreRun, RecoveryPointReceipt, emergency_recovery_consent, restore_recovery_prerequisite, this_restore_only]
+negative_constraints:
+  - Do not infer emergency authority from an agent request or the initial Restore action.
+  - Do not substitute consent for a verified rollback point.
+  - Do not equate schema-valid references with authoritative runtime resolution or crash-recovery proof.
+```
+
+ContractRef: ContractName:Plans/Backup_Restore_System.md#BRS-019, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, SchemaID:pm.backup_restore_system.contracts.v2
 
 ## Jujutsu D5 Owner Requirements (2026-09-11)
 

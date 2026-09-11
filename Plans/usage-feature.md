@@ -7007,6 +7007,41 @@ owner_hints: [Plans/usage-feature.md, Plans/Automated_Testing_System.md]
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Automated_Testing_System.md
 
+### UF-103 - Browser Operational Attribution Without Synthetic Usage
+
+```yaml
+plan_unit_id: UF-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Browser admission, execution, representation, wait, effect, handoff and recovery events are operational attribution
+  inputs to the existing Usage/ObservableWork owner, not billing records. Bounded refs preserve requested/effective
+  strategy, exact Host/Environment and workspace/page/program lineage, coverage and terminal/effect disposition;
+  real provider attempts and external billable sessions retain separately authoritative Usage and close receipts.
+gui_related: true
+gui_classification_reason: Usage details explain Browser strategy, waits, coverage, effects and unknown costs.
+depends_on: [UF-091, SMPFS-166]
+unblocks: []
+acceptance_criteria:
+  - Consume only admitted redacted metadata through browser_event_admission.json and the existing OperationalAttributionRecord; no parallel Browser UsageRecord family is minted.
+  - Preserve compile, local work, representation, lease/resource/approval waits, handoff, reconnect/replay and safe-next-action distinctions where the actual owner supplies them; unavailable durations or costs remain unknown.
+  - Real provider calls produce independently linked immutable UsageRecords; local operations, suppression, event replay and representation token estimates never fabricate model token usage or billable calls.
+  - External adapters retain actual billable-session and explicit session-close receipts without treating event presence or success as provider settlement.
+  - Requested/effective strategy, coverage, turns, bytes or token estimates are not proof of savings or benchmark comparability.
+  - Replay cannot duplicate usage, restore a billable session, dispatch a program, or expose AuthBrowserSession, page bodies, credentials or capture content.
+validation_surfaces: [Plans/browser_event_admission_fixtures.json, python3 scripts/pm-browser-event-admission.py, tests/test_pm_browser_event_admission.py, future native Browser operational attribution and provider usage integration fixtures]
+risk_class: browser_operational_attribution_or_synthetic_usage
+reasoning_tier: high
+context_scope: browser_usage_consumer
+implementation_surfaces: [Plans/usage-feature.md, Plans/shared_runtime_contracts.schema.json, Plans/browser_event_admission.json]
+node_compile_hint: {mode: static_usage_consumer_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:egolite-requirement:EGO-006, source_ref:egolite-requirement:HBU-022, source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md, USER-PACKET-GAP-CLOSURE-20260910]
+negative_constraints: [No synthetic tokens or costs from operational events., No empirical savings or billing settlement from static fixtures., No protected authentication or secret content.]
+```
+
+ContractRef: ContractName:Plans/usage-feature.md#UF-091, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json
+
 ## Run-start attribution context consumer - 2026-09-11
 
 Newly define `usage.run_start_attribution.v1@1.0.0` under DL-045 as the existing runtime-attribution read consumer of SP-265's `storage.run_started_index.v1@1.0.0` and shared `run_started_index_checkpoint`. It obtains project/run/thread and requested/effective runtime context only after current index-to-source lookup, exact `payload.run_id` matching and immutable snapshot validation. It retains the source event/snapshot refs as correlation, with owner permission checks before account-sensitive disclosure. It does not copy snapshot content into a new Usage store or maintain an independent durable cursor.

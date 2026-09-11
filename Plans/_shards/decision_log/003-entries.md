@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L612
+Source lines: L13-L643
 
-Source SHA256: `7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5`
+Source SHA256: `83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef`
 
 ---
 
@@ -608,3 +608,34 @@ The frozen source is `reports/event-authority-20260911/step-09-binding-authority
 The six semantic exclusions remain outside this approval: `chat.plan_todo_updated`, `context.compaction.failed`, `context.compaction.started`, `onboarding.free_models_refresh_retried`, `onboarding.free_models_refreshed`, `onboarding.provider_setup_opened`. `context.compaction.completed` remains governed by the separate DL-040 approval and is not part of the 39-family depth subset.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### DL-046: Bounded Browser technical bindings and individual admission landings
+
+At **2026-09-11T18:26:45.328890Z**, Jared answered exactly **“Apply it to the Browser families too”** to `call_r0F6Nos7xoXWcSwqdJ07Xvbm` and **“Approve the bounded Browser permission”** to `call_bpjmQ6ChvlSaYMcVDTi8OV4a`. The first confirms one-family-per-landing for these Browser families; the second grants the bounded technical-definition permission below. The earlier **“ok that sounds good”** at 18:06:01.565221Z confirmed the recommendation to prepare contracts together and admit separately.
+
+This approval covers only the exact 53 names below. It is separate from DL-045's original 285-family scope, whose membership is unchanged and disjoint. Browser and Storage owners may define missing technical consumer/projector/checkpoint bindings for already specified behavior only after a documented **per-family** search of current canonical sources, citations to relevant existing partial contracts, and scoped negative evidence for each missing definition. Existing definitions come first: reuse requires the owner-defined role, version and scope, not a sibling name, descriptive role or schema version. New definitions must be explicitly labelled newly authored owner contracts; this approval and the first investigated family do not prove that all 53 lack definitions.
+
+The technical permission covers identity/scope joins, versioned checkpoint values/cursors, atomic projection and advancement, replay, currentness, recovery and withdrawal for existing behavior. It does not choose new features, user-visible integrations, retention/deletion policy or competing-owner authority. Unresolved product choices continue to block dependent definitions and admission. Every family still needs its complete owner-backed Event Authority contract, exact schema references, positive and negative semantic checks, root review and its **own Storage-owned admission landing**. Preparing payloads, schemas, fixtures or wiring expectations together is not admission. A prepared row remains denied by the admission path, absent from the central event registry and unable to advance a projection checkpoint.
+
+This decision itself defines no binding identifier, admits no event, changes no runtime capability, and grants no bulk admission, native proof, historical-audit restamp, frozen-accounting change, Spec Lock update, WorkNode, NodeSeed, readiness clearance or governance seal. The separate task-failure and runtime-artifact-retention questions are not answered here.
+
+#### Exact Browser scope and response custody
+
+The frozen proposal is `reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json`, SHA-256 `717965b747decfc8548fb8d05cc1bb7fb551adae9bcf70c16f38d2bf087fc137`. Its scope source is the prepared `Plans/browser_event_admission.json` snapshot SHA-256 `9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534`. The exact question/answer receipt is `reports/packet-gap-closure-20260910/browser-binding-authority-response-20260911.json`, SHA-256 `d297e4a9dfab30f1679946768df8a67bb84c8d58304eae935d1aeba1d9b90274`, response ID `BROWSER-BINDINGS-53-RESPONSE-20260911`. Receipt application-status text describes capture time; this decision records its canonical application. Later file edits do not enlarge the approved name set.
+
+- `browser.workspace.created`, `browser.workspace.reset`, `browser.workspace.closed`
+- `browser.page.created`, `browser.page.activated`, `browser.page.closed`
+- `browser.controller_lease.granted`, `browser.controller_lease.renewed`, `browser.controller_lease.lost`, `browser.controller_lease.takeover_requested`, `browser.controller_lease.takeover_completed`
+- `browser.navigation.generation_changed`
+- `browser.document.generation_changed`
+- `browser.representation.captured`, `browser.representation.delta_created`, `browser.representation.queried`, `browser.representation.invalidated`
+- `browser.script.compile_started`, `browser.script.compiled`, `browser.script.compile_failed`
+- `browser.execution_strategy.selected`, `browser.execution_strategy.fallback_selected`
+- `browser.program.started`, `browser.program.checkpointed`, `browser.program.paused`, `browser.program.resumed`, `browser.program.completed`, `browser.program.failed`, `browser.program.cancelled`, `browser.program.segment.started`, `browser.program.segment.checkpointed`, `browser.program.segment.completed`, `browser.program.segment.failed`, `browser.program.segment.timed_out`, `browser.program.timeout.stopped`, `browser.program.timeout.effects_reconciled`, `browser.program.timeout.effect_state_unknown`
+- `browser.program_workspace.created`, `browser.program_workspace.updated`, `browser.program_workspace.checkpointed`, `browser.program_workspace.spilled`, `browser.program_workspace.closed`
+- `browser.screenshot.model_attachment_selected`, `browser.screenshot.skipped`
+- `browser.route.fetch_selected`, `browser.route.browser_escalated`
+- `browser.routine.generated`, `browser.routine.validated`, `browser.routine.promoted`, `browser.routine.invalidated`, `browser.routine.disabled`
+- `browser.session.reconstructed_on_host`, `browser.session.interrupted`
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-262

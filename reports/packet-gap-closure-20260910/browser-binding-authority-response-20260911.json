@@ -1,0 +1,89 @@
+{
+  "schema_id": "pm.browser_binding_authority_response.v1",
+  "response_id": "BROWSER-BINDINGS-53-RESPONSE-20260911",
+  "received_at_utc": "2026-09-11T18:26:45.328890Z",
+  "status": "approved_bounded_scope_only",
+  "proposal_ref": {
+    "path": "reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json",
+    "sha256": "717965b747decfc8548fb8d05cc1bb7fb551adae9bcf70c16f38d2bf087fc137"
+  },
+  "exact_responses": [
+    {
+      "question_id": "call_r0F6Nos7xoXWcSwqdJ07Xvbm",
+      "question": "DL-045 covers exactly 285 event families; none of this branch’s 53 Browser families are in that list. Should its one-family-per-landing rule also apply to these 53 Browser families?",
+      "answer": "Apply it to the Browser families too"
+    },
+    {
+      "question_id": "call_bpjmQ6ChvlSaYMcVDTi8OV4a",
+      "question": "May the Browser and Storage owners define missing technical consumer/projector/checkpoint bindings for the exact 53 prepared Browser event families? I recommend yes, but only for already specified behavior, after a documented per-family search for existing definitions. This would not approve new features, retention/deletion choices, runtime enablement or bulk admission; each family would still need full checks, root review and its own landing.",
+      "answer": "Approve the bounded Browser permission"
+    }
+  ],
+  "prior_conversational_confirmation": {
+    "received_at_utc": "2026-09-11T18:06:01.565221Z",
+    "answer": "ok that sounds good",
+    "scope": "Recommendation to prepare contracts together but admit each Browser family separately after its own review/checks."
+  },
+  "scope_event_count": 53,
+  "scope_event_types": [
+    "browser.workspace.created",
+    "browser.workspace.reset",
+    "browser.workspace.closed",
+    "browser.page.created",
+    "browser.page.activated",
+    "browser.page.closed",
+    "browser.controller_lease.granted",
+    "browser.controller_lease.renewed",
+    "browser.controller_lease.lost",
+    "browser.controller_lease.takeover_requested",
+    "browser.controller_lease.takeover_completed",
+    "browser.navigation.generation_changed",
+    "browser.document.generation_changed",
+    "browser.representation.captured",
+    "browser.representation.delta_created",
+    "browser.representation.queried",
+    "browser.representation.invalidated",
+    "browser.script.compile_started",
+    "browser.script.compiled",
+    "browser.script.compile_failed",
+    "browser.execution_strategy.selected",
+    "browser.execution_strategy.fallback_selected",
+    "browser.program.started",
+    "browser.program.checkpointed",
+    "browser.program.paused",
+    "browser.program.resumed",
+    "browser.program.completed",
+    "browser.program.failed",
+    "browser.program.cancelled",
+    "browser.program.segment.started",
+    "browser.program.segment.checkpointed",
+    "browser.program.segment.completed",
+    "browser.program.segment.failed",
+    "browser.program.segment.timed_out",
+    "browser.program.timeout.stopped",
+    "browser.program.timeout.effects_reconciled",
+    "browser.program.timeout.effect_state_unknown",
+    "browser.program_workspace.created",
+    "browser.program_workspace.updated",
+    "browser.program_workspace.checkpointed",
+    "browser.program_workspace.spilled",
+    "browser.program_workspace.closed",
+    "browser.screenshot.model_attachment_selected",
+    "browser.screenshot.skipped",
+    "browser.route.fetch_selected",
+    "browser.route.browser_escalated",
+    "browser.routine.generated",
+    "browser.routine.validated",
+    "browser.routine.promoted",
+    "browser.routine.invalidated",
+    "browser.routine.disabled",
+    "browser.session.reconstructed_on_host",
+    "browser.session.interrupted"
+  ],
+  "scope_source": {
+    "path": "Plans/browser_event_admission.json",
+    "sha256": "9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534"
+  },
+  "interpretation": "Separate bounded authority for the exact Browser53; does not modify DL-045's original285 membership. Existing-first per-event search and scoped negative evidence precede newly labelled owner technical definitions for already specified behavior. Each family retains complete contract/product/check/root-review gates and one-family Storage landing. No new feature, retention/deletion choice, runtime enablement, governance seal or bulk admission.",
+  "application_status": "canonical_decision_record_pending; no_missing_binding_authored_and_no_Browser_family_admitted"
+}

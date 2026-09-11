@@ -2767,6 +2767,50 @@
       }
     },
     {
+      "name": "source_control_command_success_cannot_have_unknown_effect",
+      "definition": "source_control_command_result",
+      "base_valid": "source_control_command_result_is_generic_and_receipted",
+      "patch": {
+        "effect_state": "effect_unknown"
+      }
+    },
+    {
+      "name": "source_control_command_unknown_error_cannot_mask_no_effect_retry",
+      "definition": "source_control_command_error",
+      "base_valid": "source_control_command_error_blocks_effect_unknown_retry",
+      "patch": {
+        "effect_state": "no_effect",
+        "retry_allowed": true,
+        "safe_next_actions": [
+          "retry"
+        ]
+      }
+    },
+    {
+      "name": "source_control_command_unknown_error_cannot_mask_reconciled_retry",
+      "definition": "source_control_command_error",
+      "base_valid": "source_control_command_error_blocks_effect_unknown_retry",
+      "patch": {
+        "effect_state": "effects_reconciled",
+        "retry_allowed": true,
+        "safe_next_actions": [
+          "retry"
+        ]
+      }
+    },
+    {
+      "name": "source_control_command_unknown_effect_cannot_offer_retry_with_reconciliation",
+      "definition": "source_control_command_error",
+      "base_valid": "source_control_command_error_blocks_effect_unknown_retry",
+      "patch": {
+        "safe_next_actions": [
+          "inspect",
+          "retry",
+          "reconcile_effects"
+        ]
+      }
+    },
+    {
       "name": "source_control_command_effect_unknown_error_cannot_retry",
       "definition": "source_control_command_error",
       "base_valid": "source_control_command_error_blocks_effect_unknown_retry",

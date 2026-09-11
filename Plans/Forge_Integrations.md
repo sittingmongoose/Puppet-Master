@@ -639,17 +639,24 @@ status: accepted
 owner_doc: Plans/Forge_Integrations.md
 canonical_text: >-
   An onboarding online copy is an optional hosted Git destination independent from local Git or Jujutsu. It becomes
-  selectable only through an explicit current account verification and an explicit repository binding. Provider-specific
+  ready only through an explicit current account verification and an explicit repository binding; selecting its
+  uncreated draft requires neither a phantom account nor a phantom repository. Provider-specific
   host, owner/container, repository, visibility, eligibility, and capability requirements remain visible and typed.
   Cursor Origin Preview is an eligible hosted Git destination with Private or Internal onboarding visibility, never a
   no-host pseudo-option. Reusing an existing connection selects and verifies the exact account and repository rather than
   skipping setup. Protected sign-in and explicit external account creation are distinct owner-controlled handoffs.
+  PWIZ-021's precommit exception permits only current owner-authorized read-only checks/listing and necessary
+  selected-source authentication. MACS-005 owns first-time sign-in. The existing cmd.forge.repository.list command
+  has a closed repository_list_scope account-container variant with a verified real account, no Project/repository
+  binding, zero repository generation, and no mutation. Its request/result/error/availability/receipt all preserve
+  that scope; it creates neither a new command nor a standalone storage/event family. Repository creation/binding and
+  content movement remain inside the exact reviewed Project owner's commit chain.
 gui_related: true
 gui_classification_reason: Defines provider cards, required fields, visibility choices, account/repository verification, and exact disabled reasons in Product Onboarding.
 depends_on: [FGI-001, FGI-003, FGI-006, FGI-008, SCS-011]
 unblocks: [PWIZ-024]
 acceptance_criteria:
-  - Every hosted-copy draft names `forge_provider`, provider variant, normalized HTTPS host, stable account ref, owner/container locator, provider repository ref, PM `repo_id`, binding generation, visibility or inherited-visibility disposition, capability currentness, and non-secret credential/grant ref as applicable.
+  - A hosted-copy draft records the selected provider/variant/host, source/container intent and desired visibility. Only actual verified identities populate account/repository refs; absent or uncreated targets remain explicitly absent. Once bound, the Forge owner supplies stable account/container/repository/PM repo identity, binding generation, capability currentness and non-secret grant refs. Selection, listing and account verification alone never claim repository readiness.
   - Account authentication and repository selection/creation are separate required results; `already_connected` must select and verify a current account and then select the exact repository, and cannot succeed as an empty action.
   - Existing accounts use one owner-controlled protected sign-in when needed. An allowlisted official provider page is offered only for explicit account creation or provider-required external administration, not as a redundant second sign-in path.
   - GitHub requires github.com or a normalized GitHub Enterprise host, a verified stable account, personal or organization owner, and repository; Private/Public are ordinary hosted choices and Internal is shown only when the exact enterprise capability permits it.
@@ -660,7 +667,8 @@ acceptance_criteria:
   - Gitea requires the same typed self-host fields through a distinct Gitea adapter and product identity; shared primitives never imply permanent Forgejo API equivalence, and API-disabled does not disable proven Git transport.
   - Cursor Origin requires a current Preview eligibility projection, verified eligible account/team owner, fixed hosted Origin service identity, and repository binding; onboarding permits only Private or Internal, keeps Public unavailable, and allows normal Git or Jujutsu-backed clone/fetch/push through certified transports.
   - Local-only Safe History stays valid with `forge_provider=none`; no forge account or repository is required until the user explicitly chooses an online copy or `Bring one from online`.
-  - Before Review confirmation, Product Onboarding records only the intended provider/account/repository fields and cached projections; it performs no sign-in, eligibility check, repository list/create/bind, clone, fetch, or publish.
+  - Before commit, explicit source access may consume owner-authorized read-only preflight/current eligibility and account-scoped repository listing or necessary selected-source sign-in. Admission consumes PWIZ-021's exact current draft/source/permission/capability/consent/hash/expiry join and MACS-005 when no account exists. It never admits repository creation/binding, clone, fetch, publish, filesystem writes, Project creation, or broad provider setup.
+  - The account-list variant of cmd.forge.repository.list uses repository_list_scope in the existing command_request/result/error/availability/receipt definitions; only this variant permits null repo_id/repository_binding_ref with zero repository generation. It binds actual account verification/generation/container, provider, selected source, draft, Client/Host and return context; requests are human GUI/read-only/current, and responses do not emit EventRecords or complete Project setup. Ordinary repository-bound requests remain unchanged, and another command cannot reuse the variant.
   - This PlanUnit reuses common `cmd.forge.*`, shared authentication/integration lifecycle, provider-owner adapters, and Source Control transport commands; it creates no provider-specific command namespace, account store, secret custody, or native/runtime evidence.
 validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/forge_integration_contracts.schema.json, Plans/forge_integration_contract_fixtures.json, provider-specific positive/negative fixtures, future protected-auth and repository-binding owner-return fixtures]
 risk_class: onboarding_forge_account_repository_or_provider_requirement_drift
@@ -677,7 +685,7 @@ negative_constraints:
   - Do not collapse GitLab hosted/self-managed, Azure cloud/self-managed, or Bitbucket Cloud/Data Center requirements.
   - Do not collapse Forgejo and Gitea into one product, adapter, API schema, capability result, or account identity.
   - Do not infer provider, account, repository, owner, visibility, eligibility, or readiness from display text or remote URL alone.
-  - Do not dispatch forge or authentication work before Review confirmation.
+  - Do not broaden precommit read-only listing/selected-source authentication into repository, filesystem, Project or unrelated-provider mutation; do not fabricate IDs to satisfy a repository-bound request.
 ```
 
 ## Forgejo/Gitea, Automation Binding, And Generic Shell Reconciliation - 2026-09-01

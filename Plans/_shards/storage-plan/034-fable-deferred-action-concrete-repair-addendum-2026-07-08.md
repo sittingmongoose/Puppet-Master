@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L16683-L16794
 
-Source SHA256: `97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027`
+Source SHA256: `96d1c05d4fb0cf0e198f11b53a2a75c30b85f20bd894d585bd8074b4eab5b79f`
 
 ---
 
@@ -16,10 +16,10 @@ This addendum is canonical storage spec text for deferred non-runtime FABLE rows
 
 Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
-- Canonical startup restore keys are `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}`.
-- Compatibility aliases `hotreload_state:v1:{project_id}` and `onboarding:v1` may be read only during migration and must be rewritten to the canonical dotted-version keys on the next successful settings save.
+- Canonical startup restore consumes `hotreload_state.v1:{project_id}` and SP-252's current `onboarding_state` session key/value binding from the machine registry.
+- The hotreload alias and SP-252's exact Onboarding predecessor keys are read-only StorageMigrationCoordinator copy-forward inputs, never ordinary-open fallbacks or lazy rewrite-on-settings-save routes.
 - `hotreload_state.v1` fields are `project_id`, `workspace_tab_id?`, `last_successful_reload_at_utc?`, `reload_generation`, `watched_root_refs[]`, `last_error_code?`, and `schema_version`.
-- `onboarding_state.v1` fields are `project_id`, `onboarding_version`, `completed_step_ids[]`, `dismissed_prompt_ids[]`, `provider_setup_state`, `first_run_completed_at_utc?`, and `schema_version`.
+- The predecessor `onboarding_state.v1` field roster is migration lineage only. SP-252/PWIZ-021 own the current closed Session fields, durable bounded draft and phase/actual-Project bindings; this startup summary does not redefine them.
 - These keys are GUI state and onboarding state only; they cannot carry runtime liveness, certification, or PNC-019 evidence.
 
 ### Terminal Storage Family Reconciliation
