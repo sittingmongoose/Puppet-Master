@@ -3005,7 +3005,7 @@
       "error_schema_ref": "Plans/server_system_contracts.schema.json#/$defs/supplemental_command_error",
       "availability_rule": "Exact Server, Client, pairing/bootstrap identity, current generation, permission, explicit consent, requested/effective state, and exact return context are required.",
       "permission_gate": "Server bootstrap, trust, pairing, revocation, Permissions, FileSafe, ephemeral-secret, and explicit confirmation gates apply by command.",
-      "disabled_reason_rule": "All six actions expose command_not_registered, handler_unavailable, stale generation, identity/trust mismatch, permission, consent, secret-material, topology, or recovery blocker and remain unavailable while central/native closure is absent.",
+      "disabled_reason_rule": "All six actions expose command_not_registered, handler_unavailable, stale generation, identity/trust mismatch, permission, consent, secret-material, topology, or recovery blocker and remain unavailable while native closure is absent; central production-intent registration is already specified.",
       "handler_owner": "ServerBootstrapService, ClientPairingService, or ClientTrustService as the single specified owner route; native handlers are not implemented or proven.",
       "handler_status": "specified",
       "wiring_status": "specified",
@@ -3044,7 +3044,7 @@
       ],
       "evidence_refs": [
         "static_schema_fixture_and_concept_only",
-        "central_catalog_wiring_native_handler_runtime_evidence_absent"
+        "central_catalog_and_production_intent_specified_native_handler_and_runtime_evidence_absent"
       ]
     },
     {
@@ -3425,6 +3425,110 @@
       "evidence_refs": [
         "static_schema_fixture_and_external_harness_only",
         "final_exact_artifact_campaign_pending"
+      ]
+    },
+    {
+      "profile_id": "TCP-TESTING-EVIDENCE",
+      "requirement_refs": [
+        "Plans/Automated_Testing_System.md#ATS-048",
+        "Plans/Test_Capture_and_Motion_Evidence.md#TCME-004"
+      ],
+      "owner_plan": "Plans/Automated_Testing_System.md",
+      "plan_unit": "ATS-048",
+      "dry_contract_ref": "Plans/testing_session_command_contracts.schema.json",
+      "payload_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
+      "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult",
+      "error_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandError",
+      "availability_rule": "Exact owner-resolved context, subject revision and ordinary evidence; consume Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability.",
+      "permission_gate": "Current actor/permission, Client/session, topology, exact evidence and redaction. Protected-auth content is forbidden; Testing export additionally requires FileSafe approved-preview binding.",
+      "disabled_reason_rule": "Closed typed owner reasons including handler_unavailable, stale_currentness, wrong_client and subject/stream/source, redaction and policy blockers.",
+      "handler_owner": "Plans/Automated_Testing_System.md#ATS-048 owns existing sole planned handlers, not TestCaptureService lifecycle authority. Native handlers are absent.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-schema contracts and existing production-intent placements only; native runtime proof remains absent.",
+      "gui_triggers": [
+        "Existing Testing/session and Runtime Artifacts recording controls; no new controls or design."
+      ],
+      "return_route": "Exact subject and frozen initiating Client return context; no latest/focus substitution.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Session events require separate Event Authority admission; export and recording viewer commands are receipt-only."
+      ],
+      "receipt_refs": [
+        "Typed settlement through Plans/ui_command_response.schema.json; accepted is pending; replay returns original identity."
+      ],
+      "observable_work": [
+        "Pending work is not settlement, capture completion or test success."
+      ],
+      "persistence_refs": [
+        "Existing owner-resolved artifact/receipt identities only; no new storage family or raw-content copy."
+      ],
+      "migration_refs": [
+        "Plans/Automated_Testing_System.md#ATS-048"
+      ],
+      "test_refs": [
+        "Plans/testing_session_command_contract_fixtures.json",
+        "tests/test_pm_evidence_commands.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_exact_join_only",
+        "native_dispatch_playback_storage_security_and_runtime_evidence_absent"
+      ]
+    },
+    {
+      "profile_id": "TCP-ARTIFACT-RECORDING",
+      "requirement_refs": [
+        "Plans/Runtime_Artifacts_Panel.md#RAP-056",
+        "Plans/Test_Capture_and_Motion_Evidence.md#TCME-004"
+      ],
+      "owner_plan": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit": "RAP-056",
+      "dry_contract_ref": "Plans/artifact_recording_command_contracts.schema.json",
+      "payload_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandRequest",
+      "result_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandResult",
+      "error_schema_ref": "Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandError",
+      "availability_rule": "Exact owner-resolved context, subject revision and ordinary evidence; consume Plans/artifact_recording_command_contracts.schema.json#/$defs/ArtifactRecordingCommandAvailability.",
+      "permission_gate": "Current actor/permission, Client/session, topology, exact evidence and redaction. Protected-auth content is forbidden; Testing export additionally requires FileSafe approved-preview binding.",
+      "disabled_reason_rule": "Closed typed owner reasons including handler_unavailable, stale_currentness, wrong_client and subject/stream/source, redaction and policy blockers.",
+      "handler_owner": "Plans/Runtime_Artifacts_Panel.md#RAP-056 owns existing sole planned handlers, not TestCaptureService lifecycle authority. Native handlers are absent.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static exact-schema contracts and existing production-intent placements only; native runtime proof remains absent.",
+      "gui_triggers": [
+        "Existing Testing/session and Runtime Artifacts recording controls; no new controls or design."
+      ],
+      "return_route": "Exact subject and frozen initiating Client return context; no latest/focus substitution.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Receipt-only viewer effects; no new domain event."
+      ],
+      "receipt_refs": [
+        "Typed settlement through Plans/ui_command_response.schema.json; accepted is pending; replay returns original identity."
+      ],
+      "observable_work": [
+        "Pending work is not settlement, capture completion or test success."
+      ],
+      "persistence_refs": [
+        "Existing owner-resolved artifact/receipt identities only; no new storage family or raw-content copy."
+      ],
+      "migration_refs": [
+        "Plans/Runtime_Artifacts_Panel.md#RAP-056"
+      ],
+      "test_refs": [
+        "Plans/artifact_recording_command_contract_fixtures.json",
+        "tests/test_pm_evidence_commands.py"
+      ],
+      "evidence_refs": [
+        "static_schema_fixture_and_exact_join_only",
+        "native_dispatch_playback_storage_security_and_runtime_evidence_absent"
       ]
     },
     {
@@ -8058,7 +8162,7 @@
       "command",
       "cmd.named_plan.create",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-NPLAN-002",
@@ -8066,7 +8170,7 @@
       "command",
       "cmd.named_plan.open",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-NPLAN-003",
@@ -8074,7 +8178,7 @@
       "command",
       "cmd.named_plan.rename",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-NPLAN-004",
@@ -8082,7 +8186,7 @@
       "command",
       "cmd.named_plan.archive",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-NPLAN-005",
@@ -8090,7 +8194,7 @@
       "command",
       "cmd.named_plan.restore",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-NPLAN-006",
@@ -8098,7 +8202,7 @@
       "command",
       "cmd.named_plan.set_priority",
       "partial",
-      "Static owner/schema exists; command registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Named Plan owner/schema, central registration and sole planned production-intent route are specified; native handler, persistence/currentness, replay and runtime proof are absent."
     ],
     [
       "TOUCH-SRV-001",
@@ -8106,7 +8210,7 @@
       "command",
       "cmd.server.add",
       "partial",
-      "Server scope is accepted; central registration, native handler, and runtime evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Server owner/schema, central registration and sole planned production-intent route are specified; native handler, connection/trust enforcement and runtime proof are absent."
     ],
     [
       "TOUCH-SRV-002",
@@ -8362,7 +8466,7 @@
       "command",
       "cmd.remote_access.open",
       "partial",
-      "Remote scope is accepted; central registration, native handler, WAN, and security evidence are absent. Central production-intent wiring and the owner-adjudicated sole future route are specified; native runtime proof remains absent."
+      "Remote owner/schema, central registration and sole planned production-intent route are specified; native handler, WAN and security/runtime proof are absent."
     ],
     [
       "TOUCH-RAS-002",
@@ -9082,7 +9186,7 @@
       "command",
       "cmd.authentication.start",
       "partial",
-      "Exact initiating active Client/session generation, preallocated authentication operation, protected-auth session, continuation, return target, no-content result fence, and static fixtures exist; native handoff/handler, provider sign-in, wrong-Client race, restart, security, and runtime evidence are absent."
+      "Current RAS-015/shared-auth handoff contract binds the Server-owned operation and newly authorized active Client/session and handoff generations for hosted Tailscale; ordinary protected-auth paths retain their initiating-Client fence. Native handoff, sign-in, wrong-Client races, restart and security/runtime proof are absent."
     ],
     [
       "TOUCH-BRW-019",
@@ -9090,7 +9194,7 @@
       "command",
       "cmd.authentication.cancel",
       "partial",
-      "Exact operation/revision, initiating Client/session generation, return target, cancelled disposition, and no-content result fence are statically specified; native cancel race, cleanup/settlement, focus return, security, and runtime evidence are absent."
+      "Exact current authentication operation/revision, authorized Client/handoff generation and return context are specified, including the RAS-015 Server-owned hosted-Tailscale operation. Native cancel races, cleanup/settlement, focus return and security/runtime proof are absent."
     ],
     [
       "TOUCH-BRW-020",
@@ -9098,7 +9202,7 @@
       "command",
       "cmd.authentication.resume",
       "partial",
-      "Exact same operation/revision, initiating Client/session generation, continuation, return target, timeout mapping, and stale/wrong-Client rejection states are statically specified; native resume, two-Client fencing, timeout/restart convergence, security, and runtime evidence are absent."
+      "RAS-015 hosted Tailscale resumes the same Server-owned operation through a newly authorized current Client/session and handoff generation; it does not inherit reusable URLs or protected content. Ordinary auth keeps its exact initiating-Client fence. Native two-Client fencing, timeout/restart convergence and security/runtime proof are absent."
     ],
     [
       "TOUCH-CAP-001",
@@ -9166,59 +9270,59 @@
     ],
     [
       "TOUCH-CAP-009",
-      "TCP-CAPTURE",
+      "TCP-TESTING-EVIDENCE",
       "command",
       "cmd.testing.session.open",
       "partial",
-      "Static capture contract exists; native session projection is absent."
+      "Exact ATS-048 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-010",
-      "TCP-CAPTURE",
+      "TCP-TESTING-EVIDENCE",
       "command",
       "cmd.testing.session.watch",
       "partial",
-      "Static capture contract exists; native watch behavior is absent."
+      "Exact ATS-048 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-011",
-      "TCP-CAPTURE",
+      "TCP-TESTING-EVIDENCE",
       "command",
       "cmd.testing.session.background",
       "partial",
-      "Static capture contract exists; native lifecycle continuity evidence is absent."
+      "Exact ATS-048 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-012",
-      "TCP-CAPTURE",
+      "TCP-TESTING-EVIDENCE",
       "command",
       "cmd.testing.session.redaction.inspect",
       "partial",
-      "Static capture contract exists; native redaction inspection and security evidence are absent."
+      "Exact ATS-048 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-013",
-      "TCP-CAPTURE",
+      "TCP-TESTING-EVIDENCE",
       "command",
       "cmd.testing.export_bundle",
       "partial",
-      "Static capture contract exists; native export, hashes, redaction, and provenance evidence are absent."
+      "Exact ATS-048 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-014",
-      "TCP-CAPTURE",
+      "TCP-ARTIFACT-RECORDING",
       "command",
       "cmd.artifacts.play_recording",
       "partial",
-      "Static artifact contract exists; native playback/frame-step implementation is absent."
+      "Exact RAP-056 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-015",
-      "TCP-CAPTURE",
+      "TCP-ARTIFACT-RECORDING",
       "command",
       "cmd.artifacts.watch_recording",
       "partial",
-      "Static artifact contract exists; native synchronized watch implementation is absent."
+      "Exact RAP-056 typed request/result/error/availability and existing sole future route specified; native dispatch, authenticated currentness, security, persistence and runtime proof remain absent."
     ],
     [
       "TOUCH-CAP-016",

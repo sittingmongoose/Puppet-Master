@@ -1,0 +1,43 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://puppetmaster.local/schemas/artifact_recording_commands/1.0.0/artifact_recording_command_contracts.schema.json",
+  "x-schema-id":"pm.artifact_recording_commands.schema.v1",
+  "description":"RAP-056 owns existing terminal-record playback and live-recording watch. ATS-048 metadata context/error/result fields are reused by reference; neither command acquires capture, Testing lifecycle, controller, or protected-auth authority.",
+  "oneOf":[{"$ref":"#/$defs/ArtifactRecordingCommandRequest"},{"$ref":"#/$defs/ArtifactRecordingCommandResult"},{"$ref":"#/$defs/ArtifactRecordingCommandError"},{"$ref":"#/$defs/ArtifactRecordingCommandAvailability"}],
+  "$defs":{
+    "id":{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/id"},
+    "ref":{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/ref"},
+    "sha256":{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/sha256"},
+    "context":{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/EvidenceCommandContext"},
+    "command_id":{"enum":["cmd.artifacts.play_recording","cmd.artifacts.watch_recording"]},
+    "record_subject":{
+      "type":"object","additionalProperties":false,"required":["kind","artifact_id","artifact_version","content_sha256","capture_id","provenance_ref","recording_state","security_class"],
+      "properties":{"kind":{"const":"terminal_recording"},"artifact_id":{"$ref":"#/$defs/id"},"artifact_version":{"type":"integer","minimum":1},"content_sha256":{"$ref":"#/$defs/sha256"},"capture_id":{"$ref":"#/$defs/id"},"provenance_ref":{"$ref":"#/$defs/ref"},"recording_state":{"const":"terminal"},"security_class":{"const":"ordinary"}}
+    },
+    "live_subject":{
+      "type":"object","additionalProperties":false,"required":["kind","capture_session_id","capture_id","stream_ref","expected_stream_generation","expected_capture_revision","recording_state","security_class"],
+      "properties":{"kind":{"const":"live_recording"},"capture_session_id":{"$ref":"#/$defs/id"},"capture_id":{"$ref":"#/$defs/id"},"stream_ref":{"$ref":"#/$defs/ref"},"expected_stream_generation":{"type":"integer","minimum":0},"expected_capture_revision":{"type":"integer","minimum":0},"recording_state":{"const":"recording_in_progress"},"security_class":{"const":"ordinary"}}
+    },
+    "viewer_args":{
+      "type":"object","additionalProperties":false,"required":["redaction_profile_ref","viewer_policy_ref","fallback_route_ref","clock_alignment_ref"],
+      "properties":{"redaction_profile_ref":{"$ref":"#/$defs/ref"},"viewer_policy_ref":{"$ref":"#/$defs/ref"},"fallback_route_ref":{"$ref":"#/$defs/ref"},"clock_alignment_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "ArtifactRecordingCommandRequest":{
+      "type":"object","additionalProperties":false,"required":["schema_id","record_kind","command_id","command_instance_id","idempotency","context","subject","args"],
+      "properties":{"schema_id":{"const":"pm.artifact_recording.command_request.v1"},"record_kind":{"const":"ArtifactRecordingCommandRequest"},"command_id":{"$ref":"#/$defs/command_id"},"command_instance_id":{"$ref":"#/$defs/id"},"idempotency":{"$ref":"https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/command_idempotency"},"context":{"$ref":"#/$defs/context"},"subject":{"oneOf":[{"$ref":"#/$defs/record_subject"},{"$ref":"#/$defs/live_subject"}]},"args":{"$ref":"#/$defs/viewer_args"}},
+      "allOf":[{"if":{"properties":{"command_id":{"const":"cmd.artifacts.play_recording"}}},"then":{"properties":{"subject":{"$ref":"#/$defs/record_subject"}}},"else":{"properties":{"subject":{"$ref":"#/$defs/live_subject"}}}}]
+    },
+    "ArtifactRecordingCommandResult":{
+      "allOf":[{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/EvidenceResultFields"}],"type":"object","unevaluatedProperties":false,"required":["schema_id","record_kind","command_id"],
+      "properties":{"schema_id":{"const":"pm.artifact_recording.command_result.v1"},"record_kind":{"const":"ArtifactRecordingCommandResult"},"command_id":{"$ref":"#/$defs/command_id"}}
+    },
+    "ArtifactRecordingCommandError":{
+      "type":"object","additionalProperties":false,"required":["schema_id","record_kind","command_id","command_instance_id","error"],
+      "properties":{"schema_id":{"const":"pm.artifact_recording.command_error.v1"},"record_kind":{"const":"ArtifactRecordingCommandError"},"command_id":{"$ref":"#/$defs/command_id"},"command_instance_id":{"$ref":"#/$defs/id"},"error":{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/EvidenceCommandError"}}
+    },
+    "ArtifactRecordingCommandAvailability":{
+      "allOf":[{"$ref":"https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/EvidenceAvailabilityFields"}],"type":"object","unevaluatedProperties":false,"required":["schema_id","record_kind","command_id"],
+      "properties":{"schema_id":{"const":"pm.artifact_recording.command_availability.v1"},"record_kind":{"const":"ArtifactRecordingCommandAvailability"},"command_id":{"$ref":"#/$defs/command_id"}}
+    }
+  }
+}

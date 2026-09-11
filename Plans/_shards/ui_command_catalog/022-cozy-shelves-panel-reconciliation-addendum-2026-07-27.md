@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L9709-L10626
 
-Source SHA256: `eccd9c23d5dc3d7f619e9ba2ac7ecd4940e34d3272b09f3bde46ee7d2b2d72be`
+Source SHA256: `f46c9a1a659e7b03bdab4d94216840dd77d5ac057b7617990976901364bc2537`
 
 ---
 
@@ -145,8 +145,8 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Wiring_
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
 | `cmd.artifacts.sort` | Sort Artifacts | `shell_view` | always | none | `unsupported` | artifacts |
-| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | `degraded`, `stale_projection` | artifacts |
-| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | `degraded`, `unreachable` | artifacts |
+| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | RAP-056 typed owner availability/error reasons | artifacts |
+| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | RAP-056 typed owner availability/error reasons | artifacts |
 | `cmd.artifacts.show_sources` | Show Sources | `navigation_wrapper` | selection (`artifact_source_refs_present`) | none | `stale_projection` | artifacts |
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md

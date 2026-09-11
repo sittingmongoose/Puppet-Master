@@ -6550,9 +6550,12 @@ def cmd_validate_server_command_gap(args: argparse.Namespace) -> dict[str, Any]:
         "negative_self_tests": 11,
     }
     expected_partition = {
-        "new_canonical_required": 86,
+        # USER-PROJECT-UNARCHIVE-REGISTRY-20260911 moved one retained source
+        # from typed-local to the approved existing-Project registry command.
+        # Source count stays 171; this wrapper must match the owner validator.
+        "new_canonical_required": 87,
         "approved_alias_to_exact": 43,
-        "typed_local_ui_action": 39,
+        "typed_local_ui_action": 38,
         "rejected_with_reason": 3,
     }
     success_candidate = proc.returncode == 0 and report.get("status") == "pass"
