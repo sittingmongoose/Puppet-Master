@@ -611,6 +611,37 @@ The six semantic exclusions remain outside this approval: `chat.plan_todo_update
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
+### DL-046: Bounded Browser technical bindings and individual admission landings
+
+At **2026-09-11T18:26:45.328890Z**, Jared answered exactly **“Apply it to the Browser families too”** to `call_r0F6Nos7xoXWcSwqdJ07Xvbm` and **“Approve the bounded Browser permission”** to `call_bpjmQ6ChvlSaYMcVDTi8OV4a`. The first confirms one-family-per-landing for these Browser families; the second grants the bounded technical-definition permission below. The earlier **“ok that sounds good”** at 18:06:01.565221Z confirmed the recommendation to prepare contracts together and admit separately.
+
+This approval covers only the exact 53 names below. It is separate from DL-045's original 285-family scope, whose membership is unchanged and disjoint. Browser and Storage owners may define missing technical consumer/projector/checkpoint bindings for already specified behavior only after a documented **per-family** search of current canonical sources, citations to relevant existing partial contracts, and scoped negative evidence for each missing definition. Existing definitions come first: reuse requires the owner-defined role, version and scope, not a sibling name, descriptive role or schema version. New definitions must be explicitly labelled newly authored owner contracts; this approval and the first investigated family do not prove that all 53 lack definitions.
+
+The technical permission covers identity/scope joins, versioned checkpoint values/cursors, atomic projection and advancement, replay, currentness, recovery and withdrawal for existing behavior. It does not choose new features, user-visible integrations, retention/deletion policy or competing-owner authority. Unresolved product choices continue to block dependent definitions and admission. Every family still needs its complete owner-backed Event Authority contract, exact schema references, positive and negative semantic checks, root review and its **own Storage-owned admission landing**. Preparing payloads, schemas, fixtures or wiring expectations together is not admission. A prepared row remains denied by the admission path, absent from the central event registry and unable to advance a projection checkpoint.
+
+This decision itself defines no binding identifier, admits no event, changes no runtime capability, and grants no bulk admission, native proof, historical-audit restamp, frozen-accounting change, Spec Lock update, WorkNode, NodeSeed, readiness clearance or governance seal. The separate task-failure and runtime-artifact-retention questions are not answered here.
+
+#### Exact Browser scope and response custody
+
+The frozen proposal is `reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json`, SHA-256 `717965b747decfc8548fb8d05cc1bb7fb551adae9bcf70c16f38d2bf087fc137`. Its scope source is the prepared `Plans/browser_event_admission.json` snapshot SHA-256 `9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534`. The exact question/answer receipt is `reports/packet-gap-closure-20260910/browser-binding-authority-response-20260911.json`, SHA-256 `d297e4a9dfab30f1679946768df8a67bb84c8d58304eae935d1aeba1d9b90274`, response ID `BROWSER-BINDINGS-53-RESPONSE-20260911`. Receipt application-status text describes capture time; this decision records its canonical application. Later file edits do not enlarge the approved name set.
+
+- `browser.workspace.created`, `browser.workspace.reset`, `browser.workspace.closed`
+- `browser.page.created`, `browser.page.activated`, `browser.page.closed`
+- `browser.controller_lease.granted`, `browser.controller_lease.renewed`, `browser.controller_lease.lost`, `browser.controller_lease.takeover_requested`, `browser.controller_lease.takeover_completed`
+- `browser.navigation.generation_changed`
+- `browser.document.generation_changed`
+- `browser.representation.captured`, `browser.representation.delta_created`, `browser.representation.queried`, `browser.representation.invalidated`
+- `browser.script.compile_started`, `browser.script.compiled`, `browser.script.compile_failed`
+- `browser.execution_strategy.selected`, `browser.execution_strategy.fallback_selected`
+- `browser.program.started`, `browser.program.checkpointed`, `browser.program.paused`, `browser.program.resumed`, `browser.program.completed`, `browser.program.failed`, `browser.program.cancelled`, `browser.program.segment.started`, `browser.program.segment.checkpointed`, `browser.program.segment.completed`, `browser.program.segment.failed`, `browser.program.segment.timed_out`, `browser.program.timeout.stopped`, `browser.program.timeout.effects_reconciled`, `browser.program.timeout.effect_state_unknown`
+- `browser.program_workspace.created`, `browser.program_workspace.updated`, `browser.program_workspace.checkpointed`, `browser.program_workspace.spilled`, `browser.program_workspace.closed`
+- `browser.screenshot.model_attachment_selected`, `browser.screenshot.skipped`
+- `browser.route.fetch_selected`, `browser.route.browser_escalated`
+- `browser.routine.generated`, `browser.routine.validated`, `browser.routine.promoted`, `browser.routine.invalidated`, `browser.routine.disabled`
+- `browser.session.reconstructed_on_host`, `browser.session.interrupted`
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-262
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -2988,6 +3019,56 @@ negative_constraints:
   - Do not decide feature, integration, retention, deletion or competing-owner questions through this technical approval.
   - Do not bulk admit, re-admit registered families, hardcode a pass, enable runtime or change validators, frozen accounting, clearance or seal state.
 owner_hints: [Plans/Decision_Log.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+```
+
+### DL-046 - Bounded Browser Technical Binding Authority And Individual Admission
+
+```yaml
+plan_unit_id: DL-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's two exact answers at 2026-09-11T18:26:45.328890Z apply individual Storage
+  admission landings and bounded technical binding definition authority to the
+  adjacent exact 53-family Browser scope. Browser and Storage owners must first
+  search current canonical definitions per family and document existing partial
+  contracts and scoped absence before labelling any missing technical binding as
+  a new owner definition for already specified behavior. Existing owner-defined
+  role, version and scope control reuse. Complete contracts, independent product
+  gates, exact schema references, positive/negative semantic checks and root review
+  precede each family's own admission landing. Prepared contracts are not admitted.
+gui_related: false
+gui_classification_reason: Records technical authority and admission constraints without changing presentation.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - The exact canonical 53-name scope matches the pinned proposal and response and is disjoint from DL-045's original 285 families.
+  - Each new definition has per-family current-source search, existing-contract citations and scoped negative evidence; neither all-family absence nor sibling-derived authority is presumed.
+  - New technical definitions are labelled newly authored and remain limited to already specified behavior.
+  - Feature, integration, retention/deletion and competing-owner decisions remain separate and block dependent work when unresolved.
+  - Each family has full owner/schema/positive-negative/root review gates and an individual Storage admission landing; preparation alone does not authorize persistence or checkpoint advancement.
+  - No binding identifier, event membership, runtime proof, historical accounting, Spec Lock, readiness or seal state changes through this decision.
+validation_surfaces:
+  - Exact response SHA-256 and scope-name comparison
+  - python3 scripts/pm-browser-event-admission.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: browser_event_authority_scope_expansion
+reasoning_tier: high
+context_scope: browser_53_bounded_binding_authority
+implementation_surfaces: [Plans/Decision_Log.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+node_compile_hint: {mode: bounded_technical_binding_authority, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - BROWSER-BINDINGS-53-RESPONSE-20260911
+  - reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json
+  - reports/packet-gap-closure-20260910/browser-binding-authority-response-20260911.json
+preserved_exact_tokens: ["Apply it to the Browser families too", "Approve the bounded Browser permission", "DL-039", "DL-045"]
+negative_constraints:
+  - Do not expand the frozen 53-family scope or DL-045 membership.
+  - Do not infer missing bindings or evidence from sibling names or turn technical permission into product or retention authority.
+  - Do not bulk admit, enable runtime, restamp historical evidence or clear readiness/seal gates.
+owner_hints: [Plans/Decision_Log.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

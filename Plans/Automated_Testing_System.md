@@ -1636,7 +1636,7 @@ owner_hints:
 
 This addendum compiles first-run onboarding, Doctor/Health, Teacher handoff, and Planning Wizard landing acceptance coverage from bootstrap ledger `pldg-20260701-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
 
-### ATS-020 - Nine-Stage Product Onboarding, Three-Scene Guided Tour, And Doctor Acceptance Tests
+### ATS-020 - Draft And Commit Product Onboarding, Three-Scene Guided Tour, And Doctor Acceptance Tests
 
 ```yaml
 plan_unit_id: ATS-020
@@ -1644,14 +1644,14 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Automated acceptance coverage enforces the exact nine-stage Product Onboarding main path
-  `welcome`/`simple_path`/`first_project`/`source_control_setup`/`server_storage_client`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`
-  and the exact six-stage connect-existing shortcut
-  `welcome`/`simple_path`/`remote_access_setup`/`review_setup_plan`/`automatic_preparation`/`ready`. Pre-review selections
-  update only the local draft: no external owner work or network probe begins until the person confirms the current
-  Review Setup Plan. Automatic Preparation dispatches the approved plan once through canonical owners and observes real
-  results and receipts. Four-screen/provider-first, five-stage, and superseded seven-stage records migrate with
-  path-correct counts, an unconfirmed Review, and no auto-confirmation or owner-work replay. Guided Tour acceptance
+  Automated acceptance consumes PWIZ-021's exact v2 main, connect-existing and explicit Project Later graphs.
+  First Project selections persist an uncreated draft; Settings copy requires explicit source selection and owner preview.
+  Only owner-authorized read-only preflight or necessary selected-source authentication may run before commit.
+  Exact Review and PJCT-007 binding admit one Project-owner commit chain; actual listed/persisted Project and required
+  owner results then admit paid-provider setup followed by Free Models, including after paid Skip. Close/resume/Back
+  never undo or replay commit. Four-screen/provider-first, five-stage, seven-stage and predecessor nine-stage records
+  migrate with path-correct counts and no auto-confirmation or owner-work replay; unresolved drafts return to unconfirmed
+  Review, while genuinely committed rows require owner-revalidated per-row phase continuation. Guided Tour acceptance
   consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
   `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
   same-answer ELI5, at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
@@ -1664,32 +1664,34 @@ gui_classification_reason: Validates modal onboarding, optional three-chapter to
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, F3-520, F3-521, SRV-001, SRV-003, SRV-004, RAS-001, RAS-007, BRS-001, BRS-003, BRS-006, PJCT-001, ACD-431, T-088, T-089, MI-028, MI-029, F2-155]
 unblocks: []
 acceptance_criteria:
-  - Tests verify the exact nine-stage main order `welcome`, `simple_path`, `first_project`, `source_control_setup`, `server_storage_client`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator nine.
+  - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
   - Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client` are omitted rather than silently executed.
   - Tests enforce the exact thirteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish; `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
-  - Before person confirmation of the current `review_setup_plan` revision, every choice performs a local draft transition or cached read only; tests reject any network probe, owner route, owner operation, mutation, or production receipt before that fence.
+  - Precommit tests reject every owner dispatch except current owner-authorized read-only preflight or necessary selected-source authentication; actual owner request shape/hash, permission, capability, consent, source/draft/revision, Client/Host, focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never authorize work.
   - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}` through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
   - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null` and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none|null` axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than replaces the selected backend.
-  - Existing-forge and signup selections queue only before Review. After confirmation, existing accounts route through connection and sign-in owners; people without accounts can open only the verified official signup page through protected AuthBrowserSession, then return for owner verification. Repository list/create, Git or Jujutsu clone/publish, and final Project registration follow the exact owner sequence and terminal results; Onboarding never claims to create an account.
-  - Forgejo/Gitea Onboarding fixtures cover distinct named instances and provider-specific variants, HTTPS/API base paths, SSH URL/custom port, scoped private-CA and known-host proof refs, cached product/version/API-schema/Git/API/Actions/currentness refs, PAT by default, OAuth PKCE only with a registered instance flow, and no secret bytes. Pre-Review planning performs no network probe, sign-in, trust decision, credential use, repository operation, filesystem mutation, or automation dispatch.
-  - "`server_storage_client` and `remote_access_setup` remain separate progressive stages on the main path; discovery alone never passes trust, explicit pairing is required, identity/certificate mismatch blocks, and restore preserves preview, preflight, verification, rollback, and default secret-exclusion requirements. Their pre-review selections do not begin owner work."
+  - Selected-source first-time sign-in consumes MACS-005 with null pre-existing Project/profile/account/install identities and protected human consent; only the auth owner allocates verified identity. FGI-011 account/container listing has no phantom repository/Project and cannot create/bind/publish. Actual repository and content mutations remain in the exact reviewed Project-owner chain; Onboarding never claims account creation.
+  - Forgejo/Gitea fixtures retain distinct instances/adapters, HTTPS/API base paths, SSH/custom port, scoped CA/known-host refs, product/version/API/Git/Actions currentness, PAT default and registered-flow-only OAuth PKCE. PWIZ-021's necessary-source read/auth admission is tested separately from forbidden precommit trust, repository mutation, filesystem write and automation; no secret bytes enter durable Onboarding state.
+  - "Server/Storage/Client and Remote Access remain independent owner-routed stages. Read-only selected-route discovery is not pairing/trust; identity/certificate mismatch blocks, and restore retains preview/preflight/verification/rollback/default secret exclusion. The source-auth exception cannot bypass Server/Remote Access/Restore mutation fences."
   - "`review_setup_plan` shows the current path, revision, queued choices, consequences, and approved-plan hash. `Confirm and prepare` is person-confirmed, rejects stale/unconfirmed/expanded plans, dispatches the approved work at most once, and adds no redundant confirmation step."
   - Automatic Preparation begins only after that confirmation, uses current owner projections and safe defaults, never silently invents probes or mutations across owner/security boundaries, and leaves provider/tool setup optional and deferrable.
-  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v1` across pending/running/waiting/requires-input/blocked/failed/cancelled/recovery-required/ready states, denominator-bearing and indeterminate progress, exact session/path/local-backend/forge/target/current-review-revision/approved-plan-hash/continuation/generation fencing, and stale rejection without state replacement.
+  - Tests validate `pm.product_onboarding.automatic_preparation_owner_projection.v2` across the owner-defined states/progress modes with exact session/draft/Project-commit/path/target/review/hash/continuation fences; stale results cannot replace state, and this phase cannot begin broad provider setup before actual Project commit.
   - Close, Defer, resume, reload, branch return, and retry preserve `owner_operation_id`, `observable_work_id`, and `dedupe_key`; retry observes the same work, timers never invent progress or readiness, and browser-concept projections cannot carry production readiness, native execution, or a production receipt.
   - Provider tests keep installation separate from authentication, reject Connected or Logged in as Ready without owner proof, preserve credential-owner custody, and prove protected AuthBrowserSession content cannot be captured, persisted, exported, replayed, or exposed to agents/adapters.
   - First Project covers verified existing Project and start-fresh defaults plus queued open, create, clone, JJ, SSH, restore, skip, and optional Origin Preview selections without treating a path as Project identity; canonical owner routing begins only after Review confirmation.
-  - Pre-review choices cause zero owner dispatches. A current Review confirmation causes at most one deduplicated dispatch per approved operation, and current terminal owner returns advance Automatic Preparation without repeated Continue/confirm clicks.
+  - Draft choices cause zero mutation. Only exact precommit read/source-auth admission permits those existing owner commands; current Review permits at most one Project commit chain, and matching terminal results advance without repeated Continue/confirm clicks. Tests reject acknowledgement-only, unlisted/unpersisted, wrong-Project/hash and unsettled selected-Settings results as commit proof.
   - Ready asserts only completion of the selected Onboarding path, keeps skipped/incomplete owner work named, and makes Guided Tour secondary and optional; tour terminal behavior is validated against PWIZ-023's default restoration or explicit Keep followed by the real Planning Wizard, and exact Skip restoration.
   - Every authored Onboarding control has exactly one typed local ui.onboarding.* action, owner work uses that owner's canonical command and sole handler, and no cmd.onboarding.* command family or generic Onboarding mutation handler exists.
-  - Request/result fixtures validate pm.product_onboarding.action_request.v1 and pm.product_onboarding.action_result.v1 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, no production receipt, and exact error/disabled reasons.
-  - Every request keeps local_context closed to intent, review_confirmation, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition; review_confirmation is null outside its gated cases, exact person-confirmed or previously-confirmed proof is required where owner work is admitted, and missing required fields, additional/arbitrary keys, raw payload copies, free-form control payloads, and secret-bearing values are rejected.
+  - Request/result fixtures validate pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2 for applied, disabled, and rejected outcomes; disabled/rejected outcomes have local_effect=none, no session/continuation write, no owner route/operation, and exact error/disabled reasons. All local results have no production receipt.
+  - local_context consumes PWIZ-021's closed v2 required/null/gated fields and phase-specific preflight/commit proofs rather than a testing-owned field list; missing, extra, raw, ambiguous and secret-bearing fields fail closed. Exact actual request/result/draft joins are exercised in addition to shape validation.
+  - Draft persistence tests validate every current Session through the deterministic offline existing-family bundle, bind the approved hash to actual bounded draft bytes, reject missing/tampered draft bodies, and fail schema/field/key drift in the standard contract gate. The physical-family and retention-policy denominators remain 88 and 24; this does not prove a native adapter.
+  - Settings tests require source/draft revision, exact eligible/explicit setting sets, exclusions, expiry and preview hash, reject draft apply, and require actual Project rebind plus ordinary current apply. Paid-provider Skip still offers Free Models, both phases require actual commit, and Close/resume/Back preserve that Project and settled phases.
   - Tests separately cover more_ways setup/project disclosure (`toggle_setup_options` plus matching choice/scope and null branch) and branch-local update (`update_branch_state`, null choice, canonical branch), rejecting mixed or ambiguous combinations.
   - Tests separately cover whole-session Skip (`skip_product_onboarding`, product_onboarding, null choice -> session_skipped/skipped) and optional Project/Remote-Access Skip (`skip_optional_scope` plus matching choice/scope/branch -> optional_scope_skipped/active), rejecting cross-normalization and false global skipped state.
   - Defer must durably preserve exact path, stage, draft selections, review revision/confirmation state, independent local-backend and forge selections, active branch, bounded history, continuation generation, initiating Client, and return-focus identity before modal dismissal; resume restores that snapshot. Close is a non-completion dismissal with exact focus return, Skip records an explicit skipped session, and Details opens/closes ephemerally on the same stage with no persistence or owner command.
   - Every inline SVG `?` choice-help control reuses `ui.onboarding.open_details` with `intent=toggle_choice_explanation`, the exact stage scope, a stable help-topic selection ref, and exact expanded state; it is keyboard reachable, accessibility-linked, same-stage, ephemeral, non-persistent, and owner-route-free.
   - The packet candidates cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are each rejected as commands, aliases, handlers, and production-wiring rows; the eleven UCC-106 command-era tokens retain their separate source-lineage count.
-  - Durable migration tests cover provider-first/four-screen, predecessor-five-stage, and superseded-seven-stage inputs; map unresolved work into the correct nine-stage or six-stage draft; preserve admissible decisions, warnings, selection axes, and valid owner receipts; require an unconfirmed Review; report exact accepted/stale/dropped/quarantined, per-stage, and per-path counts; reference the sole Storage migration receipt; quarantine secret-bearing input; and never auto-confirm or replay installation, authentication, account/repository creation, publication, pairing, restore, Project, provider, Server, Remote Access, or source-control work. Tour safe-checkpoint persistence/revalidation follows PWIZ-023 separately and cannot replay Onboarding work.
+  - Migration tests cover four/five/seven/nine-stage predecessors using PWIZ-022/SP-252, preserve admissible choices/warnings/real owner results, quarantine secrets, return unresolved drafts to unconfirmed Review, and resume committed rows only with exact per-row revalidated Project/owner refs. Accepted/stale/dropped/quarantined/stage/path/committed-resume counts reconcile and reference the sole Storage migration receipt; nothing auto-confirms or replays domain work. Tour checkpoint rules remain separate under PWIZ-023.
   - Back, Close, Skip, Do this later, Details, stale return, reconnect, interruption, reversal, resize, Reduced Motion, keyboard, focus, and screen-reader cases settle deterministically without false readiness; tests prove automatic first-run return prioritizes the genuinely active non-Home application tab before the Home fallback, exact explicit-initiator return, late-mounted body-sibling inertness and restoration, active stage/branch dialog naming, an inert outgoing layer with no duplicate IDs or focus candidates, transferred-and-cleared close-before-Tour focus ownership plus unavailable/throwing Tour fallback, distinct Basic/Friendly/Glass easing, fixed-bounds modal-window opacity/clipping across live cross-family theme changes, and Retro stepped opacity/translation keyframes with no scale; the flow remains one bounded modal and adds no browser-style Back/breadcrumb chrome.
   - Guided Tour tests enforce the exact three-chapter order `chat_teacher`, `workspace`, `planning_wizard` and every current stable step; both predecessor controllers and v2's Usage-first/Chat-final expectations are migration inputs, not current acceptance.
   - Every important manual and Show Me path reaches the same mounted owner action and success predicate; tests include unrelated clicks, timers, generic Next, look-alikes, missing targets, state changes, repeated Show Me, and interruption during pre-cue/travel/arrival/settle. None may fabricate an action result.
@@ -1710,6 +1712,9 @@ validation_surfaces:
   - python3 scripts/pm-new-contracts-verify.py
   - Plans/product_onboarding_contracts.schema.json
   - Plans/product_onboarding_contract_fixtures.json
+  - tests/test_pm_onboarding_phases.py static phase/draft/actual-owner-input/commit/offline-storage checks only
+  - tests/test_pm_settings_draft_transfer.py static explicit-copy/preview/rebind/exclusion checks only
+  - python3 scripts/pm-onboarding-contracts.py --check
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
   - tests/test_pm_guided_tour_v3_contracts.py static v3 positive/negative record coverage only
@@ -1725,7 +1730,7 @@ validation_surfaces:
   - Concepts/pm7-tools/build_pm7.py final generated-artifact static gate
   - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py
   - future Onboarding/Tour acceptance runner (the scratchpad runner above is predecessor-packet audit only and is not current acceptance)
-  - future native nine-/six-stage Product Onboarding GUI, request/result, review-confirmation fence, owner-return, durable-migration, and no-command-family acceptance suite
+  - future native PWIZ-021 v2 Product Onboarding GUI, draft/copy/preflight/source-auth/Project-commit/paid-free phases, durable continuation/migration and no-command-family acceptance suite
   - future native newbie-first Guided Tour manual/Show Me, safe-resume, callout, focus, Skip-restore, and Finish-layout acceptance suite
   - future Doctor/Health no-false-green fixture suite
 risk_class: first_run_acceptance_gap
@@ -1815,6 +1820,10 @@ preserved_exact_tokens:
   - "general.visual.reduce-animations"
   - "pm.product_onboarding.action_request.v1"
   - "pm.product_onboarding.action_result.v1"
+  - "pm.product_onboarding.action_request.v2"
+  - "pm.product_onboarding.action_result.v2"
+  - "provider_setup"
+  - "free_models_setup"
   - "pm.guided_tour.action_request.v2"
   - "pm.guided_tour.terminal_result.v2"
   - "local_context"
@@ -1852,9 +1861,9 @@ preserved_exact_tokens:
   - "fail-closed"
 negative_constraints:
   - Do not call this feature acceptance-covered without owner-current Onboarding path/denominator/fence tests, independent local-backend/optional-forge coverage, one-dispatch proof, optional provider setup, typed choice help, path-correct migration, current newbie-first Guided Tour manual/Show Me/checkpoint/terminal coverage, owner-security, and Doctor no-false-green tests.
-  - Do not restore the predecessor four-screen/provider-first, five-stage, seven-stage, or paid-provider-before-Free-Models choreography as current behavior.
+  - Do not restore predecessor four-screen/provider-first, five-stage, seven-stage or nine-stage producers. Paid-provider then Free Models is now the accepted post-Project-commit order, including Free Models after paid Skip; it does not restore provider-first setup.
   - Do not hide or bypass current `simple_path`, `server_storage_client`, or `review_setup_plan`, or silently execute stages omitted by the connect-existing shortcut.
-  - Do not dispatch any network probe, owner route, mutation, or external work before person confirmation of the current Review Setup Plan revision.
+  - Do not widen narrowly authorized precommit reads/selected-source authentication into Project/repository/filesystem mutation, pairing/trust/enrollment, or broad provider setup; do not infer authorization from shape/ref/availability alone.
   - Do not migrate a predecessor directly into a confirmed Review or Automatic Preparation state, auto-confirm it, replay owner work, or report counts against the wrong current path.
   - Do not register cmd.onboarding.* or treat a local ui.onboarding.* action as a semantic command.
   - Do not register, alias, normalize, wire, or assign a handler to any packet candidate cmd.onboarding.* token.
@@ -2312,7 +2321,7 @@ Migration, compaction, store restore, salvage, and backup-boundary capture must 
 ### Required-MVP storage-family registry routing
 
 - `REGISTRY-MVP-001` asserts exactly one materialized machine row, canonical key, closed value schema, owner/producer/consumer, migration, recovery, retention, and redaction disposition for every storage-owner-required MVP family, including `migration_receipt`, `editor_buffer_recovery_state`, `editor_workspace_state`, `hotreload_state`, `onboarding_state`, safe-point/restore transaction/restore point, EventRecord dedupe/index/checkpoint, and hold/anchor/maintenance/quarantine/deletion families.
-- `REGISTRY-MVP-002` separates current-key cases from compatibility cases. First-launch, valid-current-row, and corrupt-current-row oracles use the canonical keys `editor_state.v1:{project_id}:{file_path_hash}`, `editor_workspace_state.v1:{project_id}`, `hotreload_state.v1:{project_id}`, and `onboarding_state.v1:{project_id}`. `editor_buffer_recovery_state` uses the per-file canonical key and has no compatibility alias or copy-forward case. Coordinator-owned old-key copy-forward cases are exactly `editor_state:v1:{project_id}` for `editor_workspace_state`, `hotreload_state:v1:{project_id}` for `hotreload_state`, and `onboarding:v1` for `onboarding_state`; the global onboarding alias fails closed when project identity is ambiguous. All compatibility aliases are read-only and never receive new writes.
+- `REGISTRY-MVP-002` separates current-key from compatibility cases using the exact machine registry. Editor/hotreload current keys remain `editor_state.v1:{project_id}:{file_path_hash}`, `editor_workspace_state.v1:{project_id}` and `hotreload_state.v1:{project_id}`; `editor_buffer_recovery_state` has no alias, while its workspace sibling and hotreload retain their coordinator-only colon-version inputs. Onboarding consumes SP-252's current session key/value and exact predecessor roster, rejects ambiguous global Project/session mapping, and tests actual-Project revalidation after UI reset without recreating it. No compatibility alias receives new writes or acts as an ordinary-open fallback.
 - `REGISTRY-MVP-NEG-001` removes or defers each launch-critical family and falsifies recovery/retention metadata in turn; validation and mutation admission fail closed, and no prose key template or bundled multi-owner row substitutes for machine authority.
 
 ### Mandatory negative acceptance
@@ -3856,7 +3865,7 @@ acceptance_criteria:
   - RepositoryContext tests cover Git plus Gitea, Jujutsu plus Forgejo, no automation binding, same-forge automation, and automation on a different provider/instance/account/host; AutomationBinding is never inferred from RepositoryForgeBinding, remote origin, repository name, or display label.
   - The one canonical repository_automation occupant is labeled Actions & Pipelines. github_actions migrates only as route/bookmark/deep-link input; GitHub Actions, GitLab Pipelines, Forgejo Actions, and Gitea Actions remain provider-native headings, Bitbucket Data Center without CI says Connect automation service, and no fixture fabricates Origin Actions.
   - Security negatives cover certificate bytes or local paths instead of scoped CA refs, missing or mismatched known-host proof, invalid SSH ports, raw credentials/secrets, Authorization forwarded across redirect-origin change, unapproved localhost/metadata targets, stale provider/binding/catalog/currentness generations, denied permission, and missing FileSafe decision for local writes or downloads.
-  - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately, preserve typed self-host inputs and cached owner refs without probing, and prove all pre-Review choices are draft-only. Only a person-confirmed current Review may dispatch each deduplicated canonical owner action; owner return advances without a second confirmation, and the plan never claims account creation, adapter execution, trust, readiness, or success.
+  - Product Onboarding fixtures admit forge_forgejo and forge_gitea separately and preserve typed self-host inputs/current owner refs. PWIZ-021's precommit read/necessary-source-auth exception requires exact actual owner admission; repository/filesystem/Project mutation waits for reviewed commit. Tests reject broader authority, synthetic accounts/IDs, duplicate dispatch, and false readiness; owner return advances without a second confirmation.
   - Each of the exact nine admissions cmd.forge.repository.fork, cmd.forge.pipeline.approve, cmd.forge.review.checks, cmd.forge.repository.policy.preview, cmd.forge.repository.policy.apply, cmd.forge.runner.registration.apply, cmd.forge.runner.remove, cmd.forge.release.list, and cmd.forge.release.asset.download receives one valid request plus a rejected permission, guard, or currentness case as required by its owner contract.
   - Every newly admitted Forge command starts handler_unavailable, has expected_event_types=[], returns only its owner-typed result/receipt/projection, and emits no unregistered forge.* EventRecord. Operation receipts and ObservableWork correlation never count as EventRecord admission.
   - Repository fork, pipeline-gate approval, review checks, policy preview/apply, runner administration, release list, and release-asset download retain distinct targets, permissions, confirmations, digest/FileSafe/currentness/idempotency guards and cannot pass through aliases or generic settings/connection/pipeline-artifact substitutes.
@@ -4259,6 +4268,93 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
+## ATS-048 — Existing Session and Bundle Command Bindings
+
+The four existing `cmd.testing.session.open`, `cmd.testing.session.watch`,
+`cmd.testing.session.background`, `cmd.testing.session.redaction.inspect` commands
+remain visible-session operations under ATS-009/ATS-025. The existing
+`cmd.testing.export_bundle` remains a run-scoped export under ATS-025. Neither
+family aliases the other, and none of these five commands is a TestCaptureService
+capture lifecycle command. Their sole future handler routes remain, respectively,
+`handlers::testing::session_open`, `handlers::testing::session_watch`,
+`handlers::testing::session_background`, `handlers::testing::session_redaction_inspect`,
+and `handlers::testing::export_bundle`. These names describe planned routes, not
+implemented native functions.
+
+`Plans/testing_session_command_contracts.schema.json` owns the closed
+`TestingSessionCommandRequest`, `TestingSessionCommandResult`,
+`TestingSessionCommandError`, and `TestingSessionCommandAvailability` definitions.
+The request binds Project/Home Server/Host/Environment, optional source/thread,
+paired run/attempt, topology generation, actor and permission snapshot,
+initiating Client/session generation, expected currentness, and return context.
+Session actions additionally bind the exact session revision and target generation;
+Watch binds the stream generation. Export binds the exact run revision and a
+non-empty frozen artifact selection (identity, version, content hash), FileSafe
+plan, approved preview hash, bundle policy and redaction review. The run subject
+must equal the context run. Repeated artifact identity with different versions is
+not a valid selection. There is no implicit latest artifact or focused-session
+substitution. References are metadata, never raw frames, credentials or file paths.
+
+The owner re-resolves these bindings and all policy references at admission and
+settlement. Caller-supplied references, hashes and booleans are not authorization.
+Absent native handlers remain `handler_unavailable`; denied permission, stale
+Client/currentness/topology/target/stream, unavailable sources, failed redaction,
+protected-auth subjects and missing FileSafe approval fail closed. Background
+changes only visible-session foreground disposition under its continuation policy:
+it does not cancel a run or stop capture. Open/Watch/inspection do not change test
+verdicts. All five result contracts prohibit capture-lifecycle mutation, verdict
+mutation and protected-content exposure.
+
+Idempotency reuses the shared command-idempotency definition, not the shared
+runtime's closed command enum. The binding digest covers command, exact context,
+subject, arguments, idempotency key and scope; it excludes transport invocation
+identity and replay locators. Same key with another binding rejects; same-binding
+retry joins in-flight work or returns the original settled operation, artifacts,
+receipt and projection. Accepted/ObservableWork is pending, not completed.
+Completed/no-change requires an owner-resolved receipt, projection and currentness;
+completed export additionally requires the produced bundle artifact with manifest
+projection. No-change may reference existing output but creates none. Failed or
+cancelled settlement retains a truthful terminal receipt; unknown effects have no
+claimed settlement receipt and require reconciliation before retry. A replay may
+not rerun export, mint replacement output or emit a second event.
+
+The central UI response consumes these typed owner results and maps accepted to
+pending, completed to succeeded, no-change to no-op, blocked to rejected, failed
+to failed, cancelled to cancelled, and effect-unknown to recovery-required. Exact
+operation, command, scope, payload digest and receipt joins are mandatory. The
+four existing session event obligations consume the ATS-049 emit-only disposition
+under DL-039; neither contract admits an event or storage family. Export is receipt-
+and-artifact-backed without a new event. Original test/capture records remain
+canonical; an exported bundle is not replacement truth.
+
+```yaml
+plan_unit_id: ATS-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: The five existing session and run-bundle commands consume the exact ATS-048 typed request/result/error/availability contracts, shared metadata and idempotency primitives, and central UI response joins without acquiring capture lifecycle authority or implying native execution.
+gui_related: false
+gui_classification_reason: This unit binds existing command data and owner authority without choosing presentation or changing controls.
+depends_on: [ATS-009, ATS-025, TCME-004]
+unblocks: []
+acceptance_criteria:
+  - Each of the five command IDs has one positive typed request and result and rejects wrong subjects, stale bindings, protected content, false success and replay without its original receipt.
+  - Exact owner-state joins reject substituted scope, evidence, policy, currentness, receipts and artifacts; unavailable native handlers cannot report success.
+  - All existing placements consume the same owner contract and sole planned handler, with no capture or verdict authority mutation.
+validation_surfaces: [python3 scripts/pm-new-contracts-verify.py, python3 scripts/pm-ui-command-response.py, python3 scripts/pm-touch-closure-verify.py]
+risk_class: evidence_authority_and_false_completion
+reasoning_tier: high
+context_scope: existing_testing_command_integration
+implementation_surfaces: [Plans/testing_session_command_contracts.schema.json, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: contract_integration_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: ["Plans/Automated_Testing_System.md#ATS-025", "Plans/Test_Capture_and_Motion_Evidence.md#TCME-004", "user instruction 2026-09-11 non-design integration"]
+negative_constraints:
+  - No new command, native handler, capture lifecycle authority, protected-auth access, GUI design decision, WorkNode, readiness admission or governance seal.
+  - Static fixtures are not authenticated owner lookups, playback, persistence or runtime/security proof.
+```
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-025, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-004, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
 ## External Packet Custody and Completion Integrity — 2026-09-10
 
 <a id="external-packet-custody-and-completion-integrity-20260910"></a>
@@ -4290,3 +4386,105 @@ not a complete audit. Local schema tests, a concept demonstration, and a review 
 agent do not supply unperformed independent, runtime, visual, or provider proof.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-045, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Wiring_Rules.md
+
+## ATS-049 — Existing Session Event Obligations and Non-Admission
+
+DL-039's genuine `EMIT-PERSIST-026 = ACCEPT_EMIT_OBLIGATION_ONLY` decision governs
+these exact four events. They remain `quarantined_not_admitted`, outside the live
+Event Authority registry. Their closed payload schemas and owner-binding checks
+are useful candidate contracts, not permission to persist EventRecords, run an
+admitted-event projector, consume dedupe identities or advance replay checkpoints.
+This disposition corrects the earlier static-admission claim without changing the
+upstream fixed54 holding receipt, historical evidence or independent validator.
+
+The sole semantic producer for the four already-required session events is the
+planned `AutomatedTestingService.visible_session` owner. Handler routes in ATS-048
+request its transitions; UI clicks, generic dispatch acceptance, Client caches,
+artifact viewers and TestCaptureService are not authorized producers.
+
+| Existing command | Existing event | Required committed owner transition |
+|---|---|---|
+| `cmd.testing.session.open` | `testing.session.opened` | Exact ordinary-session visible route and its settled receipt/projection. |
+| `cmd.testing.session.watch` | `testing.session.watch_started` | Authorized redacted live projection bound to the exact session and stream generation. |
+| `cmd.testing.session.background` | `testing.session.backgrounded` | Foreground/background disposition committed under the exact continuation policy. |
+| `cmd.testing.session.redaction.inspect` | `testing.session.redaction_inspected` | Authorized redaction/evidence inspection route for the exact frozen selection. |
+
+`Plans/testing_session_event_admission.json` records the explicit non-admission
+disposition; its retained filename and proposed family metadata grant no authority.
+`Plans/testing_session_event_payloads.schema.json`
+owns their closed payloads by reference to the existing ATS-048 session subject
+and complete typed result, plus the owner-resolved settled session revision and
+projection generation. Only `completed` and non-replayed results qualify. Pending,
+no-change, rejected, failed, cancelled, unknown-effect or replayed command results
+emit none of these events. A repeated command returns/joins its original result;
+it does not emit another transition. Export and recording playback acquire no
+event obligation through this contract. These are send-only command obligations;
+the transition rules do not authorize persisted EventRecord emission.
+
+The producer resolves the authenticated retained committed transition, original
+typed request, exact result, effective permission/redaction/capability admission,
+receipt, projection, session revision and generations. A caller-supplied producer
+label, snapshot or hash never supplies authority. Subject, request digest, entire
+result and operation must match that record; settled session revision cannot
+regress and the newly committed projection generation must exceed its predecessor.
+These are visibility/inspection facts, not test verdict, capture-start/stop,
+protected-auth disclosure, UsageRecord or Prompt Pipeline attachment authority.
+
+The existing EventRecord 2.0 envelope remains sole envelope authority for any
+separately authorized future storage contract. Each candidate is Project-scoped
+with exact Project/thread/run/attempt/actor parity to its typed
+result context. Node and account identities are null because this command family
+does not own them. Correlation is the settled operation ID. The transition
+idempotency key is the canonical-JSON SHA-256 of the request's command ID plus its
+idempotency key and scope ref; the exact request-binding digest remains in the
+typed result. Payload-schema IDs are unique, but these event families are not
+registered. Candidate payloads are inline,
+limited to 65,536 UTF-8 bytes, ordinary metadata only, and `no_secrets`; raw frames,
+DOM, credentials and unadmitted migration/legacy extensions fail closed.
+
+Every attempted EventRecord append or replay is quarantined without consuming an
+event ID, dedupe identity or generation, projecting facts, or advancing a checkpoint.
+This includes otherwise valid candidates, duplicates, new transport IDs and old
+retained records. Existing checkpoint/identity state is left unchanged. Candidate
+shape and owner-binding validation runs separately, so quarantine cannot hide a
+malformed payload, substituted owner record or missing authorization. Command
+retry still returns its original owner result under ATS-048; it is not event replay.
+
+`RP-AUTHORITY-INDEFINITE` version `1.0.0` and Case L are proposals for a separately
+authorized future storage decision, not an operative retention assignment here.
+There is no new physical family. A retained reference never re-authorizes content
+access. All pre-existing 92 Event Authority rows remain unchanged and these four
+are absent; the global denominator remains open. No historical holding evidence,
+freeze, validator or governance seal is changed. Native handlers/producers remain
+unimplemented and unavailable.
+
+```yaml
+plan_unit_id: ATS-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: The four existing Testing session events retain send-only obligations and closed candidate payload/ATS-048 owner-binding contracts, but remain quarantined_not_admitted under DL-039; no EventRecord append or replay may consume identity, project facts or advance checkpoints.
+gui_related: false
+gui_classification_reason: This unit defines candidate event identity and explicit non-admission, not session presentation.
+depends_on: [ATS-048]
+unblocks: []
+acceptance_criteria:
+  - Each candidate binds its sole owner, exact typed request/result, Project scope, operation, receipt, session revision and generation without gaining event admission.
+  - Pending, no-change, failed, cancelled, rejected, unknown-effect and replayed command results emit none of these events.
+  - Candidate negatives independently reject unknown events, foreign subjects, uncommitted transitions, unauthorized producers and protected content; valid candidates still fail admission.
+  - Append/replay attempts, including duplicates and restart inputs, quarantine without consuming identity or changing existing checkpoint/projection state.
+  - All eight existing command placements retain their exact send-only event obligations and reference this non-admission disposition; no command, handler or placement is added.
+validation_surfaces: [python3 scripts/pm-testing-session-event-admission.py, tests/test_pm_testing_session_events.py]
+risk_class: event_authority_and_false_completion
+reasoning_tier: high
+context_scope: existing_testing_session_events
+implementation_surfaces: [Plans/testing_session_event_payloads.schema.json, Plans/event_family_registry.json, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: contract_integration_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: ["Plans/Decision_Log.md#DL-039", "Plans/Automated_Testing_System.md#ATS-048", "Plans/UI_Command_Catalog.md#UCC-134", "user instruction 2026-09-11 non-design integration"]
+negative_constraints:
+  - No native producer, authenticated lookup, persistence/recovery/security proof, protected-auth access, new physical family, WorkNode, global closure or governance seal.
+  - No event registration, persisted append, admitted-event replay/projection, dedupe identity consumption or checkpoint advance is authorized by these candidate contracts.
+  - Static denial fixtures do not execute commands or prove native currentness, durability or visual acceptance.
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe, ContractName:Plans/testing_session_event_admission.json, ContractName:Plans/testing_session_event_payloads.schema.json

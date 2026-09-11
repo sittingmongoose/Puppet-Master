@@ -1,0 +1,888 @@
+{
+  "schema_id": "pm.testing_session.command_contract_fixtures.v1",
+  "fixture_format": "materialize request_template, apply dot-path patch, then validate target_def",
+  "owner_schema": "Plans/testing_session_command_contracts.schema.json",
+  "claim_boundary": "Static schema and fixture consistency only; no native dispatch, authority, persistence, playback, capture or security proof.",
+  "request_template": {
+    "schema_id": "pm.testing_session.command_request.v1",
+    "record_kind": "TestingSessionCommandRequest",
+    "command_id": "cmd.testing.session.open",
+    "command_instance_id": "command:session_open",
+    "idempotency": {
+      "schema_id": "pm.shared_runtime.command_idempotency.v1",
+      "idempotency_key": "idempotency:session_open",
+      "scope_ref": "scope:testing",
+      "binding_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+      "replay_policy": "return_original_result",
+      "conflict_behavior": "reject_same_key_different_binding"
+    },
+    "context": {
+      "project_id": "project:alpha",
+      "home_server_id": "server:home",
+      "execution_host_id": "host:test",
+      "execution_environment_id": "environment:test",
+      "source_location_id": "source:alpha",
+      "thread_id": "thread:test",
+      "run_id": "run:test",
+      "attempt_id": "attempt:test",
+      "topology_generation": 7,
+      "actor_ref": "actor:human",
+      "permission_snapshot_ref": "permission:test",
+      "initiating_client_id": "client:desktop",
+      "client_session_generation": 3,
+      "expected_currentness_ref": "currentness:before",
+      "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "return_context_ref": "return:testing",
+      "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "subject": {
+      "kind": "visible_test_session",
+      "test_session_id": "session:test",
+      "expected_session_revision": 4,
+      "target_ref": "target:test",
+      "target_generation": 5,
+      "security_class": "ordinary"
+    },
+    "args": {
+      "requested_surface": "editor_target",
+      "fallback_route_ref": "fallback:readonly",
+      "effective_policy_ref": "policy:testing",
+      "redaction_profile_ref": "redaction:ordinary"
+    }
+  },
+  "request_cases": [
+    {
+      "name": "session_open",
+      "target_def": "TestingSessionCommandRequest",
+      "patch": {}
+    },
+    {
+      "name": "session_watch",
+      "target_def": "TestingSessionCommandRequest",
+      "patch": {
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_watch",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "stream_ref": "stream:test",
+          "expected_stream_generation": 3,
+          "fallback_route_ref": "fallback:readonly",
+          "effective_policy_ref": "policy:testing",
+          "redaction_profile_ref": "redaction:ordinary"
+        }
+      }
+    },
+    {
+      "name": "session_background",
+      "target_def": "TestingSessionCommandRequest",
+      "patch": {
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_background",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "reason_code": "user_requested",
+          "continuation_policy_ref": "policy:continuation"
+        }
+      }
+    },
+    {
+      "name": "session_redaction_inspect",
+      "target_def": "TestingSessionCommandRequest",
+      "patch": {
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_redaction_inspect",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "selected_evidence": [
+            {
+              "artifact_id": "artifact:recording",
+              "artifact_version": 2,
+              "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "security_class": "ordinary"
+            }
+          ],
+          "redaction_profile_ref": "redaction:ordinary",
+          "inspection_policy_ref": "policy:inspect"
+        }
+      }
+    },
+    {
+      "name": "export_bundle",
+      "target_def": "TestingSessionCommandRequest",
+      "patch": {
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:export_bundle",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "subject": {
+          "kind": "test_run",
+          "test_run_id": "run:test",
+          "expected_run_revision": 8,
+          "selected_evidence": [
+            {
+              "artifact_id": "artifact:recording",
+              "artifact_version": 2,
+              "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "security_class": "ordinary"
+            }
+          ],
+          "security_class": "ordinary"
+        },
+        "args": {
+          "file_safe_export_plan_ref": "export:plan",
+          "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "approval_receipt_ref": "approval:export",
+          "bundle_policy_ref": "policy:bundle",
+          "redaction_review_ref": "review:redaction"
+        }
+      }
+    }
+  ],
+  "other_positive_cases": [
+    {
+      "name": "session_open_result",
+      "target_def": "TestingSessionCommandResult",
+      "instance": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "operation_id": "operation:session_open",
+        "request_binding_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_open",
+        "status": "completed",
+        "receipt_ref": "receipt:session_open",
+        "projection_ref": "projection:session_open",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "session_watch_result",
+      "target_def": "TestingSessionCommandResult",
+      "instance": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "operation_id": "operation:session_watch",
+        "request_binding_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_watch",
+        "status": "completed",
+        "receipt_ref": "receipt:session_watch",
+        "projection_ref": "projection:session_watch",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "session_background_result",
+      "target_def": "TestingSessionCommandResult",
+      "instance": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "operation_id": "operation:session_background",
+        "request_binding_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_background",
+        "status": "completed",
+        "receipt_ref": "receipt:session_background",
+        "projection_ref": "projection:session_background",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "session_redaction_inspect_result",
+      "target_def": "TestingSessionCommandResult",
+      "instance": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "operation_id": "operation:session_redaction_inspect",
+        "request_binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_redaction_inspect",
+        "status": "completed",
+        "receipt_ref": "receipt:session_redaction_inspect",
+        "projection_ref": "projection:session_redaction_inspect",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "export_bundle_result",
+      "target_def": "TestingSessionCommandResult",
+      "instance": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "operation_id": "operation:export_bundle",
+        "request_binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:export_bundle",
+        "status": "completed",
+        "receipt_ref": "receipt:export_bundle",
+        "projection_ref": "projection:export_bundle",
+        "artifact_refs": [
+          "artifact:bundle"
+        ],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      }
+    },
+    {
+      "name": "typed_error",
+      "target_def": "TestingSessionCommandError",
+      "instance": {
+        "schema_id": "pm.testing_session.command_error.v1",
+        "record_kind": "TestingSessionCommandError",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "error": {
+          "reason": "handler_unavailable",
+          "safe_message_code": "handler_unavailable",
+          "detail_ref": null,
+          "retry_policy": "after_state_change",
+          "effect_state": "no_effect"
+        }
+      }
+    },
+    {
+      "name": "handler_unavailable",
+      "target_def": "TestingSessionCommandAvailability",
+      "instance": {
+        "schema_id": "pm.testing_session.command_availability.v1",
+        "record_kind": "TestingSessionCommandAvailability",
+        "command_id": "cmd.testing.session.open",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_open",
+        "native_handler_available": false,
+        "permission_allowed": true,
+        "subject_current": true,
+        "redaction_allowed": true,
+        "capability_available": true,
+        "available": false,
+        "disabled_reason": "handler_unavailable",
+        "safe_next_action_ref": "action:inspect_status"
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "name": "session_open_protected",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_open",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "session_open_protected"
+    },
+    {
+      "name": "session_open_raw_content",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_open",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "session_open_raw_content"
+    },
+    {
+      "name": "session_open_stale_binding",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_open",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "session_open_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "session_open_capture_mutation",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_open_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "session_open_capture_mutation"
+    },
+    {
+      "name": "session_open_false_success",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_open_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "session_open_false_success"
+    },
+    {
+      "name": "session_open_replay_without_original",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_open_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "session_open_replay_without_original"
+    },
+    {
+      "name": "session_watch_protected",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_watch",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "session_watch_protected"
+    },
+    {
+      "name": "session_watch_raw_content",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_watch",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "session_watch_raw_content"
+    },
+    {
+      "name": "session_watch_stale_binding",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_watch",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "session_watch_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "session_watch_capture_mutation",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_watch_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "session_watch_capture_mutation"
+    },
+    {
+      "name": "session_watch_false_success",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_watch_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "session_watch_false_success"
+    },
+    {
+      "name": "session_watch_replay_without_original",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_watch_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "session_watch_replay_without_original"
+    },
+    {
+      "name": "session_background_protected",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_background",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "session_background_protected"
+    },
+    {
+      "name": "session_background_raw_content",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_background",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "session_background_raw_content"
+    },
+    {
+      "name": "session_background_stale_binding",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_background",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "session_background_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "session_background_capture_mutation",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_background_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "session_background_capture_mutation"
+    },
+    {
+      "name": "session_background_false_success",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_background_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "session_background_false_success"
+    },
+    {
+      "name": "session_background_replay_without_original",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_background_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "session_background_replay_without_original"
+    },
+    {
+      "name": "session_redaction_inspect_protected",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_redaction_inspect",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "session_redaction_inspect_protected"
+    },
+    {
+      "name": "session_redaction_inspect_raw_content",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_redaction_inspect",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "session_redaction_inspect_raw_content"
+    },
+    {
+      "name": "session_redaction_inspect_stale_binding",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_redaction_inspect",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "session_redaction_inspect_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "session_redaction_inspect_capture_mutation",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_redaction_inspect_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "session_redaction_inspect_capture_mutation"
+    },
+    {
+      "name": "session_redaction_inspect_false_success",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_redaction_inspect_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "session_redaction_inspect_false_success"
+    },
+    {
+      "name": "session_redaction_inspect_replay_without_original",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_redaction_inspect_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "session_redaction_inspect_replay_without_original"
+    },
+    {
+      "name": "export_bundle_protected",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "export_bundle",
+      "patch": {
+        "subject.security_class": "protected_auth"
+      },
+      "expected_invalid_reason": "export_bundle_protected"
+    },
+    {
+      "name": "export_bundle_raw_content",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "export_bundle",
+      "patch": {
+        "args.raw_frame_bytes": "forbidden"
+      },
+      "expected_invalid_reason": "export_bundle_raw_content"
+    },
+    {
+      "name": "export_bundle_stale_binding",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "export_bundle",
+      "patch": {
+        "context.topology_generation": 99
+      },
+      "expected_invalid_reason": "export_bundle_stale_binding",
+      "semantic_rule": "evidence_request_binding_mismatch"
+    },
+    {
+      "name": "export_bundle_capture_mutation",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "export_bundle_result",
+      "patch": {
+        "capture_lifecycle_changed": true
+      },
+      "expected_invalid_reason": "export_bundle_capture_mutation"
+    },
+    {
+      "name": "export_bundle_false_success",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "export_bundle_result",
+      "patch": {
+        "receipt_ref": null
+      },
+      "expected_invalid_reason": "export_bundle_false_success"
+    },
+    {
+      "name": "export_bundle_replay_without_original",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "export_bundle_result",
+      "patch": {
+        "replayed": true
+      },
+      "expected_invalid_reason": "export_bundle_replay_without_original"
+    },
+    {
+      "name": "unregistered_command",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_open",
+      "patch": {
+        "command_id": "cmd.testing.capture.start"
+      },
+      "expected_invalid_reason": "unregistered_command"
+    },
+    {
+      "name": "fake_availability",
+      "target_def": "TestingSessionCommandAvailability",
+      "base_positive_case": "handler_unavailable",
+      "patch": {
+        "available": true,
+        "disabled_reason": null,
+        "safe_next_action_ref": null
+      },
+      "expected_invalid_reason": "fake_availability"
+    },
+    {
+      "name": "unknown_effect_retry_blindly",
+      "target_def": "TestingSessionCommandError",
+      "base_positive_case": "typed_error",
+      "patch": {
+        "error.effect_state": "unknown",
+        "error.retry_policy": "never"
+      },
+      "expected_invalid_reason": "unknown_effect_retry_blindly"
+    },
+    {
+      "name": "unpaired_currentness",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_open_result",
+      "patch": {
+        "status": "accepted",
+        "receipt_ref": null,
+        "artifact_refs": [],
+        "observable_work_ref": "work:pending",
+        "currentness_ref": null
+      },
+      "expected_invalid_reason": "unpaired_currentness"
+    },
+    {
+      "name": "failed_unknown_effect",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "session_open_result",
+      "patch": {
+        "status": "failed",
+        "error": {
+          "reason": "effect_reconciliation_required",
+          "safe_message_code": "reconcile",
+          "detail_ref": null,
+          "retry_policy": "same_operation_after_reconciliation",
+          "effect_state": "unknown"
+        }
+      },
+      "expected_invalid_reason": "failed_unknown_effect"
+    },
+    {
+      "name": "export_foreign_run",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "export_bundle",
+      "patch": {
+        "subject.test_run_id": "run:foreign"
+      },
+      "expected_invalid_reason": "export_foreign_run",
+      "semantic_rule": "evidence_run_scope_mismatch"
+    },
+    {
+      "name": "duplicate_artifact_identity",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "export_bundle",
+      "patch": {
+        "subject.selected_evidence": [
+          {
+            "artifact_id": "artifact:recording",
+            "artifact_version": 2,
+            "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "security_class": "ordinary"
+          },
+          {
+            "artifact_id": "artifact:recording",
+            "artifact_version": 3,
+            "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "security_class": "ordinary"
+          }
+        ]
+      },
+      "expected_invalid_reason": "duplicate_artifact_identity",
+      "semantic_rule": "evidence_duplicate_artifact_identity"
+    },
+    {
+      "name": "export_no_artifact",
+      "target_def": "TestingSessionCommandResult",
+      "base_positive_case": "export_bundle_result",
+      "patch": {
+        "artifact_refs": []
+      },
+      "expected_invalid_reason": "export_no_artifact"
+    },
+    {
+      "name": "session_is_not_run",
+      "target_def": "TestingSessionCommandRequest",
+      "base_positive_case": "session_open",
+      "patch": {
+        "subject": {
+          "kind": "test_run",
+          "test_run_id": "run:test",
+          "expected_run_revision": 8,
+          "selected_evidence": [
+            {
+              "artifact_id": "artifact:recording",
+              "artifact_version": 2,
+              "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "security_class": "ordinary"
+            }
+          ],
+          "security_class": "ordinary"
+        }
+      },
+      "expected_invalid_reason": "session_is_not_run"
+    }
+  ],
+  "coverage": {
+    "exact_command_ids": [
+      "cmd.testing.session.open",
+      "cmd.testing.session.watch",
+      "cmd.testing.session.background",
+      "cmd.testing.session.redaction.inspect",
+      "cmd.testing.export_bundle"
+    ],
+    "request_case_count": 5,
+    "positive_result_case_count": 5,
+    "negative_case_count": 39,
+    "all_commands_have_positive_request_and_result": true
+  }
+}

@@ -331,7 +331,7 @@ These IDs are required by `Plans/GitHub_Integration.md` section D and the legacy
 |---|---|---|---|
 | `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |
 | `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |
-| `cmd.project.new_github_repo` | `{ name, description?, private, visibility?, gitignore_template?, license?, local_clone_path }` | `project.created`, `git.clone.completed` | File menu, Dashboard, New GitHub Repo flow |
+| `cmd.project.new_github_repo` | Project-owned `project_action_request` (`Plans/project_system_contracts.schema.json`); approved forge intent under GI-042 / PJCT-008 | `project_action_result`; send-only `github.repo.create_requested` intake and `project.github_repo_bound` committed-transition obligations, both `quarantined_not_admitted` under DL-039 | File menu, Dashboard, New GitHub Repo flow; existing consumers unchanged |
 | `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |
 | `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Planning Wizard deferred intake (legacy command alias) |
 
@@ -813,10 +813,10 @@ Rules:
 | `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
 | `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
 | `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
-| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
-| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.screenshot` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.screenshot` | browser chrome, assistant chat |
 | `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
 | `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
 | `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
@@ -829,6 +829,7 @@ Rules:
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
 Capture event rules:
+- The four screenshot-to-chat rows declare `runtime_artifact.screenshot` consumer intent using `pm.runtime_artifact.screenshot.schema.v1` (`Plans/runtime_artifact_screenshot.schema.json`), owned by `Plans/Runtime_Artifacts_Panel.md#RAP-054`. RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded. Schema shape is not proof of real IDs, native capture, or retention execution.
 - `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
 - `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command.
 
@@ -4775,7 +4776,7 @@ plan_unit_id: UCC-064
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime artifact creation, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
+canonical_text: Browser element, selection, screenshot, share, and revoke commands preserve browser.context_captured, runtime_artifact.screenshot consumer intent subject to RAP-054 / Event Authority admission, browser share state, and distinct attachment/provenance fields without serializing context unless an explicit capture command runs.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4823,7 +4824,8 @@ preserved_exact_tokens:
 negative_constraints:
 - share_with_agent and revoke_share_with_agent do not create browser.context_captured events and do not serialize page, selection, or element context without a separate explicit capture command.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- runtime_artifact.created is preserved only as forbidden compatibility/source lineage; RAP-054 excludes it from active screenshot event expectations.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md
@@ -7704,9 +7706,9 @@ canonical_text: >-
   ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
   ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
-  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v1
-  and pm.product_onboarding.action_result.v1 contracts. Every request requires closed, normalized, secret-free
-  local_context fields for intent, scope, branch, selection, owner-operation, disclosure, tour, and recovery identity;
+  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
+  and pm.product_onboarding.action_result.v2 contracts. Every request consumes PWIZ-021's closed, normalized, secret-free
+  local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
   arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
   route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
   cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links continue to use
@@ -7724,7 +7726,8 @@ acceptance_criteria:
   - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
   - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
   - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
-  - Required local_context accepts only the schema's normalized intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition fields; additional/raw/free-form/secret-bearing values are rejected.
+  - Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list; nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding have phase-gated requirements, and additional/raw/free-form/secret-bearing values are rejected.
+  - Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only preflight or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with no fabricated identities. Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider owner routes require that real committed Project. Neither phase adds a command or handler.
   - "more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch combinations; Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch plus session_skipped versus optional_scope_skipped results."
   - Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready.
   - Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole handler without replaying owner work.
@@ -8066,7 +8069,7 @@ This addendum closes the command-catalog portion of the FABLE GUI command and wi
 
 ### Command response and receipt baseline
 
-Every command in this addendum returns the `UICommandResponse` envelope from `Plans/Contracts_V0.md`. The field-level response minimum is `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`. Error codes are closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`. Commands that intentionally emit no persisted domain event still record a dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events.
+Every command in this addendum consumes the closed v2 `UICommandResponse` in `Plans/ui_command_response.schema.json` through CV-333. The catalog does not maintain a second response-field minimum or error enum. An actual owner operation binds the normalized request, Full Thread command outcome and separately validated typed owner result; local-only route/open actions and pre-dispatch refusals use the schema's non-operation branches without fabricated durable scope. Commands that intentionally emit no persisted domain event still record an actual dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events. Acceptance remains pending, and an unknown terminal effect remains recovery-required rather than successful or automatically retryable.
 
 ### Added GUI command families
 
@@ -8233,7 +8236,7 @@ Common fields for every covered row:
 - `command_id`: every concrete current `cmd.*` token in the row's `preserved_exact_tokens`, except a token expressly marked retired, source-lineage-only, or non-alias in `compatibility_only_notes` or `stale_retired_dispositions`; grouped or wildcard tokens are family aliases and must normalize to a concrete active `cmd.*` row before dispatch.
 - `payload_required`: `dispatch_id`, `command_id`, `source_surface`, `actor_ref`, and the row-specific identity listed below.
 - `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific refs allowed by the owner row.
-- `result_fields`: the shared `UICommandResponse` envelope fields `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`.
+- `result_fields`: the shared closed v2 `UICommandResponse` schema in CV-333, consuming the separately owned typed result rather than duplicating its domain fields.
 - `error_codes`: closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`; family owners may narrow but not expand this set without a new owner-doc row.
 - `disabled_reason_codes`: closed to `unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, and `permission_required`.
 - `owner_doc_ref`: this document plus the family owner named below; no handler may invent unowned payload keys or fabricate `*.command_applied` events.
@@ -8251,7 +8254,7 @@ Common fields for every covered row:
 | `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
 | `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
 | `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families in this catalog. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
-| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-023. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its thirteen `ui.onboarding.*` identifiers are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions carry the Planning Wizard-owned typed route or intent to the target owner's existing command; local action requests/results use `pm.product_onboarding.action_request.v1` and `pm.product_onboarding.action_result.v1`. |
+| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its thirteen `ui.onboarding.*` identifiers are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
 
@@ -9842,8 +9845,8 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Wiring_
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
 | `cmd.artifacts.sort` | Sort Artifacts | `shell_view` | always | none | `unsupported` | artifacts |
-| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | `degraded`, `stale_projection` | artifacts |
-| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | `degraded`, `unreachable` | artifacts |
+| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | RAP-056 typed owner availability/error reasons | artifacts |
+| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | RAP-056 typed owner availability/error reasons | artifacts |
 | `cmd.artifacts.show_sources` | Show Sources | `navigation_wrapper` | selection (`artifact_source_refs_present`) | none | `stale_projection` | artifacts |
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
@@ -11751,12 +11754,12 @@ owner_hints:
 ## Server/Egolite Exact Command And Reverse-Consumer Catalog Addendum - 2026-09-01
 
 
-The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+The current machine partition is 171 packet rows: 87 new canonical commands, 43 pre-policy aliases, 38 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 104 obligation references collapse to **103 unique primary command/catalog/production-intent rows**; the packet primary denominator is 93 (`87 + 6`). USER-PROJECT-UNARCHIVE-REGISTRY-20260911 reclassifies only source row 128 from local-only presentation to the Project-owner registry mutation. The earlier 86/39, 102-central and 92-packet counts remain historical source-report lineage, not current denominators; every source row identity is preserved.
 
 Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
 
 
-### Exact 102 primary catalog rows
+### Exact 103 primary catalog rows
 
 | Exact primary command | Human label | Owner / PlanUnit | Sole future handler target | Complete intended GUI consumers |
 |---|---|---|---|---|
@@ -11810,6 +11813,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.installation.attach_external` | Installation Attach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.installation.detach_external` | Installation Detach External | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.installation.remove` | Installation Remove | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
+| `cmd.project.unarchive` | Restore Archived Project | `Plans/Project_System.md` / `PJCT-002` | `handlers::project::unarchive` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.duplicate_configuration` | Project Duplicate Configuration | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.duplicate_with_history` | Project Duplicate With History | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.execution_host.select` | Project Execution Host Select | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
@@ -11939,7 +11943,6 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
 | `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
-| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
@@ -11963,7 +11966,7 @@ plan_unit_id: UCC-151
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The server/Egolite closure catalogs 102 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 39 predecessor spellings typed-local-only, and three rejections non-dispatchable.
+canonical_text: The server/Egolite closure catalogs 103 unique primary commands with exact owner, sole future target, typed contracts, handler-unavailable projection, and complete intended consumers while keeping 43 aliases normalization-only, 38 predecessor spellings typed-local-only, and three rejections non-dispatchable; cmd.project.unarchive is the September 11 owner-backed registry mutation correction.
 gui_related: true
 depends_on: [CS-073]
 unblocks: [WM-050, UIW-016]
@@ -11971,6 +11974,7 @@ acceptance_criteria:
   - Each exact primary appears once in the catalog and at least once in production-intent wiring with the same command and sole target.
   - Every intended GUI consumer is preserved in the catalog and receives exact availability, disabled reason, keyboard semantics, focus return, and receipt/result projection.
   - Alias, typed-local predecessor, and rejected tokens have no primary catalog or production row.
+  - Restore Archived Project consumes cmd.project.unarchive through PJCT-002 and the existing Project action family. Its retained ui.project.restore_archived entry is only a pre-gate adapter; visible success requires the Project owner's persisted listed result, never an optimistic local-only row change or backup/runtime restoration.
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-plans-verify.py, scripts/pm-touch-closure-verify.py]
 risk_class: catalog_reverse_coverage_or_alias_promotion_drift
 reasoning_tier: high
@@ -13023,3 +13027,75 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UCC-164 - Consume The Central Command Response Contract
+
+```yaml
+plan_unit_id: UCC-164
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: "Catalogued commands consume CV-333 rather than copying response minima. Domain result, command normalization, availability, permissions, receipt and event ownership remain with their existing command owner."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-333, UCC-158]
+unblocks: []
+acceptance_criteria:
+  - "New dispatch output uses the central v2 response; owner operations bind the actual typed owner result and Full Thread command outcome."
+  - "Canonical command and command-instance identities survive alias normalization and replay; no peer command or wrapper-specific response family is added."
+  - "Local-only route/open actions and pre-dispatch refusals use their non-operation response branch; shared durable commands cannot masquerade as local projections."
+  - "Accepted dispatch, UI dismissal and unknown effects do not display successful completion; missing native handlers remain visibly unavailable."
+  - "Every production row inherits the one central response binding while typed per-owner results and their adapter proof remain independently required."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Testing and Recording Contract Consumption — 2026-09-11
+
+The four existing `cmd.testing.session.open`, `cmd.testing.session.watch`,
+`cmd.testing.session.background`, `cmd.testing.session.redaction.inspect` IDs and
+run-scoped `cmd.testing.export_bundle` consume ATS-048's
+`TestingSessionCommandRequest/Result/Error/Availability` definitions in
+`Plans/testing_session_command_contracts.schema.json`. The two existing recording
+Play/Watch IDs consume RAP-056's `ArtifactRecordingCommandRequest/Result/Error/Availability`
+definitions in `Plans/artifact_recording_command_contracts.schema.json`.
+The owners define semantics; this catalog does not copy their field lists or mint
+parallel commands. The seven commands retain eleven existing production-intent
+placements and their sole planned handlers. They do not belong to TCME's closed
+ten-ID capture schema or widen the shared-runtime command enum.
+
+Typed requests and results are mandatory at these placements; the former generic
+"typed contract or route/open disposition" fallback does not apply. Existing
+selectors project the typed owner availability/error, including `handler_unavailable`.
+Recording row scope remains record-only versus live-subject. Existing session event
+obligations consume the ATS-049 / DL-039 emit-only, `quarantined_not_admitted`
+disposition in `Plans/testing_session_event_admission.json`; payload validity does
+not authorize EventRecord append, replay, identity consumption or checkpoint advance. Export
+and recording controls retain receipt-only domain-event dispositions. No new native
+handler, visual design, command, storage family, runtime proof or readiness is claimed.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Automated_Testing_System.md#ATS-049, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+
+The existing `cmd.project.new_github_repo` and its sole planned
+`handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
+Project action request/result family. No second field-list DTO, generic create
+command or Project Composition command is introduced. The two send-only obligations
+are separate owner transitions, not unconditional dispatch success; both remain
+`quarantined_not_admitted` under DL-039, without EventRecord append/replay authority.
+The central
+response preserves the application-scoped creation operation while its typed
+terminal result identifies the actual committed Project. Native availability
+remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007

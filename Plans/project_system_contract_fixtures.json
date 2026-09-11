@@ -91,6 +91,17 @@
           "caller_context_ref": "onboarding-return:first-project:01",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -129,6 +140,17 @@
           "caller_context_ref": "onboarding-return:first-project:02",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -167,6 +189,17 @@
           "caller_context_ref": "onboarding-return:first-project:03",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -205,6 +238,17 @@
           "caller_context_ref": "onboarding-return:first-project:04",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -244,6 +288,17 @@
           "caller_context_ref": "onboarding-return:first-project:05",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -282,6 +337,17 @@
           "caller_context_ref": "onboarding-return:first-project:06",
           "expected_caller_revision": 5,
           "continuation_generation": 2
+        },
+        "onboarding_setup_binding": {
+          "setup_plan_ref": "setup-plan:queued:1",
+          "reviewed_setup_plan_revision": 1,
+          "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+          "project_draft_ref": "draft:onboarding-project-1",
+          "project_draft_revision": 3,
+          "commit_authorization_ref": "consent:project-commit-1",
+          "preflight_validation_ref": "preflight:project-draft-1",
+          "settings_transfer_draft_preview_ref": null,
+          "settings_transfer_draft_preview_sha256": null
         }
       }
     },
@@ -538,13 +604,13 @@
       }
     },
     {
-      "name": "ui_project_restore_archived_owner_local_action",
+      "name": "command_project_unarchive_registry_mutation",
       "definition": "project_action_request",
       "value": {
         "schema_id": "pm.project.action_request.v1",
         "schema_version": "1.0.0",
-        "action_id": "ui.project.restore_archived",
-        "command_instance_id": "ui-action:project:restore-archived:01",
+        "action_id": "cmd.project.unarchive",
+        "command_instance_id": "command:project:unarchive:01",
         "project_id": "project:archived:01",
         "display_name": null,
         "registration_kind": null,
@@ -571,7 +637,8 @@
           "expected_caller_revision": null,
           "continuation_generation": null
         }
-      }
+      },
+      "row_index": 128
     },
     {
       "name": "project_open_result_echoes_exact_onboarding_return",
@@ -1332,46 +1399,70 @@
       "row_index": 117
     },
     {
-      "name": "server_gap_b.positive.local.2.request",
-      "definition": "project_local_action_request",
+      "name": "server_gap_b.positive.unarchive.persisted_result",
+      "definition": "project_action_result",
       "value": {
-        "schema_id": "pm.project_composition.local_action_request.v1",
-        "record_kind": "ProjectCompositionLocalActionRequest",
-        "local_action_id": "ui.project.restore_archived",
-        "projection_ref": "projection:project_composition:2",
-        "expected_projection_generation": 4,
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.unarchive",
+        "command_instance_id": "command:project:unarchive:01",
+        "outcome": "accepted",
+        "project_id": "project:archived:01",
+        "project_revision": 3,
+        "project_currentness_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "resulting_registry_revision": 6,
+        "resulting_registry_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "lifecycle": "listed",
+        "route_ref": null,
         "return_context": {
-          "surface_id": "projects",
-          "route_id": "projects",
-          "focus_target": "restore-archived",
-          "invocation_token": "return:projects:1",
-          "return_generation": 3
-        }
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:archived",
+          "focus_id": "project.row.git.01",
+          "invocation_token": "return:project:restore-archived:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        },
+        "receipt_refs": [
+          "receipt:project:unarchive:01"
+        ],
+        "persistence_disposition": "persisted",
+        "error_code": null,
+        "replayed": false
       },
       "row_index": 128
     },
     {
-      "name": "server_gap_b.positive.local.2.result",
-      "definition": "project_local_action_result",
+      "name": "server_gap_b.positive.unarchive.already_listed_result",
+      "definition": "project_action_result",
       "value": {
-        "schema_id": "pm.project_composition.local_action_result.v1",
-        "record_kind": "ProjectCompositionLocalActionResult",
-        "local_action_id": "ui.project.restore_archived",
-        "projection_ref": "projection:project_composition:2",
-        "projection_generation": 4,
-        "redacted": true,
-        "lazy": true,
-        "mutated_domain_state": false,
-        "domain_handler_invoked": false,
-        "domain_event_emitted": false,
-        "accessible_focus_target": "restore-archived",
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.unarchive",
+        "command_instance_id": "command:project:unarchive:already-listed",
+        "outcome": "no_change",
+        "project_id": "project:already-listed:01",
+        "project_revision": 3,
+        "project_currentness_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "resulting_registry_revision": 6,
+        "resulting_registry_currentness_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "lifecycle": "listed",
+        "route_ref": null,
         "return_context": {
-          "surface_id": "projects",
-          "route_id": "projects",
-          "focus_target": "restore-archived",
-          "invocation_token": "return:projects:1",
-          "return_generation": 3
-        }
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:archived",
+          "focus_id": "project.row.git.01",
+          "invocation_token": "return:project:restore-archived:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        },
+        "receipt_refs": [
+          "receipt:project:unarchive:already-listed"
+        ],
+        "persistence_disposition": "no_change",
+        "error_code": null,
+        "replayed": false
       },
       "row_index": 128
     },
@@ -1428,8 +1519,19 @@
         "project_vault_ref": "vault:project:alpha-copy",
         "server_catalog_ref": "catalog:server:home",
         "operation": "copy_preferences",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1456,8 +1558,19 @@
         "project_vault_ref": "vault:project:alpha-move",
         "server_catalog_ref": "catalog:server:target",
         "operation": "move_project",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1484,8 +1597,19 @@
         "project_vault_ref": "vault:project:restored-new-alpha",
         "server_catalog_ref": "catalog:server:home",
         "operation": "restore_as_new",
-        "project_owned_refs": ["concrete_backup_preferences","source_capture_lineage","snapshot_restore_receipts","source_control_forge_binding_refs"],
-        "server_owned_refs": ["destination_connection_metadata","scheduler_occurrences_writer_assignments","recovery_set_public_metadata","credential_references","cross_project_full_capture_indexes"],
+        "project_owned_refs": [
+          "concrete_backup_preferences",
+          "source_capture_lineage",
+          "snapshot_restore_receipts",
+          "source_control_forge_binding_refs"
+        ],
+        "server_owned_refs": [
+          "destination_connection_metadata",
+          "scheduler_occurrences_writer_assignments",
+          "recovery_set_public_metadata",
+          "credential_references",
+          "cross_project_full_capture_indexes"
+        ],
         "secret_bytes_present": false,
         "credentials_copied": false,
         "recovery_key_copied": false,
@@ -1502,9 +1626,203 @@
         "proc_execution_evidence": "partial_not_implemented",
         "runtime_evidence_claimed": false
       }
+    },
+    {
+      "name": "project_setup_commit_requires_actual_listed_result",
+      "definition": "project_action_result",
+      "value": {
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_local",
+        "command_instance_id": "command:project:commit:1",
+        "outcome": "accepted",
+        "project_id": "project:new-1",
+        "project_revision": 1,
+        "project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "resulting_registry_revision": 4,
+        "resulting_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "lifecycle": "listed",
+        "route_ref": "route:project:new-1",
+        "return_context": {
+          "surface_id": "product_onboarding",
+          "route_ref": "route:onboarding:first_project",
+          "focus_id": "onboarding.first_project.open_detected_project",
+          "invocation_token": "return:project:open:01",
+          "caller_context_ref": "onboarding-return:first-project:07",
+          "expected_caller_revision": 5,
+          "continuation_generation": 2
+        },
+        "receipt_refs": [
+          "receipt:project-commit-1"
+        ],
+        "persistence_disposition": "persisted",
+        "error_code": null,
+        "replayed": false
+      }
+    },
+    {
+      "name": "project_setup_commit_binding_for_provider_continuation",
+      "definition": "project_setup_commit_binding",
+      "value": {
+        "schema_id": "pm.project.setup_commit_binding.v1",
+        "binding_id": "binding:project-commit-1",
+        "setup_plan_ref": "setup-plan:queued:1",
+        "reviewed_setup_plan_revision": 1,
+        "approved_setup_plan_sha256": "fb14e6c4533b7a83c7fae311617e5327d73e87c6667d671c749c0bc36c6a6b76",
+        "project_draft_ref": "draft:onboarding-project-1",
+        "project_draft_revision": 3,
+        "commit_authorization_ref": "consent:project-commit-1",
+        "command_id": "cmd.project.new_local",
+        "command_instance_id": "command:project:commit:1",
+        "idempotency_key": "idempotency:project-commit-1",
+        "project_action_result_ref": "result:project-commit-1",
+        "project_action_result_sha256": "cb8d8babf0ad73cb2328897da6fcd4fe27320377964568729bb257f74eafd97f",
+        "project_id": "project:new-1",
+        "project_revision": 1,
+        "registry_revision": 4,
+        "lifecycle": "listed",
+        "persistence_disposition": "persisted",
+        "terminal_receipt_refs": [
+          "receipt:project-commit-1"
+        ],
+        "settings_transfer_rebind_ref": null,
+        "settings_transfer_result_ref": null,
+        "required_owner_result_refs": [
+          "result:project-commit-1"
+        ],
+        "replayed": false
+      }
     }
   ],
   "invalid": [
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_local_request_identity",
+      "definition": "project_action_request",
+      "base_valid": "command_project_unarchive_registry_mutation",
+      "patch": {
+        "action_id": "ui.project.restore_archived"
+      },
+      "expected_error": "legacy local request is not mutation authorization"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_requires_permission_snapshot",
+      "definition": "project_action_request",
+      "base_valid": "command_project_unarchive_registry_mutation",
+      "patch": {
+        "permission_snapshot_ref": null
+      },
+      "expected_error": "registry mutation requires explicit permission context"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_creation_fields",
+      "definition": "project_action_request",
+      "base_valid": "command_project_unarchive_registry_mutation",
+      "patch": {
+        "display_name": "Replacement Project"
+      },
+      "expected_error": "unarchive cannot rename or recreate"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_backup_registration",
+      "definition": "project_action_request",
+      "base_valid": "command_project_unarchive_registry_mutation",
+      "patch": {
+        "registration_kind": "restore_as_new",
+        "source_ref": "restore:other"
+      },
+      "expected_error": "registry visibility is not backup restoration"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_topology_changes",
+      "definition": "project_action_request",
+      "base_valid": "command_project_unarchive_registry_mutation",
+      "patch": {
+        "project_home_server_ref": "server:other"
+      },
+      "expected_error": "unarchive cannot move Home Server"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_success_is_not_navigation",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "persistence_disposition": "no_persist_navigation"
+      },
+      "expected_error": "listed mutation requires persisted readback"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_success_requires_listed",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "lifecycle": "archived"
+      },
+      "expected_error": "archived projection cannot be success"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_success_requires_receipt",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "receipt_refs": []
+      },
+      "expected_error": "success requires correlated Project owner receipt"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_success_requires_identity",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "project_id": null
+      },
+      "expected_error": "success preserves exact Project identity"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_success_cannot_be_error",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "error_code": "archive_state_required"
+      },
+      "expected_error": "successful result has no error"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_no_change_does_not_persist_again",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.already_listed_result",
+      "patch": {
+        "persistence_disposition": "persisted"
+      },
+      "expected_error": "already listed returns no-change without another write"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejection_cannot_claim_persistence",
+      "definition": "project_action_result",
+      "base_valid": "server_gap_b.positive.unarchive.persisted_result",
+      "patch": {
+        "outcome": "rejected",
+        "error_code": "permission_denied"
+      },
+      "expected_error": "rejected mutation cannot report persisted success"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_local_owner_route",
+      "definition": "project_local_action_request",
+      "base_valid": "server_gap_b.positive.local.1.request",
+      "patch": {
+        "local_action_id": "ui.project.restore_archived"
+      },
+      "expected_error": "restore entry is not a read-only local action"
+    },
+    {
+      "name": "server_gap_b.negative.unarchive_rejects_local_owner_result",
+      "definition": "project_local_action_result",
+      "base_valid": "server_gap_b.positive.local.1.result",
+      "patch": {
+        "local_action_id": "ui.project.restore_archived"
+      },
+      "expected_error": "local false-mutation result cannot certify registry restoration"
+    },
     {
       "name": "raw_path_cannot_be_project_identity",
       "definition": "project_record",
@@ -1681,7 +1999,7 @@
     {
       "name": "restore_archived_requires_project_identity",
       "definition": "project_action_request",
-      "base_valid": "ui_project_restore_archived_owner_local_action",
+      "base_valid": "command_project_unarchive_registry_mutation",
       "patch": {
         "project_id": null
       },
@@ -2089,20 +2407,100 @@
         }
       }
     },
-    {"name":"project_backup_preferences_cannot_copy_credentials","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"credentials_copied":true},"expected_error":"credentials_remain_server_protected_refs"},
-    {"name":"project_copy_cannot_duplicate_schedule_or_writer","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"schedule_or_writer_duplicated":true},"expected_error":"copy_does_not_activate_jobs_or_writer_authority"},
-    {"name":"project_move_requires_verified_one_writer_transfer","definition":"project_backup_consumer_projection","base_valid":"project_move_requires_one_backup_writer_transfer","patch":{"one_writer_transfer_verified":false},"expected_error":"move_has_exactly_one_scheduler_writer_prune_authority"},
-    {"name":"restore_as_new_requires_fresh_project_identity","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"fresh_project_id_required":false},"expected_error":"restore_as_new_never_reuses_source_project_id"},
-    {"name":"project_backup_consumer_cannot_activate_recovered_runtime","definition":"project_backup_consumer_projection","base_valid":"restore_as_new_requires_fresh_project_and_external_repository_revalidation","patch":{"recovered_runtime_activated":true},"expected_error":"registration_does_not_activate_goals_leases_push_or_automation"},
-    {"name":"project_backup_consumer_cannot_claim_proc_execution","definition":"project_backup_consumer_projection","base_valid":"project_backup_preferences_copy_without_credentials_schedule_or_billing","patch":{"proc_execution_evidence":"implemented"},"expected_error":"proc_001_002_remain_later_execution_evidence"}
+    {
+      "name": "project_backup_preferences_cannot_copy_credentials",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "credentials_copied": true
+      },
+      "expected_error": "credentials_remain_server_protected_refs"
+    },
+    {
+      "name": "project_copy_cannot_duplicate_schedule_or_writer",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "schedule_or_writer_duplicated": true
+      },
+      "expected_error": "copy_does_not_activate_jobs_or_writer_authority"
+    },
+    {
+      "name": "project_move_requires_verified_one_writer_transfer",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_move_requires_one_backup_writer_transfer",
+      "patch": {
+        "one_writer_transfer_verified": false
+      },
+      "expected_error": "move_has_exactly_one_scheduler_writer_prune_authority"
+    },
+    {
+      "name": "restore_as_new_requires_fresh_project_identity",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "restore_as_new_requires_fresh_project_and_external_repository_revalidation",
+      "patch": {
+        "fresh_project_id_required": false
+      },
+      "expected_error": "restore_as_new_never_reuses_source_project_id"
+    },
+    {
+      "name": "project_backup_consumer_cannot_activate_recovered_runtime",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "restore_as_new_requires_fresh_project_and_external_repository_revalidation",
+      "patch": {
+        "recovered_runtime_activated": true
+      },
+      "expected_error": "registration_does_not_activate_goals_leases_push_or_automation"
+    },
+    {
+      "name": "project_backup_consumer_cannot_claim_proc_execution",
+      "definition": "project_backup_consumer_projection",
+      "base_valid": "project_backup_preferences_copy_without_credentials_schedule_or_billing",
+      "patch": {
+        "proc_execution_evidence": "implemented"
+      },
+      "expected_error": "proc_001_002_remain_later_execution_evidence"
+    },
+    {
+      "name": "onboarding_creation_requires_confirmed_setup_binding",
+      "definition": "project_action_request",
+      "base_valid": "command_project_new_local_from_onboarding",
+      "remove": [
+        "onboarding_setup_binding"
+      ]
+    },
+    {
+      "name": "setup_commit_binding_cannot_claim_registering_as_listed",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "lifecycle": "registering"
+      }
+    },
+    {
+      "name": "setup_commit_binding_needs_terminal_receipt",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "terminal_receipt_refs": []
+      }
+    },
+    {
+      "name": "setup_commit_binding_cannot_claim_unpersisted_new_project",
+      "definition": "project_setup_commit_binding",
+      "base_valid": "project_setup_commit_binding_for_provider_continuation",
+      "patch": {
+        "persistence_disposition": "no_persist_navigation"
+      }
+    }
   ],
   "server_gap_b_coverage": {
     "rows": 11,
-    "commands": 6,
-    "local_actions": 3,
+    "commands": 7,
+    "local_actions": 2,
     "aliases": 1,
     "rejections": 1,
     "positive_cases": 25,
-    "negative_cases": 9
+    "negative_cases": 23
   }
 }

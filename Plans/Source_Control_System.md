@@ -143,6 +143,11 @@ acceptance_criteria:
   - Accepted async commands point to ObservableWork; terminal receipts carry before/after native revisions and event refs.
   - Command scopes preserve exact Project/Home Server/Host/Environment/Source Location/repository/backend/workspace/revision/currentness/lease/credential identities as applicable, while path/focus/newest/remote text and generic provider fields cannot satisfy identity.
   - Read-only and pre-repository commands do not inherit mutation-only writer or transport requirements; command-specific requirements are selected only by the exact command_id discriminator.
+  - A succeeded result cannot have effect_state=effect_unknown; an effect_unknown error cannot disguise itself as a known effect. Unknown effects keep retry_allowed=false and offer reconciliation without any retry action until effects are known.
+  - Every established terminal source_control_command_result carries a non-secret operation_receipt_ref, including blocked, failed, cancelled, recovery_required and effect_unknown. This is not a requirement for pre-attempt availability or error records.
+  - The CV-333 central response consumes only the exact source_control_command_result family for these nineteen commands and joins the original typed request's command instance, discriminated scope, applicable lineage, idempotency key and exact return context to the result and its terminal receipt. A local projection or another owner's result cannot substitute for this join.
+  - Optional plan_id and goal_id lineage map exactly to the central named_plan_id and goal_id; omission or null cannot authorize an invented non-null central identity. Run and agent lineage stay in the exact owner request/result scope without inventing fields in the closed central identity.
+  - Central projection maps succeeded to succeeded, blocked to rejected, failed/cancelled to their same terminal states, and recovery_required/effect_unknown to terminal_unknown and recovery_required. Any unresolved effect requires terminal_unknown regardless of a failed result label. no_effect alone is not an owner-verified no_op verdict.
 validation_surfaces: [Plans/source_control_contract_fixtures.json, writer and credential lease fixtures, stale lease tests, prompt suppression tests, command idempotency tests]
 risk_class: concurrent_mutation_or_credential_escape
 reasoning_tier: high
@@ -154,6 +159,14 @@ preserved_exact_tokens: [writer lease, generation, epoch, git-credential-puppet-
 negative_constraints: [Do not prompt for ambient credentials., Do not persist private keys or tokens., Do not treat expiry as cleanup proof., Do not retry an effect-unknown mutation automatically.]
 owner_hints: [Plans/Source_Control_System.md, Plans/Shared_Integration_Runtime.md, Plans/Permissions_System.md, Plans/FileSafe.md]
 ```
+
+The source-control response fixture adapter consumes the central authenticated
+normalized request/hash binding; it is not a second request DTO or digest policy.
+Native admission must still resolve the actual request, applicable policy/leases,
+typed operation receipt and backend evidence. In-memory joins do not prove those
+lookups, persistence/recovery, Event Authority admission or native availability.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/source_control_contracts.schema.json, ContractName:Plans/ui_command_response.schema.json
 
 ### SCS-004 - Exact-Environment Setup And Capability Certification
 
@@ -360,11 +373,11 @@ Setup follows cached state -> exact Host/Environment discovery -> tool availabil
 
 Product Onboarding projects this flow as two independent beginner-facing choices. `scm_backend=git|jujutsu` is the local Safe History backend on the selected work computer. `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none` is an optional online-copy binding. Local history and an online copy may coexist; selecting a forge never disables local Git/Jujutsu, and selecting local-only never disables Source Control. FileSafe safe points complement Source Control and do not replace Git or Jujutsu. Git and Jujutsu are local tools and have no service accounts; GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo, Gitea, and Cursor Origin are optional services where an account and online repository may exist. Forgejo and Gitea setup preserves distinct typed instance, API, SSH, trust, product/version/schema, Git/API/Actions-state, credential-reference, and currentness fields; an API-disabled instance may still be Git-ready. No Git account, Jujutsu account, Git/Jujutsu signup, or Git/Jujutsu authentication route exists.
 
-For a new local Project, Project System first dispatches `cmd.project.new_local {init_git:true}` and returns the exact Project/repository identities. Source Control may then detect, select, and bind the admitted local backend with `cmd.source_control.backend.detect`, `cmd.source_control.backend.select`, and `cmd.source_control.repository.bind`. `cmd.source_control.repository.init` does not exist and MUST NOT be registered, aliased, dispatched, or shown. Selecting Jujutsu is allowed only when the Jujutsu owner can establish or bind the exact certified repository/workspace state; a missing owner route is `handler_unavailable`/`not_available` with a human recovery route, never an inferred initialization.
+For a new local Project, the reviewed commit uses Project System's `cmd.project.new_local` and its exact current setup binding. Project System resolves the confirmed draft's history choice; a consumer must not force `init_git:true` over an explicit no-history choice or substitute Git for Jujutsu. After the owner returns the actual identities, Source Control may detect, select, and bind the requested admitted local backend with `cmd.source_control.backend.detect`, `cmd.source_control.backend.select`, and `cmd.source_control.repository.bind`. `cmd.source_control.repository.init` does not exist and MUST NOT be registered, aliased, dispatched, or shown. Selecting Jujutsu is allowed only when the Jujutsu owner can establish or bind the exact certified repository/workspace state; a missing owner route is `handler_unavailable`/`not_available` with a human recovery route, never an inferred initialization.
 
 An optional online copy uses the common integration, account, forge, and backend owners: existing accounts use `cmd.integration.connection.add` plus `cmd.auth_profile.sign_in`; people without an account may use `cmd.auth_profile.open_official_page` to visit the verified official provider signup page, then return for owner verification/sign-in. Puppet Master never claims to create the provider account. Repository discovery/creation uses `cmd.forge.repository.list|create`; ordinary Git clone/publish uses `cmd.source_control.repository.clone {scm_backend=git}` and `cmd.source_control.remote.publish`; Jujutsu clone/publish remains `cmd.jujutsu.git.clone` and `cmd.jujutsu.git.push`; successful terminal identities feed the exact `cmd.project.add_existing` registration kind. Protected AuthBrowserSession is human-only, non-recordable, non-inspectable, unavailable to agents/adapters, and excluded from capture, logs, receipts, persistence, and concept simulation.
 
-Each onboarding choice is one dispatch. A current terminal owner result returns through the exact revisioned continuation and advances the branch/stage automatically; Source Control does not require an extra preview confirmation, `Continue when ready`, or second `Continue`. Trust, authentication, privacy, destructive, and restore decisions remain explicit where the owner requires them. Concept fixtures and PMConcept7 previews stay `concept_simulated`/`handler_unavailable` and never claim a real account, repository, push, native handler, or production readiness.
+A draft choice is not dispatch. Before Project commit, only bounded read-only source access and individually consented selected-source sign-in/verified official-page work may run through PWIZ-021 and MACS-005. They never create a Project/destination, initialize history, create a repository, clone/import, publish, bind sync, apply Settings or set up unrelated AI providers. Project-scoped IntegrationConnection add/activation requires the actual post-consent reserved Project identity; no fake Project/account/installation is supplied to an older request. Each explicit owner action or reviewed commit is one logical dispatch through the existing owner chain. A current terminal owner result returns through the exact revisioned continuation and advances the branch/stage automatically; Source Control does not require an extra preview confirmation, `Continue when ready`, or second `Continue`. Trust, authentication, privacy, destructive, and restore decisions remain explicit where the owner requires them. Concept fixtures and PMConcept7 previews stay `concept_simulated`/`handler_unavailable` and never claim a real account, repository, push, native handler, or production readiness.
 
 ## 5. Validation And Acceptance
 
@@ -629,41 +642,72 @@ plan_unit_id: SCS-011
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  Product Onboarding projects Source Control as an explicitly local Safe History backend (`git|jujutsu`) plus an
-  independent optional forge online-copy provider. A new local Project is created through Project System's
-  `cmd.project.new_local {init_git:true}` rather than a nonexistent Source Control init command; detected/selected
-  backend binding, account sign-in or verified official signup-page handoff, forge repository list/create,
-  backend-native clone/publish, and Project registration remain exact owner-routed operations. Jujutsu is a local
-  backend with no Jujutsu account. One user choice dispatches once and a current terminal owner return auto-advances.
+canonical_text: Product Onboarding projects Source Control as an explicitly local Safe History backend (`git|jujutsu`)
+  plus an independent optional forge online-copy provider. A new local Project is created through Project System's
+  `cmd.project.new_local` with the exact reviewed Project-owned setup binding rather than a nonexistent Source Control init command; detected/selected
+  backend binding, account sign-in or verified official signup-page handoff, forge repository list/create, backend-native
+  clone/publish, and Project registration remain exact owner-routed operations. Jujutsu is a local backend with
+  no Jujutsu account. Draft choices do not dispatch; one explicit authorized owner action or reviewed commit dispatches
+  once and a current terminal owner return auto-advances.
 gui_related: true
-gui_classification_reason: Defines the beginner-facing Source Control setup choices, availability reasons, owner returns, and online-copy/account routes used by Product Onboarding and Settings.
-depends_on: [SCS-003, SCS-004, SCS-005]
-unblocks: [PWIZ-021]
+gui_classification_reason: Defines the beginner-facing Source Control setup choices, availability reasons, owner
+  returns, and online-copy/account routes used by Product Onboarding and Settings.
+depends_on:
+- SCS-003
+- SCS-004
+- SCS-005
+unblocks:
+- PWIZ-021
 acceptance_criteria:
-  - Safe History copy says it is local and does not imply Git/Jujutsu is disabled or replaced.
-  - "`scm_backend=git|jujutsu` and `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none` remain independent typed axes with local-only and local-plus-online fixtures."
-  - New local Project creation uses `cmd.project.new_local {init_git:true}`; `cmd.source_control.repository.init` has no registration, alias, handler, wiring row, or visible route.
-  - Git and Jujutsu retain backend-native clone, bind, publish, revision, workspace, FileSafe, permission, and receipt semantics; FileSafe complements rather than replaces Source Control.
-  - Existing-account, sign-in, verified official account-signup page, repository list/create, clone/publish, and Project registration use only their canonical owner commands and exact terminal results.
-  - No Git/Jujutsu service account or Git/Jujutsu signup is offered, stored, simulated, or claimed; account flows name the selected forge.
-  - Each onboarding option dispatches once; a current terminal owner return auto-advances and no unchanged choice is reconfirmed through preview plus repeated Continue controls.
-  - Protected AuthBrowserSession content remains human-only and absent from agents, adapters, capture, logs, receipts, persistence, and concept evidence.
-  - Browser-concept simulation never claims a real provider account, repository creation, push, production handler, native Slint binding, or readiness.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future owner-return and protected-auth runtime fixtures]
+- Safe History copy says it is local and does not imply Git/Jujutsu is disabled or replaced.
+- '`scm_backend=git|jujutsu` and `forge_provider=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none`
+  remain independent typed axes with local-only and local-plus-online fixtures.'
+- New local Project creation uses `cmd.project.new_local` and honors the confirmed history/backend choice without a consumer-forced Git default; `cmd.source_control.repository.init`
+  has no registration, alias, handler, wiring row, or visible route.
+- Git and Jujutsu retain backend-native clone, bind, publish, revision, workspace, FileSafe, permission, and receipt
+  semantics; FileSafe complements rather than replaces Source Control.
+- Existing-account, sign-in, verified official account-signup page, repository list/create, clone/publish, and Project
+  registration use only their canonical owner commands and exact terminal results.
+- No Git/Jujutsu service account or Git/Jujutsu signup is offered, stored, simulated, or claimed; account flows
+  name the selected forge.
+- Each explicit authorized owner action or reviewed commit dispatches once; draft options stay local; a current
+  terminal owner return auto-advances and no unchanged choice is reconfirmed through preview plus repeated Continue
+  controls.
+- Protected AuthBrowserSession content remains human-only and absent from agents, adapters, capture, logs, receipts,
+  persistence, and concept evidence.
+- Browser-concept simulation never claims a real provider account, repository creation, push, production handler,
+  native Slint binding, or readiness.
+- Precommit source browsing and selected-source authentication are bounded by PWIZ-021/MACS-005; repository/history/clone/publish/binding
+  mutation remains commit-fenced and broad provider setup remains post-Project.
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- future owner-return and protected-auth runtime fixtures
+- tests/test_pm_onboarding_phases.py
 risk_class: onboarding_local_history_forge_conflation_or_false_account_claim
 reasoning_tier: high
 context_scope: onboarding_source_control_setup
-implementation_surfaces: [Plans/Source_Control_System.md, Plans/Planning_Wizard.md, Plans/product_onboarding_contracts.schema.json, future Product Onboarding native controller]
-node_compile_hint: {mode: source_control_onboarding_projection_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [Plans/FinalGUISpec.md#F3-520, user-correction:2026-09-01-safe-history-source-control-accounts]
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- Plans/Planning_Wizard.md
+- Plans/product_onboarding_contracts.schema.json
+- future Product Onboarding native controller
+node_compile_hint:
+  mode: source_control_onboarding_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/FinalGUISpec.md#F3-520
+- user-correction:2026-09-01-safe-history-source-control-accounts
 negative_constraints:
-  - Do not conflate local Safe History with an online backup or forge repository.
-  - Do not claim Git or Jujutsu has a service account.
-  - Do not mint cmd.source_control.repository.init.
-  - Do not automate or inspect protected account signup/authentication browser content.
-  - Do not require redundant confirmation of an unchanged choice.
-  - Do not promote concept simulation into native or production evidence.
+- Do not conflate local Safe History with an online backup or forge repository.
+- Do not claim Git or Jujutsu has a service account.
+- Do not mint cmd.source_control.repository.init.
+- Do not automate or inspect protected account signup/authentication browser content.
+- Do not require redundant confirmation of an unchanged choice.
+- Do not promote concept simulation into native or production evidence.
 ```
 
 ## Product-source acquisition and safety addendum - 2026-09-01
@@ -675,40 +719,83 @@ plan_unit_id: SCS-012
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Source_Control_System.md
-canonical_text: >-
-  Product Onboarding always treats local Git or Jujutsu Safe History, FileSafe recovery, optional hosted forge binding,
-  Project source acquisition, and backup restore as separate decisions. Git and Jujutsu require no service account.
-  FileSafe complements the selected local backend. A hosted copy is Ready only when an explicit verified forge account
-  and explicit repository binding both exist. Local, mounted, and SSH project-source transports and the independently
-  selected restore transport preserve exact Project, Host, Environment, Source Location, repository, and backend identity.
+canonical_text: Product Onboarding always treats local Git or Jujutsu Safe History, FileSafe recovery, optional
+  hosted forge binding, Project source acquisition, and backup restore as separate decisions. Git and Jujutsu require
+  no service account. FileSafe complements the selected local backend. A hosted copy is Ready only when an explicit
+  verified forge account and explicit repository binding both exist. Local, mounted, and SSH project-source transports
+  and the independently selected restore transport preserve exact Project, Host, Environment, Source Location, repository,
+  and backend identity.
 gui_related: true
-gui_classification_reason: Defines the beginner-facing relationship among the four Project entry routes, Safe History, FileSafe, hosted copy, and Advanced SSH source transport.
-depends_on: [SCS-001, SCS-002, SCS-003, SCS-011, FGI-001]
-unblocks: [PWIZ-024]
+gui_classification_reason: Defines the beginner-facing relationship among the four Project entry routes, Safe History,
+  FileSafe, hosted copy, and Advanced SSH source transport.
+depends_on:
+- SCS-001
+- SCS-002
+- SCS-003
+- SCS-011
+- FGI-001
+unblocks:
+- PWIZ-024
 acceptance_criteria:
-  - Start a new project, Open a folder here, Bring one from online, and Restore a backup remain four distinct Product entry intents and do not collapse into one ambiguous path field.
-  - Safe History selects exactly `scm_backend=git|jujutsu` locally and remains valid with `forge_provider=none`; neither backend offers or requires a Git/Jujutsu service account.
-  - FileSafe is an independent complementary safety decision around risky changes and restore points; it neither replaces local history nor implies an online copy.
-  - Optional hosting is independent from the local backend and is not Ready until the Forge owner returns both a current verified account identity and an exact repository binding; `already_connected` means select and verify both and is never a no-op.
-  - Open a folder here may use a local path, an OS-mounted SMB/NFS share, or Advanced SSH transport. Source Control consumes the Project/Storage-owned Source Location and transport result and does not implement a file server, mount manager, or SSH authority.
-  - Restore a backup carries an independent backup source and `backup_transport=local|mounted|ssh`; choosing a source folder or network Storage path never silently becomes the restore source.
-  - Every repository operation still resolves exact Project, Home Server, Execution Host, Execution Environment, Source Location, `repo_id`, backend-native workspace/revision, optional forge binding, leases, currentness, Permissions, FileSafe, and idempotency.
-  - Pre-Review onboarding choices are draft-only; backend selection, clone/fetch/publish, credential use, filesystem mutation, and repository binding dispatch only through their canonical owners after confirmation.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Plans/source_control_contracts.schema.json, Plans/source_control_contract_fixtures.json, future local/mounted/SSH source and independent restore-transport fixtures]
+- Start a new project, Open a folder here, Bring one from online, and Restore a backup remain four distinct Product
+  entry intents and do not collapse into one ambiguous path field.
+- Safe History selects exactly `scm_backend=git|jujutsu` locally and remains valid with `forge_provider=none`; neither
+  backend offers or requires a Git/Jujutsu service account.
+- FileSafe is an independent complementary safety decision around risky changes and restore points; it neither replaces
+  local history nor implies an online copy.
+- Optional hosting is independent from the local backend and is not Ready until the Forge owner returns both a current
+  verified account identity and an exact repository binding; `already_connected` means select and verify both and
+  is never a no-op.
+- Open a folder here may use a local path, an OS-mounted SMB/NFS share, or Advanced SSH transport. Source Control
+  consumes the Project/Storage-owned Source Location and transport result and does not implement a file server,
+  mount manager, or SSH authority.
+- Restore a backup carries an independent backup source and `backup_transport=local|mounted|ssh`; choosing a source
+  folder or network Storage path never silently becomes the restore source.
+- Every repository operation still resolves exact Project, Home Server, Execution Host, Execution Environment, Source
+  Location, `repo_id`, backend-native workspace/revision, optional forge binding, leases, currentness, Permissions,
+  FileSafe, and idempotency.
+- Precommit draft choices may request bounded source reads and separately consented selected-source account authentication;
+  backend mutation, clone/fetch/publish, filesystem mutation and repository/sync binding require the reviewed commit
+  and their canonical owners.
+validation_surfaces:
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
+- Plans/source_control_contracts.schema.json
+- Plans/source_control_contract_fixtures.json
+- future local/mounted/SSH source and independent restore-transport fixtures
 risk_class: local_history_hosting_or_transport_conflation
 reasoning_tier: high
 context_scope: onboarding_source_control_and_source_transport
-implementation_surfaces: [Plans/Source_Control_System.md, future source-control facade, future Product Onboarding owner adapter]
-node_compile_hint: {mode: source_control_onboarding_acquisition_contract, create_worknodes: false, create_nodeseeds: false}
-source_lineage: [user-correction:2026-09-01-project-source-and-safe-history-semantics, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
-preserved_exact_tokens: [Safe History, FileSafe, Git, Jujutsu, forge_provider, already_connected, local, mounted, SSH]
+implementation_surfaces:
+- Plans/Source_Control_System.md
+- future source-control facade
+- future Product Onboarding owner adapter
+node_compile_hint:
+  mode: source_control_onboarding_acquisition_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- user-correction:2026-09-01-project-source-and-safe-history-semantics
+- Plans/product_onboarding_contracts.schema.json
+- Concepts/pm7-tools/onboarding_cinematic_source.py
+preserved_exact_tokens:
+- Safe History
+- FileSafe
+- Git
+- Jujutsu
+- forge_provider
+- already_connected
+- local
+- mounted
+- SSH
 negative_constraints:
-  - Do not require a forge for local Safe History.
-  - Do not call FileSafe a replacement for Git or Jujutsu.
-  - Do not treat account verification without repository binding as hosted-copy readiness.
-  - Do not conflate project source, network Storage, and backup restore transports.
-  - Do not move Project, Storage, Backup/Restore, Forge, credential, or SSH ownership into Source Control.
-  - Do not dispatch source-control or filesystem work before Review confirmation.
+- Do not require a forge for local Safe History.
+- Do not call FileSafe a replacement for Git or Jujutsu.
+- Do not treat account verification without repository binding as hosted-copy readiness.
+- Do not conflate project source, network Storage, and backup restore transports.
+- Do not move Project, Storage, Backup/Restore, Forge, credential, or SSH ownership into Source Control.
+- Do not dispatch source-control/filesystem mutations before reviewed commit, or widen selected-source read/auth
+  permission into broad provider or Project authority.
 ```
 
 ## Forgejo/Gitea And Independent Automation Propagation - 2026-09-01

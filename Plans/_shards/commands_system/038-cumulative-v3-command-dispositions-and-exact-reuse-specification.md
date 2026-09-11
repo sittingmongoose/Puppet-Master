@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6179-L6266
+Source lines: L6180-L6319
 
-Source SHA256: `4db908950fd355b040ad67c3e4730fd479bad8eb70cc34ed4b05c52e821d08b4`
+Source SHA256: `6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52`
 
 ---
 
@@ -96,3 +96,55 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+
+### CS-080 - Shared Runtime Result To Command Outcome Binding
+
+```yaml
+plan_unit_id: CS-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: "All twenty-six canonical shared-runtime command results inherit one required command_outcome_ref in command_result_envelope. CV-333 joins that existing result to its actual Full Thread operation without merging the two closed status vocabularies."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [CV-333, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - "All twenty-six result definitions inherit the required non-secret outcome ref through the existing shared envelope."
+  - "Resolve matching command, command instance, operation, target generation and request binding before projecting the owner result."
+  - "Accepted remains nonterminal; no_change projects verified no_op, blocked projects rejected, and recovery_required retains recovery semantics without automatic retry."
+  - "Cancellation and no-change carry the actual required terminal receipt; replay returns the original result and operation identity."
+  - "Existing generalized command IDs, compatibility spellings, remote wrapper normalization, permission and no-unregistered-event rules remain unchanged."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_command_contract_fixtures.json, Plans/Commands_System.md]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Evidence-Consumer Dispatch Bindings — 2026-09-11
+
+ATS-048 owns the five existing Testing session/bundle command contracts; RAP-056
+owns the two existing recording Play/Watch command contracts. Dispatch uses the
+exact request/result schema references on all eleven existing placements in
+`Plans/Wiring_Matrix.production.json`, with the same sole planned handlers.
+The central response bridge requires the typed owner request, its authenticated
+normalized request binding, typed owner result and shared CommandOutcome to agree.
+It consumes the owners' status/currentness/receipt/replay rules; acceptance is not
+terminal success. Native owner lookup and policy enforcement remain unimplemented.
+
+Shared metadata/idempotency fields are referenced, not redefined; the shared-runtime
+26-command enum and TCME ten-command enum do not expand. No generic schema whose
+closed command enum excludes a command is a valid binding for that command. The
+owner schemas, static fixtures and planned handler names confer no execution,
+capture, test-verdict, protected-auth, storage or Event Authority permission.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/UI_Command_Catalog.md

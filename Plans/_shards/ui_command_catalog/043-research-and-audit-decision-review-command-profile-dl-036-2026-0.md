@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12935-L13025
+Source lines: L12939-L13101
 
-Source SHA256: `dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1`
+Source SHA256: `f464cd8c3d8971c2dff2e913983a3d7e24dfbac25ab8f4253c88a4b52a6146e1`
 
 ---
 
@@ -99,3 +99,75 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/assistant-chat-design.md#ACD-459, ContractName:Plans/Contracts_V0.md#CV-328, ContractName:Plans/storage-plan.md#SP-258, ContractName:Plans/Planning_Wizard.md#PWIZ-027, ContractName:Plans/FinalGUISpec.md#F3-550, ContractName:Plans/UI_Command_Catalog.md#UCC-161, ContractName:Plans/UI_Wiring_Rules.md#UIW-022, ContractName:Plans/Wiring_Matrix.md#WM-053
+
+
+### UCC-164 - Consume The Central Command Response Contract
+
+```yaml
+plan_unit_id: UCC-164
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: "Catalogued commands consume CV-333 rather than copying response minima. Domain result, command normalization, availability, permissions, receipt and event ownership remain with their existing command owner."
+gui_related: true
+gui_classification_reason: This governs visible command feedback and control wiring.
+depends_on: [CV-333, UCC-158]
+unblocks: []
+acceptance_criteria:
+  - "New dispatch output uses the central v2 response; owner operations bind the actual typed owner result and Full Thread command outcome."
+  - "Canonical command and command-instance identities survive alias normalization and replay; no peer command or wrapper-specific response family is added."
+  - "Local-only route/open actions and pre-dispatch refusals use their non-operation response branch; shared durable commands cannot masquerade as local projections."
+  - "Accepted dispatch, UI dismissal and unknown effects do not display successful completion; missing native handlers remain visibly unavailable."
+  - "Every production row inherits the one central response binding while typed per-owner results and their adapter proof remain independently required."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md, Plans/Wiring_Matrix.production.json]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Testing and Recording Contract Consumption — 2026-09-11
+
+The four existing `cmd.testing.session.open`, `cmd.testing.session.watch`,
+`cmd.testing.session.background`, `cmd.testing.session.redaction.inspect` IDs and
+run-scoped `cmd.testing.export_bundle` consume ATS-048's
+`TestingSessionCommandRequest/Result/Error/Availability` definitions in
+`Plans/testing_session_command_contracts.schema.json`. The two existing recording
+Play/Watch IDs consume RAP-056's `ArtifactRecordingCommandRequest/Result/Error/Availability`
+definitions in `Plans/artifact_recording_command_contracts.schema.json`.
+The owners define semantics; this catalog does not copy their field lists or mint
+parallel commands. The seven commands retain eleven existing production-intent
+placements and their sole planned handlers. They do not belong to TCME's closed
+ten-ID capture schema or widen the shared-runtime command enum.
+
+Typed requests and results are mandatory at these placements; the former generic
+"typed contract or route/open disposition" fallback does not apply. Existing
+selectors project the typed owner availability/error, including `handler_unavailable`.
+Recording row scope remains record-only versus live-subject. Existing session event
+obligations consume the ATS-049 / DL-039 emit-only, `quarantined_not_admitted`
+disposition in `Plans/testing_session_event_admission.json`; payload validity does
+not authorize EventRecord append, replay, identity consumption or checkpoint advance. Export
+and recording controls retain receipt-only domain-event dispositions. No new native
+handler, visual design, command, storage family, runtime proof or readiness is claimed.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Automated_Testing_System.md#ATS-049, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+
+The existing `cmd.project.new_github_repo` and its sole planned
+`handlers::github::project_new_repo` consume GI-042 / PJCT-008 through the actual
+Project action request/result family. No second field-list DTO, generic create
+command or Project Composition command is introduced. The two send-only obligations
+are separate owner transitions, not unconditional dispatch success; both remain
+`quarantined_not_admitted` under DL-039, without EventRecord append/replay authority.
+The central
+response preserves the application-scoped creation operation while its typed
+terminal result identifies the actual committed Project. Native availability
+remains `handler_unavailable` until owner gates/dispatch/receipts/readback exist.
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/GitHub_Integration.md#GI-042, ContractName:Plans/Project_System.md#PJCT-008, ContractName:Plans/Project_System.md#PJCT-007

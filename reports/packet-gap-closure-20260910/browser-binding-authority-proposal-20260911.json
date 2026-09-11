@@ -1,0 +1,173 @@
+{
+  "schema_id": "pm.browser_binding_authority_proposal.v1",
+  "proposal_id": "BROWSER-BINDINGS-53-PROPOSAL-20260911",
+  "status": "awaiting_user_answer",
+  "created_at_utc": "2026-09-11T18:25:05Z",
+  "scope": "exact_fifty_three_prepared_section15_browser_event_families",
+  "scope_event_count": 53,
+  "scope_event_types": [
+    "browser.workspace.created",
+    "browser.workspace.reset",
+    "browser.workspace.closed",
+    "browser.page.created",
+    "browser.page.activated",
+    "browser.page.closed",
+    "browser.controller_lease.granted",
+    "browser.controller_lease.renewed",
+    "browser.controller_lease.lost",
+    "browser.controller_lease.takeover_requested",
+    "browser.controller_lease.takeover_completed",
+    "browser.navigation.generation_changed",
+    "browser.document.generation_changed",
+    "browser.representation.captured",
+    "browser.representation.delta_created",
+    "browser.representation.queried",
+    "browser.representation.invalidated",
+    "browser.script.compile_started",
+    "browser.script.compiled",
+    "browser.script.compile_failed",
+    "browser.execution_strategy.selected",
+    "browser.execution_strategy.fallback_selected",
+    "browser.program.started",
+    "browser.program.checkpointed",
+    "browser.program.paused",
+    "browser.program.resumed",
+    "browser.program.completed",
+    "browser.program.failed",
+    "browser.program.cancelled",
+    "browser.program.segment.started",
+    "browser.program.segment.checkpointed",
+    "browser.program.segment.completed",
+    "browser.program.segment.failed",
+    "browser.program.segment.timed_out",
+    "browser.program.timeout.stopped",
+    "browser.program.timeout.effects_reconciled",
+    "browser.program.timeout.effect_state_unknown",
+    "browser.program_workspace.created",
+    "browser.program_workspace.updated",
+    "browser.program_workspace.checkpointed",
+    "browser.program_workspace.spilled",
+    "browser.program_workspace.closed",
+    "browser.screenshot.model_attachment_selected",
+    "browser.screenshot.skipped",
+    "browser.route.fetch_selected",
+    "browser.route.browser_escalated",
+    "browser.routine.generated",
+    "browser.routine.validated",
+    "browser.routine.promoted",
+    "browser.routine.invalidated",
+    "browser.routine.disabled",
+    "browser.session.reconstructed_on_host",
+    "browser.session.interrupted"
+  ],
+  "scope_source": {
+    "path": "Plans/browser_event_admission.json",
+    "sha256": "9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534"
+  },
+  "disjoint_from_dl045_285": true,
+  "observed_family": "browser.workspace.created",
+  "observed_producer": "BrowserRuntimeService.workspace",
+  "observation": "In exact-name/producer results and the inspected current semantic/Storage/Usage/Prompt owner passages, no explicitly assigned versioned technical consumer/projector/checkpoint binding was located for this family. This scoped negative finding is not proof that all fifty-three families lack definitions.",
+  "existing_partial_contracts": [
+    {
+      "ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166",
+      "finding": "Exact owner event census, ordinary scope and prepared/admitted distinction; not a concrete consumer identity."
+    },
+    {
+      "ref": "Plans/Contracts_V0.md#CV-330",
+      "finding": "Closed metadata payload, existing EventRecord2.0 identity/digest and replay obligations; declared refs alone do not prove resolved authority."
+    },
+    {
+      "ref": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
+      "finding": "General lookup/dedupe/atomic projection and survivor-checkpoint rules; not a workspace-created checkpoint key/version assignment."
+    },
+    {
+      "ref": "Plans/storage_value_registry.json",
+      "finding": "OperationalAttributionRecord is a materialized canonical_non_rebuildable record with mandatory-backup recovery; it cannot be repurposed as a disposable Browser event projector. Grouped browser session/profile keys remain deferred."
+    },
+    {
+      "ref": "Plans/usage-feature.md#UF-102",
+      "finding": "Operational attribution without synthetic usage; no inspected exact event-to-record/checkpoint assignment."
+    },
+    {
+      "ref": "Plans/Prompt_Pipeline.md#PP-091",
+      "finding": "Independent prompt admission and no replay delivery; no inspected exact event-consumer identity/checkpoint assignment."
+    }
+  ],
+  "search_scope": "Live top-level Plans Markdown plus explicitly referenced schema/registry files; excludes ledgers, audits, evidence, generated shards/indexes and migration/governance outputs. Generated duplicate encountered in an initial broad search was discarded; exact search rerun on scoped paths.",
+  "queries": [
+    "browser.workspace.created",
+    "BrowserRuntimeService.workspace",
+    "Case L",
+    "projector",
+    "checkpoint",
+    "currentness",
+    "withdraw",
+    "consumer_id",
+    "projector_id",
+    "projector_schema_version",
+    "checkpoint_key",
+    "OperationalAttributionRecord",
+    "operational_attribution",
+    "Browser/workspace with consumer/projector/checkpoint"
+  ],
+  "requested_authority": [
+    "For this exact frozen fifty-three-family set only, allow responsible semantic and Storage owners to define a missing technical consumer, projector or checkpoint binding for already specified behavior.",
+    "Per event, search current canonical owners first, cite existing partial definitions and record scoped negative evidence before authoring a missing definition. Reuse only an existing definition with an explicitly applicable role, version and scope; never infer from a sibling or descriptive label.",
+    "Label each newly authored binding as a new owner contract, never pre-existing evidence.",
+    "Technical work is limited to exact identity/scope joins, versioned binding and checkpoint keys/cursors, atomic projection/advancement, replay, currentness, recovery and withdrawal for already specified behavior."
+  ],
+  "unchanged_gates": [
+    "No blanket admission or root-review pass. Each event still requires its complete owner-backed contract, exact schema refs, semantic positives/negatives and root review, followed by one-family Storage landing.",
+    "No new feature, user-visible integration, retention/deletion policy or competing-owner decision. Escalate such choices separately.",
+    "No extension of DL-045's original frozen285 scope; this would be a separate bounded approval for the named Browser53.",
+    "No permission to alter the independent Event Authority validator, frozen audit accounting, historical hashes, PNC-019 baseline, Spec Lock, WorkNodes/NodeSeeds, runtime enablement or governance seal.",
+    "No inference that a prepared payload, synthetic projector, candidate membership or declared reference is actual producer/consumer/checkpoint proof."
+  ],
+  "source_pins": [
+    {
+      "path": "Plans/browser_event_admission.json",
+      "sha256": "9fd94e681052b5677016d262aab470f3fd39cd709eec3696658fe88269387534"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5"
+    },
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "c212fa23f7e490ec5ac994c3a31a2c6f0bda83d72c8ce843e33e391fb925136a"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "4da375fad4674aebfbf516146ecabddfc45fec784c97805b3375f28d02ed03a6"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "1ceecd7491befdfe09e283eac4797b91b20ba7d245393bb5b05764d9dcb78590"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "sha256": "619a21e67f29a946ef2ba65d47d5b1d8a3963127b64e1bf82d3e639befebff9e"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "sha256": "a00f1e1a7c47546b845012d1adca03f02c4cc19e5b4834f90325d526853d7516"
+    },
+    {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59"
+    },
+    {
+      "path": "Plans/section15_browser_program_contracts.schema.json",
+      "sha256": "d947af57f9fe2ddb538bc0e3b619b7b743bc8503e2681db18309bad0e4184684"
+    },
+    {
+      "path": "Plans/browser_event_payloads.schema.json",
+      "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "e286d6e355822e2dfb34cf83d377f8b08a4d776fb943de48d94b9650a08ac97c"
+    }
+  ]
+}

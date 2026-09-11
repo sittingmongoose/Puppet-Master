@@ -2,21 +2,21 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5194-L5429
+Source lines: L5194-L5430
 
-Source SHA256: `4db908950fd355b040ad67c3e4730fd479bad8eb70cc34ed4b05c52e821d08b4`
+Source SHA256: `6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52`
 
 ---
 
 ## Server/Egolite Command-Gap Central Registration Addendum - 2026-09-01
 
 
-The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+The current machine partition is 171 packet rows: 87 new canonical commands, 43 pre-policy aliases, 38 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 104 obligation references collapse to **103 unique primary command/catalog/production-intent rows**; the packet primary denominator is 93 (`87 + 6`). USER-PROJECT-UNARCHIVE-REGISTRY-20260911 reclassifies only source row 128 from local-only presentation to the Project-owner registry mutation. The earlier 86/39, 102-central and 92-packet counts remain historical source-report lineage, not current denominators; every source row identity is preserved.
 
 Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
 
 
-### Exact 102 primary registrations
+### Exact 103 primary registrations
 
 | Exact primary command | Canonical owner / PlanUnit | Sole future handler target | Exact request -> result contract |
 |---|---|---|---|
@@ -70,6 +70,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.installation.attach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
 | `cmd.installation.detach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
 | `cmd.installation.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.project.unarchive` | `Plans/Project_System.md` / `PJCT-002` | `handlers::project::unarchive` | `Plans/project_system_contracts.schema.json#/$defs/project_action_request` -> `Plans/project_system_contracts.schema.json#/$defs/project_action_result` |
 | `cmd.project.duplicate_configuration` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
 | `cmd.project.duplicate_with_history` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
 | `cmd.project.execution_host.select` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
@@ -161,7 +162,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.runtime_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
 | `cmd.ssh_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
 
-### Exact 39 typed local UI dispositions
+### Exact 38 typed local UI dispositions
 
 | Command-shaped packet spelling | Exact typed local UI action | Complete intended GUI consumers |
 |---|---|---|
@@ -196,7 +197,6 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
 | `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
-| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
@@ -222,13 +222,14 @@ plan_unit_id: CS-073
 unit_type: command_registration
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 102 unique exact primary command registrations, 43 pre-policy aliases, 39 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof.
+canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction admits cmd.project.unarchive through the existing Project action family.
 gui_related: true
 gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
 depends_on: [CS-070, CS-071, CS-072]
 unblocks: [UCC-151, WM-050, UIW-016]
 acceptance_criteria:
-  - Exact denominators remain 171 = 86 + 43 + 39 + 3, packet primaries remain 92 = 86 + 6, and 103 obligation references collapse to 102 unique central rows through the one workspace-create overlap.
+  - Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+  - cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent handler or production row; predecessor local requests cannot replay as mutation authority.
   - Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only effect, and complete reverse consumers.
   - Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor and rejection has no production row.
   - Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual, performance, or runtime proof.

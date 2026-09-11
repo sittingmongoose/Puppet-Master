@@ -1,0 +1,123 @@
+{
+  "schema_id": "pm.packet_prepared_integration.v1",
+  "report_id": "PACKET-PREPARED-INTEGRATION-20260911",
+  "status": "prepared_contracts_not_browser_admission",
+  "source_branch": "fix/packet-gap-closure-20260911-landing-dc5",
+  "source_commit": "73f15d4269c18fc84b936108fb2b44f2ef433ce9",
+  "preparation_base": "cc6d4a9aca07e85487d80f32a4f25782ed1c68a2",
+  "reviewed_upstream": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+  "consolidation": "Preserve the published source branch and historical reports; integrate its non-design changes as one current-source commit with prepared/unadmitted Browser state and approved per-family future landings.",
+  "browser_state": {
+    "prepared": 53,
+    "admitted": 0,
+    "central_registry_families": 40,
+    "central_registry_sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+    "admission_complete": false,
+    "native_runtime_proved": false,
+    "scope_permission": "Plans/Decision_Log.md#DL-046",
+    "missing_bindings_authored": 0
+  },
+  "approval_custody": {
+    "proposal": {
+      "path": "reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json",
+      "sha256": "717965b747decfc8548fb8d05cc1bb7fb551adae9bcf70c16f38d2bf087fc137"
+    },
+    "response": {
+      "path": "reports/packet-gap-closure-20260910/browser-binding-authority-response-20260911.json",
+      "sha256": "d297e4a9dfab30f1679946768df8a67bb84c8d58304eae935d1aeba1d9b90274"
+    },
+    "canonical_application": "DL-046 records both exact answers and the frozen 53-name scope; the response's pending-application text remains historical capture truth.",
+    "scope_expanded": false
+  },
+  "planunit_reference_remap": {
+    "reason": "Newly landed Jujutsu planning independently assigned seven PlanUnit IDs used only on this unlanded source branch. Preserve upstream definitions and rename this branch's own definitions and live consumers.",
+    "mapping": {
+      "BRS-021": "BRS-023",
+      "CV-330": "CV-332",
+      "CV-331": "CV-333",
+      "F-082": "F-084",
+      "UCC-162": "UCC-164",
+      "WM-054": "WM-057",
+      "SP-260": "SP-262"
+    },
+    "live_paths": [
+      "Plans/Backup_Restore_System.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Project_System.md",
+      "tests/test_pm_restore_phase_contracts.py",
+      "Plans/Contracts_V0.md",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "Plans/Wiring_Matrix.md",
+      "Plans/storage-plan.md",
+      "Plans/Commands_System.md",
+      "Plans/Shared_Integration_Runtime.md",
+      "Plans/Source_Control_System.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/UI_Wiring_Rules.md",
+      "Plans/ui_command_response.schema.json",
+      "Plans/FileManager.md",
+      "Plans/Wiring_Matrix.production.exclusions.json",
+      "Plans/touch_closure.json"
+    ],
+    "frozen_lineage": "Historical reports, source proposals, evidence captures and their hashes keep their snapshot IDs. Resolve references from source commit 73f15d4269c18fc84b936108fb2b44f2ef433ce9 through this explicit map when consulting the current owner docs.",
+    "protected_non_planunit_ids": [
+      "TOUCH-BRS-021",
+      "TOUCH-BRS-023",
+      "CWF-082",
+      "UF-082"
+    ],
+    "upstream_ids_modified": false
+  },
+  "static_boundaries": {
+    "candidate_replay": "CandidateReplayOracle explicitly tests prepared payload semantics. Default replay rejects prepared families without projection, remembered identity or checkpoint advance.",
+    "admission_gate": "Exact manifest/central admitted subset, no duplicates, exact closed family/schema/owner/retention/source/legacy bindings; prepared members remain absent even in payloads-only mode.",
+    "emit_only": "Testing and GitHub six emit-only candidates remain denied under DL-039. Both validators pin the unchanged ordered40 prefix and retain the old92 proposal prefix as historical, never active currentness.",
+    "tests": "55 focused tests passed after preparation/prefix fixes; a fresh post-integration full run is required."
+  },
+  "pre_fix_full_suite": {
+    "qualification": "Historical diagnostic run before the six fixture/prefix fixes and PlanUnit remap; not current-source acceptance.",
+    "discovered": 453,
+    "run": 453,
+    "passed": 438,
+    "failures": 6,
+    "errors": 9,
+    "raw_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-unittest-20260911-CqWD5T/stderr.log",
+      "sha256": "6658ac627b0b9e98f14765e4c9088b64cb49d909dd385987678c7e46289741db"
+    },
+    "execution_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/prepared-unittest-20260911-CqWD5T/execution-summary.json",
+      "sha256": "02fcbc4d09d07bdb88f321e68a26a5683e52d84a2f06f7a039faa5fb14faae29"
+    },
+    "failure_disposition": "Six failures traced to one test relying on untracked AGENTS.md and five stale92 proposal-prefix expectations. Fixed tracked fixture and current40 prefix without weakening validators. Nine errors are the pre-existing absent historical PNC receipt; no fabricated receipt or seal is supplied."
+  },
+  "formal_audit": {
+    "status": "OPEN",
+    "case_census": 13416,
+    "packet_cases": 5057,
+    "touch_cases": 8359,
+    "touch_rows": 643,
+    "dimensions_per_touch": 13,
+    "scope_groups": 70,
+    "source_packets": 69,
+    "historical_R4": "Source-stale and not closure/currentness proof; no verdict or freeze restamp.",
+    "fresh_formal_review_complete": false
+  },
+  "preserved_boundaries": [
+    "Settings and Onboarding/Tour visual work deferred",
+    "No native app implementation",
+    "No central Browser event admission in this preparation landing",
+    "No new physical storage family or retention policy",
+    "No WorkNodes, NodeSeeds, readiness clearance or governance seal",
+    "No Spec Lock, frozen evidence or historical accounting edits",
+    "No Concepts edits or deletion"
+  ],
+  "next_required": [
+    "Reconcile current upstream sources and regenerate derived files",
+    "Fresh focused/full tests, gates and case census with source pins",
+    "Publish and land verified preparation independently of later family admissions",
+    "Per-family Browser full owner contracts and positive/negative root review before each separate admission",
+    "Fresh evidence-backed formal packet audit without automatic case closure"
+  ]
+}
+

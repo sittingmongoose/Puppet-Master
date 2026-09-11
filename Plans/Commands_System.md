@@ -4051,7 +4051,7 @@ The retained `cmd.remote.reconnect` wrapper accepts `RemoteReconnectWrapperReque
 
 Every new request type below includes `command_instance_id`, `idempotency_key`, `expected_revision_or_epoch`, `project_id`, `project_home_server_id`, `execution_host_id`, `execution_environment_id`, nullable `source_location_id`, `topology_generation`, `actor_ref`, `permission_snapshot_ref`, optional `goal_id`, `plan_id`, `run_id`, `thread_id`, `agent_id`, `crew_id`, `deadline_utc`, and `recovery_of_operation_id`. A command whose subject does not use one optional lineage field carries it as absent; it never substitutes a path or display label for exact topology identity.
 
-Every result type includes `operation_id`, `command_instance_id`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. Replay returns the original result identity without a second side effect.
+Every result type includes `operation_id`, `command_instance_id`, `command_outcome_ref`, `outcome` (`accepted`, `no_change`, `blocked`, `cancelled`, `failed`, or `recovery_required`), `observable_work_id?`, `current_revision_or_epoch`, `projection_ref`, `receipt_refs[]`, `artifact_refs[]`, `disabled_reason?`, `recovery_actions[]`, and `replayed`. The required outcome ref resolves to the same Full Thread command/operation/target generation; the central v2 `UICommandResponse` consumes that outcome and this separately owned result under CV-333, without replacing either owner vocabulary. `accepted` means admitted or durably queued, not domain success. Terminal success requires the typed owner result/receipt and owner verification. `no_change` projects a verified `no_op`; `recovery_required` never projects success. Replay returns the original result identity without a second side effect.
 
 Until Event Authority individually admits a producer family, these commands have `event_effect = none_pending_event_authority`; they update only owner-authorized redb state and return the typed result/receipt/projection references below. A missing event registration is an explicit blocked integration edge, never permission to invent an EventRecord name.
 
@@ -5194,12 +5194,12 @@ owner_hints: [Plans/Commands_System.md, Plans/Planning_Wizard.md, Plans/UI_Comma
 ## Server/Egolite Command-Gap Central Registration Addendum - 2026-09-01
 
 
-The exact machine partition is 171 packet rows: 86 new canonical commands, 43 pre-policy aliases, 39 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 103 obligation references collapse to **102 unique primary command/catalog/production-intent rows**; the packet primary denominator remains 92 (`86 + 6`). Denominators must never be silently substituted for one another.
+The current machine partition is 171 packet rows: 87 new canonical commands, 43 pre-policy aliases, 38 typed local UI actions, and three rejected spellings. Six retained Egolite commands also lacked central rows. Eleven existing alias targets require the same central repair, with `cmd.source_control.workspace.create` the sole overlap with the retained six. Therefore 104 obligation references collapse to **103 unique primary command/catalog/production-intent rows**; the packet primary denominator is 93 (`87 + 6`). USER-PROJECT-UNARCHIVE-REGISTRY-20260911 reclassifies only source row 128 from local-only presentation to the Project-owner registry mutation. The earlier 86/39, 102-central and 92-packet counts remain historical source-report lineage, not current denominators; every source row identity is preserved.
 
 Every primary row below is static central intent. A named `handler_location` is the sole future dispatch target, not evidence that Rust code, registration, provider execution, persistence, native Slint wiring, security behavior, or runtime success exists. Initial availability remains `handler_unavailable`; the exact disabled reason is projected accessibly. All rows use receipt/projection-only effects and `expected_event_types=[]` until Event Authority separately admits an exact family. `ObservableWork` applies only where the owner contract declares asynchronous work. Exact owner permissions, generations, currentness, idempotency, cancellation, reconciliation, and exact-return rules remain intact.
 
 
-### Exact 102 primary registrations
+### Exact 103 primary registrations
 
 | Exact primary command | Canonical owner / PlanUnit | Sole future handler target | Exact request -> result contract |
 |---|---|---|---|
@@ -5253,6 +5253,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.installation.attach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::attach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
 | `cmd.installation.detach_external` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::detach_external` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
 | `cmd.installation.remove` | `Plans/Shared_Integration_Runtime.md` / `SIR-027` | `handlers::installation::remove` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/InstallationOwnershipCommandResult` |
+| `cmd.project.unarchive` | `Plans/Project_System.md` / `PJCT-002` | `handlers::project::unarchive` | `Plans/project_system_contracts.schema.json#/$defs/project_action_request` -> `Plans/project_system_contracts.schema.json#/$defs/project_action_result` |
 | `cmd.project.duplicate_configuration` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_configuration` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
 | `cmd.project.duplicate_with_history` | `Plans/Project_System.md` / `PJCT-003` | `handlers::project::duplicate_with_history` | `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequest` -> `Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResult` |
 | `cmd.project.execution_host.select` | `Plans/Shared_Integration_Runtime.md` / `SIR-026` | `handlers::execution_topology::execution_host_select` | `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandRequest` -> `Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/ProjectTopologyCommandResult` |
@@ -5344,7 +5345,7 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.runtime_connection.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
 | `cmd.ssh_credential_binding.test` | `cmd.integration.connection.test` | `handlers::integration_connection::test` | Normalize before permission and dispatch; source is not registered and has no peer handler, availability, wiring, persistence, or EventRecord. |
 
-### Exact 39 typed local UI dispositions
+### Exact 38 typed local UI dispositions
 
 | Command-shaped packet spelling | Exact typed local UI action | Complete intended GUI consumers |
 |---|---|---|
@@ -5379,7 +5380,6 @@ Every primary row below is static central intent. A named `handler_location` is 
 | `cmd.project.move.open_details` | `ui.project.move.open_details` | Projects > Move Project; Settings > Hosting & Files; Doctor; status bar |
 | `cmd.project.open_details` | `ui.project.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project.source_location.open_details` | `ui.project.source_location.open_details` | Settings > Hosting & Files; Projects hosting/source manager; Product Onboarding; Doctor |
-| `cmd.project.unarchive` | `ui.project.restore_archived` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.project_template.open_details` | `ui.project_template.open_details` | Projects page; K3 Project manager; Product Onboarding First Project; palette/API |
 | `cmd.tool_package.open_provenance` | `ui.tool_package.open_provenance` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
 | `cmd.tool_package.review_license` | `ui.tool_package.review_license` | K3 Toolchain/Integrations managers; Product Onboarding owner setup; Doctor remediation; palette/API |
@@ -5405,13 +5405,14 @@ plan_unit_id: CS-073
 unit_type: command_registration
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 102 unique exact primary command registrations, 43 pre-policy aliases, 39 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof.
+canonical_text: The 171-row server command-gap adjudication and six retained Egolite gaps resolve to 103 unique exact primary command registrations, 43 pre-policy aliases, 38 typed local UI actions, and three non-dispatchable rejections, with one sole planned target per primary and no fabricated native or event proof; the September 11 user correction admits cmd.project.unarchive through the existing Project action family.
 gui_related: true
 gui_classification_reason: The registrations supply Settings, Product Onboarding, Doctor, project, hosting, update, Browser, Forge, Source Control, and palette consumers with exact availability and disabled reasons.
 depends_on: [CS-070, CS-071, CS-072]
 unblocks: [UCC-151, WM-050, UIW-016]
 acceptance_criteria:
-  - Exact denominators remain 171 = 86 + 43 + 39 + 3, packet primaries remain 92 = 86 + 6, and 103 obligation references collapse to 102 unique central rows through the one workspace-create overlap.
+  - Exact current denominators are 171 = 87 + 43 + 38 + 3, packet primaries are 93 = 87 + 6, and 104 obligation references collapse to 103 unique central rows through the one workspace-create overlap; only row 128 changes disposition under USER-PROJECT-UNARCHIVE-REGISTRY-20260911.
+  - cmd.project.unarchive has one Project owner, existing Project request/result family and sole handlers::project::unarchive target. The retained ui.project.restore_archived entry constructs the command before every gate and receives no independent handler or production row; predecessor local requests cannot replay as mutation authority.
   - Every primary resolves one owner, exact request/result contracts, one planned target, handler_unavailable state, receipt/projection-only effect, and complete reverse consumers.
   - Every alias normalizes before permission and dispatch with no source registration or peer route; every local predecessor and rejection has no production row.
   - Static plans, schemas, fixtures, target strings, catalogs, wiring rows, and concepts confer no native, security, visual, performance, or runtime proof.
@@ -6264,3 +6265,55 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+
+
+### CS-080 - Shared Runtime Result To Command Outcome Binding
+
+```yaml
+plan_unit_id: CS-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: "All twenty-six canonical shared-runtime command results inherit one required command_outcome_ref in command_result_envelope. CV-333 joins that existing result to its actual Full Thread operation without merging the two closed status vocabularies."
+gui_related: false
+gui_classification_reason: This governs backend record binding and dispatcher contracts.
+depends_on: [CV-333, SIR-015]
+unblocks: []
+acceptance_criteria:
+  - "All twenty-six result definitions inherit the required non-secret outcome ref through the existing shared envelope."
+  - "Resolve matching command, command instance, operation, target generation and request binding before projecting the owner result."
+  - "Accepted remains nonterminal; no_change projects verified no_op, blocked projects rejected, and recovery_required retains recovery semantics without automatic retry."
+  - "Cancellation and no-change carry the actual required terminal receipt; replay returns the original result and operation identity."
+  - "Existing generalized command IDs, compatibility spellings, remote wrapper normalization, permission and no-unregistered-event rules remain unchanged."
+validation_surfaces: [Plans/ui_command_response_fixtures.json, tests/test_pm_ui_command_response.py, python3 scripts/pm-plans-verify.py validate-ui-command-response, python3 scripts/pm-plan-index.py validate]
+risk_class: command_response_identity_or_false_completion
+reasoning_tier: high
+context_scope: central_command_response_bridge
+implementation_surfaces: [Plans/shared_runtime_command_contracts.schema.json, Plans/shared_runtime_command_contract_fixtures.json, Plans/Commands_System.md]
+node_compile_hint: {mode: static_command_response_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [USER-PACKET-GAP-CLOSURE-20260910, Plans/Shared_Integration_Runtime.md#SIR-015]
+negative_constraints:
+  - No native dispatcher, owner authentication, effect execution, new command, event or physical storage-family admission is proved by static fixtures.
+  - No second command outcome owner, fabricated operation scope, automatic retry of unknown effects, or governance/readiness lift.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Evidence-Consumer Dispatch Bindings — 2026-09-11
+
+ATS-048 owns the five existing Testing session/bundle command contracts; RAP-056
+owns the two existing recording Play/Watch command contracts. Dispatch uses the
+exact request/result schema references on all eleven existing placements in
+`Plans/Wiring_Matrix.production.json`, with the same sole planned handlers.
+The central response bridge requires the typed owner request, its authenticated
+normalized request binding, typed owner result and shared CommandOutcome to agree.
+It consumes the owners' status/currentness/receipt/replay rules; acceptance is not
+terminal success. Native owner lookup and policy enforcement remain unimplemented.
+
+Shared metadata/idempotency fields are referenced, not redefined; the shared-runtime
+26-command enum and TCME ten-command enum do not expand. No generic schema whose
+closed command enum excludes a command is a valid binding for that command. The
+owner schemas, static fixtures and planned handler names confer no execution,
+capture, test-verdict, protected-auth, storage or Event Authority permission.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/UI_Command_Catalog.md

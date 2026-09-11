@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8063-L8218
+Source lines: L8066-L8221
 
-Source SHA256: `dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1`
+Source SHA256: `f464cd8c3d8971c2dff2e913983a3d7e24dfbac25ab8f4253c88a4b52a6146e1`
 
 ---
 
@@ -14,7 +14,7 @@ This addendum closes the command-catalog portion of the FABLE GUI command and wi
 
 ### Command response and receipt baseline
 
-Every command in this addendum returns the `UICommandResponse` envelope from `Plans/Contracts_V0.md`. The field-level response minimum is `schema_version`, `dispatch_id`, `command_id`, `ack_status`, `result_status?`, `error?`, `event_refs[]?`, `receipt_ref?`, and `ts`. Error codes are closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`. Commands that intentionally emit no persisted domain event still record a dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events.
+Every command in this addendum consumes the closed v2 `UICommandResponse` in `Plans/ui_command_response.schema.json` through CV-333. The catalog does not maintain a second response-field minimum or error enum. An actual owner operation binds the normalized request, Full Thread command outcome and separately validated typed owner result; local-only route/open actions and pre-dispatch refusals use the schema's non-operation branches without fabricated durable scope. Commands that intentionally emit no persisted domain event still record an actual dispatch receipt or route/open disposition and must not fabricate `*.command_applied` events. Acceptance remains pending, and an unknown terminal effect remains recovery-required rather than successful or automatically retryable.
 
 ### Added GUI command families
 

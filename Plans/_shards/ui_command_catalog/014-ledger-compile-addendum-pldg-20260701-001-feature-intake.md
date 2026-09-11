@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7689-L7845
+Source lines: L7691-L7848
 
-Source SHA256: `dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1`
+Source SHA256: `f464cd8c3d8971c2dff2e913983a3d7e24dfbac25ab8f4253c88a4b52a6146e1`
 
 ---
 
@@ -26,9 +26,9 @@ canonical_text: >-
   ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
   ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
-  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v1
-  and pm.product_onboarding.action_result.v1 contracts. Every request requires closed, normalized, secret-free
-  local_context fields for intent, scope, branch, selection, owner-operation, disclosure, tour, and recovery identity;
+  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
+  and pm.product_onboarding.action_result.v2 contracts. Every request consumes PWIZ-021's closed, normalized, secret-free
+  local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
   arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
   route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
   cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links continue to use
@@ -46,7 +46,8 @@ acceptance_criteria:
   - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
   - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
   - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
-  - Required local_context accepts only the schema's normalized intent, scope, branch_kind, branch_step, selection_ref, target_ref, owner_operation_ref, owner_branch_ref, expanded, start_tour, and recovery_condition fields; additional/raw/free-form/secret-bearing values are rejected.
+  - Required local_context consumes the exact closed v2 owner schema rather than a catalog-owned field list; nullable owner_phase/owner_command_id/precommit_authorization_ref/project_commit_ref/setup_commit_binding have phase-gated requirements, and additional/raw/free-form/secret-bearing values are rejected.
+  - Uncreated Project drafts and Settings copy previews consume PWIZ-021/SSYS-036. Only owner-authorized read-only preflight or selected-source authentication may run before commit; first-time sign-in consumes MACS-005 with no fabricated identities. Review carries PJCT-007's exact Project-owned commit binding, and paid/free-provider owner routes require that real committed Project. Neither phase adds a command or handler.
   - "more_ways setup/project disclosure and branch-local state updates have distinct intent/scope/choice/branch combinations; Skip whole-session and optional Project/Remote-Access variants have distinct intent/scope/choice/branch plus session_skipped versus optional_scope_skipped results."
   - Skip and Close never mark Health, Doctor, provider, Server, Project, backup, or any other owner Ready.
   - Owner-flow actions carry typed owner route or intent and map to the target owner's existing canonical command and sole handler without replaying owner work.
