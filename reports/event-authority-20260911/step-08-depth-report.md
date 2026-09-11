@@ -1,5 +1,9 @@
 # Step 08 — live registered depth assessment
 
+Current supplement: `run.started` now has a root-reviewed complete normative 12-facet contract in [step-08-run-started-depth.json](step-08-run-started-depth.json), with [validation and limits](step-08-run-started-validation.md). This completes one of the original 39 contract-depth rows; the other 38 have not been closed by this supplement. Runtime execution, frozen-validator clearance, overall Step 8 and governance remain incomplete. The separately completed compaction contract is outside this 39-row wave.
+
+## Historical initial assessment (before DL-045 contract definitions)
+
 State: **INCOMPLETE**. All 39 registered families were freshly assessed across 12 criteria (468 cells). No family has complete depth. All 39 exact consumer/checkpoint cells remain unclosed and route to six owner-batched unresolved-binding work records (completion already authorized; no approval sought).
 
 Contract evidence counts: ABSENT 39, CONFLICT 42, PARTIAL 186, PASS 201. PASS means a supported contract criterion, never runtime verification. Oracle execution is UNPROVEN for every row.

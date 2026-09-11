@@ -1,0 +1,595 @@
+{
+  "assessment_id": "EA-STEP08-RUN-STARTED-CONTRACT",
+  "assessed_at_utc": "2026-09-11T18:28:35.337406+00:00",
+  "base_commit": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+  "event_type": "run.started",
+  "family_id": "event-family-run-started",
+  "family_revision": "2.0.0",
+  "registry_revision": "2026-09-11.1",
+  "normative_contract_complete": true,
+  "runtime_execution": "UNPROVEN_NOT_RUN",
+  "independent_validator_pass": false,
+  "seal_prerequisites_met": false,
+  "status_meaning": "PASS means this individual normative contract explicitly supplies the facet. It is not runtime execution, frozen-validator depth clearance, readiness, or governance certification.",
+  "new_plan_units": [
+    "SP-265",
+    "EP-116",
+    "RGV-019",
+    "OP-036",
+    "UF-102"
+  ],
+  "cells": {
+    "membership_version": {
+      "status": "PASS",
+      "assessment": "Existing family and payload revision are explicit and unchanged.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+          "purpose": "Existing run.started membership, revision, project scope, payload and retention unchanged.",
+          "json_pointer": "#/families/27"
+        }
+      ]
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "assessment": "Executor retains semantic admission; Storage owns the index/checkpoint; four read consumers have exact owners.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+          "purpose": "Existing run.started membership, revision, project scope, payload and retention unchanged.",
+          "json_pointer": "#/families/27"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "sha256": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5",
+          "purpose": "DL-045 records the user-approved bounded technical contract authority.",
+          "line_start": 2941,
+          "line_end": 2941
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "New event-specific filter reads existing index; four explicit passive consumers share its checkpoint.",
+          "line_start": 19242,
+          "line_end": 19242
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Existing immutable start barrier retained; new scoped start identity and handover rules.",
+          "line_start": 7271,
+          "line_end": 7271
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "sha256": "284d95201916a33d121ad4339283ac20bb295d51e5b98889beab81d6fddfbe7e",
+          "purpose": "Focused run graph reader owns passive runtime-context display.",
+          "line_start": 1288,
+          "line_end": 1288
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "sha256": "82e027030cbd6e5e717856ab3d1103a38f9f3566d31b849c57eefbd9106340a7",
+          "purpose": "History reader owns one source-backed start fact.",
+          "line_start": 2735,
+          "line_end": 2735
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "sha256": "2678a5e6cb129c8e5acac6ff53ea521c280706573a016320e6cf2f60d58186bd",
+          "purpose": "Attribution context cannot produce or settle Usage charges.",
+          "line_start": 7021,
+          "line_end": 7021
+        }
+      ]
+    },
+    "producer": {
+      "status": "PASS",
+      "assessment": "Existing immutable runtime/start barrier plus new explicit mechanical identity and original-result reuse.",
+      "evidence": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Existing immutable start barrier retained; new scoped start identity and handover rules.",
+          "line_start": 7271,
+          "line_end": 7271
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Original committed identities survive retries and source expiry; absence cannot authorize a second start.",
+          "line_start": 7273,
+          "line_end": 7273
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Passive recovery evidence cannot reconstruct canonical records or resume execution.",
+          "line_start": 7275,
+          "line_end": 7275
+        }
+      ]
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "assessment": "Current closed envelope and v2 payload reused without widening; snapshot must satisfy exact schema and joins.",
+      "evidence": [
+        {
+          "path": "Plans/event_payload_run_started.schema.json",
+          "sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+          "purpose": "Unchanged closed current v2 payload and exact v1 compatibility reader.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/event_record.schema.json",
+          "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "purpose": "Unchanged current EventRecord envelope and immutable compatibility reader.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/requested_effective_runtime.schema.json",
+          "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+          "purpose": "Immutable runtime snapshot shape and six owner-reference joins.",
+          "json_pointer": "#"
+        }
+      ]
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "assessment": "Project partition, payload run/thread, storage instance and immutable runtime identity are cross-validated.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+          "purpose": "Existing run.started membership, revision, project scope, payload and retention unchanged.",
+          "json_pointer": "#/families/27"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Exact project partition and complete payload-backed run lookup; run_id is absent from index.",
+          "line_start": 19257,
+          "line_end": 19257
+        },
+        {
+          "path": "Plans/run_started_consumer_contracts.schema.json",
+          "sha256": "d20605a23d53b73fb98dc51cc52eaa6b3219122b787a8d259d9d238609915b52",
+          "purpose": "Closed checkpoint and typed cursor schema.",
+          "json_pointer": "#/$defs/checkpoint"
+        }
+      ]
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "assessment": "Retries preserve original durable identity; inclusive cursor resume and rebuild cannot repeat dispatch or accounting.",
+      "evidence": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Original committed identities survive retries and source expiry; absence cannot authorize a second start.",
+          "line_start": 7273,
+          "line_end": 7273
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Atomic owned effect and read-token publication; no separate persisted consumer effect.",
+          "line_start": 19283,
+          "line_end": 19283
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Passive recovery evidence cannot reconstruct canonical records or resume execution.",
+          "line_start": 7275,
+          "line_end": 7275
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Quarantine, version fencing, source-backed rebuild and canonical non-reconstruction.",
+          "line_start": 19291,
+          "line_end": 19291
+        }
+      ]
+    },
+    "retention": {
+      "status": "PASS",
+      "assessment": "Source and index policies stay unchanged; exact existing bounded projection policy assigned only to the new checkpoint.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+          "purpose": "Existing run.started membership, revision, project scope, payload and retention unchanged.",
+          "json_pointer": "#/families/27"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Exact source/index policies retained; new disposable checkpoint consumes existing RP-PROJECTION-3GEN.",
+          "line_start": 19293,
+          "line_end": 19293
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Exact first withdrawal anchor; normal refresh/run completion cannot start or reset TTL.",
+          "line_start": 19295,
+          "line_end": 19295
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "74de2579fe485c299f094a2b58e5cfb414996e5f22b0e46e3da024df9ad39d2e",
+          "purpose": "One added physical checkpoint; preceding 88 rows and all policy definitions preserved.",
+          "json_pointer": "#/families/88"
+        }
+      ]
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "assessment": "Permission/tombstone checks, non-capability refs, quarantine and mandatory canonical-backup recovery prevent content or authority reconstruction.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Refs do not grant capabilities; secret/content material never enters the checkpoint.",
+          "line_start": 19297,
+          "line_end": 19297
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Owner tombstones and scoped removal evaluated at disclosure and restore; no resurrection.",
+          "line_start": 19299,
+          "line_end": 19299
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Quarantine, version fencing, source-backed rebuild and canonical non-reconstruction.",
+          "line_start": 19291,
+          "line_end": 19291
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Passive recovery evidence cannot reconstruct canonical records or resume execution.",
+          "line_start": 7275,
+          "line_end": 7275
+        }
+      ]
+    },
+    "transitions": {
+      "status": "PASS",
+      "assessment": "Two ordered index/filter barriers; checkpoints cannot become lifecycle or execution authority.",
+      "evidence": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Existing immutable start barrier retained; new scoped start identity and handover rules.",
+          "line_start": 7271,
+          "line_end": 7271
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Existing generic index commits independently before the run-start filter; missing snapshot cannot stall index metadata.",
+          "line_start": 19280,
+          "line_end": 19280
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Only the filtered checkpoint is written under unchanged snapshot and CAS; logical joins publish after commit.",
+          "line_start": 19281,
+          "line_end": 19281
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Atomic owned effect and read-token publication; no separate persisted consumer effect.",
+          "line_start": 19283,
+          "line_end": 19283
+        }
+      ]
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "assessment": "One exact versioned filter and checkpoint serve four passive owner bindings, with complete-range validation and no independent persisted effects.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "New event-specific filter reads existing index; four explicit passive consumers share its checkpoint.",
+          "line_start": 19242,
+          "line_end": 19242
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Exact project partition and complete payload-backed run lookup; run_id is absent from index.",
+          "line_start": 19257,
+          "line_end": 19257
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "New physical checkpoint, key and closed value schema.",
+          "line_start": 19268,
+          "line_end": 19268
+        },
+        {
+          "path": "Plans/run_started_consumer_contracts.schema.json",
+          "sha256": "d20605a23d53b73fb98dc51cc52eaa6b3219122b787a8d259d9d238609915b52",
+          "purpose": "Closed checkpoint and typed cursor schema.",
+          "json_pointer": "#/$defs/checkpoint"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "74de2579fe485c299f094a2b58e5cfb414996e5f22b0e46e3da024df9ad39d2e",
+          "purpose": "One added physical checkpoint; preceding 88 rows and all policy definitions preserved.",
+          "json_pointer": "#/families/88"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Existing generic index commits independently before the run-start filter; missing snapshot cannot stall index metadata.",
+          "line_start": 19280,
+          "line_end": 19280
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Only the filtered checkpoint is written under unchanged snapshot and CAS; logical joins publish after commit.",
+          "line_start": 19281,
+          "line_end": 19281
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "sha256": "284d95201916a33d121ad4339283ac20bb295d51e5b98889beab81d6fddfbe7e",
+          "purpose": "Focused run graph reader owns passive runtime-context display.",
+          "line_start": 1288,
+          "line_end": 1288
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "sha256": "82e027030cbd6e5e717856ab3d1103a38f9f3566d31b849c57eefbd9106340a7",
+          "purpose": "History reader owns one source-backed start fact.",
+          "line_start": 2735,
+          "line_end": 2735
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "sha256": "2678a5e6cb129c8e5acac6ff53ea521c280706573a016320e6cf2f60d58186bd",
+          "purpose": "Attribution context cannot produce or settle Usage charges.",
+          "line_start": 7021,
+          "line_end": 7021
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Passive recovery evidence cannot reconstruct canonical records or resume execution.",
+          "line_start": 7275,
+          "line_end": 7275
+        }
+      ]
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "assessment": "Exact historical reader and transient upgrader preserve bytes/identity; writer and consumer withdrawal have explicit separate fences.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Exact v1 reader/upgrader, immutable original source hashes, no historical append.",
+          "line_start": 19301,
+          "line_end": 19301
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Distinct writer and consumer withdrawal; compatible successor requires explicit migration and validation.",
+          "line_start": 19303,
+          "line_end": 19303
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+          "purpose": "Original committed identities survive retries and source expiry; absence cannot authorize a second start.",
+          "line_start": 7273,
+          "line_end": 7273
+        }
+      ]
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "assessment": "35 focused static cases executed; 30 paired native acceptance obligations are authored and explicitly unexecuted.",
+      "evidence": [
+        {
+          "path": "Plans/run_started_consumer_contract_fixtures.json",
+          "sha256": "5310028861da355c64c9dc8008cad710b227ffa701f32e003865193e4768fc74",
+          "purpose": "22 schema cases, 13 relational bundles, and 30 paired native obligations.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/run_started_consumer_contracts.schema.json",
+          "sha256": "d20605a23d53b73fb98dc51cc52eaa6b3219122b787a8d259d9d238609915b52",
+          "purpose": "Closed checkpoint and typed cursor schema.",
+          "json_pointer": "#/$defs/checkpoint"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Atomic owned effect and read-token publication; no separate persisted consumer effect.",
+          "line_start": 19283,
+          "line_end": 19283
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
+          "purpose": "Owner tombstones and scoped removal evaluated at disclosure and restore; no resurrection.",
+          "line_start": 19299,
+          "line_end": 19299
+        }
+      ]
+    }
+  },
+  "scope": {
+    "event_membership_change": false,
+    "registered_families_preserved": 40,
+    "physical_checkpoint_rows_added": 1,
+    "physical_rows_before": 88,
+    "physical_rows_after": 89,
+    "retention_policy_definitions_changed": false,
+    "critical_mvp_arrays_changed": false,
+    "depth_wave_size": 39,
+    "depth_wave_completed_in_this_supplement": [
+      "run.started"
+    ],
+    "other_38_reassessment_completed": false,
+    "separate_compaction_contract_counted_in_39": false,
+    "quarantine_252_outcomes_changed": false
+  },
+  "validation": {
+    "schema_cases_passed": 22,
+    "shape_valid_cross_field_cases_passed": 13,
+    "native_semantic_pairs_unexecuted": 30,
+    "native_execution_status": "UNPROVEN_NOT_RUN",
+    "full_registry_json_schema": "PASS",
+    "unchanged_storage_registry_data_check": {
+      "status": "FAIL",
+      "failures": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 89
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 67,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 70,
+            "migration_only": 3
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "runtime_resource_admission",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "observable_work_projection",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        }
+      ],
+      "baseline_receipt_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/storage-baseline.json",
+      "baseline_receipt_sha256": "9dca79e2defa1aadef3d5bc6771a2bb46cbb60a36c45d105ba58c2a9b78b9066"
+    },
+    "broader_governance": "FAIL: all 32 standard checks executed; 18 failed or blocked. See step-08-run-started-checks.json for the dated actual results.",
+    "validator_edits_or_overrides": false
+  },
+  "native_oracle_ids": [
+    "source_lookup",
+    "scope",
+    "filter_completeness",
+    "source_digest",
+    "snapshot",
+    "join",
+    "duplicate",
+    "lost_ack",
+    "historical_key",
+    "atomic_before",
+    "atomic_after",
+    "global_checkpoint",
+    "current_switch",
+    "stale_generation",
+    "known_gap",
+    "compaction",
+    "expiry",
+    "checkpoint_eviction",
+    "source_retention",
+    "deletion",
+    "custody",
+    "legacy",
+    "usage",
+    "terminal_run",
+    "recovery",
+    "consumer_withdrawal",
+    "writer_withdrawal",
+    "migration",
+    "four_roles",
+    "checkpoint_terminal_retention_anchor"
+  ],
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-run-started-20260911/proposal-manifest.json",
+      "sha256": "e0dc569f46513cf12d67fa3081f8f2e84a0902821fa16799c079d36b8e50e5be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-run-started-20260911/owner-and-sidecars.patch",
+      "sha256": "8e5a9daf88a2c28523f9e8f1ed40885a6114e0b6b42d412ee42b1994d1d60716"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/source-search.json",
+      "sha256": "5268ada6baf8021f066278924c719ef42bcf1ed58b8fd814bd2f1b18739b62d8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/selected-source-excerpts.json",
+      "sha256": "86f0bb5b9b47bb4e393e00ce9104b49c06f51491e1d1bb4a0241bf450ffa5829"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/current-source-review.json",
+      "sha256": "6d8b8e6e6772a719dda939d8ade62f9f7574fc22e28668686be712bd5ec2cb72"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/integration-validation-final.json",
+      "sha256": "a151e5173f35cedaf11bdf2f05d899689147ba43aa953c6e1a1c5a5f0b879ec7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/storage-baseline.json",
+      "sha256": "9dca79e2defa1aadef3d5bc6771a2bb46cbb60a36c45d105ba58c2a9b78b9066"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/shard-check-final.json",
+      "sha256": "39489cb255f8865a5872082a76ca04216bd25531ddebe714bc66ef679d4a94da"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/index-scope-final.json",
+      "sha256": "f0ff5f6bb4b4549c5de37bf5dcf285fc53c199cf62cc2e16354eed8e4064464f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/run-gates-final.json",
+      "sha256": "193f0c7fe7baf015e2549002678d925318831d9e39caca5c9988d8c51c78cb19"
+    }
+  ],
+  "rebase_review": "Current 900bf485 Jujutsu owner additions preserved. All 19 selected canonical passages unchanged; SP-260/261 collisions resolved by assigning SP-265 to this new unit only. The frozen proposal retains its original IDs as lineage.",
+  "cost": "One Astra medium contract worker plus root review, integration and validation; billing data unavailable."
+}

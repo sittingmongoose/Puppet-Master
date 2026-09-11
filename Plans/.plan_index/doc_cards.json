@@ -5620,10 +5620,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 98,
+        "False": 99,
         "True": 17
       },
-      "heading_count": 208,
+      "heading_count": 210,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -5657,9 +5657,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 7263,
+      "line_count": 7331,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 115,
+      "plan_unit_count": 116,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -5775,7 +5775,8 @@
         "EP-112",
         "EP-113",
         "EP-114",
-        "EP-115"
+        "EP-115",
+        "EP-116"
       ],
       "reasoning_tiers": [
         "high",
@@ -5783,6 +5784,7 @@
       ],
       "risk_classes": [
         "duplicate_side_effect",
+        "event_source_and_checkpoint_authority_drift",
         "execution_boundary",
         "executor_addenda_precedence_drift",
         "executor_consumer_drift",
@@ -5802,15 +5804,15 @@
         "unsafe_runtime_activation",
         "unverified_execution_completion"
       ],
-      "sha256": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+      "sha256": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 115
+        "accepted": 116
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 113
+        "requirement": 114
       },
       "validation_surfaces": [
         "Cumulative snapshots are persisted once",
@@ -5822,9 +5824,12 @@
         "Future SSH no-local-checkout Executor task test.",
         "Future Verifier exact evidence follow-up test.",
         "In-flight update isolation fixtures",
+        "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "No partial stream fragment is replayed as a full assistant turn.",
         "OpenCode remains HTTP/SSE unless upstream contract changes.",
         "Partial-stream failure routing fixtures",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "Provider native item IDs are kept only where allowed by replay policy.",
         "Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support",
         "UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.",
@@ -11663,9 +11668,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 10,
-        "True": 25
+        "True": 26
       },
-      "heading_count": 97,
+      "heading_count": 99,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
@@ -11689,9 +11694,9 @@
         "future Orchestrator History tab",
         "future Orchestrator run details and routes"
       ],
-      "line_count": 2722,
+      "line_count": 2777,
       "path": "Plans/Orchestrator_Page.md",
-      "plan_unit_count": 35,
+      "plan_unit_count": 36,
       "plan_unit_ids": [
         "OP-002",
         "OP-028",
@@ -11727,7 +11732,8 @@
         "OP-032",
         "OP-033",
         "OP-034",
-        "OP-035"
+        "OP-035",
+        "OP-036"
       ],
       "reasoning_tiers": [
         "high",
@@ -11741,6 +11747,7 @@
         "concern_lifecycle_identity_drift",
         "debug_resume_identity_drift",
         "dense_tab_scale_drift",
+        "event_source_and_checkpoint_authority_drift",
         "execution_boundary",
         "gui_runtime_authority_drift",
         "help_glossary_drift",
@@ -11770,20 +11777,23 @@
         "source_control_boundary_drift",
         "untruthful_projection"
       ],
-      "sha256": "cd66bb447f461b390142bf4edc41ced7d57085e271e0085e54aab67885c58689",
+      "sha256": "82e027030cbd6e5e717856ab3d1103a38f9f3566d31b849c57eefbd9106340a7",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 34,
+        "accepted": 35,
         "retired": 1
       },
       "title": "Orchestrator Page -- Single-Page Seven-Tab Specification",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 6,
-        "requirement": 27,
+        "requirement": 28,
         "validation_rule": 1
       },
       "validation_surfaces": [
+        "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "future Orchestrator Ledger export fixture suite",
         "future Orchestrator Plan Compile tab review",
         "future Orchestrator Usage drill-through fixture suite",
@@ -14330,9 +14340,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 4,
-        "True": 14
+        "True": 15
       },
-      "heading_count": 42,
+      "heading_count": 44,
       "implementation_surfaces": [
         "Plans/.plan_index",
         "Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -14358,9 +14368,9 @@
         "future Run Graph inspector",
         "future concern identity contract"
       ],
-      "line_count": 1275,
+      "line_count": 1330,
       "path": "Plans/Run_Graph_View.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 19,
       "plan_unit_ids": [
         "RGV-001",
         "RGV-015",
@@ -14379,13 +14389,15 @@
         "RGV-014",
         "RGV-016",
         "RGV-017",
-        "RGV-018"
+        "RGV-018",
+        "RGV-019"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "event_source_and_checkpoint_authority_drift",
         "execution_projection_authority_drift",
         "historical_run_focus",
         "historical_run_mode_ambiguity",
@@ -14405,16 +14417,16 @@
         "stale_tier_cleanup",
         "validation_coverage"
       ],
-      "sha256": "49143f47ebcde1b9235b6a7cf99b532bf9bb96979480752e85df92b2447d6341",
+      "sha256": "284d95201916a33d121ad4339283ac20bb295d51e5b98889beab81d6fddfbe7e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 19
       },
       "title": "Run Graph View (Node Graph Display) -- Specification",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 3,
-        "requirement": 13,
+        "requirement": 14,
         "validation_rule": 1
       },
       "validation_surfaces": [
@@ -14429,7 +14441,10 @@
         "Manual node detail and action payload review.",
         "Manual review of Plans/Run_Graph_View.md section 1.",
         "Manual stale tier/HITL cleanup review.",
+        "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Owner adjudication review.",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "Projection trust/manual action-gating review.",
         "Route/open payload audit.",
         "UI Command Catalog cross-check.",
@@ -16217,10 +16232,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 161,
+        "False": 162,
         "True": 100
       },
-      "heading_count": 466,
+      "heading_count": 472,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16254,6 +16269,8 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/redaction_transform_registry.json",
         "Plans/redaction_transform_registry.schema.json",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
         "Plans/storage_recovery_contracts.schema.json",
@@ -16273,9 +16290,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19234,
+      "line_count": 19362,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 261,
+      "plan_unit_count": 262,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16537,7 +16554,8 @@
         "SP-258",
         "SP-259",
         "SP-260",
-        "SP-261"
+        "SP-261",
+        "SP-265"
       ],
       "reasoning_tiers": [
         "high",
@@ -16550,6 +16568,7 @@
         "dry_method_provenance_storage_gap",
         "durable_contract_claim_without_physical_family_or_nonpersisted_boundary",
         "event_record_storage_boundary_drift",
+        "event_source_and_checkpoint_authority_drift",
         "eventrecord_scope_legacy_dedupe_drift",
         "execution_boundary",
         "false_durability",
@@ -16594,17 +16613,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "ed34896ab12ec50fc1a9cf99fd73d61a1ee9018c3eb77c5404d51e350ab54ba1",
+      "sha256": "97f14d9dc4ea2dec958d102e2b3f6349da5ce114f486b415048864b5233a7027",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 258,
+        "accepted": 259,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 237,
+        "requirement": 238,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 9,
@@ -16637,9 +16656,12 @@
         "Large tool results remain retrievable from artifacts with hashes.",
         "Low-memory mode disables optional previews/agents before core runtime fails.",
         "Memory store and chat/session files have size/compaction policies.",
+        "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/context_compaction_completion_contract_fixtures.json",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
         "Plans/working_notebook_contract_fixtures.json",
         "Quota exceeded degrades with warning and exact subsystem, not crash.",
@@ -17734,9 +17756,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 33,
-        "True": 68
+        "True": 69
       },
-      "heading_count": 222,
+      "heading_count": 224,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -17765,9 +17787,9 @@
         "Plans/usage-feature.md",
         "future usage events"
       ],
-      "line_count": 7008,
+      "line_count": 7064,
       "path": "Plans/usage-feature.md",
-      "plan_unit_count": 101,
+      "plan_unit_count": 102,
       "plan_unit_ids": [
         "UF-002",
         "UF-003",
@@ -17869,13 +17891,15 @@
         "UF-096",
         "UF-099",
         "UF-100",
-        "UF-101"
+        "UF-101",
+        "UF-102"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "event_source_and_checkpoint_authority_drift",
         "fabricated_usage",
         "false_usage_reset",
         "gui_usage_acceptance_false_pass",
@@ -17906,10 +17930,10 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "b992d366f78133b51691900eac1e8a6e32e7b48648348bd6984c1acc2ab781d1",
+      "sha256": "2678a5e6cb129c8e5acac6ff53ea521c280706573a016320e6cf2f60d58186bd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 101
+        "accepted": 102
       },
       "title": "Usage Feature -- App/GUI Plan",
       "unit_type_counts": {
@@ -17918,7 +17942,7 @@
         "data_contract": 1,
         "deferred_enhancement": 8,
         "generated_artifact_residual": 1,
-        "requirement": 86,
+        "requirement": 87,
         "schema_contract": 1,
         "security_contract": 1
       },
@@ -17931,10 +17955,13 @@
         "Fallback receipt completeness fixtures",
         "GUI shows budget by source family",
         "In-flight provenance immutability fixtures",
+        "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Omitted/deferred catalog entries have reason receipts",
         "Paid fallback budget gate fixtures",
         "Per-provider/model/account cache hit/miss/cost savings views expose measured vs estimated vs unsupported states.",
         "Plans/full_thread_runtime_contract_fixtures.json",
+        "Plans/run_started_consumer_contract_fixtures.json",
+        "Plans/run_started_consumer_contracts.schema.json",
         "Provider usage null uses estimator and marks confidence.",
         "Redacted projection schema is documented and validated.",
         "Sudden token/cost jump pauses or confirms under policy.",
@@ -18520,7 +18547,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T18:03:07Z",
+  "generated_at_utc": "2026-09-11T18:29:37Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18528,13 +18555,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3351,
-      "True": 3134
+      "False": 3353,
+      "True": 3137
     },
-    "plan_unit_count": 6485,
+    "plan_unit_count": 6490,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6294,
+      "accepted": 6299,
       "retired": 182,
       "superseded": 9
     },
@@ -18601,7 +18628,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5153,
+      "requirement": 5158,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

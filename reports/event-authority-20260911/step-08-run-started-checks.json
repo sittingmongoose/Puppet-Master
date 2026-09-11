@@ -1,0 +1,840 @@
+{
+  "assessment_id": "EA-STEP08-RUN-STARTED-CHECKS",
+  "recorded_at_utc": "2026-09-11T18:34:53.013867+00:00",
+  "status": "FOCUSED_CONTRACT_CHECKS_PASS_FULL_GOVERNANCE_FAIL",
+  "runtime_execution": "UNPROVEN_NOT_RUN",
+  "standard_gates": {
+    "command": "python3 scripts/pm-plans-verify.py run-gates",
+    "exit_code": 1,
+    "status": "fail",
+    "checks_total": 32,
+    "failed_or_blocked_checks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_evidence",
+      "validate_goal_runtime_event_fixtures",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_project_output_fixtures",
+      "validate_runtime_artifact_schemas",
+      "validate_touch_closure",
+      "validate_usage_gui_fixtures",
+      "validate_web_capability_contracts",
+      "validate_working_notebook_contracts",
+      "verify_spec_lock"
+    ],
+    "checks": {
+      "check_project_artifact_requirements": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "check_shards": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "json_syntax": {
+        "failure_samples": [
+          {
+            "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/tests/fixtures/governance/raw_evidence_capture_modes.schema.json'",
+            "error": "raw_capture_manifest_schema_unavailable",
+            "path": "tests/fixtures/governance/raw_evidence_capture_modes.schema.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "lint_banned_phrases": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "lint_contractrefs": {
+        "failure_samples": [
+          {
+            "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json",
+            "error": "missing_ref",
+            "line": 72,
+            "path": "Plans/00-plans-index.md",
+            "ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "lint_path_refs": {
+        "failure_samples": [
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/test_pm_evidence_artifact_binding_modes.py",
+            "line": 701,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-001",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
+            "line": 720,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-020",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/usage_gui",
+            "line": 736,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-036",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/pm7_shared",
+            "line": 737,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-037",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/usage_gui",
+            "line": 738,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-038",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/pm7_shared",
+            "line": 738,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-038",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/pm7_shared",
+            "line": 739,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-039",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/pm7_shared/workspace_layout_event_fixtures.json",
+            "line": 740,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-040",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/test_pm_working_notebook_contracts.py",
+            "line": 746,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "ATS-046",
+            "surface_error": "missing_ref"
+          },
+          {
+            "error": "implementation_surface_missing_or_untyped",
+            "implementation_surface": "tests/fixtures/usage_gui",
+            "line": 2713,
+            "path": "Plans/.plan_index/plan_units.jsonl",
+            "plan_unit_id": "F3-514",
+            "surface_error": "missing_ref"
+          }
+        ],
+        "failures": 19,
+        "status": "fail"
+      },
+      "validate_audit_closure": {
+        "failure_samples": [
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:1: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:2: closure_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:4: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:5: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:6: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: owner_evidence_hashes for Plans/Planning_Ledger_System.md is stale (stored 871bbad705af93bdc708a0e52a6c9e778082a4e2ff3a554a838ee6c7dc6ebe0b, current f536f1cbd2d955bdc370944dd9369f5f2e8e38b88e6aec195de59444a22c1bec)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          },
+          {
+            "detail": "Plans/.audits/_semantic_closure_registry.jsonl:7: closure_evidence_hashes for Plans/00-plans-index.md is stale (stored 82b72264879f78ff58919e79a783f2223e4c0a31d5e61c6a7abef743d1cef8be, current 22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be)",
+            "error": "audit_closure_validator_error",
+            "path": "Plans/.audits/_semantic_closure_registry.jsonl"
+          }
+        ],
+        "failures": 201,
+        "status": "fail"
+      },
+      "validate_audit_status_index": {
+        "failure_samples": [
+          {
+            "error": "stale_audit_status_index",
+            "path": "Plans/.audits/_audit_status_index.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_auto_decisions": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_case_l_non_event_materialization": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_evidence": {
+        "failure_samples": [
+          {
+            "actual": "44e38275f42672ae66385cc1c2c0d398e76b4a7fc1844978e38e40403cda265a",
+            "artifact": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+            "error": "artifact_hash_stale",
+            "expected": "be2f7981b79697a4594daeed1bff2bd0ec6b3f51309809578f861cae7b2e112f",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "c72cc25df53f4aa0ce3d3a5745634bf01eccc8f43277020fd46b3599d5abf3c8",
+            "artifact": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+            "error": "artifact_hash_stale",
+            "expected": "46f90fd992a01b7999a6adeb7a4499dda42455f02f779ff441cbc0d0f56354dc",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+            "artifact": "Plans/FinalGUISpec.md",
+            "error": "artifact_hash_stale",
+            "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "8095b91b39412ee33abafc85723ed1e95b5e3fc5bd9c58135c1d820c3ab7b4ce",
+            "artifact": "Plans/_shards/finalguispec/00-index.md",
+            "error": "artifact_hash_stale",
+            "expected": "706509f80aacc46980c83edaaeb5f3d8badd8ca1619cf5ab207f922595ce20ba",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "4295c183a7ed8c4770abbc8ad6bb5e6cfcf9e2d087be0ce7df59b6462c7c05e6",
+            "artifact": "Plans/_shards/finalguispec/manifest.json",
+            "error": "artifact_hash_stale",
+            "expected": "10ddff0005f34a3a45003ff061aea0b6b4aa5d6207eaa424b0bfa858c0fa7284",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "0e77f7288cca90a4b3b49b4f241353e3187cfa13fabba3824d14b304b90bcb47",
+            "artifact": "Plans/_shards/finalguispec/001-preamble.md",
+            "error": "artifact_hash_stale",
+            "expected": "e90934f5713df6e79e6c8520dbe5dba80f743665584407636643bff16c3eee66",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "64afb51303a65194cbfd807eee5f8b2c6df7b9fedc605e2d447629d8c9e8ffae",
+            "artifact": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+            "error": "artifact_hash_stale",
+            "expected": "e24b77b840ab11cd463c3ffe14f382ce580a1f350902dba2638f390956ae32d6",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "736b2c3120b9d5cc3d95d5a2cfb8710238e1e5c960bce3adb24a464f2d130251",
+            "artifact": "Plans/_shards/finalguispec/003-table-of-contents.md",
+            "error": "artifact_hash_stale",
+            "expected": "e2e756da746ac277492d17a97eee0e86077575f76d61573aad27c15fe505e807",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "f7856aad6b0b05a42854678752f2f57dddc5786fa3241a4abd8f6bab68eeb3d1",
+            "artifact": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+            "error": "artifact_hash_stale",
+            "expected": "07d2d3377a2a74431968e579a72a3f7fdf7909a902073539f7fa7958272226c9",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "eb333346ce029b970b961a44b3fa2fbb3240fcefdab954d02e8941441c118467",
+            "artifact": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+            "error": "artifact_hash_stale",
+            "expected": "9631382b1e08960854ec4d3a479f99b78c62a3004524b7d6d4e3525a5443ecfa",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          }
+        ],
+        "failures": 1335,
+        "status": "fail"
+      },
+      "validate_filesafe_security_policy": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_forge_backup_acceptance": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "failure_samples": [
+          {
+            "error": "missing_goal_runtime_event_fixture",
+            "path": "tests/fixtures/goal_runtime_events/golden/minimal_goal_events.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_gui_asset_policy": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_implementation_readiness": {
+        "failure_samples": [
+          {
+            "error": "validator_no_output",
+            "path": "scripts/pm-implementation-readiness.py",
+            "returncode": 1,
+            "stderr_excerpt": "Traceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 8293, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 8289, in main\n    return args.func(args)\n           ~~~~~~~~~^^^^^^\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 8238, in cmd_validate\n    report = validate()\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 8196, in validate\n    self_test_report = run_self_tests()\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 8058, in run_self_tests\n    case_l_verification_checks = case_l_verification_self_test_checks()\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 5147, in case_l_verification_self_test_checks\n    legacy_fixture = read_json(EVENT_FAMILY_LEGACY_FIXTURE_PATH)\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-implementation-readiness.py\", line 949, in read_json\n    return json.loads(path.read_text(encoding=\"utf-8\"))\n                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 548, in read_text\n    return PathBase.read_text(self, encoding, errors, newline)\n           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_abc.py\", line 632, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 539, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json'\n",
+            "stdout_excerpt": ""
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_new_contracts": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_plan_graph": {
+        "failure_samples": [
+          {
+            "actual": "44e38275f42672ae66385cc1c2c0d398e76b4a7fc1844978e38e40403cda265a",
+            "artifact": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+            "error": "artifact_hash_stale",
+            "expected": "be2f7981b79697a4594daeed1bff2bd0ec6b3f51309809578f861cae7b2e112f",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "c72cc25df53f4aa0ce3d3a5745634bf01eccc8f43277020fd46b3599d5abf3c8",
+            "artifact": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+            "error": "artifact_hash_stale",
+            "expected": "46f90fd992a01b7999a6adeb7a4499dda42455f02f779ff441cbc0d0f56354dc",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "215e96a2c6817abda53923940c24347f339fd8bca974f488921a979c5324d238",
+            "artifact": "Plans/FinalGUISpec.md",
+            "error": "artifact_hash_stale",
+            "expected": "de01270457309bc0af0549ee36044cb936b0cbef429251fb6bddb5c412a5d0c8",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "8095b91b39412ee33abafc85723ed1e95b5e3fc5bd9c58135c1d820c3ab7b4ce",
+            "artifact": "Plans/_shards/finalguispec/00-index.md",
+            "error": "artifact_hash_stale",
+            "expected": "706509f80aacc46980c83edaaeb5f3d8badd8ca1619cf5ab207f922595ce20ba",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "4295c183a7ed8c4770abbc8ad6bb5e6cfcf9e2d087be0ce7df59b6462c7c05e6",
+            "artifact": "Plans/_shards/finalguispec/manifest.json",
+            "error": "artifact_hash_stale",
+            "expected": "10ddff0005f34a3a45003ff061aea0b6b4aa5d6207eaa424b0bfa858c0fa7284",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "0e77f7288cca90a4b3b49b4f241353e3187cfa13fabba3824d14b304b90bcb47",
+            "artifact": "Plans/_shards/finalguispec/001-preamble.md",
+            "error": "artifact_hash_stale",
+            "expected": "e90934f5713df6e79e6c8520dbe5dba80f743665584407636643bff16c3eee66",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "64afb51303a65194cbfd807eee5f8b2c6df7b9fedc605e2d447629d8c9e8ffae",
+            "artifact": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+            "error": "artifact_hash_stale",
+            "expected": "e24b77b840ab11cd463c3ffe14f382ce580a1f350902dba2638f390956ae32d6",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "736b2c3120b9d5cc3d95d5a2cfb8710238e1e5c960bce3adb24a464f2d130251",
+            "artifact": "Plans/_shards/finalguispec/003-table-of-contents.md",
+            "error": "artifact_hash_stale",
+            "expected": "e2e756da746ac277492d17a97eee0e86077575f76d61573aad27c15fe505e807",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "f7856aad6b0b05a42854678752f2f57dddc5786fa3241a4abd8f6bab68eeb3d1",
+            "artifact": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+            "error": "artifact_hash_stale",
+            "expected": "07d2d3377a2a74431968e579a72a3f7fdf7909a902073539f7fa7958272226c9",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          },
+          {
+            "actual": "eb333346ce029b970b961a44b3fa2fbb3240fcefdab954d02e8941441c118467",
+            "artifact": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+            "error": "artifact_hash_stale",
+            "expected": "9631382b1e08960854ec4d3a479f99b78c62a3004524b7d6d4e3525a5443ecfa",
+            "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+          }
+        ],
+        "failures": 1335,
+        "status": "fail"
+      },
+      "validate_plan_migration": {
+        "failure_samples": [
+          {
+            "actual": 72,
+            "error": "doc_count_mismatch",
+            "expected": 95,
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+          },
+          {
+            "error": "inventory_doc_set_mismatch",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json"
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 1
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 2
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 3
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 4
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 5
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 6
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 7
+          },
+          {
+            "actual": "fc27c2e590ccc86fb9059c46cb4307209c07ed47cebf3f864905a988bf5218dd",
+            "doc_index": 1,
+            "doc_path": "Plans/assistant-chat-design.md",
+            "error": "stale_batch_report_sha256_after",
+            "expected": "808661ba4fb0cfd809da2493c9dfb4a85006967cdda7c0ab8198c5f8cc62e3e4",
+            "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+            "row": 8
+          }
+        ],
+        "failures": 179,
+        "status": "fail"
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_pm7_gui_fixtures": {
+        "failure_samples": [
+          {
+            "error": "invalid_validator_output",
+            "output": "Traceback (most recent call last):\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-validate-pm7-gui-fixtures.py\", line 539, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-validate-pm7-gui-fixtures.py\", line 533, in main\n    report = validate()\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-validate-pm7-gui-fixtures.py\", line 329, in validate\n    motion_contract = load(SHARED_ROOT / \"motion_frame_matrix.json\")\n  File \"/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/scripts/pm-validate-pm7-gui-fixtures.py\", line 116, in load\n    return json.loads(path.read_text(encoding=\"utf-8\"))\n                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 548, in read_text\n    return PathBase.read_text(self, encoding, errors, newline)\n           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_abc.py\", line 632, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 539, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-run-start-depth-20260911/tests/fixtures/pm7_shared/motion_frame_matrix.json'\n"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_project_output_fixtures": {
+        "failure_samples": [
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/requirements.md"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/contracts/index.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan.md"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan_graph/index.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/plan_graph/nodes/node-fr-001.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/acceptance_manifest.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/auto_decisions.jsonl"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_quality_report.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_coverage.json"
+          },
+          {
+            "error": "missing_project_output_fixture",
+            "path": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/project/traceability/requirements_coverage.md"
+          }
+        ],
+        "failures": 12,
+        "status": "fail"
+      },
+      "validate_runtime_artifact_schemas": {
+        "failure_samples": [
+          {
+            "error": "missing_runtime_artifact_fixture_matrix",
+            "path": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_server_command_gap": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_touch_closure": {
+        "failure_samples": [
+          "TCR-SETTINGS-PACKET-COMMANDS: disposition registry hash drift: expected 904cfe8c870acf6e3b389e85af5411caa2c0e3693faaae7d97797b808b91fc08, found fa58fa37a320dc7274f472a4031d0d6ac9710c292e9f966a865e4a4628435c91",
+          "actionable Touch primary commands lack production wiring: ['cmd.github.pr.create', 'cmd.settings.agent_rules.dry_method_default_guard.set']",
+          "actionable Touch commands do not resolve to exactly one handler identity: {'cmd.github.pr.create': [], 'cmd.settings.agent_rules.dry_method_default_guard.set': []}",
+          "orphan Touch Closure actions not found in the retained owner/concept inventories: ['cmd.settings.agent_rules.dry_method_default_guard.set']",
+          "resolved server/Egolite closure denominator drift: expected {'row_count': 606, 'profile_count': 93, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1154}, found {'row_count': 606, 'profile_count': 93, 'excluded_token_count': 58, 'alias_binding_count': 64, 'production_wiring_entry_count': 1152}"
+        ],
+        "failures": 5,
+        "status": "fail"
+      },
+      "validate_usage_contract_drift": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_usage_gui_fixtures": {
+        "failure_samples": [
+          {
+            "error": "missing_usage_gui_fixture_matrix",
+            "path": "tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json"
+          }
+        ],
+        "failures": 1,
+        "status": "fail"
+      },
+      "validate_web_capability_contracts": {
+        "failure_samples": [
+          {
+            "error": "missing_v3_finding_evidence_file",
+            "evidence_file": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json",
+            "finding_id": "WSCH-001",
+            "path": "Plans/web_capability_findings_coverage.json"
+          },
+          {
+            "error": "missing_v3_finding_evidence_file",
+            "evidence_file": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json",
+            "finding_id": "WBRO-001",
+            "path": "Plans/web_capability_findings_coverage.json"
+          },
+          {
+            "error": "missing_v3_finding_evidence_file",
+            "evidence_file": "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/schema_payloads/gui_automation_manifest.json",
+            "finding_id": "WBRO-002",
+            "path": "Plans/web_capability_findings_coverage.json"
+          },
+          {
+            "error": "missing_v3_finding_evidence_file",
+            "evidence_file": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json",
+            "finding_id": "WAGENT-005",
+            "path": "Plans/web_capability_findings_coverage.json"
+          },
+          {
+            "error": "missing_runtime_artifact_fixture_matrix",
+            "path": "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+          }
+        ],
+        "failures": 5,
+        "status": "fail"
+      },
+      "validate_wiring_matrix": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "pass"
+      },
+      "validate_working_notebook_contracts": {
+        "failure_samples": [],
+        "failures": 0,
+        "status": "fail"
+      },
+      "verify_spec_lock": {
+        "failure_samples": [
+          {
+            "actual": "22d3cef7f0207cbf6a5709be0f5d0284828c359044c48ddb8e334cb5db9783be",
+            "error": "stale_hash",
+            "expected": "24a7ca33ea3d19d9b98478c575ae914f2177763dc5b80f6bcf3363b012201929",
+            "path": "Plans/00-plans-index.md"
+          },
+          {
+            "actual": "8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02",
+            "error": "stale_hash",
+            "expected": "92a37e73a67b4a820fc5be5ef5b1033682608005a6cf09da37b46ab2455ba2e7",
+            "path": "Plans/Automated_Testing_System.md"
+          },
+          {
+            "actual": "2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12",
+            "error": "stale_hash",
+            "expected": "a3be47f5e955848bc80a0e5e520138bac0c9a225986aba2f30e79c0b74641810",
+            "path": "Plans/Contracts_V0.md"
+          },
+          {
+            "actual": "259780459d60b5d51fd5f8be31960f99c7f81d9e0b9ec9703dc9984db2ccc059",
+            "error": "stale_hash",
+            "expected": "83949ad194756c4c2addb257dade79c089dc9f1bb3ce21bd36fced9b192382e5",
+            "path": "Plans/Executor_Protocol.md"
+          },
+          {
+            "actual": "b8a2a5abb2332037d65697115619d0469241d076bb04c38a99d7b7223db1a4aa",
+            "error": "stale_hash",
+            "expected": "739e3f3675e4b7fc1c2475b6351a80d34571df977313bf76f50de122685f1c07",
+            "path": "Plans/Goal_Runtime_System.md"
+          },
+          {
+            "actual": "69f878743253f8b232830d8fbe19db0e79271ce2110dffce9f68f0a7fb5af31a",
+            "error": "stale_hash",
+            "expected": "cc381fd6280cc85f4076fd267007c732d4fd3d2bb50c7803d4a108d43b1bd5f9",
+            "path": "Plans/UI_Command_Catalog.md"
+          },
+          {
+            "actual": "5143aa3167261bf3dbbe915086c1e37a315e577113b1f538a4a871bc1e352784",
+            "error": "stale_hash",
+            "expected": "44ce597ce5bf097e88f4b251ca537b723e43b793c9451a298b866b8579d49b08",
+            "path": "Plans/Wiring_Matrix.schema.json"
+          },
+          {
+            "actual": "0058eff18af43b495b659ed78b0d1c7fe78b83167cd9c0a8c662ba3372b3c620",
+            "error": "stale_hash",
+            "expected": "80d04f675c083ad39905c5690a9a58aaafcd11b0455b8c50a99ff21e0182b2f4",
+            "path": "scripts/pm-plans-verify.py"
+          },
+          {
+            "actual": "1c6d64931699c2f0fa89addd5fb96119cdd02a68e0e85221c58ff3f0f3e2ecec",
+            "error": "stale_hash",
+            "expected": "b6ba0d9ad3e8609af4e78874b270e9f70f2084ae815435aaac7119de5fb8325e",
+            "path": "scripts/pm-shard-plans.py"
+          },
+          {
+            "actual": "075ddde45f65b24583fc7c8a13eb6833c2f8fa90a37f0744b31052f4a4c14e36",
+            "error": "stale_hash",
+            "expected": "e3bd3e17e5ca0dce00a6b7b6776eeec9d67cb2c4283fa8706b180dbfe4604dce",
+            "path": "Plans/Planning_Wizard.md"
+          }
+        ],
+        "failures": 23,
+        "status": "fail"
+      }
+    },
+    "raw_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/run-gates-final.json",
+      "sha256": "193f0c7fe7baf015e2549002678d925318831d9e39caca5c9988d8c51c78cb19"
+    },
+    "raw_log": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/run-gates-final.log",
+      "sha256": "a08f917182d456d5b42c499e07ff2c147f8784448be19cb9abf50f12659faadf"
+    },
+    "environment": "Local worktree with tracked Plans/scripts/reports/Concepts. Referenced historical raw test fixtures absent from HEAD were not invented or copied into product canon."
+  },
+  "focused_contract": {
+    "schema_cases_passed": 22,
+    "relational_cases_passed": 13,
+    "native_pairs_unexecuted": 30,
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/integration-validation-final.json",
+      "sha256": "a151e5173f35cedaf11bdf2f05d899689147ba43aa953c6e1a1c5a5f0b879ec7"
+    }
+  },
+  "generated_shards": {
+    "status": "pass",
+    "docs": 98,
+    "shards": 2181,
+    "raw_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/shard-check-final.json",
+      "sha256": "39489cb255f8865a5872082a76ca04216bd25531ddebe714bc66ef679d4a94da"
+    }
+  },
+  "index_scope": {
+    "status": "PASS",
+    "base_commit": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+    "existing_plan_units_preserved": 6485,
+    "new_plan_units": [
+      "EP-116",
+      "OP-036",
+      "RGV-019",
+      "SP-265",
+      "UF-102"
+    ],
+    "plan_unit_count": 6490,
+    "existing_acceptance_units_preserved": 24785,
+    "new_acceptance_unit_count": 18,
+    "acceptance_unit_count": 24803,
+    "only_owned_sources_changed": true,
+    "raw_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/index-scope-final.json",
+      "sha256": "f0ff5f6bb4b4549c5de37bf5dcf285fc53c199cf62cc2e16354eed8e4064464f"
+    }
+  },
+  "unchanged_storage_data_failures": {
+    "status": "FAIL",
+    "failures": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 89
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 67,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 70,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      }
+    ],
+    "baseline_receipt_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/run-started-contract/root/storage-baseline.json",
+    "baseline_receipt_sha256": "9dca79e2defa1aadef3d5bc6771a2bb46cbb60a36c45d105ba58c2a9b78b9066"
+  },
+  "validator_edits_or_overrides": false,
+  "governance_sealed": false
+}

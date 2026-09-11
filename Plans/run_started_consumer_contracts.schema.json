@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/run_started_consumer_contracts/1.0.0",
+  "title": "Run-start consumer checkpoint",
+  "description": "New run.started-only owner binding. Static schema validity is not source/currentness or runtime proof. Cross-field/source constraints are normative in SP-265.",
+  "$defs": {
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "checkpoint_id",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "projector_id",
+        "projector_version",
+        "event_type",
+        "index_schema_id",
+        "index_schema_version",
+        "index_checkpoint_ref",
+        "current_selection_sha256",
+        "first_retained_sequence_id",
+        "index_through_sequence_id",
+        "filter_complete",
+        "state",
+        "health",
+        "source_cursor",
+        "updated_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.run_started_index_checkpoint.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "checkpoint_id": {
+          "const": "run.started"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "projector_id": {
+          "const": "storage.run_started_index.v1"
+        },
+        "projector_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "run.started"
+        },
+        "index_schema_id": {
+          "const": "pm.storage_value.event_record_index.v2"
+        },
+        "index_schema_version": {
+          "const": "2.0.0"
+        },
+        "index_checkpoint_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_retained_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "index_through_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filter_complete": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "current",
+            "degraded",
+            "withdrawn"
+          ]
+        },
+        "health": {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        },
+        "source_cursor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "manifest_generation",
+            "recovery_epoch",
+            "segment_generation",
+            "segment_name",
+            "byte_offset",
+            "last_sequence_id",
+            "last_event_id",
+            "survivor_prefix_sha256",
+            "projector_schema_version"
+          ],
+          "properties": {
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "last_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "last_event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "survivor_prefix_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "projector_schema_version": {
+              "const": "1.0.0"
+            }
+          }
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "current"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "filter_complete": {
+                "const": true
+              },
+              "health": {
+                "const": "healthy"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "degraded"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "health": {
+                "const": "degraded"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/checkpoint"
+}

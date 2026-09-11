@@ -2977,6 +2977,7 @@
     "DL-010",
     "DL-011",
     "DL-012",
+    "SP-265",
     "DP-006",
     "DP-025",
     "F3-446",
@@ -3168,6 +3169,10 @@
     "DL-015",
     "DL-013",
     "DL-016",
+    "EP-116",
+    "OP-036",
+    "RGV-019",
+    "UF-102",
     "DP-007",
     "DP-008",
     "DP-026",
@@ -23423,6 +23428,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-116",
+      "to": "SP-265"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -34065,6 +34075,11 @@
       "edge_type": "depends_on",
       "from": "OP-035",
       "to": "OSI-437"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-036",
+      "to": "SP-265"
     },
     {
       "edge_type": "depends_on",
@@ -49535,6 +49550,11 @@
       "edge_type": "depends_on",
       "from": "RGV-018",
       "to": "F3-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-019",
+      "to": "SP-265"
     },
     {
       "edge_type": "depends_on",
@@ -65123,6 +65143,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-265",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -75065,6 +75090,11 @@
       "edge_type": "depends_on",
       "from": "UF-101",
       "to": "UF-100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-102",
+      "to": "SP-265"
     },
     {
       "edge_type": "depends_on",
@@ -93777,7 +93807,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T18:03:07Z",
+  "generated_at_utc": "2026-09-11T18:29:37Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -126125,6 +126155,23 @@
         "heading_level": 2,
         "heading_line": 7227,
         "line": 7231,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "run_started_single_family_depth",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-116",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_and_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "EP-116 - Run-start identity and recovery consumer",
+        "heading_level": 3,
+        "heading_line": 7281,
+        "line": 7283,
         "path": "Plans/Executor_Protocol.md"
       },
       "status": "accepted",
@@ -160624,6 +160671,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "run_started_single_family_depth",
+      "gui_related": true,
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "plan_unit_id": "OP-036",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_and_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "OP-036 - Run-start History and Ledger reader",
+        "heading_level": 3,
+        "heading_line": 2732,
+        "line": 2734,
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "cursor_origin_preview_owner",
       "gui_related": true,
       "owner_doc": "Plans/Cursor_Origin_Integration.md",
@@ -180990,6 +181054,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "run_started_single_family_depth",
+      "gui_related": true,
+      "owner_doc": "Plans/Run_Graph_View.md",
+      "plan_unit_id": "RGV-019",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_and_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "RGV-019 - Run-start graph context reader",
+        "heading_level": 3,
+        "heading_line": 1285,
+        "line": 1287,
+        "path": "Plans/Run_Graph_View.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "run_modes_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Run_Modes.md",
@@ -191037,6 +191118,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "run_started_single_family_depth",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-265",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_and_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "SP-265 - Run-start filtered index checkpoint and four-reader boundary",
+        "heading_level": 3,
+        "heading_line": 19307,
+        "line": 19309,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -200625,6 +200723,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "run_started_single_family_depth",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-102",
+      "reasoning_tier": "high",
+      "risk_class": "event_source_and_checkpoint_authority_drift",
+      "source_location": {
+        "heading": "UF-102 - Run-start attribution context reader",
+        "heading_level": 3,
+        "heading_line": 7018,
+        "line": 7020,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_wiring",
       "gui_related": true,
       "owner_doc": "Plans/UI_Wiring_Rules.md",
@@ -204031,10 +204146,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14809,
+    "depends_on_edge_count": 14814,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17457,
-    "node_count": 6485,
+    "edge_count": 17462,
+    "node_count": 6490,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
