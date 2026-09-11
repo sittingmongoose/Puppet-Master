@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L4267-L4352
 
-Source SHA256: `d0315a8fa74dc85add77991a73679eddd763692afb2e552b75fc073418f24acb`
+Source SHA256: `10b0afdf4d693bd04d82cc3c832144021eaeb1366e51b00a27a694fef9d54a14`
 
 ---
 
@@ -62,8 +62,8 @@ The central UI response consumes these typed owner results and maps accepted to
 pending, completed to succeeded, no-change to no-op, blocked to rejected, failed
 to failed, cancelled to cancelled, and effect-unknown to recovery-required. Exact
 operation, command, scope, payload digest and receipt joins are mandatory. The
-four existing session event obligations consume the separate ATS-049 Event Authority
-admission; this command schema alone admits no event or storage family. Export is receipt-
+four existing session event obligations consume the ATS-049 emit-only disposition
+under DL-039; neither contract admits an event or storage family. Export is receipt-
 and-artifact-backed without a new event. Original test/capture records remain
 canonical; an exported bundle is not replacement truth.
 

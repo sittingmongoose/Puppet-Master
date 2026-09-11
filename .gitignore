@@ -68,6 +68,10 @@ tests/
 !/tests/test_pm_evidence_commands.py
 !/tests/test_pm_testing_session_events.py
 !/tests/test_pm_github_project_integration.py
+!/tests/test_pm_source_control_effects.py
+!/tests/test_pm_source_control_response.py
+!/tests/test_pm_browser_screenshot_wiring.py
+!/tests/test_pm_emit_only_event_boundaries.py
 !/tests/test_pm_settings_draft_transfer.py
 !/tests/test_pm_onboarding_phases.py
 !/tests/test_pm_project_unarchive.py

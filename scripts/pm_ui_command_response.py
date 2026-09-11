@@ -29,6 +29,7 @@ OUTCOME_SCHEMA = "Plans/full_thread_runtime_contracts.schema.json"
 SHARED_SCHEMA = "Plans/shared_runtime_command_contracts.schema.json"
 BROWSER_SCHEMA = "Plans/section15_browser_program_contracts.schema.json"
 SERVER_SCHEMA = "Plans/server_system_contracts.schema.json"
+SOURCE_CONTROL_SCHEMA = "Plans/source_control_contracts.schema.json"
 
 
 @lru_cache(maxsize=None)
@@ -91,7 +92,8 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
             failures.append("non_operation_fabricated_scope")
         if response["response_kind"] == "local_projection":
             commands = schema(SHARED_SCHEMA)["$defs"]["canonical_command_id"]["enum"]
-            if response["command_id"] in commands:
+            scm_commands = schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]
+            if response["command_id"] in commands or response["command_id"] in scm_commands:
                 failures.append("durable_command_disguised_as_local_projection")
         return sorted(set(failures))
     if structural_failures(OUTCOME_SCHEMA, outcome, "#/$defs/CommandOutcomeRecord"):
@@ -134,6 +136,11 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
         if response["owner_result_ref"] != bundle.get("resolved_owner_result_ref"):
             failures.append("owner_result_reference_mismatch")
         binding = response["owner_result_schema_ref"]
+        if response["command_id"] in schema(SOURCE_CONTROL_SCHEMA)["$defs"]["source_control_command_id"]["enum"]:
+            if binding != {"path": SOURCE_CONTROL_SCHEMA,
+                           "json_pointer": "#/$defs/source_control_command_result",
+                           "schema_id": "pm.source_control.command_result.v1"}:
+                failures.append("scm_owner_result_binding")
         allowed = {path for path, _ in contracts().CONTRACT_PAIRS}
         if binding["path"] not in allowed:
             failures.append("unadmitted_owner_result_schema")
@@ -155,6 +162,8 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
                 failures.extend(shared_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") == "browser_command_result":
                 failures.extend(browser_owner_failures(response, outcome, owner_result))
+            elif owner_result.get("schema_id") == "pm.source_control.command_result.v1":
+                failures.extend(source_control_owner_failures(response, outcome, owner_result, bundle.get("owner_request")))
             elif owner_result.get("record_type") in {"server.command.result.v1", "server.owner_command.result.v1"}:
                 failures.extend(server_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_kind") in {"TestingSessionCommandResult", "ArtifactRecordingCommandResult"}:
@@ -262,6 +271,46 @@ def evidence_owner_failures(response, outcome, owner_result, owner_request):
         failures.append("evidence_owner_receipt_mismatch")
     if owner_result["replayed"] and not response["replayed"]:
         failures.append("evidence_owner_replay_not_projected")
+    return failures
+
+
+def source_control_owner_failures(response, outcome, owner_result, owner_request):
+    """Consume SCS-003's exact request/scope and terminal receipt contract.
+
+    The normalized request/hash and retained records are fixture resolutions.
+    This does not authenticate policy, receipt storage or backend execution.
+    """
+    if structural_failures(SOURCE_CONTROL_SCHEMA, owner_request, "#/$defs/source_control_command_request"):
+        return ["scm_owner_request_schema"]
+    failures = []
+    scope = owner_result["scope"]
+    if scope["command_id"] != response["command_id"]:
+        failures.append("scm_owner_command_mismatch")
+    if (owner_request["scope"] != scope
+            or owner_request["command_instance_id"] != owner_result["command_instance_id"]
+            or owner_request["idempotency_key"] != outcome["idempotency_key"]):
+        failures.append("scm_owner_request_binding_mismatch")
+    if (owner_request.get("return_context") != owner_result.get("return_context")
+            or ("return_context" in owner_request) != ("return_context" in owner_result)):
+        failures.append("scm_owner_return_context_mismatch")
+    lineage, identity = scope["lineage"], outcome["identity"]
+    fields = ("project_id", "project_home_server_id", "execution_host_id",
+              "execution_environment_id", "source_location_id", "topology_generation")
+    if (identity["scope_kind"] != "project"
+            or any(lineage[field] != identity.get(field) for field in fields)
+            or any(lineage.get(source) != identity.get(target)
+                   for source, target in (("plan_id", "named_plan_id"), ("goal_id", "goal_id")))):
+        failures.append("scm_owner_scope_mismatch")
+    expected = {"succeeded": "succeeded", "blocked": "rejected", "failed": "failed",
+                "cancelled": "cancelled", "recovery_required": "terminal_unknown",
+                "effect_unknown": "terminal_unknown"}[owner_result["outcome"]]
+    if owner_result["effect_state"] == "effect_unknown":
+        expected = "terminal_unknown"
+    # no_effect can describe a successful read; it is not a no-change verdict.
+    if outcome["outcome"] != expected or response["result_status"] == "no_op":
+        failures.append("scm_owner_outcome_mismatch")
+    if owner_result["operation_receipt_ref"] != outcome["result_receipt_ref"]:
+        failures.append("scm_owner_receipt_mismatch")
     return failures
 
 

@@ -1,4 +1,4 @@
-"""Static owner joins only: no GitHub API, native handler or storage execution."""
+"""Static GitHub/Project candidates and owner joins; DL-039 denies admission."""
 
 import argparse
 import copy
@@ -42,11 +42,19 @@ def response_case():
 
 
 class GitHubProjectIntegrationTests(unittest.TestCase):
-    def test_two_admissions_and_all_negative_fixtures(self):
+    def assert_quarantined_unchanged(self, replay, case):
+        before = copy.deepcopy(vars(replay))
+        self.assertEqual(replay.consume(case), "quarantined_without_checkpoint_advance")
+        self.assertEqual(vars(replay), before)
+
+    def test_two_candidates_and_all_negative_fixtures_without_admission(self):
         report = GATE.validate()
         self.assertEqual(report["failures"], [])
         self.assertEqual((report["positive_events"], report["negative_cases"]), (2, 74))
-        self.assertEqual(report["registry_families"], 98)
+        self.assertEqual(report["registry_families"], 92)
+        self.assertEqual(report["admitted_events"], 0)
+        self.assertEqual(report["event_disposition"], "quarantined_not_admitted")
+        self.assertFalse(report["event_persistence_authorized"])
         self.assertFalse(report["native_handler_proven"])
         self.assertEqual(report["global_event_denominator"], "UNKNOWN_OPEN")
 
@@ -57,16 +65,20 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
 
     def test_request_before_project_and_bound_after_commit(self):
         requested, bound = list(GATE.fixture_cases())
+        for case in (requested, bound):
+            self.assertEqual(GATE.candidate_failures(case), [])
+            self.assertEqual(GATE.event_failures(case), ["event_not_admitted_dl039"])
         self.assertIsNone(requested["event"]["project_id"])
         self.assertEqual(requested["event"]["scope_kind"], "application")
         self.assertEqual(bound["event"]["project_id"], bound["result"]["project_id"])
         self.assertEqual(bound["event"]["scope_kind"], "project")
         for field in ("operation_id", "request_sha256", "admission_receipt_ref"):
             self.assertEqual(requested["event"]["payload"][field], bound["event"]["payload"][field])
-        # Intake is historical even if the later operation never commits.
+        # The intake candidate does not assert a later Project commit.
         requested["result"] = None
         requested["snapshot"]["project"] = None
-        self.assertEqual(GATE.event_failures(requested), [])
+        self.assertEqual(GATE.candidate_failures(requested), [])
+        self.assertEqual(GATE.event_failures(requested), ["event_not_admitted_dl039"])
 
     def test_actual_central_response_join_preserves_application_operation(self):
         case = response_case()
@@ -124,53 +136,66 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         snapshot["additional_effects"] = 1
         self.assertIn("forge_replay_changed_binding_or_effects", FORGE.result_failures(request, result, snapshot))
 
-    def test_replay_duplicates_and_transport_alias_conflict_never_execute(self):
+    def test_candidate_duplicates_and_transport_alias_conflicts_leave_no_replay_state(self):
         requested, bound = list(GATE.fixture_cases())
         replay = GATE.ReplayOracle()
-        self.assertEqual(replay.consume(requested), "projected_no_effect")
+        self.assert_quarantined_unchanged(replay, requested)
         duplicate = copy.deepcopy(requested)
         duplicate["event"].update(event_id="event:alias", sequence_id=3)
-        self.assertEqual(replay.consume(duplicate), "duplicate_no_effect")
-        self.assertEqual(replay.checkpoint, 1)
-        self.assertEqual(replay.consume(bound), "projected_no_effect")
+        self.assert_quarantined_unchanged(replay, duplicate)
+        self.assertEqual(replay.checkpoint, -1)
+        self.assert_quarantined_unchanged(replay, bound)
         conflict = copy.deepcopy(bound)
         conflict["event"].update(event_id="event:alias", sequence_id=4)
-        self.assertEqual(replay.consume(conflict), "quarantined_without_checkpoint_advance")
-        self.assertEqual((replay.checkpoint, replay.projected_count, replay.executed_effects), (2, 2, 0))
+        self.assert_quarantined_unchanged(replay, conflict)
+        self.assertEqual((replay.checkpoint, replay.projected_count, replay.executed_effects), (-1, 0, 0))
 
-    def test_unknown_event_does_not_consume_identity_and_restart_only_projects(self):
+    def test_unknown_events_and_restart_cannot_enable_candidate_projection(self):
         cases = list(GATE.fixture_cases())
         replay = GATE.ReplayOracle()
         unknown = copy.deepcopy(cases[0])
         unknown["event"]["event_type"] = "github.repo.unknown"
-        self.assertEqual(replay.consume(unknown), "quarantined_without_checkpoint_advance")
+        self.assert_quarantined_unchanged(replay, unknown)
         self.assertEqual(replay.identities, {})
         for _ in range(2):
             restarted = GATE.ReplayOracle()
             for case in cases:
-                self.assertEqual(restarted.consume(case), "projected_no_effect")
-            self.assertEqual((restarted.projected_count, restarted.executed_effects), (2, 0))
+                self.assert_quarantined_unchanged(restarted, case)
+            self.assertEqual((restarted.projected_count, restarted.executed_effects), (0, 0))
 
-    def test_one_creation_operation_cannot_bind_two_projects_or_changed_intake(self):
+    def test_cross_project_and_changed_intake_candidates_remain_unadmitted(self):
         requested, bound = list(GATE.fixture_cases())
         replay = GATE.ReplayOracle()
-        self.assertEqual(replay.consume(requested), "projected_no_effect")
-        self.assertEqual(replay.consume(bound), "projected_no_effect")
+        self.assert_quarantined_unchanged(replay, requested)
+        self.assert_quarantined_unchanged(replay, bound)
         other = copy.deepcopy(bound)
         other["result"]["project_id"] = other["snapshot"]["project"]["project_id"] = "project:second"
         other["snapshot"]["settled_result"] = copy.deepcopy(other["result"])
         other["event"].update(event_id="event:new-transport", sequence_id=3, project_id="project:second")
         other["event"]["payload"] = GATE.payload_for(other["event"]["event_type"], other["request"], other["result"], other["snapshot"])
-        self.assertEqual(GATE.event_failures(other), [])
-        self.assertEqual(replay.consume(other), "quarantined_without_checkpoint_advance")
+        self.assertEqual(GATE.candidate_failures(other), [])
+        self.assertEqual(GATE.event_failures(other), ["event_not_admitted_dl039"])
+        self.assert_quarantined_unchanged(replay, other)
         changed = copy.deepcopy(bound)
         changed["request"]["idempotency_key"] = "idempotency:changed-intake"
         changed["snapshot"].update(request=copy.deepcopy(changed["request"]), request_sha256=RESPONSE.owner_result_digest(changed["request"]))
         changed["event"]["payload"] = GATE.payload_for(changed["event"]["event_type"], changed["request"], changed["result"], changed["snapshot"])
         changed["event"].update(event_id="event:changed-intake", sequence_id=3, idempotency_key=GATE.transition_key(changed["event"]["event_type"], changed["request"], changed["snapshot"]))
-        self.assertEqual(GATE.event_failures(changed), [])
-        self.assertEqual(replay.consume(changed), "quarantined_without_checkpoint_advance")
-        self.assertEqual((replay.checkpoint, replay.projected_count, replay.executed_effects), (2, 2, 0))
+        self.assertEqual(GATE.candidate_failures(changed), [])
+        self.assertEqual(GATE.event_failures(changed), ["event_not_admitted_dl039"])
+        self.assert_quarantined_unchanged(replay, changed)
+        self.assertEqual((replay.checkpoint, replay.projected_count, replay.executed_effects), (-1, 0, 0))
+
+    def test_denial_preserves_preexisting_replay_state(self):
+        replay = GATE.ReplayOracle()
+        replay.identities["event:retained"] = "retained-digest"
+        replay.transitions[("project:retained", "event:retained", "key:retained")] = "retained-digest"
+        replay.operation_bindings[("server:retained", "operation:retained")] = ("request:retained", "receipt:retained")
+        replay.owner_transitions[("server:retained", "operation:retained", "event:retained")] = "retained-digest"
+        replay.checkpoint = 7
+        replay.projected_count = 1
+        for case in GATE.fixture_cases():
+            self.assert_quarantined_unchanged(replay, case)
 
     def test_protected_payload_and_onboarding_bypass_rejected(self):
         case = list(GATE.fixture_cases())[0]
@@ -189,10 +214,12 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
             event = case["event"]
             event["payload"] = GATE.payload_for(event["event_type"], request, result, snapshot)
             event.update(project_id=event["payload"]["project_id"], correlation_id=snapshot["operation_id"], idempotency_key=GATE.transition_key(event["event_type"], request, snapshot))
-            self.assertEqual(GATE.event_failures(case), [])
+            self.assertEqual(GATE.candidate_failures(case), [])
+            self.assertEqual(GATE.event_failures(case), ["event_not_admitted_dl039"])
 
     def test_current_payloads_resolve_without_unsealing_historical_kernel(self):
         readiness = RESPONSE.module("github_project_readiness", "pm-implementation-readiness.py")
+        self.assertEqual(len(GATE.load("Plans/event_family_registry.json")["families"]), 92)
         for row in GATE.load("Plans/event_family_registry.json")["families"]:
             payload, schema_id = readiness.event_family_payload_schema(row)
             self.assertIsInstance(payload, dict, row["event_type"])

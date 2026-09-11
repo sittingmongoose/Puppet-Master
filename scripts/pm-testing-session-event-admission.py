@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Four Testing event contracts only; fixture authority is not native proof."""
+"""Four emit-only Testing candidate contracts; DL-039 forbids event admission."""
 
 from __future__ import annotations
 
@@ -14,6 +14,10 @@ from referencing import Resource
 
 import pm_ui_command_response as response
 from pm_evidence_command_semantics import evidence_binding_failures
+from pm_emit_only_event_contract import (
+    DENIAL, DISPOSITION, deny_admission, disposition_failures,
+    input_shape_failures, invalid_input_report,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = "Plans/testing_session_event_payloads.schema.json"
@@ -101,14 +105,21 @@ def payload_errors(value):
     return list(payload_validator().iter_errors(value))
 
 
-def event_failures(event, producer, request, snapshot):
-    """Snapshot stands for an authenticated retained committed owner record.
+def candidate_failures(event, producer, request, snapshot):
+    """Validate candidate shape and joins, independently of event admission.
 
-    Replaying history resolves that original record, not new Client assertions
-    or present-day permission booleans. This pure fixture does neither lookup.
+    Snapshot models an owner-resolved committed record, not new Client
+    assertions or present-day permission booleans. This pure fixture does no
+    authenticated lookup and authorizes no EventRecord append or replay.
     """
+    if not isinstance(event, dict):
+        return ["envelope_schema"]
+    if not isinstance(snapshot, dict):
+        return ["owner_snapshot"]
     errors = []
     event_type = event.get("event_type")
+    if not isinstance(event_type, str):
+        return ["event_type_shape"]
     if event_type not in EVENTS:
         return ["unknown_testing_event"]
     if list(Draft202012Validator(load("Plans/event_record.schema.json"),
@@ -146,15 +157,24 @@ def event_failures(event, producer, request, snapshot):
         errors.append("payload_identity")
     if event.get("schema_version") != "2.0.0" or event.get("producer_sequence_id") is None or event.get("replay_policy") != "dedupe_by_idempotency_key":
         errors.append("event_replay_contract")
-    if event.get("redaction_profile") != "no_secrets" or any(event.get("migration", {}).values()):
+    migration = event.get("migration")
+    if not isinstance(migration, dict):
+        errors.append("event_migration_shape")
+    if event.get("redaction_profile") != "no_secrets" or (isinstance(migration, dict) and any(migration.values())):
         errors.append("redaction_or_unadmitted_migration")
     if len(json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()) > 65536:
         errors.append("payload_byte_limit")
     return sorted(set(errors))
 
 
+def event_failures(event, producer, request, snapshot):
+    errors = candidate_failures(event, producer, request, snapshot)
+    event_type = event.get("event_type") if isinstance(event, dict) else None
+    return deny_admission(errors, event_type, EVENTS)
+
+
 class ReplayOracle:
-    """In-memory retained-transition projector, never durable event execution."""
+    """Fail-closed fixture boundary; these events have no admitted replay path."""
 
     def __init__(self):
         self.event_ids = {}
@@ -165,41 +185,27 @@ class ReplayOracle:
         self.executed_effects = 0
 
     def consume(self, case):
-        event = case["event"]
-        if event_failures(event, case["producer"], case["request"], case["snapshot"]):
-            return "quarantined_without_checkpoint_advance"
-        owner = response.module("testing_event_case_l", "pm-implementation-readiness.py")
-        signature = owner.event_producer_semantic_digest(event)
-        transition = (owner.scope_partition(event["scope_kind"], event["project_id"]),
-                      event["event_type"], event["idempotency_key"])
-        prior_id = self.event_ids.get(event["event_id"])
-        prior_transition = self.transitions.get(transition)
-        if any(prior is not None and prior != signature for prior in (prior_id, prior_transition)):
-            return "quarantined_without_checkpoint_advance"
-        if prior_id is not None or prior_transition is not None:
-            # Remember aliases without advancing the projection/checkpoint, so
-            # a later conflict cannot recycle a duplicate transport event ID.
-            self.event_ids[event["event_id"]] = signature
-            return "duplicate_no_effect"
-        if event["sequence_id"] <= self.checkpoint:
-            return "quarantined_without_checkpoint_advance"
-        self.event_ids[event["event_id"]] = signature
-        self.transitions[transition] = signature
-        self.checkpoint = event["sequence_id"]
-        subject = (event["project_id"], event["payload"]["subject"]["test_session_id"])
-        self.generations[subject] = max(self.generations.get(subject, -1), event["payload"]["projection_generation"])
-        self.projected_count += 1
-        return "projected_no_effect"
+        # Even a structurally valid candidate or retained predecessor record
+        # has no current admission. Do not reserve identity or alter old state.
+        return "quarantined_without_checkpoint_advance"
 
 
 def validate(*, payloads_only=False):
     failures = []
     admission = load("Plans/testing_session_event_admission.json")
     registry = load("Plans/event_family_registry.json")
+    shape_errors = input_shape_failures(admission, registry)
+    if shape_errors:
+        return invalid_input_report("pm.testing_session_event_admission_report.v2", shape_errors)
+    failures.extend(disposition_failures(admission, registry, EVENTS))
     families = {row["event_type"]: row for row in registry["families"]}
     rows = admission["rows"]
+    if (admission.get("schema_id") != "pm.testing_session_event_admission.v2"
+            or admission.get("maximum_payload_utf8_bytes") != 65536):
+        failures.append("manifest_schema_or_payload_limit")
     if {row["event_type"]: row["command_id"] for row in rows} != EVENTS or len(rows) != 4:
         failures.append("exact_event_census")
+        return invalid_input_report("pm.testing_session_event_admission_report.v2", failures)
     if len({row["event_type"] for row in registry["families"]}) != len(registry["families"]):
         failures.append("duplicate_central_event")
     if admission["preexisting_family_prefix_count"] != 92 or digest(registry["families"][:92]) != admission["preexisting_family_prefix_sha256"]:
@@ -210,41 +216,37 @@ def validate(*, payloads_only=False):
     wiring = load("Plans/Wiring_Matrix.production.json")["entries"]
     for index, row in enumerate(rows):
         schema = load(PAYLOAD)["$defs"][row["event_type"].rsplit(".", 1)[1]]
-        if schema["$id"] != row["payload_schema_ref"]["schema_id"] or row["semantic_owner_ref"] != OWNER or row["producer_component"] != PRODUCER:
+        expected_ref = {"path": PAYLOAD, "json_pointer": "#/$defs/" + row["event_type"].rsplit(".", 1)[1], "schema_id": schema["$id"]}
+        if expected_ref != row["payload_schema_ref"] or row["semantic_owner_ref"] != OWNER or row["producer_component"] != PRODUCER:
             failures.append("owner_binding")
-        policy = policies.get(row["retention_policy_ref"]["policy_id"], {})
-        if policy.get("policy_version") != row["retention_policy_ref"]["policy_version"] or not policy.get("hold_eligible"):
-            failures.append("retention_binding")
+        policy = policies.get(row["proposed_retention_policy_ref"]["policy_id"], {})
+        if policy.get("policy_version") != row["proposed_retention_policy_ref"]["policy_version"] or not policy.get("hold_eligible"):
+            failures.append("proposed_retention_reference")
         if payloads_only:
             continue
-        family = families.get(row["event_type"], {})
-        for field in ("family_id", "family_revision", "scope_policy", "payload_schema_ref", "retention_policy_ref"):
-            if family.get(field) != row[field]:
-                failures.append("central_binding:" + row["event_type"] + ":" + field)
-        if family.get("semantic_owner_doc") != OWNER or family.get("payload_schema_id") != row["payload_schema_ref"]["schema_id"]:
-            failures.append("central_owner_binding")
-        expected_pointers = {field: ["/payload/owner_result/context/" + field] for field in IDENTITIES}
-        legacy = family.get("legacy", {})
-        if legacy.get("identity_json_pointers") != expected_pointers or legacy.get("aliases") != [] or legacy.get("admitted_extensions") != []:
-            failures.append("central_identity_or_legacy")
-        if legacy.get("redaction", {}).get("mode") != "reject_unhandled_secrets":
-            failures.append("central_redaction")
+        if row["scope_policy"] != "project_only":
+            failures.append("candidate_scope")
         placements = [entry for entry in wiring.values() if entry["ui_command_id"] == row["command_id"]]
         if len(placements) != 2:
             failures.append("placement_count")
         binding_ref = "Plans/testing_session_event_admission.json#/rows/" + str(index)
         for placement in placements:
             if placement["expected_event_types"] != [row["event_type"]] or binding_ref not in placement["effect_contract"]["receipt_or_event_refs"]:
-                failures.append("wiring_admission_ref")
+                failures.append("wiring_disposition_ref")
+            if ("Plans/Decision_Log.md#DL-039" not in placement["effect_contract"]["receipt_or_event_refs"]
+                    or not any(DISPOSITION in item for item in placement["event_test_requirements"])):
+                failures.append("wiring_non_admission_boundary")
     cases = list(fixture_cases())
     fixtures = load("Plans/testing_session_event_admission_fixtures.json")
     if fixtures["valid_case_refs"] != [case["case_id"] for case in cases]:
         failures.append("positive_fixture_census")
     negative_count = 0
     for case in cases:
-        found = event_failures(case["event"], case["producer"], case["request"], case["snapshot"])
+        found = candidate_failures(case["event"], case["producer"], case["request"], case["snapshot"])
         if found:
             failures.append({"case_id": case["case_id"], "errors": found})
+        if event_failures(case["event"], case["producer"], case["request"], case["snapshot"]) != [DENIAL]:
+            failures.append("candidate_admission_not_blocked:" + case["case_id"])
         for mutation in fixtures["invalid_for_each_valid"]:
             invalid = copy.deepcopy(case)
             if mutation["target"] == "producer":
@@ -255,13 +257,15 @@ def validate(*, payloads_only=False):
                 for part in parts[:-1]:
                     cursor = cursor[part]
                 cursor[parts[-1]] = mutation["value"]
-            rejected = event_failures(invalid["event"], invalid["producer"], invalid["request"], invalid["snapshot"])
+            rejected = candidate_failures(invalid["event"], invalid["producer"], invalid["request"], invalid["snapshot"])
             if mutation["expected_error"] not in rejected:
                 failures.append({"case_id": case["case_id"], "mutation": mutation["name"], "errors": rejected})
             negative_count += 1
-    return {"schema_id": "pm.testing_session_event_admission_report.v1",
+    return {"schema_id": "pm.testing_session_event_admission_report.v2",
             "status": "fail" if failures else ("payloads_only" if payloads_only else "pass"),
             "scoped_events": 4, "positive_cases": len(cases), "negative_cases": negative_count,
+            "admitted_events": 0, "event_disposition": DISPOSITION,
+            "event_persistence_authorized": False,
             "registry_families": len(families), "native_producer_proven": False,
             "global_event_denominator": "UNKNOWN_OPEN", "governance_sealed": False, "failures": failures}
 
