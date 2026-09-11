@@ -1408,10 +1408,12 @@ canonical_text: >-
   authority_granted false on every result path. Semantic events are bsd.policy_changed, bsd.workflow_binding_created,
   bsd.assignment_started, bsd.assignment_paused, bsd.assignment_resumed, bsd.assignment_stopped, bsd.review_started,
   bsd.finding_held, bsd.finding_reconfirmed, bsd.finding_cleared, bsd.advice_emitted, bsd.finding_suppressed,
-  bsd.review_failed, bsd.review_timed_out, and bsd.output_quarantined. Apart from the pre-existing cmd.bsd.set catalog row,
-  these require central command catalog registration, central EventRecord registration, and production wiring before they
-  exist; until then controls remain disabled with command_not_registered and effects are receipt and projection only with
-  missing_event_registration recorded, and internal trigger, hold, and reconfirm transitions receive no user-facing command ID.
+  bsd.review_failed, bsd.review_timed_out, and bsd.output_quarantined. All ten command IDs now have central catalog
+  declarations and sole future handler targets; registration does not prove native implementation. Missing command
+  registration is command_not_registered, while a registered command with no available owner is owner_unavailable.
+  Required but unadmitted EventRecord families remain missing_event_registration and cannot be bypassed by a receipt.
+  Partial Touch Closure records retain absent machine/native/durable evidence. Internal trigger, hold, and reconfirm
+  transitions receive no user-facing command ID.
 gui_related: true
 gui_classification_reason: Every listed command backs a visible control whose disabled reason must be exact.
 depends_on:
