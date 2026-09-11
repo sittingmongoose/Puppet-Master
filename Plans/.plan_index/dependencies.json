@@ -5872,6 +5872,7 @@
     "GRS-061",
     "F3-457",
     "SP-265",
+    "SP-270",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -65780,6 +65781,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "SP-235"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "SP-241"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-270",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-271",
       "to": "CV-334"
     },
@@ -94699,7 +94730,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T21:52:04Z",
+  "generated_at_utc": "2026-09-11T22:21:08Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -192605,6 +192636,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_step08_seglog_append_observability",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-270",
+      "reasoning_tier": "high",
+      "risk_class": "false_native_append_settlement_or_source_retirement",
+      "source_location": {
+        "heading": "Exact producer projection, native bookkeeping and history joins",
+        "heading_level": 3,
+        "heading_line": 20773,
+        "line": 20785,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "goal_child_status_historical_event",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -205837,10 +205885,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14980,
+    "depends_on_edge_count": 14986,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17631,
-    "node_count": 6537,
+    "edge_count": 17637,
+    "node_count": 6538,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

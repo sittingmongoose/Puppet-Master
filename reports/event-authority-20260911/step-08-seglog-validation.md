@@ -1,0 +1,17 @@
+# Step 8 — Seglog append observability depth supplement
+
+All twelve individual normative facets are supplied by SP-270. It defines the existing `seglog.event_appended` family's source-first native producer, exact semantic mapping and separate replay admission, bounded canonical settlement-prefix custody, pending-source protection, three passive reader bindings and two concrete checkpoint-generation histories. Three first-native physical families bring the registry from 95 to 98. All 95 prior rows, all policy values, launch arrays, all 41 current event registrations and payloads remain unchanged; the original Step 8 denominator remains 39. The new floor/prefix class maps explicitly to existing indefinite migration/source-lineage authority under DL-045. No per-event perpetual catalog or retention policy is added.
+
+The checker passes 25 retained joins, 26 canonical-prefix/expired-read cases, 16 transition/refresh cases, seven age/hold/ref cases and slot/sibling cleanup. Twelve prior root regressions and 32 independently rebuilt schema-valid replay-policy cases also pass. The compact canonical fixture contains 12 closed-value positive/negative shape examples. These suites overlap by design; they are not advertised as a count of distinct runtime executions. Independent review found no issue within that bounded scope.
+
+Root corrected the external checker's metadata replay-policy factory and added separate original/metadata admission predicates at both retained and prefix boundaries. This implements the existing proposed rule without adding `replay_policy` to the global producer-semantic hash preimage. Canonical compilation makes the separate admission requirement explicit and replaces draft-only wording. All prior schema and source algorithms retain their meanings.
+
+Native source authenticity, CRC/fsync/watermarks, real append receipts, canonical-store reads, redb CAS/concurrency, installed migration/adoption, backup and complete protecting-ref enumeration remain **NOT_RUN**. Prefix custody is a new normative contract, not a discovered historical receipt. The old guessed expired-removal dictionary has no positive proof and is disallowed. `DEPTH_PASS`, runtime/currentness acceptance and row closure remain withheld. This supplement does not change Step 9's 252 dispositions or seal governance.
+
+Frozen corrected subject: `/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-appended-20260911/v4-root/manifest.json` — SHA-256 `1dbd8542840086c1741d55cc2ada0edbc4b3c02affa552c60d4f13321251a171` (44 files). Its manifest pins schemas, checkers, synthetic joined fixtures and exact source snapshots. Native capture requirements remain separate.
+
+Independent report: `/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-independent-review-20260911/v4-root/report.json` — SHA-256 `5931ed86a061f460cccaf2ddd7793310d4c9d925caa4913a8f58e77a4204be16`; review manifest `/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-independent-review-20260911/v4-root/manifest.json` — SHA-256 `da8fddf9d457e48c4ff7fffc5e2e1f8ce4cf75b228d395f0998bfa8810217f61`.
+
+See `step-08-seglog-checks.json` for exact check counts and `step-08-seglog-depth.json` for the twelve-facet scope. Generated shard and PlanUnit-index verification is recorded with the landing checks.
+
+Cost: root integration and review plus one Astra-medium bounded independent review; provider dollar telemetry is unavailable.

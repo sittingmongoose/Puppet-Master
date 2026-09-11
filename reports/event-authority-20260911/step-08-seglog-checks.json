@@ -1,0 +1,44 @@
+{
+  "status": "PASS_STATIC_SCHEMAS_AND_BOUNDED_REVIEW",
+  "value_shape_cases": 12,
+  "existing_storage_families_preserved": 95,
+  "new_storage_families": 3,
+  "all_other_registry_fields_preserved": true,
+  "subject_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-appended-20260911/v4-root/manifest.json",
+    "sha256": "1dbd8542840086c1741d55cc2ada0edbc4b3c02affa552c60d4f13321251a171"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-independent-review-20260911/v4-root/report.json",
+    "sha256": "5931ed86a061f460cccaf2ddd7793310d4c9d925caa4913a8f58e77a4204be16",
+    "manifest_sha256": "da8fddf9d457e48c4ff7fffc5e2e1f8ce4cf75b228d395f0998bfa8810217f61"
+  },
+  "static_joined_cases": 25,
+  "canonical_prefix_cases": 26,
+  "transition_refresh_cases": 16,
+  "retention_cases": 7,
+  "prior_root_regression_cases": 12,
+  "independent_policy_cases": 32,
+  "slot_ceiling_and_sibling_cleanup": true,
+  "native": "NOT_RUN",
+  "new_closed_event_rows": 0,
+  "generated_index_scope": {
+    "old_plan_units_preserved": 6537,
+    "new_plan_unit_count": 6538,
+    "generated_shard_owner_groups": [
+      "storage-plan",
+      "storage_value_registry"
+    ],
+    "all_existing_plan_unit_semantics_preserved": true
+  },
+  "shard_check": {
+    "status": "pass",
+    "docs": 98,
+    "shards": 2254
+  },
+  "plan_index": {
+    "status": "pass",
+    "plan_units": 6538,
+    "acceptance_units": 25115
+  }
+}

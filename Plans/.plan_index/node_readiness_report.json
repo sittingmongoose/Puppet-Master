@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14980,
+    "depends_on_edge_count": 14986,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17631,
-    "node_count": 6537,
+    "edge_count": 17637,
+    "node_count": 6538,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T21:52:04Z",
+  "generated_at_utc": "2026-09-11T22:21:08Z",
   "gui_related_units": {
     "count": 3156,
     "units": [
@@ -34740,10 +34740,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6537,
+  "plan_unit_count": 6538,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1993,
+      "high": 1994,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35965,6 +35965,7 @@
       "false_green_home_certification": 1,
       "false_implementation_readiness_registry": 1,
       "false_layout_failure": 1,
+      "false_native_append_settlement_or_source_retirement": 1,
       "false_node_generation": 4,
       "false_non_executable_closure_overclaim": 1,
       "false_observability": 1,
@@ -38502,7 +38503,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6346,
+      "accepted": 6347,
       "retired": 182,
       "superseded": 9
     },
@@ -38569,7 +38570,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5191,
+      "requirement": 5192,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38657,7 +38658,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "1ca234e24cedba0233714de0a68a0efc115a3ef46eec4a8c2c6896000f45b445",
+        "expected": "238fffa195d9c57b5ec855515bb81a852f8fcf102d663bb2903d0a06a990ad6b",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38725,7 +38726,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-home-layout-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-seglog-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {
