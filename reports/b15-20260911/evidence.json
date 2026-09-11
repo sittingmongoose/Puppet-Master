@@ -1,0 +1,33 @@
+{
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/preflight.json",
+      "sha256": "28cdbd21ef66eec5aff965e28f76638b0c7f7e8d988410d41b5239c074285779"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/verify-ready/RUN.json",
+      "sha256": "5cff80804e82657841d413ca8476123e399625b4369eaa3d69bdf9ed9186832c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/regressions/regressions/b13/RUN.json",
+      "sha256": "521d23b3c8318e71e34941209fc2d2e97f84c11515b1a4b6241f8c927afbed47"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/regressions/regressions/b13-boundaries/RUN.json",
+      "sha256": "9be17a1e98015b644517270510843ffab620ab14dc3e9dbd24ef553343e1b7b0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/regressions/verify/RUN.json",
+      "sha256": "956bb40e87b0363e5530cddd7471e54e7ab22446c1e6b6e3e3aa20e4d2762eaa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/historical/RESULT.json",
+      "sha256": "7221563bb4335a5285ae3c87348b689d3be1343b9ad2650af539a1832f7462aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/b15-import-20260911/file-navigation.json",
+      "sha256": "7f57db91ac1caf94469584871e4b4bf54b9a2ab622e6e40e6b71bbb4672f8a9b"
+    }
+  ],
+  "html_sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c"
+}
