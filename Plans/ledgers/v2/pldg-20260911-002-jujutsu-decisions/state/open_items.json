@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "remaining_work": [
+    "Validate intake, apply reviewed owner proposals with reciprocal source lineage, independently review all44 dispositions, then regenerate required derived files and land D5."
+  ],
+  "declined_decisions": [
+    "D036",
+    "D033",
+    "D021",
+    "D041",
+    "D023",
+    "D024",
+    "D025",
+    "D026"
+  ]
+}

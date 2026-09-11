@@ -1,0 +1,29 @@
+{
+  "schema": "jj.d5.source_manifest.v1",
+  "created_at": "2026-09-11T17:28:15.827337+00:00",
+  "baseline_commit": "c423c3890d3b6feb4ce4e0d8daa57c8532bd045f",
+  "decision_authority": {
+    "path": "Plans/Decision_Log.md",
+    "sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f"
+  },
+  "original_companion": {
+    "path": "reports/jujutsu-research-2026-09-11/d3/technical-companion.json",
+    "sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702"
+  },
+  "brief": {
+    "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/NEXT_GOAL_2_D5_20260911.md",
+    "sha256": "264a58393a368fe3c8e0d04ce35bda2967e5ca1e6ec256e8da3283991c8ec7d0"
+  },
+  "answer_sheet": {
+    "path": "/mnt/Cursor/PM-Experiments/research-audit-native-20260907/process-pilot-20260908/JUJUTSU_ANSWERS_20260911.md",
+    "sha256": "310c97957e053187d2c53590eac600ae57e21e3acf118773a54b86970e48ae1f"
+  },
+  "class_counts": {
+    "accepted_for_planning": 29,
+    "conditional": 4,
+    "policy": 2,
+    "architecture": 1,
+    "declined_or_deferred": 8
+  },
+  "d3_untouched": true
+}

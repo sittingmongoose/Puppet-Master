@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+  "last_event_id": "evt-001",
+  "canonical_plan_targets": [],
+  "compiled_plan_outputs": [],
+  "compiled_owner_docs": [],
+  "governance_status": "not_requested",
+  "current_phase": "ready_for_owner_compile",
+  "cursor": {
+    "last_event_id": "evt-001",
+    "next_action": "Validate intake, apply reviewed owner proposals with reciprocal source lineage, independently review all44 dispositions, then regenerate required derived files and land D5."
+  },
+  "source_refs": [
+    "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/source_shards/authorization.md",
+    "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/source_shards/answers.md",
+    "Plans/Decision_Log.md#DL-043"
+  ],
+  "validation_state": {
+    "ledger_health": "pass_intake",
+    "independent_review": "pending",
+    "independent_intake_review": "pass"
+  },
+  "intake_review_ref": "reports/jujutsu-research-2026-09-11/d5/intake-review.json"
+}
