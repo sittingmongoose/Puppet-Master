@@ -1,0 +1,482 @@
+{
+  "schema_id": "pm.assurance.event_authority.checkpoint_approval.v1",
+  "step": 4,
+  "supplement": "current_checkpoint_carry_forward",
+  "base_commit": "1ebf8d985123db473408a989f8a0b0572e307d81",
+  "applier_task": "/root/step04_checkpoint",
+  "applied_at_utc": "2026-09-11T17:08:43.913064+00:00",
+  "authority": {
+    "approved_by": "Jared",
+    "initial_approval_ref": "Plans/Decision_Log.md#DL-039",
+    "initial_approval_conversation_date": "2026-09-10",
+    "initial_checkpoint": {
+      "registry_revision": "2026-08-27.1",
+      "registered_kernel_rows": 39
+    },
+    "compaction_authority_ref": "Plans/Decision_Log.md#DL-040",
+    "current_instruction_recorded_at_utc": "2026-09-11T17:01:44.364419Z",
+    "source": "jared_chat_2026-09-11",
+    "instruction": "explicit_current_checkpoint_carry_forward",
+    "meaning": "The DL-039 approved baseline carries forward through the DL-040 compaction admission to current registry2026-09-11.1/40; no validator pass or clearance is granted.",
+    "sources": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-12/NEXT_STEPS_20260910.md",
+        "sha256": "85dde9aaaef7c1834fe6df3a5ad5ffed2f383bd0c1cfddf32b0985d789d150e1"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json",
+        "sha256": "35516738f321b33fb113ab6836f6dab0aaca84d8cb10e93b726f608a1f4d9858"
+      }
+    ]
+  },
+  "approved_checkpoint": {
+    "schema_id": "pm.event_family_registry.v1",
+    "schema_version": "2.0.0",
+    "registry_revision": "2026-09-11.1",
+    "registered_kernel_rows": 40,
+    "registry_sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a"
+  },
+  "implementation": {
+    "path": "scripts/pm_pnc019_currentness.py",
+    "changed_data": [
+      "EVENT_FAMILY_REGISTRY_REVISION",
+      "EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT"
+    ],
+    "provenance_comments_updated": true,
+    "before_sha256": "dfa86c8d46ffc689670476145147cdf1515c9a456411719dbebf66648b5fea17",
+    "after_sha256": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
+    "function_and_class_ast_sha256": "9bd9cb48d0e1c695500d710005ab79dd32e5df92f10622d38452f3fe771ff361",
+    "all_function_and_class_ast_unchanged": true,
+    "whole_module_ast_unchanged_except_two_baseline_data": true,
+    "historical_receipt_preserved": "reports/event-authority-20260911/step-04-checkpoint-receipt.json"
+  },
+  "projection_commands": [
+    [
+      "python3",
+      "scripts/pm-implementation-readiness.py",
+      "generate"
+    ],
+    [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    [
+      "python3",
+      "scripts/pm-implementation-readiness.py",
+      "generate"
+    ]
+  ],
+  "sanctioned_paths": [
+    "scripts/pm_pnc019_currentness.py",
+    "Plans/.implementation_readiness/buildability_gate_report.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "reports/event-authority-20260911/step-04-current-checkpoint.json",
+    "reports/event-authority-20260911/step-04-current-checkpoint.md"
+  ],
+  "validation": {
+    "focused_checks": {
+      "current_baseline_clears_only_checkpoint_mismatch": true,
+      "stale_revision": true,
+      "future_revision": true,
+      "wrong_schema": true,
+      "wrong_version": true,
+      "changed_family_count": true,
+      "all_function_and_class_ast_unchanged": true,
+      "whole_module_ast_unchanged_except_two_baseline_data": true,
+      "complete_denominator_known_false": true,
+      "contract_depth_complete_false": true,
+      "bulk_registration_false": true,
+      "quarantine_count252_unchanged": true,
+      "unchanged:Plans/event_family_registry.json": true,
+      "unchanged:Plans/Spec_Lock.json": true,
+      "unchanged:Plans/.implementation_readiness/pnc019_certification_receipt.json": true,
+      "unchanged:Plans/Decision_Log.md": true,
+      "unchanged:reports/event-authority-20260911/step-04-checkpoint-receipt.json": true,
+      "unchanged:reports/event-authority-20260911/step-04-checkpoint-report.md": true,
+      "unchanged:reports/event-authority-20260911/step-03-holding-bucket-receipt.json": true,
+      "unchanged:Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py": true,
+      "unchanged:scripts/pm-event-authority-currentness.py": true,
+      "unchanged:scripts/pm-implementation-readiness.py": true,
+      "unchanged:scripts/pm-plan-index.py": true
+    },
+    "focused_check_count": 23,
+    "before_checkpoint_failures": [
+      "event_authority_checkpoint_changed_requires_fresh_approval",
+      "event_denominator_unresolved",
+      "event_family_contract_depth_unresolved"
+    ],
+    "after_checkpoint_failures": [
+      "event_denominator_unresolved",
+      "event_family_contract_depth_unresolved"
+    ],
+    "readiness_validate_exit_code": 1,
+    "readiness_status": "fail",
+    "readiness_failure_count": 92,
+    "readiness_failures_by_code": {
+      "pnc019_source_hash_stale": 16,
+      "event_authority_currentness_source_drift": 62,
+      "event_authority_currentness_validator_drift": 1,
+      "event_authority_currentness_live_registry_drift": 1,
+      "event_denominator_unresolved": 2,
+      "event_family_contract_depth_unresolved": 2,
+      "event_legacy_fixture_root_mismatch": 1,
+      "storage_value_registry_tier_counts_mismatch": 1,
+      "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+      "storage_value_registry_spec_lock_hash_stale": 3,
+      "implementation_readiness_self_tests_failed": 1
+    },
+    "currentness_validate_exit_code": 1,
+    "currentness_evidence_valid": false,
+    "currentness_event_authority_closed": false,
+    "currentness_checks": {
+      "exact_live_source_set": false,
+      "every_direct_plans_markdown_inventoried": true,
+      "all_live_sources_rehashed": false,
+      "source_manifest_digest_matches": true,
+      "occurrence_ledger_hash_matches": true,
+      "live_registry_exactly_matches_status": false,
+      "status_remains_fail_closed": true,
+      "august_pass_marked_stale_void": true,
+      "depth_remains_incomplete": true,
+      "explicit_exclusions_present": true,
+      "quarantined_252_exact_set_and_custody": true,
+      "artifact_hashes_match_receipt": true,
+      "validator_hash_matches_receipt": false,
+      "receipt_is_explicitly_non_closing": true
+    },
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2167,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "buildability_gate_passed": false,
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "complete_denominator_known": false,
+    "contract_depth_complete": false,
+    "quarantined_row_count_unchanged": 252,
+    "bulk_registration_allowed": false,
+    "initial_currentness_custody_exit_code": 2,
+    "initial_readiness_fixture_exit_code": 1
+  },
+  "claim_boundary": {
+    "checkpoint_only": true,
+    "registry_admission": false,
+    "pnc019_certified": false,
+    "runtime_enabled": false,
+    "worknodes_created": false,
+    "spec_lock_sealed": false,
+    "independent_validator_changed": false,
+    "freeze_or_closure_hash_restamps": false,
+    "certification_receipt_changed": false
+  },
+  "local_validation_notes": [
+    "Initial readiness validation could not find a fixture excluded by sparse checkout; added tracked tests/fixtures and final validation ran to actual findings.",
+    "The retained currentness directory is exposed through an ignored local symlink; direct validation correctly rejected its custody escape, then succeeded to a fail-closed result using an explicit external PM_EVIDENCE_MAP. No live canon was mapped and no audit source or receipt was rewritten.",
+    "Sanctioned index generation emitted only timestamp differences in coverage_report.json, dependencies.json and doc_cards.json beyond the authorized readiness projection. Exact diffs were retained externally and only these own timestamp changes were restored to HEAD."
+  ],
+  "evidence": {
+    "NEXT_STEPS_20260910.md": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/NEXT_STEPS_20260910.md",
+      "sha256": "85dde9aaaef7c1834fe6df3a5ad5ffed2f383bd0c1cfddf32b0985d789d150e1"
+    },
+    "OWNER_DECISION_SHEET_ANSWERS_20260910.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/OWNER_DECISION_SHEET_ANSWERS_20260910.json",
+      "sha256": "35516738f321b33fb113ab6836f6dab0aaca84d8cb10e93b726f608a1f4d9858"
+    },
+    "checkpoint-before.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/checkpoint-before.json",
+      "sha256": "f2072bad26839cc7eec6a3e00cf0a8ddea5102bc28f98fc4584ce1c7b28c0ed9"
+    },
+    "currentness-after-mapped.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after-mapped.process.json",
+      "sha256": "6ddb1f8d8c2733ab463df4e34f069698669a3d688a9dc1da4780817eeac29f7b"
+    },
+    "currentness-after-mapped.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after-mapped.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "currentness-after-mapped.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after-mapped.stdout",
+      "sha256": "cb1a0f7dfd763183cfaa472267a2897d5b4fbbc2b4e71ac60bcca0d5c90aa3cf"
+    },
+    "currentness-after.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after.process.json",
+      "sha256": "4273fead6e32474cbc9bd4d364fda8ba3552f02e12cd88c4e02affca0a7a5515"
+    },
+    "currentness-after.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "currentness-after.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-after.stdout",
+      "sha256": "02fafec1d4e2b8f8ead8c56ace45f55d7d07f6f917191e70f2a282d772743079"
+    },
+    "currentness-before.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-before.process.json",
+      "sha256": "4273fead6e32474cbc9bd4d364fda8ba3552f02e12cd88c4e02affca0a7a5515"
+    },
+    "currentness-before.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-before.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "currentness-before.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/currentness-before.stdout",
+      "sha256": "02fafec1d4e2b8f8ead8c56ace45f55d7d07f6f917191e70f2a282d772743079"
+    },
+    "focused-checks.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/focused-checks.json",
+      "sha256": "12c1d653885340f1ed8b343ce2841b86b5a87feef632b793075b81ff1052ee02"
+    },
+    "helper-before.py": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/helper-before.py",
+      "sha256": "dfa86c8d46ffc689670476145147cdf1515c9a456411719dbebf66648b5fea17"
+    },
+    "index-generate.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/index-generate.process.json",
+      "sha256": "b5d85c5e991c3aff7a0f4950e2743d39a90786257d7e14e96dbb7c8f9e634b75"
+    },
+    "index-generate.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/index-generate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "index-generate.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/index-generate.stdout",
+      "sha256": "ac08093fe4ba6d10cd436e627b64f9b65cbca9d9aeb87744f021442b27f1140a"
+    },
+    "protected-before.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/protected-before.json",
+      "sha256": "e94029eefe089133591234a0c2d7fb9b51c918011acc430246664e61b84de75c"
+    },
+    "readiness-before.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-before.process.json",
+      "sha256": "570387243a2a7ea4f3cfeebd52554a1f91e266910e58d4c61dc86d9fd35fafdb"
+    },
+    "readiness-before.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-before.stderr",
+      "sha256": "9a3cf11877ac1ab60d5d6691c59bf7618383ba6869d8834e24e51ebb520659c1"
+    },
+    "readiness-before.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-before.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-generate-final.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate-final.process.json",
+      "sha256": "3b67815214f9a1c51d23912be7df080b91a77653e1efc7e8f0594613a206b736"
+    },
+    "readiness-generate-final.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-generate-final.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate-final.stdout",
+      "sha256": "a141bbd792141da7dbf55088034457512e487e25e2fb4fed48ecca381abac820"
+    },
+    "readiness-generate.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate.process.json",
+      "sha256": "3b67815214f9a1c51d23912be7df080b91a77653e1efc7e8f0594613a206b736"
+    },
+    "readiness-generate.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-generate.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-generate.stdout",
+      "sha256": "e0d32e5cdc30f72cdbd8aa79a748568c4ca7ad589d09b248ba3bef189195ef06"
+    },
+    "readiness-validate-final.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-validate-final.process.json",
+      "sha256": "570387243a2a7ea4f3cfeebd52554a1f91e266910e58d4c61dc86d9fd35fafdb"
+    },
+    "readiness-validate-final.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-validate-final.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "readiness-validate-final.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/readiness-validate-final.stdout",
+      "sha256": "fa0401ce5e04896379e60e97b80797e1dfe5029318e5fbea190b5dcf6a2614d3"
+    },
+    "shard-check.process.json": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/shard-check.process.json",
+      "sha256": "f572ef0e5e7acf1c1db456c9079804a082ab81b8ca86c8918be7b65d726a6195"
+    },
+    "shard-check.stderr": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/shard-check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "shard-check.stdout": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/shard-check.stdout",
+      "sha256": "30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644"
+    },
+    "unrelated-index-generated.diff": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/unrelated-index-generated.diff",
+      "sha256": "9d8a38d25d3cb0b162b28431812c26b491c66a66035e9d39b56a10d219b66a32"
+    },
+    "checkpoint.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step04-current-20260911/checkpoint.py",
+      "sha256": "9ff456ee4dea408e4d6aca09e2c7cb02f2561b03bbeb0bbfcd67c390d9d3eee0"
+    },
+    "evidence-map.json": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step04-current-20260911/evidence-map.json",
+      "sha256": "6415bb97e118bd0c7d3de38c16f814c9f409345f5d14135045f7e121e0c46b0f"
+    }
+  },
+  "cost": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "medium",
+    "token_usage": null,
+    "usd": null,
+    "note": "Per-agent token and dollar usage unavailable."
+  },
+  "retained_currentness_inputs": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json",
+      "sha256": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json",
+      "sha256": "7361d14c7d799c58441de921422b758fa6d998f92737af72daf2ebaaad86d8d6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json",
+      "sha256": "8f042ba5facf0f33a7f904b44a5b3f35976fb6c79890618d7e8dbedbc45f11a3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json",
+      "sha256": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
+      "sha256": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv",
+      "sha256": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541"
+    }
+  ],
+  "original_base_commit": "bf898b1608158551babdcded344c4a8f4a56ae59",
+  "rebase_evidence": {
+    "reason": "Concurrentmain DL-043 Jujutsu landing1ebf8d9851 changedgeneratednode-readiness projection; regenerated through sanctioned owner scripts without hand-merging",
+    "pre_rebase_step04_commit": "984b60b07a",
+    "new_base_commit": "1ebf8d985123db473408a989f8a0b0572e307d81",
+    "dl039_dl040_sections": {
+      "039": {
+        "unchanged": true,
+        "section_sha256": "33f79954c75252f0f5a68f6728369fb965c5fc8893696f24057ab7bbe9c1b2b2"
+      },
+      "040": {
+        "unchanged": true,
+        "section_sha256": "2bfdfff9852d15855a294934ba6d1b0efacd590342b5480302a5c2f31ca5c3df"
+      }
+    },
+    "decision_log_sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f",
+    "protected_baseline_changes": {
+      "Plans/Decision_Log.md": {
+        "previous": "dd9dce0c463866817cee9997476db6d39f470254d90905e8d5b6ff1773538734",
+        "current": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f"
+      }
+    },
+    "unrelated_index_semantics_unchanged": true,
+    "historic_before_capture_preserved": true,
+    "captures": {
+      "currentness-after-mapped.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/currentness-after-mapped.process.json",
+        "sha256": "56296949d3a02e635b050fd6b4762f0f0b52c23d05b925203095f7daf8e19027"
+      },
+      "currentness-after-mapped.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/currentness-after-mapped.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "currentness-after-mapped.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/currentness-after-mapped.stdout",
+        "sha256": "cb1a0f7dfd763183cfaa472267a2897d5b4fbbc2b4e71ac60bcca0d5c90aa3cf"
+      },
+      "focused-checks.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/focused-checks.json",
+        "sha256": "12c1d653885340f1ed8b343ce2841b86b5a87feef632b793075b81ff1052ee02"
+      },
+      "helper-before.py": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/helper-before.py",
+        "sha256": "dfa86c8d46ffc689670476145147cdf1515c9a456411719dbebf66648b5fea17"
+      },
+      "index-generate.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/index-generate.process.json",
+        "sha256": "b5d85c5e991c3aff7a0f4950e2743d39a90786257d7e14e96dbb7c8f9e634b75"
+      },
+      "index-generate.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/index-generate.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "index-generate.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/index-generate.stdout",
+        "sha256": "eb27f18343192f97247ffc4197b7df8a0d3a3b7adbd4f482a2ea88d3d9b9e1c4"
+      },
+      "protected-before.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/protected-before.json",
+        "sha256": "373d222de615ad9d4a3cd7a704f1186f5301616b90ce979f3f9bbb801c9a7c69"
+      },
+      "readiness-generate-final.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate-final.process.json",
+        "sha256": "3b67815214f9a1c51d23912be7df080b91a77653e1efc7e8f0594613a206b736"
+      },
+      "readiness-generate-final.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate-final.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "readiness-generate-final.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate-final.stdout",
+        "sha256": "b7f6b2ab890ac9b881f3ed75ad517fabfbd4d2aaa609ce0d218358059370fd04"
+      },
+      "readiness-generate.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate.process.json",
+        "sha256": "3b67815214f9a1c51d23912be7df080b91a77653e1efc7e8f0594613a206b736"
+      },
+      "readiness-generate.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "readiness-generate.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-generate.stdout",
+        "sha256": "00fb9203d6440af07de5504cd8b94cd29660c99c2ad940a357296ce3c985a102"
+      },
+      "readiness-validate-final.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-validate-final.process.json",
+        "sha256": "570387243a2a7ea4f3cfeebd52554a1f91e266910e58d4c61dc86d9fd35fafdb"
+      },
+      "readiness-validate-final.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-validate-final.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "readiness-validate-final.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/readiness-validate-final.stdout",
+        "sha256": "d2dc7e73d6dacb61a047e037147eddab7a8ec220e91440a18568ad15938c81e6"
+      },
+      "rebase-source-check.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/rebase-source-check.json",
+        "sha256": "13de8e8e6491612bcc6deea39a159c6f69c72026f621e76ee8de292abd8503b4"
+      },
+      "shard-check.process.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/shard-check.process.json",
+        "sha256": "f572ef0e5e7acf1c1db456c9079804a082ab81b8ca86c8918be7b65d726a6195"
+      },
+      "shard-check.stderr": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/shard-check.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "shard-check.stdout": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/shard-check.stdout",
+        "sha256": "30fa5fdacb748eaf9036b7b2b97ab5268051d2d86fe0f6cfddbe006848af0644"
+      },
+      "unrelated-index-generated.diff": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step04-current/rebase-1ebf8d9851/unrelated-index-generated.diff",
+        "sha256": "e43d6bb2a113e85e2fd77a3a92a7cc276be9d0db49c5052b70ab76e860949174"
+      }
+    }
+  }
+}

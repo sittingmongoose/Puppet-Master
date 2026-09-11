@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T17:00:28Z",
+  "generated_at_utc": "2026-09-11T17:12:34Z",
   "gui_related_units": {
     "count": 3107,
     "units": [
@@ -38118,45 +38118,269 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "dfa86c8d46ffc689670476145147cdf1515c9a456411719dbebf66648b5fea17",
+        "expected": "643559041c967acb2c9218774390c935eb55ede65229580f78bbfb9b199d14b1",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "error": "pnc019_source_hash_path_missing",
+        "actual": null,
+        "error": "pnc019_source_hash_stale",
+        "expected": "021612b76503ecbeee9b2eaf7f7a32279f956345074a9a5d462e610a4e6f0ff5",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/jj-answers-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
-        "error": "event_authority_currentness_audit_unavailable"
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
       },
       {
-        "actual_checkpoint": {
-          "registered_kernel_rows": 40,
-          "registry_revision": "2026-09-11.1",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        },
-        "denominator_status": "UNKNOWN_OPEN",
-        "error": "event_authority_checkpoint_changed_requires_fresh_approval",
-        "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
-        "evidence_refs": [
-          {
-            "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
-            "claim": "UNKNOWN_OPEN current status",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
-          },
-          {
-            "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
-            "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
-          }
-        ],
-        "expected_checkpoint": {
-          "registered_kernel_rows": 39,
-          "registry_revision": "2026-08-27.1",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        }
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/00-plans-index.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Back_Seat_Driver.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Collaborative_Workflows.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Commands_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Contracts_V0.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Cursor_Origin_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Decision_Log.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/FinalGUISpec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Goal_Runtime_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Jujutsu_Integration.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/LSPSupport.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Planning_Wizard.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Prompt_Pipeline.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Release_Supply_Chain.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Server_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Settings_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Shared_Integration_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Spec_Lock.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ToDo_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Tools.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Command_Catalog.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/UI_Wiring_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Wiring_Matrix.production.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contract_fixtures.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/egolite_retained_requirement_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_family_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_completed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_progressed.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_started.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ledgers/v2/ledger_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/settings_inventory.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/shared_runtime_contracts.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage-plan.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/touch_closure.json"
+      },
+      {
+        "error": "event_authority_currentness_validator_drift",
+        "validator_path": "scripts/pm-event-authority-currentness.py"
+      },
+      {
+        "error": "event_authority_currentness_live_registry_drift"
       },
       {
         "bulk_registration_allowed": false,

@@ -1,0 +1,11 @@
+# Step 4 supplement — Current PNC-019 registry baseline
+
+Recorded registry `2026-09-11.1` (40 families) as the current PNC-019 checkpoint. Jared's explicit instruction at `2026-09-11T17:01:44.364419Z` carries the original DL-039 approval forward through DL-040's compaction admission. The prior Step 4 receipt remains unchanged. Only the revision/count datums and provenance comments changed in the helper; all function/class ASTs and every other executable AST node are unchanged.
+
+All 23 focused checks pass, including stale/future revision, wrong schema/version and changed-count negatives. The current checkpoint mismatch clears; denominator and contract-depth failures remain, both clearance flags stay false, bulk registration stays false, and the quarantine count stays 252. Sanctioned generators refreshed the buildability and node-readiness projections. Readiness validation returns 1 with 92 actual findings; currentness validation returns 1 with evidence_valid=false and event_authority_closed=false. The shard check passes for 98 documents and 2,167 shards. No PNC-019 certification, runtime enablement, registry admission or Step 10 seal is claimed.
+
+Residual findings are preserved rather than restamped: stale source/receipt evidence, live-registry audit drift, unresolved denominator/depth, legacy fixture mismatch, storage tier/Spec Lock discrepancies and existing readiness self-test failure. Raw outputs, negative controls, source provenance and SHA-256 values are in `step-04-current-checkpoint.json`. The initial sparse-fixture and custody-map setup errors are retained alongside the final completed validations. Generated readiness source hashes are current projections; frozen evidence, closure hashes, Spec Lock and certification receipts are untouched.
+
+Cost: one GPT-6 Astra medium agent; token and dollar usage unavailable.
+
+Rebase verification: regenerated the node-readiness conflict against `1ebf8d985123db473408a989f8a0b0572e307d81`, preserving DL-043 and its index semantics. DL-039/DL-040 section bytes are unchanged; provenance now pins the updated Decision Log hash. All 23 focused checks pass against the new protected baseline. The original pre-change captures remain intact, and additional rebase evidence is recorded separately.

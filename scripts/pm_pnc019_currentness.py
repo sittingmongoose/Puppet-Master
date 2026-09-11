@@ -40,10 +40,13 @@ REQUIRED_PNC019_SOURCE_HASH_PATHS = (
 EVENT_FAMILY_REGISTRY_REL_PATH = "Plans/event_family_registry.json"
 EVENT_FAMILY_REGISTRY_SCHEMA_ID = "pm.event_family_registry.v1"
 EVENT_FAMILY_REGISTRY_SCHEMA_VERSION = "2.0.0"
-# Fresh baseline approval: Plans/Decision_Log.md DL-039 (Jared, 2026-09-10);
-# checkpoint data only: denominator and contract-depth clearance remain false.
-EVENT_FAMILY_REGISTRY_REVISION = "2026-08-27.1"
-EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 39
+# DL-039 baseline approval (Jared, 2026-09-10) carries forward through DL-040's
+# compaction admission: explicit Jared instruction 2026-09-11T17:01:44.364419Z,
+# jared_chat_2026-09-11 / explicit_current_checkpoint_carry_forward.
+# Provenance: reports/event-authority-20260911/step-04-current-checkpoint.json.
+# Checkpoint data only: denominator and contract-depth clearance remain false.
+EVENT_FAMILY_REGISTRY_REVISION = "2026-09-11.1"
+EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT = 40
 EVENT_FAMILY_QUARANTINED_ROW_COUNT = 252
 EVENT_FAMILY_DENOMINATOR_STATUS = "UNKNOWN_OPEN"
 EVENT_FAMILY_BULK_REGISTRATION_ALLOWED = False
