@@ -1,0 +1,66 @@
+{
+  "step": 2,
+  "source_revision": "f8b43905fac0fb36cb249ad4157effed950d4cf0",
+  "authority": "Plans/Decision_Log.md#DL-039",
+  "authority_sha256": "b304a91ac0ca4563747eadc8f98e70fa94fc53c35d3184bc929d5f6a6d937f0a",
+  "answer_source_path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json",
+  "answer_source_sha256": "61cbe7b12dc0e89bca5071391b89be47dd7e914a3dfc3a8498f8e20542bf697c",
+  "answer_source_note": "Genuine answer file is retained in shared checkout and absent fresh worktree; exact bytes captured externally. DL-039 is present in the fresh worktree.",
+  "changed_sheet": "Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET.json",
+  "before_sha256": "f1eb54ac22da236181e33c68d87f15346fde70eb4afa89cee49658cc2864f352",
+  "after_sha256": "61539a8822917c99bf6b8c0002bc266509c82eb177bb1066657ee8d5703c1ba0",
+  "started_at_utc": "2026-09-11T03:47:58.695144+00:00",
+  "sheet_updated_at_utc": "2026-09-11T03:48:00.013539+00:00",
+  "finished_at_utc": "2026-09-11T03:48:01.817863+00:00",
+  "elapsed_seconds": 3.123,
+  "elapsed_scope": "Measured source capture, mutation and validation only; excludes checkout wait and preparatory review.",
+  "decisions_updated": 8,
+  "removed_decision_id": "UNRESOLVED-54-CLOSE-PATH",
+  "recorded_at_utc_seven": "2026-09-10T20:26:00.977491+00:00",
+  "recorded_at_utc_a8": "2026-09-11T00:49:25.665050+00:00",
+  "checks": {
+    "exact_eight_unique_ids": true,
+    "invented_entry_removed": true,
+    "all_exact_options": true,
+    "exact_response_keys": true,
+    "exact_owner_and_source": true,
+    "exact_genuine_timestamps": true,
+    "no_application_timestamp": true,
+    "unrelated_decision_fields_unchanged": true,
+    "unrelated_top_level_fields_unchanged": true,
+    "sheet_update_time_matches_edit": true,
+    "crlf_preserved": true,
+    "spec_required_eight_ids_match": true,
+    "fresh_dl039_authorizes_all_eight": true
+  },
+  "validation_return_code": 0,
+  "raw_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-02/sheet-before.json",
+      "sha256": "f1eb54ac22da236181e33c68d87f15346fde70eb4afa89cee49658cc2864f352"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-02/sheet-after.json",
+      "sha256": "61539a8822917c99bf6b8c0002bc266509c82eb177bb1066657ee8d5703c1ba0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-02/genuine-answers.json",
+      "sha256": "61cbe7b12dc0e89bca5071391b89be47dd7e914a3dfc3a8498f8e20542bf697c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-02/validation.json",
+      "sha256": "c7a7178026c129fff62fbc27f41547961596e74769ca1ba006cb5e4629d8297e"
+    }
+  ],
+  "model": "gpt-6-astra",
+  "reasoning_effort": "medium",
+  "dollar_cost": null,
+  "dollar_cost_note": "Unavailable; no billing telemetry.",
+  "scope": "Owner response correction only; no phase1 application, registry admission, schema/validator changes or seal.",
+  "independent_validator": "Not run; focused checks are not an independent-validator pass. Root review identified a remaining invented ninth-ID reference in implementation; no validator edits in step 2.",
+  "spec_source": {
+    "path": "/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-12/independent-validator/INDEPENDENT_EA_VALIDATOR_SPEC.md",
+    "sha256": "cbc9cf9941a65ec740cd17684fcfa89d8e14d96d0088cdc662ebc43d03ce8fa5",
+    "line": 76
+  }
+}
