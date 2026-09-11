@@ -117,7 +117,11 @@
         "v4:QMAX-019",
         "v4:QMAX-020"
       ],
-      "status": "PLANNED_NOT_EXECUTED"
+      "status": "COMPLETED_BOUNDED_LOCAL_WORKFLOWS",
+      "checkpoint": "BATCH_14_CHECKPOINT.json",
+      "coverage_delta": "BATCH_14_COVERAGE_DELTA.json",
+      "full_feature_acceptance": false,
+      "native_proof": false
     },
     {
       "number": 15,
@@ -741,7 +745,8 @@
     "unmapped_groups": [],
     "boundary": "Previous primary checkpoints are not blanket closure of all group clauses."
   },
-  "updated_in_batch": 12,
+  "updated_in_batch": 14,
   "remaining_batch_estimate_after_batch12": 17,
-  "remaining_batch_estimate_after_batch13": 16
+  "remaining_batch_estimate_after_batch13": 16,
+  "remaining_batch_estimate_after_batch14": 15
 }

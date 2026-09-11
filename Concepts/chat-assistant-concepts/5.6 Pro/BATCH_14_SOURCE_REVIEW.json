@@ -1,0 +1,48 @@
+{
+  "repository": "sittingmongoose/Puppet-Master",
+  "reviewed_commit": "e1ff8230bbed75c97d5b222da357cebaa9124e72",
+  "concept_baseline": "Supplied pm-b13-source.zip, including earlier cumulative batches and B11 repair; not the published B12 concept.",
+  "baseline_archive_sha256": "5653654ecf444e9321b7a488ce5551b5c78323869e30348ce92fea19e1d887ba",
+  "baseline_html_sha256": "1e437b463408b707130830818ba006b84db1acdd5f5b4281d06fb32e49ca35b1",
+  "publication_observation": "The pinned build.py ends with bsd-demo-batch12; B13 is local supplied delivery, reported installed by the user.",
+  "consulted_owners": [
+    {
+      "path": "AGENTS.md",
+      "git_blob": "4138ba1c0e10e55dfe5a00fb47aa08ef98bb5be0",
+      "scope": "Current local-disk worktree, preservation, landing and separate governance rules."
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "git_blob": "93b98dba3570658c3b06112d238120bb88d63d3f",
+      "scope": "Current routing and supersession entries."
+    },
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "git_blob": "82ce585884893d3e87103e7ae6724e5b5cf79ae6",
+      "scope": "Six strategies; direct versus ledger_bound; negative ownership; Deep Plan and Build; QMAX-001..016; lines 595–755 and 920–1120 read through connector."
+    },
+    {
+      "path": "Plans/Settings_System.md",
+      "scope": "QMAX-018..019, seven existing settings, generic transactions, source-of-value migration; read only."
+    },
+    {
+      "path": "Plans/Collaborative_Workflows.md",
+      "scope": "Shared participant/run identity and Grill Me eligible-frontier semantics; read only."
+    },
+    {
+      "path": "Plans/.audits/assistant-settings-v3/DEMO_REQUIREMENT_MATRIX.csv",
+      "scope": "Exact v2 DPLAN statements and retained v4 QMAX identities; audit matrix is not product authority."
+    }
+  ],
+  "source_limits": [
+    "The original correction_requirements.json companion for QMAX is not included in the supplied cumulative package. Current owner wording is used; no exhaustive original-packet fidelity claim.",
+    "No full canonical owner bytes are included or claimed rehashed in this package. Where given, Git blob identities are connector-returned, not locally reconstructed hashes.",
+    "The unrelated old pipeline/ledger prompt packets are not authority for this concept batch."
+  ],
+  "local_only_decisions": [
+    "Maximum 100 question proposals and policy integer values are local safety bounds, not newly asserted native defaults.",
+    "Stable JSON serialization is used as an exact in-memory source binding, not advertised as a cryptographic hash.",
+    "Source inspection uses provided JSON and a labelled supplied CSV reference extract; no live external research is performed.",
+    "PlanUnit templates and validation are local bounded profile checks, not full native PDS schema or runtime certification."
+  ]
+}
