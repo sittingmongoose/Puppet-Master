@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14686,
+    "depends_on_edge_count": 14693,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17334,
-    "node_count": 6465,
+    "edge_count": 17342,
+    "node_count": 6467,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2648,
+    "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T16:44:53Z",
+  "generated_at_utc": "2026-09-11T16:45:58Z",
   "gui_related_units": {
     "count": 3120,
     "units": [
@@ -34344,10 +34344,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6465,
+  "plan_unit_count": 6467,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1921,
+      "high": 1923,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35387,6 +35387,7 @@
       "duplicate_or_resurrected_advice": 1,
       "duplicate_owner_or_false_touch_closure": 1,
       "duplicate_question_inflation_or_persona_skill_conflation": 1,
+      "duplicate_remote_effect_or_false_project_creation": 1,
       "duplicate_rules_drift": 1,
       "duplicate_schedule_or_destructive_prune": 1,
       "duplicate_setting_identity_or_namespace_drift": 1,
@@ -36643,6 +36644,7 @@
       "precompletion_verification_drift": 1,
       "preflight_failure_payload_runtime_mapping": 1,
       "prelock_degradation_drift": 1,
+      "premature_project_publication_or_duplicate_remote_effect": 1,
       "premature_project_publication_or_false_provider_context": 1,
       "premature_runtime_launch": 1,
       "prepare_failure_worktree_race_limits": 1,
@@ -38065,7 +38067,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6274,
+      "accepted": 6276,
       "retired": 182,
       "superseded": 9
     },
@@ -38132,7 +38134,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5157,
+      "requirement": 5159,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38202,7 +38204,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "ba0c09d7e52a93f7b077db24ab55df3fc0a9dab63c328595663f5ad25528b414",
+        "expected": "846d5dbcf36bb1c69f2dce7c7aaece5cb46f98a0714ea3682725b11f043284d3",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38256,13 +38258,13 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "70c7b554f1d84586ada5aefc5a668fdcbfa245310c0547834d0c66ff6e6b4df6",
+        "expected": "c89d93a358e7bbe6d19c14a74bcb915913b3751569a48064b8dc8be2aaacd39c",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "14149361787e3e179d37a3c5376096fad9002a615ba1b667a5a10ba1a5a0d08e",
+        "expected": "6c2ff526b76debd2828946f61bc4e6ca67268fe5287e3988d622319c62949d27",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -38293,7 +38295,7 @@
       },
       {
         "actual_checkpoint": {
-          "registered_kernel_rows": 97,
+          "registered_kernel_rows": 99,
           "registry_revision": "2026-09-11.4",
           "registry_schema_id": "pm.event_family_registry.v1",
           "registry_schema_version": "2.0.0"
@@ -38341,7 +38343,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 97
+        "registered_kernel_rows": 99
       },
       {
         "bulk_registration_allowed": false,
@@ -38360,7 +38362,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 97
+        "registered_kernel_rows": 99
       }
     ],
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",

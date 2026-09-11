@@ -44404,17 +44404,21 @@
         "Receipt evidence preserves repository identity, project binding identity, correlation_id, remote-side-effect outcome, and recovery route",
         "Regression evidence covers unauthenticated, permission-denied, existing-repo, dirty-project, and user-declined cases",
         "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project."
+        "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project.",
+        "GI-042 / PJCT-008 consume the existing Project action family and application-scoped creation operation; retain handler_unavailable until native auth/permission/FileSafe, owner dispatch, receipt resolution and registry readback are proved. Static admission is not handler availability."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_github_repo; Production certification requires GitHub/project render evidence, dispatcher fixture, typed create/bind payload/result assertion, auth and permission disabled-reason proof, repo/project receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_github_repo.availability",
       "disabled_reason_projection": "state.commands.project_new_github_repo.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.project.new_github_repo must emit the declared event types and record dispatch correlation evidence.",
+        "description": "GI-042 / PJCT-008: owner-approved creation intake emits github.repo.create_requested in application scope; only verified repository/source receipts plus atomic listed Project commit/readback emit project.github_repo_bound in Project scope. Pending, rejected, cancelled, unknown and replay cannot fabricate the bound event; replay executes no effects.",
         "receipt_or_event_refs": [
           "github.repo.create_requested",
-          "project.github_repo_bound"
+          "project.github_repo_bound",
+          "Plans/github_project_event_admission.json#/rows/0",
+          "Plans/github_project_event_admission.json#/rows/1",
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
         ]
       },
       "accessibility_contract": {
@@ -44437,7 +44441,7 @@
         {
           "test_id": "wiring.catalog.project_new_github_repo.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.project.new_github_repo must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "GI-042 / PJCT-008: owner-approved creation intake emits github.repo.create_requested in application scope; only verified repository/source receipts plus atomic listed Project commit/readback emit project.github_repo_bound in Project scope. Pending, rejected, cancelled, unknown and replay cannot fabricate the bound event; replay executes no effects."
         },
         {
           "test_id": "wiring.catalog.project_new_github_repo.accessibility",
@@ -44447,7 +44451,7 @@
         {
           "test_id": "wiring.catalog.project_new_github_repo.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.project.new_github_repo emits expected event type github.repo.create_requested with command_id, origin, correlation_id, and handler target.; Assert cmd.project.new_github_repo emits expected event type project.github_repo_bound with command_id, origin, correlation_id, and handler target."
+          "requirement": "GI-042 / PJCT-008: owner-approved creation intake emits github.repo.create_requested in application scope; only verified repository/source receipts plus atomic listed Project commit/readback emit project.github_repo_bound in Project scope. Pending, rejected, cancelled, unknown and replay cannot fabricate the bound event; replay executes no effects."
         },
         {
           "test_id": "wiring.cmd_project_new_github_repo.onboarding_phase_binding",
@@ -44456,9 +44460,11 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.project.new_github_repo emits expected event type github.repo.create_requested with command_id, origin, correlation_id, and handler target.",
-        "Assert cmd.project.new_github_repo emits expected event type project.github_repo_bound with command_id, origin, correlation_id, and handler target."
-      ]
+        "Assert github.repo.create_requested only for a new GI-042 approved intake, with no invented Project identity; resolve admission row 0 and retained request/operation binding.",
+        "Assert project.github_repo_bound only for PJCT-008 verified committed Project/readback, joined to the same creation operation and request digest; resolve admission row 1. Duplicates never repeat API/clone/registration effects."
+      ],
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
     },
     "catalog.project_new_local": {
       "ui_element_id": "catalog.project_new_local",

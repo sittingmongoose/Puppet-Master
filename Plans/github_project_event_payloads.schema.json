@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/github_project_events/1.0.0/github_project_event_payloads.schema.json",
+  "title": "Existing GitHub-to-Project transition payloads; no new command or physical store",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/create_requested"
+    },
+    {
+      "$ref": "#/$defs/project_bound"
+    }
+  ],
+  "$defs": {
+    "create_requested": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.github_project_event.create_requested.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "command_id",
+        "operation_id",
+        "request_sha256",
+        "actor_ref",
+        "project_home_server_ref",
+        "source_ref",
+        "repository_ref",
+        "admission_receipt_ref",
+        "project_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.github_project_event.create_requested.schema.v1"
+        },
+        "event_type": {
+          "const": "github.repo.create_requested"
+        },
+        "command_id": {
+          "const": "cmd.project.new_github_repo"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "request_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "project_home_server_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "repository_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "admission_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "project_id": {
+          "type": "null"
+        }
+      }
+    },
+    "project_bound": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.github_project_event.project_bound.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "command_id",
+        "operation_id",
+        "request_sha256",
+        "actor_ref",
+        "project_home_server_ref",
+        "source_ref",
+        "repository_ref",
+        "admission_receipt_ref",
+        "project_id",
+        "registration_receipt_ref",
+        "repository_receipt_ref",
+        "readback_receipt_ref",
+        "owner_result_sha256",
+        "project_revision",
+        "project_currentness_sha256",
+        "registry_revision",
+        "registry_currentness_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.github_project_event.project_bound.schema.v1"
+        },
+        "event_type": {
+          "const": "project.github_repo_bound"
+        },
+        "command_id": {
+          "const": "cmd.project.new_github_repo"
+        },
+        "operation_id": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "request_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "project_home_server_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "source_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "repository_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "admission_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "project_id": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "registration_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "repository_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "readback_receipt_ref": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/safe_ref"
+        },
+        "owner_result_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "project_currentness_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
+        },
+        "registry_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "registry_currentness_sha256": {
+          "$ref": "https://puppetmaster.local/schemas/project_system/1.0.0/project_system_contracts.schema.json#/$defs/sha256"
+        }
+      }
+    }
+  }
+}
