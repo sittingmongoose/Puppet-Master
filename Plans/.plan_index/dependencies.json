@@ -5193,6 +5193,7 @@
     "ORI-007",
     "ADO-005",
     "BBI-005",
+    "DL-044",
     "FGI-009",
     "FGI-012",
     "GLI-005",
@@ -22486,6 +22487,26 @@
       "edge_type": "depends_on",
       "from": "DL-043",
       "to": "DL-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-044",
+      "to": "FGI-008"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-044",
+      "to": "UCC-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-044",
+      "to": "UCC-132"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-044",
+      "to": "UIW-006"
     },
     {
       "edge_type": "depends_on",
@@ -92728,7 +92749,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T17:00:28Z",
+  "generated_at_utc": "2026-09-11T17:22:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -120093,8 +120114,8 @@
       "source_location": {
         "heading": "DL-001 - Decision Log Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 2779,
-        "line": 2781,
+        "heading_line": 2880,
+        "line": 2882,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120110,8 +120131,8 @@
       "source_location": {
         "heading": "DL-002 - Decision Log Human-Authored Ledger Boundary",
         "heading_level": 3,
-        "heading_line": 548,
-        "line": 550,
+        "heading_line": 564,
+        "line": 566,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120127,8 +120148,8 @@
       "source_location": {
         "heading": "DL-003 - OpenCode Extraction Reference Aid Boundary",
         "heading_level": 3,
-        "heading_line": 594,
-        "line": 596,
+        "heading_line": 610,
+        "line": 612,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120144,8 +120165,8 @@
       "source_location": {
         "heading": "DL-004 - Extraction Section Number Drift Guard",
         "heading_level": 3,
-        "heading_line": 635,
-        "line": 637,
+        "heading_line": 651,
+        "line": 653,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120161,8 +120182,8 @@
       "source_location": {
         "heading": "DL-005 - Node Graph Execution Model",
         "heading_level": 3,
-        "heading_line": 674,
-        "line": 676,
+        "heading_line": 690,
+        "line": 692,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120178,8 +120199,8 @@
       "source_location": {
         "heading": "DL-006 - Governance Role Split",
         "heading_level": 3,
-        "heading_line": 722,
-        "line": 724,
+        "heading_line": 738,
+        "line": 740,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120195,8 +120216,8 @@
       "source_location": {
         "heading": "DL-007 - Completion Promotion Distinctions",
         "heading_level": 3,
-        "heading_line": 768,
-        "line": 770,
+        "heading_line": 784,
+        "line": 786,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120212,8 +120233,8 @@
       "source_location": {
         "heading": "DL-008 - Weak Integration First Class Scope",
         "heading_level": 3,
-        "heading_line": 814,
-        "line": 816,
+        "heading_line": 830,
+        "line": 832,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120229,8 +120250,8 @@
       "source_location": {
         "heading": "DL-009 - Corroboration Threshold Rule",
         "heading_level": 3,
-        "heading_line": 859,
-        "line": 861,
+        "heading_line": 875,
+        "line": 877,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120246,8 +120267,8 @@
       "source_location": {
         "heading": "DL-010 - Graph Patch Lineage Generation",
         "heading_level": 3,
-        "heading_line": 903,
-        "line": 905,
+        "heading_line": 919,
+        "line": 921,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120263,8 +120284,8 @@
       "source_location": {
         "heading": "DL-011 - Source Control Worktree First Boundary",
         "heading_level": 3,
-        "heading_line": 948,
-        "line": 950,
+        "heading_line": 964,
+        "line": 966,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120280,8 +120301,8 @@
       "source_location": {
         "heading": "DL-012 - Shared Runtime Identity Actor Scope",
         "heading_level": 3,
-        "heading_line": 993,
-        "line": 995,
+        "heading_line": 1009,
+        "line": 1011,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120297,8 +120318,8 @@
       "source_location": {
         "heading": "DL-013 - Blocked Approval Runtime Identity",
         "heading_level": 3,
-        "heading_line": 1043,
-        "line": 1045,
+        "heading_line": 1059,
+        "line": 1061,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120314,8 +120335,8 @@
       "source_location": {
         "heading": "DL-014 - Navigation Primitive Boundary",
         "heading_level": 3,
-        "heading_line": 1091,
-        "line": 1093,
+        "heading_line": 1107,
+        "line": 1109,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120331,8 +120352,8 @@
       "source_location": {
         "heading": "DL-015 - Debug Evidence Capture Hygiene",
         "heading_level": 3,
-        "heading_line": 1139,
-        "line": 1141,
+        "heading_line": 1155,
+        "line": 1157,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120348,8 +120369,8 @@
       "source_location": {
         "heading": "DL-016 - Provider Runtime Actor Envelope",
         "heading_level": 3,
-        "heading_line": 1192,
-        "line": 1194,
+        "heading_line": 1208,
+        "line": 1210,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120365,8 +120386,8 @@
       "source_location": {
         "heading": "DL-017 - Support Decision Drift Guard",
         "heading_level": 3,
-        "heading_line": 1248,
-        "line": 1250,
+        "heading_line": 1264,
+        "line": 1266,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120382,8 +120403,8 @@
       "source_location": {
         "heading": "DL-018 - Governance Label Copy Boundary",
         "heading_level": 3,
-        "heading_line": 1299,
-        "line": 1301,
+        "heading_line": 1315,
+        "line": 1317,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120399,8 +120420,8 @@
       "source_location": {
         "heading": "DL-019 - Graph Owned Governance Semantics",
         "heading_level": 3,
-        "heading_line": 1358,
-        "line": 1360,
+        "heading_line": 1374,
+        "line": 1376,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120416,8 +120437,8 @@
       "source_location": {
         "heading": "DL-020 - Seam Weak Integration UI Visibility",
         "heading_level": 3,
-        "heading_line": 1413,
-        "line": 1415,
+        "heading_line": 1429,
+        "line": 1431,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120433,8 +120454,8 @@
       "source_location": {
         "heading": "DL-021 - Reopen Revocation Weak Integration Policy",
         "heading_level": 3,
-        "heading_line": 1471,
-        "line": 1473,
+        "heading_line": 1487,
+        "line": 1489,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120450,8 +120471,8 @@
       "source_location": {
         "heading": "DL-022 - Approval Anchoring Evidence Governance",
         "heading_level": 3,
-        "heading_line": 1530,
-        "line": 1532,
+        "heading_line": 1546,
+        "line": 1548,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120467,8 +120488,8 @@
       "source_location": {
         "heading": "DL-023 - Blocked Episode Identity Migration",
         "heading_level": 3,
-        "heading_line": 1584,
-        "line": 1586,
+        "heading_line": 1600,
+        "line": 1602,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120484,8 +120505,8 @@
       "source_location": {
         "heading": "DL-024 - Corroboration Disagreement Outcome",
         "heading_level": 3,
-        "heading_line": 1640,
-        "line": 1642,
+        "heading_line": 1656,
+        "line": 1658,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120501,8 +120522,8 @@
       "source_location": {
         "heading": "DL-025 - Help Clusters Alias Limits",
         "heading_level": 3,
-        "heading_line": 1689,
-        "line": 1691,
+        "heading_line": 1705,
+        "line": 1707,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120518,8 +120539,8 @@
       "source_location": {
         "heading": "DL-026 - Lane Cleanup Retained Transition",
         "heading_level": 3,
-        "heading_line": 1750,
-        "line": 1752,
+        "heading_line": 1766,
+        "line": 1768,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120535,8 +120556,8 @@
       "source_location": {
         "heading": "DL-027 - Case L Bundle A Recovery And Migration Decisions",
         "heading_level": 3,
-        "heading_line": 1798,
-        "line": 1800,
+        "heading_line": 1814,
+        "line": 1816,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120552,8 +120573,8 @@
       "source_location": {
         "heading": "DL-028 - Case L Bundle B Seglog Durability Recovery Decisions",
         "heading_level": 3,
-        "heading_line": 1862,
-        "line": 1864,
+        "heading_line": 1878,
+        "line": 1880,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120569,8 +120590,8 @@
       "source_location": {
         "heading": "DL-029 - Case L Bundle C Retention Compaction Quarantine Decisions",
         "heading_level": 3,
-        "heading_line": 1943,
-        "line": 1945,
+        "heading_line": 1959,
+        "line": 1961,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120586,8 +120607,8 @@
       "source_location": {
         "heading": "DL-030 - Case L Bundle D Storage Root Lock And Fallback Decisions",
         "heading_level": 3,
-        "heading_line": 2020,
-        "line": 2022,
+        "heading_line": 2036,
+        "line": 2038,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120603,8 +120624,8 @@
       "source_location": {
         "heading": "DL-031 - Case L Bundle E EventRecord Scope And Replay Decisions",
         "heading_level": 3,
-        "heading_line": 2093,
-        "line": 2095,
+        "heading_line": 2109,
+        "line": 2111,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120620,8 +120641,8 @@
       "source_location": {
         "heading": "DL-032 - Case L Bundle F Restore Safe Point And Chat Decisions",
         "heading_level": 3,
-        "heading_line": 2157,
-        "line": 2159,
+        "heading_line": 2173,
+        "line": 2175,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120637,8 +120658,8 @@
       "source_location": {
         "heading": "DL-033 - Case L Supplemental Probe Packet Decisions",
         "heading_level": 3,
-        "heading_line": 2231,
-        "line": 2233,
+        "heading_line": 2247,
+        "line": 2249,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120654,8 +120675,8 @@
       "source_location": {
         "heading": "DL-034 - Case L Supplemental Kernel Depth Decisions",
         "heading_level": 3,
-        "heading_line": 2304,
-        "line": 2306,
+        "heading_line": 2320,
+        "line": 2322,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120671,8 +120692,8 @@
       "source_location": {
         "heading": "DL-035 - Terminal Research Decisions Own Engine And Accepted Proposals",
         "heading_level": 3,
-        "heading_line": 2385,
-        "line": 2387,
+        "heading_line": 2401,
+        "line": 2403,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120688,8 +120709,8 @@
       "source_location": {
         "heading": "DL-036 - Research Decision Packet Review Flow",
         "heading_level": 3,
-        "heading_line": 2463,
-        "line": 2465,
+        "heading_line": 2479,
+        "line": 2481,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120705,8 +120726,8 @@
       "source_location": {
         "heading": "DL-037 - Terminal Input Protection Persistence",
         "heading_level": 3,
-        "heading_line": 2531,
-        "line": 2533,
+        "heading_line": 2547,
+        "line": 2549,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120722,8 +120743,8 @@
       "source_location": {
         "heading": "DL-038 - Terminal Input Protection User And Agent Scope",
         "heading_level": 3,
-        "heading_line": 2578,
-        "line": 2580,
+        "heading_line": 2594,
+        "line": 2596,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120739,8 +120760,8 @@
       "source_location": {
         "heading": "DL-039 - Event Authority Owner Decisions August Sheet Answered",
         "heading_level": 3,
-        "heading_line": 2631,
-        "line": 2633,
+        "heading_line": 2647,
+        "line": 2649,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -120756,8 +120777,25 @@
       "source_location": {
         "heading": "DL-043 - Jujutsu Research Decisions Forty Four Answers",
         "heading_level": 3,
-        "heading_line": 2709,
-        "line": 2711,
+        "heading_line": 2725,
+        "line": 2727,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "forge_review_wiring_vocabulary",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-044",
+      "reasoning_tier": "high",
+      "risk_class": "forge_wiring_provider_vocabulary_drift",
+      "source_location": {
+        "heading": "DL-044 - Forge Review Wiring Vocabulary And Create Alias",
+        "heading_level": 3,
+        "heading_line": 2795,
+        "line": 2797,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -139439,8 +139477,8 @@
       "source_location": {
         "heading": "FGI-009 - Forge Repository Create Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 496,
-        "line": 498,
+        "heading_line": 498,
+        "line": 500,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139456,8 +139494,8 @@
       "source_location": {
         "heading": "FGI-010 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 580,
-        "line": 582,
+        "heading_line": 582,
+        "line": 584,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139473,8 +139511,8 @@
       "source_location": {
         "heading": "FGI-011 - Verified account and repository binding requirements by forge",
         "heading_level": 3,
-        "heading_line": 631,
-        "line": 633,
+        "heading_line": 633,
+        "line": 635,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139490,8 +139528,8 @@
       "source_location": {
         "heading": "FGI-012 - Distinct Self-Hosted Providers And Independent Automation Authority",
         "heading_level": 3,
-        "heading_line": 683,
-        "line": 685,
+        "heading_line": 685,
+        "line": 687,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139507,8 +139545,8 @@
       "source_location": {
         "heading": "FGI-013 - Nine Distinct Event-Silent Forge Command Admissions",
         "heading_level": 3,
-        "heading_line": 724,
-        "line": 726,
+        "heading_line": 726,
+        "line": 728,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139524,8 +139562,8 @@
       "source_location": {
         "heading": "FGI-014 - Origin And Provider-Specific Operation Profiles",
         "heading_level": 3,
-        "heading_line": 769,
-        "line": 771,
+        "heading_line": 771,
+        "line": 773,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -139541,8 +139579,8 @@
       "source_location": {
         "heading": "FGI-015 - Exact Provider Capability, Authentication, Trust, And Administration Matrix",
         "heading_level": 3,
-        "heading_line": 835,
-        "line": 837,
+        "heading_line": 837,
+        "line": 839,
         "path": "Plans/Forge_Integrations.md"
       },
       "status": "accepted",
@@ -196542,8 +196580,8 @@
       "source_location": {
         "heading": "UCC-127 - Cozy Shelves Reconciliation Adoption And Namespace Reservations",
         "heading_level": 3,
-        "heading_line": 9963,
-        "line": 9965,
+        "heading_line": 9962,
+        "line": 9964,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196559,8 +196597,8 @@
       "source_location": {
         "heading": "UCC-128 - GitHub Actions Namespace Promotion And Open-In-GitHub Adjudication",
         "heading_level": 3,
-        "heading_line": 10015,
-        "line": 10017,
+        "heading_line": 10014,
+        "line": 10016,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196576,8 +196614,8 @@
       "source_location": {
         "heading": "UCC-129 - Agents Panel Navigation Command Family",
         "heading_level": 3,
-        "heading_line": 10071,
-        "line": 10073,
+        "heading_line": 10070,
+        "line": 10072,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196593,8 +196631,8 @@
       "source_location": {
         "heading": "UCC-130 - Runtime Artifacts Panel Command Rows",
         "heading_level": 3,
-        "heading_line": 10120,
-        "line": 10122,
+        "heading_line": 10119,
+        "line": 10121,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196610,8 +196648,8 @@
       "source_location": {
         "heading": "UCC-131 - Source Control Branch Stash And Commit Rows",
         "heading_level": 3,
-        "heading_line": 10171,
-        "line": 10173,
+        "heading_line": 10170,
+        "line": 10172,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196627,8 +196665,8 @@
       "source_location": {
         "heading": "UCC-132 - Project-Scope Worktree Merge Lock Unlock And GitHub PR Create",
         "heading_level": 3,
-        "heading_line": 10230,
-        "line": 10232,
+        "heading_line": 10229,
+        "line": 10231,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196644,8 +196682,8 @@
       "source_location": {
         "heading": "UCC-133 - Search Result Navigation Scope And Flag Toggle Rows",
         "heading_level": 3,
-        "heading_line": 10287,
-        "line": 10289,
+        "heading_line": 10286,
+        "line": 10288,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196661,8 +196699,8 @@
       "source_location": {
         "heading": "UCC-134 - Testing Quarantine Rows And Run Session Scope Split",
         "heading_level": 3,
-        "heading_line": 10341,
-        "line": 10343,
+        "heading_line": 10340,
+        "line": 10342,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196678,8 +196716,8 @@
       "source_location": {
         "heading": "UCC-135 - File Manager Editor And Chat Navigation Rows",
         "heading_level": 3,
-        "heading_line": 10390,
-        "line": 10392,
+        "heading_line": 10389,
+        "line": 10391,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196695,8 +196733,8 @@
       "source_location": {
         "heading": "UCC-136 - Docker Container Lifecycle Adjudication Image And Cleanup Rows",
         "heading_level": 3,
-        "heading_line": 10449,
-        "line": 10451,
+        "heading_line": 10448,
+        "line": 10450,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196712,8 +196750,8 @@
       "source_location": {
         "heading": "UCC-137 - Docker Compose Group Verbs Scenario Aliases And Context Adjudication",
         "heading_level": 3,
-        "heading_line": 10514,
-        "line": 10516,
+        "heading_line": 10513,
+        "line": 10515,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196729,8 +196767,8 @@
       "source_location": {
         "heading": "UCC-138 - Panel Switch Destination Vocabulary Undock Alias And Terminal Focus Adjudication",
         "heading_level": 3,
-        "heading_line": 10572,
-        "line": 10574,
+        "heading_line": 10571,
+        "line": 10573,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196746,8 +196784,8 @@
       "source_location": {
         "heading": "UCC-139 - Run & Debug Family Catalog Registration",
         "heading_level": 3,
-        "heading_line": 10783,
-        "line": 10785,
+        "heading_line": 10782,
+        "line": 10784,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196763,8 +196801,8 @@
       "source_location": {
         "heading": "UCC-140 - Orchestrator Run-Control Trio Catalog Registration",
         "heading_level": 3,
-        "heading_line": 11055,
-        "line": 11057,
+        "heading_line": 11054,
+        "line": 11056,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196780,8 +196818,8 @@
       "source_location": {
         "heading": "UCC-141 - Debug Family Wiring Re-Home Record",
         "heading_level": 3,
-        "heading_line": 11113,
-        "line": 11115,
+        "heading_line": 11112,
+        "line": 11114,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196797,8 +196835,8 @@
       "source_location": {
         "heading": "UCC-142 - Debug Investigation Verification and Cleanup Catalog Registration",
         "heading_level": 3,
-        "heading_line": 11172,
-        "line": 11174,
+        "heading_line": 11171,
+        "line": 11173,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196814,8 +196852,8 @@
       "source_location": {
         "heading": "UCC-143 - Chat Open Alias Adjudication",
         "heading_level": 3,
-        "heading_line": 11241,
-        "line": 11243,
+        "heading_line": 11240,
+        "line": 11242,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196831,8 +196869,8 @@
       "source_location": {
         "heading": "UCC-144 - Home Workspace Command Routing And Leaf Semantics",
         "heading_level": 3,
-        "heading_line": 11374,
-        "line": 11376,
+        "heading_line": 11373,
+        "line": 11375,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196848,8 +196886,8 @@
       "source_location": {
         "heading": "UCC-145 - Shared Runtime Command Catalog Registration",
         "heading_level": 3,
-        "heading_line": 11501,
-        "line": 11503,
+        "heading_line": 11500,
+        "line": 11502,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196865,8 +196903,8 @@
       "source_location": {
         "heading": "UCC-146 - Usage Forecast Command Registration And Settings Destination Identity",
         "heading_level": 3,
-        "heading_line": 11586,
-        "line": 11588,
+        "heading_line": 11585,
+        "line": 11587,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196882,8 +196920,8 @@
       "source_location": {
         "heading": "UCC-147 - PMConcept7 Existing Command Census And View-Local Dispositions",
         "heading_level": 3,
-        "heading_line": 11687,
-        "line": 11689,
+        "heading_line": 11686,
+        "line": 11688,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196899,8 +196937,8 @@
       "source_location": {
         "heading": "UCC-148 - Exact owner command rows and reverse consumer routes",
         "heading_level": 3,
-        "heading_line": 11013,
-        "line": 11015,
+        "heading_line": 11012,
+        "line": 11014,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196916,8 +196954,8 @@
       "source_location": {
         "heading": "UCC-149 - Agent plugin command rows and reverse consumers",
         "heading_level": 3,
-        "heading_line": 10929,
-        "line": 10931,
+        "heading_line": 10928,
+        "line": 10930,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196933,8 +196971,8 @@
       "source_location": {
         "heading": "UCC-150 - Guided Tour focus route is catalog-external local presentation",
         "heading_level": 3,
-        "heading_line": 10857,
-        "line": 10859,
+        "heading_line": 10856,
+        "line": 10858,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196950,8 +196988,8 @@
       "source_location": {
         "heading": "UCC-151 - Exact Server And Egolite Catalog Rows",
         "heading_level": 3,
-        "heading_line": 11960,
-        "line": 11962,
+        "heading_line": 11959,
+        "line": 11961,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196967,8 +197005,8 @@
       "source_location": {
         "heading": "UCC-152 - Remaining Touch Reverse-GUI Closure",
         "heading_level": 3,
-        "heading_line": 12221,
-        "line": 12223,
+        "heading_line": 12220,
+        "line": 12222,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -196984,8 +197022,8 @@
       "source_location": {
         "heading": "UCC-153 - ConnectionDraft Activation Catalog And Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12272,
-        "line": 12274,
+        "heading_line": 12271,
+        "line": 12273,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197001,8 +197039,8 @@
       "source_location": {
         "heading": "UCC-154 - Post-Integration Auth Alias Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12317,
-        "line": 12319,
+        "heading_line": 12316,
+        "line": 12318,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197018,8 +197056,8 @@
       "source_location": {
         "heading": "UCC-155 - Neutral Source-Control Concrete Catalog And Reverse Coverage",
         "heading_level": 3,
-        "heading_line": 12361,
-        "line": 12363,
+        "heading_line": 12360,
+        "line": 12362,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197035,8 +197073,8 @@
       "source_location": {
         "heading": "UCC-156 - Assistant Redesign Command Registration And Alias Census",
         "heading_level": 3,
-        "heading_line": 12584,
-        "line": 12586,
+        "heading_line": 12583,
+        "line": 12585,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197052,8 +197090,8 @@
       "source_location": {
         "heading": "UCC-157 - Assistant Redesign Retired Command Surfaces",
         "heading_level": 3,
-        "heading_line": 12641,
-        "line": 12643,
+        "heading_line": 12640,
+        "line": 12642,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197069,8 +197107,8 @@
       "source_location": {
         "heading": "Working Notebook Command Rows Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 12719,
-        "line": 12723,
+        "heading_line": 12718,
+        "line": 12722,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197086,8 +197124,8 @@
       "source_location": {
         "heading": "15. UI Command Catalog Dispositions and Exact Reuse Rules (APR-023)",
         "heading_level": 3,
-        "heading_line": 12761,
-        "line": 12786,
+        "heading_line": 12760,
+        "line": 12785,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197103,8 +197141,8 @@
       "source_location": {
         "heading": "UCC-160 - Accepted Terminal Action Contracts",
         "heading_level": 3,
-        "heading_line": 12860,
-        "line": 12862,
+        "heading_line": 12859,
+        "line": 12861,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -197120,8 +197158,8 @@
       "source_location": {
         "heading": "UCC-161 — Research Decision Review",
         "heading_level": 3,
-        "heading_line": 12961,
-        "line": 12963,
+        "heading_line": 12960,
+        "line": 12962,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -198956,8 +198994,8 @@
       "source_location": {
         "heading": "UIW-007 - Autonomous Verification Strategy",
         "heading_level": 3,
-        "heading_line": 292,
-        "line": 294,
+        "heading_line": 302,
+        "line": 304,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -198973,8 +199011,8 @@
       "source_location": {
         "heading": "UIW-008 - Reference Boundary Preservation",
         "heading_level": 3,
-        "heading_line": 329,
-        "line": 331,
+        "heading_line": 339,
+        "line": 341,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -198990,8 +199028,8 @@
       "source_location": {
         "heading": "UIW-009 - Approve And Build Disabled Reason Projection",
         "heading_level": 3,
-        "heading_line": 361,
-        "line": 363,
+        "heading_line": 371,
+        "line": 373,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199007,8 +199045,8 @@
       "source_location": {
         "heading": "UIW-010 - Home Control Census And Semantic Commit Wiring",
         "heading_level": 3,
-        "heading_line": 626,
-        "line": 628,
+        "heading_line": 636,
+        "line": 638,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199024,8 +199062,8 @@
       "source_location": {
         "heading": "UIW-011 - Shared Runtime Production Wiring Without Event Fabrication",
         "heading_level": 3,
-        "heading_line": 689,
-        "line": 691,
+        "heading_line": 699,
+        "line": 701,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199041,8 +199079,8 @@
       "source_location": {
         "heading": "UIW-012 - Transactional Preview Commit Cancel Cleanup And Shared Assistant Re-Seating",
         "heading_level": 3,
-        "heading_line": 764,
-        "line": 766,
+        "heading_line": 774,
+        "line": 776,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199058,8 +199096,8 @@
       "source_location": {
         "heading": "UIW-013 - Typed control, owner route, and accessible hover binding",
         "heading_level": 3,
-        "heading_line": 852,
-        "line": 854,
+        "heading_line": 862,
+        "line": 864,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199075,8 +199113,8 @@
       "source_location": {
         "heading": "UIW-014 - Complete Settings Command And Route-Only Wiring Family",
         "heading_level": 3,
-        "heading_line": 919,
-        "line": 921,
+        "heading_line": 929,
+        "line": 931,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199092,8 +199130,8 @@
       "source_location": {
         "heading": "UIW-015 - Product Onboarding typed-local request/result closure",
         "heading_level": 3,
-        "heading_line": 1018,
-        "line": 1020,
+        "heading_line": 1028,
+        "line": 1030,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199109,8 +199147,8 @@
       "source_location": {
         "heading": "UIW-016 - Server And Egolite Exact Dispatch Boundary",
         "heading_level": 3,
-        "heading_line": 1079,
-        "line": 1081,
+        "heading_line": 1089,
+        "line": 1091,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199126,8 +199164,8 @@
       "source_location": {
         "heading": "UIW-017 - Exact Touch Command/GUI/Handler Closure",
         "heading_level": 3,
-        "heading_line": 1111,
-        "line": 1113,
+        "heading_line": 1121,
+        "line": 1123,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199143,8 +199181,8 @@
       "source_location": {
         "heading": "UIW-018 - Assistant Redesign Row Discipline And Declared View-Local Intents",
         "heading_level": 3,
-        "heading_line": 1156,
-        "line": 1158,
+        "heading_line": 1166,
+        "line": 1168,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199160,8 +199198,8 @@
       "source_location": {
         "heading": "Working Notebook Wiring Disposition Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1413,
-        "line": 1417,
+        "heading_line": 1423,
+        "line": 1427,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199177,8 +199215,8 @@
       "source_location": {
         "heading": "16. Wiring DRY Invariants and Action Chaining Teardown (APR-023, APR-050)",
         "heading_level": 3,
-        "heading_line": 1453,
-        "line": 1472,
+        "heading_line": 1463,
+        "line": 1482,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199194,8 +199232,8 @@
       "source_location": {
         "heading": "UIW-021 - Terminal Research Action Dispatch",
         "heading_level": 3,
-        "heading_line": 1529,
-        "line": 1531,
+        "heading_line": 1539,
+        "line": 1541,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -199211,8 +199249,8 @@
       "source_location": {
         "heading": "UIW-022 — Research Decision Review",
         "heading_level": 3,
-        "heading_line": 1606,
-        "line": 1608,
+        "heading_line": 1616,
+        "line": 1618,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -202234,10 +202272,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14608,
+    "depends_on_edge_count": 14612,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17256,
-    "node_count": 6441,
+    "edge_count": 17260,
+    "node_count": 6442,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0

@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8520-L9706
 
-Source SHA256: `d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5`
+Source SHA256: `dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1`
 
 ---
 
@@ -837,7 +837,7 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   Panel review actions use the canonical Forge-owned cmd.forge.review.create and cmd.forge.review.merge
   commands with a typed provider discriminator and exact SCM/forge context. The historical
-  cmd.source_control.pr.create and cmd.source_control.pr.merge spellings are compatibility inputs that
+  cmd.source_control.pr.create, cmd.github.pr.create, and cmd.source_control.pr.merge spellings are compatibility inputs that
   normalize to the Forge commands with provider github before availability, permission, telemetry, receipt,
   and dispatch; they receive no primary catalog or production-wiring rows. Thread-bound
   cmd.chat.worktree.pr and cmd.chat.worktree.merge remain assistant-thread wrappers. Protected-branch merge
@@ -848,7 +848,7 @@ depends_on: [UCC-044, UCC-058, FGI-004, SCS-004]
 unblocks: []
 acceptance_criteria:
   - Forge review create and merge carry the exact provider, repository, revision, SCM context, permission, and disabled-state contract.
-  - Source Control PR compatibility inputs normalize before dispatch and never receive a second handler or primary wiring row.
+  - Source Control and GitHub PR compatibility inputs normalize before availability, permission, telemetry, receipt, and dispatch and never receive a second handler or primary wiring row.
   - Panel review commands never impersonate or replace the thread-bound worktree PR commands.
   - Protected-branch merges are blocked without a domain.git_destructive_remote approval.
 validation_surfaces:

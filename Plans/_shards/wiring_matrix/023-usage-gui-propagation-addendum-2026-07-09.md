@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3329-L3394
 
-Source SHA256: `92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e`
+Source SHA256: `1e174cdc574c82377e7dc79cace28a169998a26825b2aad68fea1ffc36d77c68`
 
 ---
 
@@ -49,7 +49,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Wiring_Matrix.md:2705-2784"
   - "Plans/Wiring_Matrix.md:3325-3390"
-  - "Plans/Wiring_Matrix.production.json:2674"
+  - "Plans/Wiring_Matrix.production.json:42762"
   - "Plans/Wiring_Matrix.production.json:3664"
   - "Plans/Wiring_Matrix.production.json:4819"
   - "Plans/Wiring_Matrix.production.json:16493"

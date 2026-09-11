@@ -29846,16 +29846,22 @@
     },
     "catalog.forge_review_create": {
       "ui_element_id": "catalog.forge_review_create",
-      "ui_location": "Source Control panel > Create pull request",
+      "ui_location": "Source Control panel > Reviews > Create review action",
+      "vocabulary": {
+        "noun_source": "selected_repository_adapter",
+        "noun_field": "review_noun",
+        "label_template": "Create {noun}"
+      },
       "ui_command_id": "cmd.forge.review.create",
       "handler_location": "handlers::forge::review_create",
       "expected_event_types": [],
       "acceptance_checks": [
         "Create carries the exact SCM context payload: repo, source worktree/branch, target branch, compare target, baseline, and run/attempt lineage",
-        "Disabled state is deterministic for missing scopes, expired auth, or no GitHub remote",
+        "Disabled state is deterministic for missing scopes, expired auth, or a false forge_capability_current, auth_valid, or repository_current guard, exactly as the command catalog defines them; what makes each guard true for a given provider is that provider owner's capability and binding contract, never a remote type named in this row.",
         "The panel command stays distinct from the thread-bound cmd.chat.worktree.pr and does not fabricate a thread_id",
         "cmd.forge.review.create must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.forge.review.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.forge.review.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures."
       ],
       "evidence_required": "Production wiring contract for cmd.forge.review.create; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.forge_review_create.availability",
@@ -29959,16 +29965,22 @@
     },
     "catalog.forge_review_merge": {
       "ui_element_id": "catalog.forge_review_merge",
-      "ui_location": "Source Control panel > Merge pull request",
+      "ui_location": "Source Control panel > Reviews > Merge review action",
+      "vocabulary": {
+        "noun_source": "selected_repository_adapter",
+        "noun_field": "review_noun",
+        "label_template": "Merge {noun}"
+      },
       "ui_command_id": "cmd.forge.review.merge",
       "handler_location": "handlers::forge::review_merge",
       "expected_event_types": [],
       "acceptance_checks": [
-        "Merge targets an open pull request with deterministic disabled state for missing scopes, expired auth, or no GitHub remote",
+        "Merge targets an open provider review; disabled state is deterministic for a false review_open, merge_allowed, or auth_valid guard, exactly as the command catalog defines them; what makes each guard true for a given provider is that provider owner's contract, never a remote type named in this row.",
         "Protected-branch merges route the domain.git_destructive_remote permission class and are blocked without that approval",
         "Merge is distinct from the worktree-local cmd.chat.worktree.merge and records the remote merge receipt",
         "cmd.forge.review.merge must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.forge.review.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.forge.review.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "The rendered label is the vocabulary template with the selected repository adapter's review noun in its provider_matrix_profile.review_vocabulary display form; the validate-wiring-matrix check renders it for every provider in the Forge contract fixtures."
       ],
       "evidence_required": "Production wiring contract for cmd.forge.review.merge; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.forge_review_merge.availability",
@@ -34302,73 +34314,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.github.disconnect records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.github_pr_create": {
-      "ui_element_id": "catalog.github_pr_create",
-      "ui_location": "Left rail > Source Control panel > Create PR on GitHub",
-      "ui_command_id": "cmd.github.pr.create",
-      "handler_location": "handlers::github::pr_create",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.github.pr.create must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.github.pr.create must expose projected state selector and disabled reason before dispatch",
-        "cmd.github.pr.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.github.pr.create must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.github.pr.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "cmd.github.pr.create availability class is capability (github_auth_valid && github_remote_present) with confirmation class none; disabled reasons come only from the closed set: unauthorized, unreachable, not_configured (UI_Command_Catalog Cozy Shelves Panel Reconciliation Addendum - 2026-07-27)",
-        "GitHub-domain API-only PR creation; distinct from and never aliasing cmd.forge.review.create or cmd.chat.worktree.pr; retired prototype token git.create_pr migrates to this canonical id."
-      ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/GitHub_Integration.md. Registration: Plans/UI_Command_Catalog.md Cozy Shelves Panel Reconciliation Addendum - 2026-07-27 (UCC-127..UCC-138). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.cmd_github_pr_create.enabled",
-      "disabled_reason_projection": "state.cmd_github_pr_create.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.github.pr.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.github.pr.create.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.github_pr_create exposes a stable role/name/description matching cmd.github.pr.create with visible label Create PR on GitHub.",
-        "keyboard_access": "catalog.github_pr_create is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.github_pr_create preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.github_pr_create surfaces state.cmd_github_pr_create.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.github_pr_create.render_control",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Planned render/control placeholder: future render evidence must prove catalog.github_pr_create exists on the declared surface with stable role and accessible name Create PR on GitHub; this row is not implementation evidence."
-        },
-        {
-          "test_id": "wiring.catalog.github_pr_create.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "A future dispatcher fixture must prove cmd.github.pr.create reaches the planned handlers::github::pr_create target with typed args/result contract; this row is not implementation evidence."
-        },
-        {
-          "test_id": "wiring.catalog.github_pr_create.disabled_reason",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.cmd_github_pr_create.enabled and disabled copy reads state.cmd_github_pr_create.disabled_reason; disabled_reason values come only from the closed set: unauthorized, unreachable, not_configured."
-        },
-        {
-          "test_id": "wiring.catalog.github_pr_create.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.github.pr.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.github_pr_create.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        },
-        {
-          "test_id": "wiring.catalog.github_pr_create.regression",
-          "evidence_kind": "event_test",
-          "requirement": "Regression placeholder: dispatch, refusal, and idempotent replay of cmd.github.pr.create emit no unexpected persisted domain event and preserve command_id, origin, and correlation_id."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.github.pr.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.goal_checkpoint": {

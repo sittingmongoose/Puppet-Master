@@ -70,6 +70,37 @@
           "minLength": 1,
           "description": "Panel or screen where the element lives (e.g., \"Settings > GitHub/Auth\", \"File Editor toolbar\", \"Orchestrator > Node Graph Display\")."
         },
+        "vocabulary": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Optional provider vocabulary reference for a rendered action label.",
+          "required": [
+            "noun_source",
+            "noun_field",
+            "label_template"
+          ],
+          "properties": {
+            "noun_source": {
+              "type": "string",
+              "enum": [
+                "selected_repository_adapter",
+                "selected_automation_binding_adapter"
+              ]
+            },
+            "noun_field": {
+              "type": "string",
+              "enum": [
+                "review_noun",
+                "pipeline_noun"
+              ]
+            },
+            "label_template": {
+              "type": "string",
+              "pattern": "\\{noun\\}",
+              "description": "Action label template containing {noun}; noun display wording comes from the selected adapter."
+            }
+          }
+        },
         "ui_command_id": {
           "type": "string",
           "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",

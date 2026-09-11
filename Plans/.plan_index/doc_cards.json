@@ -5064,9 +5064,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 19,
-        "True": 21
+        "True": 22
       },
-      "heading_count": 84,
+      "heading_count": 86,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5081,6 +5081,7 @@
         "Plans/FileManager.md",
         "Plans/FileSafe.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Forge_Integrations.md",
         "Plans/GitHub_Integration.md",
         "Plans/Glossary.md",
         "Plans/Goal_Runtime_System.md",
@@ -5105,7 +5106,9 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/UI_Wiring_Rules.md",
         "Plans/Wiring_Matrix.md",
+        "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/Wiring_Matrix.schema.json",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/event_family_registry.json",
@@ -5117,11 +5120,12 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
-        "Plans/storage_value_registry.schema.json"
+        "Plans/storage_value_registry.schema.json",
+        "scripts/pm-plans-verify.py"
       ],
-      "line_count": 2928,
+      "line_count": 3029,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 40,
+      "plan_unit_count": 41,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5162,6 +5166,7 @@
         "DL-038",
         "DL-039",
         "DL-043",
+        "DL-044",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5188,6 +5193,7 @@
         "decision_review_flow_drift",
         "event_authority_decision_drift",
         "extraction_mapping_overauthority",
+        "forge_wiring_provider_vocabulary_drift",
         "governance_label_copy_drift",
         "governance_role_conflation",
         "graph_governance_semantics_drift",
@@ -5210,16 +5216,16 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f",
+      "sha256": "12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 40
+        "accepted": 41
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 37
+        "requirement": 38
       },
       "validation_surfaces": [
         "Owner/consumer source-to-decision review",
@@ -5229,7 +5235,9 @@
         "exact supplemental three-packet set-equality check",
         "python3 scripts/pm-event-authority-currentness.py validate",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
       ]
     },
     {
@@ -7366,7 +7374,7 @@
         "future signed provider catalog",
         "future webhook ingress"
       ],
-      "line_count": 899,
+      "line_count": 901,
       "path": "Plans/Forge_Integrations.md",
       "plan_unit_count": 15,
       "plan_unit_ids": [
@@ -7406,7 +7414,7 @@
         "split_brain_forge_authority",
         "stale_review_evidence_or_agent_publication"
       ],
-      "sha256": "fb5f9889bb6a3b702304cf026f75bf1865c65e98c64773a17aaa3c068e243d87",
+      "sha256": "51bca3f34e86d1d980566ba1e07833df842325f5ac612bcfd5c78547cc08e190",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 15
@@ -17147,7 +17155,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13026,
+      "line_count": 13025,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 161,
       "plan_unit_ids": [
@@ -17377,7 +17385,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5",
+      "sha256": "dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 160,
@@ -17485,7 +17493,7 @@
         "Plans/touch_closure.json",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 1670,
+      "line_count": 1680,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -17540,7 +17548,7 @@
         "unwired_gui",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "683459c0727eb26dc581b46d93d03d310d3886a13c76b365ac66f4cd8ae13975",
+      "sha256": "ab72a564c10d41a77e937675747f9e9756162d74fe03e7f95f7315794c323613",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -17597,6 +17605,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, noun templates, and rendered labels against every non-null review vocabulary in the Forge provider contract fixtures.",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm-validate-wiring-matrix.py",
@@ -18071,7 +18080,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "92d7933ee2706310a95694142540119cf377f6d8a665f87a91c873af13d7600e",
+      "sha256": "1e174cdc574c82377e7dc79cace28a169998a26825b2aad68fea1ffc36d77c68",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -18389,7 +18398,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:00:28Z",
+  "generated_at_utc": "2026-09-11T17:22:03Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18398,12 +18407,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3334,
-      "True": 3107
+      "True": 3108
     },
-    "plan_unit_count": 6441,
+    "plan_unit_count": 6442,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6250,
+      "accepted": 6251,
       "retired": 182,
       "superseded": 9
     },
@@ -18470,7 +18479,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5143,
+      "requirement": 5144,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L546-L2900
+Source lines: L562-L3001
 
-Source SHA256: `815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f`
+Source SHA256: `12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd`
 
 ---
 
@@ -2239,6 +2239,91 @@ owner_hints:
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
   - Plans/FinalGUISpec.md
+```
+
+### DL-044 - Forge Review Wiring Vocabulary And Create Alias
+
+```yaml
+plan_unit_id: DL-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved option 1 on 2026-09-11: generic Forge review wiring uses neutral row descriptions,
+  catalog guards and an optional vocabulary reference to the selected repository adapter's review_noun
+  in provider_matrix_profile.review_vocabulary display form. The wiring validator rejects provider
+  names and provider nouns in generic Forge row text and renders templates against the existing
+  provider fixtures. cmd.github.pr.create becomes an alias-of cmd.forge.review.create with provider
+  github, preserving git.create_pr retirement lineage. One user action has one command; provider
+  differences live in the adapter, and thread-bound worktree commands remain separate.
+gui_related: true
+gui_classification_reason: Governs visible review action labels, availability wording, and GUI command wiring.
+split_recommended: false
+depends_on: [UIW-006, FGI-008, UCC-122, UCC-132]
+unblocks: []
+acceptance_criteria:
+  - catalog.forge_review_create and catalog.forge_review_merge use neutral ui_location and acceptance_checks, preserving their handler, state selector, disabled projection, effect contract, and evidence requirement.
+  - The optional vocabulary object carries noun_source, noun_field, and a label_template containing {noun}; existing required WiringEntry fields are unchanged.
+  - Create uses forge_capability_current, auth_valid, and repository_current; merge uses review_open, merge_allowed, and auth_valid, with each provider owner's capability and binding contracts determining guard truth.
+  - Generic cmd.forge. rows contain no whole-word provider names or review nouns in ui_location, acceptance_checks, or evidence_required; Actions & Pipelines and the Git remote name Origin remain allowed.
+  - Existing provider fixtures render Create pull request, Create merge request, Merge pull request, and Merge merge request; the validator reports each row's rendered set and rejects provider names in rendered labels.
+  - cmd.github.pr.create normalizes to cmd.forge.review.create with provider github before availability, permission, telemetry, receipt, and dispatch, with no primary catalog or production row and no second handler or guard.
+  - git.create_pr retains its retirement target cmd.github.pr.create, and thread-bound cmd.chat.worktree.pr and cmd.chat.worktree.merge keep their separate scope.
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: forge_wiring_provider_vocabulary_drift
+reasoning_tier: high
+context_scope: forge_review_wiring_vocabulary
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Wiring_Matrix.schema.json
+  - Plans/Wiring_Matrix.production.json
+  - Plans/Wiring_Matrix.production.exclusions.json
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Forge_Integrations.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: forge_review_wiring_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md:DL-044-approval-2026-09-11
+  - Plans/UI_Wiring_Rules.md#UIW-006
+  - Plans/UI_Command_Catalog.md#UCC-122
+  - Plans/UI_Command_Catalog.md#UCC-132
+  - Plans/Forge_Integrations.md#FGI-008
+  - Plans/GitLab_Integration.md#GLI-003
+  - Plans/forge_integration_contracts.schema.json#/$defs/provider_adapter_profile
+  - Plans/forge_integration_contracts.schema.json#/$defs/provider_matrix_profile
+  - Plans/forge_integration_contracts.schema.json#/$defs/automation_shell_projection
+  - Plans/forge_integration_contract_fixtures.json
+preserved_exact_tokens:
+  - cmd.forge.review.create
+  - cmd.forge.review.merge
+  - cmd.github.pr.create
+  - git.create_pr
+  - selected_repository_adapter
+  - selected_automation_binding_adapter
+  - review_noun
+  - pipeline_noun
+  - review_vocabulary
+  - label_template
+  - "{noun}"
+  - wiring_provider_literal_on_generic_command
+negative_constraints:
+  - Do not invent an adapter readiness field or derive generic guard truth from a named remote type.
+  - Do not add provider-specific primary review commands, a second alias handler, or an independent alias guard.
+  - Do not special-case Merge merge request or label GitLab reviews Pull Requests.
+  - Do not conflate repository and automation binding adapters or collapse thread-bound worktree scope into panel actions.
+  - No WorkNodes, NodeSeeds, runtime enablement, readiness admission, or governance seal is created by this record.
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Forge_Integrations.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

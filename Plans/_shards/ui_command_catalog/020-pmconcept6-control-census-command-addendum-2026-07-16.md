@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8330-L8518
 
-Source SHA256: `d537941adfd4e1c59733d92f7823b88f67f3947ccbf2fc323ba1b4b51237feb5`
+Source SHA256: `dd72993fe4392d070603fc344112dc65d09a7b9b6b1abeb382722ed52b7929d1`
 
 ---
 
@@ -187,13 +187,13 @@ ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:
 
 ### Forge review commands and Source Control compatibility inputs
 
-Panel review actions consume the common Forge owner with exact SCM/forge context (provider, repository, workspace/revision, compare target, baseline, run/attempt lineage). The historical Source Control PR spellings normalize before availability, permission, telemetry, receipt, and dispatch; they never own a second review handler. Thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` remain separate assistant-thread wrappers.
+Panel review actions consume the common Forge owner with exact SCM/forge context (provider, repository, workspace/revision, compare target, baseline, run/attempt lineage). The historical Source Control and GitHub PR spellings normalize before availability, permission, telemetry, receipt, and dispatch; they never own a second review handler. Thread-bound `cmd.chat.worktree.pr` / `cmd.chat.worktree.merge` remain separate assistant-thread wrappers.
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
 | `cmd.forge.review.create` | Create Review | Creates a provider-discriminated review through the Forge owner with repository, source workspace/revision, target revision, compare payload, and exact return route. | `forge_capability_current && auth_valid && repository_current` | `domain_action` |
 | `cmd.forge.review.merge` | Merge Review | Merges the selected provider review through the Forge owner; protected-branch mutation routes the applicable destructive-remote permission class. | `review_open && merge_allowed && auth_valid` | `domain_action` |
 
-Compatibility inputs: `cmd.source_control.pr.create` normalizes to `cmd.forge.review.create {provider: github}` and `cmd.source_control.pr.merge` normalizes to `cmd.forge.review.merge {provider: github}`. Neither compatibility spelling receives a primary catalog or production-wiring row.
+Compatibility inputs: `cmd.source_control.pr.create` and `cmd.github.pr.create` are alias-of `cmd.forge.review.create {provider: github}`, and `cmd.source_control.pr.merge` normalizes to `cmd.forge.review.merge {provider: github}`. These compatibility spellings receive no primary catalog or production-wiring row. DL-044 supersedes the former separate GitHub-domain create command; provider API behavior remains owned by the selected adapter.
 
 ContractRef: ContractName:Plans/Forge_Integrations.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md

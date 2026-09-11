@@ -383,7 +383,7 @@ Compatibility normalization:
 ```text
 cmd.source_control.pr.create -> cmd.forge.review.create {provider: github}
 cmd.source_control.pr.merge  -> cmd.forge.review.merge  {provider: github}
-cmd.github.pr.create remains direct GitHub owner behavior
+cmd.github.pr.create -> cmd.forge.review.create {provider: github}
 cmd.actions.* | cmd.github_actions.* -> command-owner-adjudicated cmd.github.actions.*
 github_actions panel/route/bookmark/deep-link input -> repository_automation with a GitHub AutomationBinding
 cmd.origin.* -> forbidden
@@ -444,6 +444,8 @@ Results distinguish `accepted`, `succeeded`, `blocked`, `degraded`, `failed`, `c
 ## 4. Integration Surfaces
 
 ### 4.1 Source Control
+
+Review action labels in wiring rows render from the selected repository adapter's review noun through the wiring vocabulary reference, as the automation shell takes its noun from the selected automation binding adapter.
 
 Reviews, optional Versions/Threads, Source of Truth, and Mirror Health are conditional Source Control sections driven by the current capability envelope. Hosted automation renders in the one provider-neutral `repository_automation` / **Actions & Pipelines** shell through the selected `AutomationBinding`. GitHub keeps GitHub Actions nouns, Current Branch, Workflows, Settings, pins, rerun, and log recovery; GitLab keeps Pipeline/Stages/Jobs/Trace; Forgejo/Gitea use their actual Actions capability; Bitbucket Data Center without configured CI says **Connect automation service**. Generic shell ownership never erases provider-specific semantics.
 

@@ -268,10 +268,20 @@ acceptance_criteria:
   - Wiring Matrix JSON stores rows under entries as a map keyed by ui_element_id.
   - Row schema preserves handler, expected event, acceptance, and evidence requirements.
   - Instant Grep and similar wiring addenda point back to owner docs for lifecycle, storage, and runtime canon.
+  - >-
+    A row whose ui_command_id begins with cmd.forge. must not name a provider (GitHub, GitLab, Azure DevOps,
+    Bitbucket) or a provider noun (pull request or pull requests, merge request or merge requests, GitHub
+    Actions) in ui_location, acceptance_checks, or evidence_required. A label that varies by provider uses
+    the optional vocabulary reference with noun_source, noun_field, and a label_template containing {noun}.
+    The selected repository adapter supplies review_noun in provider_matrix_profile.review_vocabulary
+    display form, following the automation shell precedent provider_noun_source = selected_automation_binding_adapter
+    in Plans/forge_integration_contracts.schema.json#/$defs/automation_shell_projection. Actions & Pipelines
+    and the Git remote name Origin are not provider-literal violations.
 validation_surfaces:
   - Plans/Wiring_Matrix.schema.json
   - GATE-010 schema validation
   - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix enforces the case-insensitive whole-word literal ban, noun templates, and rendered labels against every non-null review vocabulary in the Forge provider contract fixtures.
 risk_class: matrix_schema_drift
 reasoning_tier: standard
 context_scope: wiring_matrix

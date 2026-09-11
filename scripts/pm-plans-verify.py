@@ -3799,8 +3799,9 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     schema_path = PLANS / "Wiring_Matrix.schema.json"
     catalog_path = PLANS / "UI_Command_Catalog.md"
     exclusions_path = PLANS / "Wiring_Matrix.production.exclusions.json"
+    forge_fixtures_path = PLANS / "forge_integration_contract_fixtures.json"
 
-    for path in [matrix_path, schema_path, catalog_path, exclusions_path]:
+    for path in [matrix_path, schema_path, catalog_path, exclusions_path, forge_fixtures_path]:
         if not path.exists():
             failures.append({"path": rel(path), "error": "missing_wiring_matrix_input"})
     if failures:
@@ -3842,6 +3843,23 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     production_commands: set[str] = set()
     event_rows = 0
     typed_contract_rows = 0
+    provider_name_re = re.compile(r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket)\b", re.IGNORECASE)
+    provider_literal_re = re.compile(
+        r"\b(?:GitHub Actions|GitHub|GitLab|Azure DevOps|Bitbucket|pull requests?|merge requests?)\b",
+        re.IGNORECASE,
+    )
+    forge_fixtures = load_json(forge_fixtures_path)
+    review_vocabularies = [
+        profile["review_vocabulary"]
+        for fixture in forge_fixtures.get("valid", [])
+        if fixture.get("definition") == "provider_capability_matrix"
+        for profile in fixture.get("value", {}).get("profiles", [])
+        if isinstance(profile.get("review_vocabulary"), str) and profile["review_vocabulary"].strip()
+    ]
+    generic_forge_rows = 0
+    provider_literal_rows: set[str] = set()
+    provider_literal_hits = 0
+    rendered_vocabulary_labels: dict[str, list[str]] = {}
 
     for key, row in entries.items():
         row_path = f"{rel(matrix_path)}#/entries/{key}"
@@ -3850,6 +3868,52 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
             continue
         command_id = str(row.get("ui_command_id", ""))
         production_commands.add(command_id)
+        if command_id.startswith("cmd.forge."):
+            generic_forge_rows += 1
+            text_fields = [("ui_location", row.get("ui_location")), ("evidence_required", row.get("evidence_required"))]
+            acceptance_checks = row.get("acceptance_checks", [])
+            if isinstance(acceptance_checks, list):
+                text_fields.extend((f"acceptance_checks[{index}]", value) for index, value in enumerate(acceptance_checks))
+            for field, value in text_fields:
+                if not isinstance(value, str):
+                    continue
+                for match in provider_literal_re.finditer(value):
+                    provider_literal_rows.add(key)
+                    provider_literal_hits += 1
+                    failures.append({
+                        "path": row_path, "entry_id": key, "command_id": command_id,
+                        "field": field, "matched_text": match.group(0),
+                        "error": "wiring_provider_literal_on_generic_command",
+                    })
+
+        if "vocabulary" in row:
+            vocabulary = row["vocabulary"]
+            template = vocabulary.get("label_template") if isinstance(vocabulary, dict) else None
+            if not isinstance(template, str) or "{noun}" not in template:
+                failures.append({
+                    "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                    "error": "wiring_vocabulary_template_missing_noun",
+                })
+            else:
+                for match in provider_literal_re.finditer(template):
+                    failures.append({
+                        "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                        "matched_text": match.group(0), "error": "wiring_vocabulary_template_literal",
+                    })
+                if not review_vocabularies:
+                    failures.append({
+                        "path": rel(forge_fixtures_path), "entry_id": key,
+                        "error": "wiring_vocabulary_missing_review_fixtures",
+                    })
+                rendered_labels = sorted({template.replace("{noun}", noun.lower()) for noun in review_vocabularies})
+                rendered_vocabulary_labels[key] = rendered_labels
+                for label in rendered_labels:
+                    for match in provider_name_re.finditer(label):
+                        failures.append({
+                            "path": row_path, "entry_id": key, "field": "vocabulary.label_template",
+                            "rendered_label": label, "matched_text": match.group(0),
+                            "error": "wiring_vocabulary_rendered_provider_name",
+                        })
         if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
             failures.append({"path": row_path, "command_id": command_id, "error": "retired_chat_usage_alias_in_production_wiring"})
         if RETIRED_WEB_COMMAND_RE.match(command_id):
@@ -4133,6 +4197,11 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         typed_contract_row_count=typed_contract_rows,
         missing_catalog_command_count=len(missing_commands),
         uncataloged_production_command_count=len(uncataloged_production_commands),
+        generic_forge_row_count=generic_forge_rows,
+        wiring_provider_literal_row_count=len(provider_literal_rows),
+        wiring_provider_literal_hit_count=provider_literal_hits,
+        vocabulary_review_profile_count=len(review_vocabularies),
+        rendered_vocabulary_labels=rendered_vocabulary_labels,
     )
 
 
@@ -6956,7 +7025,13 @@ def main() -> int:
         args.paths = []
     report = COMMANDS[args.command](args)
     write_report(report, args.report)
-    print(json.dumps({k: report[k] for k in report if k in {"check", "status", "failures", "generated_at_utc"}}, indent=2, sort_keys=True))
+    output_fields = {"check", "status", "failures", "generated_at_utc"}
+    if args.command == "validate-wiring-matrix":
+        output_fields.update({
+            "generic_forge_row_count", "wiring_provider_literal_row_count", "wiring_provider_literal_hit_count",
+            "vocabulary_review_profile_count", "rendered_vocabulary_labels",
+        })
+    print(json.dumps({k: report[k] for k in report if k in output_fields}, indent=2, sort_keys=True))
     return 0 if report.get("status") == "pass" else 1
 
 

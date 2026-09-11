@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L538
+Source lines: L13-L554
 
-Source SHA256: `815528702ec413c30cbce2cd234fddc7ca02d1de096c8a513c79d63dd4d4147f`
+Source SHA256: `12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd`
 
 ---
 
@@ -534,3 +534,19 @@ These dispositions authorize planning only. They do not land any owner amendment
 SourceRef: `reports/jujutsu-research-2026-09-11/d3/decision-packet.md`; `reports/jujutsu-research-2026-09-11/d3/technical-companion.json`; Jared, conversation of 2026-09-11.
 
 ContractRef: ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Backup_Restore_System.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+### DL-044: Forge review wiring uses adapter vocabulary and one create command
+
+Approved on 2026-09-11 by Jared, with this decision number selected after the originally requested number was found to be occupied.
+
+The question was whether shared review actions should keep provider names and review terminology in their wiring rows, or take that wording from the selected adapter. It came up because the generic Create Review and Merge Review rows still said “pull request” and disabled the actions when there was no GitHub remote. The command catalog already defined provider-aware guards, and the provider contracts already supplied native review wording, including “Merge request” for GitLab. A separate GitHub create command also duplicated the generic create action.
+
+The options were:
+
+1. Use neutral descriptions in generic wiring rows, render varying labels through an optional adapter vocabulary reference, enforce that rule with the wiring validator, and make the GitHub create spelling a compatibility alias of the generic create command.
+2. Correct the two review rows only, leaving future wording drift unchecked and keeping a separate GitHub create command.
+3. Keep separate provider-specific wiring and command behavior, duplicating labels and availability rules for each provider.
+
+The answer is option 1. One user action has one command; provider differences remain in the adapter. Review labels use the selected repository adapter's existing review noun and display vocabulary, following the automation shell's use of its selected binding adapter. Create and merge retain the command catalog's guards and provider-owner routes. The legacy create spelling still follows its recorded retirement path into the compatibility alias, and thread-bound worktree commands keep their separate scope.
+
+This buys consistent provider wording and an executable check against the existing provider fixtures. It costs an optional wiring vocabulary object, template rendering in validation, and maintenance of alias normalization before availability, permission, telemetry, receipts, and dispatch. No new readiness predicate is needed on the adapter. The validator rejects provider names and review nouns in generic rows and prints the rendered labels; “Merge merge request” is the expected merge label for a provider whose review noun is “merge request”. This records planning and validation changes only, with no runtime enablement or governance seal.

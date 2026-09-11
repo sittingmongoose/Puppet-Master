@@ -3367,7 +3367,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Wiring_Matrix.md:2705-2784"
   - "Plans/Wiring_Matrix.md:3325-3390"
-  - "Plans/Wiring_Matrix.production.json:2674"
+  - "Plans/Wiring_Matrix.production.json:42762"
   - "Plans/Wiring_Matrix.production.json:3664"
   - "Plans/Wiring_Matrix.production.json:4819"
   - "Plans/Wiring_Matrix.production.json:16493"
