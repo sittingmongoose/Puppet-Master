@@ -44,9 +44,12 @@ def intake_failures(request, snapshot):
             failures.append("forge_gate:" + field)
     if snapshot.get("account_realm") != "github_api" or not snapshot.get("account_ref"):
         failures.append("forge_account_realm")
-    for field in ("account_ref", "operation_id", "admission_receipt_ref", "server_id"):
+    for field in ("account_ref", "admission_receipt_ref"):
         if response.structural_failures(SCHEMA, snapshot.get(field), "#/$defs/safe_ref"):
             failures.append("forge_intake_ref:" + field)
+    for field in ("operation_id", "server_id"):
+        if response.structural_failures(response.OUTCOME_SCHEMA, snapshot.get(field), "#/$defs/Id"):
+            failures.append("forge_intake_identity:" + field)
     if not snapshot.get("operation_id") or not snapshot.get("admission_receipt_ref") or not snapshot.get("server_id"):
         failures.append("forge_intake_identity")
     if snapshot.get("resolved_home_server_ref") != request["project_home_server_ref"]:
