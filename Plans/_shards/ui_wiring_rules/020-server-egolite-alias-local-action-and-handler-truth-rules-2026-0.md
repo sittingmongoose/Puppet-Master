@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1066-L1101
+Source lines: L1066-L1104
 
-Source SHA256: `7ce6eaa6610e8b01e54a6e321b6c9acb8c805d3a5c1b9456352384379c0a26a2`
+Source SHA256: `2299db5fe0f19028330db5fbd5f14a0fb376fd14246ad8dc3e0cce8536bc1f64`
 
 ---
 
@@ -18,6 +18,8 @@ The 171-row command-gap adjudication and six retained Egolite rows obey four clo
 4. A rejected spelling is inert. Its reason and safe exact replacement guidance remain visible to maintainers and audits, but it cannot dispatch.
 
 Every intended GUI consumer uses owner data and the same command/action identity. Settings, Product Onboarding, and Doctor remain consumers/routers; they cannot privately authenticate, install, update, move, back up, restore, browse, test, or operate source control. Static concept JavaScript remains simulation only.
+
+USER-PROJECT-UNARCHIVE-REGISTRY-20260911 removes row 128 from presentation-only classification. The retained `ui.project.restore_archived` entry constructs `cmd.project.unarchive` through the existing Project request/result family before every gate; it is not a read-only local action, independent dispatch identity, or local registry writer. PJCT-002 owns persisted archived-to-listed semantics, and WM-050 binds its one production-intent route. All consumers remain disabled until the owner is available and show success only from its verified persisted/readback result.
 
 ### UIW-016 - Server And Egolite Exact Dispatch Boundary
 
@@ -34,6 +36,7 @@ acceptance_criteria:
   - No visible control dispatches an alias, local predecessor, rejected spelling, or unregistered family root.
   - Every primary control and intended consumer uses the same exact target availability and accessible disabled reason.
   - Every typed local action has owner-local currentness/focus/return behavior and no domain mutation or EventRecord.
+  - Restoring an archived Project routes through cmd.project.unarchive before all gates; the old UI entry cannot privately save a registry change or fabricate navigation-only success, and receives no second handler or production row.
   - Concept simulation, schema validation, catalog presence, and planned target strings never claim native runtime readiness.
 validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, Concepts/pm7-tools/onboarding_cinematic_source.py, scripts/pm-touch-closure-verify.py]
 risk_class: ui_alias_bypass_or_phantom_runtime_claim
