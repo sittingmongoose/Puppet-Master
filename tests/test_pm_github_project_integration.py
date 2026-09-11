@@ -51,7 +51,7 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         report = GATE.validate()
         self.assertEqual(report["failures"], [])
         self.assertEqual((report["positive_events"], report["negative_cases"]), (2, 74))
-        self.assertEqual(report["registry_families"], 92)
+        self.assertEqual(report["registry_families"], 93)
         self.assertEqual(report["admitted_events"], 0)
         self.assertEqual(report["event_disposition"], "quarantined_not_admitted")
         self.assertFalse(report["event_persistence_authorized"])
@@ -219,7 +219,7 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
 
     def test_current_payloads_resolve_without_unsealing_historical_kernel(self):
         readiness = RESPONSE.module("github_project_readiness", "pm-implementation-readiness.py")
-        self.assertEqual(len(GATE.load("Plans/event_family_registry.json")["families"]), 92)
+        self.assertEqual(len(GATE.load("Plans/event_family_registry.json")["families"]), 93)
         for row in GATE.load("Plans/event_family_registry.json")["families"]:
             payload, schema_id = readiness.event_family_payload_schema(row)
             self.assertIsInstance(payload, dict, row["event_type"])
