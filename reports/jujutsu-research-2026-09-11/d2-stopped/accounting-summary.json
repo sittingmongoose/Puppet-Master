@@ -1,0 +1,61 @@
+{
+  "captured_at": "2026-09-11T03:40:40.516706+00:00",
+  "non_arm_cap_usd": 60,
+  "standard_api_equivalent_observed_usd": 33.402671999999995,
+  "unknown_tier_fast_scenario_observed_usd": 66.64057199999999,
+  "basis": "Preserved2026-09-08; inclusive input subtracts cache categories; output includes reasoning once",
+  "agents": [
+    {
+      "agent": "root",
+      "known_standard_subtotal_usd": 11.326712,
+      "known_fast_subtotal_usd": 22.653424,
+      "request_coverage_complete_in_captured_counters": true,
+      "gaps": [],
+      "service_tier_verified": false,
+      "actual_cash_usd": null
+    },
+    {
+      "agent": "case",
+      "known_standard_subtotal_usd": 5.112392,
+      "known_fast_subtotal_usd": 10.224784,
+      "request_coverage_complete_in_captured_counters": true,
+      "gaps": [],
+      "service_tier_verified": false,
+      "actual_cash_usd": null
+    },
+    {
+      "agent": "protocol",
+      "known_standard_subtotal_usd": 9.6367,
+      "known_fast_subtotal_usd": 19.2734,
+      "request_coverage_complete_in_captured_counters": true,
+      "gaps": [],
+      "service_tier_verified": false,
+      "actual_cash_usd": null
+    },
+    {
+      "agent": "audit",
+      "known_standard_subtotal_usd": 7.162096,
+      "known_fast_subtotal_usd": 14.324192,
+      "request_coverage_complete_in_captured_counters": true,
+      "gaps": [],
+      "service_tier_verified": false,
+      "actual_cash_usd": null
+    }
+  ],
+  "probe_default_api_equivalent_usd": 0.164772,
+  "actual_cash_usd": null,
+  "unreported_or_in_flight_usage_usd": null,
+  "limitations": [
+    "Native context service tier absent; standard/Fast scenarios, not bill",
+    "Usage after capture and in-flight/unreported failed-request charges remain unknown",
+    "Counter gaps excluded from known subtotals and explicitly listed",
+    "Posthoc receipts do not enforce prospective spending cap",
+    "Root start conservatively includes request begun before Goal activation if completed after start",
+    "Fast scenario doubles only root/support unknown-tier sessions; explicitly default-tier probe keeps default tariff."
+  ],
+  "raw_sanitized_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/accounting/stop_usage_preserved.json",
+    "sha256": "cd2aaebc6302674b50e7b864e4e65d6d3be21ac767ac7bd624c94d16e2a714c7"
+  },
+  "decision": "Stop before either campaign: service tier unresolved and conservative Fast scenario exceeds the overall non-arm allowance. This is not a claim that the standard-rate estimate or actual cash exceeds $60."
+}
