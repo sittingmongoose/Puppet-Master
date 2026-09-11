@@ -164,7 +164,7 @@
     "Plans/_shards/goal_runtime_system": 33,
     "Plans/_shards/storage-plan": 58
   },
-  "base_commit": "4d9d21297d2134148828b91fdcba6527fc99126c",
+  "base_commit": "5d6b351bc993f13ce4962f54445610e7f3a45cfa",
   "new_units": [
     "CV-334",
     "CV-335",
@@ -190,7 +190,7 @@
   },
   "validation_helper": {
     "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/verify.py",
-    "sha256": "4220581a1d3e7fb6dbbb997172ff76be0673542c12a67925102577182b46d504"
+    "sha256": "532d9c5a22ca199a0db188770dd5e7bedb981e5b5de2046733c70085418e0461"
   },
   "shards": {
     "status": "PASS",
@@ -201,7 +201,6 @@
     "status": "PASS",
     "cases": 6
   },
-  "standard_governance": "Prior dated full-check result remains failing; not rerun or overridden by this focused change.",
   "existing_new_contracts_static_gate": {
     "status": "PASS",
     "contract_pairs": 26,
@@ -210,9 +209,6 @@
     "internal_self_tests_passed": 12,
     "claim": "Existing gate excludes the three new historical fixture packs; those are tested separately by the pinned root verifier."
   },
-  "index_validation": {
-    "status": "PASS",
-    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-historical-root-20260911/index-validation.json",
-    "sha256": "58adf81b00f75a8d0b658156f1599901c0997a78e01318baaa61998705f88c3a"
-  }
+  "rebase_adjudication": "The intervening 5d6b351 commit changes only Jujutsu reports. All 42 cited Plans passages remained unchanged; the exact Goal historical qualifications are preserved. Final SP-271 wording explicitly requires original applicable-contract admission custody; source presence alone never proves history.",
+  "standard_governance": "Prior dated full-check result remains failing; not rerun or overridden by this focused change."
 }
