@@ -12,6 +12,8 @@ Frozen corrected subject: `/home/sittingmongoose/PM-Experiments/event-authority-
 
 Independent report: `/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-independent-review-20260911/v4-root/report.json` — SHA-256 `5931ed86a061f460cccaf2ddd7793310d4c9d925caa4913a8f58e77a4204be16`; review manifest `/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-independent-review-20260911/v4-root/manifest.json` — SHA-256 `da8fddf9d457e48c4ff7fffc5e2e1f8ce4cf75b228d395f0998bfa8810217f61`.
 
-See `step-08-seglog-checks.json` for exact check counts and `step-08-seglog-depth.json` for the twelve-facet scope. Generated shard and PlanUnit-index verification is recorded with the landing checks.
+See `step-08-seglog-checks.json` for exact check counts and `step-08-seglog-depth.json` for the twelve-facet scope. Generated shards pass (98 documents, 2,254 shards); PlanUnit index generation/validation passes (6,538 units, 25,115 acceptance units), preserving all 6,537 prior units semantically. Only the Storage and storage-value-registry shard groups change.
+
+The standard 36-subcheck aggregate was run and fails. After materializing tracked test/Concepts inputs, 11 affected subchecks were rerun individually; 11 subchecks still fail due to unsealed governance/stale evidence and preexisting missing references or fixture paths. These targeted results are not a second aggregate PASS. None identifies SP-270 or its new schema/fixtures as a path/contract-reference error. The existing new-contracts gate passes. Exact external run/recheck paths and SHA-256 values are recorded in the checks JSON. No lock, readiness, audit/evidence hash or validator was changed to clear those failures.
 
 Cost: root integration and review plus one Astra-medium bounded independent review; provider dollar telemetry is unavailable.
