@@ -20,10 +20,10 @@
       ],
       "default_if_no_response": "BLOCKED \u2014 no seal, no PNC-019, no runtime",
       "owner_response": {
-        "chosen_option": "RECLASSIFY_OUT_OF_REGISTRY (requires census + registry amendment)",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "chosen_option": "VETO_KEEP_REGISTERED_PROVISIONAL (retain registered_keep; consumers_checkpoints remain UNKNOWN)",
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -43,10 +43,10 @@
       ],
       "default_if_no_response": "BLOCKED \u2014 no seal, no PNC-019, no runtime",
       "owner_response": {
-        "chosen_option": "RECLASSIFY_OUT_OF_REGISTRY (requires census + registry amendment)",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "chosen_option": "VETO_KEEP_REGISTERED_PROVISIONAL (retain registered_keep; consumers_checkpoints remain UNKNOWN)",
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -67,9 +67,9 @@
       "default_if_no_response": "CONFIRM_EXACT_EXCLUDE",
       "owner_response": {
         "chosen_option": "CONFIRM_EXACT_EXCLUDE",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -90,9 +90,9 @@
       "default_if_no_response": "CONFIRM_EXACT_EXCLUDE",
       "owner_response": {
         "chosen_option": "CONFIRM_EXACT_EXCLUDE",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -113,9 +113,9 @@
       "default_if_no_response": "ACCEPT_EMIT_OBLIGATION_ONLY",
       "owner_response": {
         "chosen_option": "ACCEPT_EMIT_OBLIGATION_ONLY (keep NEEDS_MORE_EVIDENCE; no registry admit)",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -138,10 +138,10 @@
       ],
       "default_if_no_response": "BLOCKED \u2014 no seal, no PNC-019, no runtime",
       "owner_response": {
-        "chosen_option": "KEEP_UNREGISTERED_NO_PERSIST (treat wiring no-persist as controlling; remain outside admitted denominator)",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "chosen_option": "ESCALATE_AS_PERSISTED_FAMILY (requires owner-backed EventRecord/seglog authority + complete EA contract; not supported by current evidence)",
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -161,9 +161,9 @@
       "default_if_no_response": "CONFIRM_ALL_QUARANTINE_NO_ADMIT",
       "owner_response": {
         "chosen_option": "CONFIRM_ALL_QUARANTINE_NO_ADMIT",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-11T00:49:25.665050+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     },
     {
@@ -183,36 +183,11 @@
       "default_if_no_response": "CONFIRM_UNRESOLVED_NO_ADMIT",
       "owner_response": {
         "chosen_option": "CONFIRM_UNRESOLVED_NO_ADMIT",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z"
-      }
-    },
-    {
-      "decision_id": "UNRESOLVED-54-CLOSE-PATH",
-      "theme": "unresolved_bucket_close_path",
-      "question": "How should Event Authority close the 54 unresolved rows (28 J40 + 26 EMIT) so bucket!=unresolved and disposition not NEEDS_MORE_EVIDENCE/NEEDS_OWNER_VETO, without registry admit and without inventing persistence?",
-      "options": [
-        "NEW_NON_ADMITTED_QUARANTINE_BUCKET (schema+validator bucket quarantined_not_admitted; KEEP_QUARANTINED; not registry admit; not denominator admit)",
-        "VALIDATOR_TREAT_QUARANTINED_UNRESOLVED_AS_CLOSED (weaken unresolved_bucket_not_closed / evidence_gap predicates)",
-        "MOVE_54_INTO_CPU_QUARANTINE (denominator-admit 54 without complete EA contracts)",
-        "PER_ROW_SPLIT_54 (delay seal; 54 new sheet IDs; no default quarantine)"
-      ],
-      "blocking_checkpoint": "unresolved_bucket_not_closed + individual_dispositions_evidence_gap_blocking",
-      "evidence_refs": [
-        "SEAL_PATH_MATRIX.md",
-        "PHASE1_APPLY_PLAYBOOK.md",
-        "OWNER_DECISION_BRIEF.md"
-      ],
-      "default_if_no_response": "BLOCKED \u2014 no seal, no PNC-019, no runtime",
-      "owner_response": {
-        "chosen_option": "NEW_NON_ADMITTED_QUARANTINE_BUCKET (schema+validator bucket quarantined_not_admitted; KEEP_QUARANTINED; not registry admit; not denominator admit)",
-        "recorded_at_utc": "2026-08-12T12:02:41Z",
-        "source": "owner_ask_2026-08-12",
-        "applied_at_utc": "2026-08-12T12:06:14Z",
-        "interpretation": "ACCEPT_EMIT_OBLIGATION_ONLY and CONFIRM_UNRESOLVED_NO_ADMIT mean no registry admit. Close-path supersedes keep-NEEDS_MORE_EVIDENCE / stay-bucket-unresolved for seal: 26+28 move to bucket=quarantined_not_admitted with disposition=KEEP_QUARANTINED. COMPACT-001 KEEP_UNREGISTERED_NO_PERSIST also uses this bucket (leaves CPU, retains july248 pin)."
+        "decided_by": "Jared",
+        "recorded_at_utc": "2026-09-10T20:26:00.977491+00:00",
+        "source": "jared_chat_2026-09-10"
       }
     }
   ],
-  "updated_at_utc": "2026-08-12T12:06:14Z"
+  "updated_at_utc": "2026-09-11T03:48:00.013539+00:00"
 }
