@@ -2298,3 +2298,68 @@ owner_hints:
 ```
 
 For exactly `cmd.chat.create_restore_point`, Storage SP-274 retains the ORIGINAL SIR-owned CommandOutcomeRecord as delegated app-root command-replay custody within the command-specific canonical value. SIR remains the sole semantic producer/owner; Storage cannot generate an outcome from a typed result, schema-valid caller body, event, receipt ref, current topology or defaults. Native creation authenticates the actual operation owner and current dispatch identity before admitting the initial record and its true terminal successor. Once terminal, preserve the exact original record and schema; no conversion to a newly observed topology or new operation is permitted. The delegated resolver exposes that same original record to CV-333 through the exact stored command_outcome_ref and validates its separately owned typed result/hash/ref join. A retained actual outcome is not a global outcome writer or a substitute for initial native acknowledgement/effect evidence. Pending updates require the original SIR authority; passive replay writes nothing. This narrowly supplies custody for the existing app-root original-owner-result obligation; it does not materialize a global CommandOutcome family or alter RP-DELIVERY-365D.
+
+### Original Home command outcome custody
+
+Shared Integration Runtime delegates custody of the authenticated original Home CommandOutcomeRecord, content-free normalized identity and original CV-333 response to the same canonical Home operation receipt defined by SP-273. SIR retains sole semantic production and authentication authority. The receipt resolves exact original command/operation/instance/topology/target/dispatch identities and the separately typed Home result; copied refs or mutually repaired hashes do not authenticate those records. Pending custody remains with the original owner until the real outcome is resolved.
+
+The new Home capture bytes are explicitly serialized from authenticated original typed values under SP-273, not claimed original SIR wire bytes. Existing SIR/CV source schemas and hash meanings remain unchanged. Original terminal values and typed AppendReceipt/publication custody are immutable, content-free and coherently backed up; layout bodies stay in their distinct configuration/temporary operation custody. A read-only retry returns the same original values without synthesizing an outcome or repeating layout mutation. This narrow Home delegation does not reuse the create-only SIR-044 result family or introduce a global result producer. SP-273 owns the physical bytes, exact joins, retention, migration and withdrawal rules.
+
+```yaml
+plan_unit_id: SIR-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: For actually admitted Home commands producing workspace.layout_changed under SP-273, Shared
+  Integration Runtime delegates custody of its exact authenticated original CommandOutcomeRecord to the
+  same canonical Home operation receipt while retaining exclusive semantic production and authentication
+  authority. The captured content-free normalized-request identity and exact original CV-333 response
+  join that same operation and separately hashed Home owner result. This is NEW Home-only delegated custody;
+  create-only SIR-044 and its physical family are not reused. Original terminal typed values, NEW Home
+  capture bytes, schema/topology and refs are immutable and mandatory-backup; pending advances require
+  original SIR authority; passive retry resolution cannot synthesize outcomes or create a global writer.
+gui_related: false
+gui_classification_reason: Exact original SIR custody only.
+depends_on:
+- SIR-042
+- CV-333
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Shared Integration Runtime remains the sole semantic producer and authenticator of the exact original
+  Home CommandOutcomeRecord.
+- Original normalized identity, outcome and response join actual command, operation, target generation,
+  dispatch identity and separately hashed Home result through the same canonical receipt.
+- New Home content-free capture serialization and hashes are explicit; they do not claim original SIR
+  wire bytes or change existing owner hash recipes.
+- Pending or unresolved original outcome custody cannot synthesize a successful terminal response or bypass
+  original Home readback and append durability.
+- Authentic original terminal values remain immutable and backed up; read-only retry cannot create a second
+  outcome, repeat Home mutation or become a global result store.
+validation_surfaces:
+- Plans/home_layout_event_contracts.schema.json
+- Plans/event_payloads/workspace_layout_changed.schema.json
+- Plans/home_workspace_layout.schema.json
+- Plans/home_layout_event_contract_fixtures.json
+- reports/event-authority-20260911/step-08-home-validation.md
+risk_class: home_layout_readback_event_receipt_crash_or_replay_authority_escape
+reasoning_tier: high
+context_scope: workspace_layout_changed_original_sir_custody
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/home_layout_event_contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/storage-plan.md#SP-273
+- Plans/Shared_Integration_Runtime.md#SIR-042
+- Plans/Contracts_V0.md#CV-333
+- Plans/Decision_Log.md#DL-045
+negative_constraints:
+- No event admission, sibling terminal/panel closure, retention value change, runtime claim, global accounting
+  change, readiness or seal.
+```
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-046, ContractName:Plans/storage-plan.md#SP-273, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/Decision_Log.md#DL-045

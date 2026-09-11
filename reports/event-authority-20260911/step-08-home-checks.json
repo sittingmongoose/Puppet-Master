@@ -1,0 +1,269 @@
+{
+  "status": "PASS_STATIC_SCHEMA_AND_INDEPENDENT_BOUNDED_REVIEW",
+  "value_shape_cases": 12,
+  "joined_cases": 48,
+  "reader_generation_cases": 22,
+  "numeric_admission_cases": 6,
+  "reader_cleanup_cases": 4,
+  "slot_migration_cases": 32,
+  "slot_cleanup_ordinary_retry_cases": 12,
+  "root_v3_fresh_probes": 11,
+  "independent_v4_migration_cases": 15,
+  "independent_v4_ordinary_cleanup_cases": 5,
+  "all_existing_registry_rows_preserved": 99,
+  "subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
+    "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5"
+  },
+  "independent_v4_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-independent-review-20260911/v4/report.json",
+    "sha256": "8bd0a34f347512bfbcc2556f4bd8e4e990e7710ead70f001f326b9aca33e699e",
+    "manifest_sha256": "2312832568b5b244ce748e1b4f8e1eb7da95687cc500ea48c28e35229a7050d2"
+  },
+  "source_adjudication": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-home-root-integration-20260911/source-review.json",
+    "sha256": "83a08d16580a56384f60b1fb18c01336b06fd89227ffba2f6d5ee6228e44a2ef"
+  },
+  "native_execution": "NOT_RUN",
+  "governance_seal": false,
+  "root_local_checks": {
+    "status": "PASS_OWN_SCHEMAS_FIXTURES_AND_PRESERVATION_ONLY",
+    "base": "20f109f2561d7c7f39cf576385d5c2f590e86c9a",
+    "all_prior_storage_families_preserved": 99,
+    "physical_family_count": 102,
+    "all_current_events_preserved": 42,
+    "policies_preserved": 24,
+    "old_plan_units_preserved": 6540,
+    "new_plan_unit_count": 6542,
+    "new_plan_units": [
+      "SP-273",
+      "SIR-046"
+    ],
+    "value_shapes": 12,
+    "registry_data_check": "FAIL_UNMODIFIED_CHECKER",
+    "registry_data_failures": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 102
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 80,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 18,
+          "later_gui_or_feature_projection": 81,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      }
+    ],
+    "registry_data_baseline_failures": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 99
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 77,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 18,
+          "later_gui_or_feature_projection": 78,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      }
+    ],
+    "new_checker_diagnostics": "Three Home generic_read_token field-name scanner diagnostics. The closed value is a non-capability SP-278 source/currentness binding, with no authentication credentials. Diagnostics remain uncleared; no waiver or validator edit. Existing fixed family/status/tier totals also differ after authorized registrations.",
+    "generated_owner_groups": [
+      "storage-plan",
+      "shared_integration_runtime",
+      "storage_value_registry"
+    ],
+    "native_execution": "NOT_RUN"
+  },
+  "generated_checks": {
+    "shards": {
+      "status": "PASS",
+      "docs": 98,
+      "shards": 2302
+    },
+    "plan_index": {
+      "status": "PASS",
+      "plan_units": 6542,
+      "acceptance_units": 25141,
+      "prior_units_preserved": 6540
+    },
+    "validate_new_contracts": "PASS",
+    "git_diff_check": "PASS"
+  }
+}

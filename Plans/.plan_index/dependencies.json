@@ -5793,6 +5793,7 @@
     "ACD-440",
     "ACD-442",
     "SP-233",
+    "SIR-046",
     "EP-103",
     "F2-201",
     "W-083",
@@ -6371,6 +6372,7 @@
     "SCS-014",
     "SP-254",
     "SRV-013",
+    "SP-273",
     "F3-521",
     "WM-041",
     "UIW-013",
@@ -55178,6 +55180,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SIR-046",
+      "to": "CV-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-046",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-046",
+      "to": "SIR-042"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-001",
       "to": "SMPFS-002"
     },
@@ -65845,6 +65862,56 @@
       "edge_type": "depends_on",
       "from": "SP-271",
       "to": "GRS-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "ATS-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "CV-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "CV-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "F3-515"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "SIR-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "SP-245"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "UCC-144"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "UCC-147"
     },
     {
       "edge_type": "depends_on",
@@ -94772,7 +94839,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T22:34:39Z",
+  "generated_at_utc": "2026-09-11T22:52:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -185334,6 +185401,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "workspace_layout_changed_original_sir_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-046",
+      "reasoning_tier": "high",
+      "risk_class": "home_layout_readback_event_receipt_crash_or_replay_authority_escape",
+      "source_location": {
+        "heading": "Original Home command outcome custody",
+        "heading_level": 3,
+        "heading_line": 2302,
+        "line": 2308,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "section15_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -192727,6 +192811,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "workspace_layout_changed_only",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-273",
+      "reasoning_tier": "high",
+      "risk_class": "home_layout_readback_event_receipt_crash_or_replay_authority_escape",
+      "source_location": {
+        "heading": "Slot migration-generation custody and activation",
+        "heading_level": 3,
+        "heading_line": 21232,
+        "line": 21254,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "restore_point_create_original_result",
@@ -205961,10 +206062,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14994,
+    "depends_on_edge_count": 15007,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17645,
-    "node_count": 6540,
+    "edge_count": 17658,
+    "node_count": 6542,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

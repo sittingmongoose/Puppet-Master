@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14994,
+    "depends_on_edge_count": 15007,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17645,
-    "node_count": 6540,
+    "edge_count": 17658,
+    "node_count": 6542,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T22:34:39Z",
+  "generated_at_utc": "2026-09-11T22:52:05Z",
   "gui_related_units": {
-    "count": 3156,
+    "count": 3157,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -29464,6 +29464,17 @@
         }
       },
       {
+        "owner_doc": "Plans/storage-plan.md",
+        "plan_unit_id": "SP-273",
+        "source_location": {
+          "heading": "Slot migration-generation custody and activation",
+          "heading_level": 3,
+          "heading_line": 21232,
+          "line": 21254,
+          "path": "Plans/storage-plan.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
         "plan_unit_id": "SQR-001",
         "source_location": {
@@ -34740,10 +34751,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6540,
+  "plan_unit_count": 6542,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1996,
+      "high": 1998,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36290,6 +36301,7 @@
       "home_cross_axis_or_semantic_preset_schema_drift": 1,
       "home_gesture_regression": 1,
       "home_layout_persistence_drift": 1,
+      "home_layout_readback_event_receipt_crash_or_replay_authority_escape": 2,
       "home_menu_regression": 1,
       "home_platform_claim_drift": 1,
       "home_receipt_truth_drift": 1,
@@ -38505,7 +38517,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6349,
+      "accepted": 6351,
       "retired": 182,
       "superseded": 9
     },
@@ -38572,12 +38584,12 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5193,
+      "requirement": 5194,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 63,
+      "schema_contract": 64,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38660,7 +38672,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "07e0f7c167b15f8ba151ea866b4379d8648eef05ea4a19265d012ef86c8fa773",
+        "expected": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38728,7 +38740,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-seglog-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-home-v4-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {

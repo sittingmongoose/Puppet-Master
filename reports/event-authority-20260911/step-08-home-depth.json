@@ -1,0 +1,151 @@
+{
+  "status": "NORMATIVE_CONTRACT_COMPLETE_NATIVE_UNPROVEN",
+  "baseline_head": "20f109f2561d7c7f39cf576385d5c2f590e86c9a",
+  "event_type": "workspace.layout_changed",
+  "normative_contract_complete": true,
+  "status_meaning": "PASS means the individual normative facet is defined, not native execution or frozen-validator DEPTH_PASS.",
+  "new_plan_units": [
+    "SP-273",
+    "SIR-046"
+  ],
+  "new_physical_families": [
+    "home_layout_transaction_slot",
+    "home_layout_operation_receipt",
+    "home_layout_event_reader_checkpoint"
+  ],
+  "physical_counts": {
+    "before": 99,
+    "after": 102
+  },
+  "current_event_count": 42,
+  "policy_count": 24,
+  "all_existing_registry_rows_policies_and_events_preserved": true,
+  "native_execution": "NOT_RUN",
+  "frozen_validator_rows_closed": 0,
+  "criteria": [
+    {
+      "criterion": "membership_version",
+      "coverage": "Exact registered family 1.1.0/project_only and payload 1.1.0 remain; no event admission/alias.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "owner_doc",
+      "coverage": "F3-515/CV-323/SP-245/UCC-144/UCC-147/ATS-040 current owners; SP-273 proposed Storage supplement, no owner substitution.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "producer",
+      "coverage": "NEW home.workspace_layout_commit.v1 with actual command applicability, scoped rollback slot, readback, prepared receipt, source sync and terminal release; uncertain append fences.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "closed_payload_schema",
+      "coverage": "Existing closed 26-required-field schema unchanged. Three new standalone storage schemas with actual resolvable JSON Pointers.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "scope_identity",
+      "coverage": "Actual instance/project/workspace/command instance and scoped command idempotency; stable deterministic operation/event refs and exact domain identity preservation.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "replay_idempotency",
+      "coverage": "Command and event identities separately checked; immutable prepared semantic bytes; crash retry original result; history/replay cannot mutate Home or domain resources.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "retention",
+      "coverage": "Exact existing event/layout/index/identity/checkpoint policy objects pinned. NEW slot config and receipt/audit class mappings explicitly for root review; no policy values/anchors changed.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "redaction_custody",
+      "coverage": "Temporary semantic Home snapshots only in unresolved rollback slot; content-free durable result/receipt; protected canonical custody, current access/deletion, no domain bodies or secrets.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "transitions",
+      "coverage": "Write/readback/prepared receipt/event sync/terminal release explicitly ordered; definitive failure rolls back, ambiguous outcome preserves evidence. Ordinary recovery without command lineage emits no fabricated event.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "consumers_checkpoints",
+      "coverage": "NEW Home/editor-routing/terminal-presentation readers share one filtered checkpoint after generic index; source/receipt/current-layout/slot/access/CAS fences; no canonical replay.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "compatibility_withdrawal",
+      "coverage": "Actual family/version installation and backup recovery; frozen compatibility remains read-only/unbound when insufficient; producer admission cutoff preserves pending obligations and identities.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    },
+    {
+      "criterion": "positive_negative_oracles",
+      "coverage": "44 static relations (2 positive/42 negative), six slot/six receipt phases, ten structural negatives and 89+3 registry validation pass; 38 paired native obligations remain NOT_RUN.",
+      "status": "PASS",
+      "proposal_status": "DRAFT_DEFINED_STATIC_PARTIAL_NATIVE_NOT_RUN",
+      "owner_units": [
+        "SP-273",
+        "SIR-046"
+      ]
+    }
+  ],
+  "subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
+    "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5"
+  }
+}
