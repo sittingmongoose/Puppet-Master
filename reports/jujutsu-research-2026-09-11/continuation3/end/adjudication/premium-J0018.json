@@ -1,0 +1,691 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0018-reconcile",
+  "arm": "premium",
+  "review_status": "proposed_pending_independent_review",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/manifest.json",
+    "sha256": "71c6c09a3735037159215640f01ba0af7302f5daf46608a894383fa720a04a97"
+  },
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "scope": "All eight delivered assertion documents read. Primary-source citations are retained worker evidence; no independent upstream runtime certification.",
+  "claims": [
+    {
+      "claim_id": "P-J0018-C01",
+      "proposition": "Hunk selections choose deletion/insertion operations, with mixed outcomes; show synthesized result and unambiguous pane meaning.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 29,
+          "line_end": 33,
+          "exact_quote": "- [diff.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/diff.lua#L92-L106), [S00017](research-evidence/sources/S00017/text.txt):100\u2013105, retains an old line when its left-side deletion is **not** selected, and emits a new line when its right-side insertion **is** selected. For one replaced line, selecting neither keeps old; selecting both produces new; selecting only right retains old and adds new; selecting only left removes old without inserting new. This is a source-derived example, not a runtime observation.\n- [init.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/init.lua#L62-L109), [S00016](research-evidence/sources/S00016/text.txt):62\u201388, pairs by offset within a hunk, rather than semantic code identity. Lines 90\u2013109 toggle an entire hunk on both sides. File selection covers both sides (18\u201329).\n- [output tests](research-evidence/sources/S00015/text.txt):83\u2013117 and [diff tests](research-evidence/sources/S00067/text.txt):18\u201340 explicitly assert mixed old/new partial results. They support the deletion/insertion interpretation behind the confusion reported in #30.\n\n**Lesson retained:** show synthesized resulting content and make the meaning of a selected deletion/insertion visible. Pairing is helpful but does not remove the need to explain partial results or unequal hunk sizes."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-result-review.md",
+          "sha256": "3aba467a52aa08471e0b36d939d949f973224b07e34f18570921e5eb55099f37",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "The baseline diff selector has read-only left/right buffers and applies selected deletions/insertions only on final acceptance. A result preview could show the actual synthesized content, including both-lines/neither-line outcomes, before committing a selection. Keep three alternatives distinct: read-only synthesized preview, editable center pane, or select-then-edit staged review."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-result-review.md",
+          "sha256": "3aba467a52aa08471e0b36d939d949f973224b07e34f18570921e5eb55099f37",
+          "line_start": 14,
+          "line_end": 16,
+          "exact_quote": "- [Issue #6 pane-label discussion](https://github.com/julienvincent/hunk.nvim/issues/6#issuecomment-4397260720), S00033: identify result and revision context; ours/theirs can reverse. The acquired jj external-merge implementation passes base/left/right/output/path/marker_length, not revision-label variables (S00041 lines 222\u2013262). This does not establish that integrations can never supply extra metadata.\n\nUnresolved: behavior of undo after manual edits, unequal hunks, ambiguous application order, remaining-conflict detection, baseline-branch integration, exact bytes on output, and whether result editing should be allowed during split selection as well as conflict resolution. The experimental commit's message says PoC and contains \u201cCloses #6\u201d; the issue remains open and the assigned baseline revision contains no merge module. Do not promote the branch into baseline capability."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F029",
+          "relation": "narrower",
+          "rationale": "Selection semantics and preview refine these topics but do not establish the full exact-identity safety rule or the whole comparison convenience proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F067",
+          "relation": "narrower",
+          "rationale": "Selection semantics and preview refine these topics but do not establish the full exact-identity safety rule or the whole comparison convenience proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Selection semantics and preview refine these topics but do not establish the full exact-identity safety rule or the whole comparison convenience proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C02",
+      "proposition": "Output preview, editable-center and select-then-edit are distinct proposals; existing file preview and theme-sensitive colors narrow claims of absent functionality.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 39,
+          "line_end": 41,
+          "exact_quote": "| [#29 output preview](https://github.com/julienvincent/hunk.nvim/issues/29), [S00008](research-evidence/sources/S00008/text.txt), open | Body requests output preview and arbitrary editing. The maintainer's [proposal](https://github.com/julienvincent/hunk.nvim/issues/29#issuecomment-3448403461), [S00027](research-evidence/sources/S00027/text.txt), considers both an editable center pane and a select-then-edit flow. These are alternatives, not proof of baseline implementation. |\n| [#30 highlights](https://github.com/julienvincent/hunk.nvim/issues/30), [S00009](research-evidence/sources/S00009/text.txt), open | Reporter explicitly says accepting both sides is necessary for the complete replacement. [Maintainer replies](https://github.com/julienvincent/hunk.nvim/issues/30#issuecomment-3448362670), [S00026](research-evidence/sources/S00026/text.txt), attribute diff coloring to Neovim/theme groups and also acknowledge a separate nonstandard gutter-highlight problem. The baseline code now links `HunkSignAdd/Delete` to `DiagnosticOk/Error` ([S00036](research-evidence/sources/S00036/text.txt):69\u201377) and applies side-specific mappings ([S00060](research-evidence/sources/S00060/text.txt):155\u2013166). Thus the issue is evidence of semantic confusion, not a demonstrated universal absence of red/green styling. Modified-line `DiffChange`/`DiffText` colors remain theme-sensitive. |\n| [#36 automatic file preview](https://github.com/julienvincent/hunk.nvim/issues/36), [S00021](research-evidence/sources/S00021/text.txt), open | Automatic preview while moving the cursor is the request. Baseline [tree.lua](research-evidence/sources/S00029/text.txt):291\u2013315 already supports explicit open/preview, and 349\u2013356 previews the first file. It does not install cursor-movement preview in this code. [Comments](research-evidence/sources/S00028/text.txt) propose debounced `CursorMoved` or next/previous-file functions; the maintainer prefers an extension interface but would consider a built-in contribution. An existing `on_tree_mount` hook (344) is a useful extension point. |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-result-review.md",
+          "sha256": "3aba467a52aa08471e0b36d939d949f973224b07e34f18570921e5eb55099f37",
+          "line_start": 11,
+          "line_end": 13,
+          "exact_quote": "- [Issue #29, maintainer proposal](https://github.com/julienvincent/hunk.nvim/issues/29#issuecomment-3448403461), local `research-evidence/sources/S00027/`: proposes both an editable three-way interface and a two-part flow; neither proposal alone proves implementation.\n- [Experimental README](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/README.md#L273-L312), S00052: `MergeEditor` supplies editable center initialized from base. [Implementation](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/lua/hunk/merge/init.lua#L298-L325), S00054, confirms buffer properties; lines 473\u2013489 write then quit or cancel via `cq`.\n- [Issue #6 interaction clarification](https://github.com/julienvincent/hunk.nvim/issues/6#issuecomment-4397692610), S00033: applying consumes a hunk; standard undo replaces toggling because the result is editable. A Windows accept failure was reported and subsequently reported fixed in the same thread; this is user testimony, not a runtime receipt from this review."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F067",
+          "relation": "narrower",
+          "rationale": "These are scoped interaction proposals and external-editor examples, not the full managed handoff or focused-comparison proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F035",
+          "relation": "narrower",
+          "rationale": "These are scoped interaction proposals and external-editor examples, not the full managed handoff or focused-comparison proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "These are scoped interaction proposals and external-editor examples, not the full managed handoff or focused-comparison proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C03",
+      "proposition": "Automatic focus preview, cross-file traversal and true selection inversion differ from existing explicit preview and group toggles.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 42,
+          "line_end": 43,
+          "exact_quote": "| [#41 inversion](https://github.com/julienvincent/hunk.nvim/issues/41), [S00020](research-evidence/sources/S00020/text.txt), open | Requested complement selects the other seven files after deselecting three. Baseline file/directory toggle logic sets groups all on/off; it is not equivalent to complementing every mixed file/line selection (S00016:18\u201329; S00029:328\u2013341). |\n| [#43 next/previous file](https://github.com/julienvincent/hunk.nvim/issues/43), [S00022](research-evidence/sources/S00022/text.txt), and [#34 continuous navigation](https://github.com/julienvincent/hunk.nvim/issues/34), [S00025](research-evidence/sources/S00025/text.txt), both open | #43 asks for file actions; #34 asks for successive same-kind/hunk navigation without returning to the tree and with automatic expansion. Baseline next/previous-hunk code scans only the current file ([S00038](research-evidence/sources/S00038/text.txt):177\u2013201). A draft PR and diffview-plus.nvim analogy are leads, not verified implementations. |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-navigation.md",
+          "sha256": "f3b6ad09c1089ab900da26d6ca4c12697fea9235c192ffbf809352734462387d",
+          "line_start": 7,
+          "line_end": 16,
+          "exact_quote": "Separate moving between files, previewing the focused file, and complementing a selection. These have different semantics and can be implemented or configured independently.\n\nPrimary evidence:\n\n- [#36](https://github.com/julienvincent/hunk.nvim/issues/36), S00021, requests automatic preview on file-list movement. [Comments](https://github.com/julienvincent/hunk.nvim/issues/36#issuecomment-4408035140), S00028, favor a maintained extension interface, while allowing a contributed built-in feature. Another comment proposes debounced `CursorMoved`; another proposes global `next_file`/`previous_file` actions.\n- [Baseline tree implementation](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/ui/tree.lua#L291-L356), S00029: manual open, explicit preview through expand-node, initial first-file preview, and `on_tree_mount` hook. Thus \u201cno preview exists\u201d is false; automatic preview on every movement is the request.\n- [#34](https://github.com/julienvincent/hunk.nvim/issues/34), S00025, requests continuous same-kind/hunk traversal without returning to the file tree. [#43](https://github.com/julienvincent/hunk.nvim/issues/43), S00022, requests next/previous file and references a draft PR. Its [later comment](https://github.com/julienvincent/hunk.nvim/issues/43#issuecomment-5406344119), S00050, cites diffview-plus.nvim as a navigation analogy; that alternative was not independently inspected.\n- [#41](https://github.com/julienvincent/hunk.nvim/issues/41), S00020, describes inversion as deselecting three selected files and selecting seven others. Baseline `toggle_file` and directory toggles normalize selection rather than complementing every file/line (S00016 lines 18\u201329; S00029 lines 328\u2013341).\n\nUnresolved: consistent global traversal order, expanded/collapsed directory behavior, debounce and large-file costs, partial-selection inversion semantics, and preservation of focus/selection while previewing. Existing hooks are evidence of an extension point, not a verified implementation of all requests. No adoption or implementation is requested by this reconciliation."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F067",
+          "relation": "narrower",
+          "rationale": "A supported subset of comparison convenience; revision pinning and selected-revision bookmark details are not asserted here.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "A supported subset of comparison convenience; revision pinning and selected-revision bookmark details are not asserted here.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C04",
+      "proposition": "Baseline DiffEditor and separate experimental MergeEditor have different protocols and maturity; an issue-closing commit text is not release proof.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 44,
+          "line_end": 49,
+          "exact_quote": "| [#23 documenting `:cq`](https://github.com/julienvincent/hunk.nvim/issues/23), [S00023](research-evidence/sources/S00023/text.txt), closed/completed | The older documentation request is satisfied in the assigned README: nonzero exit abort and `q` calling `:cq` appear at 145\u2013153. Do not carry this forward as missing documentation. |\n| [#6 merge tool](https://github.com/julienvincent/hunk.nvim/issues/6), [S00024](research-evidence/sources/S00024/text.txt), open | The baseline repository listing [S00002](research-evidence/sources/S00002/text.txt) contains the diff editor, not the merge module. But [comments](research-evidence/sources/S00033/text.txt) announce a separate experimental branch; saying no implementation exists anywhere would be wrong. |\n\nThe additional branch is pinned by [S00049](research-evidence/sources/S00049/text.txt). Its [README](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/README.md#L273-L312), [S00052](research-evidence/sources/S00052/text.txt):273\u2013312, documents `MergeEditor $base $left $right $output $path`, an editable center initialized from base, hunk application, and explicit accept/cancel. [Code](research-evidence/sources/S00054/text.txt):298\u2013325 and 473\u2013489 confirms those buffer and write/quit paths. The commit calls itself an experimental PoC; its \u201cCloses #6\u201d text does not prove merge or release while the acquired issue is open.\n\nUseful new interaction evidence in #6 is retained: applying a hunk is consumed, with standard undo instead of toggling after arbitrary center edits; result-pane identity remains confusing; a Windows/Nushell accept failure was reported and then reported fixed; and a user with 30+ conflicted files requests a file list and resolution status. These are primary participant reports, not reproduced runtime results."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-result-review.md",
+          "sha256": "3aba467a52aa08471e0b36d939d949f973224b07e34f18570921e5eb55099f37",
+          "line_start": 12,
+          "line_end": 16,
+          "exact_quote": "- [Experimental README](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/README.md#L273-L312), S00052: `MergeEditor` supplies editable center initialized from base. [Implementation](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/lua/hunk/merge/init.lua#L298-L325), S00054, confirms buffer properties; lines 473\u2013489 write then quit or cancel via `cq`.\n- [Issue #6 interaction clarification](https://github.com/julienvincent/hunk.nvim/issues/6#issuecomment-4397692610), S00033: applying consumes a hunk; standard undo replaces toggling because the result is editable. A Windows accept failure was reported and subsequently reported fixed in the same thread; this is user testimony, not a runtime receipt from this review.\n- [Issue #6 pane-label discussion](https://github.com/julienvincent/hunk.nvim/issues/6#issuecomment-4397260720), S00033: identify result and revision context; ours/theirs can reverse. The acquired jj external-merge implementation passes base/left/right/output/path/marker_length, not revision-label variables (S00041 lines 222\u2013262). This does not establish that integrations can never supply extra metadata.\n\nUnresolved: behavior of undo after manual edits, unequal hunks, ambiguous application order, remaining-conflict detection, baseline-branch integration, exact bytes on output, and whether result editing should be allowed during split selection as well as conflict resolution. The experimental commit's message says PoC and contains \u201cCloses #6\u201d; the issue remains open and the assigned baseline revision contains no merge module. Do not promote the branch into baseline capability."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F035",
+          "relation": "narrower",
+          "rationale": "Preserves exact-profile and external-tool qualification as examples; no complete PM handoff requirement or shipped-profile guarantee is established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F050",
+          "relation": "narrower",
+          "rationale": "Preserves exact-profile and external-tool qualification as examples; no complete PM handoff requirement or shipped-profile guarantee is established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Preserves exact-profile and external-tool qualification as examples; no complete PM handoff requirement or shipped-profile guarantee is established.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C05",
+      "proposition": "Nonzero diff-editor exit rejects output but does not undo an earlier native working-copy snapshot.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 53,
+          "line_end": 57,
+          "exact_quote": "The [accept/quit implementation](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/init.lua#L123-L141), S00016:123\u2013141, calls `write_changeset` and then `qa` for accept. Quit calls `cq` without calling the writer; optional quit confirmation is configurable. Buffers are read-only/nonmodifiable in the normal diff UI (S00038:25\u201334). The intended selection-cancel path is supported.\n\nThe README phrase \u201cno changes will be written\u201d needs a boundary. In independent native jj [external.rs](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/merge_tools/external.rs#L384-L443), [S00041](research-evidence/sources/S00041/text.txt):411\u2013443, failed spawn or unsuccessful editor exit returns before output snapshotting. [Diffedit test source](research-evidence/sources/S00065/text.txt):107\u2013122 and 786\u2013802 makes a temporary deletion then fails and asserts the repository diff remains unchanged. This supports rejection of editor output, not rollback of every earlier effect.\n\nNative split calls `workspace_helper` before selecting the diff and only finishes its split transaction afterward ([S00044](research-evidence/sources/S00044/text.txt):280\u2013294, 421\u2013422); squash has the same ordering ([S00058](research-evidence/sources/S00058/text.txt):192, 269, 338\u2013350, 456). [Workspace handling](research-evidence/sources/S00043/text.txt):459\u2013516 snapshots when allowed, and 2128\u20132235 can commit a separate \u201csnapshot working copy\u201d operation. Thus cancellation can reject the split/squash edit while leaving a prior snapshot. A crash or nonzero editor exit is not proof of unchanged repository state or unchanged generic input directories."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "This is a scoped cancellation counterexample; the complete multi-stage effects and retry proposition is supported separately below.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "This is a scoped cancellation counterexample; the complete multi-stage effects and retry proposition is supported separately below.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C06",
+      "proposition": "A later external merge failure can leave earlier files resolved; native jj commits the partial tree before returning the error.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 59,
+          "line_end": 59,
+          "exact_quote": "**Do not conflate merge cancellation with diff cancellation.** Native external merge invocation is per file and explicitly leaves directory mode as a TODO (S00041:337\u2013381). On failure after earlier files, it returns a partially resolved tree. [resolve.rs](research-evidence/sources/S00062/text.txt):114\u2013146 commits that tree before returning the partial-resolution error. This directly supports preserving saved/pending/failed file states in a future multi-file conflict workflow."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-merge-batch-boundary.md",
+          "sha256": "2a2d9c2408c0ba9a6b63c022d5f201f634001123de64af7dea90b72bf806bf4f",
+          "line_start": 9,
+          "line_end": 13,
+          "exact_quote": "Primary jj code at `c5ba4ea0b011fbc8d532d74b6cf8493911618cf5` supports the limitation: [external.rs lines 337\u2013381](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/merge_tools/external.rs#L337-L381), S00041, invokes the merge tool once per file and explicitly leaves directory invocation as a TODO. Failure on a later file returns the already-resolved tree plus a partial-resolution error. [resolve.rs lines 114\u2013146](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/resolve.rs#L114-L146), S00062, commits that tree before returning the error.\n\nConsequently, the diff-editor nonzero-exit contract cannot be generalized to \u201ccancel a multi-file resolve and nothing was saved.\u201d This is a source-backed distinction, not a demonstrated runtime in this workspace.\n\nUnresolved: separate app-level conflict session versus future native directory invocation; explicit saved/pending/failed file states; resume after partial completion; trustworthy pane identity and result labels. Keep the experimental `MergeEditor` and baseline `DiffEditor` as different protocols until integration is verified."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F008",
+          "relation": "equivalent",
+          "rationale": "Directly states the command-specific partial-resolution boundary and preserves saved/pending/failed state instead of no-effect cancellation.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "equivalent",
+      "mapping_rationale": "Directly states the command-specific partial-resolution boundary and preserves saved/pending/failed state instead of no-effect cancellation.",
+      "proposed_credit_fids": [
+        "F008"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C07",
+      "proposition": "Partial hunk output normalizes a missing final newline, while whole-file moves use a different path; preserve bytes, EOF and metadata explicitly.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 65,
+          "line_end": 65,
+          "exact_quote": "- **Missing final newline:** `read_file_as_lines` removes the final empty split element (57\u201362); `write_file` appends `\"\\n\"` to every emitted line (79\u201391). Partial selections call that pipeline (S00007:91\u201396), without retaining an EOF flag. A nonempty partial result lacking a final newline is therefore normalized. Whole-file branches move left/right files (71\u201399), so this is not the path taken by every acceptance, including a selection that becomes \u201call selected.\u201d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-output-fidelity.md",
+          "sha256": "7be5183e93d40682edefd786b7ed6a6fd8a5a9e9f76b2305e313659d1db9c5fd",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "At the assigned revision, partial selection reconstructs a file as lines and appends LF to each emitted line. This loses missing-final-newline information; whole-file selection uses `mv` and should not be described as taking the same rewrite path. The API also mutates the supplied left/right trees by moving files, so \u201cseparate output\u201d is not a promise to preserve its inputs."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-output-fidelity.md",
+          "sha256": "7be5183e93d40682edefd786b7ed6a6fd8a5a9e9f76b2305e313659d1db9c5fd",
+          "line_start": 16,
+          "line_end": 18,
+          "exact_quote": "Follow-up evidence matrix: two- and three-directory operation; one versus all selected hunks; missing final newline and CRLF; empty/new/deleted files; executable-only and content-plus-mode changes; file\u2194symlink and dangling links; inaccessible input/output; failed/partial writes and command errors; inputs after successful accept. Record bytes, type, mode and errors separately. Do not claim that every permission/symlink case is broken; it is not established by these sources.\n\nAlternative to evaluate: preserve bytes/EOF and metadata explicitly, use checked non-destructive copies or staged writes, propagate every filesystem failure to nonzero editor exit, and review the synthesized result before acceptance. No upstream code was run."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F031",
+          "relation": "narrower",
+          "rationale": "A precise byte-fidelity counterexample and preservation proposal, but not the entire untouched-byte/deletion-state/ordinary-Save proposition. It does not assert the separate newly-created-newline policy in F032.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "A precise byte-fidelity counterexample and preservation proposal, but not the entire untouched-byte/deletion-state/ordinary-Save proposition. It does not assert the separate newly-created-newline policy in F032.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C08",
+      "proposition": "Failed file reads can become empty content and unchecked filesystem writes can reach successful editor exit without aggregate failure reporting.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 66,
+          "line_end": 66,
+          "exact_quote": "- **Failures and partial writes:** failed scans return, failed reads become nil and then empty content in callers, failed output open silently returns, write/close results and `mv`/`rm` statuses are unchecked (S00005:14\u201317, 47\u201358, 70\u201391; S00017:11\u201312). The changeset loop has no aggregate error return (S00007:102\u2013107). Some failures can therefore reach `qa` without being surfaced as acceptance failure; other operations can still raise exceptions. This is not a claim that all failures are silent."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-output-fidelity.md",
+          "sha256": "7be5183e93d40682edefd786b7ed6a6fd8a5a9e9f76b2305e313659d1db9c5fd",
+          "line_start": 11,
+          "line_end": 14,
+          "exact_quote": "- [fs.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/fs.lua#L47-L91), S00005: reads text, normalizes line arrays, unchecked `mv`/`rm`, silently returns if output open fails, ignores write/close results.\n- [changeset.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/changeset.lua#L67-L107), S00007: whole-file move versus partial reconstruction, per-file loop without aggregate error outcome. [Accept caller](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/init.lua#L123-L141), S00016: calls writer then `qa`.\n- Output tests S00015 compare line arrays; fixture helpers S00019 write/read via the same normalization. Symlink tests S00013 assert loaded descriptors/hunks, never output writing. No test in these inspected suites proves raw-byte EOF preservation, executable-bit selection, or symlink replacement output.\n- jj temp trees use no EOL conversion and automatic executable-change handling (S00061 lines 177\u2013181), so the caller is not shown restoring hunk.nvim's lost EOF state. Successful editor exit leads to snapshotting output (S00041 lines 411\u2013443)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F030",
+          "relation": "narrower",
+          "rationale": "Supported file read/write failure examples; these do not separately establish all unavailable native-query states or distinguish whole-request validation rejection from post-write failure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F034",
+          "relation": "narrower",
+          "rationale": "Supported file read/write failure examples; these do not separately establish all unavailable native-query states or distinguish whole-request validation rejection from post-write failure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Supported file read/write failure examples; these do not separately establish all unavailable native-query states or distinguish whole-request validation rejection from post-write failure.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C09",
+      "proposition": "Symlink descriptor tests and line-array fixtures do not establish output symlink/mode/raw-byte fidelity; whole-file moves also consume input files.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 67,
+          "line_end": 69,
+          "exact_quote": "- **Symlinks:** scanning records `fs_readlink` (S00005:32\u201337); diffing skips textual hunks if either side is a symlink (S00017:6\u20139). Whole-file selection uses moves. [Symlink test source](research-evidence/sources/S00013/text.txt):24\u201372 checks loaded descriptors and empty hunks, not output application. Symlink output integrity is not proven by that suite.\n- **Permissions and input preservation:** no explicit mode capture/application exists in the scanned file descriptors or partial writer. Existing-output versus newly created output and whole-file moves have different mode behavior; actual executable-bit/type transitions remain unresolved. Moves also consume files from the supplied input trees. Separate output does not mean a non-destructive generic directory API.\n- **Test limitation:** [output tests](research-evidence/sources/S00015/text.txt) assert line arrays; [fixtures](research-evidence/sources/S00019/text.txt):29\u201337 and 50\u201355 create/read through the same newline-normalizing helpers. Together with the inspected changeset/diff/symlink suites, they provide no exact-byte EOF, mode-preservation, or output-symlink validation. Native jj temp-tree setup uses `EolConversionMode::None` and automatic executable-change handling ([S00061](research-evidence/sources/S00061/text.txt):177\u2013181); no caller repair of lost EOF information is shown."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-output-fidelity.md",
+          "sha256": "7be5183e93d40682edefd786b7ed6a6fd8a5a9e9f76b2305e313659d1db9c5fd",
+          "line_start": 13,
+          "line_end": 18,
+          "exact_quote": "- Output tests S00015 compare line arrays; fixture helpers S00019 write/read via the same normalization. Symlink tests S00013 assert loaded descriptors/hunks, never output writing. No test in these inspected suites proves raw-byte EOF preservation, executable-bit selection, or symlink replacement output.\n- jj temp trees use no EOL conversion and automatic executable-change handling (S00061 lines 177\u2013181), so the caller is not shown restoring hunk.nvim's lost EOF state. Successful editor exit leads to snapshotting output (S00041 lines 411\u2013443).\n\nFollow-up evidence matrix: two- and three-directory operation; one versus all selected hunks; missing final newline and CRLF; empty/new/deleted files; executable-only and content-plus-mode changes; file\u2194symlink and dangling links; inaccessible input/output; failed/partial writes and command errors; inputs after successful accept. Record bytes, type, mode and errors separately. Do not claim that every permission/symlink case is broken; it is not established by these sources.\n\nAlternative to evaluate: preserve bytes/EOF and metadata explicitly, use checked non-destructive copies or staged writes, propagate every filesystem failure to nonzero editor exit, and review the synthesized result before acceptance. No upstream code was run."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F031",
+          "relation": "narrower",
+          "rationale": "Scoped filesystem qualification evidence, without a demonstrated universal type/permission failure or full Windows reparse-point identity proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F053",
+          "relation": "narrower",
+          "rationale": "Scoped filesystem qualification evidence, without a demonstrated universal type/permission failure or full Windows reparse-point identity proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Scoped filesystem qualification evidence, without a demonstrated universal type/permission failure or full Windows reparse-point identity proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C10",
+      "proposition": "A shared registry lock and action token protect participating spawn/cancel calls; exited leaders, pipes, close and cancel have distinct completion semantics.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 85,
+          "line_end": 90,
+          "exact_quote": "1. **Identity and scope:** a PID-keyed registry stores the `Child`, optional `SyncToken` and `signaled` flag (33\u201348). Token identity uses pointer identity for the shared atomic flag (98\u2013100). `CURRENT_SYNC` is thread-local; `enter` temporarily replaces it and restores prior scope on drop (29\u201331, 89\u2013111).\n2. **Spawn/cancel race protection:** output obtains that scope, configures the child, and checks `closed`/canceled while holding the same mutex used to spawn/register (122\u2013154). Cancel first latches intent and then sweeps matching entries under the mutex (59\u201379). A spawn that wins the lock is registered before the sweep; a later spawn sees canceled. This protects participating registry calls, not arbitrary subprocess APIs.\n3. **Exited leaders and pipes:** cancel marks `signaled` only if `try_wait()` reports a still-running leader, but signals its group even after leader exit (70\u201375). The output entry stays registered while pipes are read, which supports freeing descendant-held pipes in the intended Unix case.\n4. **Completion and classification:** stdout is read while another thread reads stderr (233\u2013251); output then reaps/polls the registered leader (155\u2013157, 168\u2013189). `CoreError::Canceled` requires `signaled && !status.success()` (158\u2013160). A late cancel can free pipes while preserving a successful leader result. Pipe/reap errors instead become `Internal`; the cancellation flag is not a substitute for observed process status. Normal successful pipe completion is not proof that every possible descendant exited.\n5. **Close is different:** close seals the registry and signals all entries (192\u2013201), then waits the grace and sends forceful termination to entries still present (204\u2013220). It does not set their `signaled` cancellation flag or itself join/reap every worker. The test expects a killed-on-close child to return an unsuccessful `Output`, not `Canceled`.\n6. **Timing:** the 200 ms constant and field note that a fetch survived SIGTERM are present at 25\u201327. Escalation runs in a background thread for cancel, synchronously through the grace for close. This is an escalation policy, not a guaranteed 200 ms total lifetime or an independently confirmed incident receipt."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Concrete lifecycle mechanism and limits support completion/process policy, without claiming global subprocess coverage or the whole effects-reconciliation proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F074",
+          "relation": "narrower",
+          "rationale": "Concrete lifecycle mechanism and limits support completion/process policy, without claiming global subprocess coverage or the whole effects-reconciliation proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete lifecycle mechanism and limits support completion/process policy, without claiming global subprocess coverage or the whole effects-reconciliation proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C11",
+      "proposition": "Unix process-group signaling and Windows taskkill are different, ignore termination results, and do not establish a 200 ms completion deadline; Job Objects are an unimplemented alternative.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 96,
+          "line_end": 100,
+          "exact_quote": "| [Unix source](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/unix.rs), [S00010](research-evidence/sources/S00010/text.txt):4\u201316 | `process_group(0)` and `kill(-pid, SIGTERM/SIGKILL)`. Kill results are ignored. [POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/functions/kill.html), [S00053](research-evidence/sources/S00053/text.txt):19\u201329, confirms negative PID targets permitted members of that process group, not all descendants regardless of group membership. |\n| [Windows source](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/windows.rs), [S00011](research-evidence/sources/S00011/text.txt):3\u201315 | Group configuration is a no-op. Termination synchronously invokes `taskkill /PID <pid> /T`, with `/F` for force, suppressing output and ignoring execution/status results. [Microsoft documentation](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill), [S00056](research-evidence/sources/S00056/text.txt):44\u201351, defines tree and force options. This is not SIGTERM/SIGKILL, and neither source proves the exited-leader case on Windows. Because `.status()` runs under the registry lock, cancel latency includes that external command, not merely latching a flag. |\n| [Process tests](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/tests.rs), [S00012](research-evidence/sources/S00012/text.txt) | Six tests cover stubborn group termination on close (8\u201332), closed-registry refusal (34\u201341), token isolation (43\u201372), canceled-action refusal of later children (74\u201391), cancellation after stderr output (93\u2013124), and successful exited leader with descendant-held pipes (126\u2013153). The last explicitly expects success. The module is `cfg(all(test, unix))` (S00003:6\u20137). These are unexecuted intended assertions, not Windows evidence or an exhaustive race/timeout proof. |\n\n**Alternative retained:** [Windows Job Objects](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects), [S00055](research-evidence/sources/S00055/text.txt):35\u201345, 67\u201374, provide process association, inherited child membership, termination and kill-on-close, with breakaway/nesting caveats. They deserve investigation as stronger managed containment; the inspected JayJay implementation does not use them. Unix descendants leaving the group, signal failures, open pipes after leader exit, and deterministic shutdown joining remain runtime questions."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-process-containment.md",
+          "sha256": "9e19a7071fc13825a0087dde2fe0c65bd6e5829d824395b37af59c02772a7849",
+          "line_start": 7,
+          "line_end": 13,
+          "exact_quote": "At `3b53b4080f6704b4aad61b0173027b84ba0b10ea`, [Unix implementation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/unix.rs), S00010, creates a group and signals `-pid`; [Windows implementation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/windows.rs), S00011, does no group setup and synchronously runs `taskkill /PID \u2026 /T`, later `/F`. Both discard termination results. A 200 ms grace is not an end-to-end deadline.\n\n[POSIX kill](https://pubs.opengroup.org/onlinepubs/9799919799/functions/kill.html), S00053 lines 19\u201329, targets eligible processes sharing the process-group ID; it is not arbitrary descendant enumeration. [Microsoft taskkill](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill), S00056 lines 44\u201351, defines `/T` and `/F`, but does not establish this implementation's behavior after the leader disappears. The Unix-only tests S00012 cover exited-leader/held-pipe cleanup and stubborn groups; none were executed here.\n\nAlternative: [Windows Job Objects](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects), S00055 lines 35\u201345 and 67\u201374, support association, inherited child membership, group termination and kill-on-close. Evaluate association/spawn races, breakaway rules, nested jobs and assignment failures before adoption. This alternative is not implemented by the inspected JayJay module.\n\nUnresolved matrix: cancel racing spawn and natural exit; leader already exited; descendants retaining both pipes; descendants leaving the group; ignored termination and permission errors; blocked pipe reads; close versus cancel result classification; deterministic worker/reap completion and Windows latency. Collect actual process/pipe/exit receipts rather than interpreting the cancellation request or UI click as completion."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Platform containment is a validation and implementation direction within existing process/effect obligations, not a new product capability or runtime proof.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F074",
+          "relation": "narrower",
+          "rationale": "Platform containment is a validation and implementation direction within existing process/effect obligations, not a new product capability or runtime proof.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Platform containment is a validation and implementation direction within existing process/effect obligations, not a new product capability or runtime proof.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C12",
+      "proposition": "Thread-local cancellation scopes and exact environment coverage have gaps: generic helpers and login-shell PATH probing use other spawn paths.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 104,
+          "line_end": 108,
+          "exact_quote": "[command.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command.rs), [S00031](research-evidence/sources/S00031/text.txt):15\u201320, resolves jj, sets the repository cwd and uses the registry. But generic `command_output_in` uses ordinary `.output()` outside it (50\u201363). Quiet jj calls discard the whole result (37\u201339); ordinary non-success output becomes `Internal` with combined output text (66\u2013100). Thus error distinctions exist, but exit codes, transport categories and stdout/stderr are not all preserved as structured caller errors. A `Canceled` error itself contains no process-output receipt in this path.\n\nThe assigned [sync caller](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/git/sync.rs), [S00030](research-evidence/sources/S00030/text.txt):9\u201326 and 67\u201383, enters a token scope for normal push/pull. This supports binding synchronous registry-routed jj calls within those entry points. A separate multi-bookmark helper does not enter a token itself (31\u201347); it could inherit an enclosing scope. Neither thread-local storage nor the comment \u201cevery jj process\u201d proves automatic propagation to new threads or all generic subprocesses.\n\n[environment.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/environment.rs), [S00034](research-evidence/sources/S00034/text.txt):48\u201389, 128\u2013183, resolves tools using inherited/login-shell/fallback paths and adjusts PATH and SSH_AUTH_SOCK. It does not freeze or record an exact full environment. Its login-shell PATH probe spawns outside the registry (258\u2013282), polls a leader deadline, and then uses `wait_with_output` after successful leader exit; descendant-held stdout is an unresolved separate boundary. These are concrete limits to a universal \u201call subprocesses are canceled\u201d claim, not observed leaks."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-scope-and-environment.md",
+          "sha256": "98d89f9ab822b16ab2f0677703b30035f0138dcb378cddbd993fc64d296162eb",
+          "line_start": 7,
+          "line_end": 13,
+          "exact_quote": "[command_process.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process.rs), S00003, binds a token through thread-local `CURRENT_SYNC` and restores previous scope on drop. This covers registry-routed jj calls within the synchronous entered action, not arbitrary commands or newly spawned threads automatically. The reviewed push/pull entry points enter that scope (S00030 lines 10 and 73).\n\n[command.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command.rs), S00031 lines 15\u201320, sets repository cwd and routes jj through the registry; lines 50\u201363 route generic commands directly through `.output()` outside it. The separate multi-bookmark push helper in S00030 lines 31\u201347 does not create a token scope itself; callers may still supply an enclosing scope.\n\n[environment.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/environment.rs), S00034 lines 48\u201389 and 128\u2013183, resolves binaries and augments PATH/SSH_AUTH_SOCK. It does not freeze or record a complete effective environment. The login-shell PATH probe (lines 258\u2013282) spawns outside the registry. It polls the leader with a nominal two-second deadline, but on successful leader exit calls `wait_with_output`; descendant-held stdout remains a question. No such hang was observed here.\n\nAlternative to investigate: explicit operation context passed into every relevant command runner, explicit propagation across thread boundaries, uniform registration where required, and non-secret receipts for resolved executable/version/cwd/config inputs. Keep this as a scoped completeness audit, not a claim that every helper presently leaks processes or that Windows behavior matches Unix."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F074",
+          "relation": "narrower",
+          "rationale": "Precisely scoped runner/environment evidence, not the full owner-routing obligation across Git/SSH/signing/filters/hooks/forge sidecars.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Precisely scoped runner/environment evidence, not the full owner-routing obligation across Git/SSH/signing/filters/hooks/forge sidecars.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0018-C13",
+      "proposition": "Cancellation intent, process result, action completion and actual local/remote effects differ; multi-step sync can publish before a canceled result, so reconcile before retry.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+          "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+          "line_start": 114,
+          "line_end": 124,
+          "exact_quote": "- Push optionally tracks the bookmark first, then pushes, reloads, and finally checks cancellation (S00030:9\u201322). A final `Canceled` result can occur after a successful remote phase.\n- Pull reads tracked names, fetches, optionally tracks, rebases to `trunk()`, reloads, checks cancellation, and performs cleanup (67\u2013105, 116\u2013167). Several errors are deliberately ignored. Cleanup checks cancellation before best-effort `abandon`, then records the bookmark in its result (151\u2013155); that report alone is not a verified successful abandonment receipt.\n- The [Mac UI](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/shell/mac/Sources/JayJay/Repo/ViewModel/Actions/RepoViewModel+GitActions.swift#L109-L118), [S00048](research-evidence/sources/S00048/text.txt):109\u2013118, explicitly refreshes after cancellation because \u201cThe remote phase may have landed before the cancel took effect.\u201d Cancel methods only call the token (46\u201352). [Async support](research-evidence/sources/S00057/text.txt):94\u2013115 and 119\u2013151 clears busy state and delivers success/failure after the operation returns. There is no automatic replay in these inspected cancel/result paths. Local refresh alone does not establish authoritative remote state.\n\nIndependent native jj source reinforces why kill/reap cannot establish rollback:\n\n- [Git fetch implementation](research-evidence/sources/S00046/text.txt):3284\u20133288 states it updates Git remote-tracking branches before subsequent jj import. [CLI fetch](research-evidence/sources/S00037/text.txt):242\u2013261 separates remote fetch, import, and transaction finish. Interruption between phases need not imply no local Git effect.\n- [CLI push](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/git/push.rs#L598-L656), [S00045](research-evidence/sources/S00045/text.txt):598\u2013656, calls remote push before local transaction completion; on some exported refs it can commit then return \u201cFailed to push some bookmarks.\u201d [Library code](research-evidence/sources/S00046/text.txt):3490\u20133540 updates local exported/remote-ref records after the push. A local failure or killed observer does not undo remote changes.\n- \u201cNo auto-retry\u201d is a useful recovery policy and is supported for the inspected UI cancellation path, not as a universal transport claim. The independent native fetch contains a retry loop that drops missing refspecs (S00046:3313\u20133342). This is different from retrying an entire user action after an uncertain cancellation.\n\n**Lesson retained:** distinguish cancellation requested, process result, action completion, and observed local/remote effects. Preserve success when the process actually finished successfully; do not turn a cancel click into a rollback claim. Before any recovery/retry decision, identify the exact executable/version, arguments, cwd and effective configuration, then reconcile operation heads, relevant Git refs and remote state. No runtime before/after receipts were acquired in this read-only source review, and the inspected native jj version is not asserted to be JayJay's installed version."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-effect-reconciliation.md",
+          "sha256": "7e8de6502f24500fcbc353ee3122f099ccf4ec6387f7113a2c59d6fa8ea4c3da",
+          "line_start": 7,
+          "line_end": 13,
+          "exact_quote": "[JayJay sync callers](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/git/sync.rs), S00030, perform bookmark tracking before push (lines 9\u201322), then fetch/track/rebase/reload and optional abandonment for pull (lines 67\u2013104, 137\u2013162). Each subprocess can complete before a later cancellation check. Quiet helpers discard errors (S00031 lines 37\u201339); abandonment reporting records a bookmark after a best-effort call, so UI text is not a verified per-step receipt.\n\n[Mac cancellation presentation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/shell/mac/Sources/JayJay/Repo/ViewModel/Actions/RepoViewModel+GitActions.swift#L109-L118), S00048, explicitly refreshes because \u201cThe remote phase may have landed before the cancel took effect.\u201d It does not retry the canceled action in this path. S00057 lines 94\u2013115 clears busy state in actual result callbacks, not on cancel.\n\nIndependent native evidence at jj `c5ba4ea0b011fbc8d532d74b6cf8493911618cf5` (manifest version 0.45.1, not a captured JayJay CLI version): S00046 lines 3284\u20133288 says fetch changes Git remote-tracking refs before jj import; S00037 lines 242\u2013261 separates fetch/import/transaction completion. S00045 lines 598\u2013656 pushes before finishing the local transaction and can commit partial exports then return an error. Kill/reap cannot reverse those boundaries.\n\nUnresolved: pin executable/version/cwd/config/transport and capture pre/post jj operation heads, relevant Git refs and authoritative remote refs for controlled cancellations. Distinguish requested, observed process result, local effects and remote effects. Re-read state before deciding whether any retry is appropriate; ordinary local refresh is not proof of remote state. Also keep transport-level retries distinct: native jj fetch has a missing-refspec retry loop (S00046 lines 3313\u20133342), so \u201cno retries anywhere\u201d is unsupported."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "equivalent",
+          "rationale": "The combined evidence explicitly preserves actual multi-step partial effects and errors, separates cancellation from rollback, and requires fresh local/native/remote state before retry. It directly supports the core complete F007 proposition.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "equivalent",
+      "mapping_rationale": "The combined evidence explicitly preserves actual multi-step partial effects and errors, separates cancellation from rollback, and requires fresh local/native/remote state before retry. It directly supports the core complete F007 proposition.",
+      "proposed_credit_fids": [
+        "F007"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support or scoped technical refinement; no new product requirement established."
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-merge-batch-boundary.md",
+      "sha256": "2a2d9c2408c0ba9a6b63c022d5f201f634001123de64af7dea90b72bf806bf4f",
+      "lines": 13,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C06"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-navigation.md",
+      "sha256": "f3b6ad09c1089ab900da26d6ca4c12697fea9235c192ffbf809352734462387d",
+      "lines": 16,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C03"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-output-fidelity.md",
+      "sha256": "7be5183e93d40682edefd786b7ed6a6fd8a5a9e9f76b2305e313659d1db9c5fd",
+      "lines": 18,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C07",
+        "P-J0018-C08",
+        "P-J0018-C09"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/hunk-result-review.md",
+      "sha256": "3aba467a52aa08471e0b36d939d949f973224b07e34f18570921e5eb55099f37",
+      "lines": 16,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C01",
+        "P-J0018-C02",
+        "P-J0018-C04"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-effect-reconciliation.md",
+      "sha256": "7e8de6502f24500fcbc353ee3122f099ccf4ec6387f7113a2c59d6fa8ea4c3da",
+      "lines": 13,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C13"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-process-containment.md",
+      "sha256": "9e19a7071fc13825a0087dde2fe0c65bd6e5829d824395b37af59c02772a7849",
+      "lines": 13,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C11"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/leads/jayjay-scope-and-environment.md",
+      "sha256": "98d89f9ab822b16ab2f0677703b30035f0138dcb378cddbd993fc64d296162eb",
+      "lines": 13,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C12"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0018-reconcile/notes.md",
+      "sha256": "23d504218a59d9ba2bc111f7f0000be16654699a4b96a963f6a6f92960d2f78c",
+      "lines": 126,
+      "kind": "notes",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0018-C01",
+        "P-J0018-C02",
+        "P-J0018-C03",
+        "P-J0018-C04",
+        "P-J0018-C05",
+        "P-J0018-C06",
+        "P-J0018-C07",
+        "P-J0018-C08",
+        "P-J0018-C09",
+        "P-J0018-C10",
+        "P-J0018-C11",
+        "P-J0018-C12",
+        "P-J0018-C13"
+      ],
+      "disposition": "All substantive topic blocks read; duplicate evidence and unresolved validation directions retained with these claims."
+    }
+  ],
+  "proposed_credit_fids": [
+    "F007",
+    "F008"
+  ],
+  "proposed_new_original_baseline_credit_fids": [],
+  "credit_note": "F007 and F008 already have original premium credit; continuation support does not increase cumulative recall.",
+  "new_union_candidates": [],
+  "union_extension_count": 0,
+  "original_union_denominator": 105,
+  "current_canon_review": {
+    "performed": false,
+    "reason": "No materially new product/canon requirement established, and no new current-canon coverage assertion made."
+  },
+  "unresolved": [
+    "All upstream source and tests were inspected rather than executed.",
+    "Windows containment, exact native runtime identity and before/after effects require runtime receipts.",
+    "Interaction proposals, experimental merge integration and output-fidelity matrix remain scoped directions."
+  ],
+  "nonclaim_coverage": [
+    {
+      "document": "notes.md",
+      "lines": [
+        1,
+        18
+      ],
+      "disposition": "Scope and revision/source identity."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        71,
+        73
+      ],
+      "disposition": "Alternatives and links already covered by child assertions."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        126,
+        126
+      ],
+      "disposition": "Delivery links; no additional authoritative assignment."
+    }
+  ],
+  "validation": {
+    "manifest_document_hashes_verified": true,
+    "exact_quotes_extracted_from_hashed_sources": true,
+    "no_keyword_only_recall_credit": true,
+    "all_8_assertion_documents_read": true,
+    "no_new_research_or_worker_input_mutations": true
+  },
+  "manifest_revisions": [
+    {
+      "previous_sha256": "267fe9546b23e33356ef1fcd74e87014015e81eabbd3baabda8a4c6856f8978f",
+      "current_sha256": "71c6c09a3735037159215640f01ba0af7302f5daf46608a894383fa720a04a97",
+      "reason": "Collector now explicitly inventories top-level leads.md and both source-index.md and evidence-index.md. Delivered document bytes and assertions are unchanged.",
+      "all_existing_document_hashes_reverified": true
+    }
+  ]
+}

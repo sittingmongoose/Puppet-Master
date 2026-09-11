@@ -1,0 +1,1047 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0020-compare",
+  "arm": "premium",
+  "review_status": "proposed_pending_independent_review",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/manifest.json",
+    "sha256": "e630d74d6ed8112b1536ee078d300faac36f4c1ce5bcb5bfecc4d6190ce4825c"
+  },
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "claims": [
+    {
+      "claim_id": "P-J0020-C01",
+      "proposition": "Native undo is scoped recovery rather than full backup; selected state and excluded worktree/database domains limit GitButler marketing promises.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 18,
+          "line_end": 20,
+          "exact_quote": "1. [GitButler timeline documentation](https://docs.gitbutler.com/features/timeline), S00004:30\u201339, promises undo of \u201cnearly\u201d any action, pre-major-action snapshots and occasional capture of recently changed uncommitted files. This does not establish continuous capture, every operation's recovery, or a complete repository backup.\n2. [Oplog capture at `8861f862`](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L782-L962), S00021:782\u2013962 / S00028, records index and optional index-conflict trees, target/conflict state, selected project metadata, branch order, virtual-branch state/commit bytes, worktree, optional additional ref and checkout identity, and the workspace commit independently of HEAD. `project_meta.toml` is selected target/ref/push-remote information (S00021:44\u201351), **not the full project database**. Lines 860\u2013928 overlay graph-projected metadata through `set_workspace` and synchronize applied heads, so capture is not simply copying a stale TOML file. This also connects to the ownership lead below.\n3. [Linked-worktree API](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-api/src/worktrees.rs#L5-L10), S00022:5\u201310, expressly excludes its mutations from oplog: archive state is a project-database row and a removed checkout cannot be restored from a snapshot. Its feature gate is also explicit. This qualifies broad marketing wording; it does not prove that JJ shares these exact exclusions."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 27,
+          "line_end": 27,
+          "exact_quote": "- **Native owner:** `Plans/Jujutsu_Integration.md:9\u201311,180\u2013209` (JJI-005; S00003) explicitly separates `jj undo`/`jj op restore`, FileSafe decisions and receipts, and forbids recovery claims without post-restore snapshot/conflict proof. Exact operation identities and stale-operation rejection are required. Native recovery is not promised as all-storage backup."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F011",
+          "relation": "narrower",
+          "rationale": "Supports explicit recovery scope, but not every distinction among inverse-operation/workspace/external-file recovery or remote push.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Supports explicit recovery scope, but not every distinction among inverse-operation/workspace/external-file recovery or remote push.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C02",
+      "proposition": "The inspected capture has no active size limit, and ignored/submodule/status omissions require qualification rather than invented coverage.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 21,
+          "line_end": 21,
+          "exact_quote": "4. **Size-limit correction:** S00021:37\u201339 sets `AUTO_TRACK_LIMIT_BYTES=0`, described as inactive; capture passes it at line 931. [The called worktree implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-core/src/repo_ext.rs#L219-L345), S00023:238\u2013240, only applies the size check when nonzero. No active size cap is established by the stale API comments. Lines 250\u2013264 configure dirty-submodule ignoring, omit ignored/pruned directory-walk entries and drop individual status errors; lines 334\u2013345 store a changed submodule HEAD as a commit entry. These are specific capture boundaries and observability questions, not evidence that every ignored tracked file is excluded or that dirty submodule content is recursively backed up."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "**Capture coverage and snapshot schema compatibility.** Already covered at the requirement level by JJI-005/JJI-008, SCS-014 and BRS-002/004/006. Retain explicit legacy/absent/empty/malformed metadata, ignored and approved-untracked scope, large-file capture, dirty-submodule and unavailable-dependency cases. GitButler's capture path has no active size cap at `8861f862`; do not copy stale comments into a product limit. Primary sources: S00021\u2013S00023, S00049/S00050/S00052. A per-operation native recovery-scope preview is an unapproved product proposal, detailed in notes."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Specific implementation corrects stale comments and marketing; not a new PM file-size policy.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Specific implementation corrects stale comments and marketing; not a new PM file-size policy.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C03",
+      "proposition": "Prepared objects, published heads and retention refs are separate fallible stages; format compatibility alone does not prove ownership or historical closure.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 22,
+          "line_end": 23,
+          "exact_quote": "5. **Preparation, publication and retention are different:** S00021:959\u20131002 creates the prepared tree, then a snapshot commit, then updates the oplog head, then retention state. [Retention code at `079f2d99`](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/gitbutler-oplog/src/reflog.rs#L37-L99), S00034:37\u201399, deliberately roots target/oplog/last-pushed-base objects through `gitbutler/target` reflog entries. This is positive GC-protection evidence; sequential fallible writes are not crash-atomicity proof. Applied-stack commit serialization excludes commits reachable from the target (S00021:901\u2013906), so snapshot-local serialized commits alone do not prove all target ancestry or every other store is reconstructible.\n6. **Version handling exists but is not semantic proof:** S00021:375\u2013409 selects the direct worktree subtree for version 3 and a legacy reconstruction path otherwise. Lines 605\u2013675 parse project metadata with legacy default-target fallback and optional validated branch-order data. Lines 1032\u20131049 validate metadata formats before worktree/ref/config mutation. This distinguishes absent optional data, legacy format and malformed data; it does not prove correct ownership or complete historical closure. The retained child note's broader compatibility test claims were not substituted for locally executed tests."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "**Snapshot publication and retention.** Already covered by the accepted barrier/GC/publication/verification separation, but runtime evidence remains absent. Exercise prepared objects versus published head versus retention roots and failure at each boundary. The `gitbutler/target` reflog is real retention evidence (S00034), while sequential publication (S00021:965\u20131002) is not a crash-atomic guarantee. Verify retained historical closure, not just the latest tree."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Distinct stages and structural-versus-semantic evidence reinforce existing findings; no runtime crash drill claimed.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Distinct stages and structural-versus-semantic evidence reinforce existing findings; no runtime crash drill claimed.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Distinct stages and structural-versus-semantic evidence reinforce existing findings; no runtime crash drill claimed.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C04",
+      "proposition": "Complete retained native history, external/shared dependencies and dirty physical files must be captured under a barrier and GC fence, without manufacturing a snapshot.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 28,
+          "line_end": 30,
+          "exact_quote": "- **Closure owner:** `Plans/Jujutsu_Integration.md:449\u2013473,499\u2013505` (JJI-008; S00007) already covers retained operation heads/views, commits/trees/conflicts, non-current abandoned/rebased objects, backing/common/alternate/shared stores, workspace maps and dirty files under a barrier and GC fence. A text log, push, mirror, bundle or current bookmarks cannot suffice. Captured files remain separately related to the last operation; capture cannot manufacture a JJ operation. Historical inspection/restore is isolated, version-compatible, and avoids hidden working-copy snapshots.\n- **Neutral consumer:** `Plans/Source_Control_System.md:776\u2013800` (SCS-014; S00019) consumes closure/barrier truth. It names approved untracked/LFS/submodule/alternate/shared-store dependencies, prohibits a complete badge after lost fences or missing dependencies, and retains the previous complete point. It delegates bytes, manifests and activation to Backup.\n- **Backup consumer and product owner:** `Plans/Backup_Restore_System.md:104\u2013139,196\u2013209` (BRS-002/BRS-004; S00017) already defines included/excluded families, dirty tracked and approved untracked content, required dependencies, manifest versions/compatibility, and reduced historical labels. Existing policy expansion requires a human scope preview. Lines 235\u2013266 (BRS-005; S00069) distinguish committed, verified and restore-tested states and require durable crash convergence; lines 278\u2013307 (BRS-006; S00018) require verified pre-restore recovery, staged verification and post-restore checks. This is stronger than adopting GitButler's operation snapshot as a full backup."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 33,
+          "line_end": 33,
+          "exact_quote": "- **Machine coverage:** `Plans/jujutsu_integration_contracts.schema.json:2127\u20132375` (S00026) includes layout, retained operations/views/stores/workspace maps, dirty-copy relationship, missing dependencies and barrier/GC refs; complete closure rejects missing dependencies and an unverified captured-files relationship. Existing fixtures at `Plans/jujutsu_integration_contract_fixtures.json:2780\u20132944,3051\u20133080` (full bytes S00044) cover colocated/non-colocated/shared layouts and missing dependencies. These are structural examples, not evidence of capture execution."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 37,
+          "line_end": 42,
+          "exact_quote": "The core lesson is **already covered**. Do not create a second timeline, native backup product, private JJ Backup command, unlimited-undo promise, automatic all-file capture policy or fixed file-size limit from this evidence. The accepted scope is complete closure **for retained operations and selected coverage**, not an assertion that every historical operation ever created survives indefinitely.\n\nPreserve the two retained directions as acceptance elaborations of JJI-005/JJI-008 and BRS-005/BRS-006:\n\n- **Capture coverage and schema compatibility:** exercise ignored/untracked/large files according to the certified adapter and approved scope, dirty submodules, missing alternate/shared stores, unreadable or concurrently changing paths, and absent/empty/malformed/legacy metadata. Missing coverage or unresolved relationship must remain partial/blocked. An omitted optional field must use the version's documented behavior, not silently acquire a completeness claim. Runtime evidence must verify actual captured bytes and dependencies, not merely the presence of a version or reference string.\n- **Publication and retention:** inject interruption after object creation, head publication, retention-root update and external-copy staging. A prepared tree or visible log entry cannot by itself produce a complete/verified/restore-tested badge. Retain the last complete recovery point, prove selected historical objects after GC pressure in an isolated copy, and distinguish a discoverable recovery entry from an unreferenced prepared artifact. This tests existing barrier/publication obligations without assuming GitButler's storage layout for JJ."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "semantically_equivalent",
+          "rationale": "Explicit owner/consumer comparison fully states closure and exact selected-coverage semantics, including retained historical rather than all-ever-created operations.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Explicit owner/consumer comparison fully states closure and exact selected-coverage semantics, including retained historical rather than all-ever-created operations.",
+      "proposed_credit_fids": [
+        "F079"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C05",
+      "proposition": "Scope and verification badges must reflect owner evidence; FileSafe Git-shaped profile cannot fabricate JJ identity or certify the named JJ/FileSafe readiness dependency.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 31,
+          "line_end": 32,
+          "exact_quote": "- **Visible consumers:** `Plans/Settings_System.md:1315\u20131318` (S00071) requires exact scope and independent verification/drill state. `Plans/FinalGUISpec.md:35625\u201335628,35640\u201335645` (S00070) consumes owner truth through `ScopeCoverageSummary`, `VerificationBadge`, restore preview and progress. `Plans/Source_Control_System.md:867` expressly keeps JJ undo distinct from commit history and Backup restore. `Plans/UI_Command_Catalog.md:12075\u201312078` (S00061) routes operation log/show/undo/restore to the existing JJ owner.\n- **FileSafe boundary:** `Plans/FileSafe.md:1484\u20131502,1514\u20131529` (S00077) independently defines versioned scope, excluded state, manifest/SCM equality and fenced logical transaction atomicity. It explicitly rejects `git status`, mtimes, path counts and subprocess success as equality authority. Its full safe-point profile names Git worktree/HEAD/index identities and excludes nested submodule contents absent separate authorization; that profile is not proof of JJ-native recovery support. JJI-005's independent commands/receipts and JJI-001's native-owner rule prevent using this Git-shaped profile as a JJ operation snapshot. The JJ/FileSafe integration remains a named readiness dependency at `Plans/Jujutsu_Integration.md:327`; do not manufacture a Git branch/index identity to close it."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F011",
+          "relation": "narrower",
+          "rationale": "Boundary and readiness caution, not a new implemented command or alternate owner.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F050",
+          "relation": "narrower",
+          "rationale": "Boundary and readiness caution, not a new implemented command or alternate owner.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F072",
+          "relation": "narrower",
+          "rationale": "Boundary and readiness caution, not a new implemented command or alternate owner.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Boundary and readiness caution, not a new implemented command or alternate owner.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C06",
+      "proposition": "A proposed per-operation recovery-scope preview would show covered, omitted and unknown state in existing confirmation/operation-show UI, subject to approval.",
+      "assertion_status": "unapproved_product_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 44,
+          "line_end": 44,
+          "exact_quote": "A new per-operation \u201cWhat this undo can recover\u201d preview would be a **product proposal requiring approval**, not an uncovered backup requirement. A reviewable version would add concise covered/omitted/unknown state to the existing operation-show/confirmation surface, based on the exact adapter version, operation and workspace. Benefit: users can distinguish native recovery from Backup before acting. Dependencies: JJI-005 capability/scope evidence, existing confirmation and receipts, SCS/UI owner projection, version compatibility, and FileSafe separation. Tradeoffs: preview latency and maintenance across versions; some damaged states can only report unknown. It must neither silently widen capture/upload nor create a new command or claim a guaranteed redo. Deferring this UI addition while retaining the existing owner disclosure and fail-closed checks is a valid alternative. No approval is inferred."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "**Capture coverage and snapshot schema compatibility.** Already covered at the requirement level by JJI-005/JJI-008, SCS-014 and BRS-002/004/006. Retain explicit legacy/absent/empty/malformed metadata, ignored and approved-untracked scope, large-file capture, dirty-submodule and unavailable-dependency cases. GitButler's capture path has no active size cap at `8861f862`; do not copy stale comments into a product limit. Primary sources: S00021\u2013S00023, S00049/S00050/S00052. A per-operation native recovery-scope preview is an unapproved product proposal, detailed in notes."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F011",
+          "relation": "materially_new",
+          "rationale": "Explicit optional presentation addition, not evidence of a missing backup requirement. Broader recovery-scope principle is F011, but preview packaging is not its exact proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Explicit optional presentation addition, not evidence of a missing backup requirement. Broader recovery-scope principle is F011, but preview packaging is not its exact proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C07",
+      "proposition": "Three reported integration/eviction/stale-file outcomes remain causally separate; dry-run logs and ancestor-matching bytes cannot prove persisted failure or unintended edits.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 51,
+          "line_end": 54,
+          "exact_quote": "- [Issue #14848](https://github.com/gitbutlerapp/gitbutler/issues/14848), S00009:145\u2013158, reports CLI 0.21.0/macOS, approximately nine applied stacks and concurrent agents/sessions. It separately reports an amend evicting an unrelated same-tip stack and an upstream integration leaving rebased refs/metadata ahead of the workspace commit. Later clear portions report status/unapply/restore errors including the expected-tree mismatch. Damaged/duplicated body passages are not reconstructed. The private reflogs/snapshots were not independently inspected. Concurrency and missing StackId causation remain hypotheses.\n- [Issue #14831](https://github.com/gitbutlerapp/gitbutler/issues/14831), S00010:145\u2013176 and remainder, describes 0.21.0, two or three stacks, generated-file churn, `no entrypoints`, checkout refusal and unavailable snapshot creation. Its shown assertion has **`dry_run=Yes` at line 169**. That log alone does not prove post-write failure. The reporter lacks a deterministic reproducer. Its unavailable oplog must not be conflated with the intact chain in the next report.\n- [Independent July 23 comment](https://github.com/gitbutlerapp/gitbutler/issues/14848#issuecomment-5063257903), S00032 (API body), reports 168 upstream-changed files, 153 previously clean files left at older contents, and snapshot worktree/base divergence growing from 19 to 183 files. It expressly says this is a related outcome, **not proof of the same code path**, and reports no loud error. Its \u201cdeterministic core,\u201d skipped-checkout and no-race conclusions exceed the supplied evidence. An ancestor-matching file may be an intentional user revert; a known pre-operation clean baseline is necessary before labelling it stale or discarding it.\n- [Historical checkout helper at `f5ae1a5`](https://github.com/gitbutlerapp/gitbutler/blob/f5ae1a5abae2e462c354bddd37d49980f77d965b/crates/but-core/src/worktree/checkout/utils.rs#L56-L74), S00054:56\u201374, contains the exact expected-HEAD-tree guard after checking nonempty checkout changes and local/ignored changes. This is the base pin recorded in PR #14860's API response, not a verified 0.21.0 release tag. It supports a recovery-precondition hazard, not inevitable failure of every restore from every inconsistent state."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 13,
+          "line_end": 17,
+          "exact_quote": "**Partial integration and recovery preconditions.** Uncertain upstream aggregate; covered no-blind-retry/fenced-recovery principles plus an unapproved damaged-state diagnosis proposal. Fault injection must include failure obtaining normal workspace projection or before-state capture. Preserve observed partial effects and unknown domains; no invented coherent after revision, relaxed guard or fallback Git mutation. Primary sources: S00009/S00010, S00031, S00035, S00033, S00054/S00056/S00058.\n\n**Silent stale clean files after base advance.** Independent uncertain report in S00032, comment 5063257903. Separate initial clean, user-dirty and native-change paths; verify expected post-integration blobs and preserve user edits. An intentional ancestor-content revert is a required negative control. The reported 153 clean files and 19-to-183 divergence are reporter measurements, not a locally reproduced failure or evidence of a shared cause.\n\n**Unrelated-stack/workspace membership eviction.** Independent uncertain report, S00009:152\u2013158, with another observation in S00032. Test amend separately from base advance. Preserve equal-tip refs, legitimate sharing, ownership and affected-scope evidence; adapt the acceptance scenario to JJ's native workspace/bookmark/change semantics. PR #14860 is unmerged; #15584's demonstrated ownership mechanism is not a proven cause of this July incident."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Attributed observations and negative-control methodology; no reproduced common JJ defect.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F080",
+          "relation": "narrower",
+          "rationale": "Attributed observations and negative-control methodology; no reproduced common JJ defect.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Attributed observations and negative-control methodology; no reproduced common JJ defect.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C08",
+      "proposition": "Unmerged rollback PR, partial merged CLI/conflict features and changed checkout ordering cannot be treated as a causal shipped fix.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 55,
+          "line_end": 58,
+          "exact_quote": "- [PR #14860](https://github.com/gitbutlerapp/gitbutler/pull/14860), S00031, is **closed and unmerged** (`merged=false`, `merged_at=null`), despite a non-null merge SHA. Its proposed eager snapshots/rollback, relaxed restore guard and amend-eviction guard are not shipped-fix evidence. Its claim that replacing `bail!` avoids a hard panic is misleading: the historical helper already returns an error. The fetched GitHub page (S00012:185\u2013187) additionally says the head repository was deleted when the PR closed; this adds provenance absent from the retained note, but does not establish technical rejection or acceptance of the design.\n- [PR #14700](https://github.com/gitbutlerapp/gitbutler/pull/14700), S00055, merged 2026-07-12, explicitly adds **partial anonymous-segment CLI support**. [PR #15232](https://github.com/gitbutlerapp/gitbutler/pull/15232), S00057, merged 2026-08-10, adds workdir/target conflict representation in the index. Neither establishes a causal fix for all three outcomes. The nightly suggestion in S00032 says \u201cMy hope,\u201d not confirmed resolution; both issue pages acquired here still say Open.\n- [Integration wrapper at `079f2d99`](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-api/src/workspace.rs#L764-L918), S00035:803\u2013818, prepares a best-effort snapshot, publishes only after successful integration, and ignores publication error via `.ok()`. Lines 879\u2013901 materialize and then persist/update metadata and projection state. [Materialization](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-rebase/src/graph_rebase/materialize.rs#L190-L280), S00033:206\u2013272, persists objects, checks out linked/current worktrees, then applies the ref batch and refreshes. \u201cRefs always move before checkout\u201d is false for this path. [Checkout at the same pin](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-core/src/worktree/checkout/function.rs#L32-L192), S00056, uses HEAD or merge-base override, creates a worktree tree and performs a three-way merge; it can represent allowed conflicts. The historical exact guard is not unchanged current implementation.\n- [The separate transaction API](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-transaction/src/lib.rs#L39-L61), S00058:39\u201361, expressly says best effort and excludes project-database rows. Its existence does not prove that the inspected integration wrapper uses it or that all persistence is atomic. Snapshot preparation still depends on a workspace projection (S00021:860\u2013880), so even before-state capture can fail in a damaged repository."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Explicit comparison resolves stale proposed-fix narratives against source and merge provenance.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Explicit comparison resolves stale proposed-fix narratives against source and merge provenance.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C09",
+      "proposition": "Unknown or partial effects require fenced reconciliation before retry/restart, truthful per-domain observations and no invented coherent after revision.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 62,
+          "line_end": 68,
+          "exact_quote": "`Plans/Jujutsu_Integration.md:81\u2013101,124\u2013141,153\u2013176,188\u2013208,295\u2013303` (JJI-002/003/004/005; S00003) already requires exact expected operations, no automatic retry of unknown effects, quarantine for mismatches/late colocated writes, independent FileSafe/native recovery and post-restore proof. The handoff's reference to \u201cJJI-002 unknown effect/quarantine\u201d is imprecise: JJI-002 owns identity; JJI-003/004 and \u00a73.3 carry those outcome rules.\n\n`Plans/Source_Control_System.md:127\u2013155,335\u2013343` (SCS-003; S00002/S00067) requires typed terminal attempts, before/after revisions, reconciliation before lease reassignment/restart and no automatic unknown-effect retry. `Plans/jujutsu_integration_contracts.schema.json:700\u2013773,1775\u20132055` (S00066/S00045) supplies effect state, recovery actions and detail refs; unknown effect forces reconciliation-only retry and null after revision. Known partial observations can remain in diagnostic/receipt evidence without inventing a coherent after revision. A `detail_ref` is not proof that such diagnostics are implemented.\n\nThe relevant consumers are the Source Control operation flow above, existing operation show/undo/restore routes in `Plans/UI_Command_Catalog.md:12075\u201312078` (S00061), and Backup's isolated/activation boundary in `Plans/Source_Control_System.md:795\u2013800` and `Plans/Backup_Restore_System.md:278\u2013307` (S00019/S00018). Backup must block activation on conflict, stale target or unknown effect; it does not supply an implicit repair of a live damaged JJ workspace. Static restart/unknown-effect fixtures and the future-test inventory at `Plans/Jujutsu_Integration.md:321\u2013327,482` are not live recovery evidence.\n\nThe adjacent FileSafe recovery owner is more explicit for its own exact-file-restore domain: `Plans/FileSafe.md:1518\u20131537,1553\u20131555` (S00077) requires a verified durable rollback manifest before mutation, per-path compare-and-swap, target or rollback equality, retained fences after a third state, and durable recovery holds. This supplies covered requirements for external file effects; it does not silently authorize automatic rollback of a JJ operation or solve native projection failure. Its Git/worktree-specific manifest and the JJ adapter must preserve their separate identity and authority boundaries."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 82,
+          "line_end": 84,
+          "exact_quote": "| Partial integration and broken recovery preconditions | Inject failure after object persistence, each workspace checkout, native operation/ref publication, metadata publication and recovery-point publication. Include missing normal projection, missing target metadata, process death, restart, external writer and lease loss. Record observed domains separately. Proven no-effect may remain no-effect; unknown/partial effect stays fenced and cannot blindly retry. Recovery either verifies a coherent before/selected state or returns explicit recovery-required/unavailable with preserved dirty bytes. |\n| Silent stale clean files after base advance | Before integration, partition paths into dirty user files, native change/workspace content and clean upstream-only files; record blobs, index stages where applicable and native state. Advance upstream, then verify previously clean paths reached expected new content while genuine edits remain preserved. Include an intentional ancestor-content revert as a negative control. Vary dirty state, workspace count and external writers independently; a successful process exit or advanced operation ID cannot substitute for file-state comparison. |\n| Unrelated workspace/branch ownership eviction | Reproduce cross-stack amend and base advance separately in GitButler research; for JJ certification use its native bookmark/workspace/change relationships, not invented GitButler stacks. Include equal-tip references, shared history, legitimate rewrite propagation and independent workspaces. Compare expected versus actual affected identities, membership, immutable objects and dirty files. An unexplained scope expansion cannot be hidden behind a narrow operation title; legitimate owner-defined propagation must still be represented accurately. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "semantically_equivalent",
+          "rationale": "Addresses actual partial progress, process death/restart, effect uncertainty and no-blind-retry through owner receipts and acceptance cases.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Addresses actual partial progress, process death/restart, effect uncertainty and no-blind-retry through owner receipts and acceptance cases.",
+      "proposed_credit_fids": [
+        "F007"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C10",
+      "proposition": "A damaged-state diagnostic path independent of healthy status projection is proposed, with typed unavailable responses and preserved fences; automatic rollback is a separate policy option.",
+      "assertion_status": "unapproved_product_policy_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 70,
+          "line_end": 76,
+          "exact_quote": "No inspected passage proves a diagnostic/recovery implementation that remains usable when normal workspace projection fails. Conversely, nothing proves a JJ implementation has GitButler's bug: these are different native models, and the frozen Plans explicitly do not certify a running adapter. Therefore the aggregate remains **uncertain**, with its existing requirements preserved. No reported manual Git plumbing, `but teardown`, relaxed guard, automatic rewind or Git mutation fallback is recommended for JJ.\n\n### Reviewable proposal: damaged-state diagnosis and fenced recovery\n\n**Product proposal requiring approval; not an adopted policy.** Add an explicit degraded recovery path behind existing owner routes. When mutation or recovery cannot establish coherent state, retain the mutation fence and present a source-bound diagnostic receipt that distinguishes last verified state, observed per-domain progress and unknown domains. Read-only inspection should use native operation/store/workspace evidence independently of the normal healthy status projection where the certified adapter supports it. Failure to reconstruct current identity must return a typed unavailable diagnosis; it must not invent an expected revision, bypass the writer fence, or mutate to make diagnosis succeed. Any later recovery still needs an exact observed-state precondition, owner confirmation, preserved dirty state and independent postcondition checks.\n\nBenefit: an operation error need not strand the user behind the same status/capture precondition that failed. Dependencies: JJI-002/005, neutral writer-lease recovery, certified native read modes, source-bound diagnostic retention, FileSafe for external file effects, and existing UI/ObservableWork/Backup owner routes. Tradeoffs: extra diagnosis/storage cost and potentially prolonged quarantine; some corrupt states cannot be repaired automatically. **Material choice to review:** retain quarantine plus explicit recovery as the first policy, or add eagerly published pre-mutation checkpoints and automatic rollback for narrowly certified operation classes. Automatic rollback needs additional capture/publication guarantees, external-writer handling and performance/retention decisions; this evidence does not authorize it. A full raw-storage recovery-copy feature would additionally need Backup ownership and scope approval, not a new JJ-private backup facility."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 13,
+          "line_end": 13,
+          "exact_quote": "**Partial integration and recovery preconditions.** Uncertain upstream aggregate; covered no-blind-retry/fenced-recovery principles plus an unapproved damaged-state diagnosis proposal. Fault injection must include failure obtaining normal workspace projection or before-state capture. Preserve observed partial effects and unknown domains; no invented coherent after revision, relaxed guard or fallback Git mutation. Primary sources: S00009/S00010, S00031, S00035, S00033, S00054/S00056/S00058."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Independent damaged-state recovery is already the core F010 principle. Concrete UI/service route and eager-checkpoint/automatic-rollback option are unapproved elaborations, not established missing implementation.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Independent damaged-state recovery is already the core F010 principle. Concrete UI/service route and eager-checkpoint/automatic-rollback option are unapproved elaborations, not established missing implementation.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Independent damaged-state recovery is already the core F010 principle. Concrete UI/service route and eager-checkpoint/automatic-rollback option are unapproved elaborations, not established missing implementation.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C11",
+      "proposition": "A correct graph can hide wrong stack-owned metadata; merged lookup fixes preserve legitimate duplicate ownership and do not justify global duplicate-name rejection.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 93,
+          "line_end": 97,
+          "exact_quote": "[Issue #15573](https://github.com/gitbutlerapp/gitbutler/issues/15573), S00011:145\u2013175, reports 0.22.1/Linux and an eight-segment restore that rewound only the tip while seven lower refs remained on the abandoned chain. At lines 198\u2013216 the author explicitly marks the SQLite-versus-TOML explanation as a guess. Do not retain that guess as the root cause.\n\n[Merged PR #15584](https://github.com/gitbutlerapp/gitbutler/pull/15584), S00030 (`merged=true`, merge `a8cca1862e8cd67b1d91d0c1361d32adca401961`, 2026-08-27 08:08:16 UTC), explicitly fixes #15573. Its primary explanation (S00008:147\u2013158) identifies global lowest-order name matching that moved owned heads into a stale stack during `set_workspace`. UI remained correct because it used the ref graph; capture used degraded metadata; restore followed applied ownership. Duplicates are ownership entries across stacks, not multiple same-full-name Git refs.\n\n[Code at the merge](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/but-meta/src/legacy/mod.rs#L483-L558), S00024:483\u2013558, preserves incoming existing stack identity and calls `stack_has_head` before global fallback. [Patch tests](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/15584/files), S00020, roundtrip synthetic metadata in `duplicate_names_in_unapplied_stacks_do_not_steal_applied_branches` and `shared_segment_names_stay_in_their_own_applied_stacks`. Applied and stale owners retain their own entries/OIDs; legitimate cross-stack movement can still use fallback. These tests were inspected, not run, and are not an eight-segment live restore demonstration. Blanket duplicate-name rejection would reject supported states."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 103,
+          "line_end": 103,
+          "exact_quote": "The behavioral principle is already in `Plans/Jujutsu_Integration.md:81\u2013101,188\u2013208` (JJI-002/JJI-005; S00003): native identity, snapshot and conflict proof cannot come from paths or display state. JJI-008 at lines 449\u2013470 (S00007) additionally requires workspace maps, complete retained objects, historical restore verification and explicit colocation/collision truth before activation. `Plans/Source_Control_System.md:778\u2013799` (SCS-014; S00019) requires isolated verification, distinct rebind and collision/conflict receipts. These are **JJ-native** obligations; adding GitButler stack metadata to the JJ model is not the repair."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 21,
+          "line_end": 21,
+          "exact_quote": "**Stack-scoped ownership and semantic restore truth.** Merged GitButler mechanism supported by S00020/S00024/S00030, without binary/reproducer certification. Preserve legitimate duplicate ownership entries; do not globally deduplicate branch names. For the Plans comparison, the concrete defect is in `backup_jj_restore_verification_receipt`: explicit workspace/dual-writer blockers or unknown working-copy relationship can coexist with activation readiness. See [receipt-probe-results.json](receipt-probe-results.json) and notes for replacement behavior and controls. Correct graph rendering or valid metadata syntax is insufficient independent evidence of correct native mapping."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "semantically_equivalent",
+          "rationale": "Direct existing native/sidecar observability counterexample and independent native mapping requirement.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Direct existing native/sidecar observability counterexample and independent native mapping requirement.",
+      "proposed_credit_fids": [
+        "F010"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C12",
+      "proposition": "Historical bad captures remain bad after future serializer fixes; redo depends on successfully published before-state and independent semantic restore checks.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 99,
+          "line_end": 99,
+          "exact_quote": "The PR says historical bad snapshots remain bad and stale-entry garbage collection is follow-up. [Oplog at the merge](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/gitbutler-oplog/src/oplog.rs#L1038-L1275), S00025:1038\u20131051, prepares the before-state, but publishes it only after restore mutations at 1268\u20131275. Restore rewrites applied heads at 1186\u20131191 and ignores individual ref-write errors with `.ok()`; conflict-sidecar errors are logged and ignored at 1053\u20131055. Thus redo is conditional on correct capture and successful publication. Preparation alone, interrupted restore, an uncapturable current state or publication failure does not establish an available redo entry. No binary release inclusion, original reproducer or universal redo guarantee is claimed."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 135,
+          "line_end": 135,
+          "exact_quote": "- Retain immutable malformed historical captures. On an isolated disposable copy, test refusing semantic corruption before mutation; if a historical restore is explicitly permitted by a certified path, verify every relevant before/after native identity, object, dirty file and conflict state. A before-restore artifact is usable for redo only after publication/discovery and successful verification. Inject capture failure, restore failure and before-state publication failure separately; none may claim unconditional redo or repair historical bytes in place."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+          "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+          "line_start": 23,
+          "line_end": 23,
+          "exact_quote": "**Historical bad captures and conditional redo.** Existing malformed bytes remain malformed after the serializer fix (S00008:158). At the merge pin, before-restore capture is prepared before mutation and published afterwards (S00025:1038\u20131051,1268\u20131275). Preserve immutable bad captures, isolated semantic checks and capture/restore/publication failure injection. Redo requires verified published before-state; no universal redo or automatic historical repair is approved. The frozen Plans already require isolated historical verification; runtime drills and an exact completed-rebind representation remain implementation/contract follow-up, not findings of executed recovery."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Conditional redo and historical evidence preservation do not propose or certify full navigation capabilities or universal recovery.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Conditional redo and historical evidence preservation do not propose or certify full navigation capabilities or universal recovery.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F015",
+          "relation": "narrower",
+          "rationale": "Conditional redo and historical evidence preservation do not propose or certify full navigation capabilities or universal recovery.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Conditional redo and historical evidence preservation do not propose or certify full navigation capabilities or universal recovery.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C13",
+      "proposition": "The frozen restore verification schema accepts ready_for_owner_activation with workspace_map_result=collision_blocked.",
+      "assertion_status": "reproduced_structural_counterexample_in_retained_worker_probe",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 107,
+          "line_end": 119,
+          "exact_quote": "- `Plans/jujutsu_integration_contracts.schema.json:2377\u20132410,2467\u20132486` (S00026) requires `workspace_map_result`, `working_copy_relation` and `colocation_activation_disposition`, with values including `collision_blocked`, `unverified` and `blocked_dual_writer_or_identity_collision`.\n- Its success conditional at lines 2607\u20132639 checks historical-operation success, complete object closure, empty conflict/collision arrays and sanitized configuration, **but never constrains those three results**. Lines 2641\u20132700 only require evidence when the outcome itself is blocked; they do not make a blocking result force a non-ready outcome. The colocation assertion at line 2720 is an annotation, not a JSON Schema conditional.\n- `Plans/jujutsu_integration_contract_fixtures.json:2947\u20132996,3082\u20133090` (S00044) supplies a valid isolated restore example and a negative for historical-operation mismatch. It does not supply these contradictory-readiness negatives.\n\n**Reproduced structural counterexamples:** [receipt_probe.py](receipt_probe.py) validates the exact acquired frozen schema bytes and referenced neutral revision schema with Python `jsonschema` 4.19.2, Draft 2020-12 and format checking. [receipt-probe-results.json](receipt-probe-results.json) records hashes, mutations and results. Starting from the existing isolated-restore fixture, set `outcome=ready_for_owner_activation` and `credential_resolution=not_required`; then change one field at a time:\n\n| Field mutation | Frozen schema result | Required meaning |\n|---|---|---|\n| `workspace_map_result=collision_blocked` | accepted | Workspace collision prevents activation readiness. |\n| `colocation_activation_disposition=blocked_dual_writer_or_identity_collision` | accepted | A blocked dual writer/identity collision prevents activation readiness. |\n| `working_copy_relation=unverified` | accepted | Dirty-file relationship has not been proven, so activation readiness is not established. |\n\nThe unchanged sign-in fixture and consistent-ready control validate. The existing historical-operation mismatch and a nonempty collision-ref ready control are rejected. This confirms the narrow conditional gap without claiming that native activation actually runs, that custom semantic validators have been executed, or that every runtime consumer trusts schema validity alone."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt_probe.py",
+          "sha256": "1835217b289f84d18c925c72689043d135905c0999a239ff8fd00d9e0978ff1d",
+          "line_start": 36,
+          "line_end": 45,
+          "exact_quote": "base_name = \"backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in\"\nbase = next(x[\"value\"] for x in fixtures[\"valid\"] if x[\"name\"] == base_name)\ncases = [\n    (\"existing_sign_in_fixture\", {}, True),\n    (\"ready_consistent_control\", {\"outcome\": \"ready_for_owner_activation\", \"credential_resolution\": \"not_required\"}, True),\n    (\"ready_but_workspace_collision\", {\"outcome\": \"ready_for_owner_activation\", \"credential_resolution\": \"not_required\", \"workspace_map_result\": \"collision_blocked\"}, True),\n    (\"ready_but_dual_writer_blocked\", {\"outcome\": \"ready_for_owner_activation\", \"credential_resolution\": \"not_required\", \"colocation_activation_disposition\": \"blocked_dual_writer_or_identity_collision\"}, True),\n    (\"ready_but_working_copy_unverified\", {\"outcome\": \"ready_for_owner_activation\", \"credential_resolution\": \"not_required\", \"working_copy_relation\": \"unverified\"}, True),\n    (\"existing_historical_mismatch_negative\", {\"outcome\": \"ready_for_owner_activation\", \"historical_operation_result\": \"blocked_operation_mismatch\"}, False),\n    (\"collision_ref_blocks_ready_control\", {\"outcome\": \"ready_for_owner_activation\", \"collision_refs\": [\"collision:workspace:1\"]}, False),"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+          "line_start": 27,
+          "line_end": 37,
+          "exact_quote": "    {\n      \"name\": \"ready_but_workspace_collision\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"credential_resolution\": \"not_required\",\n        \"workspace_map_result\": \"collision_blocked\"\n      },\n      \"schema_accepts\": true,\n      \"full_root_schema_accepts\": true,\n      \"errors\": []\n    },"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F001",
+          "relation": "materially_new",
+          "rationale": "A specific success/blocker contradiction in backup_jj_restore_verification_receipt. F001 instead requires terminal command_result receipt_ref; broad F010/F081 do not enumerate this structural counterexample.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        },
+        {
+          "finding_id": "F010",
+          "relation": "materially_new",
+          "rationale": "A specific success/blocker contradiction in backup_jj_restore_verification_receipt. F001 instead requires terminal command_result receipt_ref; broad F010/F081 do not enumerate this structural counterexample.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "materially_new",
+          "rationale": "A specific success/blocker contradiction in backup_jj_restore_verification_receipt. F001 instead requires terminal command_result receipt_ref; broad F010/F081 do not enumerate this structural counterexample.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "A specific success/blocker contradiction in backup_jj_restore_verification_receipt. F001 instead requires terminal command_result receipt_ref; broad F010/F081 do not enumerate this structural counterexample.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": true
+    },
+    {
+      "claim_id": "P-J0020-C14",
+      "proposition": "The same frozen ready outcome accepts colocation_activation_disposition=blocked_dual_writer_or_identity_collision.",
+      "assertion_status": "reproduced_structural_counterexample_in_retained_worker_probe",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 116,
+          "line_end": 116,
+          "exact_quote": "| `colocation_activation_disposition=blocked_dual_writer_or_identity_collision` | accepted | A blocked dual writer/identity collision prevents activation readiness. |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+          "line_start": 38,
+          "line_end": 48,
+          "exact_quote": "    {\n      \"name\": \"ready_but_dual_writer_blocked\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"credential_resolution\": \"not_required\",\n        \"colocation_activation_disposition\": \"blocked_dual_writer_or_identity_collision\"\n      },\n      \"schema_accepts\": true,\n      \"full_root_schema_accepts\": true,\n      \"errors\": []\n    },"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F001",
+          "relation": "materially_new",
+          "rationale": "Second mutation of the same missing activation-readiness conditional; consolidate with C13/C15 as one correction, not separate union counts.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        },
+        {
+          "finding_id": "F081",
+          "relation": "materially_new",
+          "rationale": "Second mutation of the same missing activation-readiness conditional; consolidate with C13/C15 as one correction, not separate union counts.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Second mutation of the same missing activation-readiness conditional; consolidate with C13/C15 as one correction, not separate union counts.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": true
+    },
+    {
+      "claim_id": "P-J0020-C15",
+      "proposition": "The same frozen ready outcome accepts working_copy_relation=unverified.",
+      "assertion_status": "reproduced_structural_counterexample_in_retained_worker_probe",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 117,
+          "line_end": 117,
+          "exact_quote": "| `working_copy_relation=unverified` | accepted | Dirty-file relationship has not been proven, so activation readiness is not established. |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+          "line_start": 49,
+          "line_end": 59,
+          "exact_quote": "    {\n      \"name\": \"ready_but_working_copy_unverified\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"credential_resolution\": \"not_required\",\n        \"working_copy_relation\": \"unverified\"\n      },\n      \"schema_accepts\": true,\n      \"full_root_schema_accepts\": true,\n      \"errors\": []\n    },"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F001",
+          "relation": "materially_new",
+          "rationale": "Third mutation in the same readiness obligation. Unknown dirty-file relation differs from missing terminal receipt and should not earn F001 credit.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        },
+        {
+          "finding_id": "F081",
+          "relation": "materially_new",
+          "rationale": "Third mutation in the same readiness obligation. Unknown dirty-file relation differs from missing terminal receipt and should not earn F001 credit.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Third mutation in the same readiness obligation. Unknown dirty-file relation differs from missing terminal receipt and should not earn F001 credit.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": true
+    },
+    {
+      "claim_id": "P-J0020-C16",
+      "proposition": "The probe includes consistent-ready/sign-in positive controls and historical mismatch/nonempty collision-reference negatives at definition and root schema levels.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 111,
+          "line_end": 119,
+          "exact_quote": "**Reproduced structural counterexamples:** [receipt_probe.py](receipt_probe.py) validates the exact acquired frozen schema bytes and referenced neutral revision schema with Python `jsonschema` 4.19.2, Draft 2020-12 and format checking. [receipt-probe-results.json](receipt-probe-results.json) records hashes, mutations and results. Starting from the existing isolated-restore fixture, set `outcome=ready_for_owner_activation` and `credential_resolution=not_required`; then change one field at a time:\n\n| Field mutation | Frozen schema result | Required meaning |\n|---|---|---|\n| `workspace_map_result=collision_blocked` | accepted | Workspace collision prevents activation readiness. |\n| `colocation_activation_disposition=blocked_dual_writer_or_identity_collision` | accepted | A blocked dual writer/identity collision prevents activation readiness. |\n| `working_copy_relation=unverified` | accepted | Dirty-file relationship has not been proven, so activation readiness is not established. |\n\nThe unchanged sign-in fixture and consistent-ready control validate. The existing historical-operation mismatch and a nonempty collision-ref ready control are rejected. This confirms the narrow conditional gap without claiming that native activation actually runs, that custom semantic validators have been executed, or that every runtime consumer trusts schema validity alone."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt_probe.py",
+          "sha256": "1835217b289f84d18c925c72689043d135905c0999a239ff8fd00d9e0978ff1d",
+          "line_start": 22,
+          "line_end": 35,
+          "exact_quote": "jj = acquired(\"S00026\")\nscs = acquired(\"S00047\")\nfixtures = acquired(\"S00044\")\nregistry = Registry().with_resources(\n    [(s[\"$id\"], Resource.from_contents(s)) for s in [jj, scs]]\n)\nvalidator = Draft202012Validator(\n    {\"$ref\": jj[\"$id\"] + \"#/$defs/backup_jj_restore_verification_receipt\"},\n    registry=registry,\n    format_checker=FormatChecker(),\n)\nroot_validator = Draft202012Validator(\n    jj, registry=registry, format_checker=FormatChecker()\n)"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt_probe.py",
+          "sha256": "1835217b289f84d18c925c72689043d135905c0999a239ff8fd00d9e0978ff1d",
+          "line_start": 56,
+          "line_end": 71,
+          "exact_quote": "for name, patch, expected_current_validity in cases:\n    record = copy.deepcopy(base)\n    record.update(patch)\n    errors = list(validator.iter_errors(record))\n    valid = not errors\n    assert valid == expected_current_validity, (name, errors)\n    root_valid = root_validator.is_valid(record)\n    assert root_valid == valid, (name, \"root and receipt definition disagree\")\n    report[\"cases\"].append({\n        \"name\": name,\n        \"patch\": patch,\n        \"schema_accepts\": valid,\n        \"full_root_schema_accepts\": root_valid,\n        \"errors\": [{\"path\": list(e.absolute_path), \"message\": e.message} for e in errors],\n    })\nprint(json.dumps(report, indent=2))"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+          "line_start": 10,
+          "line_end": 26,
+          "exact_quote": "    {\n      \"name\": \"existing_sign_in_fixture\",\n      \"patch\": {},\n      \"schema_accepts\": true,\n      \"full_root_schema_accepts\": true,\n      \"errors\": []\n    },\n    {\n      \"name\": \"ready_consistent_control\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"credential_resolution\": \"not_required\"\n      },\n      \"schema_accepts\": true,\n      \"full_root_schema_accepts\": true,\n      \"errors\": []\n    },"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+          "line_start": 60,
+          "line_end": 97,
+          "exact_quote": "    {\n      \"name\": \"existing_historical_mismatch_negative\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"historical_operation_result\": \"blocked_operation_mismatch\"\n      },\n      \"schema_accepts\": false,\n      \"full_root_schema_accepts\": false,\n      \"errors\": [\n        {\n          \"path\": [\n            \"historical_operation_result\"\n          ],\n          \"message\": \"'verified_on_disposable_copy' was expected\"\n        }\n      ]\n    },\n    {\n      \"name\": \"collision_ref_blocks_ready_control\",\n      \"patch\": {\n        \"outcome\": \"ready_for_owner_activation\",\n        \"collision_refs\": [\n          \"collision:workspace:1\"\n        ]\n      },\n      \"schema_accepts\": false,\n      \"full_root_schema_accepts\": false,\n      \"errors\": [\n        {\n          \"path\": [\n            \"collision_refs\"\n          ],\n          \"message\": \"['collision:workspace:1'] is too long\"\n        }\n      ]\n    }\n  ]\n}"
+        }
+      ],
+      "baseline_mappings": [],
+      "relation": "no_match",
+      "mapping_rationale": "Validation-scope evidence for C13\u2013C15; custom semantic assertions, live activation and production consumer behavior are not executed.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C17",
+      "proposition": "Repair should make explicit blockers force non-ready outcomes with evidence and require proven workspace/working-copy relationships before activation.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 123,
+          "line_end": 126,
+          "exact_quote": "Repair the **existing owner schema/fixtures**, and clarify the corresponding JJI-008 acceptance if needed; do not edit Plans as part of this comparison:\n\n1. An explicit workspace collision or blocked dual-writer/identity disposition must prevent `ready_for_owner_activation`. Require an appropriate blocking outcome and nonempty source-bound collision/recovery evidence, rather than permitting an empty array to mask a blocking result.\n2. Activation readiness requires a verified workspace mapping and a proven working-copy relationship (`matches_latest_snapshot` or `dirty_files_preserved_separately`). Unknown relationship remains non-ready with diagnosis. For a colocated activation, require the proven single-JJ-writer disposition; a pending owner rebind cannot silently count as completed activation proof. Preserve legitimate read-only inspection and explicit rebind routes. Do not force a non-colocated repository into a fabricated colocated state; any richer completed-rebind representation must be reconciled with the existing Source Control owner contract."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 132,
+          "line_end": 132,
+          "exact_quote": "- Add each of the three counterexamples as a separate mechanically rejected fixture, plus ready-with-pending-rebind cases for the exact supported layout rules. Keep consistent-ready, sign-in-required, explicit blocked-collision/conflict, read-only inspection and non-colocated owner rebind examples valid for their true outcomes. Keep the historical-operation negative rejecting."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F081",
+          "relation": "materially_new",
+          "rationale": "Concrete forward schema correction for the C13\u2013C15 defect; completed-rebind/layout semantics remain to be adjudicated, not blindly forced into a colocated state.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Concrete forward schema correction for the C13\u2013C15 defect; completed-rebind/layout semantics remain to be adjudicated, not blindly forced into a colocated state.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": true
+    },
+    {
+      "claim_id": "P-J0020-C18",
+      "proposition": "Native restored identities, objects, workspace mappings and dirty/conflict state need independent validation; GUI and Backup must consume the same authoritative blockers.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 127,
+          "line_end": 128,
+          "exact_quote": "3. The native verifier must independently compare restored operation/view identities, workspace registrations/mappings, bookmark targets and required objects, and separately preserved dirty/conflict state against capture evidence. A valid string reference, parseable metadata, graph rendering or process exit cannot populate a verified result. Semantic checks must preserve legitimate sharing and exact native ownership rather than globally deduplicating names.\n4. Backup activation and GUI consumers must consume that same authoritative result. `Plans/Backup_Restore_System.md:278\u2013295,319\u2013345` (BRS-006/007; S00018) already requires verified source/identity and fresh readiness. `Plans/FinalGUISpec.md:35625\u201335628,35640\u201335642` and `Plans/Settings_System.md:1307\u20131309,1316\u20131318` (S00070/S00071) project owner truth; they must show blockers instead of a ready/verified badge. Existing operation and Backup commands remain the routes. No new handler, manifest, event family, alternate restore mode or automatic historical repair is authorized."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 133,
+          "line_end": 136,
+          "exact_quote": "- Test serialization-valid but semantically wrong workspace/ownership mappings with a correct-looking graph. A restored operation or object listing alone must not satisfy mapping verification; independent native comparisons must block activation and identify the mismatched identities.\n- Cover same display names in different native scopes, stale mappings, legitimate shared history, rewrites with stable change IDs but new immutable commits, and actual supported movement between scopes. Successful roundtrips preserve the correct native associations and do not reject valid sharing.\n- Retain immutable malformed historical captures. On an isolated disposable copy, test refusing semantic corruption before mutation; if a historical restore is explicitly permitted by a certified path, verify every relevant before/after native identity, object, dirty file and conflict state. A before-restore artifact is usable for redo only after publication/discovery and successful verification. Inject capture failure, restore failure and before-state publication failure separately; none may claim unconditional redo or repair historical bytes in place.\n- Run the focused schema/fixture gate after an eventual repair, then future native historical-operation, mapping, crash/GC and consumer-state tests. The present probe is counterexample evidence only. It neither fixes the schema nor fulfills those future runtime gates."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F081",
+          "relation": "semantically_equivalent",
+          "rationale": "Full selected historical restore and semantic evidence requirement beyond parseable strings, graph or process success; no runtime proof asserted.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Full selected historical restore and semantic evidence requirement beyond parseable strings, graph or process success; no runtime proof asserted.",
+      "proposed_credit_fids": [
+        "F081"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0020-C19",
+      "proposition": "No automatic old-snapshot repair, new backup product or universal redo is authorized; eventual schema fixtures and native/consumer tests remain future work.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "line_start": 136,
+          "line_end": 144,
+          "exact_quote": "- Run the focused schema/fixture gate after an eventual repair, then future native historical-operation, mapping, crash/GC and consumer-state tests. The present probe is counterexample evidence only. It neither fixes the schema nor fulfills those future runtime gates.\n\nThis is a repair to materialize accepted fail-closed recovery semantics, not approval for a new backup/recovery product. The two independent directions\u2014stack-scoped ownership and old bad captures/conditional redo\u2014remain preserved in [leads.md](leads.md). An automatic historical-snapshot repair or promised universal redo would be a separate product proposal requiring approval, exact scope and version support, immutable-original preservation, and failure/retention tradeoffs; it is not assumed here.\n\n## Delivery and verification boundary\n\nAll three assigned IDs have separate headings and permitted disposition markers. Owner and relevant consumer passages, external primary evidence, conflicting interpretations, covered requirements, concrete repair behavior and acceptance checks are retained above. Product additions and material recovery-policy choices are explicitly unapproved proposals. The unresolved incident aggregate and unexecuted runtime directions remain uncertain; this comparison does not relabel them as fixed or certified.\n\nSeven retained directions are attached to the assigned parents in `leads.md`; embedded upstream child IDs did not replace or expand the assignments. Source acquisition receipts and immutable source copies remain under `research-evidence/sources/`. The only executable verification performed was the local structural receipt probe, with positive and negative controls. No Plans gate, upstream test, native recovery, UI render or production handler was represented as executed. No other cases, arms, evaluator material or prior experiment reports were consulted."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F015",
+          "relation": "narrower",
+          "rationale": "Explicit non-approval/runtime limits avoid promoting proposed acceptance into completed capability.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Explicit non-approval/runtime limits avoid promoting proposed acceptance into completed capability.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Explicit non-approval/runtime limits avoid promoting proposed acceptance into completed capability.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+      "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+      "lines": 144,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0020-C01",
+        "P-J0020-C02",
+        "P-J0020-C03",
+        "P-J0020-C04",
+        "P-J0020-C05",
+        "P-J0020-C06",
+        "P-J0020-C07",
+        "P-J0020-C08",
+        "P-J0020-C09",
+        "P-J0020-C10",
+        "P-J0020-C11",
+        "P-J0020-C12",
+        "P-J0020-C13",
+        "P-J0020-C14",
+        "P-J0020-C15",
+        "P-J0020-C16",
+        "P-J0020-C17",
+        "P-J0020-C18",
+        "P-J0020-C19"
+      ],
+      "disposition": "All material assertion blocks reviewed; duplicate retained directions share claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+      "sha256": "a31b5858ac5a2d0e551f9d2ad9c98385b980a4ae118c06378b1ee4a34b99a148",
+      "lines": 23,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0020-C02",
+        "P-J0020-C03",
+        "P-J0020-C06",
+        "P-J0020-C07",
+        "P-J0020-C10",
+        "P-J0020-C11",
+        "P-J0020-C12"
+      ],
+      "disposition": "All material assertion blocks reviewed; duplicate retained directions share claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/source-index.md",
+      "sha256": "2b8a966048172fb3070173fcef2592ffadf90ab0d74558729906a35777658600",
+      "lines": 83,
+      "read_complete": true,
+      "claim_ids": [],
+      "disposition": "Source/receipt index only"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt_probe.py",
+      "sha256": "1835217b289f84d18c925c72689043d135905c0999a239ff8fd00d9e0978ff1d",
+      "lines": 71,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0020-C13",
+        "P-J0020-C16"
+      ],
+      "disposition": "All material assertion blocks reviewed; duplicate retained directions share claims."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+      "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329",
+      "lines": 97,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0020-C13",
+        "P-J0020-C14",
+        "P-J0020-C15",
+        "P-J0020-C16"
+      ],
+      "disposition": "All material assertion blocks reviewed; duplicate retained directions share claims."
+    }
+  ],
+  "supplemental_delivery_audit": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/completion-audit.json",
+    "sha256": "8c2139c3052b20babd71194852d1471fa569720bfe38e1642659e0cedcc16aef",
+    "read_complete": true,
+    "all_five_deliverable_hashes_match": true,
+    "lead_directory_empty": true,
+    "retained_directions_location": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/leads.md",
+    "input_navigation_files": "sources.md inspected; assignment/handoff/brief/navigation are inputs, not additional delivered findings."
+  },
+  "probe_evidence": {
+    "source_input_hashes_verified": [
+      {
+        "source_id": "S00026",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00026/raw",
+        "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041"
+      },
+      {
+        "source_id": "S00047",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00047/raw",
+        "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada"
+      },
+      {
+        "source_id": "S00044",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00044/raw",
+        "sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff"
+      }
+    ],
+    "cases": [
+      {
+        "name": "existing_sign_in_fixture",
+        "patch": {},
+        "schema_accepts": true,
+        "full_root_schema_accepts": true,
+        "errors": []
+      },
+      {
+        "name": "ready_consistent_control",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "credential_resolution": "not_required"
+        },
+        "schema_accepts": true,
+        "full_root_schema_accepts": true,
+        "errors": []
+      },
+      {
+        "name": "ready_but_workspace_collision",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "credential_resolution": "not_required",
+          "workspace_map_result": "collision_blocked"
+        },
+        "schema_accepts": true,
+        "full_root_schema_accepts": true,
+        "errors": []
+      },
+      {
+        "name": "ready_but_dual_writer_blocked",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "credential_resolution": "not_required",
+          "colocation_activation_disposition": "blocked_dual_writer_or_identity_collision"
+        },
+        "schema_accepts": true,
+        "full_root_schema_accepts": true,
+        "errors": []
+      },
+      {
+        "name": "ready_but_working_copy_unverified",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "credential_resolution": "not_required",
+          "working_copy_relation": "unverified"
+        },
+        "schema_accepts": true,
+        "full_root_schema_accepts": true,
+        "errors": []
+      },
+      {
+        "name": "existing_historical_mismatch_negative",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "historical_operation_result": "blocked_operation_mismatch"
+        },
+        "schema_accepts": false,
+        "full_root_schema_accepts": false,
+        "errors": [
+          {
+            "path": [
+              "historical_operation_result"
+            ],
+            "message": "'verified_on_disposable_copy' was expected"
+          }
+        ]
+      },
+      {
+        "name": "collision_ref_blocks_ready_control",
+        "patch": {
+          "outcome": "ready_for_owner_activation",
+          "collision_refs": [
+            "collision:workspace:1"
+          ]
+        },
+        "schema_accepts": false,
+        "full_root_schema_accepts": false,
+        "errors": [
+          {
+            "path": [
+              "collision_refs"
+            ],
+            "message": "['collision:workspace:1'] is too long"
+          }
+        ]
+      }
+    ],
+    "worker_execution_claim": "Seven local JSON Schema cases only, matching retained code/results. Evaluator inspected code/results, did not rerun or invoke native work.",
+    "scope": "Frozen schema structure only; custom x-puppet-master assertions are annotations, not executed runtime checks."
+  },
+  "proposed_credit_fids": [
+    "F007",
+    "F010",
+    "F079",
+    "F081",
+    "F102"
+  ],
+  "proposed_new_original_baseline_credit_fids": [],
+  "baseline_F001_credit": false,
+  "baseline_F001_distinction": "F001 is evaluator-derived non-null terminal command_result receipt_ref. This job identifies a separate backup_jj_restore_verification_receipt readiness conditional gap; no direct credit for F001 is warranted.",
+  "new_union_candidates": [
+    {
+      "candidate_id": "P-J0020-activation-readiness",
+      "proposed_classification": "correction",
+      "proposition": "A backup JJ restore-verification receipt must not claim ready_for_owner_activation when workspace mapping is collision-blocked, colocation is blocked by dual-writer/identity collision, or working-copy relation is unverified.",
+      "claim_ids": [
+        "P-J0020-C13",
+        "P-J0020-C14",
+        "P-J0020-C15",
+        "P-J0020-C17"
+      ],
+      "count_as": "One correction obligation with three retained counterexamples, not three findings.",
+      "current_canon_status": "Independently reproduced against current Plans by root; current evidence path/hash in current_canon_review. Final independent union adjudication pending.",
+      "direct_research_arm": "premium"
+    }
+  ],
+  "unapproved_proposals": [
+    {
+      "claim_id": "P-J0020-C06",
+      "proposal": "Per-operation covered/omitted/unknown recovery-scope preview",
+      "status": "Hold for root current-canon/D5 overlap check before any optional-capability extension."
+    },
+    {
+      "claim_id": "P-J0020-C10",
+      "proposal": "Damaged-state diagnostic path and explicit quarantine versus eager-checkpoint automatic-rollback policy choice",
+      "status": "Existing F010 recovery principle covers much of this; do not add a union item absent exact uncovered product delta."
+    }
+  ],
+  "current_canon_review": {
+    "performed_by_this_agent": false,
+    "assigned_to": "root",
+    "reason": "Root independently checks current schema/Plans and proposal overlap; no duplicate current-canon adjudication or schema edit performed.",
+    "independent_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/current-restore-readiness.json",
+      "sha256": "0cff481c4069a0554e734c6079b3979496ab2a441965bd60b2853fdd0dcac261"
+    },
+    "status": "Root independently reproduced all three current-schema contradictions with positive/negative controls; final reviewer still adjudicates union distinctness."
+  },
+  "original_union_denominator": 105,
+  "accepted_union_extension_count": 0,
+  "proposed_correction_extension_count": 1,
+  "validation": {
+    "all_five_deliverables_read": true,
+    "quotes_extracted_from_hashed_sources": true,
+    "full_105_baseline_considered": true,
+    "no_keyword_only_credit": true,
+    "no_web_native_calls_or_protocol_edits": true
+  },
+  "unresolved": [
+    "Final independent union distinctness and optional-proposal D5 overlap review remain pending; current-schema contradictions reproduced.",
+    "Completed-rebind/layout acceptance requires owner-contract reconciliation.",
+    "Three upstream incidents remain uncertain and not causally unified.",
+    "Native restore/activation, runtime semantic validators and GUI behavior are not tested."
+  ],
+  "manifest_revisions": [
+    {
+      "previous_sha256": "2a417a70e0a45167cc63d3c4a632569ee404b4c6b3ba4be152ba3f2d383a1b03",
+      "current_sha256": "e630d74d6ed8112b1536ee078d300faac36f4c1ce5bcb5bfecc4d6190ce4825c",
+      "reason": "Collector now explicitly inventories top-level leads.md and both source-index.md and evidence-index.md. Delivered document bytes and assertions are unchanged.",
+      "all_existing_document_hashes_reverified": true
+    }
+  ]
+}

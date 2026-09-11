@@ -1,0 +1,1052 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0017-reconcile",
+  "arm": "premium",
+  "review_status": "proposed_pending_independent_review",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/manifest.json",
+    "sha256": "df2b1be99ea9619351c1021043c8ec6fad54ae2919f74bd41cf287d3306291f1"
+  },
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "scope": "Read all eight delivered assertion documents plus source-index; evaluated statements and retained author caveats. No upstream code executed; primary-source URLs remain author citations, not a fresh independent runtime certification.",
+  "claims": [
+    {
+      "claim_id": "P-J0017-C01",
+      "proposition": "GitButler snapshots selected native/worktree state; its undo promise does not establish complete repository or historical backup.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 14,
+          "line_end": 14,
+          "exact_quote": "**Reconciled conclusion.** The architecture in the handoff is supported. GitButler records operation-scoped native recovery state, with explicit exclusions and compatibility behavior. \u201cUnlimited undo\u201d is not evidence of complete repository, worktree or historical backup. The suggested untracked-file size exclusion is contradicted by the implementation at the handoff pin."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 18,
+          "line_end": 20,
+          "exact_quote": "- [Timeline documentation](https://docs.gitbutler.com/features/timeline), S00001:30\u201339: \u201cUndo nearly any of your actions\u201d; before major actions it snapshots virtual branches, uncommitted work and conflicts in the Git object database; \u201cRevert\u201d restores the pre-action state. It also \u201cOccasionally\u201d snapshots recently changed uncommitted files. This supports automatic pre-action recovery and occasional dirty-file capture, without proving continuous capture or every operation's coverage. The [README](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/README.md#L59-L74), S00015:59\u201374, uses broader \u201cunlimited undo\u201d and \u201call operations\u201d wording.\n- [Pinned oplog implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L782-L962), S00010:782\u2013962: the implementation records index and optional index-conflict trees, target tree, conflict sidecars, selected project metadata, branch order, virtual-branch metadata/trees/commit bytes, and the worktree. It additionally records ad-hoc checkout identity, an optional extra reference and the workspace commit independently of HEAD. `project_meta.toml` means selected target reference/commit and push-remote fields (44\u201351), **not the entire project database**. Capture derives projected workspace metadata, overlays it through `set_workspace`, synchronizes applied-stack heads from refs and serializes it; it is not just a copy of a potentially stale TOML file (860\u2013928). The acquired-head oplog file S00035 is byte-identical to S00010.\n- [Linked-worktree API](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-api/src/worktrees.rs#L5-L10), S00011:5\u201310: these experimental operations are feature-gated, and \u201cNone of the mutations here take part in the oplog: archived state is a project-database row, and a removed checkout cannot be restored from a snapshot.\u201d The database and removed-checkout limits are explicit, rather than inferred from missing documentation."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+          "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "The [oplog implementation at 8861f86](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L782-L962) records selected state, including target, branch-order, index/conflict and workspace data (S00010). The [capture implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-core/src/repo_ext.rs#L219-L376) disables its size filter when the limit is zero, omits ignored/pruned directory entries, and handles submodules as commit entries rather than recursively capturing dirty submodule contents (S00033). The [worktree API](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-api/src/worktrees.rs#L5-L10) excludes archive/remove from oplog (S00011)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F011",
+          "relation": "narrower",
+          "rationale": "Explicit recovery-scope boundaries and selected project metadata support these findings, but do not assert all distinct JJ recovery actions or complete barrier/GC-fenced closure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Explicit recovery-scope boundaries and selected project metadata support these findings, but do not assert all distinct JJ recovery actions or complete barrier/GC-fenced closure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Explicit recovery-scope boundaries and selected project metadata support these findings, but do not assert all distinct JJ recovery actions or complete barrier/GC-fenced closure.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C02",
+      "proposition": "The inspected capture path has no active untracked-file size limit: zero disables the check despite stale comments.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 21,
+          "line_end": 21,
+          "exact_quote": "- **Size-limit correction:** S00010:37\u201339 declares `AUTO_TRACK_LIMIT_BYTES = 0` and \u201cInactive for now\u201d; line 931 passes it to `create_wd_tree`. [The called implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-core/src/repo_ext.rs#L219-L376), S00033:238\u2013240, applies the size check only when the limit is nonzero. Thus API comments at S00010:144/210 referring to exclusion above `SNAPSHOT_FILE_LIMIT_BYTES` are stale for this path. S00025 confirms identical capture code at the acquired head. Do not invent an active size cap."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+          "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "The [oplog implementation at 8861f86](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L782-L962) records selected state, including target, branch-order, index/conflict and workspace data (S00010). The [capture implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-core/src/repo_ext.rs#L219-L376) disables its size filter when the limit is zero, omits ignored/pruned directory entries, and handles submodules as commit entries rather than recursively capturing dirty submodule contents (S00033). The [worktree API](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-api/src/worktrees.rs#L5-L10) excludes archive/remove from oplog (S00011)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "A concrete resolved conflict between broad/stale prose and specific implementation, matching the background finding; full F102 credit also rests on C12/C13/C18.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "A concrete resolved conflict between broad/stale prose and specific implementation, matching the background finding; full F102 credit also rests on C12/C13/C18.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C03",
+      "proposition": "Ignored/pruned entries and dirty submodule contents are not universally captured; changed submodule heads are stored as commit entries.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 22,
+          "line_end": 22,
+          "exact_quote": "- **Other capture limits remain:** S00033:250\u2013264 configures submodule dirty-content ignoring, omits ignored/pruned directory entries and drops individual status-iteration errors using `filter_map(|change| change.ok())`; 334\u2013345 stores a changed submodule HEAD as a Git commit entry. This is not recursive dirty-submodule capture. These passages establish exclusions and an error-observability question, not a reproduced loss incident or a claim that every ignored tracked path is omitted."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+          "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "The [oplog implementation at 8861f86](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L782-L962) records selected state, including target, branch-order, index/conflict and workspace data (S00010). The [capture implementation](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-core/src/repo_ext.rs#L219-L376) disables its size filter when the limit is zero, omits ignored/pruned directory entries, and handles submodules as commit entries rather than recursively capturing dirty submodule contents (S00033). The [worktree API](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/but-api/src/worktrees.rs#L5-L10) excludes archive/remove from oplog (S00011)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F080",
+          "relation": "narrower",
+          "rationale": "Specific omission and submodule examples do not assert the full file-class or qualification/backup disposition propositions.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F089",
+          "relation": "narrower",
+          "rationale": "Specific omission and submodule examples do not assert the full file-class or qualification/backup disposition propositions.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific omission and submodule examples do not assert the full file-class or qualification/backup disposition propositions.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C04",
+      "proposition": "Dropped status-iteration errors leave capture coverage an open validation question, not a reproduced loss incident.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 22,
+          "line_end": 22,
+          "exact_quote": "- **Other capture limits remain:** S00033:250\u2013264 configures submodule dirty-content ignoring, omits ignored/pruned directory entries and drops individual status-iteration errors using `filter_map(|change| change.ok())`; 334\u2013345 stores a changed submodule HEAD as a Git commit entry. This is not recursive dirty-submodule capture. These passages establish exclusions and an error-observability question, not a reproduced loss incident or a claim that every ignored tracked path is omitted."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+          "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "Alternative: an operation-scoped snapshot can explicitly declare a limited recovery scope; an independently complete backup would need to preserve excluded stores and filesystem state. No complete-backup implementation or requirement comparison is established here. The status iterator drops individual errors through `filter_map(...ok())` (S00033:263\u2013265); unreadable/changing files are an additional fault-injection question, not a reproduced data-loss finding."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F030",
+          "relation": "narrower",
+          "rationale": "Identifies an omission/error-observability mechanism, without a complete typed read-result contract or demonstrated loss.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Identifies an omission/error-observability mechanism, without a complete typed read-result contract or demonstrated loss.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C05",
+      "proposition": "Snapshot preparation, publication and GC-retention updates are separate stages; deliberately maintained reflogs are retention roots.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 23,
+          "line_end": 23,
+          "exact_quote": "- **Preparation and publication differ:** S00010:142\u2013159 says the prepared tree is undiscoverable until committed. The implementation writes the snapshot commit, updates oplog-head state, and then updates retention references (965\u20131002). [Retention code](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/gitbutler-oplog/src/reflog.rs#L37-L99), S00040, deliberately maintains `gitbutler/target` reflog entries protecting target, oplog and last-pushed-base commits from GC. This is positive retention evidence, but those sequential writes are not proof of crash-atomic publication, and a visible branch listing alone does not describe the retention roots."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/snapshot-publication-and-retention.md",
+          "sha256": "8a82a368a8b8ea6f38212891ade83709fe6b96783cf158112e3419836153b4ab",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "[Snapshot publication](https://github.com/gitbutlerapp/gitbutler/blob/8861f862414df646220fc6f935b4ab404456d577/crates/gitbutler-oplog/src/oplog.rs#L965-L1002) creates a commit, writes the oplog head, then updates retention references (S00010). [Retention code](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/gitbutler-oplog/src/reflog.rs#L37-L99) maintains a synthetic `gitbutler/target` reflog linking target, oplog and last-pushed-base commits (S00040). This is positive evidence of deliberate GC protection, not proof that copying a visible branch or printing the timeline preserves it."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Specific publication and retention stages motivate independent observability; no claim of complete crash-atomic closure is made.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Specific publication and retention stages motivate independent observability; no claim of complete crash-atomic closure is made.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific publication and retention stages motivate independent observability; no claim of complete crash-atomic closure is made.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C06",
+      "proposition": "Snapshot format handling validates selected metadata and supports legacy omissions, but format validity does not prove semantic ownership or full closure.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 25,
+          "line_end": 27,
+          "exact_quote": "**Compatibility evidence and its limits.** [Snapshot details](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/gitbutler-oplog/src/entry.rs#L367-L387), S00039, default to version 3. S00035:375\u2013407 selects a direct worktree subtree for version 3; 605\u2013675 parses selected project metadata with legacy default-target fallback and optional validated branch-order data. Restore validates these formats before preparing the before-state or mutating the worktree (1032\u20131049). This is useful schema handling, not semantic validation of every branch's ownership or complete object closure.\n\n[Source-defined integration tests](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/gitbutler-oplog/tests/oplog/integration.rs), S00045:96\u2013204, explicitly preserve **current** branch order when an old snapshot lacks it and reject malformed/invalid branch-order data before advancing oplog or overwriting the tested worktree file. Lines 511\u2013556 assert malformed project metadata leaves project metadata, oplog head and TOML unchanged. Lines 647\u2013701 remove one captured loose commit and assert restore recreates it and repoints its branch. These are meaningful narrower test definitions, inspected but not run; they do not establish restoration of all history or excluded state."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+          "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "Independent direction: make the captured state and omitted state inspectable, and validate both structural format and semantic ownership. At acquired head `079f2d998fc3e2d882f68c5f535d101272ed28cf`, version 3 selects the direct worktree subtree, project metadata has a legacy fallback, and missing branch-order data preserves current ordering (S00035, S00039, S00045). A version number alone does not prove capture completeness. Include legacy, absent, explicitly empty and malformed metadata cases; distinguish optional omission from corruption."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Inspected narrower test definitions and schema behavior are not complete object-interpretation or isolated selected-operation recovery proof.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Inspected narrower test definitions and schema behavior are not complete object-interpretation or isolated selected-operation recovery proof.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Inspected narrower test definitions and schema behavior are not complete object-interpretation or isolated selected-operation recovery proof.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C07",
+      "proposition": "External/shared storage, target ancestry, external writers and historical object retention remain unverified closure questions.",
+      "assertion_status": "asserted_scope_limit_with_open_questions",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 29,
+          "line_end": 29,
+          "exact_quote": "**Preserved lesson, alternatives and open questions.** Disclose the exact recovery scope and version-dependent omissions. Preserve both native recovery and the independent question of full storage closure. Applied-stack commit serialization explicitly excludes commits reachable from the target (S00010:901\u2013906); the selected target's tree and ID do not themselves prove all target ancestry is reconstructible from serialized snapshot commit blobs. Questions remain about external/shared stores, all retained historical objects, capture during external writes, status errors, retention publication failure and GC during an external copy. No complete all-history backup is claimed. An explicitly limited operation snapshot is a valid alternative to a separately verified full-storage capture."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/snapshot-publication-and-retention.md",
+          "sha256": "8a82a368a8b8ea6f38212891ade83709fe6b96783cf158112e3419836153b4ab",
+          "line_start": 7,
+          "line_end": 9,
+          "exact_quote": "Independent direction: inspect outcomes when object creation succeeds but oplog-head publication or reflog retention fails; verify discovery and restoration after an interrupted publication. Preserve the required retention roots and objects during any external capture. Snapshot trees preserve applied-stack commits excluding commits reachable from the target and preserve the workspace commit separately (S00010:886\u2013956); target ancestry and all other refs/stores are not shown to be reconstructed solely from those serialized commit blobs.\n\nAlternative: retain the full repository/storage closure under a coordinated capture, or describe the artifact as limited native undo. A copied history listing, readable tree, or successful fresh current-state restore alone cannot settle historical recoverability. No upstream code or crash test was executed in this reconciliation."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Explicitly preserves questions and limited-undo alternative; does not assert a verified backup or a newly missing PM requirement.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Explicitly preserves questions and limited-undo alternative; does not assert a verified backup or a newly missing PM requirement.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Explicitly preserves questions and limited-undo alternative; does not assert a verified backup or a newly missing PM requirement.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C08",
+      "proposition": "Reported partial integrations changed refs/metadata without a matching worktree projection, but common cause and present-release resolution are unproved.",
+      "assertion_status": "attributed_reporter_observation",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 36,
+          "line_end": 40,
+          "exact_quote": "**Aggregate disposition retained.** The reports support distinct failure observations and a strong investigation direction. A single shared root cause, deterministic reproduction and current-release resolution remain unproved. The historical expected-tree guard is verified in source; newer checkout and materialization code has changed, so the old sequence must not be stated as unchanged present behavior.\n\n**Reporter evidence, kept separate.**\n\n- [#14848](https://github.com/gitbutlerapp/gitbutler/issues/14848), S00002, reports CLI 0.21.0 on Apple Silicon macOS, about nine applied stacks and concurrent agents/sessions. Clear portions describe all nine branch refs rebased, an integrated branch's ref/metadata removed, and TOML heads advanced while the workspace merge commit remained old. It reports subsequent status/unapply failures and `Specified HEAD \u2026 didn't match actual HEAD^{tree} \u2026` during oplog restore. These are the reporter's reflog/snapshot observations, not independently inspected private-repository artifacts. Several body passages are damaged/duplicated; no missing text is reconstructed. The inference that a missing StackId was caused by partial mutation remains a hypothesis."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "[#14848](https://github.com/gitbutlerapp/gitbutler/issues/14848) reports refs/metadata moving before the workspace merge commit and failed oplog restore; [#14831](https://github.com/gitbutlerapp/gitbutler/issues/14831) reports different invariant failures, checkout refusal and absent snapshots (S00002/S00004). Their common root cause is not established. The latter's quoted assertion has `dry_run=Yes`, and its reproduction is explicitly nondeterministic."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Reporter observations motivate the existing independent-state boundary; private repository evidence and common causality were not independently established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Reporter observations motivate the existing independent-state boundary; private repository evidence and common causality were not independently established.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C09",
+      "proposition": "A different stack was reportedly evicted during an amend without corresponding operation scope/warning; its cause remains uncertain.",
+      "assertion_status": "attributed_reporter_observation",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 41,
+          "line_end": 41,
+          "exact_quote": "- Incident 1 in that same issue is separately useful: amending one stack allegedly removed an unrelated applied stack with two same-tip heads, with only an `AMEND` entry and no `UNAPPLY` or warning; files stayed on disk and appeared uncommitted/untracked. Concurrency was present, but the report does not establish that it caused either incident."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/unrelated-stack-eviction.md",
+          "sha256": "7a56d6a949e20aeea2aae0aba7ce4bdd680837e527107ae97e79d18fdb8f1568",
+          "line_start": 5,
+          "line_end": 9,
+          "exact_quote": "Incident 1 in [#14848](https://github.com/gitbutlerapp/gitbutler/issues/14848) describes amending one stack while a different stack, with two heads at the same commit, lost workspace membership. Only an `AMEND` oplog entry was reported, with no `UNAPPLY` entry or warning; the evicted stack's files remained on disk as apparent uncommitted/untracked content (S00002). The [later independent comment](https://github.com/gitbutlerapp/gitbutler/issues/14848#issuecomment-5063257903) also saw the applied-lane count go from one to zero during a base advance but could not establish causality (S00003).\n\nIndependent direction: reproduce cross-stack amend and base advance separately, including equal-tip heads and shared segments. Compare graph parents, ref targets, metadata ownership, applied flags, disk files and recorded operation scope. Verify that any necessary membership change appears in the operation outcome instead of silently widening an amend's effect.\n\n[#14860](https://github.com/gitbutlerapp/gitbutler/pull/14860) proposed an amend-preview eviction guard, but was not merged (S00018). [#15584](https://github.com/gitbutlerapp/gitbutler/pull/15584) fixes a different demonstrated ownership-write mechanism; no source reviewed here links it causally to this July report. Do not merge the two diagnoses just because both involve missing stacks. Parent aggregate disposition remains uncertain."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "A distinct attributed scope mismatch, not proof of the global terminal/cancellation proposition or a new product gap.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "A distinct attributed scope mismatch, not proof of the global terminal/cancellation proposition or a new product gap.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "A distinct attributed scope mismatch, not proof of the global terminal/cancellation proposition or a new product gap.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C10",
+      "proposition": "A dry_run=Yes assertion log does not prove failure after persisted writes, and nondeterministic incidents must remain unresolved.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 42,
+          "line_end": 42,
+          "exact_quote": "- [#14831](https://github.com/gitbutlerapp/gitbutler/issues/14831), S00004, separately reports 0.21.0 desktop/CLI, two or three applied stacks and heavy generated-file churn. It cites `no entrypoints`, failed merges/selectors, safe-checkout refusal and `DefaultTargetNotFound` preventing snapshot creation. Its displayed assertion log has **`dry_run=Yes`**: that log alone cannot prove the assertion occurred after persisted writes. The reporter explicitly lacks a deterministic reproducer; the [maintainer comment](https://github.com/gitbutlerapp/gitbutler/issues/14831#issuecomment-5025402794), S00009, also anticipates reproduction difficulty. An empty/unavailable oplog in this report differs from the intact oplog in the next report."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "[#14848](https://github.com/gitbutlerapp/gitbutler/issues/14848) reports refs/metadata moving before the workspace merge commit and failed oplog restore; [#14831](https://github.com/gitbutlerapp/gitbutler/issues/14831) reports different invariant failures, checkout refusal and absent snapshots (S00002/S00004). Their common root cause is not established. The latter's quoted assertion has `dry_run=Yes`, and its reproduction is explicitly nondeterministic."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Corrects inference about one dry-run report; does not establish universal dry-run authority/effect rules.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F087",
+          "relation": "narrower",
+          "rationale": "Corrects inference about one dry-run report; does not establish universal dry-run authority/effect rules.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Corrects inference about one dry-run report; does not establish universal dry-run authority/effect rules.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C11",
+      "proposition": "Ancestor-matching bytes do not by themselves prove stale clean-file loss; a known clean baseline is needed to distinguish intentional edits.",
+      "assertion_status": "attributed_observation_and_methodological_correction",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 43,
+          "line_end": 43,
+          "exact_quote": "- [July 23 independent comment](https://github.com/gitbutlerapp/gitbutler/issues/14848#issuecomment-5063257903), S00003, reports 168 upstream-changed files, **153 previously clean files left with older committed contents**, and worktree/base divergence increasing from 19 to 183 files while base/HEAD advanced. It explicitly says \u201crelated outcome, not proof of the same code path,\u201d reports no loud error, and cannot isolate the gating conditions. Its intact snapshot chain is useful reported evidence; the raw per-file artifacts were not independently obtained. The claimed deterministic core, skipped-checkout explanation and exclusion of a race are not established merely by before/after snapshots. Also correct its detection heuristic: matching an ancestor's bytes alone does not distinguish stale content from an intentional user revert; a known clean baseline is necessary."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stale-clean-files-after-base-advance.md",
+          "sha256": "a4959b2c940bfac551eda68da5ffc8b080846d85a62098a290d3d6fb81e7dfd7",
+          "line_start": 5,
+          "line_end": 11,
+          "exact_quote": "The [July 23 comment](https://github.com/gitbutlerapp/gitbutler/issues/14848#issuecomment-5063257903) describes GitButler 0.21.0, a dirty worktree and a base advance affecting 168 files, with 153 previously clean files retaining older committed bytes while HEAD/base advanced. It reports snapshot divergence increasing from 19 to 183 files and an unchanged example-file mtime (S00003). These counts are the reporter's measurements; the private repository and raw per-file artifacts were not independently examined.\n\nIndependent direction: preserve a controlled before/after manifest separating genuinely dirty paths, applied-stack paths and initially clean base-only paths. Advance only upstream content, then compare each class against expected committed and worktree blobs and index stages. Vary dirty-file presence, stack count, concurrent external writers and stack removal independently.\n\nThe reporter explicitly says the outcome is not proof of the loud assertion path. Their claim of a deterministic core and a skipped checkout is an inference; snapshots around an operation do not alone prove absence of a race. Their heuristic that an ancestor-matching dirty blob must be stale is also insufficient by itself: a user can intentionally revert a file to an ancestor's content. Baseline provenance is necessary before classifying or discarding changes.\n\nAlternative explanations include skipped/failed checkout, legitimate local edits, projection changes or an external writer. Keep this direction independent from both assertion failures and stack eviction; preserve the parent aggregate's uncertain disposition."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F080",
+          "relation": "narrower",
+          "rationale": "Specific provenance test direction and reporter counts; not the complete operation-diff or snapshot/checkout proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F012",
+          "relation": "narrower",
+          "rationale": "Specific provenance test direction and reporter counts; not the complete operation-diff or snapshot/checkout proposition.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific provenance test direction and reporter counts; not the complete operation-diff or snapshot/checkout proposition.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C12",
+      "proposition": "The expected-HEAD guard was present at a historical PR base, but that pin is not a verified release tag and current checkout code has changed.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 45,
+          "line_end": 45,
+          "exact_quote": "**Historical source verification.** [Checkout helper at `f5ae1a5`](https://github.com/gitbutlerapp/gitbutler/blob/f5ae1a5abae2e462c354bddd37d49980f77d965b/crates/but-core/src/worktree/checkout/utils.rs#L55-L82), S00044, contains the exact expected-HEAD-tree error. It first requires nonempty checkout changes and then detects worktree or ignored changes before comparing actual HEAD's tree with the source tree. This validates that such a recovery precondition existed. The pin is the base revision of proposed PR #14860, identified in S00018, **not a verified 0.21.0 release tag**. The source does not prove every attempted restore in the reporter's damaged state necessarily fails."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 52,
+          "line_end": 52,
+          "exact_quote": "- [Merged PR #15232](https://github.com/gitbutlerapp/gitbutler/pull/15232), S00047, merged 2026-08-10 at `b4020294dd07053c9dd7766571d62910b062ff08`, enables workdir/target conflicts to be represented in the index. [Acquired-head checkout code](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-core/src/worktree/checkout/function.rs#L32-L192), S00031, uses HEAD or a merge-base override, creates a worktree tree and performs a three-way merge; it can emit index conflicts when allowed, otherwise returns checkout-precondition errors. The old helper's exact mismatch guard is no longer the current implementation. This is relevant changed behavior, not evidence that either issue or the silent variant is fixed."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F050",
+          "relation": "narrower",
+          "rationale": "Exact-version caution and changed-source comparison refine qualification but do not certify any runtime or release.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F102",
+          "relation": "narrower",
+          "rationale": "Exact-version caution and changed-source comparison refine qualification but do not certify any runtime or release.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Exact-version caution and changed-source comparison refine qualification but do not certify any runtime or release.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C13",
+      "proposition": "Closed unmerged rollback PR14860 is not a validated fix; merged partial CLI support PR14700 does not establish integration or restore correctness.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 49,
+          "line_end": 51,
+          "exact_quote": "- Both issues are open in the acquired API responses. The [maintainer's nightly suggestion](https://github.com/gitbutlerapp/gitbutler/issues/14848#issuecomment-5025646549), S00003, says \u201cMy hope \u2026 you won't see this anymore\u201d; it is not confirmation. Issue timelines S00013/S00014 were inspected for fix references.\n- [PR #14860](https://github.com/gitbutlerapp/gitbutler/pull/14860), S00018, proposes eager snapshots/rollback, relaxed restore guards and an amend eviction guard. It is **closed and unmerged** (`merged: false`, `merged_at: null`). Empty acquired comment/review arrays S00021/S00023 do not reveal why it was closed. Its non-null `merge_commit_sha` is not proof of a merge. Its prose also incorrectly contrasts `bail!` with a graceful `Err`: the historical helper already returns an error; `bail!` is not evidence of a process panic. Do not adopt the proposal as a validated fix or safe fallback.\n- [Merged PR #14700](https://github.com/gitbutlerapp/gitbutler/pull/14700), S00019, merged 2026-07-12 at `08aa662a2725f151c979f47185042e885fb71c7c`, explicitly offers **partial** anonymous-segment support. Its [patch/test](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/14700/files), S00046, assigns IDs, rejects empty selectors and tests status rendering. It does not repair transactional upstream integration or certify restore from inconsistent state. Release inclusion was not independently established."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "The proposed rollback patch [#14860](https://github.com/gitbutlerapp/gitbutler/pull/14860) is closed, **unmerged** (S00018). Merged [#14700](https://github.com/gitbutlerapp/gitbutler/pull/14700) only adds partial anonymous-segment CLI support (S00019/S00046). Current [integration code](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-api/src/workspace.rs#L764-L918) prepares a best-effort snapshot, publishes only on success and ignores publication failure (S00041). It does not wrap this operation in the separate `but-transaction` API."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Directly resolves narrative/merge-state overclaims against more specific retained implementation/provenance evidence.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Directly resolves narrative/merge-state overclaims against more specific retained implementation/provenance evidence.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C14",
+      "proposition": "The integration wrapper publishes a best-effort snapshot only on success and ignores publication errors; the separate transaction API is not full ACID and excludes database rows.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 53,
+          "line_end": 55,
+          "exact_quote": "- [Current upstream-integration wrapper](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-api/src/workspace.rs#L764-L918), S00041:803\u2013818, prepares a best-effort snapshot, calls integration, commits the snapshot only on success, and ignores its commit error with `.ok()`. The lower path materializes, persists project metadata, updates workspace metadata and constructs the returned state (879\u2013901). This wrapper does not implement the proposed automatic snapshot rollback.\n- [Current materialization](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-rebase/src/graph_rebase/materialize.rs#L190-L280), S00042, persists object memory, checks out linked worktrees and then the current worktree, and only then applies the ref-edit batch and refreshes the projection. The main worktree allows conflicts; linked worktrees do not. Thus \u201crefs always move before checkout\u201d is contradicted for this path. Several fallible sequential stages still justify failure injection; no crash atomicity is inferred.\n- The separate [transaction API](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-transaction/src/lib.rs#L39-L61), S00034, explicitly calls itself \u201cbest effort,\u201d not fully ACID, and excludes project-database rows from rollback. Its existence is not evidence that the inspected integration wrapper uses it or that every state domain is transactional."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "The proposed rollback patch [#14860](https://github.com/gitbutlerapp/gitbutler/pull/14860) is closed, **unmerged** (S00018). Merged [#14700](https://github.com/gitbutlerapp/gitbutler/pull/14700) only adds partial anonymous-segment CLI support (S00019/S00046). Current [integration code](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-api/src/workspace.rs#L764-L918) prepares a best-effort snapshot, publishes only on success and ignores publication failure (S00041). It does not wrap this operation in the separate `but-transaction` API."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Concrete evidence for independently observable native/sidecar boundaries, consolidated with C17/C19 for full finding credit.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete evidence for independently observable native/sidecar boundaries, consolidated with C17/C19 for full finding credit.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C15",
+      "proposition": "Current materialization checks out worktrees before the ref batch; fallible stage boundaries require investigation, not an assumed refs-first or atomic sequence.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 54,
+          "line_end": 54,
+          "exact_quote": "- [Current materialization](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-rebase/src/graph_rebase/materialize.rs#L190-L280), S00042, persists object memory, checks out linked worktrees and then the current worktree, and only then applies the ref-edit batch and refreshes the projection. The main worktree allows conflicts; linked worktrees do not. Thus \u201crefs always move before checkout\u201d is contradicted for this path. Several fallible sequential stages still justify failure injection; no crash atomicity is inferred."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "Independent direction: inject failures after object persistence, individual checkout, ref update, project/stack metadata persistence and snapshot publication. Observe actual state at each boundary, preserve dirty files, and distinguish failed-before-effect, partial effect, unknown effect and successful recovery. Current [materialization](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-rebase/src/graph_rebase/materialize.rs#L190-L280) performs checkout before the ref batch; it must not be described as the original reporter's unchanged sequence (S00042). Recovery preparation still consults the current projection (S00035:860\u2013880)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Source-order correction and fault-injection direction add implementation detail to existing findings.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F102",
+          "relation": "narrower",
+          "rationale": "Source-order correction and fault-injection direction add implementation detail to existing findings.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Source-order correction and fault-injection direction add implementation detail to existing findings.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C16",
+      "proposition": "Recovery should diagnose actual progress independently of healthy projections and avoid repeating mutation after unknown effects while preserving dirty-file provenance.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 57,
+          "line_end": 57,
+          "exact_quote": "**Preserved lessons and alternatives.** Test recovery from inconsistent state independently of healthy status/UI projections. Snapshot preparation still calls the current workspace projection (S00035:860\u2013880), so merely requesting a before-snapshot is not proof it can be captured in every damaged state. Separate actual progress from intended action, and avoid automatic repeated mutation after an unknown/partial effect. Preserve dirty-file provenance before attempting repair. Quarantine with an explicit state diagnosis is an alternative when rollback cannot establish a consistent result. The reporter's manual Git plumbing/teardown remains historical evidence, not a recommended fallback procedure."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+          "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+          "line_start": 9,
+          "line_end": 11,
+          "exact_quote": "Independent direction: inject failures after object persistence, individual checkout, ref update, project/stack metadata persistence and snapshot publication. Observe actual state at each boundary, preserve dirty files, and distinguish failed-before-effect, partial effect, unknown effect and successful recovery. Current [materialization](https://github.com/gitbutlerapp/gitbutler/blob/079f2d998fc3e2d882f68c5f535d101272ed28cf/crates/but-rebase/src/graph_rebase/materialize.rs#L190-L280) performs checkout before the ref batch; it must not be described as the original reporter's unchanged sequence (S00042). Recovery preparation still consults the current projection (S00035:860\u2013880).\n\nAlternative: capture state and enter explicit recovery when rollback cannot establish a consistent result. The reporter's manual Git plumbing and the unmerged patch's relaxed guard are not validated fallback procedures. The parent aggregate remains uncertain even if a narrow CLI or checkout symptom is fixed."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Supports partial-effect recovery and no-blind-retry lessons; not all timeout/cancellation/publication aspects of F007 are expressly asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Supports partial-effect recovery and no-blind-retry lessons; not all timeout/cancellation/publication aspects of F007 are expressly asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Supports partial-effect recovery and no-blind-retry lessons; not all timeout/cancellation/publication aspects of F007 are expressly asserted.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C17",
+      "proposition": "Graph appearance can remain correct while stack ownership metadata and later restored refs are wrong; verify graph, ownership, captured metadata and restored state independently.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 68,
+          "line_end": 68,
+          "exact_quote": "[PR #15584](https://github.com/gitbutlerapp/gitbutler/pull/15584), S00005, is merged (`merged: true`) at `a8cca1862e8cd67b1d91d0c1361d32adca401961`, 2026-08-27 08:08:16 UTC, and explicitly fixes #15573. It states that `set_workspace` selected the lowest-ordered branch-name match across all stacks. A stale unapplied stack could take the applied stack's head when metadata was written; the UI stayed correct because it was derived from the ref graph. Snapshot preparation reused that metadata write, then restore obeyed its degraded applied-membership list. The PR also reports duplicate-name errors during unapply. This is stronger causal evidence than the issue's unverified database theory, but is not a claim that every visually similar problem has the same cause."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 74,
+          "line_end": 74,
+          "exact_quote": "- [Oplog at the merge revision](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/gitbutler-oplog/src/oplog.rs), S00037:844\u2013855, overlays projected metadata and calls the changed `set_workspace` during capture. Restore later rewrites branch refs by iterating only applied stacks and their heads (1186\u20131191). This connects the metadata defect to incomplete restoration without assuming the report's SQLite theory. Duplicate **ownership entries across stacks** can be legitimate shared segments; this is not a claim of duplicate full names in Git's ref namespace."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 78,
+          "line_end": 78,
+          "exact_quote": "**Preserved lesson, alternatives and remaining questions.** Compare graph, stack-scoped ownership, captured metadata and actual restored refs/objects independently; a correct graph or valid serialization can hide the wrong ownership. Preserve legitimate shared segments rather than deleting all duplicate names. Keep malformed historical captures as immutable evidence, then test both bad restore and redo against all refs, workspace state, index/conflicts and dirty files. Existing generic restore tests in S00045 add narrower positive evidence, including missing-commit reconstitution and malformed-format rejection; they do not establish full historical ownership recovery. Alternatives include rejecting semantically inconsistent metadata before mutation and exposing a bounded recovery procedure when an old capture cannot satisfy those invariants. No automatic repair of old captures or universal redo guarantee is claimed."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stack-scoped-metadata-ownership.md",
+          "sha256": "f0d51025192a38ec8db434074202331cbb5de491d64c4e7a76111d8a759223b4",
+          "line_start": 5,
+          "line_end": 9,
+          "exact_quote": "[Merged PR #15584](https://github.com/gitbutlerapp/gitbutler/pull/15584) explains why global lowest-order name matching moved a head from its legitimate owner into a stale stack while graph-derived UI looked correct (S00005). The [merged code](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/but-meta/src/legacy/mod.rs#L483-L558) keeps a matching head already owned by the destination stack before falling back to cross-stack lookup (S00030). Duplicate ownership entries do not mean there are two Git refs with the same full name.\n\nThe [patch tests](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/15584/files) assert that stale unapplied copies retain their own heads and that two applied stacks can each retain a shared-segment entry (S00008). They roundtrip synthetic metadata, not a live eight-segment restore. The fix leaves genuine cross-stack moves using the fallback when the destination does not own the head.\n\nIndependent direction: compare the graph, per-stack ownership and captured metadata using stack identity plus branch/segment identity; include stale duplicate entries, legitimate shared segments, different ordering and real cross-stack movement. A blanket global deduplication or \u201creject duplicate names\u201d rule would reject supported states. Garbage collection of stale duplicates was explicitly left as follow-up by the PR. This direction retains the lead despite rejection of the issue author's SQLite-versus-TOML hypothesis."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "semantically_equivalent",
+          "rationale": "Exact existing F010 GitButler counterexample plus independent restoration/state checks. Together with C5/C14/C16, this supports the complete native/sidecar observability and inconsistent-state recovery proposition.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Exact existing F010 GitButler counterexample plus independent restoration/state checks. Together with C5/C14/C16, this supports the complete native/sidecar observability and inconsistent-state recovery proposition.",
+      "proposed_credit_fids": [
+        "F010"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C18",
+      "proposition": "The merged stack-scoped head lookup explains the ownership defect more specifically than the issue author\u2019s unverified SQLite-versus-TOML theory.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 64,
+          "line_end": 68,
+          "exact_quote": "**Reconciled conclusion.** The merged mechanism in the handoff is supported by both source and patch tests. The issue author's SQLite-versus-TOML theory is superseded by the demonstrated duplicate-ownership lookup bug. Existing malformed snapshots are not repaired by this patch; the redo benefit is conditional on a correct, successfully published before-restore snapshot.\n\n**Report versus diagnosis.** [Issue #15573](https://github.com/gitbutlerapp/gitbutler/issues/15573), S00007, reports 0.22.1/Linux, an eight-segment stack, and two restores that rewound only the tip while leaving seven lower refs on the abandoned chain. Its included reflog table and snapshot summary report duplicated heads, nine metadata stacks and only one applied entry. The author discloses AI-assisted diagnosis and writes: \u201cI have not read the source, so treat the mechanism as a guess; the observations above are direct.\u201d The supplied reproducer was not executed here. Treat observed state separately from the guessed storage architecture.\n\n[PR #15584](https://github.com/gitbutlerapp/gitbutler/pull/15584), S00005, is merged (`merged: true`) at `a8cca1862e8cd67b1d91d0c1361d32adca401961`, 2026-08-27 08:08:16 UTC, and explicitly fixes #15573. It states that `set_workspace` selected the lowest-ordered branch-name match across all stacks. A stale unapplied stack could take the applied stack's head when metadata was written; the UI stayed correct because it was derived from the ref graph. Snapshot preparation reused that metadata write, then restore obeyed its degraded applied-membership list. The PR also reports duplicate-name errors during unapply. This is stronger causal evidence than the issue's unverified database theory, but is not a claim that every visually similar problem has the same cause."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 72,
+          "line_end": 74,
+          "exact_quote": "- [Merged metadata implementation](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/but-meta/src/legacy/mod.rs#L483-L558), S00030:483\u2013558, preserves the incoming existing stack identity, then checks `stack_has_head` before global fallback. A head already owned by the target stack stays there; a branch not owned by it can still use the existing cross-stack move path. Helper lines 1120\u20131133 check the short name within the selected stack. The full file is byte-identical at acquired head (S00043); this proves source retention, not binary release inclusion.\n- [Patch and tests](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/15584/files), S00008, add `duplicate_names_in_unapplied_stacks_do_not_steal_applied_branches` and `shared_segment_names_stay_in_their_own_applied_stacks`. They construct synthetic metadata, roundtrip through `workspace`/`set_workspace`, and assert that the applied stack retains lower/tip heads, the stale copy retains its distinct OID, and both applied stacks retain their shared segment. These tests directly address ownership preservation; they are not live eight-segment restore tests and were not run here.\n- [Oplog at the merge revision](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/gitbutler-oplog/src/oplog.rs), S00037:844\u2013855, overlays projected metadata and calls the changed `set_workspace` during capture. Restore later rewrites branch refs by iterating only applied stacks and their heads (1186\u20131191). This connects the metadata defect to incomplete restoration without assuming the report's SQLite theory. Duplicate **ownership entries across stacks** can be legitimate shared segments; this is not a claim of duplicate full names in Git's ref namespace."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stack-scoped-metadata-ownership.md",
+          "sha256": "f0d51025192a38ec8db434074202331cbb5de491d64c4e7a76111d8a759223b4",
+          "line_start": 5,
+          "line_end": 7,
+          "exact_quote": "[Merged PR #15584](https://github.com/gitbutlerapp/gitbutler/pull/15584) explains why global lowest-order name matching moved a head from its legitimate owner into a stale stack while graph-derived UI looked correct (S00005). The [merged code](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/but-meta/src/legacy/mod.rs#L483-L558) keeps a matching head already owned by the destination stack before falling back to cross-stack lookup (S00030). Duplicate ownership entries do not mean there are two Git refs with the same full name.\n\nThe [patch tests](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/15584/files) assert that stale unapplied copies retain their own heads and that two applied stacks can each retain a shared-segment entry (S00008). They roundtrip synthetic metadata, not a live eight-segment restore. The fix leaves genuine cross-stack moves using the fallback when the destination does not own the head."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Mechanism is reconciled against specific merged source and narrow test definitions while retaining release/runtime uncertainty.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Mechanism is reconciled against specific merged source and narrow test definitions while retaining release/runtime uncertainty.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C19",
+      "proposition": "Shared-segment ownership entries can legitimately repeat across stacks; blanket duplicate-name rejection would reject supported states.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 72,
+          "line_end": 74,
+          "exact_quote": "- [Merged metadata implementation](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/but-meta/src/legacy/mod.rs#L483-L558), S00030:483\u2013558, preserves the incoming existing stack identity, then checks `stack_has_head` before global fallback. A head already owned by the target stack stays there; a branch not owned by it can still use the existing cross-stack move path. Helper lines 1120\u20131133 check the short name within the selected stack. The full file is byte-identical at acquired head (S00043); this proves source retention, not binary release inclusion.\n- [Patch and tests](https://api.github.com/repos/gitbutlerapp/gitbutler/pulls/15584/files), S00008, add `duplicate_names_in_unapplied_stacks_do_not_steal_applied_branches` and `shared_segment_names_stay_in_their_own_applied_stacks`. They construct synthetic metadata, roundtrip through `workspace`/`set_workspace`, and assert that the applied stack retains lower/tip heads, the stale copy retains its distinct OID, and both applied stacks retain their shared segment. These tests directly address ownership preservation; they are not live eight-segment restore tests and were not run here.\n- [Oplog at the merge revision](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/gitbutler-oplog/src/oplog.rs), S00037:844\u2013855, overlays projected metadata and calls the changed `set_workspace` during capture. Restore later rewrites branch refs by iterating only applied stacks and their heads (1186\u20131191). This connects the metadata defect to incomplete restoration without assuming the report's SQLite theory. Duplicate **ownership entries across stacks** can be legitimate shared segments; this is not a claim of duplicate full names in Git's ref namespace."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stack-scoped-metadata-ownership.md",
+          "sha256": "f0d51025192a38ec8db434074202331cbb5de491d64c4e7a76111d8a759223b4",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "Independent direction: compare the graph, per-stack ownership and captured metadata using stack identity plus branch/segment identity; include stale duplicate entries, legitimate shared segments, different ordering and real cross-stack movement. A blanket global deduplication or \u201creject duplicate names\u201d rule would reject supported states. Garbage collection of stale duplicates was explicitly left as follow-up by the PR. This direction retains the lead despite rejection of the issue author's SQLite-versus-TOML hypothesis."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F006",
+          "relation": "narrower",
+          "rationale": "GitButler-specific scoped-ownership example; does not introduce a PM stack schema or new capability. Fits the existing warning that a healthy graph/serialization can hide wrong identity.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "GitButler-specific scoped-ownership example; does not introduce a PM stack schema or new capability. Fits the existing warning that a healthy graph/serialization can hide wrong identity.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "GitButler-specific scoped-ownership example; does not introduce a PM stack schema or new capability. Fits the existing warning that a healthy graph/serialization can hide wrong identity.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    },
+    {
+      "claim_id": "P-J0017-C20",
+      "proposition": "Future serializer fixes do not repair immutable bad historical snapshots, and redo requires a correct successfully published before-state; preparation or returned success alone is insufficient.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+          "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+          "line_start": 76,
+          "line_end": 78,
+          "exact_quote": "**Old snapshots and redo qualification.** The PR explicitly says already recorded degenerate snapshots still restore badly, and leaves stale-entry garbage collection as follow-up. The patch changes future metadata construction; it does not rewrite historical snapshot bytes. At S00037:1038\u20131051, restore prepares the before-state tree, but only commits it at 1268\u20131275, **after** restore mutations. Thus a completed restore with a correctly captured and published before-state can support redo; preparation alone, an interrupted restore, a publication failure or an already uncapturable current state does not prove an available redo entry. Restore also logs and ignores conflict-sidecar errors (1053\u20131055) and ignores individual applied-head ref-write errors with `.ok()` (1189). Those are code-derived reasons for independently checking the restored state, not locally reproduced failures.\n\n**Preserved lesson, alternatives and remaining questions.** Compare graph, stack-scoped ownership, captured metadata and actual restored refs/objects independently; a correct graph or valid serialization can hide the wrong ownership. Preserve legitimate shared segments rather than deleting all duplicate names. Keep malformed historical captures as immutable evidence, then test both bad restore and redo against all refs, workspace state, index/conflicts and dirty files. Existing generic restore tests in S00045 add narrower positive evidence, including missing-commit reconstitution and malformed-format rejection; they do not establish full historical ownership recovery. Alternatives include rejecting semantically inconsistent metadata before mutation and exposing a bounded recovery procedure when an old capture cannot satisfy those invariants. No automatic repair of old captures or universal redo guarantee is claimed."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/historical-bad-snapshot-redo.md",
+          "sha256": "a55a1d1bb9c88cf1958687ff168519355ae9f3a037e4065a10cc52baf818859d",
+          "line_start": 5,
+          "line_end": 11,
+          "exact_quote": "[#15573](https://github.com/gitbutlerapp/gitbutler/issues/15573) reports an eight-segment restore rewinding only the top ref. [#15584](https://github.com/gitbutlerapp/gitbutler/pull/15584) says it prevents newly degraded metadata but does not repair snapshots already recorded; fresh before-restore capture should make a bad historical restore recoverable with redo (S00007/S00005).\n\nAt the [merge revision](https://github.com/gitbutlerapp/gitbutler/blob/a8cca1862e8cd67b1d91d0c1361d32adca401961/crates/gitbutler-oplog/src/oplog.rs#L1007-L1275), restore prepares the before-state tree at lines 1038\u20131051, restores only heads in applied metadata at 1186\u20131191, and commits the before-state snapshot at 1268\u20131275, after mutations (S00037). Preparing the tree alone does not make the redo entry discoverable. Some conflict-sidecar and individual ref-update errors are ignored; a returned success needs independent semantic verification before it proves complete restoration.\n\nIndependent direction: retain an immutable bad historical capture, restore it in an isolated disposable repository with the fixed implementation, and verify a published redo returns every ref, ownership entry, workspace commit, index/conflict stage and dirty file to its recorded before-state. Exercise failure during restore and failure publishing its before-state snapshot separately. Do not assume a corrected metadata serializer repaired historical bytes or made all partial restore failures recoverable.\n\nAlternative: detect malformed ownership before application and preserve the original capture plus diagnostics. Existing generic restore tests provide useful narrower evidence, but neither those tests nor the metadata roundtrip tests were run here, and no test inspected establishes universal old-capture recovery."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "Specific old-capture and redo limits reinforce verification requirements. No recent-actions/virtualized timeline proposal or universal historical recovery is established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F081",
+          "relation": "narrower",
+          "rationale": "Specific old-capture and redo limits reinforce verification requirements. No recent-actions/virtualized timeline proposal or universal historical recovery is established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F015",
+          "relation": "narrower",
+          "rationale": "Specific old-capture and redo limits reinforce verification requirements. No recent-actions/virtualized timeline proposal or universal historical recovery is established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific old-capture and redo limits reinforce verification requirements. No recent-actions/virtualized timeline proposal or universal historical recovery is established.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding implementation evidence / bounded technical refinement; no new product or canon requirement established."
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/capture-coverage-and-schema.md",
+      "sha256": "c1617a091353f1101587a20c04dbfc781d04154a3a953950f571a20cc2076473",
+      "lines": 9,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C01",
+        "P-J0017-C02",
+        "P-J0017-C03",
+        "P-J0017-C04",
+        "P-J0017-C06"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/historical-bad-snapshot-redo.md",
+      "sha256": "a55a1d1bb9c88cf1958687ff168519355ae9f3a037e4065a10cc52baf818859d",
+      "lines": 11,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C20"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/partial-integration-recovery.md",
+      "sha256": "95829d7cfa3af2f014df84964eb647bb2b656d619a541eb1dfc25a90e666e5fe",
+      "lines": 11,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C08",
+        "P-J0017-C10",
+        "P-J0017-C13",
+        "P-J0017-C14",
+        "P-J0017-C15",
+        "P-J0017-C16"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/snapshot-publication-and-retention.md",
+      "sha256": "8a82a368a8b8ea6f38212891ade83709fe6b96783cf158112e3419836153b4ab",
+      "lines": 9,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C05",
+        "P-J0017-C07"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stack-scoped-metadata-ownership.md",
+      "sha256": "f0d51025192a38ec8db434074202331cbb5de491d64c4e7a76111d8a759223b4",
+      "lines": 9,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C17",
+        "P-J0017-C18",
+        "P-J0017-C19"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/stale-clean-files-after-base-advance.md",
+      "sha256": "a4959b2c940bfac551eda68da5ffc8b080846d85a62098a290d3d6fb81e7dfd7",
+      "lines": 11,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C11"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/leads/unrelated-stack-eviction.md",
+      "sha256": "7a56d6a949e20aeea2aae0aba7ce4bdd680837e527107ae97e79d18fdb8f1568",
+      "lines": 9,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C09"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/notes.md",
+      "sha256": "64d825b032afddd5f08e1d4608bfd0fc3694fa80cc8bf8e54a02963196f457e1",
+      "lines": 84,
+      "kind": "notes",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0017-C01",
+        "P-J0017-C02",
+        "P-J0017-C03",
+        "P-J0017-C04",
+        "P-J0017-C05",
+        "P-J0017-C06",
+        "P-J0017-C07",
+        "P-J0017-C08",
+        "P-J0017-C09",
+        "P-J0017-C10",
+        "P-J0017-C11",
+        "P-J0017-C12",
+        "P-J0017-C13",
+        "P-J0017-C14",
+        "P-J0017-C15",
+        "P-J0017-C16",
+        "P-J0017-C17",
+        "P-J0017-C18",
+        "P-J0017-C19",
+        "P-J0017-C20"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; duplicate child restatements joined to the listed atomic claims; open directions are not promoted to confirmed findings."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0017-reconcile/source-index.md",
+      "sha256": "a38decc6b448e646a922e8e39ffdbc7ee63dc5a5bdd0f845ed41c09b1f0c84a3",
+      "lines": 40,
+      "kind": "primary_receipt_index",
+      "read_complete": true,
+      "claim_ids": [],
+      "disposition": "Receipt/provenance lookup only; no independently asserted product claim."
+    }
+  ],
+  "proposed_credit_fids": [
+    "F010",
+    "F102"
+  ],
+  "proposed_new_original_baseline_credit_fids": [],
+  "credit_note": "Both F010 and F102 already have original premium credit. This increment adds more specific supporting evidence, not new unique recall credit. Narrower mapped assertions are not credited as full propositions.",
+  "new_union_candidates": [],
+  "union_extension_count": 0,
+  "original_union_denominator": 105,
+  "current_canon_review": {
+    "required_for_genuinely_new_product_claim": true,
+    "performed": false,
+    "reason": "No genuinely new product/canon requirement established: scoped ownership, incomplete publication, old-capture/redo and file provenance examples fit existing finding boundaries. No claim that current Plans contains a newly missing requirement is made."
+  },
+  "unresolved": [
+    "Partial-integration aggregate cause, reproducer and current-release resolution remain uncertain.",
+    "Reporter measurements/private artifacts are attributed, not independently reproduced.",
+    "Merged ownership tests were inspected by the worker but not run; binary release inclusion remains unverified.",
+    "Full storage closure, crash publication, old-capture recovery and redo fault paths remain proposed validation work."
+  ],
+  "nonclaim_coverage": [
+    {
+      "document": "notes.md",
+      "lines": [
+        1,
+        9
+      ],
+      "disposition": "Scope, evidence identity and missing sibling investigation notice."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        31,
+        31
+      ],
+      "disposition": "Delivery link to two retained directions."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        59,
+        59
+      ],
+      "disposition": "Three investigation directions; uncertain aggregate explicitly remains open."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        80,
+        84
+      ],
+      "disposition": "Delivery audit and unresolved runtime limits."
+    }
+  ],
+  "validation": {
+    "manifest_document_hashes_verified": true,
+    "all_9_documents_read": true,
+    "exact_quotes_extracted_from_hashed_sources": true,
+    "full_105_propositions_considered": true,
+    "no_keyword_only_recall_credit": true,
+    "no_new_research_or_worker_input_mutations": true
+  },
+  "manifest_revisions": [
+    {
+      "previous_sha256": "ef1c158301f7f769ce880e094d0c05324c4b27a9ae620bcbf5b28f979cb58322",
+      "current_sha256": "df2b1be99ea9619351c1021043c8ec6fad54ae2919f74bd41cf287d3306291f1",
+      "reason": "Collector now explicitly inventories top-level leads.md and both source-index.md and evidence-index.md. Delivered document bytes and assertions are unchanged.",
+      "all_existing_document_hashes_reverified": true
+    }
+  ]
+}

@@ -1,0 +1,1180 @@
+{
+  "schema": "jj.continuation3.bounded_bulk_review.v1",
+  "scope": "17 remaining jobs; partial reading. Original arm credit persists. No complete-coverage or saturation claim.",
+  "baseline_union_denominator": 105,
+  "index": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/terminal-notes-index.json",
+    "sha256": "db149c7282063a75a2d258214a6700fa0144a83d228b7f868f239ab22a6a4b88"
+  },
+  "jobs": [
+    {
+      "arm": "premium",
+      "job": "J0022-compare",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [],
+      "document_ids": [
+        0,
+        1
+      ],
+      "detailed_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/adjudication/premium-J0022.json",
+        "sha256": "05c950ad23b1c1bf0cf724a84599eccf1a37c81d9037561e5a31f074075daec0"
+      },
+      "assessment": "Detailed earlier report persists; no new-to-original-arm baseline credits."
+    },
+    {
+      "arm": "premium",
+      "job": "J0023-reconcile",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [],
+      "document_ids": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "detailed_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/adjudication/premium-J0023.json",
+        "sha256": "143bb424afc5383cd7a3206f33cb652f2c42feb8fc60ffbee67389fcffa6a618"
+      },
+      "assessment": "Detailed earlier report persists; no new-to-original-arm baseline credits."
+    },
+    {
+      "arm": "premium",
+      "job": "J0024-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "premium",
+      "job": "J0025-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "premium",
+      "job": "J0026-compare",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "premium",
+      "job": "J0027-compare",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "premium",
+      "job": "J0028-compare",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        37,
+        38
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0013-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0014-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0015-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0016-compare",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [],
+      "document_ids": [
+        81,
+        82
+      ],
+      "assessment": "Read-effects repair overlaps F002, already original hybrid credit. Optional waypoint/stack/review marks overlap F013/F014/F099/F027, also already credited. No new-to-arm credit. Supplemental primary artifacts were not independently inspected."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0017-compare",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [
+        {
+          "id": "graph_projection_relational_validation",
+          "proposition": "Reject structurally accepted graph pages whose emitted counts exceed requested size, whose declared count or continuation disagrees with content, whose node identities conflict, or whose parent-reference expansion is unbounded.",
+          "status": "candidate_requires_root_current_canon_adjudication",
+          "baseline_overlap": "F061 already owns graph bounds/currentness; determine whether concrete schema counterexamples warrant a distinct correction rather than duplicate baseline evidence.",
+          "evidence": [
+            {
+              "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0017-compare/notes.md",
+              "sha256": "a5f7afe2d1edef11dc1be3277ab7105cc38b7d638e8a20cc553891a33ec024c5",
+              "line_start": 18,
+              "line_end": 20,
+              "exact_quote": "`source_graph_projection` caps nodes at 200 and edges at 600, but does not connect `returned_count` to the actual node count, enforce the requested `page_size`, tie `has_more` to a continuation, or constrain parent-reference expansion. The current graph fixtures (`Plans/source_control_contract_fixtures.json:2011\u20132099`) exercise backend identity and declaration flags, not these relations. The independent read-only probe [graph-contract-probes.json](graph-contract-probes.json) confirms that a two-node page with size 1, a false returned count, a `has_more=true` page with no continuation, duplicate node identity for different revisions, and 1001 parent refs all validate. The 201-node and 601-edge negative controls fail as expected. This is structural-schema evidence only, not a claim about the unavailable future runtime or canonical semantic validator.\n\nReplacement behavior to specify in SCS-017 and its existing schema/fixture family: count actual emitted nodes separately from layout rows; require `returned_count == len(nodes) <= page_size <= 200`; validate node/edge identity consistency and continuation relations; bound reference/edge expansion and report incomplete adjacency explicitly instead of silently truncating it. Treat dynamic cursor ownership/generation and selection preservation as owner semantic validation obligations, with fixtures that show the state transitions rather than only asserting true/false flags. Concrete full checks and consumer touchpoints will be recorded in the final revision of these notes."
+            }
+          ],
+          "limit": "JSON Schema only; no semantic validator or runtime execution. Probe result read; probe Python and primary-passages supplement unread."
+        }
+      ],
+      "document_ids": [
+        83,
+        84,
+        85,
+        86
+      ],
+      "assessment": "Progressive delivered note. F061 overlap does not establish all cursor/caller and projection-identity requirements. F102 existing-arm evidence reconciles prior false quadratic paging assertion. No new original-arm baseline credit."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0018-compare",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        87,
+        88,
+        89
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0019-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0020-reconcile",
+      "delivered_markdown_read_complete": false,
+      "new_to_original_arm_baseline_credit_fids": null,
+      "new_union_candidates": [],
+      "document_ids": [
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119
+      ],
+      "assessment": "Not examined within bounded evaluator allocation; findings and credit are unknown, not zero. Requires full semantic review."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0021-reconcile",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [],
+      "document_ids": [
+        120
+      ],
+      "assessment": "Progressive external reconciliation supports existing-arm F102 release/implementation corrections; no full new-to-arm proposition. Remaining investigation explicitly unfinished."
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0022-compare",
+      "delivered_markdown_read_complete": true,
+      "new_to_original_arm_baseline_credit_fids": [],
+      "new_union_candidates": [],
+      "document_ids": [
+        121
+      ],
+      "assessment": "Progressive comparison establishes existing authority boundaries and corrects dirty-file exclusion claim as intent versus implementation (existing F102). Does not fully establish F001 or F005. No new-to-arm credit."
+    }
+  ],
+  "documents": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0022-compare/notes.md",
+      "sha256": "ba6904cb4bcde5ddbe5952c3c276966043f7a16332977f3281fa832f00a1680e",
+      "read_complete": true,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0022-compare/workspace/schema-checks.json",
+      "sha256": "5e4f1f289524036285f391939763ae65b01f14c169f0ed78bc213ae54e2c6419",
+      "read_complete": true,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+      "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+      "read_complete": true,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/clone-destination-lifecycle.md",
+      "sha256": "d0f498530703ced0ebaba7312fe7841193727f5fb36d3cf35dd23554a5ce6a77",
+      "read_complete": true,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/conflict-byte-roundtrip.md",
+      "sha256": "933cd74fb924fa1ff56bc6d0db7f322810ca3397b25c9290cf6b6cf666e143cc",
+      "read_complete": true,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/conflict-editor-partial-results.md",
+      "sha256": "34806fbb749928e6cb6e2e0f8b0811cef66139282042c945891a1b596727ea41",
+      "read_complete": true,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/evolution-identity-pagination.md",
+      "sha256": "aa99fdfba25d207cfad70f6511a1d93de1550b213214ed080524175bb9645ff2",
+      "read_complete": true,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/notes.md",
+      "sha256": "df36d18c5a05e4bb072350be92a9f98ff7cb47b1587ad4169e5131bafa62f71d",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/crash-directory-entry-durability.md",
+      "sha256": "804a66c5e74b100bab8574e062047ff13536dcc28c8092637fc2be3d8242c993",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/crash-recovery-closure.md",
+      "sha256": "5f20204b4843e603a054fc78b46d63a433ad52ac30d72fc73f18f6045d170469",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-cleanup-regression-coverage.md",
+      "sha256": "864e99c6e6e275dfa8dcd8d1ff21a7e3617b9faf904f07bd55543c8f66498119",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-empty-heads-and-gc.md",
+      "sha256": "2c13fa1b575ccda83914627f046ed0bbf7e0c408618643dfad186b6c6a742d43",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-head-entry-validation.md",
+      "sha256": "232434e8f3e768d9b35c07dfc7d5d5b9e1038280ecaa4b89610362c6c146df60",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-legacy-metadata-recovery.md",
+      "sha256": "081d038b631e95f02f3ea8d60a43a900cd3ca36ae6d3d60a1fdde491ba78968e",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-removal-error-observability.md",
+      "sha256": "67c3da8219b94eb6b64067d6219a0e0ed3bd7037701d278036a00a5c4a401ceb",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/fetch-prefetch-alternative.md",
+      "sha256": "811b3a31f65b90db25c7043948686a513a8d646d0b4d4c50eae00ec0b7e2de13",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/fetch-snapshot-boundary-and-semantics.md",
+      "sha256": "2878b45d6d5fb341772283dfdb7e943160235ce81feb29e702b3749623c12219",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0024-reconcile/workspace/evidence-index.md",
+      "sha256": "a703085c37bccf2410cebc950ad517a9779ef1cc854206982f6fd1f5db34d453",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0024-reconcile/workspace/reconciliation-audit.md",
+      "sha256": "e036cead70b9b240a9470f18dd3e826a882505a78c1d364948803f687e3d0419",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/notes.md",
+      "sha256": "517131e62d42b4567aace37f378ae57f7089f5b645895360543d5366b2601bb5",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/gc-command-snapshot-side-effects.md",
+      "sha256": "af486d34274a0d6a445d9a9b61ead97ce3a513776b777422be996b4423d2c9ba",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/gc-detached-operation-closure.md",
+      "sha256": "e012c832102acd5afda2318bfc4d5ab9379fc09f2b5b343ad815df0ae0f29048",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/hash-existing-repo-effective-format.md",
+      "sha256": "1e49e7e2bea2e4efa775696854250176cef19aa19d79bc02ba8782a0b22be205",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/hash-legacy-signature-preservation.md",
+      "sha256": "101181feaf7516ee5e20bfd24d60baa57f8b382f7da0d34f6e61e34332d7e368",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/revset-sibling-visibility.md",
+      "sha256": "500464a6eeef859051edfe402b16155993899c3b5f7f0edcf4f8ff5fef2f36b8",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0025-reconcile/workspace/evidence-index.md",
+      "sha256": "b725c14131268fc336afd341a713c100998bf3cf15cc845819b01a6140b9aa73",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+      "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/clone-destination-lifecycle.md",
+      "sha256": "07557678a92fff3f8d7d8a434645521b53c33222908dbf2525da3d4b2a919428",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/conflict-byte-roundtrip.md",
+      "sha256": "87806c7dec8109998127ff3f8b0cf2db26f5531594a95cb1cf8c6d5ecda9e8eb",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/conflict-editor-partial-results.md",
+      "sha256": "b2fbb600f6eb7f443a9405180e5ec06ead94cae17d8bfefed40975dcbe279752",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/evolution-identity-pagination.md",
+      "sha256": "80fa715f297fe0e7a082a06be3af719b7dacfa52afb2262523f4ddb99e412f9f",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/notes.md",
+      "sha256": "ce220bf03a4344ced49262a39c61326ee5b92ceb0c34adf0ac99f287fcfb871e",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/leads.md",
+      "sha256": "f31ff986b695c248efc2abc13667445b101e5d4e7d2f9785117e929925102c1f",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/check_schema_evidence.py",
+      "sha256": "f31a6e4320dea927b0cccbfc6eaec05c9f3efe2fc98f7a5bf080829a69edea05",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/evidence-index.md",
+      "sha256": "ad16c50c80f0b7771cabb222b2f4796a0bd51dcb7a725bcf1faf748869c4abb2",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/plan-integrity-checks.json",
+      "sha256": "9b74f721848029d46927511b4eecbfd294ddf94081a6d009290cfe90b1c2b967",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/schema-checks.json",
+      "sha256": "01450e5f6e5faf40954d3e49a5f8474e84cbfcbb956c416fc04de234e1821ff4",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md",
+      "sha256": "469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0028-compare/workspace/evidence-index.md",
+      "sha256": "acc9902c5c5c67cd0927db4dbc1c30b92539722a4f39a3dd5160d48e0263246d",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/notes.md",
+      "sha256": "1e9025fcfac43a1ffef551afc98d59fd4770ca881fe6422ea84abd59dd568e64",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/branchless-snapshot-undo-coverage.md",
+      "sha256": "8e18994bb0ecf1659cd96f53d51e922d5408bd5037847d4e53681793639dcae0",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/editor-scm-templates-and-snapshot-coordination.md",
+      "sha256": "af41a4309b3b1b09215a25caf533b0ec322c6510978ee797035dfda3ec8b53d7",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/forge-stack-identities.md",
+      "sha256": "4325110703fda6814866d33a7c546ff7b5e7cdaa3618198f491ec25313066056",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/gg-http-embedding.md",
+      "sha256": "2f7e0a2ab4883d6752a418ad0cff0e48930091b0600f0e4f193fbeddf01fe56e",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/gitbutler-snapshot-transactions.md",
+      "sha256": "62c96502bb8382016a6dfc04f2261b68feaca919a55cec5738a7bff9486a808c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/isl-lifecycle-queues-and-cancellation.md",
+      "sha256": "d1382aaabf308ee30336b701b47a2dd41f6cdd6cda0c87967b802374eabb1fc8",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/mixed-engines-and-repository-compatibility.md",
+      "sha256": "0445686b7ec9058191fe4907d0684450c0bbc7d4771b61071f4b6a6116ae0c01",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/operation-waypoints-and-grouping.md",
+      "sha256": "899b54ba6d17c8b769b8c77c9f0167b5bb1f3525617238455964721ba835da85",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/readonly-inspection-and-migrations.md",
+      "sha256": "7d9c5fb9225f09096c028ba9a6f1e162533c7ed85f8e038406ee0455b60561fa",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/review-state-across-rewrites.md",
+      "sha256": "1de4a5fc62e3ee390aea0cf9afe24cf97089a8d6897a95426d3079f7673fec92",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/structured-api-demand.md",
+      "sha256": "c01a7aa565a33ecad9105ed036a7f64bceb32e19fad7be58a8aca2e6b9e349d7",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/visualjj-private-protocol-and-store.md",
+      "sha256": "04e79caa75f2482e09b3dcac2ab0cbd7b75ccdc1ce057e646097c3480686f1cc",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/notes.md",
+      "sha256": "6ee3575adee8597c7285497ea029ce7b6716603a1d75bf6fbbc763376d0bfeca",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-ipc-boundaries.md",
+      "sha256": "2c12c1144b50ac5466eced64c7422c45085dd80d4d2bc197dc8a6b91c6b37a97",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-packaging-and-windows.md",
+      "sha256": "370b800ad28852b3be9f2a024c680a011d449c7d1e6fe275d54b4051c8ee7bf3",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-prompt-framing-and-types.md",
+      "sha256": "24a6e1b57987ad754dd5ae48ebdfecf5f03af2477230c6a1361026e13b8eb232",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/cancellation-and-request-lifecycle.md",
+      "sha256": "2b52780ddd4f1dd80b5bf63e626b9a885e7fafe7ff155245482a4a197dfd7f3d",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/credential-policy-and-precedence.md",
+      "sha256": "24604e461ed9941b4c84b56e2dd5b8cbc932b6ce8fbc4581b3121713c8a65d30",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/credential-storage-boundaries.md",
+      "sha256": "4c28f70c6e7b8674f61239eeccfcff03b84fe94a913d9c79bf4af3b69e4a6fbb",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-retry-and-clone-coverage.md",
+      "sha256": "7343901a442faf6807ede3e926369dfd33a410bab14ecba95406b1844623c28c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-secret-display-and-logging.md",
+      "sha256": "c514c8e273349bb283c161c98efff99a1ed5f3034387515b172b7e85ab11d9f0",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-web-credential-boundary.md",
+      "sha256": "af4836559c00b93301e56e78a023d42964989399e64a100d4147c403eb292d69",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gui-agent-environment.md",
+      "sha256": "a402f7e7a5a04e1d7b1e435f5a0e9f684488184bce8d14e73c4ce9b08e4e2535",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/jj-interaction-and-hook-coverage.md",
+      "sha256": "231776f5b5286ae2b212e18c332f01d56ea55bcbed5c76c98cd59447e2035da2",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0014-reconcile/workspace/evidence-index.md",
+      "sha256": "11364ee9dbd31168f1de86a7107bac6eb114fc6d9b204c40ab99612e7b62ab84",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/notes.md",
+      "sha256": "d7d841fe6b1e8a1baeeb74b9c1f60113f4420e7394708cb959ea35b5a04caf34",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/askpass-replay-and-lifecycle.md",
+      "sha256": "a8de855f08f8382bf28c93e0e9a451ef222d536d6c8072887f40f19c1e32e998",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/bookmark-projection-and-eligibility.md",
+      "sha256": "70b39ffb1e66f7698e8f4ad5891efd05b73b3c10d59ed3fd40db5b016744ca99",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/config-and-ui-state.md",
+      "sha256": "f570def3192ba6e4c06df49e20f72ba8cd41d20530f3fbcda50f3dd0c1bb03f9",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/embedded-semantics-and-feature-capabilities.md",
+      "sha256": "e18e7260157b5609857d8efb26de382f65b6405fbec54e2a11283c5049d8d43f",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-error-and-memory-contract.md",
+      "sha256": "8ccc4f891a2bc3f8dace81381b404accf408a847fa4b2c14cfec11ac248dfa72",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-ordering-and-stream-contract.md",
+      "sha256": "dc7201c4288e0b6b67ed3535c97d926b3c220e8ef8bbf2eab72b618c42116fad",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-pagination-coordinates.md",
+      "sha256": "2fda333a798d8fc50dd6a9a166b66a20d20fe7599e71d7c6b0490afbba6bb1f1",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/jj-api-and-embedding.md",
+      "sha256": "966688758b34b50f817cc7f2c7f65acfe2aab515011dab500dd54d0ca0508f21",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/large-repository-costs.md",
+      "sha256": "9b4e16c60066dcf315b397022eab4ded3e6f06ffb4c8c3803e6ec6a1ee9e791f",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/native-and-graph-verification.md",
+      "sha256": "db9dd4794ba888ecf11f5d32e46193a117ed097152d1b72ec694ceaba334dbe3",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/operation-history-and-durable-identity.md",
+      "sha256": "3369abfdf2ef7aa38f6d269e9d16a46e80ee96230ba250bd11942bab6a9b8d6c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/push-helper-boundary.md",
+      "sha256": "f09a1d1c08251a201dd1b38e83e72497f6db39871f231913cd1f3eecbc77d74a",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/web-query-ownership.md",
+      "sha256": "bbe4f311364b5781bdc5b2ad0c788787a8d5a43356f882271fab153352a7537d",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0015-reconcile/workspace/evidence-index.md",
+      "sha256": "811db9af1c88005b13dbb57c2e41fe21ce454e7f7433f2da6741fd0ea4cb80f4",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0015-reconcile/workspace/history-passages.md",
+      "sha256": "a226e278a354df64d3b352604095e8d021c60fe57f4d0758fc8837902edc7557",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0016-compare/notes.md",
+      "sha256": "ac30ba07b9f8b53a17ff111db6370fd9ea43208c7d912d7f6a1b076a529db61d",
+      "read_complete": true,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0016-compare/leads.md",
+      "sha256": "7997035763b424919330f3f2a26d621342eb2c51fd5d6a4b40dc705e1afa98d7",
+      "read_complete": true,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0017-compare/notes.md",
+      "sha256": "a5f7afe2d1edef11dc1be3277ab7105cc38b7d638e8a20cc553891a33ec024c5",
+      "read_complete": true,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/graph-contract-probes.json",
+      "sha256": "4fcab2eed572f5079240534b4a3e9c31b3990fb22c1e18c8275f4c38c6848f40",
+      "read_complete": true,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/graph-contract-probes.py",
+      "sha256": "294065b7393ed97fbe0857ca6fc4ac7f9f1b5dbfbea523b13da5841135b858ec",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/primary-passages.md",
+      "sha256": "d7efe52aabf3dd79c18c87de37dd6489ae278cc739504f268ee5f4e8c4e536e1",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/notes.md",
+      "sha256": "7c8726dca6a989bdabd1a5f85bfd9cce4035aeaf7db63f3e78e273a152d6d8fe",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/leads/credential-boundary-followups.md",
+      "sha256": "4c3c36b9b79a8c85f6a8d05c362ae49d35f0d24980ff487ceee9f5c3f2433f9f",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/evidence-index.md",
+      "sha256": "55fb4524d1b2e35fa58f833d800dfa463b4faec44809ae57034f1d366b6033d7",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/notes.md",
+      "sha256": "7501b5bbba5e595ba1da62ae1991b58bc47a4093ffed513b98c5bb859cbaf165",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/api-contract-and-local-transport.md",
+      "sha256": "35a8adfcb897f4acd1673d45a5a7d556d8a308f219beb96746dd9885043a0de2",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/conflict-artifact-containment.md",
+      "sha256": "429273334590f13ff1daf32dd73019922d145c570be3170de1305bd7da8683a7",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/file-write-lock-schema.md",
+      "sha256": "4d9091e3e0635d06023651ac8099a9c04c621c0a3f5e9670e67e1ca700f9efc0",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/forge-account-and-cache-boundaries.md",
+      "sha256": "725d894911b90c143c2921ed02b2c02e311fc723c7166d496729b745296c141a",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/graph-editor-selector-and-borrow-scope.md",
+      "sha256": "fd2aba8e2293adfe941779bd5e98c5a52ca977f958b683b924d10129f5ec91fa",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/index-consistency.md",
+      "sha256": "f365a4c15040ef964635356d4e204324b8f358546eb02249d7465812684e9d8c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/multi-store-metadata-recovery.md",
+      "sha256": "166eb7b2cefbc29521cc2ae1933eb53683aa1ead5b8e62d23bdb7ee27adb8ff3",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/oplog-outcome-and-retry.md",
+      "sha256": "2611224dd513802b582d6fc9db22fa1e66d0662bd1fe1c67a41ae6b7bdea4801",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/restore-projection-validation.md",
+      "sha256": "5491a47ff11236b4c80a04978e19ba6229ca696a489861fdf7e259140fd04954",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/snapshot-capture-and-restore-coverage.md",
+      "sha256": "d39f251047a2b19ccd27505958430715df49c5d34a1cc208868874687b535e64",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/worktree-identity-and-adoption.md",
+      "sha256": "a5b03c1ec9133b6c7aaa2812bff9480c0b602d6c44598334b9470bcb930e3eed",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/writer-lock-failure-and-wait.md",
+      "sha256": "b5b5b9cb9237518a7e250060060cae425cd01b41b8e31c5c7452f8a220a1b26c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/evidence-map.json",
+      "sha256": "3245737a589d746e6b49fe404c29ff6705f742b71af35121d5806f19f3e91847",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/issue-map.json",
+      "sha256": "1716c6f6755b94dce5f61a415b7797ab7d5aaa55d9d230c5ae906232e6d27426",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/retained-primary-index.json",
+      "sha256": "71f9492dcfa9f21882992fd9dad065e86baa13a6ccde1f57e434cec2b1ae01cb",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/web-map.json",
+      "sha256": "a9182d9adb6f2928ace3f0b2ff87d484bd421b6311f6d8606fabbd7ec057279d",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/notes.md",
+      "sha256": "234a7dbc0cd02b9381bf3a6a4d4d6cf828dead1db69ce1cac98f3d2f39c70063",
+      "read_complete": false,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/documentation-and-gc.md",
+      "sha256": "65f1e6221a08d90b975a60c3a1001e3524546d67048051fcf59c9c9d8aac7ff4",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/evolution-retention.md",
+      "sha256": "e35bd18577381555ccf49f13133aa4d9906329789b9e40d6251d87715affe2cf",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/external-config-capture.md",
+      "sha256": "362ae01788c8033bf9421d816ae06276178107a6ecb35aeaf46c24676286e6ed",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/extras-marker-integrity.md",
+      "sha256": "56c1459d2ca5ee4761cd9585091b3e90b150794ad8d8a2c134eed47af1e18012",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/index-rebuild-boundary.md",
+      "sha256": "d38520d1535631684840c8e49da606f363ae286a34d060eff5eb42220d0a2edd",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/keep-ref-recovery.md",
+      "sha256": "91fa0b3f6be8065f5966fa639acbb6d930f6cf8809bd05a8b7ee82345a5acedd",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/operation-head-capture.md",
+      "sha256": "d90e606b699f6452fb4adfe8a63e22f376e5d767394c4d5b3e69da3f78040d6c",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/operation-retention.md",
+      "sha256": "aca0fb3d57a29b3f232a1ba5c02bf866d97eece35a46e89ed0bf6d73dbeb9705",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/partial-clone-completeness.md",
+      "sha256": "b402c3aff58f2716fe4e4c9b930ba9db8f3ae59d02d3f38892d0836cafd74625",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/relocation-and-object-stores.md",
+      "sha256": "e9c0f5f0456cc225f3d77f88ed72b4987fee645f4871e0a58d70d081007d441e",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/workspace-restore-state.md",
+      "sha256": "6750931c64e59fdc13794d56d01054302285a498e6749a54eede503ef59e032b",
+      "read_complete": false,
+      "kind": "lead"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0020-reconcile/workspace/evidence-index.md",
+      "sha256": "36252e91f4fb4400de602228bd0cd84f1fb104007037a47fac4d51f2aaf62ab8",
+      "read_complete": false,
+      "kind": "supplement_candidate"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0021-reconcile/notes.md",
+      "sha256": "9af7be8020dca51df0c278e8b405127730f9d15d05e8d631bfb2e3591306244b",
+      "read_complete": true,
+      "kind": "notes"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0022-compare/notes.md",
+      "sha256": "5bb0c0257fa1a72b6b6d9c43af6ba6ec93590e5e57155842fad68226298452a2",
+      "read_complete": true,
+      "kind": "notes"
+    }
+  ],
+  "coverage": {
+    "job_count": 17,
+    "delivered_markdown_jobs_read_complete": 6,
+    "delivered_markdown_jobs_unread": 11,
+    "supplemental_coverage_complete": false
+  },
+  "budget": "Last accounting captured own standard API-equivalent $14.693278 at 22:35:03; subsequent context/reset and compact reads consume remaining $16 allocation. Stop new analysis; actual cash unknown.",
+  "unexamined_document_ids": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119
+  ]
+}

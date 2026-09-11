@@ -1,0 +1,31 @@
+{
+  "premium": {
+    "observed_at": "2026-09-11T21:48:10.525370+00:00",
+    "lead_count": 132,
+    "stage_counts": {
+      "discovered": 115,
+      "comparison_delivered": 17
+    },
+    "unresolved_intake_count": 4,
+    "semantic_quality": "Scheduler delivery state only, not independently verified finding quality or completeness.",
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/progress.json",
+      "sha256": "c78501ebf811f45675e7b407dae8ddf6c7441dcdbe77276df460517c0d34596e"
+    }
+  },
+  "hybrid": {
+    "observed_at": "2026-09-11T22:31:10.186069+00:00",
+    "lead_count": 151,
+    "stage_counts": {
+      "comparison_delivered": 4,
+      "reconciled": 3,
+      "discovered": 144
+    },
+    "unresolved_intake_count": 11,
+    "semantic_quality": "Scheduler delivery state only, not independently verified finding quality or completeness.",
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/progress.json",
+      "sha256": "a2ed79c7c704342c6d60dfcd89775116cc2cfac12df3d3fdaf41b17aa26d0f95"
+    }
+  }
+}

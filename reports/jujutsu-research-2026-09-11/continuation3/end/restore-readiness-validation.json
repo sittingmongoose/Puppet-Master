@@ -1,0 +1,113 @@
+{
+  "created_at": "2026-09-11T21:12:11.713859+00:00",
+  "worktree_head": "5d6b351bc993f13ce4962f54445610e7f3a45cfa",
+  "scope": "Independent local structural validation against current worktree Plans; no runtime activation or semantic validator claim.",
+  "base_fixture": "backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in",
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/jujutsu_integration_contracts.schema.json",
+      "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/source_control_contracts.schema.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a"
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/jujutsu_integration_contract_fixtures.json",
+      "sha256": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868"
+    }
+  ],
+  "cases": [
+    {
+      "name": "existing_sign_in_fixture",
+      "patch": {},
+      "schema_accepts": true,
+      "root_schema_accepts": true,
+      "errors": []
+    },
+    {
+      "name": "consistent_ready_control",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required"
+      },
+      "schema_accepts": true,
+      "root_schema_accepts": true,
+      "errors": []
+    },
+    {
+      "name": "ready_workspace_collision",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required",
+        "workspace_map_result": "collision_blocked"
+      },
+      "schema_accepts": true,
+      "root_schema_accepts": true,
+      "errors": []
+    },
+    {
+      "name": "ready_dual_writer_blocked",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required",
+        "colocation_activation_disposition": "blocked_dual_writer_or_identity_collision"
+      },
+      "schema_accepts": true,
+      "root_schema_accepts": true,
+      "errors": []
+    },
+    {
+      "name": "ready_working_copy_unverified",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required",
+        "working_copy_relation": "unverified"
+      },
+      "schema_accepts": true,
+      "root_schema_accepts": true,
+      "errors": []
+    },
+    {
+      "name": "historical_mismatch_negative",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required",
+        "historical_operation_result": "blocked_operation_mismatch"
+      },
+      "schema_accepts": false,
+      "root_schema_accepts": false,
+      "errors": [
+        {
+          "path": [
+            "historical_operation_result"
+          ],
+          "message": "'verified_on_disposable_copy' was expected"
+        }
+      ]
+    },
+    {
+      "name": "collision_reference_negative",
+      "patch": {
+        "outcome": "ready_for_owner_activation",
+        "credential_resolution": "not_required",
+        "collision_refs": [
+          "collision:workspace:1"
+        ]
+      },
+      "schema_accepts": false,
+      "root_schema_accepts": false,
+      "errors": [
+        {
+          "path": [
+            "collision_refs"
+          ],
+          "message": "['collision:workspace:1'] is too long"
+        }
+      ]
+    }
+  ],
+  "gap_still_present": true,
+  "controls_match": true,
+  "product_status": "Correction candidate for independent adjudication; no canonical edit made or new product behavior adopted."
+}

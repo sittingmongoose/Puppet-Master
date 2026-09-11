@@ -1,0 +1,1079 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0021-compare",
+  "arm": "premium",
+  "review_status": "proposed_pending_independent_review",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/manifest.json",
+    "sha256": "397f156f11dfc2f9e46b5204028d618f4627878180794944004af2012c1e02e9"
+  },
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "runtime_status": "budget_truncated",
+  "delivered_scope": "250-line notes and32-line leads, plus inspected original local schema-witness code/results. No unhandled work inferred complete.",
+  "claims": [
+    {
+      "claim_id": "P-J0021-C01",
+      "proposition": "JJ native conflict owner semantics conflict with catalog Git-availability and marker-only resolution gates.",
+      "assertion_status": "unsupported_correction_claim_reclassified_as_unapproved_normalization_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 36,
+          "line_end": 44,
+          "exact_quote": "| `Jujutsu_Integration.md:105–142,180–208,295–303` (S00001/S00004) | Split/squash have canonical commands; mutations are fenced and receipted; conflicts are typed JJ state, distinct from materialized files; resolution proves the current snapshot, expected conflict identity and terminal reconciliation. “Do not call a materialized file clean while JJ conflict state remains.” | Already covered at the semantic owner. Neither a successful editor exit nor marker removal is sufficient proof of JJ conflict resolution. |\n| `Source_Control_System.md:843–867` (S00024), `FinalGUISpec.md:35703–35719` (S00023) | JJ Current Change, Split/Squash, conflicts, stable change/current commit identities, Workspaces and Operation History; no fake staging or hidden Git mutation. | Existing first-class JJ surface, but no specified line-selection/result-preview workflow. |\n| `WorktreeGitImprovement.md:450–452` (S00031) | Existing review lens, conflict file list/flyout, external-tool preference, optional first-file auto-open, explicit resolution approval, scoped undo and shared diff identity. | Useful existing interaction ownership. Git worktree/staging behavior cannot become JJ mutation semantics. Basic conflict listing and explicit choices are not new features. |\n| `UI_Command_Catalog.md:548–551` (S00132) | `open_conflict` is gated on `git_available && conflict_present`; `mark_conflict_resolved` says validation confirms no markers remain, with `conflict_file_selected && no_conflict_markers`. | **Concrete consumer repair:** the neutral-looking surface does not express the JJ owner gate and offers marker-only resolution criteria. The Git availability gate must not become JJ availability authority. |\n| `Wiring_Matrix.md:556` (S00140); `Wiring_Matrix.production.json:57172–57214` (S00142) | Generic conflict routes, future typed handler/state selector, receipt/effect and accessibility obligations. | The production-intent row adds no JJ snapshot/conflict reconciliation predicate and is not runtime evidence. It does not repair the catalog semantics. |\n| `Orchestrator_Page.md:306–319` (S00139); `assistant-chat-design.md:3230–3238` (S00141) | Blocked cards and Chat route to the same Conflict assistant; the Chat worktree section mentions Git resolution fallback and Git rebase auto-abort. | Preserve these as Git-specific mechanics. JJ consumers need backend-correct routes and must not inherit Git fallback, auto-abort, or lock-release behavior. |\n| `FileManager.md:334–359` (S00069) | Explicit Save, read-only/binary/encoding limits, preserve CRLF/LF/CR, dirty-buffer versus on-disk conflict handling. | Existing editor protections apply when reusing editor surfaces; they do not prove an external diff writer preserves bytes, EOF, modes or symlinks. |\n\nThe complete literal searches for the conflict commands and `no_conflict_markers` (S00135–S00138), followed by the actual owner/consumer passages above, found the consumer mismatch. This is a Plans contract mismatch; no claim is made that a shipped handler currently resolves JJ conflicts incorrectly."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F056",
+          "relation": "narrower",
+          "rationale": "Withdraw as a demonstrated correction: SCS explicitly retains existing Git conflict commands as Git adapter commands absent owner normalization. The generic-looking command IDs and consumer wording do not establish a JJ route through these rows. JJI-005 requires native conflict truth but the inspected current31-command JJ inventories contain no cmd.jujutsu.conflict.* or resolve command; absence does not authorize normalization or invent an ID. The deliverable is an unapproved backend-normalization/integration proposal, not a proven owner/consumer contradiction.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F072",
+          "relation": "narrower",
+          "rationale": "Withdraw as a demonstrated correction: SCS explicitly retains existing Git conflict commands as Git adapter commands absent owner normalization. The generic-looking command IDs and consumer wording do not establish a JJ route through these rows. JJI-005 requires native conflict truth but the inspected current31-command JJ inventories contain no cmd.jujutsu.conflict.* or resolve command; absence does not authorize normalization or invent an ID. The deliverable is an unapproved backend-normalization/integration proposal, not a proven owner/consumer contradiction.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "no_match",
+      "mapping_rationale": "Withdraw as a demonstrated correction: SCS explicitly retains existing Git conflict commands as Git adapter commands absent owner normalization. The generic-looking command IDs and consumer wording do not establish a JJ route through these rows. JJI-005 requires native conflict truth but the inspected current31-command JJ inventories contain no cmd.jujutsu.conflict.* or resolve command; absence does not authorize normalization or invent an ID. The deliverable is an unapproved backend-normalization/integration proposal, not a proven owner/consumer contradiction.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "counterevidence": [
+        {
+          "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Source_Control_System.md",
+          "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+          "line_start": 127,
+          "line_end": 136,
+          "exact_quote": "  Every source-control mutation requires one current writer lease with repository/workspace/backend, holder,\n  generation, epoch, expiry and reconciliation state; one expected native revision; Permissions and FileSafe\n  decisions; and one idempotent command instance. HTTPS and SSH credentials are brokered as expiring,\n  revocable, operation- or GoalRun-scoped leases. Async work uses ObservableWork and every terminal attempt\n  emits a typed operation receipt even when the effect is unknown or recovery is required. The nineteen\n  canonical cmd.source_control backend/repository/status/diff/history/workspace/remote identities use one\n  owner-DRY discriminated scope plus generic request/result/error/availability/disabled-reason schemas; this\n  static contract does not establish central catalog rows, native handlers, production wiring, admitted events,\n  or runtime proof.\ngui_related: true"
+        },
+        {
+          "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Source_Control_System.md",
+          "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+          "line_start": 302,
+          "line_end": 308,
+          "exact_quote": "The generic command scope admits only those exact nineteen IDs. It preserves exact Project, Project Home Server, Execution Host, Execution Environment, Source Location, topology generation, repository context, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native expected revision, currentness generation, writer lease, credential lease, transport, independent `forge_provider` binding, and checkpoint identity/generation fields as applicable. `backend.detect` and `backend.select` are exact-environment pre-repository branches; status/diff/history/workspace-list/open and checkpoint inspect are read/currentness branches without a fabricated writer lease; mutation, checkpoint create/restore, and remote branches add the exact writer or credential authority they require. Closed `additionalProperties` scopes structurally reject path/focus/newest-record/remote-text/generic-provider substitution.\n\n`cmd.source_control.repository.clone` is the sole backend-neutral ordinary Git clone command. Its scope is nevertheless exactly `scm_backend=git`; it requires a reserved Project/repository/workspace lineage, exact Host/Environment/Source Location and topology generation, current catalog generation/ref/hash, destination writer lease, one-operation credential lease, transport, independent forge binding including `none`, verified remote identity, FileSafe destination Source Location, permission decision, idempotency, and an exact caller return context. Success returns the repository/source identities, `ObservableWork`, and terminal operation receipt needed by Project System to register `registration_kind=git_clone`. Cancellation returns to the exact caller route/focus/continuation after cleanup and creates no Project row. Caller close or navigation does not itself cancel the clone.\n\nJujutsu cloning remains the distinct `cmd.jujutsu.git.clone` owned by `Plans/Jujutsu_Integration.md`, and its Project handoff is `registration_kind=jujutsu_clone`. Neither `cmd.git.clone`, `cmd.scm.clone`, a generic `cmd.project.clone`, nor any normalization between ordinary Git and Jujutsu clone is admitted.\n\n`cmd.source_control.select_worktree` is compatibility-only and normalizes before policy/dispatch to `cmd.source_control.workspace.switch {backend: git}`. `cmd.scm.*` is forbidden. Existing Git conflict/merge/review/graph/stage/commit/stash/branch/compare commands remain Git adapter commands unless the command owner explicitly normalizes them. Family/glob tokens are documentation groups, never registerable commands."
+        },
+        {
+          "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Jujutsu_Integration.md",
+          "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+          "line_start": 190,
+          "line_end": 209,
+          "exact_quote": "  FileSafe safe points protect exact external file effects and complement JJ recovery; they never replace the\n  operation log, silently rewind JJ state, or claim recovery without post-restore snapshot and conflict proof.\n  Conflicts remain typed JJ conflicts with materialized-file and backend state explicitly distinguished.\ngui_related: true\ngui_classification_reason: Undo, restore, conflict, quarantine, and recovery state are visible actions and statuses.\ndepends_on: [JJI-003, JJI-004]\nunblocks: [JJI-006]\nacceptance_criteria:\n  - Undo and restore reject stale operation IDs and emit before/after operation identities.\n  - FileSafe restore and JJ operation restore have distinct commands, decisions, and receipts.\n  - Conflict resolution proves current snapshot, expected conflict identity, and terminal reconciliation.\nvalidation_surfaces: [undo/op restore fixtures, FileSafe complement tests, conflict and restart recovery tests]\nrisk_class: destructive_or_false_jj_recovery\nreasoning_tier: high\ncontext_scope: jujutsu_recovery\nimplementation_surfaces: [future JJ adapter, Plans/FileSafe.md, future Runtime Artifacts projections]\nnode_compile_hint: {mode: jujutsu_recovery_contract, create_worknodes: false, create_nodeseeds: false}\nsource_lineage: [source_ref:egolite-register:SCM-02]\npreserved_exact_tokens: [jj undo, jj op restore, FileSafe safe points, operation log, conflict]\nnegative_constraints: [Do not let FileSafe replace JJ undo., Do not restore by newest-operation heuristic., Do not call a materialized file clean while JJ conflict state remains.]"
+        },
+        {
+          "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Jujutsu_Integration.md",
+          "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+          "line_start": 258,
+          "line_end": 290,
+          "exact_quote": "cmd.jujutsu.diff.open\ncmd.jujutsu.history.open\ncmd.jujutsu.change.new\ncmd.jujutsu.change.describe\ncmd.jujutsu.change.edit\ncmd.jujutsu.change.split\ncmd.jujutsu.change.squash\ncmd.jujutsu.change.rebase\ncmd.jujutsu.change.abandon\ncmd.jujutsu.change.restore\ncmd.jujutsu.bookmark.create\ncmd.jujutsu.bookmark.move\ncmd.jujutsu.bookmark.rename\ncmd.jujutsu.bookmark.delete\ncmd.jujutsu.bookmark.track\ncmd.jujutsu.bookmark.untrack\ncmd.jujutsu.workspace.list\ncmd.jujutsu.workspace.create\ncmd.jujutsu.workspace.open\ncmd.jujutsu.workspace.switch\ncmd.jujutsu.workspace.remove\ncmd.jujutsu.operation.log\ncmd.jujutsu.operation.show\ncmd.jujutsu.operation.undo\ncmd.jujutsu.operation.restore\ncmd.jujutsu.git.clone\ncmd.jujutsu.git.fetch\ncmd.jujutsu.git.push\ncmd.jujutsu.git.import\ncmd.jujutsu.git.export\n```\n\n`cmd.jj.<suffix>` is compatibility-only and normalizes to `cmd.jujutsu.<suffix>` before availability, policy, dispatch, telemetry, event, and receipt handling."
+        },
+        {
+          "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/UI_Command_Catalog.md",
+          "sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+          "line_start": 576,
+          "line_end": 584,
+          "exact_quote": "Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.\n\nRules:\n- Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.\n- Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.\n- `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.\n- `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md"
+        }
+      ]
+    },
+    {
+      "claim_id": "P-J0021-C02",
+      "proposition": "Conflict actions need backend-correct availability and exact revision/conflict/lease preconditions; saving marker-free text does not prove native resolution.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 48,
+          "line_end": 56,
+          "exact_quote": "Replace the marker-only/generic-Git interpretation of the existing conflict rows with backend-discriminated behavior owned by Source Control and delegated to the native adapter:\n\n1. Opening a conflict resolves the captured RepositoryContext, native workspace/revision and effective conflict capability. A JJ action uses Jujutsu-owner availability, independent of whether a Git CLI happens to be installed. If the JJ handler/capability is unavailable, show the typed reason and preserve the file list; do not fall through to `cmd.git.*`.\n2. A proposed resolution carries the expected JJ operation, immutable commit, workspace snapshot, file identity and conflict identity, plus the current writer lease, Permissions/FileSafe decisions and required explicit user choice. Revalidate them immediately before effects.\n3. Saving an edited materialized file is a distinct event from proving backend resolution. After the authorized save/native operation, obtain a current owner snapshot and conflict result. Only that result may mark the file resolved or release its blocked episode. Marker absence is at most supporting evidence. Stale, unavailable, still-conflicted or unverified backend state remains visibly unresolved/recovering.\n4. A failed or cancelled multi-file native resolve may have saved earlier files. Reconcile the actual operation and affected file/conflict identities, report the verified saved/resolved subset and the failed/unprocessed subset, retain unresolved work, and issue one terminal attempt receipt. Do not state that all files were undone or resolved because the editor exited.\n5. Update the catalog, its disabled-state/typed-result/wiring checks, and the Orchestrator/Chat consumer references together. Preserve the existing command identities and owner boundary; this repair does not invent a new `cmd.jujutsu.resolve` command, register a handler/event, or approve an experimental merge editor. Existing `handler_unavailable` and Event Authority restrictions remain in force (`Jujutsu_Integration.md:347–385`, S00099/S00133).\n\n**Acceptance checks:** a marker-free file with an outstanding JJ conflict remains unresolved; stale operation/conflict/snapshot rejects mutation; an unavailable JJ adapter does not invoke Git; a valid current JJ resolution clears only the adapter-proven conflict and links its operation receipt. Resolve two files, fail/cancel on the third, and verify persisted results for the first two, residual conflicts for the third/rest, truthful blocked-card state, and no automatic replay. Cover non-text/type conflicts, stale return projections, restart and keyboard/pointer parity. The end-to-end check must inspect backend state and bytes, not only command dispatch or marker text."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F056",
+          "relation": "semantically_equivalent",
+          "rationale": "Native conflict structure, supported shape and authoritative terminal reconciliation explicitly control resolution; invalid or stale results stay unresolved.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Native conflict structure, supported shape and authoritative terminal reconciliation explicitly control resolution; invalid or stale results stay unresolved.",
+      "proposed_credit_fids": [
+        "F056"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C03",
+      "proposition": "Multi-file resolve failure/cancellation preserves earlier saved resolutions and must report resolved versus failed/unprocessed subsets.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 53,
+          "line_end": 56,
+          "exact_quote": "4. A failed or cancelled multi-file native resolve may have saved earlier files. Reconcile the actual operation and affected file/conflict identities, report the verified saved/resolved subset and the failed/unprocessed subset, retain unresolved work, and issue one terminal attempt receipt. Do not state that all files were undone or resolved because the editor exited.\n5. Update the catalog, its disabled-state/typed-result/wiring checks, and the Orchestrator/Chat consumer references together. Preserve the existing command identities and owner boundary; this repair does not invent a new `cmd.jujutsu.resolve` command, register a handler/event, or approve an experimental merge editor. Existing `handler_unavailable` and Event Authority restrictions remain in force (`Jujutsu_Integration.md:347–385`, S00099/S00133).\n\n**Acceptance checks:** a marker-free file with an outstanding JJ conflict remains unresolved; stale operation/conflict/snapshot rejects mutation; an unavailable JJ adapter does not invoke Git; a valid current JJ resolution clears only the adapter-proven conflict and links its operation receipt. Resolve two files, fail/cancel on the third, and verify persisted results for the first two, residual conflicts for the third/rest, truthful blocked-card state, and no automatic replay. Cover non-text/type conflicts, stale return projections, restart and keyboard/pointer parity. The end-to-end check must inspect backend state and bytes, not only command dispatch or marker text."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F008",
+          "relation": "semantically_equivalent",
+          "rationale": "Exact partial-multi-file resolve proposition with two successful files and third failure acceptance case.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Exact partial-multi-file resolve proposition with two successful files and third failure acceptance case.",
+      "proposed_credit_fids": [
+        "F008"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C04",
+      "proposition": "Line selection independently includes insertions and excludes deletions; paired operations are positional, and right-only can retain old plus new.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 62,
+          "line_end": 73,
+          "exact_quote": "The [baseline README](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/README.md) (S00034:11–23,72–83) documents two/three directory input, optional output, files/hunks/lines and paired-line selection. [diff.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/diff.lua#L92-L106) (S00033:92–105) retains an old line when its deletion is not selected and emits the new line when its insertion is selected. For a one-line replacement:\n\n| Select left deletion | Select right insertion | Resulting content |\n|---|---|---|\n| No | No | Old line |\n| Yes | No | Neither line |\n| No | Yes | Old line followed by new line |\n| Yes | Yes | New line |\n\nThis table is derived from the implementation, not a reproduced UI run. Paired selection is positional within a hunk (`init.lua`, S00035:62–88), not semantic code matching. Output tests explicitly expect mixed old/new partial output (S00101:83–117).\n\n[#30](https://github.com/julienvincent/hunk.nvim/issues/30) (S00072) is evidence of this semantic confusion. It is not proof of a universal color bug: [maintainer comments](https://github.com/julienvincent/hunk.nvim/issues/30#issuecomment-3448362670) (S00082) distinguish theme-driven line colors from a gutter-highlight problem. Baseline `highlights.lua:69–77` and `layout.lua:155–166` (S00107/S00103) already use `DiagnosticOk/Error` and side-specific mappings. Labels/signs and accessible explanations matter independently of red/green styling."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F029",
+          "relation": "narrower",
+          "rationale": "Specific composition and accessible explanation example; not a complete canonical hunk identity/mutation contract.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific composition and accessible explanation example; not a complete canonical hunk identity/mutation contract.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C05",
+      "proposition": "A synthesized split/squash result-review session, editable center or select-then-edit are proposed alternatives, not implied by the Split button.",
+      "assertion_status": "unapproved_product_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 75,
+          "line_end": 95,
+          "exact_quote": "[#29](https://github.com/julienvincent/hunk.nvim/issues/29) (S00071/S00084) requests actual output preview and arbitrary edits. The maintainer discusses both an editable center and select-then-edit; these are alternatives, not baseline coverage. Current baseline diff buffers are read-only (S00105:25–34).\n\n### H-P1 — Result review and selection contract: product proposal requiring approval\n\n**Proposal:** add an explicit JJ split/squash selection session with old/new operation selection and a synthesized result review bound to the exact input snapshots. Review the selected portion **and the remainder for split**, and the destination effect for squash. An optional pair action selects the corresponding deletion/insertion operations; independent selection remains understandable through explicit “remove old” / “include new” semantics, signs and accessible names. “Accept selected changes” and “Cancel selection” have distinct actions.\n\nThe current closed `command_target` contains change/source/destination/workspace/operation/transport fields but no selection or output-result reference (`jujutsu_integration_contracts.schema.json:451–571`, S00068). The positive split fixture is a generic change-target request (`jujutsu_integration_contract_fixtures.json:574` onward, S00079). The local witness confirms that simply adding `target.selection_ref` is rejected. This is evidence that an approved extension must be designed; it does **not** imply that a named Split button already authorizes arbitrary line editing, nor that all native split modes are impossible.\n\n**Benefit:** users can see the actual selected tree before changing history, especially right-only/left-only selections and unequal hunks.\n\n**Reviewable alternatives:**\n\n| Choice | Behavior and benefit | Dependencies/tradeoffs |\n|---|---|---|\n| Read-only synthesized result preview | Show exactly what the current selection will produce; selections remain the sole source of content. Recommended initial proposal, subject to approval. | Needs a byte/type-aware result builder and stable selection/session identities. Lower editing complexity, but users cannot fix new code within this session. |\n| Editable center pane | Permit manual edits while applying hunks; useful for resolving code that cannot be composed solely from existing lines. | Requires rules for extra content outside the original change, consumed-hunk versus toggle semantics, undo after edits, result ownership, byte fidelity, and revalidation. Three panes cost space and accessibility work. |\n| Select-then-edit | First choose operations, then edit/review the synthesized result before final acceptance. | Simpler staging boundary but extra navigation and a rule for going back to selections without silently losing edits. The intermediate “accept” must not already commit repository effects. |\n\nFor an approved choice, define the session/result reference in the **existing Jujutsu owner schema**, with immutable input/result identity, selection generation, command instance and expected revision, rather than UI-to-jj execution. Reuse Source Control placement, current FileManager limits and shared work/receipt services. Recompute/review on source drift; never silently retarget a selection using Review mode's nearest-baseline fallback. No hunk.nvim dependency, new schema token, default pane layout or arbitrary-edit permission is approved here.\n\n**Acceptance checks:** all four table cases; additions/deletions/empty files; unequal hunk lengths; select file/hunk/line/pair consistency; exact result identity through Accept; stale source or session generation rejected; split portions account for original changes under the approved semantics; arbitrary new edits are disclosed if that alternative is selected; cancel versus accept via keyboard and pointer; color-independent labels; narrow layouts and FileManager large/binary/read-only limits. Acceptance must compare exact bytes and native before/after effects, not only the highlighted lines."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 11,
+          "line_end": 11,
+          "exact_quote": "| Result review / experimental merge interaction (`hunk-result-review.md` in handoff) | product proposal requiring approval | H-P1 compares read-only synthesized output, editable center and select-then-edit. Decide result-edit scope, split remainder semantics, undo and exact snapshot/result identity before extending the closed command request. Primary #29/#30, baseline diff/init, and experimental merge README/code: S00071/S00072/S00084, S00033/S00035, S00086/S00087. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F028",
+          "relation": "materially_new",
+          "rationale": "Explicit result-review product choices and schema-extension proposal. Neither rejected selection_ref nor an upstream request proves a canon defect or completed feature.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F067",
+          "relation": "materially_new",
+          "rationale": "Explicit result-review product choices and schema-extension proposal. Neither rejected selection_ref nor an upstream request proves a canon defect or completed feature.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Explicit result-review product choices and schema-extension proposal. Neither rejected selection_ref nor an upstream request proves a canon defect or completed feature.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C06",
+      "proposition": "Documented accept/quit semantics already exist, while rejected editor output can coexist with an earlier native snapshot.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 99,
+          "line_end": 105,
+          "exact_quote": "`init.lua:123–141` (S00035) writes the changeset then calls `qa` on acceptance; quit calls `cq`. The README explicitly documents this (`S00034:145–153`), and [#23](https://github.com/julienvincent/hunk.nvim/issues/23) is closed (S00077). The older request to document `:cq` is **already covered**, not a new repair.\n\nIndependent [jj external.rs](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/merge_tools/external.rs#L384-L443) (S00040:411–443) returns on spawn/nonzero exit before snapshotting diff output. `test_diffedit_command.rs:107–122` (S00109) asserts rejection of temporary editor changes after failure; it was read, not run.\n\nThat boundary is narrower than “nothing changed in the repository.” Split calls `workspace_helper` before selecting the diff (S00043:280–294); that helper can snapshot (S00044:459–496) and commit a separate “snapshot working copy” operation (S00044:2221–2235). Squash likewise selects the diff within a later transaction (S00042:330–350). A cancel/crash/nonzero exit can reject selected output yet leave an earlier snapshot or earlier phase effect.\n\nFor a future PM adapter, distinguish user cancellation, failed launch, editor failure and uncertain interruption; do not infer intent solely from a nonzero exit. Reconcile pre-command, post-snapshot and final native state using the actual supported profile. Ordinary refresh must not silently create additional mutations while claiming to observe cancellation. Never auto-undo a snapshot or replay split/squash to manufacture an unchanged state. The receipt repair J-R1 below applies to this path too."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Corrects missing-documentation and no-effect claims. Combined cancellation/effect evidence appears fully in C20.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F102",
+          "relation": "narrower",
+          "rationale": "Corrects missing-documentation and no-effect claims. Combined cancellation/effect evidence appears fully in C20.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Corrects missing-documentation and no-effect claims. Combined cancellation/effect evidence appears fully in C20.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C07",
+      "proposition": "Partial hunk output loses missing-final-newline state, unlike whole-file moves; adopted writer must preserve exact content/type/mode and fail visibly on errors.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 109,
+          "line_end": 119,
+          "exact_quote": "[fs.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/fs.lua) (S00015:47–91) drops the final empty split element and appends LF to every written line. [changeset.lua](https://github.com/julienvincent/hunk.nvim/blob/c8a8e7b6973576f63e5bf39aa8338d7f37f4dc53/lua/hunk/api/changeset.lua) (S00018:67–107) uses this reconstruction only for partial selection; whole-file cases move left/right files instead. A nonempty partial result cannot retain missing-final-newline information through that pipeline. Do not say every accepted file is normalized.\n\nFailed scans/reads/output opens can be silently collapsed, and move/remove/write/close results are unchecked. The changeset loop does not aggregate failures before `qa`. Other exceptions can still surface: the supported claim is that **some** failure paths can look like acceptance, not that all I/O errors are silent. Input moves also mean separate output is not a non-destructive generic-directory API.\n\nSymlinks are recorded during scanning and excluded from textual hunks (S00015:32–37; S00033:6–9). The symlink suite checks descriptors/hunks, not output application (S00100:24–72). File descriptors/writer do not explicitly preserve executable modes. Whole-file move and newly created partial output differ; actual mode/symlink failures across platforms remain **uncertain**, not demonstrated. Output tests compare line arrays and their fixture helpers use the same normalization (S00101; S00102:29–55). Native jj temporary trees disable EOL conversion and use automatic executable-change handling (S00106:177–181); no repair of lost EOF state by the caller was found.\n\n**Concrete replacement behavior if this writer/model is borrowed:** preserve content bytes and EOF metadata rather than reconstituting every line with LF; treat file kind, symlink target and supported executable metadata as explicit changes; keep inputs immutable and construct checked staged output; propagate failed reads/writes/close/move/remove as failure and withhold successful editor exit/adapter acceptance. Revalidate the staged output and revision before final effect. Unsupported byte/type/mode combinations should be unavailable with a reason, not silently converted. An external diff protocol must reject failed output; partial repository effects already applied must still be receipted/reconciled. Whole-session transactional staging versus per-file committed writes must be explicitly defined for the chosen protocol.\n\nThis is an upstream adoption constraint and proposed adapter acceptance detail, **not evidence PM already uses the faulty writer**. Existing FileManager line-ending preservation is covered; importing a new writer or choosing staged-write architecture remains unapproved.\n\n**Acceptance matrix:** two/three directories; one versus all selected hunks; LF/CRLF/CR and missing final newline; empty/new/deleted files; executable-only and content-plus-mode changes on each supported platform; file-to-symlink and symlink-to-file, dangling links; unreadable input, unwritable output, partial writes and command failures; immutable input bytes after acceptance; failure before/after an earlier file write. Inspect raw bytes, file kind, link target, supported mode metadata, exit/error receipt and native operation changes separately."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 13,
+          "line_end": 13,
+          "exact_quote": "| Output fidelity / write failure (`hunk-output-fidelity.md`) | uncertain | Missing-final-newline normalization and unchecked paths are source-supported; actual mode/symlink/CRLF/platform behavior needs exact-byte/type/mode execution evidence if a writer or editor is selected. Do not run or import upstream code under this comparison assignment. S00015/S00018/S00100/S00101/S00102/S00106. Proposed checked staged writer/adoption constraints are in the parent notes. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F031",
+          "relation": "narrower",
+          "rationale": "Specific EOF and unchecked I/O mechanism/adoption constraints; no assertion PM uses this writer, no proved universal symlink/mode failure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F030",
+          "relation": "narrower",
+          "rationale": "Specific EOF and unchecked I/O mechanism/adoption constraints; no assertion PM uses this writer, no proved universal symlink/mode failure.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific EOF and unchecked I/O mechanism/adoption constraints; no assertion PM uses this writer, no proved universal symlink/mode failure.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C08",
+      "proposition": "Manual/first-file preview already exists; cross-file traversal, optional focus preview and scoped selection inversion are separate proposals.",
+      "assertion_status": "unapproved_product_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 123,
+          "line_end": 133,
+          "exact_quote": "Primary reconciliation: [#36](https://github.com/julienvincent/hunk.nvim/issues/36) requests automatic preview on cursor movement (S00070/S00085). Baseline `tree.lua:291–315,344–356` (S00104) already has explicit open/preview, first-file preview and an extension hook. “No file preview exists” is rejected. [#34](https://github.com/julienvincent/hunk.nvim/issues/34) and [#43](https://github.com/julienvincent/hunk.nvim/issues/43) request traversal across files (S00075/S00073); baseline hunk movement is current-file-only (S00105:177–201). A referenced draft PR is not verified coverage. [#41](https://github.com/julienvincent/hunk.nvim/issues/41) asks to complement selection (S00074); group all-on/all-off is not that operation (S00035:18–29; S00104:328–341).\n\nThe existing conflict first-file auto-open preference and review filters (`WorktreeGitImprovement.md:450–452`) do not settle these interaction choices. Scoped searches (S00127–S00131) support navigation, but the disposition rests on owner/schema/consumer reading rather than literal absence alone.\n\nPropose three independently reviewable additions:\n\n- **Next/previous file and cross-file hunk traversal:** stable order within the captured compare/file set, available while focused in either pane or tree; preserve selection and expand the destination as needed. Benefit: less focus switching. Dependencies: stable IDs, filters, ordering, empty/deleted-file semantics and keyboard mapping. Tradeoff: define filtered/collapsed/end-of-list behavior; do not skip a selected file invisibly.\n- **Preview focused file:** optional automatic preview with bounded/debounced loading; explicit preview remains available. Benefit: faster scanning. Dependencies: shared resource/projection limits and FileManager large-file/read-only policy. Tradeoff: I/O/render churn and preference complexity. A maintained extension hook versus built-in setting is an open implementation/product choice, not an inherited upstream decision.\n- **Invert selection:** explicitly label the affected universe (for example, visible files versus all files), complement each selected operation in that scope, and report mixed selections correctly. Benefit: efficient complementary split. Dependencies: H-P1 selection model and filtered-scope rules. Tradeoff: file-level inversion and line-level complement differ; no silent choice of scope.\n\n**Acceptance checks:** deterministic traversal with collapsed and filtered directories; focus/selection preserved during delayed preview; obsolete preview results cannot replace the latest focus; huge/binary files respect resource limits; inversion twice restores the exact original selection; hidden files stay unchanged for visible-only scope; mixed partial selections and file deletion/addition work as disclosed. These additions require approval; none is installed or implemented."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 12,
+          "line_end": 12,
+          "exact_quote": "| File navigation / configurable preview (`hunk-navigation.md`) | product proposal requiring approval | H-P2 separates cross-file traversal, automatic preview and inversion, with scope/focus/large-file acceptance. Existing manual/initial preview and hooks remain credited. Primary #36/#34/#43/#41 and baseline tree/file code: S00070/S00075/S00073/S00074, S00104/S00105. Draft PR and diffview-plus.nvim analogy remain unverified references, not dependencies. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F067",
+          "relation": "narrower",
+          "rationale": "Existing focused-comparison conveniences overlap; exact UI additions require D5/current-owner overlap review, not automatic union expansion.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Existing focused-comparison conveniences overlap; exact UI additions require D5/current-owner overlap review, not automatic union expansion.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C09",
+      "proposition": "An experimental merge branch has editable result behavior but is not baseline release or platform certification.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 137,
+          "line_end": 139,
+          "exact_quote": "The parent “merge request is open” is correct but incomplete. [Issue #6 comments](https://github.com/julienvincent/hunk.nvim/issues/6) (S00083) announce an experimental branch. Its [README](https://github.com/julienvincent/hunk.nvim/blob/db04df6d8d974b3736eb6308fcb2a481254d0fe0/README.md#L273-L312) (S00086:273–312) and code (S00087:298–325,473–489) implement an editable center initialized from base, hunk application and accept/cancel. That does not turn it into baseline/released capability. The issue remains open in the acquisition.\n\nThe thread distinguishes consumed hunk application plus ordinary undo from toggling after arbitrary edits; requests stronger pane identity; reports a Windows/Nushell accept failure and then a fix; and requests a file list/status for a conflict involving 30+ files. Those are participant reports, not reproduced runtime receipts. Base/left/right/result labels should be grounded in supplied metadata; generic ours/theirs labels can reverse and should not be invented from pane position."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Resolves incomplete no-implementation narrative against pinned experimental source while preserving status and runtime caveats.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Resolves incomplete no-implementation narrative against pinned experimental source while preserving status and runtime caveats.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C10",
+      "proposition": "Native per-file external merge can commit a partially resolved tree before returning failure.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 141,
+          "line_end": 141,
+          "exact_quote": "[Native external merge](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/merge_tools/external.rs#L337-L381) (S00040:337–381) invokes the tool per file, leaves directory mode as a TODO, and returns a partially resolved tree on later failure. [resolve.rs](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/resolve.rs#L114-L146) (S00041:114–146) commits that tree before returning the error. Thus diff-editor abort cannot be generalized to atomic multi-file merge cancellation."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F008",
+          "relation": "semantically_equivalent",
+          "rationale": "Explicit native evidence for already accepted partial resolve behavior.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Explicit native evidence for already accepted partial resolve behavior.",
+      "proposed_credit_fids": [
+        "F008"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C11",
+      "proposition": "A persistent batch-conflict session with drafts/backend states and resume is proposed, distinct from existing partial-result reporting.",
+      "assertion_status": "unapproved_product_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 143,
+          "line_end": 147,
+          "exact_quote": "**Proposal:** enhance the existing conflict file list into a session showing separate draft/saved status and backend unresolved/resolved status, plus failed/unprocessed files, exact current revision and a resume route. Benefit: users can navigate large conflict sets without losing track of saved work. Dependencies: H-R1, per-file result receipts, revision refresh between committed phases, current native adapter capability and approved result-editing semantics. Reuse the Source Control conflict surface; do not create a second Chat or JJ-private conflict UI.\n\n**Material choice:** an app-coordinated sequence of supported per-file operations provides controllable navigation now but needs orchestration/restart/error rules; waiting for or adopting a certified native directory protocol reduces app orchestration but depends on upstream delivery; adopting the experimental editable merge code adds another dependency and unresolved fidelity/platform/undo work. No option is approved. A persistent batch session is new scope; truthful per-file partial-result reporting for an existing attempted resolve is already required by H-R1.\n\n**Acceptance checks:** navigate away from a dirty draft without silently saving/losing it; fail or cancel after two saved files and show their persisted receipts separately from remaining conflicts; reopen after restart against the correct current snapshot; reject stale session writes; avoid replay of completed files; prove resolution from backend conflict state; test undo after hunk application/manual edits if editable-center is chosen; validate Windows separately. Exact batch UI and native integration remain unimplemented proposals."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 14,
+          "line_end": 14,
+          "exact_quote": "| Multi-file conflict completion (`hunk-merge-batch-boundary.md`) | product proposal requiring approval | Existing conflict-list and truthful partial-result obligations are covered/repairable now (H-R1); a persistent navigable multi-file editing session is H-P3. Choose app-managed per-file orchestration versus certified native directory protocol or another editor. S00083, S00040:337–381, S00041:114–146. Runtime undo/Windows/fidelity and resume cases remain uncertain. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F035",
+          "relation": "narrower",
+          "rationale": "Managed external-session theme overlaps; persistent batch orchestration/result-edit semantics remain unapproved new scope pending overlap adjudication.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Managed external-session theme overlaps; persistent batch orchestration/result-edit semantics remain unapproved new scope pending overlap adjudication.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C12",
+      "proposition": "Shared work states and cancellation phase must use owner vocabulary; accepted dispatch and text logs do not establish completed work.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 158,
+          "line_end": 168,
+          "exact_quote": "| `Jujutsu_Integration.md:80–92,113–141,297–303` (S00001/S00004) | Exact native revision fences, before/after receipts, typed outcomes, ObservableWork for accepted work, and no automatic retry of effect-unknown/stale results. Already covered. |\n| `Source_Control_System.md:127–154` (S00097) | Every terminal attempt emits a typed receipt, even unknown/recovery outcomes; lease expiry is not cleanup. This is the repair's existing requirement. |\n| `Source_Control_System.md:843–867,899–923` (S00024) | Captured exact targets and per-target non-atomic fan-out; durable intent before remote actions; timeout becomes unknown and exact remote reconciliation; successful CLI exit is not durable remote truth. Already covered, including timeout-after-success anti-duplication. |\n| `Shared_Integration_Runtime.md:235–239,823–849` (S00012/S00030) | Underlying resource reconciliation before lease reassignment; separate admission, command and work axes; completion owner-receipt-backed; current work vocabulary; client/view loss does not cancel durable work. Already covered. |\n| `Executor_Protocol.md:488–497` (S00013) | Once-owned shutdown root established before subprocess start; isolated groups for managed subprocesses; provider and MCP/LSP grace policies. Covers a foundation, not a JJ spawn/cancel/pipe/reap contract or all-platform containment proof. |\n| `BinaryLocator_Spec.md:247–275` (S00092) | Version-probe timeout and cleanup policy (5 s probe, 500 ms escalation), not a general JJ cancellation deadline. Do not overwrite it with JayJay's 200 ms policy. |\n| `FinalGUISpec.md:35715–35719,35737–35740` (S00023) | Partial/unknown remote outcomes and truthful work remain visible; Chat consumes compact capability/receipt data. |\n| `Runtime_Artifacts_Panel.md:166–179` (S00096) | Receipt-like artifacts preserve requested/effective action, outcome, partial/external-indeterminate details and receipt linkage, with redaction. A text log cannot replace the native evidence. |\n| `Jujutsu_Integration.md:347–385` (S00099/S00133) | Named future handlers still need native evidence; acceptance never establishes success; no new persisted events without central admission. |\n\nThe current shared work contract supersedes older spellings: `cancelling` normalizes to `work_state=running`, phase `Cancelling`, no further cancel action; `succeeded` normalizes to `completed` (`Shared_Integration_Runtime.md:831`). Do not add a competing `cancel_requested`/`cancelling` work-state enum merely because a different subsystem uses those words. Domain command outcomes and work outcomes remain separate axes."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Owner vocabulary/readiness cautions, not new receipt schema family or competing lifecycle service.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F073",
+          "relation": "narrower",
+          "rationale": "Owner vocabulary/readiness cautions, not new receipt schema family or competing lifecycle service.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Owner vocabulary/readiness cautions, not new receipt schema family or competing lifecycle service.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C13",
+      "proposition": "Participating process spawns and cancellation share registration locking, but thread-local scope is not automatic for all helpers.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 174,
+          "line_end": 175,
+          "exact_quote": "- **Registration race:** a PID registry holds `Child`, optional SyncToken and `signaled`; output checks closed/cancelled, spawns and registers under the same mutex used by cancellation/close (33–48,122–154). A participating spawn is either included in the sweep or refused later. This is a good lifecycle pattern, not coverage of every subprocess API.\n- **Scope:** tokens share an atomic cancellation flag with pointer identity and a thread-local entered scope restored on drop (29–31,89–111). Synchronous registry-routed calls inherit it. New threads and generic commands do not automatically inherit that scope."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F074",
+          "relation": "narrower",
+          "rationale": "Concrete operation-scope mechanism; later dispatch/environment completeness remains unverified.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete operation-scope mechanism; later dispatch/environment completeness remains unverified.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C14",
+      "proposition": "Cancellation intent, natural success, pipe completion, process reaping and close are distinct; escalation delay is not a cleanup deadline.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 176,
+          "line_end": 182,
+          "exact_quote": "- **Completion:** cancellation latches intent, flags a leader only when `try_wait()` says it is live, and signals the group even if the leader exited (59–79). Output reads both pipes, then reaps/polls the registered leader (155–189,233–251). A process is classified Canceled only if signaled and unsuccessful; a successful leader can remain successful after late cancellation frees descendant-held pipes.\n- **Close:** close seals the registry and signals/escalates but does not itself join/reap every command worker or set the per-action `signaled` flag (192–220). A return from close is not a receipt proving all workers/descendants ended.\n- **Timing:** 200 ms is the interval before escalation, not an end-to-end completion deadline. The field SIGTERM-survival comment is a developer report, not an independent reproduced incident.\n\nPlatform details matter. [Unix](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/unix.rs) (S00037:4–16) creates a process group and signals `-pid`, ignoring the result. [POSIX kill](https://pubs.opengroup.org/onlinepubs/9799919799/functions/kill.html) (S00090:19–41) targets permitted processes sharing that group, not arbitrary descendants that leave it. [Windows](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/windows.rs) (S00036:3–15) does no group setup; it synchronously invokes `taskkill /PID … /T`, later `/F`, suppressing results. [Microsoft taskkill](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/taskkill) (S00088:44–51) defines those switches, but does not prove this implementation handles an already-exited leader. Calling it while the registry mutex is held also makes cancellation latency include the external command.\n\n[Process tests](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command_process/tests.rs) (S00038:8–153) cover stubborn groups, closed registry, token isolation, later-spawn refusal, stderr-before-cancel, and exited leader with held pipes. The last expects success. These tests are compiled only on Unix (S00016:6–7), and were not executed here. They establish neither Windows equivalence nor exhaustive race/latency/resource cleanup."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Detailed process-lifecycle refinement, not a demonstrated PM failure or portable containment guarantee.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Detailed process-lifecycle refinement, not a demonstrated PM failure or portable containment guarantee.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C15",
+      "proposition": "Generic subprocesses and login-shell probes are not all registry-bound; captured effective environment and actual helper-scope audits remain necessary.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 184,
+          "line_end": 186,
+          "exact_quote": "**Caller correction:** [command.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/command.rs) (S00039:15–20,37–76) routes jj through the registry with repository cwd, but generic commands use direct `.output()` and quiet jj calls discard errors. Non-success output is flattened into an Internal message; full structured exit/output distinctions are not preserved for every caller. [sync.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/git/sync.rs) (S00017:9–26,31–50,67–83) enters a token for normal push/pull; the multi-bookmark helper does not create its own entered scope, although a caller could supply one.\n\n**Environment correction:** [environment.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/environment.rs) (S00048:128–183,258–282) builds paths and SSH socket inputs, not a captured complete effective configuration. The login-shell probe is outside the registry; its nominal leader deadline precedes `wait_with_output` after success, leaving descendant-held output as an unresolved boundary. No leak/hang was observed. PM already requires exact Host/Environment and installation certification (`Source_Control_System.md:165–178`, S00097); the improvement is a completeness audit of actual dispatch and non-secret receipts, not ambient PATH fallback or raw environment logging."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 26,
+          "line_end": 26,
+          "exact_quote": "| Scope and environment (`jayjay-scope-and-environment.md`) | uncertain | Audit every actual jj/editor/transport/ancillary launch for explicit context propagation, lifecycle owner and non-secret environment receipt. Test thread/task propagation and the login-shell probe/held-pipe boundary if adopted. S00016/S00039/S00048. Do not infer every helper leaks or expand product Fetch into JayJay's automatic track/rebase/abandon behavior. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F074",
+          "relation": "semantically_equivalent",
+          "rationale": "Explicit exact Host/Environment and operation-owned dispatch requirement across jj/editor/transport/ancillary launch matrix, further specified C18.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Explicit exact Host/Environment and operation-owned dispatch requirement across jj/editor/transport/ancillary launch matrix, further specified C18.",
+      "proposed_credit_fids": [
+        "F074"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C16",
+      "proposition": "Every terminal JJ command_result must carry a non-null owner receipt; frozen failed/cancelled/recovery/unknown branches accept null.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 190,
+          "line_end": 204,
+          "exact_quote": "**Static defect:** `jujutsu_integration_contracts.schema.json:1775–1793,1861–1869,1941–2055` (S00025/S00027) requires the `receipt_ref` property but permits null on failed, cancelled, recovery-required and unknown outcomes. Only successful mutation tightens it to a non-secret ref. `full_thread_runtime_contracts.schema.json:150–187` (S00014) permits terminal work with a null or absent `result_receipt_ref`; its conditionals cover waiting/progress but not terminal evidence. The neutral result also permits missing/null `operation_receipt_ref` for non-success source-control outcomes (`source_control_contracts.schema.json:2046–2175`, S00080); repairs should remain consistent across the facade.\n\nThis conflicts with the existing SCS-003 terminal-attempt requirement and shared completion truth. The fixture `command_result_jujutsu_clone_cancelled_after_cleanup` includes a receipt (`jujutsu_integration_contract_fixtures.json:2703–2723`, S00079), but is a positive example, not a negative guard proving all cancellation paths enforce it. Generic request/permission-negative coverage for split/squash is not cancellation or byte-fidelity coverage.\n\n**Executed witnesses:** four original positive fixtures validate. Removing a receipt from successful mutation is rejected, and removing a required wait reason is rejected. Yet cancelled/failed/recovery-required/effect-unknown JJ push results with no receipt validate; a split cancellation claiming a prior applied effect with no receipt/after revision validates; completed/cancelled/failed shared work with no receipt validates. Adding an unmodeled split selection field is rejected. All 15 checks match their stated expected schema result. Full records and errors are preserved in schema-witnesses.json; no runtime or semantic-correctness claim is attached to synthetic witness instances.\n\n**Replacement behavior:**\n\n1. Tighten the existing terminal JJ result branches to require a non-null owner receipt for every terminal attempt. A pre-effect rejection may reference a no-effect/preflight receipt; an uncertain interruption references an explicit uncertainty/reconciliation receipt. Accepted nonterminal work continues to reference ObservableWork without falsely claiming terminal completion.\n2. Tighten terminal shared-work records to require the matching owner terminal receipt. Validate the referenced record's command instance, operation, attempt/generation, repository/workspace and environment at the producer/consumer boundary; nonempty syntax alone is insufficient. Mirror the requirement in the neutral result path wherever it projects the same attempt, reusing the owner receipt rather than manufacturing a second one.\n3. Preserve cancellation intent, observed process result and observed effects separately in the existing owner receipt extension/diagnostic references. Known local after-state is recorded when proven; null/unknown values have a reason and reconciliation state. `effect_unknown` currently requires a null aggregate after revision (`Jujutsu_Integration.md:303`; schema:1966–1993): retain any proven **phase-local** operation/ref observations in the receipt rather than fabricating a complete aggregate revision or discarding known facts.\n4. A cancel request presents pending Cancelling using the current shared vocabulary. It does not clear busy state, release a writer lease or claim rollback merely because the signal was sent. Completion requires the lifecycle and effect checks in J-R2/J-R3. If all intended work completed before cancellation took effect, preserve that proven result. If one process step succeeded but later required work stopped, preserve the step's success without declaring the whole action successful.\n5. Missing/mismatched terminal evidence keeps the projection reconciling/waiting or explicitly recovery-required as appropriate, with retry disabled until the owner's conditions are met. Do not invent receipts from stdout, a progress bar, PID absence, button dismissal or a client timeout. Schema/event/handler changes still go through their existing owners; this report edits none of them.\n\n**Acceptance checks:** turn the accepted malformed witnesses into rejected fixtures; retain successful/preflight/no-effect/known-effect/unknown-effect terminal examples with appropriate receipts; reject a receipt from another command/workspace/attempt/generation; prevent a receiptless completed/cancelled projection; keep cancellation pending while a live worker/pipe remains; preserve late natural success; show a cancelled multi-step action with earlier applied effects; reattach after restart to the same operation without replay; emit no unexpected persisted event. Validate the real referenced receipt and backend state in integration tests, because JSON Schema can only enforce local shape and conditions."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F001",
+          "relation": "semantically_equivalent",
+          "rationale": "Direct independent assertion of exact baseline F001 correction with static witnesses and acceptance cases. Preserve original evaluator-derived origin; add continuation direct premium evidence rather than rewriting original credit.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": false
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Direct independent assertion of exact baseline F001 correction with static witnesses and acceptance cases. Preserve original evaluator-derived origin; add continuation direct premium evidence rather than rewriting original credit.",
+      "proposed_credit_fids": [
+        "F001"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C17",
+      "proposition": "Shared terminal ObservableWorkRecord also accepts absent/null result_receipt_ref; neutral source-control projection should reuse the same owner receipt.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 190,
+          "line_end": 199,
+          "exact_quote": "**Static defect:** `jujutsu_integration_contracts.schema.json:1775–1793,1861–1869,1941–2055` (S00025/S00027) requires the `receipt_ref` property but permits null on failed, cancelled, recovery-required and unknown outcomes. Only successful mutation tightens it to a non-secret ref. `full_thread_runtime_contracts.schema.json:150–187` (S00014) permits terminal work with a null or absent `result_receipt_ref`; its conditionals cover waiting/progress but not terminal evidence. The neutral result also permits missing/null `operation_receipt_ref` for non-success source-control outcomes (`source_control_contracts.schema.json:2046–2175`, S00080); repairs should remain consistent across the facade.\n\nThis conflicts with the existing SCS-003 terminal-attempt requirement and shared completion truth. The fixture `command_result_jujutsu_clone_cancelled_after_cleanup` includes a receipt (`jujutsu_integration_contract_fixtures.json:2703–2723`, S00079), but is a positive example, not a negative guard proving all cancellation paths enforce it. Generic request/permission-negative coverage for split/squash is not cancellation or byte-fidelity coverage.\n\n**Executed witnesses:** four original positive fixtures validate. Removing a receipt from successful mutation is rejected, and removing a required wait reason is rejected. Yet cancelled/failed/recovery-required/effect-unknown JJ push results with no receipt validate; a split cancellation claiming a prior applied effect with no receipt/after revision validates; completed/cancelled/failed shared work with no receipt validates. Adding an unmodeled split selection field is rejected. All 15 checks match their stated expected schema result. Full records and errors are preserved in schema-witnesses.json; no runtime or semantic-correctness claim is attached to synthetic witness instances.\n\n**Replacement behavior:**\n\n1. Tighten the existing terminal JJ result branches to require a non-null owner receipt for every terminal attempt. A pre-effect rejection may reference a no-effect/preflight receipt; an uncertain interruption references an explicit uncertainty/reconciliation receipt. Accepted nonterminal work continues to reference ObservableWork without falsely claiming terminal completion.\n2. Tighten terminal shared-work records to require the matching owner terminal receipt. Validate the referenced record's command instance, operation, attempt/generation, repository/workspace and environment at the producer/consumer boundary; nonempty syntax alone is insufficient. Mirror the requirement in the neutral result path wherever it projects the same attempt, reusing the owner receipt rather than manufacturing a second one."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F001",
+          "relation": "materially_new",
+          "rationale": "Shared/facade consumer extension of terminal-evidence obligation; do not count as separate correction automatically. Root should inspect current schema after D5 baseline repair.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        }
+      ],
+      "relation": "materially_new",
+      "mapping_rationale": "Shared/facade consumer extension of terminal-evidence obligation; do not count as separate correction automatically. Root should inspect current schema after D5 baseline repair.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C18",
+      "proposition": "Managed operation completion needs atomic admission/registration, explicit scope propagation, stable process identity, bounded pipe cleanup and truthful cleanup uncertainty.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 208,
+          "line_end": 220,
+          "exact_quote": "Shared runtime already owns ObservableWork and lease reconciliation; Executor already owns managed subprocess shutdown/group isolation; Jujutsu owns native effects and adapter dispatch. The missing integration detail is the contract that connects these for an operation containing jj, editor and transport/helper processes. Simply copying JayJay's registry or waiting its grace period does not meet existing truth requirements.\n\n**Replacement behavior for the existing managed-operation boundary:**\n\n- Create the operation context and cancellation authority before spawning. Every participating launch must atomically check admission/cancel/close state and register its stable process/containment identity before it can escape a cancellation sweep. Carry context explicitly across async tasks/threads and nested helpers. Existing managed process pools/governors remain the owners; no JJ-private global process service.\n- Bind each process attempt to command instance, operation/attempt generation, exact Execution Host/Environment, selected executable/version/adapter, cwd/source location, approved arguments and relevant non-secret effective configuration references. Audit editor launches, Git/SSH/credential helpers and ancillary probes. A helper outside operation cancellation must have an explicit independent lifecycle and cannot block this operation's claimed completion invisibly.\n- Cancellation is idempotent intent plus observed termination, not completion. Record whether signaling/spawn/pipe/reap/containment observation failed. Drain bounded/redacted diagnostics and retain the process status; join/reconcile workers and pipe readers before claiming their cleanup. Keep the action tracked while an exited leader's descendants still hold its pipes. Pipe closure alone likewise does not prove all descendants ended.\n- Separate the grace-to-escalate policy from the deadline for observation/cleanup. Use the owning platform/operation policy; do not replace provider/MCP/LSP/probe timeouts with 200 ms. Blocking platform termination work runs outside the UI/control path. A timeout or unsupported containment state yields truthful recovery/cleanup uncertainty and protects the lease, not an invented cancelled-clean result.\n- Close seals further launches and performs or tracks deterministic cleanup; it does not report all processes gone merely after an escalation request. Preserve natural-exit races and successful process receipts. On restart, reconcile current owner/resource truth before reassigning a writer scope.\n\nThese are behavioral refinements needed to implement already accepted completion, isolation and lease truth. Choice of OS mechanism is a proposal below. They do not claim that all descendants can be contained under every execution environment.\n\n**Acceptance checks:** race cancel against spawn and natural exit; cancel one token while another/unbound task remains independent; refuse later launches from a cancelled/closed scope; explicitly propagated worker-thread token; leader exit with stdout and stderr held separately; stubborn child; descendant escaping a Unix group; signal permission/command failure; Windows taskkill failure and exited leader; reader error; close twice; shutdown with blocked workers; PID/handle identity reuse; restart before terminal receipt. Capture actual process handles/groups/jobs, reader completion, status and lease-reconciliation evidence. Never infer completion merely from no PID in a UI list. Run the matrix on native Windows with WSL off as well as Unix; Unix-only source tests cannot certify it."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 24,
+          "line_end": 24,
+          "exact_quote": "| Platform containment / completion (`jayjay-process-containment.md`) | uncertain | Run J-R2's process/pipe/race/close matrix against the actually certified platform adapter; source tests are Unix-only and unexecuted here. S00016/S00036/S00037/S00038 plus POSIX/Microsoft S00088–S00090. Windows Job Objects are separately **product proposal requiring approval**, J-P1, with launch-association/nesting/breakaway/notification caveats. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "Concrete lifecycle acceptance refinement of existing completion/isolation owners. Choice of mechanism is explicitly separate; no runtime certification or uncovered product promise established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F074",
+          "relation": "narrower",
+          "rationale": "Concrete lifecycle acceptance refinement of existing completion/isolation owners. Choice of mechanism is explicitly separate; no runtime certification or uncovered product promise established.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete lifecycle acceptance refinement of existing completion/isolation owners. Choice of mechanism is explicitly separate; no runtime certification or uncovered product promise established.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C19",
+      "proposition": "Operation-scoped Windows Job Objects versus weaker taskkill fallback is an unapproved implementation/material choice.",
+      "assertion_status": "unapproved_material_mechanism_proposal",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 224,
+          "line_end": 226,
+          "exact_quote": "[Microsoft Job Objects](https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects) (S00089:35–45,57–58,67–73) support process association, default inherited child membership, termination and kill-on-close, with nested-job/breakaway caveats and non-guaranteed notification delivery for some events. The inspected JayJay module uses taskkill, not Job Objects.\n\n**Proposal:** evaluate an operation-scoped Windows Job Object adapter within the existing managed-process owner against a taskkill-based fallback with explicitly weaker verified guarantees. Benefit: a containment handle and accounting can outlive the original leader and improve deterministic shutdown. Dependencies: supported Windows versions, launch/association race prevention, nested-job compatibility, breakaway policy, handle custody, asynchronous observation, assignment/termination failure handling and exact Environment support. Tradeoffs: stronger control requires platform-specific implementation and may conflict with tools that use jobs or break away; taskkill is simpler but depends on leader/tree discovery and external-command latency. Kill-on-close must follow owner lifecycle, not a client window close. Choose only after the J-R2 platform matrix; no adoption, fallback promise or latency constant is approved here."
+        }
+      ],
+      "baseline_mappings": [],
+      "relation": "no_match",
+      "mapping_rationale": "Named OS mechanism is not automatically a product capability or union finding; leave as engineering option requiring exact environment qualification.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C20",
+      "proposition": "Cancellation can follow local or remote applied phases; preserve exact observations and unknown outcomes, block blind replay, and do not equate local refresh or process success with remote truth.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 230,
+          "line_end": 242,
+          "exact_quote": "JayJay's [sync caller](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/git/sync.rs) (S00017) performs optional bookmark tracking before push, then push/reload/final cancel check (9–22). Pull can fetch, track, rebase, reload and abandon (67–105,137–162). Some errors are ignored; recording an abandoned bookmark after a quiet helper is not proof that abandonment succeeded. These actions demonstrate why all-or-nothing cancellation prose is unsafe; **they do not approve PM automatically tracking/rebasing/abandoning as part of Fetch**.\n\nThe [Mac UI](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/shell/mac/Sources/JayJay/Repo/ViewModel/Actions/RepoViewModel+GitActions.swift#L109-L118) (S00047:109–118) refreshes after cancellation because the remote phase may have landed. That path does not replay the action. Local refresh is not authoritative remote verification.\n\nIndependent native evidence corroborates the boundary:\n\n- [lib/src/git.rs](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/lib/src/git.rs#L3284-L3288) (S00049:3284–3288) says fetch first updates local Git remote-tracking refs; [CLI fetch](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/git/fetch.rs#L242-L261) (S00045:242–261) imports then finishes the JJ transaction.\n- [CLI push](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/git/push.rs#L598-L656) (S00046:598–656) pushes remotely before finishing the local transaction; partial exports can commit and still return an error.\n- Native fetch includes a missing-refspec retry loop (S00049:3313–3342). “No automatic replay of an uncertain user action” must not be misreported as “no transport retries exist anywhere.”\n\nSCS-016 already requires durable intent, exact remote target/preconditions, per-target observations and unknown-outcome reconciliation; F3-529 already requires visible partial/unknown outcomes. Do not duplicate that policy or create another remote observer. Complete its JJ-specific acceptance with phase receipts for tracking/snapshot/fetch/import/push/rewrite as actually invoked, and keep remote observation distinct from local JJ/Git state. A cancelled or failed process cannot reverse remote writes, a local undo cannot reverse publication, and a successful process alone cannot certify it.\n\n**Acceptance checks for existing policy:** capture the exact executable/version/profile, arguments, cwd, effective non-secret config/transport, pre/post JJ operation heads, relevant local Git refs and authoritative remote refs. Interrupt before launch, after a pre-snapshot, after fetch-before-import, after remote push-before-local finish, and after a successful step-before-action callback. Include partial multi-target push, unavailable remote observation, late success, repeated cancellation and restart. Compare observed effects with each terminal receipt; block blind replay; preserve known local observations when remote truth remains unknown; require current target/lease/revision/policy checks for any subsequently chosen action. Version-specific boundary hooks must be established against the actually certified adapter; the independently inspected 0.45.1 source is not certification for another version."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+          "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+          "line_start": 25,
+          "line_end": 25,
+          "exact_quote": "| Cancellation versus local/remote effects (`jayjay-effect-reconciliation.md`) | deferred | Existing policy is already covered; future native certification must supply exact executable/profile/config/transport and pre/post operation heads, local Git refs and authoritative remote refs at the interruption windows listed in J-R3. S00017/S00047, independent jj S00045/S00046/S00049. Local refresh and process success are not remote truth; native 0.45.1 source is not a captured PM/JayJay executable. |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "semantically_equivalent",
+          "rationale": "Full multi-stage partial-effect/cancellation/remote publication and restart proposition with phase acceptance matrix.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Full multi-stage partial-effect/cancellation/remote publication and restart proposition with phase acceptance matrix.",
+      "proposed_credit_fids": [
+        "F007"
+      ],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C21",
+      "proposition": "Native transport retry loops exist without authorizing replay of an uncertain user action or silently adding track/rebase/abandon to Fetch.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 230,
+          "line_end": 240,
+          "exact_quote": "JayJay's [sync caller](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/git/sync.rs) (S00017) performs optional bookmark tracking before push, then push/reload/final cancel check (9–22). Pull can fetch, track, rebase, reload and abandon (67–105,137–162). Some errors are ignored; recording an abandoned bookmark after a quiet helper is not proof that abandonment succeeded. These actions demonstrate why all-or-nothing cancellation prose is unsafe; **they do not approve PM automatically tracking/rebasing/abandoning as part of Fetch**.\n\nThe [Mac UI](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/shell/mac/Sources/JayJay/Repo/ViewModel/Actions/RepoViewModel+GitActions.swift#L109-L118) (S00047:109–118) refreshes after cancellation because the remote phase may have landed. That path does not replay the action. Local refresh is not authoritative remote verification.\n\nIndependent native evidence corroborates the boundary:\n\n- [lib/src/git.rs](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/lib/src/git.rs#L3284-L3288) (S00049:3284–3288) says fetch first updates local Git remote-tracking refs; [CLI fetch](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/git/fetch.rs#L242-L261) (S00045:242–261) imports then finishes the JJ transaction.\n- [CLI push](https://github.com/jj-vcs/jj/blob/c5ba4ea0b011fbc8d532d74b6cf8493911618cf5/cli/src/commands/git/push.rs#L598-L656) (S00046:598–656) pushes remotely before finishing the local transaction; partial exports can commit and still return an error.\n- Native fetch includes a missing-refspec retry loop (S00049:3313–3342). “No automatic replay of an uncertain user action” must not be misreported as “no transport retries exist anywhere.”\n\nSCS-016 already requires durable intent, exact remote target/preconditions, per-target observations and unknown-outcome reconciliation; F3-529 already requires visible partial/unknown outcomes. Do not duplicate that policy or create another remote observer. Complete its JJ-specific acceptance with phase receipts for tracking/snapshot/fetch/import/push/rewrite as actually invoked, and keep remote observation distinct from local JJ/Git state. A cancelled or failed process cannot reverse remote writes, a local undo cannot reverse publication, and a successful process alone cannot certify it."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F009",
+          "relation": "narrower",
+          "rationale": "Clarifies scope of no-replay policy and prevents importing upstream side effects; not new PM Fetch behavior.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        },
+        {
+          "finding_id": "F102",
+          "relation": "narrower",
+          "rationale": "Clarifies scope of no-replay policy and prevents importing upstream side effects; not new PM Fetch behavior.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Clarifies scope of no-replay policy and prevents importing upstream side effects; not new PM Fetch behavior.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C22",
+      "proposition": "The fifteen structural witnesses distinguish validated controls from terminal-evidence underconstraint and rejected unmodeled selection fields; they do not certify a runtime.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 190,
+          "line_end": 194,
+          "exact_quote": "**Static defect:** `jujutsu_integration_contracts.schema.json:1775–1793,1861–1869,1941–2055` (S00025/S00027) requires the `receipt_ref` property but permits null on failed, cancelled, recovery-required and unknown outcomes. Only successful mutation tightens it to a non-secret ref. `full_thread_runtime_contracts.schema.json:150–187` (S00014) permits terminal work with a null or absent `result_receipt_ref`; its conditionals cover waiting/progress but not terminal evidence. The neutral result also permits missing/null `operation_receipt_ref` for non-success source-control outcomes (`source_control_contracts.schema.json:2046–2175`, S00080); repairs should remain consistent across the facade.\n\nThis conflicts with the existing SCS-003 terminal-attempt requirement and shared completion truth. The fixture `command_result_jujutsu_clone_cancelled_after_cleanup` includes a receipt (`jujutsu_integration_contract_fixtures.json:2703–2723`, S00079), but is a positive example, not a negative guard proving all cancellation paths enforce it. Generic request/permission-negative coverage for split/squash is not cancellation or byte-fidelity coverage.\n\n**Executed witnesses:** four original positive fixtures validate. Removing a receipt from successful mutation is rejected, and removing a required wait reason is rejected. Yet cancelled/failed/recovery-required/effect-unknown JJ push results with no receipt validate; a split cancellation claiming a prior applied effect with no receipt/after revision validates; completed/cancelled/failed shared work with no receipt validates. Adding an unmodeled split selection field is rejected. All 15 checks match their stated expected schema result. Full records and errors are preserved in schema-witnesses.json; no runtime or semantic-correctness claim is attached to synthetic witness instances."
+        }
+      ],
+      "baseline_mappings": [],
+      "relation": "no_match",
+      "mapping_rationale": "Evidence-method claim only; probe code/result retained below, no union item.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    },
+    {
+      "claim_id": "P-J0021-C23",
+      "proposition": "Platform fidelity, escaped descendants, helper coverage and experimental merge recovery remain unresolved despite delivered comparison prose.",
+      "assertion_status": "asserted_source_and_frozen_plan_comparison",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+          "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+          "line_start": 244,
+          "line_end": 250,
+          "exact_quote": "## Residual directions and completion boundary\n\n[leads.md](leads.md) retains the reviewable product/material choices and unresolved runtime matrices under the two assigned parents. No embedded upstream lead is substituted for an assignment. The concrete repairs above include replacement behavior and acceptance checks; the optional proposals include benefit, dependencies and tradeoffs. All are findings for review, not authorized Plans edits or implementation.\n\nUnresolved empirical questions are explicitly bounded: exact-byte/type/mode behavior across platforms; symlink output; Windows containment and latency; descendants outside a group; complete helper-scope coverage; experimental merge undo/fidelity/platform integration; and actual local/remote before/after effects under cancellation. They remain uncertain/deferred follow-up evidence. This comparison does not require running prohibited upstream code to pretend those questions are resolved.\n\nThe comparison is complete when both assigned headings/dispositions, owner and consumer citations, primary-source reconciliation, concrete repair behavior/checks and unapproved proposals are saved and checked. Static Plans and schema witnesses are not native readiness, runtime/security certification, GUI evidence or user approval."
+        }
+      ],
+      "baseline_mappings": [],
+      "relation": "no_match",
+      "mapping_rationale": "Runtime truncation remains authoritative; author completion language does not mean unexecuted empirical work is finished.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+      "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+      "lines": 250,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0021-C01",
+        "P-J0021-C02",
+        "P-J0021-C03",
+        "P-J0021-C04",
+        "P-J0021-C05",
+        "P-J0021-C06",
+        "P-J0021-C07",
+        "P-J0021-C08",
+        "P-J0021-C09",
+        "P-J0021-C10",
+        "P-J0021-C11",
+        "P-J0021-C12",
+        "P-J0021-C13",
+        "P-J0021-C14",
+        "P-J0021-C15",
+        "P-J0021-C16",
+        "P-J0021-C17",
+        "P-J0021-C18",
+        "P-J0021-C19",
+        "P-J0021-C20",
+        "P-J0021-C21",
+        "P-J0021-C22",
+        "P-J0021-C23"
+      ],
+      "disposition": "All material assertions read; duplicate leads share claims; schema code/result evidence supporting C16/C17/C22."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/leads.md",
+      "sha256": "e9f7e922d0dadec99e9d3c0665c2df43d84c02705bba46e6039960068ef5f801",
+      "lines": 32,
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0021-C05",
+        "P-J0021-C07",
+        "P-J0021-C08",
+        "P-J0021-C11",
+        "P-J0021-C15",
+        "P-J0021-C18",
+        "P-J0021-C20"
+      ],
+      "disposition": "All material assertions read; duplicate leads share claims; schema code/result evidence supporting C16/C17/C22."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/schema-witnesses.py",
+      "sha256": "2ebf653d516babf98008f8a612d7065cde7dbb35ca835749c4fef0e724418aff",
+      "lines": 114,
+      "read_complete": true,
+      "claim_ids": [],
+      "disposition": "All material assertions read; duplicate leads share claims; schema code/result evidence supporting C16/C17/C22."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/schema-witnesses.json",
+      "sha256": "7cb8b47fba083ef5d05dc93dd7d83391e9c5fac90c9782c7cfd3d7a28ec576bb",
+      "lines": 924,
+      "read_complete": true,
+      "claim_ids": [],
+      "disposition": "All material assertions read; duplicate leads share claims; schema code/result evidence supporting C16/C17/C22."
+    }
+  ],
+  "probe_evidence": {
+    "inputs_verified": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/research-evidence/sources/S00020/text.txt",
+        "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041",
+        "source_id": "S00020"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/research-evidence/sources/S00080/text.txt",
+        "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada",
+        "source_id": "S00080"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/research-evidence/sources/S00014/text.txt",
+        "sha256": "78cad4065dc69c06a99c8ea693623f0bb5d7d6bd1027ef2aff0ee4d060d30e1f",
+        "source_id": "S00014"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/research-evidence/sources/S00079/text.txt",
+        "sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff",
+        "source_id": "S00079"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/research-evidence/sources/S00081/text.txt",
+        "sha256": "5b4ba1963efaae46989f80fb2e13e8d2c71cce6a64e4bf1ef8e8de011280ce2d",
+        "source_id": "S00081"
+      }
+    ],
+    "checks": [
+      {
+        "name": "control_clone_cancel_with_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "Unmodified positive fixture."
+      },
+      {
+        "name": "control_success_with_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "Unmodified positive fixture."
+      },
+      {
+        "name": "control_waiting_work",
+        "valid_under_frozen_schema": true,
+        "explanation": "Unmodified positive fixture."
+      },
+      {
+        "name": "control_split_request",
+        "valid_under_frozen_schema": true,
+        "explanation": "Unmodified positive fixture."
+      },
+      {
+        "name": "jj_cancelled_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "A terminal attempt can omit its receipt; unknown effect correctly blocks retry but has no evidence link."
+      },
+      {
+        "name": "jj_failed_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "A terminal attempt can omit its receipt; unknown effect correctly blocks retry but has no evidence link."
+      },
+      {
+        "name": "jj_recovery_required_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "A terminal attempt can omit its receipt; unknown effect correctly blocks retry but has no evidence link."
+      },
+      {
+        "name": "jj_effect_unknown_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "A terminal attempt can omit its receipt; unknown effect correctly blocks retry but has no evidence link."
+      },
+      {
+        "name": "jj_split_cancel_known_effect_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "Even a cancellation claiming a known applied effect can lack an after revision and receipt."
+      },
+      {
+        "name": "control_success_without_receipt_is_rejected",
+        "valid_under_frozen_schema": false,
+        "explanation": "The frozen schema does require the receipt for successful mutation."
+      },
+      {
+        "name": "work_completed_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "The shared terminal projection accepts a null owner receipt; producer/consumer semantics must enforce more."
+      },
+      {
+        "name": "work_cancelled_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "The shared terminal projection accepts a null owner receipt; producer/consumer semantics must enforce more."
+      },
+      {
+        "name": "work_failed_without_receipt",
+        "valid_under_frozen_schema": true,
+        "explanation": "The shared terminal projection accepts a null owner receipt; producer/consumer semantics must enforce more."
+      },
+      {
+        "name": "control_wait_without_reason_is_rejected",
+        "valid_under_frozen_schema": false,
+        "explanation": "Confirms that the validator enforces existing conditional requirements."
+      },
+      {
+        "name": "new_split_selection_ref_is_rejected",
+        "valid_under_frozen_schema": false,
+        "explanation": "The current closed request has no selection-ref field; adding selection is a reviewed contract extension, not implicit coverage."
+      }
+    ],
+    "scope": "Static frozen-schema witnesses only; no native execution or runtime failure claim.",
+    "execution_by_this_evaluator": false
+  },
+  "proposed_credit_fids": [
+    "F001",
+    "F007",
+    "F008",
+    "F056",
+    "F074",
+    "F102"
+  ],
+  "proposed_new_original_baseline_credit_fids": [
+    "F001"
+  ],
+  "F001_credit_policy": "Propose new direct continuation premium support for existing F001; original union still105 and original F001 evaluator-only zero-credit fact remains unchanged. Current-canon correction status must be separated from discovery against the original frozen union. Root reports F001 already fixed in current Plans; direct frozen-baseline rediscovery does not create another current defect.",
+  "related_extension_holds": [
+    {
+      "claim_id": "P-J0021-C17",
+      "reason": "Shared terminal receipt underconstraint extends F001 obligation into consumer schema. Determine current status and grouping; not automatically another union item."
+    }
+  ],
+  "unapproved_proposals": [
+    {
+      "claim_id": "P-J0021-C05",
+      "status": "No completion/approval credit; current D5/owner overlap and exact novel product delta require separate adjudication."
+    },
+    {
+      "claim_id": "P-J0021-C08",
+      "status": "No completion/approval credit; current D5/owner overlap and exact novel product delta require separate adjudication."
+    },
+    {
+      "claim_id": "P-J0021-C11",
+      "status": "No completion/approval credit; current D5/owner overlap and exact novel product delta require separate adjudication."
+    },
+    {
+      "claim_id": "P-J0021-C19",
+      "status": "No completion/approval credit; current D5/owner overlap and exact novel product delta require separate adjudication."
+    },
+    {
+      "claim_id": "P-J0021-C01",
+      "status": "Owner-approved backend normalization and concrete routing would be new work; no correction or completion credit."
+    }
+  ],
+  "original_union_denominator": 105,
+  "accepted_union_extension_count": 0,
+  "current_canon_review": {
+    "performed_by_this_agent": false,
+    "assigned_to": "root",
+    "status": "Literal catalog rows remain, but SCS Git-only scope defeats the inferred JJ binding. Conflict-consumer correction withdrawn; original F001 fixed-current/direct-baseline-credit distinction unchanged.",
+    "root_reported_checks": {
+      "head": "5d6b351bc993f13ce4962f54445610e7f3a45cfa",
+      "conflict_catalog": {
+        "path": "Plans/UI_Command_Catalog.md",
+        "open_conflict_line": 548,
+        "mark_conflict_resolved_line": 551,
+        "gate": "git_available && conflict_present",
+        "resolution_gate": "conflict_file_selected && no_conflict_markers"
+      },
+      "F001": {
+        "path": "Plans/Jujutsu_Integration.md",
+        "line": 304,
+        "status": "Every established terminal command_result now requires nonnull receipt_ref; accepted remains nullable."
+      },
+      "evidence_status": "Root exact-file evidence pending attachment; this record attributes the check rather than inventing a source hash."
+    },
+    "owner_scope_counterevidence": [
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Source_Control_System.md",
+        "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+        "line_start": 127,
+        "line_end": 136,
+        "exact_quote": "  Every source-control mutation requires one current writer lease with repository/workspace/backend, holder,\n  generation, epoch, expiry and reconciliation state; one expected native revision; Permissions and FileSafe\n  decisions; and one idempotent command instance. HTTPS and SSH credentials are brokered as expiring,\n  revocable, operation- or GoalRun-scoped leases. Async work uses ObservableWork and every terminal attempt\n  emits a typed operation receipt even when the effect is unknown or recovery is required. The nineteen\n  canonical cmd.source_control backend/repository/status/diff/history/workspace/remote identities use one\n  owner-DRY discriminated scope plus generic request/result/error/availability/disabled-reason schemas; this\n  static contract does not establish central catalog rows, native handlers, production wiring, admitted events,\n  or runtime proof.\ngui_related: true"
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Source_Control_System.md",
+        "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+        "line_start": 302,
+        "line_end": 308,
+        "exact_quote": "The generic command scope admits only those exact nineteen IDs. It preserves exact Project, Project Home Server, Execution Host, Execution Environment, Source Location, topology generation, repository context, `repo_id`, `scm_backend`, backend-native `workspace_id`, backend-native expected revision, currentness generation, writer lease, credential lease, transport, independent `forge_provider` binding, and checkpoint identity/generation fields as applicable. `backend.detect` and `backend.select` are exact-environment pre-repository branches; status/diff/history/workspace-list/open and checkpoint inspect are read/currentness branches without a fabricated writer lease; mutation, checkpoint create/restore, and remote branches add the exact writer or credential authority they require. Closed `additionalProperties` scopes structurally reject path/focus/newest-record/remote-text/generic-provider substitution.\n\n`cmd.source_control.repository.clone` is the sole backend-neutral ordinary Git clone command. Its scope is nevertheless exactly `scm_backend=git`; it requires a reserved Project/repository/workspace lineage, exact Host/Environment/Source Location and topology generation, current catalog generation/ref/hash, destination writer lease, one-operation credential lease, transport, independent forge binding including `none`, verified remote identity, FileSafe destination Source Location, permission decision, idempotency, and an exact caller return context. Success returns the repository/source identities, `ObservableWork`, and terminal operation receipt needed by Project System to register `registration_kind=git_clone`. Cancellation returns to the exact caller route/focus/continuation after cleanup and creates no Project row. Caller close or navigation does not itself cancel the clone.\n\nJujutsu cloning remains the distinct `cmd.jujutsu.git.clone` owned by `Plans/Jujutsu_Integration.md`, and its Project handoff is `registration_kind=jujutsu_clone`. Neither `cmd.git.clone`, `cmd.scm.clone`, a generic `cmd.project.clone`, nor any normalization between ordinary Git and Jujutsu clone is admitted.\n\n`cmd.source_control.select_worktree` is compatibility-only and normalizes before policy/dispatch to `cmd.source_control.workspace.switch {backend: git}`. `cmd.scm.*` is forbidden. Existing Git conflict/merge/review/graph/stage/commit/stash/branch/compare commands remain Git adapter commands unless the command owner explicitly normalizes them. Family/glob tokens are documentation groups, never registerable commands."
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Jujutsu_Integration.md",
+        "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+        "line_start": 190,
+        "line_end": 209,
+        "exact_quote": "  FileSafe safe points protect exact external file effects and complement JJ recovery; they never replace the\n  operation log, silently rewind JJ state, or claim recovery without post-restore snapshot and conflict proof.\n  Conflicts remain typed JJ conflicts with materialized-file and backend state explicitly distinguished.\ngui_related: true\ngui_classification_reason: Undo, restore, conflict, quarantine, and recovery state are visible actions and statuses.\ndepends_on: [JJI-003, JJI-004]\nunblocks: [JJI-006]\nacceptance_criteria:\n  - Undo and restore reject stale operation IDs and emit before/after operation identities.\n  - FileSafe restore and JJ operation restore have distinct commands, decisions, and receipts.\n  - Conflict resolution proves current snapshot, expected conflict identity, and terminal reconciliation.\nvalidation_surfaces: [undo/op restore fixtures, FileSafe complement tests, conflict and restart recovery tests]\nrisk_class: destructive_or_false_jj_recovery\nreasoning_tier: high\ncontext_scope: jujutsu_recovery\nimplementation_surfaces: [future JJ adapter, Plans/FileSafe.md, future Runtime Artifacts projections]\nnode_compile_hint: {mode: jujutsu_recovery_contract, create_worknodes: false, create_nodeseeds: false}\nsource_lineage: [source_ref:egolite-register:SCM-02]\npreserved_exact_tokens: [jj undo, jj op restore, FileSafe safe points, operation log, conflict]\nnegative_constraints: [Do not let FileSafe replace JJ undo., Do not restore by newest-operation heuristic., Do not call a materialized file clean while JJ conflict state remains.]"
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/Jujutsu_Integration.md",
+        "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+        "line_start": 258,
+        "line_end": 290,
+        "exact_quote": "cmd.jujutsu.diff.open\ncmd.jujutsu.history.open\ncmd.jujutsu.change.new\ncmd.jujutsu.change.describe\ncmd.jujutsu.change.edit\ncmd.jujutsu.change.split\ncmd.jujutsu.change.squash\ncmd.jujutsu.change.rebase\ncmd.jujutsu.change.abandon\ncmd.jujutsu.change.restore\ncmd.jujutsu.bookmark.create\ncmd.jujutsu.bookmark.move\ncmd.jujutsu.bookmark.rename\ncmd.jujutsu.bookmark.delete\ncmd.jujutsu.bookmark.track\ncmd.jujutsu.bookmark.untrack\ncmd.jujutsu.workspace.list\ncmd.jujutsu.workspace.create\ncmd.jujutsu.workspace.open\ncmd.jujutsu.workspace.switch\ncmd.jujutsu.workspace.remove\ncmd.jujutsu.operation.log\ncmd.jujutsu.operation.show\ncmd.jujutsu.operation.undo\ncmd.jujutsu.operation.restore\ncmd.jujutsu.git.clone\ncmd.jujutsu.git.fetch\ncmd.jujutsu.git.push\ncmd.jujutsu.git.import\ncmd.jujutsu.git.export\n```\n\n`cmd.jj.<suffix>` is compatibility-only and normalizes to `cmd.jujutsu.<suffix>` before availability, policy, dispatch, telemetry, event, and receipt handling."
+      },
+      {
+        "path": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation3-results-20260911/Plans/UI_Command_Catalog.md",
+        "sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "line_start": 576,
+        "line_end": 584,
+        "exact_quote": "Compare-open command identity is repository-scoped rather than UI-local. The compatibility token `compare_open` maps to `cmd.source_control.open_review` or `cmd.git.diff_open` with `project_id`, `repo_id`, optional `repo_relative_path`, left/right selectors that can bind to `worktree_id`, branch, commit, or revision, and presentation hints such as `side_by_side` versus `unified`. Path-level stage/unstage/discard commands remain separate from hunk-level aliases (`stage_hunk`, `unstage_hunk`, `discard_hunk`) and their plural command rows above. Conflict-review and `/open-resolution` actions must flow through Source Control conflict commands or `cmd.git.conflict_apply_resolution`; no consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.\n\nRules:\n- Review mode state is a Source Control view state with per-project persistence for compare target and filters; it is not canonical repository history.\n- Conflict assistant commands record resolution events and blocked-state handoff outcomes through `/event/storage`; they do not persist conflicted file content.\n- `cmd.source_control.open_conflict` is the command-backed action behind the `Open Conflict Assistant` GUI entrypoint from `Source Control > Changes` and Orchestrator blocked worktree cards.\n- `/disabled` states must explain missing git, missing compare target, `stale-target`, absent conflict files, unavailable merge editor, or policy-restricted mutation rather than silently hiding the command.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md"
+      }
+    ],
+    "inventory_check": {
+      "files": [
+        "Plans/Jujutsu_Integration.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/jujutsu_integration_contracts.schema.json"
+      ],
+      "result": "Each contains31 exact cmd.jujutsu IDs; no cmd.jujutsu.conflict.* or resolve ID found. This is inventory evidence, not permission to mint or normalize commands."
+    }
+  },
+  "unresolved": [
+    "No upstream or process/Windows runtime tests executed.",
+    "No portable containment, every-helper coverage, or mode/symlink correctness certification.",
+    "Selection/result and persistent batch UI choices remain unapproved.",
+    "Receipt witnesses are local structural checks, not runtime semantic validator failures."
+  ],
+  "validation": {
+    "retained_markdown_hashes_verified": true,
+    "exact_quote_lines_extracted": true,
+    "full_baseline_propositions_considered": true,
+    "no_keyword_only_credit": true,
+    "no_protocol_edits_or_live_worker_calls": true
+  },
+  "withdrawn_new_union_candidates": [
+    {
+      "candidate_id": "P-J0021-conflict-consumer-gates",
+      "proposed_classification": "correction",
+      "proposition": "Existing conflict command consumers must route by the captured backend and require JJ-native snapshot/conflict resolution proof, rather than using Git-availability and marker-only predicates as JJ authority.",
+      "claim_ids": [
+        "P-J0021-C01",
+        "P-J0021-C02"
+      ],
+      "status": "withdrawn_after_owner_scope_counterevidence",
+      "reason": "Withdraw as a demonstrated correction: SCS explicitly retains existing Git conflict commands as Git adapter commands absent owner normalization. The generic-looking command IDs and consumer wording do not establish a JJ route through these rows. JJI-005 requires native conflict truth but the inspected current31-command JJ inventories contain no cmd.jujutsu.conflict.* or resolve command; absence does not authorize normalization or invent an ID. The deliverable is an unapproved backend-normalization/integration proposal, not a proven owner/consumer contradiction."
+    }
+  ],
+  "new_union_candidates": [],
+  "amendment": {
+    "reason": "Parent requested narrow re-adjudication against SCS explicit Git-command scope. Previous literal-only inference was insufficient.",
+    "change": "Withdraw H-R1 new correction candidate; preserve exact delivered claim and counterevidence. Other semantic baseline support remains unchanged.",
+    "canonical_files_modified": false
+  }
+}

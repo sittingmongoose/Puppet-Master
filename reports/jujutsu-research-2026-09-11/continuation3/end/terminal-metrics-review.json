@@ -1,0 +1,187 @@
+{
+  "status": "PASS_METRIC_ACCURACY_WITH_ACCOUNTED_CAP_OVERSHOOT",
+  "review_at": 1789166103.3967185,
+  "scope": "Read-only terminal metrics/evidence audit; no runtime tests,paid calls,source changes or semantic adjudication.",
+  "metrics": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/terminal-metrics/premium.json",
+      "sha256": "bd4fe57c1c5866ebb1c99bb402a39a357cca992f1832a3bc0945e54d915ed65f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/terminal-metrics/hybrid.json",
+      "sha256": "868ba89b1b95516c8c8c9bd283532947b869f383c486a7d91f56e20e48d5583d"
+    }
+  ],
+  "arms": {
+    "premium": {
+      "new_admissions": 12,
+      "lifetime_admissions": 28,
+      "remaining_unused_admissions": 0,
+      "runtime_status_counts": {
+        "complete": 7,
+        "budget_truncated": 5
+      },
+      "job_end_reconciled_count": 10,
+      "job_end_unresolved_count": 2,
+      "prior_captured_usd": 40.340164,
+      "new_captured_usd": 81.58379,
+      "lifetime_captured_usd": 121.923954,
+      "terminal_unresolved_usd": 24.0,
+      "accounted_total_usd": "145.923954",
+      "arm_cap_usd": 250,
+      "accounted_overshoot_usd": "0",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "source_references_hash_verified": 112,
+      "max_physical_requests": 40,
+      "max_elapsed_seconds": 1086.596,
+      "stage_timing": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "reconcile": {
+          "wall_seconds": 2891.1800394058228,
+          "summed_job_seconds": 5237.865,
+          "average_concurrency": 1.8116702967679774,
+          "jobs": 6
+        },
+        "compare": {
+          "wall_seconds": 3216.9117159843445,
+          "summed_job_seconds": 5883.882,
+          "average_concurrency": 1.829046775130286,
+          "jobs": 6
+        }
+      },
+      "overall_timing": {
+        "wall_seconds": 3980.7539229393005,
+        "summed_job_seconds": 11121.747,
+        "average_concurrency": 2.793879555304928,
+        "jobs": 12
+      }
+    },
+    "hybrid": {
+      "new_admissions": 10,
+      "lifetime_admissions": 22,
+      "remaining_unused_admissions": 2,
+      "runtime_status_counts": {
+        "budget_truncated": 5,
+        "complete": 2,
+        "interrupted": 3
+      },
+      "job_end_reconciled_count": 7,
+      "job_end_unresolved_count": 3,
+      "prior_captured_usd": 3.596462368,
+      "new_captured_usd": 70.12668000000001,
+      "lifetime_captured_usd": 73.723142368,
+      "terminal_unresolved_usd": 36.0,
+      "accounted_total_usd": "109.723142368",
+      "arm_cap_usd": 100,
+      "accounted_overshoot_usd": "9.723142368",
+      "stop_reason": "Stop: global_allowance_launch_allowed",
+      "source_references_hash_verified": 85,
+      "max_physical_requests": 40,
+      "max_elapsed_seconds": 1004.89,
+      "stage_timing": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "jobs": 0
+        },
+        "reconcile": {
+          "wall_seconds": 2540.4580895900726,
+          "summed_job_seconds": 5059.908590932846,
+          "average_concurrency": 1.991730787320058,
+          "jobs": 6
+        },
+        "compare": {
+          "wall_seconds": 1652.7816236019135,
+          "summed_job_seconds": 2517.7319714756013,
+          "average_concurrency": 1.523330085186147,
+          "jobs": 4
+        }
+      },
+      "overall_timing": {
+        "wall_seconds": 2540.594123363495,
+        "summed_job_seconds": 7577.640562408447,
+        "average_concurrency": 2.9826253995960608,
+        "jobs": 10
+      }
+    }
+  },
+  "material_observations": [
+    {
+      "id": "T1",
+      "severity": "required_disclosure",
+      "arm": "hybrid",
+      "finding": "Captured73.723142368 remains below100, but adding36 terminal unresolved allowances yields109.723142368, exceeding100 by9.723142368. This is not overall cap compliance. Unknown liability remains visible rather than zeroed or dropped."
+    },
+    {
+      "id": "T2",
+      "severity": "required_distinction",
+      "arm": "hybrid",
+      "finding": "Five jobs are budget_truncated by model_request_limit; three distinct jobs J0020-reconcile,J0021-reconcile,J0022-compare are interrupted by the campaign global_allowance_launch_allowed stop. Do not relabel all eight as per-job budget truncations, or claim the campaign stopped because of an arm-cap request denial."
+    },
+    {
+      "id": "T3",
+      "severity": "accounting_caveat",
+      "finding": "Premium has two research-complete jobs with incomplete usage coverage and12 unresolved each. Research completion and native accounting reconciliation are separate dimensions."
+    },
+    {
+      "id": "T4",
+      "severity": "required_distinction",
+      "finding": "pending_and_delivery=null means missing extraction from progress.json, not zero pending work. Root will publish a separate progress summary bound tosourcehashes. All22terminaljobs retain notes; presence doesnot establish completecoverage."
+    }
+  ],
+  "metric_defects": [],
+  "checks": [
+    "Every referenced top-level and per-job source hash matched at review time.",
+    "Stage and overall admission-to-terminal spans,execution sums,job counts and average concurrency recomputed exactly withinfloating precision.",
+    "Outcome statuses/durations match; all10 budget_truncated jobs acrossarms have40requests andmodel_request_limit denial.",
+    "For all22newjobs,unique transport forward_admitted IDs equal durableMeter request_count<=40; latestforward within2400frommeterstart. MaximumobservedelapsedP1086.596/H1004.89seconds.",
+    "New captured receipt/job totals plus preserved historical totals reproduce both lifetimecaptured figures; fixed12 unresolved totals and reconciledcounts match durable meters.",
+    "Premiumoriginal16monetaryrows and16budgetattempts compareexactly withprior snapshot;originalstart preserved. Hybrid originallegacy meter remains embeddedexactly andcaptured3.596462368unchanged.",
+    "No live jobs remain in either durablemeter. P28lifetime exhaustsadmissiongrant; H22lifetime leaves2 unused.",
+    "Reserve adjustment sourcebefore/afterhashes match and onlyoperational_headroom_usd changed20to15; phase80,start andallotherconfigfields unchanged."
+  ],
+  "reserve_adjustment": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/accounting-reserve-adjustment-001/allocation.json",
+    "sha256": "ba75b45a3574ab0ee106121b4392cb9052a7b93bea33107b63c172ce4966c794",
+    "cap_usd": 80,
+    "old_reserve_usd": 20,
+    "new_reserve_usd": 15,
+    "grant_renewed": false
+  },
+  "limitations": [
+    "This audit does not certify cash billing,totalunknownspend,semanticrecall orclaim-validity.",
+    "Hybridterminalreceipt establishesglobalallowancegate stop; exactnonarmcountervalue atstop wasnot reconstructed here.",
+    "Accounted overshoot can appear atjobend whenknowncostandfixedunresolvedcharges replace smallerliveaverages; nofuturelaunchapproval is implied.",
+    "Separate pending/delivery progress summary was announced butnot reviewed inthismetricsaudit; donotinferzero fromnull."
+  ]
+}

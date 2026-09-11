@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-11T21:59:17.927005+00:00",
+  "kind": "internal_budget_allocation",
+  "reason": "Premium campaign and terminal metrics are complete and five premium adjudication drafts are prepared. Re-estimate outstanding closing reserve at $15 while completing the authorized hybrid run. This spends within the existing $80 phase; it changes no protocol code, gate predicate, usage start, captured usage, arm cap, clock, admission grant, or history.",
+  "captured_usage_at_allocation": 58.298719999999996,
+  "old_reserve_usd": 20,
+  "new_reserve_usd": 15,
+  "cap_usd": 80,
+  "all_other_configuration_fields_unchanged": true,
+  "sources": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/accounting-reserve-adjustment-001/before.json",
+      "sha256": "d7eff0d0305230f715d4c5c187ccc47b71f0023cf6dd695e1a5d4db497454082"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/accounting-reserve-adjustment-001/after.json",
+      "sha256": "f5181bf37ce4b2e4e30a9014ec5cae88b4d74eb98d64370474f58b3fbc49cf2a"
+    }
+  ]
+}

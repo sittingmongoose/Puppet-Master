@@ -1,0 +1,702 @@
+{
+  "premium": {
+    "arm": "premium",
+    "terminal": {
+      "at": "2026-09-11T21:48:11.173383+00:00",
+      "stop_reason": "Stop: admitted_attempt_cap",
+      "partial": true,
+      "pending_intake_preserved": true
+    },
+    "prior_lifetime_admissions": 16,
+    "new_admissions": 12,
+    "lifetime_admissions": 28,
+    "remaining_unused_admissions": 0,
+    "continuation_started_at": 1789152688.500512,
+    "verified_human_waits": [
+      {
+        "start": 1789154117.097736,
+        "end": 1789154140.353642,
+        "verified": true,
+        "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/approval-wait-evidence.json",
+        "evidence_sha256": "cd24beb26f9ddb2c292419407ac4786bc66ecbcd888aa97026590f6982f59d6a"
+      },
+      {
+        "start": 1789156004.896084,
+        "end": 1789157021.4942,
+        "verified": true,
+        "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/human-wait-evidence.json",
+        "evidence_sha256": "a3976caacd1ff8b18a56d1697362bc1a5c6b46cd887208867e3b92f04fa3f968"
+      }
+    ],
+    "continuation_restarts": 1,
+    "historical_restarts": 0,
+    "runtime_status_counts": {
+      "complete": 7,
+      "budget_truncated": 5
+    },
+    "stage_timing": {
+      "discovery": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "implementation": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "history": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "reconcile": {
+        "wall_seconds": 2891.1800394058228,
+        "summed_job_seconds": 5237.865,
+        "average_concurrency": 1.8116702967679774,
+        "jobs": 6
+      },
+      "compare": {
+        "wall_seconds": 3216.9117159843445,
+        "summed_job_seconds": 5883.882,
+        "average_concurrency": 1.829046775130286,
+        "jobs": 6
+      }
+    },
+    "overall_timing": {
+      "wall_seconds": 3980.7539229393005,
+      "summed_job_seconds": 11121.747,
+      "average_concurrency": 2.793879555304928,
+      "jobs": 12
+    },
+    "timing_scope": "This increment only. Wall is admission-to-terminal span; sum is execution duration. Historical time and unobserved intervals are not filled in.",
+    "prior_captured_usd": 40.340164,
+    "new_captured_usd": 81.58379,
+    "lifetime_captured_usd": 121.92395399999987,
+    "lifetime_cap_usd": 250,
+    "new_unresolved_charge_usd": 24.0,
+    "job_end_reconciled_count": 10,
+    "job_end_unresolved_count": 2,
+    "jobs_with_notes": 12,
+    "new_budget_truncated_leads": [
+      "L-09a659a5a6f3",
+      "L-21de7aceefe8",
+      "L-28f7a36f8557",
+      "L-3e328f150be6",
+      "L-403e2eb271bc",
+      "L-6028298d8855",
+      "L-6ab2467deb87",
+      "L-74d9d8b172d3",
+      "L-937ac57a9f2b",
+      "L-aa8c1461d43a",
+      "L-e9ec230d009b"
+    ],
+    "live_usage_receipt_count": 420,
+    "native_retained_receipt_count": 420,
+    "historical_unknown_usage_preserved": true,
+    "historical_unknown_job_count": 8,
+    "inherited_meter_text_caveat": "The inherited top-level uncertainty string says unresolved usage is uncharged. New v4 unresolved charge fields and enforcement supersede that old description; historical unknowns retain their original valuation.",
+    "jobs": [
+      {
+        "job": "J0017-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-3c0712b66649",
+          "L-0eb0bdc5ba1a",
+          "L-f27a42fd3b4c"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 762.319,
+        "request_count": 29,
+        "captured_usd": 4.561676,
+        "job_end_reconciled": false,
+        "fully_reconciled": false,
+        "unresolved_charge_usd": 12.0,
+        "note_present": true,
+        "native_accounting_gaps": [
+          {
+            "reason": "physical_native_request_coverage_mismatch",
+            "physical": 29,
+            "native": 28
+          },
+          {
+            "reason": "durable_meter_request_count_mismatch",
+            "durable_requests": 29,
+            "transport_requests": 29,
+            "native_receipts": 28
+          }
+        ],
+        "denial_reasons": {
+          "job_closed": 1
+        }
+      },
+      {
+        "job": "J0018-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-937ac57a9f2b",
+          "L-3e328f150be6"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 833.743,
+        "request_count": 32,
+        "captured_usd": 5.452898,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0019-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-aa8c1461d43a",
+          "L-e9ec230d009b",
+          "L-6028298d8855"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 1006.065,
+        "request_count": 40,
+        "captured_usd": 7.58582,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0020-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-3c0712b66649",
+          "L-0eb0bdc5ba1a",
+          "L-f27a42fd3b4c"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 885.41,
+        "request_count": 39,
+        "captured_usd": 7.245385999999998,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0021-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-937ac57a9f2b",
+          "L-3e328f150be6"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 995.259,
+        "request_count": 40,
+        "captured_usd": 8.218146,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0022-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-aa8c1461d43a",
+          "L-e9ec230d009b",
+          "L-6028298d8855"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 986.724,
+        "request_count": 40,
+        "captured_usd": 8.591085999999999,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0023-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-28f7a36f8557",
+          "L-74d9d8b172d3",
+          "L-6ab2467deb87"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 720.255,
+        "request_count": 23,
+        "captured_usd": 4.132882,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0024-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-403e2eb271bc",
+          "L-21de7aceefe8",
+          "L-09a659a5a6f3"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 1027.397,
+        "request_count": 30,
+        "captured_usd": 5.699126,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0025-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-4634dafd85af",
+          "L-a2ab9a454e58",
+          "L-aa07eee74517"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 888.086,
+        "request_count": 31,
+        "captured_usd": 5.608986,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0026-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-28f7a36f8557",
+          "L-74d9d8b172d3",
+          "L-6ab2467deb87"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 983.877,
+        "request_count": 40,
+        "captured_usd": 7.689489999999999,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0027-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-403e2eb271bc",
+          "L-21de7aceefe8",
+          "L-09a659a5a6f3"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 946.016,
+        "request_count": 40,
+        "captured_usd": 7.704535999999999,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0028-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-4634dafd85af",
+          "L-a2ab9a454e58",
+          "L-aa07eee74517"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 1086.596,
+        "request_count": 38,
+        "captured_usd": 9.093758000000001,
+        "job_end_reconciled": false,
+        "fully_reconciled": false,
+        "unresolved_charge_usd": 12.0,
+        "note_present": true,
+        "native_accounting_gaps": [
+          {
+            "reason": "physical_native_request_coverage_mismatch",
+            "physical": 38,
+            "native": 37
+          },
+          {
+            "reason": "durable_meter_request_count_mismatch",
+            "durable_requests": 38,
+            "transport_requests": 38,
+            "native_receipts": 37
+          }
+        ],
+        "denial_reasons": {}
+      }
+    ],
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/terminal-metrics/premium.json",
+      "sha256": "bd4fe57c1c5866ebb1c99bb402a39a357cca992f1832a3bc0945e54d915ed65f"
+    },
+    "captured_plus_new_unresolved_usd": 145.92395399999987,
+    "accounted_excess_over_cap_usd": 0,
+    "budget_limited_job_count": 5,
+    "budget_limited_leads": [
+      "L-09a659a5a6f3",
+      "L-21de7aceefe8",
+      "L-28f7a36f8557",
+      "L-3e328f150be6",
+      "L-403e2eb271bc",
+      "L-6028298d8855",
+      "L-6ab2467deb87",
+      "L-74d9d8b172d3",
+      "L-937ac57a9f2b",
+      "L-aa8c1461d43a",
+      "L-e9ec230d009b"
+    ],
+    "budget_limited_status_note": "Raw request-limit truncations and global-stop interruptions remain separate; both limit delivered coverage."
+  },
+  "hybrid": {
+    "arm": "hybrid",
+    "terminal": {
+      "at": "2026-09-11T22:31:11.006213+00:00",
+      "stop_reason": "Stop: global_allowance_launch_allowed",
+      "partial": true,
+      "pending_intake_preserved": true
+    },
+    "prior_lifetime_admissions": 12,
+    "new_admissions": 10,
+    "lifetime_admissions": 22,
+    "remaining_unused_admissions": 2,
+    "continuation_started_at": 1789163317.8160677,
+    "verified_human_waits": [],
+    "continuation_restarts": 0,
+    "historical_restarts": 0,
+    "runtime_status_counts": {
+      "budget_truncated": 5,
+      "complete": 2,
+      "interrupted": 3
+    },
+    "stage_timing": {
+      "discovery": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "implementation": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "history": {
+        "wall_seconds": 0,
+        "summed_job_seconds": 0,
+        "average_concurrency": null,
+        "jobs": 0
+      },
+      "reconcile": {
+        "wall_seconds": 2540.4580895900726,
+        "summed_job_seconds": 5059.908590932846,
+        "average_concurrency": 1.991730787320058,
+        "jobs": 6
+      },
+      "compare": {
+        "wall_seconds": 1652.7816236019135,
+        "summed_job_seconds": 2517.7319714756013,
+        "average_concurrency": 1.523330085186147,
+        "jobs": 4
+      }
+    },
+    "overall_timing": {
+      "wall_seconds": 2540.594123363495,
+      "summed_job_seconds": 7577.640562408447,
+      "average_concurrency": 2.9826253995960608,
+      "jobs": 10
+    },
+    "timing_scope": "This increment only. Wall is admission-to-terminal span; sum is execution duration. Historical time and unobserved intervals are not filled in.",
+    "prior_captured_usd": 3.596462368,
+    "new_captured_usd": 70.12668000000001,
+    "lifetime_captured_usd": 73.72314236800005,
+    "lifetime_cap_usd": 100,
+    "new_unresolved_charge_usd": 36.0,
+    "job_end_reconciled_count": 7,
+    "job_end_unresolved_count": 3,
+    "jobs_with_notes": 10,
+    "new_budget_truncated_leads": [
+      "L-57a7dbaf939e",
+      "L-c6f933c467f3",
+      "L-ed29958e8a22"
+    ],
+    "live_usage_receipt_count": 351,
+    "native_retained_receipt_count": 351,
+    "historical_unknown_usage_preserved": true,
+    "historical_unknown_job_count": 1,
+    "inherited_meter_text_caveat": "The inherited top-level uncertainty string says unresolved usage is uncharged. New v4 unresolved charge fields and enforcement supersede that old description; historical unknowns retain their original valuation.",
+    "jobs": [
+      {
+        "job": "J0013-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-57a7dbaf939e"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 885.423,
+        "request_count": 40,
+        "captured_usd": 6.829430000000001,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0014-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-718aab2f5cc8"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 1004.89,
+        "request_count": 35,
+        "captured_usd": 7.49485,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0015-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-ed29958e8a22"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 983.162,
+        "request_count": 40,
+        "captured_usd": 7.8854560000000005,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0016-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-57a7dbaf939e"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 547.259,
+        "request_count": 40,
+        "captured_usd": 7.508354,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0017-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-ed29958e8a22"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 673.339,
+        "request_count": 40,
+        "captured_usd": 10.437538000000002,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0018-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-718aab2f5cc8"
+        ],
+        "runtime_status": "complete",
+        "elapsed_seconds": 995.474,
+        "request_count": 40,
+        "captured_usd": 8.498349999999999,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0019-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-c6f933c467f3"
+        ],
+        "runtime_status": "budget_truncated",
+        "elapsed_seconds": 789.971,
+        "request_count": 40,
+        "captured_usd": 8.456722000000001,
+        "job_end_reconciled": true,
+        "fully_reconciled": true,
+        "unresolved_charge_usd": 0.0,
+        "note_present": true,
+        "native_accounting_gaps": [],
+        "denial_reasons": {
+          "model_request_limit": 1
+        }
+      },
+      {
+        "job": "J0020-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-69e6431790ab"
+        ],
+        "runtime_status": "interrupted",
+        "elapsed_seconds": 870.6037964820862,
+        "request_count": 30,
+        "captured_usd": 5.756171999999999,
+        "job_end_reconciled": false,
+        "fully_reconciled": false,
+        "unresolved_charge_usd": 12.0,
+        "note_present": true,
+        "native_accounting_gaps": [
+          {
+            "reason": "physical_native_request_coverage_mismatch",
+            "physical": 30,
+            "native": 29
+          },
+          {
+            "reason": "durable_meter_request_count_mismatch",
+            "durable_requests": 30,
+            "transport_requests": 30,
+            "native_receipts": 29
+          }
+        ],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0021-reconcile",
+        "phase": "reconcile",
+        "lead_ids": [
+          "L-c40a480e8584",
+          "L-44263d5ddaac"
+        ],
+        "runtime_status": "interrupted",
+        "elapsed_seconds": 525.8587944507599,
+        "request_count": 22,
+        "captured_usd": 3.000664,
+        "job_end_reconciled": false,
+        "fully_reconciled": false,
+        "unresolved_charge_usd": 12.0,
+        "note_present": true,
+        "native_accounting_gaps": [
+          {
+            "reason": "physical_native_request_coverage_mismatch",
+            "physical": 22,
+            "native": 21
+          },
+          {
+            "reason": "durable_meter_request_count_mismatch",
+            "durable_requests": 22,
+            "transport_requests": 22,
+            "native_receipts": 21
+          }
+        ],
+        "denial_reasons": {}
+      },
+      {
+        "job": "J0022-compare",
+        "phase": "compare",
+        "lead_ids": [
+          "L-c6f933c467f3"
+        ],
+        "runtime_status": "interrupted",
+        "elapsed_seconds": 301.6599714756012,
+        "request_count": 27,
+        "captured_usd": 4.259144,
+        "job_end_reconciled": false,
+        "fully_reconciled": false,
+        "unresolved_charge_usd": 12.0,
+        "note_present": true,
+        "native_accounting_gaps": [
+          {
+            "reason": "physical_native_request_coverage_mismatch",
+            "physical": 27,
+            "native": 26
+          },
+          {
+            "reason": "durable_meter_request_count_mismatch",
+            "durable_requests": 27,
+            "transport_requests": 27,
+            "native_receipts": 26
+          }
+        ],
+        "denial_reasons": {}
+      }
+    ],
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/terminal-metrics/hybrid.json",
+      "sha256": "868ba89b1b95516c8c8c9bd283532947b869f383c486a7d91f56e20e48d5583d"
+    },
+    "captured_plus_new_unresolved_usd": 109.72314236800005,
+    "accounted_excess_over_cap_usd": 9.723142368000055,
+    "budget_limited_job_count": 8,
+    "budget_limited_leads": [
+      "L-44263d5ddaac",
+      "L-57a7dbaf939e",
+      "L-69e6431790ab",
+      "L-c40a480e8584",
+      "L-c6f933c467f3",
+      "L-ed29958e8a22"
+    ],
+    "budget_limited_status_note": "Raw request-limit truncations and global-stop interruptions remain separate; both limit delivered coverage."
+  }
+}

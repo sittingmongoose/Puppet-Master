@@ -1,0 +1,1117 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0019-reconcile",
+  "arm": "premium",
+  "review_status": "proposed_pending_independent_review",
+  "manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/manifest.json",
+    "sha256": "e423e179bc1f7da9b40c30d652f5f9bc74b190a5c6fd7875b44ea583e75e9d8f"
+  },
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "runtime_status": "budget_truncated",
+  "delivered_scope": "Nine retained markdown documents (notes plus eight child leads); no separate source-index is present in this manifest. Review-status headings do not override runtime truncation.",
+  "scope": "Read all delivered documents and mapped explicit source-reviewed assertions. No upstream execution or new external research; author citations are retained provenance, not fresh runtime certification.",
+  "claims": [
+    {
+      "claim_id": "P-J0019-C01",
+      "proposition": "JayJay separates reusable primitives, diff/review and native repository layers; library licenses differ from application-shell licenses.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 14,
+          "line_end": 14,
+          "exact_quote": "- [README](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/README.md), S00006 lines 3\u20137, 31\u201336, 73\u2013115: SwiftUI macOS, GPUI Linux beta, interdiff, evolution, file/hunk/line selections, review marks and notes are product claims at this pin. The architecture is corroborated by manifests, not merely inferred from the README: primitives has serde/hash/error dependencies and no jj-lib (S00027); review depends on primitives and jj-diff, with optional filesystem storage (S00026); jj-diff's complete dependency list has no jj-lib (S00028); core's default `repository` feature activates jj-lib (S00030 lines 10\u201338); UniFFI's desktop feature activates core repository support (S00034 lines 10\u201335); GPUI directly depends on core/review (S00031 lines 13\u201318). The workspace declares Rust 1.96 and jj-lib 0.45.1 (S00009 lines 5\u201314). These are version constraints, not evidence of compatibility with every Rust application."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 22,
+          "line_end": 22,
+          "exact_quote": "- Licensing evidence: workspace license `Apache-2.0` and inherited crate manifests (S00009, S00026\u201328, S00030, S00034), plus [crates/LICENSE](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/LICENSE) (S00033), support the reusable-crate license claim. The root [LICENSE](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/LICENSE) is Business Source License 1.1 (S00029), and the GPUI manifest explicitly declares `BUSL-1.1` (S00031 line 6). Do not apply the library license to the shells."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F044",
+          "relation": "narrower",
+          "rationale": "Dependency/license evidence supports implementation feasibility, not a new PM architecture choice or a certified Slint integration.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F046",
+          "relation": "narrower",
+          "rationale": "Dependency/license evidence supports implementation feasibility, not a new PM architecture choice or a certified Slint integration.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Dependency/license evidence supports implementation feasibility, not a new PM architecture choice or a certified Slint integration.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C02",
+      "proposition": "Pinned Histogram and multi-platform implementation contradict an older Myers/macOS-only description; pin-specific implementation must govern the conclusion.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 15,
+          "line_end": 15,
+          "exact_quote": "- [Diff algorithm](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jj-diff/src/lib.rs#L21), S00061 lines 21\u201327, actually selects `Algorithm::Histogram`. Thus the older macOS-only/Myers description cited in the handoff cannot describe this pinned product. This reconciles the substance; the older community entry itself was not supplied as a primary passage and is not used as proof of its historical behavior."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Specific source evidence corrects upstream narrative without claiming older historical behavior that was not evidenced.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Specific source evidence corrects upstream narrative without claiming older historical behavior that was not evidenced.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C03",
+      "proposition": "Review identity hashes both tree sides and projection shape rather than repository or commit provenance; rebase survival requires identical relevant sides.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 16,
+          "line_end": 16,
+          "exact_quote": "- [Review identity](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/diff/entry.rs#L43), S00059 lines 43\u201374, hashes both merged-tree sides: blob IDs and executable state, symlink/tree/submodule identities, explicit absence, and optional format-projection identity. It does not hash a commit ID or repository ID. The path is separate in the store key. Rebase invariance means the relevant sides remain identical, not that every rebase preserves identity. Integration-test source actually performs an identical-base rebase and a different-base rebase and checks equality/inequality (S00062 lines 53\u2013115)."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-provenance.md",
+          "sha256": "19ca816c19e68df502420576ba4a09e7e37ff0fe6c74f1728498397bdc484f04",
+          "line_start": 5,
+          "line_end": 5,
+          "exact_quote": "At JayJay `3b53b4080f6704b4aad61b0173027b84ba0b10ea`, review marks use `change_id|path` (local S00046, `crates/jayjay-review/src/store/models/review_entry.rs:62\u201364`). Notes store change ID/path/file identity, without repository/commit/operation IDs (S00021, `crates/jayjay-primitives/src/review.rs:15\u201347`), and ordinary reports filter notes by change ID (S00036:6\u201314). The owned-vector entry point resolves the report change ID but passes the vector unchanged to reconciliation (S00019:55\u201371). File identity encodes both tree values and projection identity, not commit provenance (S00059:43\u201374)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F006",
+          "relation": "narrower",
+          "rationale": "Concrete content identity distinction; does not itself establish full cross-repository isolation or all canonical entity identities.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F027",
+          "relation": "narrower",
+          "rationale": "Concrete content identity distinction; does not itself establish full cross-repository isolation or all canonical entity identities.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete content identity distinction; does not itself establish full cross-repository isolation or all canonical entity identities.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C04",
+      "proposition": "Unique canonical fingerprints preserve reviewed hunks across matching changes, while ambiguous/new groups become ChangedSinceReview and notes separately become stale/orphaned/resolved.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 17,
+          "line_end": 20,
+          "exact_quote": "- [Review fingerprints](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jj-diff/src/review_fingerprint.rs), S00037 lines 10\u201315, 37\u201354, 92\u2013153, 176\u2013195, 259\u2013288: canonical fingerprints use exact whitespace, uncollapsed/unhighlighted changes, side, source text, EOF-newline state and up to three unchanged context lines on each side. They omit absolute line/group positions and include an algorithm version; CRLF is retained in the hashed payload. Display groups are mapped back to canonical groups when whitespace is ignored.\n- [Mark reconciliation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-review/src/file_state.rs), S00015 lines 74\u2013134, 194\u2013235: matching identity/version has a fast path; otherwise a fingerprint inherits state only when unique in both previous and current snapshots. Ambiguous/new groups become `ChangedSinceReview`; removed reviewed groups remain counted. Legacy file/hunk marks and missing/version-mismatched snapshots use more conservative rules. Test assertions cover local edits preserving a sibling mark, moved context, duplicate fingerprints, removed reviewed groups, and whitespace-hidden groups (S00063 lines 58\u2013165). These substantiate \u201cmatching hunks survive,\u201d not automatic migration of every review mark.\n- [Note reconciliation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-review/src/reconcile.rs#L44), S00014 lines 44\u201369: resolved notes remain `Resolved`; no matching path in the current **diff** means `Orphaned`; a changed full file-pair identity means `Stale`; only then is the exact side/line/excerpt searched for `Current`. A file can still exist while its note is orphaned because that file no longer appears in the diff. The stored `anchor_context` is not used by this matcher (S00021 lines 15\u201347; S00083 lines 12\u201325). Notes do not use the hunk-fingerprint migration path. Provider file-read errors become missing replay data and therefore `Stale`, whereas summary/provider acquisition errors can propagate (S00016 lines 28\u201347; S00014 lines 31\u201335). A stale status alone does not prove a content edit.\n- [Core review provider](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/review_notes.rs), S00019 lines 35\u201371, 102\u2013130, supplies both store-backed reports and the owned-note-vector entry point, using summary identity and rename-aware content. Replay uses the same diff/display pipeline and the note's recorded whitespace mode (S00016 lines 6\u201318, 28\u201347). The replay test explicitly produces `Some(0)` under the recorded ignore-whitespace mode and `None` under the other mode (lines 164\u2013174). Integration-test assertions cover current/stale/orphaned/resolved states, equivalent owned snapshots and a note created on an already-renamed file (S00035 lines 74\u2013188). The rename test is **not** proof that an existing note follows a later rename. The UniFFI `ReviewSession` wraps the same `ReviewStore` behind a mutex and supports JSON snapshots (S00064 lines 1\u201335)."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-provenance.md",
+          "sha256": "19ca816c19e68df502420576ba4a09e7e37ff0fe6c74f1728498397bdc484f04",
+          "line_start": 11,
+          "line_end": 11,
+          "exact_quote": "Alternatives: bind repository and immutable revision provenance while allowing explicitly reconciled successors; or make change-level sharing intentional and visible. Verify exact commit selection and caller filtering before asserting isolation. Preserve current/stale/orphaned/resolved semantics; do not use hunk fingerprint survival as proof of note migration safety."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F027",
+          "relation": "semantically_equivalent",
+          "rationale": "Direct support for persistent review markers and line-anchored notes with conservative stale/orphaned semantics. Explicitly distinguishes matching rewrites from arbitrary note migration.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Direct support for persistent review markers and line-anchored notes with conservative stale/orphaned semantics. Explicitly distinguishes matching rewrites from arbitrary note migration.",
+      "proposed_credit_fids": [
+        "F027"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C05",
+      "proposition": "Read errors can present as missing/stale review data or empty persisted state; save errors and failed corruption preservation are not reliable success outcomes.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 19,
+          "line_end": 19,
+          "exact_quote": "- [Note reconciliation](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-review/src/reconcile.rs#L44), S00014 lines 44\u201369: resolved notes remain `Resolved`; no matching path in the current **diff** means `Orphaned`; a changed full file-pair identity means `Stale`; only then is the exact side/line/excerpt searched for `Current`. A file can still exist while its note is orphaned because that file no longer appears in the diff. The stored `anchor_context` is not used by this matcher (S00021 lines 15\u201347; S00083 lines 12\u201325). Notes do not use the hunk-fingerprint migration path. Provider file-read errors become missing replay data and therefore `Stale`, whereas summary/provider acquisition errors can propagate (S00016 lines 28\u201347; S00014 lines 31\u201335). A stale status alone does not prove a content edit."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 21,
+          "line_end": 21,
+          "exact_quote": "- [Filesystem persistence](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-review/src/store/persistence/filesystem.rs), S00017 lines 46\u2013155: default storage is `ProjectDirs(...).config_dir()/review_store.json`, overrideable with `JAYJAY_REVIEW_STORE_PATH`, not native jj repository history. It detects staleness with mtime/length, supports explicit refresh, attempts to rename malformed JSON to `.json.corrupt`, and saves via a unique sibling temporary file followed by rename. Read failures can return empty state; failed corrupt-file rename is ignored; save errors are logged rather than returned. Atomic replacement protects against partial-file reads but does not itself serialize concurrent read-modify-write operations. The two-writer regression is sequential and explicitly refreshes writer A after writer B saves (S00063 lines 233\u2013253), so it does not prove simultaneous-writer safety."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-persistence.md",
+          "sha256": "320ca6127dfa21c65e94444e2184cfcc18b757bfed124cc34f1fc0184a08955e",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "Read errors default to empty; malformed JSON preservation is attempted but rename errors are ignored; save errors are logged. Investigate error propagation, crash durability and an interrupted multiwriter update. The UniFFI in-process mutex (S00064:8\u201316) does not establish cross-process serialization. Alternatives: one persistence owner, a lock covering refresh/mutate/save, or transactional storage with conflict detection. Keep pure reconciliation reusable without requiring this storage implementation. A native jj backup would not automatically include this external review file."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F030",
+          "relation": "narrower",
+          "rationale": "Specific error-propagation hazards; no full typed read/list contract is asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific error-propagation hazards; no full typed read/list contract is asserted.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C06",
+      "proposition": "Atomic replacement of the review JSON file does not serialize simultaneous read-modify-write operations; the cited test sequences writes and refreshes.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 21,
+          "line_end": 21,
+          "exact_quote": "- [Filesystem persistence](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-review/src/store/persistence/filesystem.rs), S00017 lines 46\u2013155: default storage is `ProjectDirs(...).config_dir()/review_store.json`, overrideable with `JAYJAY_REVIEW_STORE_PATH`, not native jj repository history. It detects staleness with mtime/length, supports explicit refresh, attempts to rename malformed JSON to `.json.corrupt`, and saves via a unique sibling temporary file followed by rename. Read failures can return empty state; failed corrupt-file rename is ignored; save errors are logged rather than returned. Atomic replacement protects against partial-file reads but does not itself serialize concurrent read-modify-write operations. The two-writer regression is sequential and explicitly refreshes writer A after writer B saves (S00063 lines 233\u2013253), so it does not prove simultaneous-writer safety."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-persistence.md",
+          "sha256": "320ca6127dfa21c65e94444e2184cfcc18b757bfed124cc34f1fc0184a08955e",
+          "line_start": 7,
+          "line_end": 9,
+          "exact_quote": "Local S00017: default store is an application config JSON file with an environment override (112\u2013120); staleness uses mtime and length (55\u201360, 99\u2013109); save writes a unique temporary file and renames it (123\u2013153). No interprocess read-modify-write lock or compare-and-swap is present in these functions. Atomic rename is useful for complete-file visibility, but two writers can read the same state then overwrite each other's changes. This is a code-level possible interleaving, not an observed runtime failure. The test named `two_independently_loaded_writers_preserve_unrelated_review_state` explicitly sequences writes and refreshes (S00063:233\u2013253).\n\nRead errors default to empty; malformed JSON preservation is attempted but rename errors are ignored; save errors are logged. Investigate error propagation, crash durability and an interrupted multiwriter update. The UniFFI in-process mutex (S00064:8\u201316) does not establish cross-process serialization. Alternatives: one persistence owner, a lock covering refresh/mutate/save, or transactional storage with conflict detection. Keep pure reconciliation reusable without requiring this storage implementation. A native jj backup would not automatically include this external review file."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F004",
+          "relation": "narrower",
+          "rationale": "App-side review persistence race is an implementation example, not a demonstrated failure or a new unconditional PM persistence requirement.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F010",
+          "relation": "narrower",
+          "rationale": "App-side review persistence race is an implementation example, not a demonstrated failure or a new unconditional PM persistence requirement.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "App-side review persistence race is an implementation example, not a demonstrated failure or a new unconditional PM persistence requirement.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C07",
+      "proposition": "Change/path keys and content identity do not prove cross-repository or divergent-commit note isolation; caller filtering and explicit provenance remain to be qualified.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 24,
+          "line_end": 24,
+          "exact_quote": "**Limits, alternatives and preserved questions.** The store key is literally `change_id|path` (S00046 lines 62\u201364); notes filter on change ID (S00036 lines 6\u201314), and their schema has no repository, immutable commit or operation ID (S00021). Further, `reconcile_review_notes(notes, rev)` resolves a target change ID but does not filter the supplied vector against it (S00019 lines 55\u201371). Thus \u201cnotes cannot silently migrate to another divergent change\u201d is an investigation requirement, not an established guarantee. A correctly filtered normal report and conservative full-file identity checks help, but content-identical divergent commits can share change/file identity. Cross-repository copies and mismatched caller snapshots need separate evidence. Options to investigate are explicit repository/commit provenance with controlled reconciliation, or intentionally shared change-level notes with visible provenance. Shared exact diff primitives can be reused independently of the disk store. Concurrent persistence could instead be owned by one service or a transaction-capable store. These directions are retained in `leads/L-aa8c1461d43a-review-provenance.md` and `leads/L-aa8c1461d43a-review-persistence.md`."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-provenance.md",
+          "sha256": "19ca816c19e68df502420576ba4a09e7e37ff0fe6c74f1728498397bdc484f04",
+          "line_start": 5,
+          "line_end": 11,
+          "exact_quote": "At JayJay `3b53b4080f6704b4aad61b0173027b84ba0b10ea`, review marks use `change_id|path` (local S00046, `crates/jayjay-review/src/store/models/review_entry.rs:62\u201364`). Notes store change ID/path/file identity, without repository/commit/operation IDs (S00021, `crates/jayjay-primitives/src/review.rs:15\u201347`), and ordinary reports filter notes by change ID (S00036:6\u201314). The owned-vector entry point resolves the report change ID but passes the vector unchanged to reconciliation (S00019:55\u201371). File identity encodes both tree values and projection identity, not commit provenance (S00059:43\u201374).\n\nPrimary source: https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/review_notes.rs#L55\n\nInvestigate content-identical divergent versions, copies of the same change in different repositories, caller snapshots from a different revision, and changes while summary/content are acquired. The strict note identity gate and ordinary change-ID filtering are useful protections; they do not prove provenance isolation. A repeated matching path/identity could be intentional shared review or accidental migration depending on the contract. No end-to-end failure was executed here.\n\nAlternatives: bind repository and immutable revision provenance while allowing explicitly reconciled successors; or make change-level sharing intentional and visible. Verify exact commit selection and caller filtering before asserting isolation. Preserve current/stale/orphaned/resolved semantics; do not use hunk fingerprint survival as proof of note migration safety."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F006",
+          "relation": "narrower",
+          "rationale": "Explicit unresolved provenance direction and controlled sharing alternatives; do not manufacture a demonstrated accidental-migration incident.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F027",
+          "relation": "narrower",
+          "rationale": "Explicit unresolved provenance direction and controlled sharing alternatives; do not manufacture a demonstrated accidental-migration incident.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Explicit unresolved provenance direction and controlled sharing alternatives; do not manufacture a demonstrated accidental-migration incident.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C08",
+      "proposition": "Diff editing must validate both materialized sides and native conflict structure because equal marker text can conceal unresolved native values.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 31,
+          "line_end": 35,
+          "exact_quote": "**Disposition.** Preserve the guard mechanism, with narrower wording: selected-path native conflict checks and current materialized old/new equality prevent specific stale-selection corruption. This is not an exact-operation precondition or a complete mutation lease.\n\n**Primary evidence and supported lessons.**\n\n- [guard.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/diffedit/guard.rs), S00003 lines 12\u201360: reject `Renamed` or any `old_path`; parse the selected path; require resolved native values in source **and parent** trees; compare current `Option<String>` against rendered `new_content`, then parent against `old_content`. The comments explicitly explain that unresolved conflicts can materialize as the same marker text and later be incorrectly written as resolved literal markers. Native conflict structure must be checked separately from display equality."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-e9ec230d009b-mutation-boundary.md",
+          "sha256": "023502dfb344773aa0457cc19a096601f4081ebdc086ab5f49036ceaf37a6a2b",
+          "line_start": 11,
+          "line_end": 15,
+          "exact_quote": "The public operation snapshots first under a working-copy lock, then guards both materialized sides and native conflict state and rewrites. Snapshotting may record an operation even if the later guard rejects. The lock used for snapshotting is finished before selection dispatch. The selection struct has no immutable revision/operation, mode or native metadata identity; ignore-whitespace is passed separately. Output metadata is taken from current source or parent.\n\nInvestigate: writer changes after validation; disk edits after the preliminary snapshot; metadata-only parent/source rewrites; current target resolution; changed whitespace toggle or diff projection after line selection; full/display mapping, CRLF/EOF and absent versus empty files. Preserve native conflicts distinctly from marker text. The parent tests inject stale content, all four destination checks use whitespace-sensitive mode, and unchanged file assertions do not prove unchanged op heads (S00043:72\u2013142).\n\nAlternatives: immutable revision/tree/shape and render-mode preconditions inside a serialized mutation boundary, retaining the materialized checks; or explicit re-render/reselection. Establish the actual before/after native operations on both rejection and success. Do not infer an exact-operation lease or retry safety from this guard alone. Upstream tests were inspected, not run."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F029",
+          "relation": "semantically_equivalent",
+          "rationale": "Both-side/current native conflict checks plus immutable revision/render-mode preconditions under serialized mutation directly support safe exact-boundary hunk selection; combined with C9/C10/C12.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Both-side/current native conflict checks plus immutable revision/render-mode preconditions under serialized mutation directly support safe exact-boundary hunk selection; combined with C9/C10/C12.",
+      "proposed_credit_fids": [
+        "F029"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C09",
+      "proposition": "All four edit destinations guard before rewrites; selected/remaining content depends on both sides and full diff indices, not only unchanged new-side text.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 36,
+          "line_end": 37,
+          "exact_quote": "- [operations.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/diffedit/operations.rs), S00020 lines 19\u201345, 48\u2013224: the public entry snapshots working-copy edits before dispatch, then all four destinations invoke the guard before constructing rewritten trees. Source immutability checks are in these callers, not in `ensure_selections_are_current`. Remove/move guard before starting their transaction; child/parallel guard inside a transaction callback before writes. The validated parent tree is passed into selection construction (lines 226\u2013241). `load_parent_tree` delegates to native `commit.parent_tree(repo)` (S00045 lines 14\u201320), so \u201cparent\u201d means the merged parent tree when there are multiple parents.\n- [partition.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/diffedit/partition.rs), S00049 lines 36\u2013123: reconstruct selected and remaining content from both sides using full diff indices and the requested whitespace mode. Old removed lines contribute to selected/remaining results, explaining why an unchanged new side alone is insufficient. Context/unchanged lines come from the new side; \u201call unselected lines come from old content\u201d would be too broad. A parent **content** mismatch invalidates selection; a metadata-only parent rewrite with identical materialized selected-path sides need not. This corrects the handoff's categorical \u201ca parent rewrite alone invalidates.\u201d"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 44,
+          "line_end": 51,
+          "exact_quote": "| Passage | What the test source asserts | Limit |\n| --- | --- | --- |\n| 31\u201368 | Append to disk after rendering, then reject stale selection and preserve disk text | One remove destination; not a writer racing after validation |\n| 72\u2013103 | Old-side mismatch rejects even when new side matches; disk text preserved | Injects stale `old_content`; does not execute a parent rebase |\n| 107\u2013142 | Injected stale parent rejected for remove, move to working copy, child and parallel; source content preserved | All calls use `ignore_whitespace=false`; does not assert operation identity unchanged |\n| 146\u2013163 | Matching modified file passes and whole modification can be removed | One normal text case |\n| 166\u2013253 | Real conflicting history is constructed; conflicted parent/source edits rejected; resolved disk content preserved in parent case | Not every conflict/tree shape or destination combination |\n| 256\u2013285 | Deleted-file selection with absent new side can be removed, restoring the file | Nonempty original text; not empty-file/mode-only coverage |"
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F029",
+          "relation": "narrower",
+          "rationale": "Mechanism and inspected test scope support C8; metadata-only parent rewrites do not automatically invalidate equal content.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Mechanism and inspected test scope support C8; metadata-only parent rewrites do not automatically invalidate equal content.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C10",
+      "proposition": "Absent content stays distinct from an empty file, and regular-text editing does not certify binary, submodule, symlink, empty-file or mode-only transformations.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 38,
+          "line_end": 39,
+          "exact_quote": "- [Current text materialization](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/diff/current_text.rs), S00044 lines 13\u201329, uses the diff materialization pipeline. Absence stays `None`, distinct from an existing empty file. GPUI explicitly preserves `None` for the absent side and captures whitespace mode with the request (S00066 lines 17\u201321, 120\u2013130); on `DiffSelectionStale` it refreshes the view (lines 166\u2013170). This is source evidence of refresh behavior, not an executed UI test.\n- Shape handling is broader than the guard: partition rejects synthetic non-text prefixes (S00049 lines 49\u201355; [placeholder.rs](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/placeholder.rs), S00084 lines 6\u201326). File display emits binary placeholders for NUL/non-UTF-8 content (S00086 lines 19\u201325); materialization represents symlinks/submodules as displays (S00065 lines 143\u2013179). Writes require `TreeValue::File` and reuse source metadata, falling back to parent metadata; executable/copy ID are carried into the new file value (S00020 lines 330\u2013389). This supports regular-text editing, not arbitrary tree-shape editing. The prefix check can conservatively reject genuine text beginning with a reserved placeholder prefix. Empty-file or mode-only changes may have no selectable changed lines; callers reject a partition with none (S00020 lines 256\u2013282, 299\u2013324)."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F030",
+          "relation": "narrower",
+          "rationale": "Specific representation/shape restrictions; no claim of complete unsupported-type or round-trip coverage.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F029",
+          "relation": "narrower",
+          "rationale": "Specific representation/shape restrictions; no claim of complete unsupported-type or round-trip coverage.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Specific representation/shape restrictions; no claim of complete unsupported-type or round-trip coverage.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C11",
+      "proposition": "Preliminary working-copy snapshotting may already publish an operation before later selection rejection; the snapshot lock is not global writer exclusion.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 53,
+          "line_end": 53,
+          "exact_quote": "**Conflicting evidence and open directions.** [Working-copy refresh](https://github.com/hewigovens/jayjay/blob/3b53b4080f6704b4aad61b0173027b84ba0b10ea/crates/jayjay-core/src/repo/working_copy.rs), S00085 lines 78\u2013135, acquires the native working-copy lock **before** loading head, may write a snapshot operation, and finishes/releases it before `apply_diff_selection` proceeds. Its lock-race test (lines 169\u2013208) covers a competing snapshot while waiting for that lock. Therefore guard rejection preserves the tested file contents but can still follow a successful snapshot operation; do not translate rejection into \u201cnothing in the repository changed.\u201d The later transaction is not covered by that same working-copy lock. Repo `get_repo()` clones an Arc under a short RwLock, and `set_repo` explicitly handles concurrent/stale/divergent operations (S00060 lines 136\u2013158); the guard is not proof of global writer exclusion."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-e9ec230d009b-mutation-boundary.md",
+          "sha256": "023502dfb344773aa0457cc19a096601f4081ebdc086ab5f49036ceaf37a6a2b",
+          "line_start": 11,
+          "line_end": 11,
+          "exact_quote": "The public operation snapshots first under a working-copy lock, then guards both materialized sides and native conflict state and rewrites. Snapshotting may record an operation even if the later guard rejects. The lock used for snapshotting is finished before selection dispatch. The selection struct has no immutable revision/operation, mode or native metadata identity; ignore-whitespace is passed separately. Output metadata is taken from current source or parent."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F007",
+          "relation": "narrower",
+          "rationale": "A guard failure is not no-effect proof and one lock is not an owner lease, but the complete cancellation/multi-route propositions are not all asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F004",
+          "relation": "narrower",
+          "rationale": "A guard failure is not no-effect proof and one lock is not an owner lease, but the complete cancellation/multi-route propositions are not all asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F002",
+          "relation": "narrower",
+          "rationale": "A guard failure is not no-effect proof and one lock is not an owner lease, but the complete cancellation/multi-route propositions are not all asserted.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "A guard failure is not no-effect proof and one lock is not an owner lease, but the complete cancellation/multi-route propositions are not all asserted.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C12",
+      "proposition": "Render mode and immutable revision/shape must be rechecked within the mutation boundary or selections rerendered; guard tests do not prove safe retry or after-validation race exclusion.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 55,
+          "line_end": 55,
+          "exact_quote": "The selection schema contains paths, old/new text, hunk type and line ranges, but no expected operation/commit ID, executable bit or captured whitespace mode (S00082 lines 17\u201325); mode is a separate call argument. Preserve investigation of an intervening writer after validation, source/parent metadata-only changes, target identity, format projections, correct full/display line mapping in both modes, EOF/CRLF and empty files. Options are to retain materialized equality plus an explicit native identity/shape precondition and serialized mutation boundary, or to require re-render/reselection after the captured revision or render mode changes. No safe automatic retry is established. Details are retained in `leads/L-e9ec230d009b-mutation-boundary.md`."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-e9ec230d009b-mutation-boundary.md",
+          "sha256": "023502dfb344773aa0457cc19a096601f4081ebdc086ab5f49036ceaf37a6a2b",
+          "line_start": 13,
+          "line_end": 15,
+          "exact_quote": "Investigate: writer changes after validation; disk edits after the preliminary snapshot; metadata-only parent/source rewrites; current target resolution; changed whitespace toggle or diff projection after line selection; full/display mapping, CRLF/EOF and absent versus empty files. Preserve native conflicts distinctly from marker text. The parent tests inject stale content, all four destination checks use whitespace-sensitive mode, and unchanged file assertions do not prove unchanged op heads (S00043:72\u2013142).\n\nAlternatives: immutable revision/tree/shape and render-mode preconditions inside a serialized mutation boundary, retaining the materialized checks; or explicit re-render/reselection. Establish the actual before/after native operations on both rejection and success. Do not infer an exact-operation lease or retry safety from this guard alone. Upstream tests were inspected, not run."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F029",
+          "relation": "semantically_equivalent",
+          "rationale": "Explicit safety alternatives bind captured render/native state to mutation and preserve both-side checks, completing C8 rather than proposing a new union item.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Explicit safety alternatives bind captured render/native state to mutation and preserve both-side checks, completing C8 rather than proposing a new union item.",
+      "proposed_credit_fids": [
+        "F029"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C13",
+      "proposition": "Native recovery dependencies span operation/view stores, retained object metadata, publication heads and backend-selected storage outside current bookmarks.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 62,
+          "line_end": 62,
+          "exact_quote": "**Aggregate disposition.** Preserve the multi-store backup lead. Its central claim is supported by implementation, with corrections to old architecture prose and concrete evidence of external Git dependencies. A complete, portable capture/restore protocol has **not** been established. This aggregate remains uncertain; five independent directions are extracted below rather than replacing or discarding it. The uncertainty concerns the protocol, not whether native state exists outside Git bookmarks."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 68,
+          "line_end": 76,
+          "exact_quote": "| Commit backend and store selectors | [repo.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/repo.rs#L209), S00069 lines 219\u2013261, 650\u2013679, creates/loads `store`, `op_store`, `op_heads`, `index`, `submodule_store` with type selectors | Discover the actual backend and layout; a hardcoded Git-only folder list is not a generic backend export |\n| Operations and views | [simple_op_store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/simple_op_store.rs#L123), S00068 lines 123\u2013155, stores separate `views/` and `operations/`; [op_store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/op_store.rs#L248), S00071 lines 248\u2013261, 358\u2013380, stores visible heads/bookmarks/tags/remote views/Git refs, desired per-workspace commits, operation parents and rewrite predecessors | Native history and its referenced commit graph cannot be reconstructed from current bookmarks or an operation-log text listing alone |\n| Publication heads | [transaction.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/transaction.rs#L125), S00075 lines 125\u2013172, 202\u2013240 | View, operation and index are written before publishing op heads. Unpublished operations can exist on disk without appearing at head. A manifest needs an explicit policy for retained operation roots and unpublished/unreachable data |\n| Git objects and extra metadata | [git_backend.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/git_backend.rs#L228), S00010 lines 228\u2013362 | Internal Git uses `store/git`; colocated/external backends persist `store/git_target`; `store/extra` is loaded independently. Copying only the workspace or only its backing Git directory can omit required state |\n| Indexes | [default_index/store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_index/store.rs#L225), S00088 lines 225\u2013345, 519\u2013554 | Default indexes can be rebuilt from retained operations, views and commit ancestry; missing/corrupt indexes trigger rebuild. They are a separate store but not necessarily irreplaceable bytes. Rebuild is conditional on complete underlying closure and applies to this backend, not every custom index |\n| Workspace indirection | [workspace.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/workspace.rs#L369), S00067 lines 369\u2013405, 568\u2013630 | Secondary `.jj/repo` is a path file; paths are resolved from `.jj`, while `.jj/working_copy` stays local. The creation code prefers a relative path when possible. Absolute paths work through path-join semantics but need relocation treatment |\n| Workspace path registry | [workspace_store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/workspace_store.rs#L104), S00097 lines 104\u2013128, 167\u2013192, 233\u2013250 | `repo/workspace_store/index` records workspace names and encoded paths, relative to repo path where possible, under its own lock. It is separate from operation views; a historical operation does not contain this physical path map. `load()` can initialize missing storage, so its name does not imply a side-effect-free read |\n| Local checkout and tree state | [local_working_copy.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/local_working_copy.rs#L2580), S00070 lines 1155\u20131222, 2580\u20132626, 2646\u20132690; [schema](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/protos/local_working_copy.proto), S00092 lines 19\u201378 | `checkout` records last-updated operation/workspace; `tree_state` records tree terms/conflict labels, file states, sparse patterns and Watchman state. Actual unsnapshotted file bytes remain outside these metadata records and native commit objects |\n| Submodule store qualification | [default_submodule_store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_submodule_store.rs), S00093 lines 22\u201351; S00091 lines 17\u201321 | The default submodule store at this pin is a stub holding a path and a name. Its existence is not proof that it contains submodule source. Discover initialized child repositories/backing Git modules separately where relevant |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-history-retention.md",
+          "sha256": "2c39fdc2804787f423636a32a3ae708acbe06377f615fbfe0c509ccb33db640b",
+          "line_start": 7,
+          "line_end": 13,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/op_store.rs (S00071:248\u2013261, 358\u2013380): views and operation predecessor maps are native history outside current Git bookmarks.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/operation.rs (S00104:141\u2013153): predecessor commit IDs must also be included in index reconstruction.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_index/store.rs (S00088:241\u2013339): index construction traverses retained operation ancestry, operation/view references and commit parents.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/git_backend.rs (S00010:691\u2013715, 835\u2013865, 902\u2013987, 1400\u20131474, 1558\u20131590): newer headers coexist with extras and legacy conflict metadata; keep refs are recomputed from indexed heads and age; extras and Git objects have separate GC steps.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/simple_op_store.rs (S00068:277\u2013316): op/view retention follows supplied roots plus age, with acknowledged TOCTOU.\n\nDefine retained operation roots explicitly: current heads, selected historical operations, workspace checkout operations, and any intentionally retained unpublished/abandoned operations. Determine which objects remain available, rather than promising recovery of already-GCed history. Traverse relevant views and predecessor mappings, then tree/blob/conflict dependencies; preserve extras. A Git mirror can be a component of a backup but does not itself preserve jj operations/views or unsnapshotted files."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Concrete dependency inventory; complete F079 support requires the barrier/GC and physical workspace assertions in C15/C17.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Concrete dependency inventory; complete F079 support requires the barrier/GC and physical workspace assertions in C15/C17.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C14",
+      "proposition": "Shared/external Git storage and alternate-path bases require a dependency graph and semantic relocation; resolving one Git administrative path cannot prove closure.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 78,
+          "line_end": 84,
+          "exact_quote": "The [Kaizen PR #216 diff](https://github.com/keanemind/jjk/pull/216.diff), local S00079 lines 17\u201345, corroborates `.jj/repo` path-file handling and corrects an operation-store watcher to use the resolved repo path. Its tests explicitly cover primary directory, secondary absolute path and secondary relative path (lines 80\u2013125). This is an acquired PR patch, not proof of merge/release status or an executed test. Native jj source above is the stronger authority for layout. No retained child-note block was supplied beyond the handoff's evidence references.\n\n**Git store closure and relocation.** `GitBackend::load` joins `git_target` against the jj store path and loads the Git repo plus `extra` separately (S00010 lines 335\u2013362). `git_repo_at_workdir` checks shared `common_dir` identity (lines 390\u2013410); `git_repo_path()` returns the Git administrative path, not necessarily every shared object directory (414\u2013416). Windows relative targets are written with `/` for WSL compatibility; the code explicitly says an absolute target cannot work inside/outside WSL simultaneously (311\u2013325). `canonicalize_git_repo_path` deliberately keeps the final `.git` component to avoid changing bare/worktree interpretation when following certain symlinks (605\u2013617). Relocation needs to preserve those semantics rather than blindly canonicalize every path.\n\nBacking Git can borrow object stores. [Git's repository-layout manual](https://git-scm.com/docs/gitrepository-layout), S00094 lines 221\u2013236, 258\u2013267, 405\u2013427, specifies `objects/info/alternates`, Git environment alternates, `commondir`, shallow boundaries, submodule repositories and linked-worktree administrative data. Relative alternates are relative to the **object database**, whereas `commondir` is relative to the Git directory. These bases differ from jj's `git_target` and `.jj/repo` path bases.\n\nThis is also supported by the actual gix dependency rather than solely by generic Git documentation: jj declares gix 0.87.1 (S00080 line 63). The release tag resolves via S00106/S00110 to Gitoxide commit `3ebca8b66017ab2dd02a38f75f78f485bee1ded8`. Its repository opener uses `common_dir/objects` (S00096 lines 483\u2013495), and [object-store loading](https://github.com/GitoxideLabs/gitoxide/blob/3ebca8b66017ab2dd02a38f75f78f485bee1ded8/gix-odb/src/store_impls/dynamic/load_index.rs#L233), S00115 lines 233\u2013268, adds recursively resolved alternate paths to loose and packed object discovery. [Alternate resolution](https://github.com/GitoxideLabs/gitoxide/blob/3ebca8b66017ab2dd02a38f75f78f485bee1ded8/gix-odb/src/alternate/mod.rs#L41), S00116 lines 41\u201382, reads `info/alternates`, detects cycles and deduplicates canonical directories. Thus the handoff's negative jj literal search must not be interpreted as no alternates support. Exact nested-relative-path behavior and Git environment override parity are still open; the observed gix resolver joins parsed paths to its initial `objects_directory` (line 72), so a custom backup walker should not guess at equivalence. This is version-specific source inspection, not a restore trial."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-store-discovery.md",
+          "sha256": "db0f8827d4619893d04df619355e5219f82907aa7eec31021bb177095b10b3cb",
+          "line_start": 7,
+          "line_end": 15,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/workspace.rs (local S00067:369\u2013405, 568\u2013630): `.jj/repo` can be a path file, relative to `.jj`; per-workspace working-copy state remains separate.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/git_backend.rs (S00010:228\u2013362, 390\u2013416, 605\u2013635): internal/colocated/external Git; `store/git_target`; separately loaded `store/extra`; common Git directory identity; deliberately preserved final `.git` component; Windows/WSL relative-path handling and absolute-path limitation.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/repo.rs (S00069:219\u2013261, 650\u2013679): separate backend selectors and stores. Default submodule store is only a stub at this pin (S00093:22\u201351), not evidence of child-source closure.\n- https://git-scm.com/docs/gitrepository-layout (S00094:221\u2013267, 405\u2013427): object alternates, shallow boundary, `commondir`, Git modules/worktrees and distinct relative path bases.\n- https://github.com/GitoxideLabs/gitoxide/blob/3ebca8b66017ab2dd02a38f75f78f485bee1ded8/gix-odb/src/store_impls/dynamic/load_index.rs (S00115:233\u2013268): actual loose/pack discovery includes alternate object directories. Its resolver recursively follows files and detects cycles (S00116:41\u201382).\n\nInvestigate a manifest that records each physical store once, logical references between them, the origin/base of each path, backend/version and unresolved/missing dependencies. Preserve internal, external, shared-worktree and symlink semantics on relocation. Do not infer closure by canonicalizing `git_repo_path()` alone. Verify dependencies in an isolated destination with original paths unavailable. Exact nested-relative alternates and Git environment override parity remain unresolved; the gix resolver's use of its initial `objects_directory` deserves explicit cases before writing a custom walker.\n\nAlternatives: copy the entire resolved store graph with rewritten links; or materialize borrowed objects in a self-contained destination using a backend-aware export. The latter must preserve native metadata/history separately. No export or relocation implementation was executed."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Source-backed alternate/common storage mechanism; custom nested-relative/environment parity remains unresolved. This is not a watcher-reconnection implementation.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F070",
+          "relation": "narrower",
+          "rationale": "Source-backed alternate/common storage mechanism; custom nested-relative/environment parity remains unresolved. This is not a watcher-reconnection implementation.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Source-backed alternate/common storage mechanism; custom nested-relative/environment parity remains unresolved. This is not a watcher-reconnection implementation.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C15",
+      "proposition": "Recoverable capture must preserve retained operations, predecessor/object/extra metadata and physical workspace state with coordination spanning writers and external-store GC.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 90,
+          "line_end": 102,
+          "exact_quote": "- `refs/jj/keep/*` protect commits from Git GC but are not the operation log. Creation/import can create per-commit refs; GC replaces these with index heads plus qualifying newer refs (S00010 lines 902\u2013965, 1463\u20131474, 1558\u20131590; S00114 lines 636\u2013637). The implementation therefore qualifies the prose \u201ca ref for each commit in the operation log.\u201d The default index rebuild walks operation ancestry, operation predecessor references and every view's referenced commits, then commit parents (S00088 lines 241\u2013339). This is the concrete reason retained hidden/history objects matter beyond current visible heads.\n- OpStore GC retains ancestors of supplied operation heads plus newer objects; SimpleOpStore explicitly notes a timestamp TOCTOU race (S00071 lines 481\u2013488; S00068 lines 277\u2013316). `jj util gc` defaults to two weeks and accepts `--expire now`, runs operation-store GC followed by GitBackend GC (S00076 lines 26\u201367). GitBackend recreates keep refs, GCs extra-table segments and invokes Git GC (S00010 lines 1558\u20131590, 970\u2013987). The ref timestamp check also documents re-import races (929\u2013937). These are mitigations and retention rules, not a backup GC fence.\n- Test source corroborates removal of redundant keep refs and retention varying with index/time (S00108 lines 156\u2013250); extra-table GC removes unreachable segments while keeping the reachable segment contents (255\u2013310). These tests do not certify a concurrent backup. No test was run here.\n\n**Physical workspace state and capture consistency.** [Working-copy documentation](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/working-copy.md), S00005 lines 9\u201329, 69\u2013110, describes snapshotting and shared/stale workspaces. The view records what *should* be checked out; local state records the last completed update (S00071 lines 258\u2013261). Dirty bytes, untracked/ignored files and sparse omission are separate facts. `WorkingCopyFreshness::check_stale` distinguishes updated, stale and sibling operations and can regard differing operation IDs as fresh when the tree still matches (S00072 lines 348\u2013399). Operation-ID inequality alone is not a complete stale-state classification.\n\n`LocalWorkingCopy::start_mutation` locks one workspace's state and reloads its checkout/tree after acquiring the lock (S00070 lines 2662\u20132690). Finish writes tree state and checkout state separately (2940\u20132965). Operation publication, extras tables, workspace registry, Git GC and ordinary file writes are distinct boundaries. A working-copy lock does not stop arbitrary editor writes or freeze all workspaces/external stores. An unchanged operation head before/after capture would not alone prove dirty-file consistency.\n\nAlso, acquiring a `ReadonlyRepo` is not proof that discovery was nonmutating: `RepoLoader::load_at_head` can reconcile divergent heads by merging operations (S00069 lines 714\u2013736); missing/corrupt indexes can be rebuilt (S00088 lines 528\u2013554); workspace-store loading can initialize files (S00097 lines 116\u2013125). Exact-operation loading avoids head reconciliation but can still need an index. Preserve the captured heads and actual local state before choosing any repair or normalization.\n\n**Competing evidence, rather than a blanket rejection of filesystem copying.** The pinned [README](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/README.md#L102), S00112 lines 102\u2013121, calls safe concurrent replication experimental and says rsync/Dropbox results should not be corrupt. The linked [concurrency document](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/technical/concurrency.md#L40), S00117 lines 40\u201362, qualifies this: working copies may mismatch, Git backend corruption is possible in known scenarios, and colocated replication is not thoroughly tested and might lose bookmark pointers. It offers reindexing for its linked historical bug; that is not proof that every capture defect can be repaired. The implementation's distributed-extras race above is another limit. `test_bad_locking` simulates merging two copied repositories and checks both child heads plus a merge operation; an interrupted op-head publication test checks recovery without a new operation (S00113 lines 104\u2013162, 168\u2013199). Neither covers live multi-store capture with concurrent GC, alternate stores and dirty workspaces. Preserve replication/merge as a real native design direction, with conflicts and recovery semantics; do not equate it with a verified exact-point backup.\n\n**Alternatives, unresolved questions and aggregate extraction.** A coordinated offline copy or storage snapshot of the entire discovered dependency set could be a baseline; a live capture would need demonstrated ordering/barriers and retention protection across all relevant writers/stores. These are alternatives to investigate, not certified recipes. A logical backend-aware export could omit rebuildable caches only if it preserves selected historical operations, referenced commits/trees/blobs, native metadata and separately captured workspace state. No complete all-store export or live capture protocol was established by the reviewed APIs; this is a bounded evidence statement, not a claim that none exists anywhere."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-capture-consistency.md",
+          "sha256": "cf8e7cfc2692e20c8e872f7c9b6f9ec051f20df0f3acf31a2f30dcbdf13d2e36",
+          "line_start": 14,
+          "line_end": 16,
+          "exact_quote": "Investigate nonmutating discovery and capture under a barrier spanning native repo writers, every affected workspace, editor/file writers and external/alternate store GC. An equal head ID before/after is insufficient for dirty files or expiring unreachable data. Do not hold an undocumented collection of locks and assume it constitutes a fence.\n\nAlternatives: stop relevant writers and take a coordinated copy; storage-level snapshots covering every dependency; or a logical immutable-object export with explicit roots and independently captured workspace files. Evaluate native replication as a different recovery model that may merge operations and report conflicts. Define crash/interruption behavior and verify captured closure before resuming writers. No live protocol is certified by this review."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-history-retention.md",
+          "sha256": "2c39fdc2804787f423636a32a3ae708acbe06377f615fbfe0c509ccb33db640b",
+          "line_start": 13,
+          "line_end": 17,
+          "exact_quote": "Define retained operation roots explicitly: current heads, selected historical operations, workspace checkout operations, and any intentionally retained unpublished/abandoned operations. Determine which objects remain available, rather than promising recovery of already-GCed history. Traverse relevant views and predecessor mappings, then tree/blob/conflict dependencies; preserve extras. A Git mirror can be a component of a backup but does not itself preserve jj operations/views or unsnapshotted files.\n\nDo not equate the two-week default GC grace period (`cli/.../util/gc.rs`, S00076:26\u201367) with a capture fence. Independent Git GC and alternate-store GC must be addressed. Tests inspect keep-ref reduction and extra-segment collection (S00108:156\u2013310); they are not backup tests and were not executed here.\n\nAlternative: carry all store bytes under a coordinated snapshot, or export selected reachable closure plus explicit retention receipts. Default index rebuilding is possible if source closure exists; missing history cannot be repaired by merely rebuilding an index. Keep aggregate uncertainty until restoration of retained historical states is demonstrated."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-workspace-capture.md",
+          "sha256": "117d0fd46b75beb1658fa276db662d645ec8db0a6ec2a37c421e2eedbed1524b",
+          "line_start": 13,
+          "line_end": 15,
+          "exact_quote": "Investigate manifests carrying workspace identity, physical root mapping, checkout operation, desired view commit, actual files and sparse/conflict metadata as separate observations. Missing paths or an unavailable workspace cannot be silently reconstructed from its desired commit and called a capture of its dirty state. Decide explicit inclusion for untracked/ignored files and initialized nested repositories. Preserve deletions, empty files, executable bits, symlinks and sparse omissions distinctly.\n\nRelocation may invalidate stored paths, file-stat shortcuts and filesystem-monitor clocks. Verify resumed scanning on an isolated copy instead of assuming old cache state is portable. Snapshotting live files with an ordinary jj command changes native history; it is an alternative capture policy only if explicitly intended, not a way to relabel preexisting dirty files as already committed. No native operation was created during this review."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "semantically_equivalent",
+          "rationale": "Directly states the full retained history/dependency/physical-file closure and coordinated writer/GC barrier requirement. Protocol uncertainty does not weaken the asserted necessary recovery scope, and no working backup is claimed.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Directly states the full retained history/dependency/physical-file closure and coordinated writer/GC barrier requirement. Protocol uncertainty does not weaken the asserted necessary recovery scope, and no working backup is claimed.",
+      "proposed_credit_fids": [
+        "F079"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C16",
+      "proposition": "Newer change-id headers do not replace native extras and predecessor history; implementation retry/retention behavior corrects oversimplified architecture prose.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 88,
+          "line_end": 92,
+          "exact_quote": "- The older [architecture text](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/technical/architecture.md), S00004 lines 11\u201318, 29\u201343, 78\u201390, is not a complete specification at its own pin. Its \u201cjj-lib only used by CLI\u201d is contradicted here by JayJay's actual jj-lib dependency; its \u201cworking copy has no trait\u201d is contradicted by `WorkingCopy` (S00072 lines 51\u201375). Its exclusive-sounding description of extra metadata omits newer representations: `change-id` headers are read when present and may be written, with fallback synthetic IDs and extra metadata override (S00010 lines 691\u2013715, 835\u2013865, 1303\u20131315, 1379\u20131383). Old conflict tree data can still reside in extras. Operations now also record transitive rewrite predecessors (S00071 lines 364\u2013380), explicitly included in the references used to rebuild an index (S00104 lines 141\u2013153). Do not assume Git commit headers replace native extras or operation history.\n- The architecture's \u201cerror out on second commit with same Git ID/different change ID\u201d is contradicted by the writer's loop: hold the extras-table lock, detect different extras for the Git ID, decrement committer timestamp and retry (S00010 lines 1400\u20131459). Its comment still identifies a race when different machines' repositories are rsynced. Correct the mechanism without discarding the storage/recovery lead.\n- `refs/jj/keep/*` protect commits from Git GC but are not the operation log. Creation/import can create per-commit refs; GC replaces these with index heads plus qualifying newer refs (S00010 lines 902\u2013965, 1463\u20131474, 1558\u20131590; S00114 lines 636\u2013637). The implementation therefore qualifies the prose \u201ca ref for each commit in the operation log.\u201d The default index rebuild walks operation ancestry, operation predecessor references and every view's referenced commits, then commit parents (S00088 lines 241\u2013339). This is the concrete reason retained hidden/history objects matter beyond current visible heads.\n- OpStore GC retains ancestors of supplied operation heads plus newer objects; SimpleOpStore explicitly notes a timestamp TOCTOU race (S00071 lines 481\u2013488; S00068 lines 277\u2013316). `jj util gc` defaults to two weeks and accepts `--expire now`, runs operation-store GC followed by GitBackend GC (S00076 lines 26\u201367). GitBackend recreates keep refs, GCs extra-table segments and invokes Git GC (S00010 lines 1558\u20131590, 970\u2013987). The ref timestamp check also documents re-import races (929\u2013937). These are mitigations and retention rules, not a backup GC fence.\n- Test source corroborates removal of redundant keep refs and retention varying with index/time (S00108 lines 156\u2013250); extra-table GC removes unreachable segments while keeping the reachable segment contents (255\u2013310). These tests do not certify a concurrent backup. No test was run here."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F102",
+          "relation": "semantically_equivalent",
+          "rationale": "Pinned writer, GC and index reconstruction mechanisms resolve specific stale documentation claims while retaining limitations.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Pinned writer, GC and index reconstruction mechanisms resolve specific stale documentation claims while retaining limitations.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C17",
+      "proposition": "Physical dirty/sparse files and actual checkout state differ from desired operation views and current path registries; unchanged head IDs cannot prove consistent file capture.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 94,
+          "line_end": 96,
+          "exact_quote": "**Physical workspace state and capture consistency.** [Working-copy documentation](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/working-copy.md), S00005 lines 9\u201329, 69\u2013110, describes snapshotting and shared/stale workspaces. The view records what *should* be checked out; local state records the last completed update (S00071 lines 258\u2013261). Dirty bytes, untracked/ignored files and sparse omission are separate facts. `WorkingCopyFreshness::check_stale` distinguishes updated, stale and sibling operations and can regard differing operation IDs as fresh when the tree still matches (S00072 lines 348\u2013399). Operation-ID inequality alone is not a complete stale-state classification.\n\n`LocalWorkingCopy::start_mutation` locks one workspace's state and reloads its checkout/tree after acquiring the lock (S00070 lines 2662\u20132690). Finish writes tree state and checkout state separately (2940\u20132965). Operation publication, extras tables, workspace registry, Git GC and ordinary file writes are distinct boundaries. A working-copy lock does not stop arbitrary editor writes or freeze all workspaces/external stores. An unchanged operation head before/after capture would not alone prove dirty-file consistency."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-workspace-capture.md",
+          "sha256": "117d0fd46b75beb1658fa276db662d645ec8db0a6ec2a37c421e2eedbed1524b",
+          "line_start": 7,
+          "line_end": 15,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/op_store.rs (S00071:258\u2013261): view says what should be checked out; local state is authoritative for the last completed update.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/workspace_store.rs (S00097:104\u2013128, 167\u2013192): current physical path registry is in `workspace_store/index` and is independent of historical views.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/protos/local_working_copy.proto (S00092:19\u201378): file shape/stat/conflict-materialization state, tree terms/labels, sparse prefixes, Watchman clock and checkout operation/workspace identity.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/working_copy.rs (S00072:348\u2013399): fresh/updated/stale/sibling distinctions; a differing operation can still be fresh if the relevant tree matches.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/working-copy.md (S00005:9\u201329, 69\u2013110): snapshots, untracked/ignored files and secondary/stale workspaces.\n\nInvestigate manifests carrying workspace identity, physical root mapping, checkout operation, desired view commit, actual files and sparse/conflict metadata as separate observations. Missing paths or an unavailable workspace cannot be silently reconstructed from its desired commit and called a capture of its dirty state. Decide explicit inclusion for untracked/ignored files and initialized nested repositories. Preserve deletions, empty files, executable bits, symlinks and sparse omissions distinctly.\n\nRelocation may invalidate stored paths, file-stat shortcuts and filesystem-monitor clocks. Verify resumed scanning on an isolated copy instead of assuming old cache state is portable. Snapshotting live files with an ordinary jj command changes native history; it is an alternative capture policy only if explicitly intended, not a way to relabel preexisting dirty files as already committed. No native operation was created during this review."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F080",
+          "relation": "narrower",
+          "rationale": "Strong physical/view distinction but not every skipped-checkout/invalid-UTF8 or saved-operation recovery condition in these broader findings.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F019",
+          "relation": "narrower",
+          "rationale": "Strong physical/view distinction but not every skipped-checkout/invalid-UTF8 or saved-operation recovery condition in these broader findings.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Strong physical/view distinction but not every skipped-checkout/invalid-UTF8 or saved-operation recovery condition in these broader findings.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C18",
+      "proposition": "ReadonlyRepo loading may reconcile operations, rebuild indexes or initialize storage; discovery names and exact-operation loading are not universal no-write guarantees.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 98,
+          "line_end": 98,
+          "exact_quote": "Also, acquiring a `ReadonlyRepo` is not proof that discovery was nonmutating: `RepoLoader::load_at_head` can reconcile divergent heads by merging operations (S00069 lines 714\u2013736); missing/corrupt indexes can be rebuilt (S00088 lines 528\u2013554); workspace-store loading can initialize files (S00097 lines 116\u2013125). Exact-operation loading avoids head reconciliation but can still need an index. Preserve the captured heads and actual local state before choosing any repair or normalization."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-capture-consistency.md",
+          "sha256": "cf8e7cfc2692e20c8e872f7c9b6f9ec051f20df0f3acf31a2f30dcbdf13d2e36",
+          "line_start": 10,
+          "line_end": 14,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/repo.rs (S00069:714\u2013736): `load_at_head` can merge divergent operations. Index loading can rebuild state (S00088:528\u2013554); workspace-store loading can initialize it (S00097:116\u2013125).\n\nCounterevidence to dismissing copying outright: README's experimental safe-replication claim (S00112:102\u2013121) and the copied-repository/interrupted-head tests (S00113:104\u2013199). Qualifying evidence: https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/technical/concurrency.md (S00117:40\u201362) says working-copy mismatch, known Git-backend corruption and weak colocated testing remain; GitBackend writer still notes distributed extras races (S00010:1400\u20131405). These sources support conflict-aware replication, not a demonstrated live multi-store backup drill.\n\nInvestigate nonmutating discovery and capture under a barrier spanning native repo writers, every affected workspace, editor/file writers and external/alternate store GC. An equal head ID before/after is insufficient for dirty files or expiring unreachable data. Do not hold an undocumented collection of locks and assume it constitutes a fence."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F002",
+          "relation": "narrower",
+          "rationale": "Covers specific load/repair side effects; does not assert all credential migration/hydration/ref import routes of F002.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Covers specific load/repair side effects; does not assert all credential migration/hydration/ref import routes of F002.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C19",
+      "proposition": "Experimental filesystem replication may merge copied operation histories but its documented limits and tests do not establish exact-point multi-store backup correctness.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 100,
+          "line_end": 100,
+          "exact_quote": "**Competing evidence, rather than a blanket rejection of filesystem copying.** The pinned [README](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/README.md#L102), S00112 lines 102\u2013121, calls safe concurrent replication experimental and says rsync/Dropbox results should not be corrupt. The linked [concurrency document](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/technical/concurrency.md#L40), S00117 lines 40\u201362, qualifies this: working copies may mismatch, Git backend corruption is possible in known scenarios, and colocated replication is not thoroughly tested and might lose bookmark pointers. It offers reindexing for its linked historical bug; that is not proof that every capture defect can be repaired. The implementation's distributed-extras race above is another limit. `test_bad_locking` simulates merging two copied repositories and checks both child heads plus a merge operation; an interrupted op-head publication test checks recovery without a new operation (S00113 lines 104\u2013162, 168\u2013199). Neither covers live multi-store capture with concurrent GC, alternate stores and dirty workspaces. Preserve replication/merge as a real native design direction, with conflicts and recovery semantics; do not equate it with a verified exact-point backup."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-capture-consistency.md",
+          "sha256": "cf8e7cfc2692e20c8e872f7c9b6f9ec051f20df0f3acf31a2f30dcbdf13d2e36",
+          "line_start": 12,
+          "line_end": 16,
+          "exact_quote": "Counterevidence to dismissing copying outright: README's experimental safe-replication claim (S00112:102\u2013121) and the copied-repository/interrupted-head tests (S00113:104\u2013199). Qualifying evidence: https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/technical/concurrency.md (S00117:40\u201362) says working-copy mismatch, known Git-backend corruption and weak colocated testing remain; GitBackend writer still notes distributed extras races (S00010:1400\u20131405). These sources support conflict-aware replication, not a demonstrated live multi-store backup drill.\n\nInvestigate nonmutating discovery and capture under a barrier spanning native repo writers, every affected workspace, editor/file writers and external/alternate store GC. An equal head ID before/after is insufficient for dirty files or expiring unreachable data. Do not hold an undocumented collection of locks and assume it constitutes a fence.\n\nAlternatives: stop relevant writers and take a coordinated copy; storage-level snapshots covering every dependency; or a logical immutable-object export with explicit roots and independently captured workspace files. Evaluate native replication as a different recovery model that may merge operations and report conflicts. Define crash/interruption behavior and verify captured closure before resuming writers. No live protocol is certified by this review."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F079",
+          "relation": "narrower",
+          "rationale": "Preserves positive competing evidence and its limits; neither blanket corruption nor universal reindex recovery is claimed.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F082",
+          "relation": "narrower",
+          "rationale": "Preserves positive competing evidence and its limits; neither blanket corruption nor universal reindex recovery is claimed.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        },
+        {
+          "finding_id": "F102",
+          "relation": "narrower",
+          "rationale": "Preserves positive competing evidence and its limits; neither blanket corruption nor universal reindex recovery is claimed.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Preserves positive competing evidence and its limits; neither blanket corruption nor universal reindex recovery is claimed.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C20",
+      "proposition": "Isolated restore validation must avoid original stores, interpret retained historical objects/conflicts, restore a selected historical operation and separately verify dirty workspace bytes.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 104,
+          "line_end": 104,
+          "exact_quote": "For restore verification, [native `op restore`](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/cli/src/commands/operation/restore.rs), S00103 lines 26\u201329, 47\u201368, creates a **new** operation using selected portions of an old view; it does not repopulate missing objects or reconstruct unsnapshotted old file bytes. Historical inspection via `--at-op` suppresses ordinary working-copy snapshotting (S00077 lines 45\u201365), but inspection alone is weaker than restoration. An isolated restore trial should verify dependency relocation without reaching original stores, enumerate captured operation roots, load historical commits/conflicts and exercise an explicitly chosen historical restoration while separately checking captured dirty/sparse/workspace metadata. Configuration and filesystem-monitor/path state need deliberate treatment on relocation. No restore drill was executed or claimed."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-restore-validation.md",
+          "sha256": "6c8d60cb336e72921222d5ec91236ecbfe05554640a39cec429c3a00eb40f57d",
+          "line_start": 7,
+          "line_end": 14,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/cli/src/commands/operation/restore.rs (S00103:26\u201329, 47\u201368): restore creates a new operation from selected portions of an old view; it is not an object import or filesystem backup restore.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/docs/operation-log.md (S00077:45\u201365): historical inspection with `--at-op` suppresses normal working-copy snapshotting; mutating at old operations can fork history.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_index/store.rs (S00088:225\u2013345, 519\u2013554): conditional rebuilding of default indexes from underlying native history.\n- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/git_backend.rs (S00010:335\u2013362, 605\u2013617): external targets and `.git` path semantics can cause a nominal restore to keep using original storage.\n\nInvestigate an isolated disposable destination where original external/alternate paths are unavailable. Verify the set of retained operations and their referenced commit/tree/blob/extra metadata, then inspect and actually restore a selected historical operation. Check native conflict structure and historical predecessor identity, not merely current files or bookmarks. Independently verify captured dirty bytes, sparse state, shared-workspace links and stale/sibling classifications. Loadability can be weaker than closure if caches or original stores satisfy missing dependencies.\n\nAlternative: preserve byte-level caches, or rebuild the default index intentionally and verify equivalent historical behavior. Backend/version support, path relocation, active configuration, filesystem-monitor caches, nested repository scope and missing objects must be explicit. Do not claim an index rebuild restores lost objects or that `op restore` returns arbitrary dirty files/path registries to their old state. This file proposes verification work; no restore command, upstream executable or network transport was run here."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F081",
+          "relation": "semantically_equivalent",
+          "rationale": "Requires independent destination/dependency and native historical restore verification instead of mere loadability/current files. Explicit proposed validation is not falsely reported as an executed drill.",
+          "proposed_full_proposition_credit": true,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Requires independent destination/dependency and native historical restore verification instead of mere loadability/current files. Explicit proposed validation is not falsely reported as an executed drill.",
+      "proposed_credit_fids": [
+        "F081"
+      ],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C21",
+      "proposition": "Index rebuilding is conditional on retained source closure and cannot recover lost objects; copying derived caches or rebuilding them are explicit alternatives.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 72,
+          "line_end": 72,
+          "exact_quote": "| Indexes | [default_index/store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_index/store.rs#L225), S00088 lines 225\u2013345, 519\u2013554 | Default indexes can be rebuilt from retained operations, views and commit ancestry; missing/corrupt indexes trigger rebuild. They are a separate store but not necessarily irreplaceable bytes. Rebuild is conditional on complete underlying closure and applies to this backend, not every custom index |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-history-retention.md",
+          "sha256": "2c39fdc2804787f423636a32a3ae708acbe06377f615fbfe0c509ccb33db640b",
+          "line_start": 17,
+          "line_end": 17,
+          "exact_quote": "Alternative: carry all store bytes under a coordinated snapshot, or export selected reachable closure plus explicit retention receipts. Default index rebuilding is possible if source closure exists; missing history cannot be repaired by merely rebuilding an index. Keep aggregate uncertainty until restoration of retained historical states is demonstrated."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-restore-validation.md",
+          "sha256": "6c8d60cb336e72921222d5ec91236ecbfe05554640a39cec429c3a00eb40f57d",
+          "line_start": 14,
+          "line_end": 14,
+          "exact_quote": "Alternative: preserve byte-level caches, or rebuild the default index intentionally and verify equivalent historical behavior. Backend/version support, path relocation, active configuration, filesystem-monitor caches, nested repository scope and missing objects must be explicit. Do not claim an index rebuild restores lost objects or that `op restore` returns arbitrary dirty files/path registries to their old state. This file proposes verification work; no restore command, upstream executable or network transport was run here."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F083",
+          "relation": "narrower",
+          "rationale": "Existing index retention/rebuild choice and corruption boundary illustrated; no new product decision beyond F083.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": false
+        },
+        {
+          "finding_id": "F082",
+          "relation": "narrower",
+          "rationale": "Existing index retention/rebuild choice and corruption boundary illustrated; no new product decision beyond F083.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Existing index retention/rebuild choice and corruption boundary illustrated; no new product decision beyond F083.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    },
+    {
+      "claim_id": "P-J0019-C22",
+      "proposition": "Default submodule-store presence is not evidence of child-repository closure; nested repositories and initialized child backing stores need explicit capture scope.",
+      "assertion_status": "asserted_source_review",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+          "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+          "line_start": 76,
+          "line_end": 76,
+          "exact_quote": "| Submodule store qualification | [default_submodule_store.rs](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/default_submodule_store.rs), S00093 lines 22\u201351; S00091 lines 17\u201321 | The default submodule store at this pin is a stub holding a path and a name. Its existence is not proof that it contains submodule source. Discover initialized child repositories/backing Git modules separately where relevant |"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-store-discovery.md",
+          "sha256": "db0f8827d4619893d04df619355e5219f82907aa7eec31021bb177095b10b3cb",
+          "line_start": 9,
+          "line_end": 9,
+          "exact_quote": "- https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/repo.rs (S00069:219\u2013261, 650\u2013679): separate backend selectors and stores. Default submodule store is only a stub at this pin (S00093:22\u201351), not evidence of child-source closure."
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-workspace-capture.md",
+          "sha256": "117d0fd46b75beb1658fa276db662d645ec8db0a6ec2a37c421e2eedbed1524b",
+          "line_start": 13,
+          "line_end": 13,
+          "exact_quote": "Investigate manifests carrying workspace identity, physical root mapping, checkout operation, desired view commit, actual files and sparse/conflict metadata as separate observations. Missing paths or an unavailable workspace cannot be silently reconstructed from its desired commit and called a capture of its dirty state. Decide explicit inclusion for untracked/ignored files and initialized nested repositories. Preserve deletions, empty files, executable bits, symlinks and sparse omissions distinctly."
+        }
+      ],
+      "baseline_mappings": [
+        {
+          "finding_id": "F089",
+          "relation": "narrower",
+          "rationale": "Submodule closure subcase, not full partial/promisor/LFS qualification or hydration authority.",
+          "proposed_full_proposition_credit": false,
+          "original_premium_credit": true
+        }
+      ],
+      "relation": "narrower",
+      "mapping_rationale": "Submodule closure subcase, not full partial/promisor/LFS qualification or hydration authority.",
+      "proposed_credit_fids": [],
+      "new_union_candidate": false,
+      "disposition": "Existing finding support, narrower implementation detail, or explicitly unresolved validation direction; no new product requirement established."
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-capture-consistency.md",
+      "sha256": "cf8e7cfc2692e20c8e872f7c9b6f9ec051f20df0f3acf31a2f30dcbdf13d2e36",
+      "lines": 16,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C15",
+        "P-J0019-C18",
+        "P-J0019-C19"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-history-retention.md",
+      "sha256": "2c39fdc2804787f423636a32a3ae708acbe06377f615fbfe0c509ccb33db640b",
+      "lines": 17,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C13",
+        "P-J0019-C15",
+        "P-J0019-C21"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-restore-validation.md",
+      "sha256": "6c8d60cb336e72921222d5ec91236ecbfe05554640a39cec429c3a00eb40f57d",
+      "lines": 14,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C20",
+        "P-J0019-C21"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-store-discovery.md",
+      "sha256": "db0f8827d4619893d04df619355e5219f82907aa7eec31021bb177095b10b3cb",
+      "lines": 15,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C14",
+        "P-J0019-C22"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-6028298d8855-workspace-capture.md",
+      "sha256": "117d0fd46b75beb1658fa276db662d645ec8db0a6ec2a37c421e2eedbed1524b",
+      "lines": 15,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C15",
+        "P-J0019-C17",
+        "P-J0019-C22"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-persistence.md",
+      "sha256": "320ca6127dfa21c65e94444e2184cfcc18b757bfed124cc34f1fc0184a08955e",
+      "lines": 9,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C05",
+        "P-J0019-C06"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-aa8c1461d43a-review-provenance.md",
+      "sha256": "19ca816c19e68df502420576ba4a09e7e37ff0fe6c74f1728498397bdc484f04",
+      "lines": 11,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C03",
+        "P-J0019-C04",
+        "P-J0019-C07"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/leads/L-e9ec230d009b-mutation-boundary.md",
+      "sha256": "023502dfb344773aa0457cc19a096601f4081ebdc086ab5f49036ceaf37a6a2b",
+      "lines": 15,
+      "kind": "lead",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C08",
+        "P-J0019-C11",
+        "P-J0019-C12"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0019-reconcile/notes.md",
+      "sha256": "253388539d551b8a5129f8603ab2634d666d81374385f1cfa2bdb037f13cbf83",
+      "lines": 114,
+      "kind": "notes",
+      "read_complete": true,
+      "claim_ids": [
+        "P-J0019-C01",
+        "P-J0019-C02",
+        "P-J0019-C03",
+        "P-J0019-C04",
+        "P-J0019-C05",
+        "P-J0019-C06",
+        "P-J0019-C07",
+        "P-J0019-C08",
+        "P-J0019-C09",
+        "P-J0019-C10",
+        "P-J0019-C11",
+        "P-J0019-C12",
+        "P-J0019-C13",
+        "P-J0019-C14",
+        "P-J0019-C15",
+        "P-J0019-C16",
+        "P-J0019-C17",
+        "P-J0019-C18",
+        "P-J0019-C19",
+        "P-J0019-C20",
+        "P-J0019-C21",
+        "P-J0019-C22"
+      ],
+      "disposition": "All substantive assertion blocks reviewed; child restatements share mapped claims. Proposed investigations remain unverified; no inference of unhandled work."
+    }
+  ],
+  "proposed_credit_fids": [
+    "F027",
+    "F029",
+    "F079",
+    "F081",
+    "F102"
+  ],
+  "proposed_new_original_baseline_credit_fids": [],
+  "credit_note": "Delivered partial notes support the listed propositions; all already have original premium credit, so the increment does not increase unique baseline recall. Narrower matches remain uncredited as full propositions.",
+  "new_union_candidates": [],
+  "union_extension_count": 0,
+  "original_union_denominator": 105,
+  "current_canon_review": {
+    "performed": false,
+    "reason": "No materially new product/canon assertion: review provenance/persistence and mutation race directions fit existing identity/review/read-safety boundaries, while backup requirements directly restate F079/F081. No new missing requirement or live-canon defect claimed."
+  },
+  "unresolved": [
+    "No simultaneous-writer persistence or divergent-review migration failure was executed.",
+    "No after-validation mutation race or broad format-mode guard qualification was executed.",
+    "Complete portable multi-store capture and restore protocol remains uncertain.",
+    "Nested-relative alternates and Git environment override parity remain open.",
+    "No runtime completion inferred beyond delivered documents after request-limit truncation."
+  ],
+  "nonclaim_coverage": [
+    {
+      "document": "notes.md",
+      "lines": [
+        1,
+        8
+      ],
+      "disposition": "Scope and exact-version discipline; no additional findings."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        26,
+        29
+      ],
+      "disposition": "Validation limits and next parent heading."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        57,
+        64
+      ],
+      "disposition": "Validation limit and unresolved backup aggregate."
+    },
+    {
+      "document": "notes.md",
+      "lines": [
+        106,
+        114
+      ],
+      "disposition": "Direction inventory and preserved uncertainty."
+    }
+  ],
+  "validation": {
+    "manifest_document_hashes_verified": true,
+    "all_9_delivered_documents_read": true,
+    "exact_quotes_extracted_from_hashed_sources": true,
+    "full_105_baseline_considered": true,
+    "no_keyword_only_recall_credit": true,
+    "no_protocol_runtime_worker_input_changes": true
+  },
+  "manifest_revisions": [
+    {
+      "previous_sha256": "72f43ee55fdcb7caf2f15a2b6212c778a6be543e640b332e07b58185b269141e",
+      "current_sha256": "e423e179bc1f7da9b40c30d652f5f9bc74b190a5c6fd7875b44ea583e75e9d8f",
+      "reason": "Collector now explicitly inventories top-level leads.md and both source-index.md and evidence-index.md. Delivered document bytes and assertions are unchanged.",
+      "all_existing_document_hashes_reverified": true
+    }
+  ]
+}

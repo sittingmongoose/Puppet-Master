@@ -1,0 +1,170 @@
+{
+  "schema": "jujutsu.continuation3.increment_adjudication.v1",
+  "job": "J0023-reconcile",
+  "arm": "premium",
+  "runtime_status": "complete",
+  "review_status": "proposed_pending_independent_review",
+  "baseline": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/baseline/baseline-index.json",
+    "sha256": "1ae330f045ea82114d33b5f0669e42dc76a316672d6ae5670be94ef009f88582",
+    "finding_count": 105
+  },
+  "claims": [
+    {
+      "claim_id": "P-J0023-C01",
+      "proposition": "Preserve earlier accepted resolutions when a later external merge tool fails, and report their native after-state rather than claiming the entire resolve did nothing.",
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Earlier resolved tree persisted before later external tool failure.",
+      "proposed_credit_fids": [
+        "F008"
+      ],
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+          "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+          "line_start": 86,
+          "line_end": 90,
+          "exact_quote": "**Editor result is mode-dependent and can partially commit.** [external.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/merge_tools/external.rs) (`S00025`, 72\u201391, 198\u2013220, 271\u2013330) distinguishes tools whose output is accepted as a full resolution from tools configured to edit markers. For the latter, or configured conflict exit codes, it reparses output with the original terms and expected length. Other nonzero exits abort; empty/unchanged output is rejected; a conflict exit with no valid remaining conflict is rejected. Tool-specific marker-style overrides and `$marker_length` affect the path. It is incorrect to claim every successful editor invocation reparses markers automatically.\n\nFor multiple files, `external.rs` 343\u2013380 can return a partially changed tree together with a later error. [resolve.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/commands/resolve.rs) (`S00015`, 112\u2013147) writes that tree and finishes the transaction **before returning the partial-resolution error**. The test `test_multiple_conflicts_with_error` (`S00029`, 2077\u20132125) expects file1's resolution saved, file2 still conflicted and exit 1. Direct text editing requires a subsequent native snapshot; `jj resolve` itself reads temporary editor output and records a rewritten commit. Treat these as distinct paths when verifying post-editor state.\n\n**Native inspection data and remaining gaps.** `jj resolve --list` enumerates native conflicted paths but has no template argument in `ResolveArgs`, and no-conflict/no-matching-path results are errors (`S00015`, 50\u2013105). [print_conflicted_paths](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/cli_util.rs) (`S00035`, 3070\u20133158) simplifies terms and prints path, side count and special/deleted object categories; a backend error propagates. A listing failure is not proof of resolution. [Templates](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/templates.md) (`S00020`, 290\u2013298, 788\u2013800) offer `commit.conflict()`, `conflicted_files()`, path, file type and side count through `TreeEntry`. These support native enumeration, but the inspected `TreeEntry` API does not expose the complete original term/object identity and is not directly serializable. Explicitly map its fields; preserve exact commit/repository/path context and use deeper native data where term identity is required. JSON schema stability has the caveat recorded under L-28f7a36f8557."
+        }
+      ]
+    },
+    {
+      "claim_id": "P-J0023-C02",
+      "proposition": "Preserve native multi-term conflict state, side provenance, supported marker/type shapes and terminal reconciliation; clean-looking text is insufficient.",
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Logical multi-term conflicts/native shape and post-editor reconciliation beyond markers.",
+      "proposed_credit_fids": [
+        "F056"
+      ],
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+          "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+          "line_start": 64,
+          "line_end": 92,
+          "exact_quote": "**Logical model and representations.** [v0.44.0 conflicts documentation](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/conflicts.md) (local `research-evidence/sources/S00026/text.txt`, lines 11\u201318) says rebase can succeed with a conflict recorded in the commit, and \u201cwhat's stored in the commit is a logical representation of the conflict, not conflict markers.\u201d This does not assert that every rebase succeeds despite unrelated errors. The same file is byte-identical as fetched text to the handoff revision (`S00004`). Its passages establish arbitrarily many sides (109\u2013113), diff/snapshot/Git-diff3 styles (93\u201397, 121\u2013167), Git fallback to snapshot for more than two sides (165\u2013167), collision-avoiding longer markers (169\u2013187), and missing-final-newline encoding (190\u2013219): add a separator newline to each term and omit the newline on the closing marker.\n\n[v0.44.0 technical conflicts](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/technical/conflicts.md) (`S00027`, 15\u201339, 44\u201357) describes an ordered odd-length tree merge such as `A+(C-B)+(E-D)` and cancellation of terms on subsequent rebases. \u201cThree-way\u201d means two sides and a base, not three sides. The same document (65\u201374) warns that the default same-change rule is algebraically lossy; do not expand logical conflict support into a universal guarantee of lossless rebase roundtrips.\n\n[v0.44.0 conflicts.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/lib/src/conflicts.rs) (`S00007`, 394\u2013430) accepts marker-like runs followed by whitespace/end and parses markers of **at least** the expected length, ignoring shorter ones. Length is chosen above marker-like lines already present. The materializer's style dispatch and newline handling are at 516\u2013564. Thus seven fixed ASCII characters are not a complete parser, and marker recognition depends on the original conflict's expected length and side count.\n\n**Snapshot and partial-term preservation.** [Working-copy docs](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/working-copy.md) (`S00014`, 9\u201312, 31\u201358) say most commands snapshot changed files, reparsing conflict markers, and allow resolving part of a conflict by editing its terms. `update_from_content` (`S00007`, 1047\u20131125) simplifies original file-ID terms, parses using the simplified side count, returns the original terms when hunks are unchanged, writes changed terms and expands back to the original arity when needed. It returns a normal file if **no valid markers of the expected arity** remain (1081\u20131084), including malformed-marker cases. Native resolution state can therefore treat marker-looking text as ordinary file content; a visual marker scan is not a substitute for querying native state, and native clean state alone does not prove the user intended every byte.\n\nThe [v0.44.0 library test source](https://github.com/jj-vcs/jj/blob/v0.44.0/lib/tests/test_conflicts.rs) (`S00028`, 1755\u20131804 and 1854\u20131943) asserts unchanged term identity, changed IDs after partial resolution, and preservation of unsimplified terms. The malformed-input test (2364 onward) includes invalid marker text inside a still-conflicted result. Tests were read, not executed.\n\n**Trailing-CR discrepancy resolved against code.**\n\n- [Issue #9868](https://github.com/jj-vcs/jj/issues/9868), retrieved through the [primary API](https://api.github.com/repos/jj-vcs/jj/issues/9868) (`S00017`), reports jj-lib **0.43.0**, Git markers, terms `left\\r`, `base`, `right`, and loss of the CR after materialize/parse. The API response still says `state: open`; this is issue metadata, not release evidence. Its prose calls `left\\r` \u201cthree bytes,\u201d which is a typo: the illustrated input contains five bytes.\n- v0.44.0 `parse_conflict` (`S00007`, 838\u2013875) removes the added LF and then removes any final CR **without checking the separator's EOL style**. The materializer's EOL detector (433\u2013446) uses LF when the terms have no LF. Hence a content CR can be mistaken for a separator CR. This independently verifies applicability to 0.44.0 rather than merely extrapolating from the 0.43 issue.\n- [Fix commit f1d7a873e3e04fae0765c3adaaa152fb55a00931](https://github.com/jj-vcs/jj/commit/f1d7a873e3e04fae0765c3adaaa152fb55a00931), [patch](https://github.com/jj-vcs/jj/commit/f1d7a873e3e04fae0765c3adaaa152fb55a00931.patch) (`S00016`, 7\u201334, 61\u2013127), records whether the opening marker ended with CRLF and removes CR only then. The commit explains that the missing byte otherwise compares as a real edit during `update_from_content` and gets written on snapshot. [Commit metadata](https://api.github.com/repos/jj-vcs/jj/commits/f1d7a873e3e04fae0765c3adaaa152fb55a00931) (`S00030`) distinguishes author date **2026-07-29** from committer date **2026-08-07**; the handoff's August 7 is supported as the latter.\n- [v0.45.0 conflicts.rs](https://github.com/jj-vcs/jj/blob/v0.45.0/lib/src/conflicts.rs) (`S00031`, 839\u2013881) and the [handoff revision's file](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/conflicts.rs) (`S00008`, same passage) contain that condition. The [changelog](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/CHANGELOG.md) (`S00009`, 69, 124\u2013127) assigns the fix to **0.45.0, September 2, 2026**. This closes the old \u201cfix unfound/exact-0.44 comparison pending\u201d prose; the retained follow-up is supported by independent fetches.\n- The added regression test (`S00031`, 1417\u20131443) covers LF and actual CRLF separators, each with content ending in bare CR, using **Git style, line-level merging, `SameChange::Keep`**. It does not alone prove every style, mixed-EOL editor, binary input or working-copy runtime path. Simply stopping all CR removal would break the CRLF-separator case; the conditional fix is substantive. No test was run here.\n\n**Native merge editor limits and alternatives.** [v0.44.0 merge_tools/mod.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/merge_tools/mod.rs) (`S00024`, 333\u2013360, 430\u2013468) materializes/validates every selected conflict before selecting builtin, `:ours`, `:theirs` or external handling. It rejects non-file terms, more than two simplified sides, and unresolved executable-bit conflicts. Therefore the restriction is broader than just external tools. Absent base/deleted sides can be represented by empty input: the [resolve test](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/tests/test_resolve_command.rs) (`S00029`, 685\u2013722) explicitly expects empty `$base` for an add/add conflict. Three-sided rejection is tested at 726\u2013755. Manual marker editing, resolving an ancestor to simplify a later conflict, or deliberately restoring a chosen side remain documented alternatives; the built-in side pickers do not bypass this validation.\n\nThe older working-copy prose says there is no way to see where file/directory/symlink conflict parts came from. That absolute statement is too strong for this version: the file-versus-directory test (`S00029`, 926\u2013966) expects an error listing removing/adding file/tree object IDs **and commit/change labels**. Preserve the editor limitation while acknowledging available provenance summaries; they are not a complete structured term API.\n\n**Editor result is mode-dependent and can partially commit.** [external.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/merge_tools/external.rs) (`S00025`, 72\u201391, 198\u2013220, 271\u2013330) distinguishes tools whose output is accepted as a full resolution from tools configured to edit markers. For the latter, or configured conflict exit codes, it reparses output with the original terms and expected length. Other nonzero exits abort; empty/unchanged output is rejected; a conflict exit with no valid remaining conflict is rejected. Tool-specific marker-style overrides and `$marker_length` affect the path. It is incorrect to claim every successful editor invocation reparses markers automatically.\n\nFor multiple files, `external.rs` 343\u2013380 can return a partially changed tree together with a later error. [resolve.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/commands/resolve.rs) (`S00015`, 112\u2013147) writes that tree and finishes the transaction **before returning the partial-resolution error**. The test `test_multiple_conflicts_with_error` (`S00029`, 2077\u20132125) expects file1's resolution saved, file2 still conflicted and exit 1. Direct text editing requires a subsequent native snapshot; `jj resolve` itself reads temporary editor output and records a rewritten commit. Treat these as distinct paths when verifying post-editor state.\n\n**Native inspection data and remaining gaps.** `jj resolve --list` enumerates native conflicted paths but has no template argument in `ResolveArgs`, and no-conflict/no-matching-path results are errors (`S00015`, 50\u2013105). [print_conflicted_paths](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/cli_util.rs) (`S00035`, 3070\u20133158) simplifies terms and prints path, side count and special/deleted object categories; a backend error propagates. A listing failure is not proof of resolution. [Templates](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/templates.md) (`S00020`, 290\u2013298, 788\u2013800) offer `commit.conflict()`, `conflicted_files()`, path, file type and side count through `TreeEntry`. These support native enumeration, but the inspected `TreeEntry` API does not expose the complete original term/object identity and is not directly serializable. Explicitly map its fields; preserve exact commit/repository/path context and use deeper native data where term identity is required. JSON schema stability has the caveat recorded under L-28f7a36f8557.\n\nRetain unresolved study of 3+ sides, partial/unsimplified terms, binary/non-UTF-8 bytes, file/directory/symlink/executable/deletion conflicts, literal/long/malformed markers, LF/CRLF/mixed-EOL/bare-CR/no-final-newline content, tool exit-code configuration and interruptions. Neither a general lossless editor integration nor runtime certification is established. Preserve both a version-aware byte regression study and a native post-editor-state study; the fixed hypothesis strengthens the lead instead of disposing of it."
+        }
+      ]
+    },
+    {
+      "claim_id": "P-J0023-C03",
+      "proposition": "Account for the known 0.44 carriage-return conflict round-trip defect when qualifying conflict editing.",
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Exact0.44 CR defect and conditional0.45fix traced in source.",
+      "proposed_credit_fids": [
+        "F057"
+      ],
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+          "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+          "line_start": 76,
+          "line_end": 80,
+          "exact_quote": "- [Issue #9868](https://github.com/jj-vcs/jj/issues/9868), retrieved through the [primary API](https://api.github.com/repos/jj-vcs/jj/issues/9868) (`S00017`), reports jj-lib **0.43.0**, Git markers, terms `left\\r`, `base`, `right`, and loss of the CR after materialize/parse. The API response still says `state: open`; this is issue metadata, not release evidence. Its prose calls `left\\r` \u201cthree bytes,\u201d which is a typo: the illustrated input contains five bytes.\n- v0.44.0 `parse_conflict` (`S00007`, 838\u2013875) removes the added LF and then removes any final CR **without checking the separator's EOL style**. The materializer's EOL detector (433\u2013446) uses LF when the terms have no LF. Hence a content CR can be mistaken for a separator CR. This independently verifies applicability to 0.44.0 rather than merely extrapolating from the 0.43 issue.\n- [Fix commit f1d7a873e3e04fae0765c3adaaa152fb55a00931](https://github.com/jj-vcs/jj/commit/f1d7a873e3e04fae0765c3adaaa152fb55a00931), [patch](https://github.com/jj-vcs/jj/commit/f1d7a873e3e04fae0765c3adaaa152fb55a00931.patch) (`S00016`, 7\u201334, 61\u2013127), records whether the opening marker ended with CRLF and removes CR only then. The commit explains that the missing byte otherwise compares as a real edit during `update_from_content` and gets written on snapshot. [Commit metadata](https://api.github.com/repos/jj-vcs/jj/commits/f1d7a873e3e04fae0765c3adaaa152fb55a00931) (`S00030`) distinguishes author date **2026-07-29** from committer date **2026-08-07**; the handoff's August 7 is supported as the latter.\n- [v0.45.0 conflicts.rs](https://github.com/jj-vcs/jj/blob/v0.45.0/lib/src/conflicts.rs) (`S00031`, 839\u2013881) and the [handoff revision's file](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/lib/src/conflicts.rs) (`S00008`, same passage) contain that condition. The [changelog](https://github.com/jj-vcs/jj/blob/e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215/CHANGELOG.md) (`S00009`, 69, 124\u2013127) assigns the fix to **0.45.0, September 2, 2026**. This closes the old \u201cfix unfound/exact-0.44 comparison pending\u201d prose; the retained follow-up is supported by independent fetches.\n- The added regression test (`S00031`, 1417\u20131443) covers LF and actual CRLF separators, each with content ending in bare CR, using **Git style, line-level merging, `SameChange::Keep`**. It does not alone prove every style, mixed-EOL editor, binary input or working-copy runtime path. Simply stopping all CR removal would break the CRLF-separator case; the conditional fix is substantive. No test was run here."
+        }
+      ]
+    },
+    {
+      "claim_id": "P-J0023-C04",
+      "proposition": "Track clone setup, fetch, preset writing, checkout and residual-directory cleanup with exact destination identity; protect existing and dirty directories.",
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Clone phase/residual cleanup and destination identity distinctions.",
+      "proposed_credit_fids": [
+        "F086"
+      ],
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+          "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+          "line_start": 44,
+          "line_end": 56,
+          "exact_quote": "- Admission: lines 175\u2013191 reject `--at-op` with \u201c--at-op is not respected\u201d before creating the destination, record `wc_path.exists()`, and reject an existing nonempty directory. Tests 126\u2013176 and 363\u2013386 explicitly check preservation of existing empty destinations and existing repositories; the latter are rejected before clone starts. This is not evidence about concurrent replacement after admission.\n- **Earlier uncovered boundary:** lines 194\u2013220 call `create_dir_all` before fallible colocation configuration, branch/tag pattern parsing, object-hash configuration and canonicalization. These `?` returns precede `clone_result`, so an error there can leave created directories. The guarded cleanup also removes only the destination itself, not newly created ancestor directories. These are control-flow deductions, not executed reproductions.\n- Guarded stage: lines 222\u2013260 cover workspace initialization, remote configuration, fetch/import and associated transaction completion. On error, lines 261\u2013285 *attempt* `.jj` deletion, then `.git` deletion when colocated, then `remove_dir` on the root only if the original existence check said it was new. `NotFound` is ignored for metadata directories. Any other deletion error short-circuits the closure, so cleanup can stop before remaining paths; warning output is best-effort and the original clone error is returned. Replace any implication of guaranteed cleanup with this narrower statement.\n- Later stage: lines 287\u2013322 propagate preset-write, checkout and transaction-finish errors outside that guard. Checkout is conditional on a selected branch with a normal remote target; an empty remote or unmatched branch selection may validly have no selected branch. Even the commit lookup is `if let Ok(commit)`, not an unconditional checkout guarantee. Lines 350\u2013365 and 391\u2013459 show separate remote-configuration/fetch transactions; this is not one atomic clone operation.\n- The source test `test_git_clone_malformed`, lines 1084\u20131135, expects a `.jj` path in the remote tree to cause **checkout failure after fetch and preset messages**, then expects `status` to report a retained stale working copy. Its first `workspace update-stale` attempt fails again; the test recovers by selecting `root()` with `--ignore-working-copy`. This directly supports the later failure boundary; it does not establish a universal recovery recipe.\n- Success also depends on requested mode: `test_git_clone_ignore_working_copy`, lines 785\u2013820, expects clone success without updating working-copy files and a later ordinary status to report staleness. A zero exit in this mode is not evidence of populated files. `test_git_clone_at_operation`, lines 824\u2013837, expects exit 2 for `--at-op`.\n- Colocation is default unless config/flags alter it (source 77\u2013105, 198\u2013202); `--no-colocate` and `--colocate` are mutually exclusive. Depth, ref selection and object hash are explicit source options (107\u2013159). A review must record the effective mode, not infer it from a version number.\n\n**Version reconciliation.** Fetched normalized source text at handoff revision `e9f48b3e4c1c5e816fbbfbfd06c154a6a96b0215` (`S00003`) and v0.44.0 (`S00006`) is byte-identical, SHA-256 `505b6c62e85fb6bcb50d3d816fad583a020651e8a7860b50932fb849c6f54136`. This independently confirms the retained follow-up and closes the older exact-file comparison deferral. It proves equivalence of this command file only, not all dependencies or environments.\n\n**Supported lesson and alternatives.** Preserve separate observations for destination creation, initialization, fetch/import completion, preset persistence, repository transaction completion, working-copy materialization and cleanup outcome. A retained fetched repository can support explicit recovery; deletion/retry is not the only outcome. The v0.44.0 [working-copy documentation](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/working-copy.md#stale-working-copy) (`S00014`, lines 94\u2013118) distinguishes recorded operations from working-copy updates and identifies interruption as a possible cause of staleness.\n\n**Unresolved.** The inspected code is an explicit error branch, not proof that a killed/cancelled process reaches cleanup. Authentication cancellation, subprocess shutdown, preset-write interruption, partial checkout and cleanup failure need fault-injection evidence in a separately authorized executable study. Canonicalizing a path and remembering a Boolean do not establish persistent directory identity; replacement/symlink races and concurrent new contents remain unverified hypotheses, not demonstrated data-loss bugs. Preserve destination identity, residual-directory disposition and caller continuation as investigation directions; native source does not establish a caller-navigation contract. Tests above were read, not run."
+        }
+      ]
+    },
+    {
+      "claim_id": "P-J0023-C05",
+      "proposition": "Resolve stale upstream prose and incomplete investigations against the more specific supplied implementation evidence.",
+      "relation": "semantically_equivalent",
+      "mapping_rationale": "Pinned API history and nullable operation documentation reconciled.",
+      "proposed_credit_fids": [
+        "F102"
+      ],
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+          "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+          "line_start": 28,
+          "line_end": 32,
+          "exact_quote": "**Exact API/version reconciliation.** Comparison of v0.44.0 (`S00005`) with handoff revision `e9f48b3\u2026` (`S00002`) found only a wording change to the `--no-graph` help comment. The substantive command code matches. v0.44.0 [templates](https://github.com/jj-vcs/jj/blob/v0.44.0/docs/templates.md) (`S00020`, 250\u2013313) expose commit/change IDs, divergence, hidden state, `CommitEvolutionEntry.commit`, `operation`, `predecessors`, and normalized `inter_diff`. Release history (`S00009`, 2187\u20132188) dates operation-backed evolution to **0.30.0**. It puts multi-start evolog in **0.31.0** (2047\u20132048), the `CommitEvolutionEntry`/`templates.evolog` transition in **0.33.0** (1745\u20131747), `predecessors()`/`inter_diff()` in **0.37.0** (1180\u20131185), and removal of pre-0.30 legacy predecessor support in **0.42.0** (481\u2013482). These are already applicable by 0.44.0, not unidentified future changes.\n\nThere is a documentation mismatch: the template table calls `operation()` an `Operation`, but the implementation maps the optional entry operation directly ([commit_templater.rs](https://github.com/jj-vcs/jj/blob/v0.44.0/cli/src/commit_templater.rs), `S00033`, 1480\u20131486), and the JSON test explicitly expects `\"operation\":null` (`S00019`, 269\u2013275). `json(self)` is an available alternative to parsing display graphs, but that tested serialization contains commit and operation fields, **not explicit predecessor edges**; request predecessor IDs separately through templates if needed. Serialization backward compatibility is explicitly \u201cnot guaranteed\u201d (`S00020`, 562\u2013570). No stable cross-version adapter API is implied.\n\n**Imported-history qualification.** The v0.44.0 clone fetch path (`S00006`, 384\u2013388) explicitly sets `record_synthetic_predecessors: false`, with a comment about the potentially large number of new commits. The changelog reports synthetic history from preserved remote change IDs during `git fetch` starting in 0.42.0 (`S00009`, 495\u2013497). These passages do not establish that a fresh clone recreates the producer's original evolution/operation history. Retain provenance and missing-history distinctions when importing repositories."
+        }
+      ]
+    }
+  ],
+  "document_coverage": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/clone-destination-lifecycle.md",
+      "sha256": "d0f498530703ced0ebaba7312fe7841193727f5fb36d3cf35dd23554a5ce6a77",
+      "read_complete": true,
+      "disposition": "Full text read; child follow-up restatements preserve narrower/unresolved acceptance work, not additional credits."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/conflict-byte-roundtrip.md",
+      "sha256": "933cd74fb924fa1ff56bc6d0db7f322810ca3397b25c9290cf6b6cf666e143cc",
+      "read_complete": true,
+      "disposition": "Full text read; child follow-up restatements preserve narrower/unresolved acceptance work, not additional credits."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/conflict-editor-partial-results.md",
+      "sha256": "34806fbb749928e6cb6e2e0f8b0811cef66139282042c945891a1b596727ea41",
+      "read_complete": true,
+      "disposition": "Full text read; child follow-up restatements preserve narrower/unresolved acceptance work, not additional credits."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/leads/evolution-identity-pagination.md",
+      "sha256": "aa99fdfba25d207cfad70f6511a1d93de1550b213214ed080524175bb9645ff2",
+      "read_complete": true,
+      "disposition": "Full text read; child follow-up restatements preserve narrower/unresolved acceptance work, not additional credits."
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0023-reconcile/notes.md",
+      "sha256": "02249b605a3c6de83ec2f0d21bf4eb56ad941b9dfea2f083f810bb6aa5c8e430",
+      "read_complete": true,
+      "disposition": "Full text read; child follow-up restatements preserve narrower/unresolved acceptance work, not additional credits."
+    }
+  ],
+  "proposed_credit_fids": [
+    "F008",
+    "F056",
+    "F057",
+    "F086",
+    "F102"
+  ],
+  "proposed_new_original_baseline_credit_fids": [],
+  "new_union_candidates": [],
+  "original_union_denominator": 105,
+  "unresolved_or_partial": [
+    {
+      "lines": [
+        14,
+        34
+      ],
+      "disposition": "Evolution/interdiff mechanisms support F025/F024 narrowly; no full UI proposal or stablepagination proof inferred."
+    },
+    {
+      "lines": [
+        56,
+        56
+      ],
+      "disposition": "Cancellation/race executable evidence remains absent."
+    },
+    {
+      "lines": [
+        90,
+        103
+      ],
+      "disposition": "Byte/type/editor matrix remains unexecuted; delivered headings not runtime certification."
+    }
+  ],
+  "supplemental_coverage": "Original workspace assertion-bearing supplements still require inventory; no claim they were read."
+}
