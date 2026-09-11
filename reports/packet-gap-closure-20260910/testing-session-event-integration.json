@@ -1,0 +1,143 @@
+{
+  "schema_id": "pm.packet_gap_closure.testing_session_event_integration.v1",
+  "date": "2026-09-11",
+  "status": "bounded_four_existing_event_contracts_admitted",
+  "authority": "User instruction: do the non-design integration work; preserve Settings and deferred Tour/Onboarding visual choices.",
+  "preceding_contract_commit": "e123b34405",
+  "claim_boundary": "Static owner contracts, registry admission, schema/identity/replay fixtures and planned wiring only; not native production integration, full packet review or readiness.",
+  "changes": [
+    "Four already-required Testing session events now consume committed exact ATS-048 owner transitions through ATS-049 and separate Event Authority registration.",
+    "Eight existing placements consume exact admission rows; event assertions no longer treat a click, pending/no-op/refusal/failure/cancellation/unknown-effect or replay as a committed transition.",
+    "Existing EventRecord envelope, producer semantic digest, session subject and typed result are reused; no command, handler, placement or physical storage family was added.",
+    "Readiness payload lookup now resolves #/... pointers correctly instead of stripping # and passing an incompatible resolver. Existing 39-family readiness pin remains unchanged and blocked."
+  ],
+  "verification": {
+    "testing_event_gate": {
+      "status": "pass",
+      "positive_cases": 4,
+      "negative_cases": 124,
+      "focused_tests": 9,
+      "standard_wrapper": "pass"
+    },
+    "browser_admission": {
+      "status": "pass",
+      "admitted_scoped_families": 53,
+      "positive_cases": 53,
+      "negative_cases": 576
+    },
+    "existing_evidence_command_tests": {
+      "status": "pass",
+      "tests": 9
+    },
+    "touch_and_whole_wiring_tests": {
+      "status": "pass",
+      "tests": 19
+    },
+    "wiring": "pass",
+    "touch": {
+      "status": "pass",
+      "rows": 644,
+      "profiles": 133,
+      "open_residuals": 644
+    },
+    "case_l_non_event_materialization": "pass",
+    "shards": {
+      "status": "pass",
+      "sources": 98,
+      "shards": 2181
+    },
+    "index": {
+      "status": "pass",
+      "plan_units": 6461,
+      "acceptance_units": 24695,
+      "readiness": "blocked_runtime_certification_incomplete"
+    },
+    "event_reader": {
+      "payload_schema_ids_resolved": 96,
+      "existing_kernel_pin": 39,
+      "kernel_pin_refreshed": false
+    },
+    "standard_governance": {
+      "status": "not_sealed",
+      "note": "Full run-gates was not repeated for this second batch. Prior independent lock/evidence/readiness/missing-surface failures remain; targeted changed integration gates pass. No readiness pin, Spec Lock, evidence bundle or historical audit verdict was rewritten."
+    }
+  },
+  "scope": {
+    "preexisting_event_families": 92,
+    "preexisting_family_prefix_sha256": "99c53d0bf95bac68e57bb60f7df54e0b48e46884ac33511ee3a9a9ee33bb2c69",
+    "preexisting_rows_unchanged": true,
+    "scoped_event_additions": 4,
+    "current_event_registry_rows": 96,
+    "global_event_denominator": "UNKNOWN_OPEN",
+    "production_placements": 1144,
+    "commands_added": 0,
+    "physical_storage_families_added": 0,
+    "settings_or_concepts_edited": false,
+    "native_producer_proven": false,
+    "governance_sealed": false
+  },
+  "remaining": [
+    "GitHub repository create-requested/Project-bound transitions and command request/result binding remain a separate non-design integration task.",
+    "All-packet source/Touch semantic review remains incomplete; historical source freezes/verdicts are not silently rebased.",
+    "Native dispatch, authenticated retained-owner lookup, durable event/receipt recovery, permissions/redaction/security, runtime and visual acceptance remain unproved.",
+    "Tour and Onboarding visual design remains explicitly deferred."
+  ],
+  "artifacts": [
+    {
+      "path": ".gitignore",
+      "sha256": "29e94720126456b1243eb99531ebe2aa432ab1b185bc138faa56e7a3a3bab4c2"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "d0315a8fa74dc85add77991a73679eddd763692afb2e552b75fc073418f24acb"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "10078dc7390883cc421c68891a060f7c12b07aaf04883ae91a0983fcaaafd5e8"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "3ead72284a3eb1e2ec81ce48c92789035c24c6efcab381566c3d9a6f6b479ff5"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "4b695edc4249ed738ac46f014df730b353b07c7395f00959444c62bed7cdfe8b"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "8c4bf9469adfa06c22a655613fd033e8c1723749f973ca78618b4509d2521d2a"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "e1182af260cff296f401b1bc58180fab1fa101439594089d2ce0636e706c0dbd"
+    },
+    {
+      "path": "Plans/testing_session_event_payloads.schema.json",
+      "sha256": "9648b7665d65b4ef43076bf5180001ec7fefded007ea9ed0e2aece8484383c70"
+    },
+    {
+      "path": "Plans/testing_session_event_admission.json",
+      "sha256": "0142db5f7e95ccb3368c6b91342b48d51f77f7e167ccdfa352605e52d0538d46"
+    },
+    {
+      "path": "Plans/testing_session_event_admission_fixtures.json",
+      "sha256": "4659b2ed17fabde768fceecfb31caff5583fc5c67c7b9543259cfa5f260a3b67"
+    },
+    {
+      "path": "scripts/pm-testing-session-event-admission.py",
+      "sha256": "bc0028d44727425297a6159ead9b18587ffa9d579e4d755b26c3c42e655c2b79"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "b522740b7ea5160f0bb26ba19c53282c3d25270225a26016ff5a2d92d734684b"
+    },
+    {
+      "path": "scripts/pm-implementation-readiness.py",
+      "sha256": "7101cbd81f9c8670c20c2824f77db1708001ad36213a77d3f383aa5e42c4579f"
+    },
+    {
+      "path": "tests/test_pm_testing_session_events.py",
+      "sha256": "6e0f153b058a97712503afcdb65b53f8105a3ed2244d80a437294a71c92f333e"
+    }
+  ]
+}
