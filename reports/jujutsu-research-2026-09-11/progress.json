@@ -1,48 +1,10 @@
 {
-  "schema": "jujutsu.checkpoint_progress.v1",
-  "captured_at": "2026-09-11T03:51:04.775891+00:00",
-  "processing_start": "2026-09-11T03:06:26Z",
-  "human_waiting_seconds_at_capture": 65,
-  "completion_point": "After deliverable4; not reached",
-  "d1": {
-    "status": "complete_pushed",
-    "commit": "179c7a0ee673d66a984037b68dc974ee15228bdd",
-    "branch": "research/jujutsu-20260911",
-    "report": "d1/README.md"
-  },
-  "d2": {
-    "status": "preflight_verified_pending_launch",
-    "report": "d2-launch/summary.md",
-    "freeze_sha256": "84c1cb7b2472878ff25a555f855774549aed99d8ed9b89da31163a7fbdd6cf2c",
-    "standard_tier_confirmed_by_user": true,
-    "tests": "19 passed; 7 focused independently passed"
-  },
-  "d3": {
-    "status": "pending_arms"
-  },
-  "d4": {
-    "status": "pending_adjudication"
-  },
-  "premium": {
-    "admitted_jobs": 0,
-    "campaign_usage_usd": 0,
-    "status": "not_started"
-  },
-  "hybrid": {
-    "admitted_jobs": 0,
-    "campaign_usage_usd": 0,
-    "status": "not_started"
-  },
-  "non_arm": {
-    "standard_api_equivalent_observed_usd": 39.715357999999995,
-    "cap_usd": 60,
-    "actual_cash_usd": null,
-    "unreported_usage_usd": null,
-    "tier_evidence": "d2-launch/tier-evidence.json",
-    "operational_reserve_usd": 2,
-    "caps_cumulative": true
-  },
-  "governance": "No Plans edits, derived regeneration or reseal; main landing not attempted.",
-  "scope_note": "This is partial progress, not completion of deliverables2\u20134 or the required checkpoint.",
-  "processing_seconds_at_capture": 2054.516706
+  "at": "2026-09-11T13:47:49.301874+00:00",
+  "d1": "complete_pushed",
+  "d2": "complete_partial_campaigns_frozen",
+  "d3": "pending",
+  "d4": "pending",
+  "d5": "pending_user_answers_after_d4",
+  "checkpoint_reached": false,
+  "results": "d2-results/results.json"
 }
