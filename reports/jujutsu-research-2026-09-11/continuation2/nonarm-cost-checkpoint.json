@@ -1,0 +1,19 @@
+{
+  "basis": "Preserved standard API-equivalent; not cash billing",
+  "captured_at": "2026-09-11T19:37:48.521188+00:00",
+  "phase": "continuation",
+  "sealed_prior_segment_usd": 12.27443,
+  "current_segment_usd": 1.167508,
+  "cumulative_captured_usd": 13.441938,
+  "cap_usd": 60,
+  "counter_gaps": 0,
+  "source": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation2/prepublication-usage.json",
+    "sha256": "8c664e0ec123cce974734ecc13e6b7df34f8b49d65cc6135e1ebf418265d24fc"
+  },
+  "limitations": [
+    "Review and publication after this checkpoint are not yet included",
+    "Unreported usage remains unknown; no certified cash total",
+    "The repair qualification is charged once to the closed repair phase"
+  ]
+}

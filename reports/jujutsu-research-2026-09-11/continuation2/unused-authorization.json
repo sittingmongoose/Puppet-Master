@@ -1,0 +1,27 @@
+{
+  "authorization": "User selected Authorize $20 repair and 12 premium admissions",
+  "question_item_id": "[request_user_input_async,call_HNrl6vu2Pnddj2G0GvwkIhRn,0]",
+  "recorded_at": "2026-09-11T19:17:20.042537+00:00",
+  "additional_repair_allowance_usd": 20,
+  "aggregate_repair_cap_usd": 60,
+  "prior_repair_captured_usd": 41.76055,
+  "remaining_aggregate_repair_allowance_usd": 18.23945,
+  "additional_premium_admissions": 12,
+  "preserve_existing_counters_starts_and_hybrid_limits": true,
+  "bounded_attempt_number": 3,
+  "restart_count": 2,
+  "max_attempt_seconds": 1200,
+  "attempt_start": "2026-09-11T19:17:20.042537+00:00",
+  "deadline_at": "2026-09-11T19:37:20.042537+00:00",
+  "previous_protocol": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol",
+  "previous_freeze_sha256": "8126b2b12abada3ea68c830ce7abb18f47ec99bb9893b82324c69813d6fb6965",
+  "continuation_segment_001_captured_usd": 12.274429999999999,
+  "continuation_segment_001_end_exclusive": "2026-09-11T19:17:20.042537+00:00",
+  "user_reply_at": "2026-09-11T19:15:40.353642+00:00",
+  "verified_human_wait": {
+    "start": 1789154117.097736,
+    "end": 1789154140.353642,
+    "verified": true,
+    "evidence_ref": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/approval-wait-evidence.json"
+  }
+}

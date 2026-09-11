@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "review_scope": "Independent report-only review; no implementation changes, tests, probes, campaigns, or canonical edits.",
+  "review_at": 1789155546.7591007,
+  "reviewed_report_directory": "/home/sittingmongoose/pm-worktrees/jujutsu-continuation2-20260911/reports/jujutsu-research-2026-09-11/continuation2",
+  "reviewed_report_sha256": {
+    "README.md": "ddf2d914d29bd123d6f57d9b1adf8a000d78a9ee279f820aed209d93a41c9aa0",
+    "nonarm-cost-checkpoint.json": "477239cf00e0f2a35385358786adac2aeda88e6b5705fb15c33b36790850ba3d",
+    "preservation.json": "23db13e2b6b4c433a186a46f339fba64e7ea1af11eb032659824db9dae2bb044",
+    "prior-arm-results.json": "fd3be52365888de274114a0e74a1550f99ee3e8fe33b715281cd3a56c5b61ef6",
+    "prior-comparison.json": "2437ff49683549cc88cbb36c31d0b03121116913ce80eda8f1e5baf106b0689a",
+    "prior-hybrid-pending.json": "3e4d8b4be296594c584d0dc7db0c3bebdd2cb13e5c0b7f637aa18610f1fa0b00",
+    "prior-premium-pending.json": "d4a70767b12e1a6fa69ee9b017ce7758a770c116bec45e01f2780c8b06ce1415",
+    "repair-final-cost.json": "4b40eafc502aac42e38fb4000d939ca73d4fa8454eda6efea585c6b6afcde728",
+    "result.json": "246de3d181ff3f48b3b8cc1685241579f463a3b892406cbe1e4e4a821aa3880f",
+    "unused-authorization.json": "a2040e4682892ea0fae1c1f2dcb013b12dd493b440be3dd27d371b9733e2e767"
+  },
+  "phase_close": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair-attempt-003/phase-close.json",
+    "sha256": "4b40eafc502aac42e38fb4000d939ca73d4fa8454eda6efea585c6b6afcde728"
+  },
+  "cost_source": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/repair-attempt-003/repair-extension-close-usage.json",
+    "sha256": "94d7dbae464e55a7ce0e8cbd645513d18ce82c42d37045d90f4ae97062727264"
+  },
+  "preservation_evidence_sha256": "23db13e2b6b4c433a186a46f339fba64e7ea1af11eb032659824db9dae2bb044",
+  "prior_result_references": [
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation/arm-results.json",
+      "sha256": "13462949b4d336eb6e5bedb39cbb7220de2e2eb4845474d019599d79bbe638bf",
+      "verified": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation/comparison.json",
+      "sha256": "58f1c8a9cef7531f73a04afae1baadc52721ffe387758ceb0243e89651f38874",
+      "verified": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation/hybrid-pending.json",
+      "sha256": "1aeb0e5a3d7284fd3720eae19cb9dae5db7c61fea0f3ffe61a94bb6e6a6cb02c",
+      "verified": true
+    },
+    {
+      "path": "reports/jujutsu-research-2026-09-11/continuation/premium-pending.json",
+      "sha256": "a30bfaa1da8b36674833b9b9657f65b0239fe7f584c0f1194c25ba6c1cceb14a",
+      "verified": true
+    }
+  ],
+  "material_findings": [],
+  "checks_passed": [
+    "Failed live qualification leaves premium additional12 unused/unapplied and hybrid12/fourhours unopened; no new budget state or research workers.",
+    "Original premium start,16premium/12hybrid lifetime admissions,prior retry results and pending outcomes are preserved; relied on hash-bound preservation evidence for2683premium+2381hybrid artifacts rather than rehashing thousands.",
+    "All zero checkpoint increments are explicitly separated from retained premium11budget-truncated+1interrupted jobs and prior timing; concurrency null correctly reflects no new execution.",
+    "Four referenced prior comparison/results/pending files match exact recorded digests; summarized prior recall/shared/unique/unsupported metrics match retained comparison.",
+    "Repair final cost copy matches phase-close byte-for-byte;41.760550+16.634998=58.395548<60; component/event sums agree and one qualification agent/event contributes0.043324 exactly once.",
+    "Report labels captured standard API-equivalent valuations as noncash, retains unknown/unpriced usage, and does not represent failed qualification as zero paid usage.",
+    "No new finding or canonical edit is asserted, so no unsupported D5/current-main adjudication or completed research claim is made.",
+    "Added non-arm checkpoint source hash and component sums verified:12.274430+1.167508=13.441938/60,zero counter gaps; later review/publication excluded explicitly and qualification not counted again in this segment."
+  ],
+  "limits": [
+    "Existing root preservation verification was reused, as requested; raw artifact trees were not redundantly scanned.",
+    "This PASS approves report accuracy only; native research live launch remains FAIL_LIVE_LAUNCH.",
+    "Continuation reporting segment002 costs accrue separately after sealed repair close19:34:42.542517UTC; this review does not alter the sealed repair total."
+  ],
+  "nonarm_checkpoint_source": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation2/prepublication-usage.json",
+    "sha256": "8c664e0ec123cce974734ecc13e6b7df34f8b49d65cc6135e1ebf418265d24fc"
+  }
+}

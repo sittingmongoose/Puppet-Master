@@ -1,0 +1,75 @@
+{
+  "checked_at": "2026-09-11T19:37:12.634351+00:00",
+  "checks": [
+    {
+      "arm": "premium",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/repair/protocol/arm-budgets/premium.json",
+      "sha256": "1629c24833a25f05dd014970f962d41ca0ec8e5ce612e561d2d99bc56f623639",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/campaign-terminal.json",
+      "sha256": "f53f58bb736d49e56ac67a9af617e80b8ee3aea8d1272230f4adee3a4f693a05",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/timing.json",
+      "sha256": "ade947859ddd9749ca2a02c296cc8370fee9b0ddfce10ba73e9de91770146447",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/premium-priced-usage-post-reconciliation.json",
+      "sha256": "f253974892ba9fc58105a3013138d4c9ed24e2ace5179a17030d3ded66f69908",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-premium-20260911/run.json",
+      "sha256": "72231c563e6a71e11b6766d9b08ec5ee093bde34995de1fd7ff8ead39340ea56",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-premium-continuation-20260911/history-artifacts.json",
+      "sha256": "881ee3c2366a423085a2322607d371625643e8244cf1ae5a0cf34dd856c731c5",
+      "unchanged": true
+    },
+    {
+      "arm": "premium",
+      "original_artifacts_verified": 2683
+    },
+    {
+      "arm": "hybrid",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid.json",
+      "sha256": "1d4e24b83788dd945c88f12928e4672e3a3da79893e5df8c9e62cba195693843",
+      "unchanged": true
+    },
+    {
+      "arm": "hybrid",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/arm-budgets/hybrid-priced-usage.json",
+      "sha256": "870694784daec81c42ed9185693cf03386f901bc33ebafe4e552f9de0a814b72",
+      "unchanged": true
+    },
+    {
+      "arm": "hybrid",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/runs/jujutsu-hybrid-20260911/run.json",
+      "sha256": "b29a3a3d2cbab412c23c5e90ab029a6c6a1e62c229c0ea1a95bb56f11ad48ff2",
+      "unchanged": true
+    },
+    {
+      "arm": "hybrid",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation/runs/jujutsu-hybrid-continuation-20260911/history-artifacts.json",
+      "sha256": "863b82260fb9bbdd4451eb60640339c2510eb8b3ba6cb70f0acffd12e5f85aae",
+      "unchanged": true
+    },
+    {
+      "arm": "hybrid",
+      "original_artifacts_verified": 2381
+    }
+  ],
+  "new_budget_state_exists": false,
+  "new_research_workers_started": 0
+}

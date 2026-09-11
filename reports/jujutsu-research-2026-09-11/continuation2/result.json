@@ -1,0 +1,189 @@
+{
+  "status": "blocked_after_final_bounded_repair",
+  "blocked_by": "FAIL_LIVE_LAUNCH: native usage recovered, transport receipt reconciliation unavailable",
+  "repair_commit": "d3ddb52162dc4421b2f616f68cd607c6cf1dbd45",
+  "research_protocol_version_candidate": "jujutsu-continuation-v3-20260911",
+  "research_protocol_enabled": false,
+  "campaign_started_after_new_authorization": false,
+  "new_arm_admissions": 0,
+  "new_research_notes": 0,
+  "new_shared_findings": 0,
+  "new_unique_findings": 0,
+  "new_unsupported_findings": 0,
+  "new_budget_truncated_jobs": 0,
+  "new_recall_measurable": false,
+  "new_corrections_to_adjudicate": 0,
+  "covered_by_d5_findings": 0,
+  "currentness_review_required_for_new_passages": false,
+  "reason_currentness_not_needed": "No new research finding or canonical edit",
+  "arms": {
+    "premium": {
+      "lifetime_captured_usd": 40.34016399999999,
+      "lifetime_cap_usd": 250,
+      "additional_captured_since_previous_report_usd": 0,
+      "historical_unresolved_retained": true,
+      "unpriced_jobs": [
+        "J0010-reconcile",
+        "J0011-reconcile",
+        "J0013-reconcile",
+        "J0015-reconcile",
+        "J0016-reconcile"
+      ],
+      "existing_lifetime_admissions": 16,
+      "unused_authorized_admissions": 12,
+      "new_grant_applied": false,
+      "original_continuation_start": "2026-09-11T18:51:28.500512+00:00",
+      "new_start": null,
+      "stage_timing_this_checkpoint": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "reconcile": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "compare": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        }
+      },
+      "cumulative_timing_unchanged": {
+        "at": "2026-09-11T18:52:37.720213+00:00",
+        "stages": {
+          "discovery": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          },
+          "implementation": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          },
+          "history": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          },
+          "reconcile": {
+            "wall_seconds": 57.86241030693054,
+            "summed_job_seconds": 149.8731645755768,
+            "average_concurrency": 2.590164560732541
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null
+          }
+        },
+        "arm_cumulative_wall_seconds": 69.19525575637817,
+        "continuation_processing_seconds": 69.2197265625,
+        "summed_terminal_job_seconds": 149.8731645755768,
+        "average_concurrency": 2.165945669790548,
+        "timing_scope": "stage span includes scheduling gaps; sum counts execution elapsed; retries counted",
+        "reserved_upper_usd": 0,
+        "actual_usage_usd": null,
+        "captured_usage_upper_usd": 39.71806599999998,
+        "money_stop_reason": null,
+        "usage_status": "Captured priced usage is a conservative upper valuation; outstanding liability is separate; no billing total claimed."
+      }
+    },
+    "hybrid": {
+      "lifetime_captured_usd": 3.596462368000001,
+      "lifetime_cap_usd": 100,
+      "additional_captured_since_previous_report_usd": 0,
+      "historical_unresolved_retained": true,
+      "unpriced_jobs": [],
+      "existing_lifetime_admissions": 12,
+      "unused_authorized_admissions": 12,
+      "new_grant_applied": false,
+      "original_continuation_start": null,
+      "new_start": null,
+      "stage_timing_this_checkpoint": {
+        "discovery": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "implementation": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "history": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "reconcile": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        },
+        "compare": {
+          "wall_seconds": 0,
+          "summed_job_seconds": 0,
+          "average_concurrency": null,
+          "status": "not_started_after_failed_qualification"
+        }
+      },
+      "cumulative_timing_unchanged": {
+        "stages": {
+          "discovery": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null,
+            "status": "not_started"
+          },
+          "implementation": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null,
+            "status": "not_started"
+          },
+          "history": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null,
+            "status": "not_started"
+          },
+          "reconcile": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null,
+            "status": "not_started"
+          },
+          "compare": {
+            "wall_seconds": 0,
+            "summed_job_seconds": 0,
+            "average_concurrency": null,
+            "status": "not_started"
+          }
+        }
+      }
+    }
+  }
+}
