@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "snapshot_commit": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "source_files": 199,
+  "case_files": 204,
+  "case_freeze_sha256": "9668a590f0a21bb66c8486085f18120cb1bf827a991436df96e2a1a4baf96579",
+  "checks": [
+    "exact file set and SHA256",
+    "original worktree byte equality and Git blob identities",
+    "explicit include/manifest/census equality",
+    "brief copies identical",
+    "prepare_case.py unchanged from original",
+    "Plans untouched"
+  ],
+  "limits": "Static case integrity only; no research, runtime, product acceptance, governance seal or readiness claim."
+}
