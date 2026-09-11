@@ -49,6 +49,7 @@ tests/
 !/tests/
 /tests/*
 !/tests/test_pm_forge_backup_acceptance.py
+!/tests/test_pm_forge_provider_fixture_gate.py
 !/tests/test_pm_touch_closure_source.py
 !/tests/test_pm_wiring_vocabulary.py
 !/tests/test_pm_guided_tour_v3_contracts.py

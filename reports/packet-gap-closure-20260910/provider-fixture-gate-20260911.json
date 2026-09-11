@@ -1,0 +1,111 @@
+{
+  "report_kind": "root_reviewed_provider_fixture_gate_fix",
+  "created_at_utc": "2026-09-11T23:21:00Z",
+  "tested_base_commit": "f8bec7b1078d7e5433e8f211355b7e7dc1c63698",
+  "status": "focused_fix_verified_global_gates_still_fail",
+  "claim_boundary": "Static fixture enrollment and validator bookkeeping only. No provider API, authentication, signature verification, network, Browser, native handler, visual, runtime, or readiness proof.",
+  "source_of_gap": "The R5b case-by-case review found four provider-specific fixture packs absent from the shared validator's closed manifest. This live fix does not alter the frozen R5 inputs or verdicts.",
+  "owner_basis": [
+    "Plans/00-plans-index.md provider-specific consumers of common Forge contracts",
+    "Plans/Forge_Integrations.md sections 0 and 1",
+    "Plans/Cursor_Origin_Integration.md section 3",
+    "Plans/GitLab_Integration.md section 3",
+    "Plans/Azure_DevOps_Integration.md section 3",
+    "Plans/Bitbucket_Integration.md section 3"
+  ],
+  "changes": [
+    "Explicitly enroll Cursor Origin, GitLab, Azure DevOps, and Bitbucket fixture packs under the existing Forge schema; the closed manifest grows from 26 to 30 pairs, not 30 unique schema sources.",
+    "Count distinct source paths when checking full schema-ID collisions. Multiple fixture visits to one owner file are not collisions; different files claiming one URI still fail.",
+    "Preserve manifest uniqueness/cardinality, unreadable-input, stale owner-path, and cross-pack runtime-record duplicate rejection.",
+    "Add one named reusable regression file and its exact gitignore exception. No Plans, Concepts, schemas, fixture contents, generated artifacts, governance locks, or runtime implementation changed."
+  ],
+  "provider_cases": {
+    "Plans/cursor_origin_integration_fixtures.json": {
+      "positive": 4, "negative": 4,
+      "scope": "Preview profile, App installation, receipt numeric lifetime, token numeric lifetime, provider alias rejection, and webhook algorithm discriminator. The negative named origin_is_not_an_scm_backend actually mutates provider identity; it does not execute an SCM backend check."
+    },
+    "Plans/gitlab_integration_fixtures.json": {
+      "positive": 3, "negative": 1,
+      "scope": "GitLab.com, Self-Managed, Dedicated profiles and rejection of Environment Toolkit as a forge identity."
+    },
+    "Plans/azure_devops_integration_fixtures.json": {
+      "positive": 2, "negative": 1,
+      "scope": "Services and Server profiles plus missing repository project identity."
+    },
+    "Plans/bitbucket_integration_fixtures.json": {
+      "positive": 2, "negative": 1,
+      "scope": "Cloud and Data Center profiles plus rejection of generic Bitbucket identity."
+    }
+  },
+  "verification": {
+    "new_tests_before_fix": {
+      "methods_run": 9,
+      "failing_methods": 3,
+      "reported_failures_including_subtests": 7,
+      "observed": "All four packs are absent. Forcing the existing packs through main validates all cases but falsely reports the repeated Forge source path as a duplicate full schema ID. A minimal shared-source control reproduces the same false collision."
+    },
+    "new_tests_after_fix": {
+      "methods_run": 9, "passed": 9,
+      "real_pack_test": "Runs the actual main loop with the four unchanged provider packs and real schema validators; only unrelated storage and expansion checks are omitted in this focused harness.",
+      "bookkeeping_tests": "Synthetic in-memory schemas/fixtures isolate source-ID, runtime-ID, manifest, missing-file, and owner-path guards. They are not provider execution."
+    },
+    "standalone_contract_gate": {
+      "before": {"status": "pass", "pairs": 26, "positive_valid": 1016, "negative_rejected": 3314, "findings": 0},
+      "after": {"status": "pass", "pairs": 30, "positive_valid": 1027, "negative_rejected": 3321, "findings": 0},
+      "unique_schema_sources_in_pair_manifest": 26,
+      "metaschema_count_qualification": "metaschemas_valid is a per-pair validation count (30 after), not a count of distinct schemas. The separately counted expansion schema remains unchanged. All other reported gate counters are unchanged."
+    },
+    "unit_suite": {
+      "coverage": "Disjoint union of unittest discovery test_pm_*.py and all nine remaining root test_*.py modules; this covers the current Python unittest module inventory, not JS, native, browser, or packet execution.",
+      "pm_pattern": {"run": 591, "passed": 581, "failures": 1, "errors": 9, "skipped": 0},
+      "other_nine_modules": {"run": 49, "passed": 46, "failures": 3, "errors": 0, "skipped": 0},
+      "combined": {"run": 640, "passed": 627, "failures": 4, "errors": 9, "skipped": 0},
+      "unresolved": [
+        "Onboarding storage census expects 90 families; current unchanged registry has 102.",
+        "Shared runtime storage census expects 84 families; current unchanged registry has 102.",
+        "Runtime integration disposition validator reports stale owner hashes.",
+        "PRD planning runtime validator reports 72 unresolved local references in unchanged Plans/home_layout_event_contracts.schema.json. This report records the validator finding; it does not adjudicate embedded-schema URI resolution.",
+        "Nine PNC-019 tests fail in setup because the historical event-authority VALIDATOR_RECEIPT.json is absent."
+      ]
+    },
+    "standard_plan_gates": {
+      "status": "fail", "passed": 24, "failed": 12, "total": 36,
+      "new_contracts_status": "pass", "shards_status": "pass",
+      "failed_checks": [
+        "json_syntax", "lint_contractrefs", "lint_path_refs", "validate_audit_closure",
+        "validate_audit_status_index", "validate_evidence", "validate_implementation_readiness",
+        "validate_plan_graph", "validate_plan_migration", "validate_pm7_gui_fixtures",
+        "validate_prd_planning_runtime_contracts", "verify_spec_lock"
+      ],
+      "qualification": "Current 24/36 result, not the historical 25/36 snapshot. Missing raw-capture and PM7 fixture inputs, absent audit references, stale governance artifacts, readiness gaps, and the Home layout reference findings remain open. No count override, receipt synthesis, governance refresh, or changes to other agents' files were used to make these pass."
+    },
+    "own_shards": {"status": "pass", "documents": 98, "shards": 2302},
+    "diff_whitespace": "pass"
+  },
+  "tested_changed_file_hashes": {
+    ".gitignore": "53324e5d9fa88e6ae0bb2120fa801d1106995b5912087d8b6ad314f5d9c4c6e3",
+    "scripts/pm-new-contracts-verify.py": "6fc1e669bb76a875c76f679083bd52995e3681897a6e2ffbd293096810314239",
+    "tests/test_pm_forge_provider_fixture_gate.py": "88d685f42301cc0fe1bd4fc2c98d6f9203c9a7e5054eaa9232fabe3914ba06e9"
+  },
+  "pre_fix_validator_sha256": "6579eea1bf77e6c039bed8fca517426e86e5eebec624106fccf83f2f827d0dac",
+  "evidence": [
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/contracts-before.json", "sha256": "e2fcac38770698235576eb3875374ac0101f50f8a52c0f481755fcabfb758176"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/provider-tests-before.log", "sha256": "5daa2baa14dc33a4f3ed231e4a4e861593b5b05b32d843f17b57651f88a0404b"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/provider-tests-after.log", "sha256": "d5be120001ba70f3d48351a304693df878d6f12ff83a91a4d89b5ba59074471c"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/contracts-after.json", "sha256": "a934d91a5c1fba6ec03b49d86ea4b24e8683713af18872481a0122b91ec0868a"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/full-unit-suite-after.log", "sha256": "7125722565abc8840b0f7e31e0798656a2cca94a7c15d42c195adf01f3d617c1"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/non-pm-unit-suite-after.log", "sha256": "79e90ebc00b97a767e6989c5c1a6252e40c5161b44b653a5469a86a33bcfc043"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/plan-gates-after.json", "sha256": "a0a44e4928da36d6b90e967058e03b1d8baae923fce38da4e017e2d49879db07"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/shards-own-check.log", "sha256": "b2faaf64a1e178d42976996341427c756c132432c410af8da27ef3b1d155c8f9"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/input-sha256.txt", "sha256": "c08d368648e0deadb1185a15622c945ff87cfb0c5c95783467d14280474f891e"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/change.patch", "sha256": "369fd55e6e678abb8b991eae4977b18ee34bd6271a19d72cf486453b03a5ae67"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/prd-runtime-current.json", "sha256": "72c2165c02b2b0d468ac972c15b03b6a7739c79cdaf04afa8475bdc6bb4ae2dd"},
+    {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/provider-fixture-gate-20260911-zzSoh5FH/unrelated-failure-input-sha256.txt", "sha256": "09f9f7fb7dbf3469e26ec7a13d20313cfc75e604db87718739af80d41adf0e70"}
+  ],
+  "remaining_work": [
+    "The full non-design integration goal remains active. This fix closes only the live provider-pack enrollment gap.",
+    "Frozen R5 review remains 437 reviewed cases with 12,979 remaining; no frozen verdict or denominator changed in this patch.",
+    "Browser compact-result budget enforcement and the remaining Browser event-family depth work remain open.",
+    "Global verification failures require owner-governed follow-up. Deferred visual design, native implementation, and governance sealing remain outside this patch."
+  ]
+}

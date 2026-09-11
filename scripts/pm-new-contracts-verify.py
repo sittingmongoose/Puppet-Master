@@ -39,6 +39,10 @@ CONTRACT_PAIRS = (
     ("Plans/egolite_retained_requirement_contracts.schema.json", "Plans/egolite_retained_requirement_contract_fixtures.json"),
     ("Plans/final_gui_interaction_contracts.schema.json", "Plans/final_gui_interaction_contract_fixtures.json"),
     ("Plans/forge_integration_contracts.schema.json", "Plans/forge_integration_contract_fixtures.json"),
+    ("Plans/forge_integration_contracts.schema.json", "Plans/cursor_origin_integration_fixtures.json"),
+    ("Plans/forge_integration_contracts.schema.json", "Plans/gitlab_integration_fixtures.json"),
+    ("Plans/forge_integration_contracts.schema.json", "Plans/azure_devops_integration_fixtures.json"),
+    ("Plans/forge_integration_contracts.schema.json", "Plans/bitbucket_integration_fixtures.json"),
     ("Plans/full_thread_runtime_contracts.schema.json", "Plans/full_thread_runtime_contract_fixtures.json"),
     ("Plans/guided_tour_contracts.schema.json", "Plans/guided_tour_contract_fixtures.json"),
     ("Plans/jujutsu_integration_contracts.schema.json", "Plans/jujutsu_integration_contract_fixtures.json"),
@@ -62,7 +66,7 @@ CONTRACT_PAIRS = (
     ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 26
+EXPECTED_CONTRACT_PAIR_COUNT = 30
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -1176,7 +1180,11 @@ def main() -> int:
 
         schema_uri = schema.get("$id")
         if isinstance(schema_uri, str):
-            schema_uri_locations[schema_uri].append(schema_rel)
+            # Several reviewed fixture packs may consume the same owner schema.
+            # A collision is two source paths claiming one URI, not two visits
+            # to one path; distinct-source and runtime-record checks stay intact.
+            if schema_rel not in schema_uri_locations[schema_uri]:
+                schema_uri_locations[schema_uri].append(schema_rel)
             match = re.match(r"^https://([^/]+)/", schema_uri)
             if match:
                 schema_hosts[match.group(1)].append(schema_rel)
