@@ -9833,8 +9833,8 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Wiring_
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
 | `cmd.artifacts.sort` | Sort Artifacts | `shell_view` | always | none | `unsupported` | artifacts |
-| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | `degraded`, `stale_projection` | artifacts |
-| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | `degraded`, `unreachable` | artifacts |
+| `cmd.artifacts.play_recording` | Play Recording | `domain_action` | record_only (`recording_artifact_terminal`) | none | RAP-056 typed owner availability/error reasons | artifacts |
+| `cmd.artifacts.watch_recording` | Watch Live Recording | `domain_action` | live_subject (`recording_in_progress`) | none | RAP-056 typed owner availability/error reasons | artifacts |
 | `cmd.artifacts.show_sources` | Show Sources | `navigation_wrapper` | selection (`artifact_source_refs_present`) | none | `stale_projection` | artifacts |
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
@@ -13049,3 +13049,27 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Testing and Recording Contract Consumption — 2026-09-11
+
+The four existing `cmd.testing.session.open`, `cmd.testing.session.watch`,
+`cmd.testing.session.background`, `cmd.testing.session.redaction.inspect` IDs and
+run-scoped `cmd.testing.export_bundle` consume ATS-048's
+`TestingSessionCommandRequest/Result/Error/Availability` definitions in
+`Plans/testing_session_command_contracts.schema.json`. The two existing recording
+Play/Watch IDs consume RAP-056's `ArtifactRecordingCommandRequest/Result/Error/Availability`
+definitions in `Plans/artifact_recording_command_contracts.schema.json`.
+The owners define semantics; this catalog does not copy their field lists or mint
+parallel commands. The seven commands retain eleven existing production-intent
+placements and their sole planned handlers. They do not belong to TCME's closed
+ten-ID capture schema or widen the shared-runtime command enum.
+
+Typed requests and results are mandatory at these placements; the former generic
+"typed contract or route/open disposition" fallback does not apply. Existing
+selectors project the typed owner availability/error, including `handler_unavailable`.
+Recording row scope remains record-only versus live-subject. Existing session event
+obligations are preserved and require separate Event Authority admission; export
+and recording controls retain receipt-only domain-event dispositions. No new native
+handler, visual design, command, storage family, runtime proof or readiness is claimed.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
