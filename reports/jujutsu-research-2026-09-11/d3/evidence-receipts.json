@@ -1,0 +1,149 @@
+{
+  "schema": "jujutsu.d3_evidence_receipts.v1",
+  "evidence": [
+    {
+      "role": "union",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/union.json",
+      "sha256": "23850729559d9d80d2f8d6cd45725116837436a883eae5ca78e4c3f6f9e64756",
+      "bytes": 1637903
+    },
+    {
+      "role": "coverage",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/document-coverage.json",
+      "sha256": "5e7e41421ea9e4a6ad4e4768b55b89f80e231758504313bdd47afba46aab3988",
+      "bytes": 148306
+    },
+    {
+      "role": "documents",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/documents.json",
+      "sha256": "c742ef646ceda1ed1ec0416ef19afd67f8942ab87d8d0c006eb5feebf7447e96",
+      "bytes": 57741
+    },
+    {
+      "role": "document_roles",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind/document-roles.json",
+      "sha256": "94597a8f510986b44949bf722eea09159519aa9d999a9cfba0e1be7853fcfbe2",
+      "bytes": 29584
+    },
+    {
+      "role": "packet",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/decision-draft.md",
+      "sha256": "66e516daa5f3ee747be434bce53af8dcb89d40892df1de9b4aaa71aea1cde767",
+      "bytes": 26606
+    },
+    {
+      "role": "companion",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/companion.json",
+      "sha256": "616dd3673eb9b83e8f37ade85eee0f476914087815306cebf84b0e63b305a702",
+      "bytes": 66869
+    },
+    {
+      "role": "proposal_dispositions",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/proposal-dispositions.json",
+      "sha256": "a4d47c258590f70086b0a93aeab8a99de3858d02e10458af1b148071cd53f1a5",
+      "bytes": 156155
+    },
+    {
+      "role": "corrections",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/corrections.md",
+      "sha256": "200bfe08dbf82ef00cd7984670401ae3d40555f7ce41026c87330dc17444eaf6",
+      "bytes": 2759
+    },
+    {
+      "role": "review",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/independent-review/review.json",
+      "sha256": "f3b933e4b7258b02d47fc36a199b6dc2cb1b52ec34c56f5f9c1c0c2b3cf72c99",
+      "bytes": 6402
+    },
+    {
+      "role": "provenance",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-provenance.json",
+      "sha256": "159680ff04faed7e3382c97c9628c94f9ec73aecaa46b66378125fef9f3485d4",
+      "bytes": 90539
+    },
+    {
+      "role": "both_arms",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/frozen/both-arms.json",
+      "sha256": "b2078d67d41badb19cf149495a921a4d65fbdea806cd0c457de1e7b2b3648252",
+      "bytes": 684
+    },
+    {
+      "role": "blind_verification",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/collection/blind-verification.json",
+      "sha256": "d111acf4f0a7c6c92d63f7c846f5d0a70ca374d387ac84582f52660c62dece88",
+      "bytes": 861
+    },
+    {
+      "role": "sealed-adjudication.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/sealed-adjudication.json",
+      "sha256": "a3e0db32bd4b01f7422d6492a3a47a6b56382b936b89745eef224a2cd5746d78",
+      "bytes": 2701
+    },
+    {
+      "role": "comparison.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/comparison.json",
+      "sha256": "5adbed81946b9fcbfdc7b08718ccfd024f7ec595598e66b7ffb7313483b73629",
+      "bytes": 751492
+    },
+    {
+      "role": "build_comparison.py",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/build_comparison.py",
+      "sha256": "c76342270e9f91c5851338624882605e824f88024439bfb3dd86837954f00e20",
+      "bytes": 11074
+    },
+    {
+      "role": "publish_report.py",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/publish_report.py",
+      "sha256": "e6a111966ff0b3b0ee4e6450b07d50a6e402e88fd007453eb3a8d3c9169c1d1b",
+      "bytes": 10975
+    },
+    {
+      "role": "intake-verification.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/intake-verification.json",
+      "sha256": "d1f0658efd3d1a4a5f36171e299e0583387d9360c388756becf8198ff3672967",
+      "bytes": 1128
+    },
+    {
+      "role": "verify_intake.py",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/verify_intake.py",
+      "sha256": "a87af9128e32283ba8cf4440632be83710ecd7ce0972db6f2e67b219cf6c93f2",
+      "bytes": 2313
+    },
+    {
+      "role": "review.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/credit-exception-review/review.json",
+      "sha256": "a7dba52231f4b4b01ef1a5c1d2d879304d0c5b8c3c0e9ee666bf9cfc05cd7e68",
+      "bytes": 7179
+    },
+    {
+      "role": "artifact-manifest.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/artifact-manifest.json",
+      "sha256": "725c39a37879351c75f162a2d9701c7d9b04b06396e7817710bb33d38b87f712",
+      "bytes": 4974
+    },
+    {
+      "role": "edge-audit.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/edge-audit.json",
+      "sha256": "58c2b2c6b65be4fb9174c6830beaff9b30e9f6b8b48e967f6cb7fd343d20f3b1",
+      "bytes": 230747
+    },
+    {
+      "role": "review-dispositions.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/review-dispositions.json",
+      "sha256": "05deaec0408bc83e9e2d40d9d7246a411cb01e53418bbf2d00a6da6c330056d5",
+      "bytes": 4616
+    },
+    {
+      "role": "verification.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/verification.json",
+      "sha256": "aeb627e88bb1b04d686381435693baabc5514112bd9273194867e8fec28273cb",
+      "bytes": 2048
+    },
+    {
+      "role": "terminal-receipt-counterexample.json",
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d3/blind-adjudication/terminal-receipt-counterexample.json",
+      "sha256": "052d2009ecb99c766b4a475dbbb3a03ffe5ed64a7a98681f411e9b5c422c1088",
+      "bytes": 346
+    }
+  ]
+}

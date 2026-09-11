@@ -1,0 +1,4453 @@
+{
+  "provisional_key_count": 404,
+  "proposals": [
+    {
+      "extraction_key": "AI change descriptions",
+      "finding_ids": [
+        "F077"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "AI commit descriptions",
+      "finding_ids": [
+        "F077"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "EOL conversion compatibility",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "GC-aware backup closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Gerrit forge capability",
+      "finding_ids": [
+        "F100"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Git and JJ dual decoder verification",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Git index colocation compatibility",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Git index exact recovery state",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Git index hidden conflict decisions",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Git reads can hydrate authenticate mutate",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "LFS attributes submodule eligibility",
+      "finding_ids": [
+        "F089"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "LFS retained history object closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "LFS submodule eligibility",
+      "finding_ids": [
+        "F089"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "RPC authentication lifecycle versioning",
+      "finding_ids": [
+        "F043"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "RPC multi host architecture",
+      "finding_ids": [
+        "F048"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "SHA256 signature compatibility",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "SSH host key trust policy",
+      "finding_ids": [
+        "F041"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "SSH host-key confirmation UX",
+      "finding_ids": [
+        "F041"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "VFS large file backend scope",
+      "finding_ids": [
+        "F091"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Windows askpass certification",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "Windows link versus target identity",
+      "finding_ids": [
+        "F053"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "actual terminal outcome",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "adapter choice embedded library CLI or private RPC",
+      "finding_ids": [
+        "F044"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "ancillary DB excluded from native undo closure",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "annotate performance",
+      "finding_ids": [
+        "F026"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "askpass IPC peer isolation",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "askpass helper packaging provenance",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "askpass timeout cancellation and child cleanup",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "async selection generation",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "audit receipt failure after effect",
+      "finding_ids": [
+        "F001"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "correction"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "authorized partial clone materialization",
+      "finding_ids": [
+        "F090"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "automatic fetch and CI in graph",
+      "finding_ids": [
+        "F098"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "background auth no surprise prompts",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "background credential prompt policy",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup completeness versus stored integrity",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup dirty physical bytes",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup exclusion completeness disclosure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup normalization mutates heads",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup retry upload versus capture generation",
+      "finding_ids": [
+        "F085"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "backup sidecar metadata closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "batch editable diff save",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "before restore recovery checkpoint",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bookmark action remote scope",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bookmark conflict resolution workflow",
+      "finding_ids": [
+        "F060"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bookmark descendant impact preview",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bookmark multi-axis state UI",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded cache bytes",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded file read preflight",
+      "finding_ids": [
+        "F037"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded file reads and scan errors",
+      "finding_ids": [
+        "F037"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded graph computation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded graph paging and stale identities",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded lock wait and typed contention",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded operation graph computation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded read concurrency",
+      "finding_ids": [
+        "F037"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded read concurrency timeout",
+      "finding_ids": [
+        "F037"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bounded writer lock acquisition",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "broker deadlock concurrent prompts and cleanup",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "browser API authentication",
+      "finding_ids": [
+        "F043"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "bundled engine provenance and pair certification",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "busy ref gesture prevention",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "cancellation unknown effect",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "change evolution history",
+      "finding_ids": [
+        "F025"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "change evolution interdiff annotate file history",
+      "finding_ids": [
+        "F024",
+        "F025",
+        "F026"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding(s); synonymous formulations consolidated. A compound evolution/interdiff/annotation key maps to three distinct capabilities."
+    },
+    {
+      "extraction_key": "change-id header interoperability",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "checkout before metadata with exact baseline",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "clicked target versus selected target isolation",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "clone cancellation residual directory",
+      "finding_ids": [
+        "F086"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "clone destination identity",
+      "finding_ids": [
+        "F086"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "clone excludes ancillary undo DB",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "clone staged outcome cleanup",
+      "finding_ids": [
+        "F086"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocated Git HEAD versus index health",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocated external editor writer coexistence",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocated import export disabled profile",
+      "finding_ids": [
+        "F051"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocated index corruption versus new defect prevention",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocated index residue",
+      "finding_ids": [
+        "F052"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "colocation enable disable crash safety",
+      "finding_ids": [
+        "F051"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "compiled capability detection",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "concurrent workspace creation unpublished operation recovery",
+      "finding_ids": [
+        "F019"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "config precedence",
+      "finding_ids": [
+        "F054"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "config query failure versus absent",
+      "finding_ids": [
+        "F030"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflict CR byte roundtrip",
+      "finding_ids": [
+        "F057"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflict partial restore bug",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflict scratch artifacts excluded from commit graph",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflict side provenance labels",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflict side selection preview",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflicted commit Git interop",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "conflicted push policy",
+      "finding_ids": [
+        "F058"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "context aware previews",
+      "finding_ids": [
+        "F067"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "converge divergence resolution",
+      "finding_ids": [
+        "F022"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "crash object integrity",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "crash zero-length object validation",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "create missing parent directories",
+      "finding_ids": [
+        "F031"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential IPC authentication",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential account selection no silent fallback",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential broker architecture",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential helper app secret backend",
+      "finding_ids": [
+        "F040"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential helper packaging Windows",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential helper precedence",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential helper preservation",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential logs secret exposure",
+      "finding_ids": [
+        "F039"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential progress sideband",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential prompt localization stability",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential prompt sanitization",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential prompt taxonomy correlation",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential prompt versus operation timeout",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential retry unknown effect",
+      "finding_ids": [
+        "F009"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential store write policy",
+      "finding_ids": [
+        "F040"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "credential waiting queue deadlock",
+      "finding_ids": [
+        "F071"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "cross process cache invalidation",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "cross-process cache invalidation",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "cross-volume consistent capture",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "custom operation descriptions",
+      "finding_ids": [
+        "F017"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "damaged copy preserve before recovery",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dedicated AI review per workspace",
+      "finding_ids": [
+        "F078"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "degraded result cache exclusion",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dependency ordered restore activation",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dependent operation queue",
+      "finding_ids": [
+        "F071"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dependent rewrite target rebinding",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "derived metadata repair authority",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff editor lossless bytes metadata",
+      "finding_ids": [
+        "F031"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff editor output symlink confinement",
+      "finding_ids": [
+        "F033"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff editor partial write failure",
+      "finding_ids": [
+        "F034"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff editor stale session identity",
+      "finding_ids": [
+        "F036"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff editor untouched EOL byte preservation",
+      "finding_ids": [
+        "F031"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff engine reuse licensing",
+      "finding_ids": [
+        "F046"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff output preview and inversion navigation",
+      "finding_ids": [
+        "F067"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff read failure not empty",
+      "finding_ids": [
+        "F030"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff save deletion versus empty file",
+      "finding_ids": [
+        "F031"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "diff save exact snapshot session identity",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dirty files recovery coverage",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dirty workspace remove guard",
+      "finding_ids": [
+        "F086"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "display versus immutable identity",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "divergence conflict display",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "divergence keep resolution workflow",
+      "finding_ids": [
+        "F022"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "divergent change convergence",
+      "finding_ids": [
+        "F022"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "divergent change requires exact commit selection",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "draft description preservation through rewrites",
+      "finding_ids": [
+        "F068"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "drag autoscroll",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "drag graph edit actions",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "drag reorder changes",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dry-run snapshot side effects",
+      "finding_ids": [
+        "F087"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "edited text EOL policy",
+      "finding_ids": [
+        "F032"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "editor SCM integration scope",
+      "finding_ids": [
+        "F047"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "editor save exit cancel distinct",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "effective config semantics revalidation",
+      "finding_ids": [
+        "F054"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "embedded CLI semantics parity",
+      "finding_ids": [
+        "F044"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "empty versus absent output",
+      "finding_ids": [
+        "F030"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "environment owned external execution",
+      "finding_ids": [
+        "F074"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "environment repository redirection isolation",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "ephemeral remote secrets versus OS keychain",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "ephemeral selector versus durable identity",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "equal refs do not prove objects",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "exact profile extras-head loss fix",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "exact push ref and remote target",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "expected operation not native compare and swap",
+      "finding_ids": [
+        "F005"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "explicit import export guard still snapshots",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external diff tool readiness stages",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external diff tool session lifecycle",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external editor RPC session authentication",
+      "finding_ids": [
+        "F043"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external editor lifecycle readiness",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external editor remote forwarding",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external merge tool integration",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external process mediation",
+      "finding_ids": [
+        "F074"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external shared store backup closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external store support",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external tool out of tree side effects",
+      "finding_ids": [
+        "F033"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "external tool stdout stderr protocol",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "extra change operations duplicate merge absorb backout",
+      "finding_ids": [
+        "F023"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "extras marker silent loss integrity",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "failure atomicity and independent effect receipt",
+      "finding_ids": [
+        "F001"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "correction"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "fakeeditor snapshot resource lifetime",
+      "finding_ids": [
+        "F035"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "fetch import concurrent operation race",
+      "finding_ids": [
+        "F005"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "file traversal incomplete outcome",
+      "finding_ids": [
+        "F030"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "foreground background headless auth policy",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "forge cache freshness",
+      "finding_ids": [
+        "F097"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "forge cache freshness and model version",
+      "finding_ids": [
+        "F097"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "forge integration expansion",
+      "finding_ids": [
+        "F100"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "forge versus local change identity",
+      "finding_ids": [
+        "F097"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "fork-private metadata compatibility",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "git branchless event log limits",
+      "finding_ids": [
+        "F102"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "git wrapper credential alternative",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph branch prioritization",
+      "finding_ids": [
+        "F063"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph branch priority preference",
+      "finding_ids": [
+        "F063"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph display id suffix refresh",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph elision visibility",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph failed versus empty state",
+      "finding_ids": [
+        "F030"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph frontend memory and width bounds",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph hidden revision regression",
+      "finding_ids": [
+        "F064"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph lane continuation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph missing elided edge semantics",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph page geometry and edge continuity",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph query multiple client isolation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph selected identity preservation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph snapshot cursor and partial failure",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "graph visual regression",
+      "finding_ids": [
+        "F062"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hash algorithm and signature interchange capability",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "helper output sideband versus raw forwarding",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hidden terminal credential helper child cleanup",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "historical graph visibility isolation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "historical operation browsing",
+      "finding_ids": [
+        "F105"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hook re-entry not authority bypass",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hook-only undo fidelity comparison",
+      "finding_ids": [
+        "F102"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hosting state separate from transport",
+      "finding_ids": [
+        "F097"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hunk edit both rendered sides stale guard",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hunk line diff editing",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hunk selection exact match completeness",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "hunk selection scripting",
+      "finding_ids": [
+        "F028"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "idempotency missing upstream is not PM gap",
+      "finding_ids": [
+        "F072"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "immutable content cache versus UI identity",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "immutable override retry policy",
+      "finding_ids": [
+        "F087"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "implicit tags and tracking side effects",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "in-app Git SSH credential prompting",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "in-band wait versus failed-operation replay",
+      "finding_ids": [
+        "F009"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "inactive restore config",
+      "finding_ids": [
+        "F084"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "index cannot prove backup fidelity",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "inspectable command log",
+      "finding_ids": [
+        "F096"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "installed distribution versus advertised version",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "interactive subprocess PTY capability",
+      "finding_ids": [
+        "F075"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "interdiff feature",
+      "finding_ids": [
+        "F024"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "invalid UTF8 path exclusion",
+      "finding_ids": [
+        "F080"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "isolated historical restore proof",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "keep-ref corruption diagnosis",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "keyboard shortcut configurability focus conflicts",
+      "finding_ids": [
+        "F076"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "large repo VFS or CDC storage",
+      "finding_ids": [
+        "F091"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "large repo capability degradation",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "large repo ref import cost",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "large untracked snapshot cost",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "late credential reply quarantine",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "legacy versus proposed GitButler backup",
+      "finding_ids": [
+        "F102"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "legitimate slow transfer versus prompt timeout",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "light dark contrast",
+      "finding_ids": [
+        "F062"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "local-only no forge account requirement",
+      "finding_ids": [
+        "F097"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "lock-order dependency deadlocks",
+      "finding_ids": [
+        "F071"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "merge operation undo unavailable",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "merge parent retention when rebasing",
+      "finding_ids": [
+        "F088"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "metadata graph disagreement",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "migration version compatibility",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi file resolve partial native effect",
+      "finding_ids": [
+        "F008"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi step partial result",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi window caller identity",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-client operation progress attribution",
+      "finding_ids": [
+        "F072"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-client query cursor isolation",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-repo background daemon",
+      "finding_ids": [
+        "F048"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-root repository dedupe",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-store repair probes real authority",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-window command isolation",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multi-workspace recovery scope",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multiselect revisions",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "multiway binary mode conflict workflow",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native conflict state proof",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native diff library reuse",
+      "finding_ids": [
+        "F046"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native interactive symlink type fidelity",
+      "finding_ids": [
+        "F053"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native menu platform regression",
+      "finding_ids": [
+        "F062"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native metadata plus object transport closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native predecessor dual-store closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native recovery corruption taxonomy",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native sidecar crash atomicity",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "nested/submodule inventory and closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "network-file-sync corruption",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "no hidden terminal auth fallback",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "no-op history suppression",
+      "finding_ids": [
+        "F018"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "non-credential helper device FIDO prompts",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "offline object closure verification",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "one background snapshot authority",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation abandonment rewrite-history retention",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation abandonment rewrites identity",
+      "finding_ids": [
+        "F094"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation diff correct baseline",
+      "finding_ids": [
+        "F012"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation grouping and batch undo",
+      "finding_ids": [
+        "F014"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation grouping undo",
+      "finding_ids": [
+        "F014"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation heads consistent capture barrier",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation history growth maintenance",
+      "finding_ids": [
+        "F018"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation local selector identity",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation merge undo parent semantics",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation metadata correlation not idempotency",
+      "finding_ids": [
+        "F094"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation recency navigation",
+      "finding_ids": [
+        "F015"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation recent undo redo menu",
+      "finding_ids": [
+        "F015"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation restore scope versus external files",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "operation waypoints",
+      "finding_ids": [
+        "F013"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "opset filtering",
+      "finding_ids": [
+        "F016"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "optimistic UI until authoritative refresh",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "optimistic ref guard not workspace lock",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "optional MCP adapter",
+      "finding_ids": [
+        "F049"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "optional history shrink before archive",
+      "finding_ids": [
+        "F018"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "optional rebuild index instead of capture",
+      "finding_ids": [
+        "F083"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "panic isolation worker survival",
+      "finding_ids": [
+        "F093"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "parent-normalized evolution diff semantics",
+      "finding_ids": [
+        "F025"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "partial operation row missing closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "partial publish versus review failure",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "partial transport warnings retained",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "partial write outcome and rollback",
+      "finding_ids": [
+        "F034"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "partial-clone eligibility",
+      "finding_ids": [
+        "F089"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "path index optimization",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "path spelling normalization",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "per workspace Git HEAD migration",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "per-operation environment isolation",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "per-workspace Git HEAD migration",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "persistent review marks",
+      "finding_ids": [
+        "F027"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "persistent review marks through rewrites",
+      "finding_ids": [
+        "F027"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "platform launch crash compatibility",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "post-checkout failure recovery proof",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "preserve description drafts",
+      "finding_ids": [
+        "F068"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "process-tree cancellation and reap not effect proof",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "processed versus transferred progress",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "projection mixed native and disk generations",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "promisor fsck uncertainty",
+      "finding_ids": [
+        "F081"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "protocol version negotiation",
+      "finding_ids": [
+        "F043"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "publish before workspace checkout",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "push deadline semantics",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "push rejection visible",
+      "finding_ids": [
+        "F007"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "read commands can reconcile operations",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "read historical index rebuild writes",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "read operation diff writes unpublished objects",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "read-only sandbox capability",
+      "finding_ids": [
+        "F003"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "recovery from inconsistent state",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "recovery scope honest",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "recursive submodule recovery bounds",
+      "finding_ids": [
+        "F089"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "redacted operation diagnostics",
+      "finding_ids": [
+        "F095"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "redacted operation export",
+      "finding_ids": [
+        "F095"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "ref-heavy import cost",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "reindex limited to index repair",
+      "finding_ids": [
+        "F082"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "remote lease distinct from local writer",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "remote undo not rollback",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "render throttling",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "restore abandon undo trap",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "restore partial write failure",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "restore skipped checkout outcome",
+      "finding_ids": [
+        "F080"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "restore validate recorded metadata against graph",
+      "finding_ids": [
+        "F010"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "resumable setup receipts",
+      "finding_ids": [
+        "F085"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "review annotation stale orphan state",
+      "finding_ids": [
+        "F027"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "review stack integration",
+      "finding_ids": [
+        "F099"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "revision details bookmarks",
+      "finding_ids": [
+        "F067"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "revision pin comparison",
+      "finding_ids": [
+        "F067"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "revset autocomplete",
+      "finding_ids": [
+        "F065"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "runtime discovery and qualification",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "runtime packaging qualification",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "same change rule lossy roundtrip",
+      "finding_ids": [
+        "F056"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "save only changed paths",
+      "finding_ids": [
+        "F031"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "schema-only locks not runtime evidence",
+      "finding_ids": [
+        "F073"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "secondary workspace store discovery",
+      "finding_ids": [
+        "F070"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "secret log redaction",
+      "finding_ids": [
+        "F039"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "secret persistence keychain",
+      "finding_ids": [
+        "F039"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "secret replacement failure ordering",
+      "finding_ids": [
+        "F040"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "secure external config IDs drill isolation",
+      "finding_ids": [
+        "F084"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "seekable graph stream contribution",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "semantic gesture changes command by context",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "server rechecks advisory UI",
+      "finding_ids": [
+        "F072"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "server rechecks eligibility",
+      "finding_ids": [
+        "F072"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "settings config UI",
+      "finding_ids": [
+        "F076"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "shallow and alternate object closure",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "shared store path relocation",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "shared store reconciliation cascade",
+      "finding_ids": [
+        "F002"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "shared-store indirection watcher resolution",
+      "finding_ids": [
+        "F070"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "single action catalog",
+      "finding_ids": [
+        "F072"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "single colocated writer authority",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "snapshot cost bounds",
+      "finding_ids": [
+        "F092"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "snapshot omitted files successful warning",
+      "finding_ids": [
+        "F080"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "snapshot polling coordination",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "source-control shell menu semantics",
+      "finding_ids": [
+        "F062"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stable selection bounded queries",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stacked forge reviews",
+      "finding_ids": [
+        "F099"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stacked pull requests",
+      "finding_ids": [
+        "F099"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stale refresh cancellation",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stale workspace dirty file loss",
+      "finding_ids": [
+        "F019"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "stale workspace saved recovery discoverability",
+      "finding_ids": [
+        "F019"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "state separate from external config",
+      "finding_ids": [
+        "F055"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "structured operation descriptions",
+      "finding_ids": [
+        "F017"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "structured template AST and config isolation",
+      "finding_ids": [
+        "F054"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "tag push broad scope",
+      "finding_ids": [
+        "F059"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "template output version stability",
+      "finding_ids": [
+        "F054"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "template override parsing",
+      "finding_ids": [
+        "F054"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "third-party push hooks integration",
+      "finding_ids": [
+        "F101"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "three-valued gesture eligibility",
+      "finding_ids": [
+        "F066"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "timestamp cache collision verification",
+      "finding_ids": [
+        "F069"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "typed authentication cancellation",
+      "finding_ids": [
+        "F038"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "undo revert restore distinct scope",
+      "finding_ids": [
+        "F011",
+        "F103"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability",
+        "unsupported_or_rejected"
+      ],
+      "reason": "Native sequential undo and whole-view restoration retain their existing recovery contract; reversing one selected operation is a separately adjudicated optional action. Their effects and labels must remain distinct."
+    },
+    {
+      "extraction_key": "unintegrated operation preview",
+      "finding_ids": [
+        "F104"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "unpublished operation receipt recovery",
+      "finding_ids": [
+        "F019"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "unsupported binary file type saving",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "unsupported file types binary symlink preservation",
+      "finding_ids": [
+        "F029"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "unsupported null stdin means no tty",
+      "finding_ids": [
+        "F042"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "untracked file section",
+      "finding_ids": [
+        "F067"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "upstream RPC readiness",
+      "finding_ids": [
+        "F045"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "upstream docs staleness",
+      "finding_ids": [
+        "F102"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "upstream file lock table not enforcement",
+      "finding_ids": [
+        "F073"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "vendor fork RPC architecture",
+      "finding_ids": [
+        "F044"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "product_choice"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "version qualification",
+      "finding_ids": [
+        "F050"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "virtualized operation history",
+      "finding_ids": [
+        "F061"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "watcher exclusions tracked edits",
+      "finding_ids": [
+        "F070"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "watcher reconnect stale display",
+      "finding_ids": [
+        "F070"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "work queue stops on conflict failure",
+      "finding_ids": [
+        "F071"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace adoption synchronization capability",
+      "finding_ids": [
+        "F020"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace archive hide capability",
+      "finding_ids": [
+        "F021"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace enumeration root support",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace identity not basename",
+      "finding_ids": [
+        "F006"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace path outside operation recovery",
+      "finding_ids": [
+        "F011"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace relocation semantics",
+      "finding_ids": [
+        "F079"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace rename adoption binding",
+      "finding_ids": [
+        "F020"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "workspace stale detection projection",
+      "finding_ids": [
+        "F019"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "worktree adoption archive metadata",
+      "finding_ids": [
+        "F021"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "writer lease versus advisory lock",
+      "finding_ids": [
+        "F004"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "writer lock reentrancy",
+      "finding_ids": [
+        "F071"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "unsupported_or_rejected"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dedicated interdiff action",
+      "finding_ids": [
+        "F024"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "dedicated native evolution history",
+      "finding_ids": [
+        "F025"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    },
+    {
+      "extraction_key": "native annotation and file history",
+      "finding_ids": [
+        "F026"
+      ],
+      "disposition": "mapped_to_adjudicated_finding",
+      "classifications": [
+        "optional_capability"
+      ],
+      "reason": "Substance retained in the listed finding; synonymous formulations consolidated without independent credit for input copies."
+    }
+  ]
+}
