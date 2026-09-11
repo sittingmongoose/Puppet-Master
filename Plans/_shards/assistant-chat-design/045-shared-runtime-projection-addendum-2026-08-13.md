@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3593-L22201
+Source lines: L3593-L22202
 
-Source SHA256: `f5513c64efa1971abdfd94949abf1543ec7ee54808f480ed00c2a67da3fa1796`
+Source SHA256: `35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c`
 
 ---
 
@@ -8399,8 +8399,9 @@ canonical_text: >-
   or the chat context circle's Compact Now action. The entrypoint dispatches
   cmd.chat.compact_context only after explicit user choice, shows clear UI
   feedback such as "Compacting...", projects started/completed/failed state from
-  the command result and receipt without emitting unregistered context.compaction.*
-  EventRecords, reports already_running, cancelled, no_op, degraded, unavailable,
+  the command result and receipt; committed completion emits the registered
+  context.compaction.completed under ACD-461 while other outcomes emit no unregistered
+  context.compaction.* EventRecords, reports already_running, cancelled, no_op, degraded, unavailable,
   retry_scheduled, completed, or failed command results, and treats Plans/newfeatures.md §10 as
   source-lineage only rather than live owner prose.
 gui_related: true
@@ -8455,7 +8456,7 @@ negative_constraints:
   - Do not revive Plans/newfeatures.md as a live implementation surface or owner hint for Compact Now, manual compaction, or auto-compact behavior.
   - Do not dispatch Compact Now from hover alone; explicit click/choice is required.
   - Do not treat manual Compact Now alone as a new cache lineage unless logical run lineage changes.
-  - Do not treat the preserved context.compaction.started, context.compaction.completed, or context.compaction.failed tokens as registered Event Authority families.
+  - context.compaction.started and context.compaction.failed remain unregistered; context.compaction.completed is admitted only under the complete ACD-461 and SP-259 contract.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md

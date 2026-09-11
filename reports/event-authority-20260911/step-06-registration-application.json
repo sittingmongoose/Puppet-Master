@@ -1,0 +1,82 @@
+{
+  "application_id": "EA-STEP06-COMPACT-001-REGISTERED",
+  "applied_at_utc": "2026-09-11T15:52:27.339312+00:00",
+  "decision_id": "COMPACT-001",
+  "authority_refs": [
+    "Plans/Decision_Log.md#DL-039",
+    "Plans/Decision_Log.md#DL-040"
+  ],
+  "supplemental_approval": {
+    "card_id": "EA-S6-001",
+    "answer": "Approve",
+    "decided_by": "Jared",
+    "recorded_at_utc": "2026-09-11T15:26:49.325818Z",
+    "response_record": "reports/event-authority-20260911/decision-responses.jsonl"
+  },
+  "current_outcome": "REGISTERED_WITH_NORMATIVE_CONTRACT",
+  "event_type": "context.compaction.completed",
+  "registry_before": {
+    "revision": "2026-08-27.1",
+    "family_count": 39,
+    "sha256": "b7e124a977c13a3bf85df83549a6a265eda0f98a73bbf7a9053183935e28c123"
+  },
+  "registry_after": {
+    "path": "Plans/event_family_registry.json",
+    "revision": "2026-09-11.1",
+    "family_count": 40,
+    "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+    "json_pointer": "/families/39"
+  },
+  "existing_39_entries_unchanged": true,
+  "bulk_registration": false,
+  "other_252_registered": false,
+  "depth_assessment": {
+    "path": "reports/event-authority-20260911/step-06-contract-depth.json",
+    "sha256": "e376a134cca92cf66178f7369b9101248df656084378e39e11894ebc5629f365"
+  },
+  "superseded_historical_outcomes": [
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+      "line": 71,
+      "event_type": "context.compaction.completed",
+      "row_bytes_sha256": "fd2c7fba11a1b61e2e41933a6448140717e354e83270b865111fb7b1b0d5385a",
+      "file_sha256": "e010c393a8f1b4821a604d062f8c51c78fa5124c4349773cbca363624da55913",
+      "former_disposition": "NEEDS_MORE_EVIDENCE",
+      "superseded_as_current_outcome": true,
+      "historical_bytes_unchanged": true
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+      "line": 106,
+      "event_type": "context.compaction.completed",
+      "row_bytes_sha256": "59b8bb78247b7d06e6c8c26c6b6ddabe155ae3db230d12f04db3142c6d2f3d25",
+      "file_sha256": "43db2ae0fe8330fc5b98ff23cab41b05e2fb0970fbcdb7503d30e529261f3532",
+      "former_disposition": "NEEDS_MORE_EVIDENCE",
+      "superseded_as_current_outcome": true,
+      "historical_bytes_unchanged": true
+    }
+  ],
+  "representation_limit": "The retained IndividualDisposition has no generic registered bucket and Census registered_keep is frozen to Known37 plus August2. Do not invent a bucket, relabel compaction as August, change validators, or silently treat superseded cohort rows/counts as current. This explicit sidecar supersedes the former evidence-gap/quarantine outcome; canonical registry is current registration authority. Historical ledgers, coverage, partition, freeze and closure hashes remain byte-identical.",
+  "current_observation": {
+    "registered_family_count": 40,
+    "exact_J248_campaign_rows_remaining": 252,
+    "old_ledger_cpu_count": 253,
+    "old_ledger_compaction_outcome_superseded": true
+  },
+  "governance": {
+    "independent_validator_pass": false,
+    "runtime_execution": "UNPROVEN",
+    "pnc019_baseline_reapproved": false,
+    "denominator_sealed": false,
+    "spec_lock_resealed": false
+  },
+  "cost": {
+    "root_review": "high reasoning",
+    "astra_medium_workers": 3,
+    "billing_usage_available": false
+  },
+  "check_summary": {
+    "path": "reports/event-authority-20260911/step-06-check-summary.json",
+    "sha256": "34eb3b3c80430e537217b97c40d89314aab92f06eb39322d36bb4fb12ec36cc3"
+  }
+}

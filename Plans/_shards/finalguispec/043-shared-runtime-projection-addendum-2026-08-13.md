@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5290-L26363
 
-Source SHA256: `751bf9ecc387524d8eafe2f31680a812cf28f783f4050701501edcc5624f5a08`
+Source SHA256: `627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5`
 
 ---
 
@@ -7105,10 +7105,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
-- "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.* EventRecord is emitted."
+- "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "The former context.compaction.failed event implication is retired because no context.compaction.* family is registered in Event Authority."
+- "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

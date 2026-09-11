@@ -1,0 +1,315 @@
+{
+  "assessment_id": "EA-STEP06-COMPACTION-CONTRACT",
+  "assessed_at_utc": "2026-09-11T15:52:27.339312+00:00",
+  "event_type": "context.compaction.completed",
+  "family_id": "event-family-context-compaction-completed",
+  "family_revision": "1.0.0",
+  "registry_revision": "2026-09-11.1",
+  "normative_contract_complete": true,
+  "runtime_execution": "UNPROVEN",
+  "independent_validator_pass": false,
+  "seal_prerequisites_met": false,
+  "status_meaning": "PASS means this individual normative event contract explicitly supplies the facet; it is not runtime execution, frozen-validator depth clearance or governance certification.",
+  "cells": {
+    "membership_version": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "80d9caae48948827a42c4290009f3b27c5c1b3b4ae96cf080011c4713d5dac1a",
+          "line_start": 2397,
+          "line_end": 2397,
+          "purpose": "Exact one-family membership; payload and family v1 in the following closed entry."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19029,
+          "line_end": 19029,
+          "purpose": "Storage admission and unchanged preceding 39 entries."
+        }
+      ]
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25289,
+          "line_end": 25289,
+          "purpose": "Explicit authority and ownership split; identifiers newly authorized by EA-S6-001."
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "sha256": "69f6778ea974bf0fa51216b40973674b21744688b02588de46bde85bec3b2ba9",
+          "line_start": 429,
+          "line_end": 429,
+          "purpose": "Genuine approval chronology and contract scope."
+        }
+      ]
+    },
+    "producer": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25291,
+          "line_end": 25291,
+          "purpose": "Exact producer ID, command handler, automatic/micro entrypoints and commit-only authority."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19031,
+          "line_end": 19031,
+          "purpose": "Prepared bundle, serialized live fences, seglog barrier and atomic logical visibility."
+        }
+      ]
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/event_payload_context_compaction_completed.schema.json",
+          "sha256": "4731fecea1fb9db1ecbf6e204b512971a183e5bd49c3d60796d8781b01606dc1",
+          "line_start": 7,
+          "line_end": 7,
+          "purpose": "Closed root payload; complete actual schema pinned below."
+        }
+      ]
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25293,
+          "line_end": 25293,
+          "purpose": "Real Project/thread binding; operation generation; actual nullable causal identity."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19035,
+          "line_end": 19035,
+          "purpose": "Exact event, idempotency and receipt ID formulas."
+        }
+      ]
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19035,
+          "line_end": 19035,
+          "purpose": "Frozen semantic bytes, original-result reuse, conflicts and append dedupe"
+        },
+        {
+          "path": "Plans/Shared_Integration_Runtime.md",
+          "sha256": "a262a1e77b79f096be363d63b1531c1d3ad97b04d68e3b2a9cbf0b1ccdd26405",
+          "line_start": 2007,
+          "line_end": 2007,
+          "purpose": "Lease/identity recovery and projection-only replay."
+        }
+      ]
+    },
+    "retention": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19041,
+          "line_end": 19041,
+          "purpose": "Indefinite content-free audit event; stronger live refs/holds; separate content and derived retention."
+        }
+      ]
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19041,
+          "line_end": 19041,
+          "purpose": "Preappend envelope/payload secret and content checks; opaque noncapability refs and permission-checked audit."
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25299,
+          "line_end": 25299,
+          "purpose": "Deletion and typed unavailable references preserve privacy and search boundaries."
+        }
+      ]
+    },
+    "transitions": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25295,
+          "line_end": 25295,
+          "purpose": "Only validated committed success; all noncommit states excluded."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19033,
+          "line_end": 19033,
+          "purpose": "Crash ambiguity, current-head pins and expired historical receipt distinction."
+        }
+      ]
+    },
+    "consumers_checkpoints": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25297,
+          "line_end": 25297,
+          "purpose": "One exact focused-thread consumer/projector; bounded activity projection."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19037,
+          "line_end": 19037,
+          "purpose": "Exact existing target and checkpoint key formula, schema and binding versions."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19039,
+          "line_end": 19039,
+          "purpose": "Atomic effect/own-checkpoint; full-detail serialization and publication guard; verified survivor provenance."
+        }
+      ]
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
+          "line_start": 25299,
+          "line_end": 25299,
+          "purpose": "No alias/backfill; preserve valid future bytes; owner-governed withdrawal sequencing."
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19043,
+          "line_end": 19043,
+          "purpose": "New-writer version and StorageMigrationCoordinator ownership."
+        }
+      ]
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
+          "line_start": 19043,
+          "line_end": 19043,
+          "purpose": "Positive/negative native acceptance obligations with explicit unproved execution."
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "sha256": "8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02",
+          "line_start": 1409,
+          "line_end": 1409,
+          "purpose": "Completion-specific acceptance assertion."
+        }
+      ]
+    }
+  },
+  "payload_schema": {
+    "path": "Plans/event_payload_context_compaction_completed.schema.json",
+    "sha256": "4731fecea1fb9db1ecbf6e204b512971a183e5bd49c3d60796d8781b01606dc1",
+    "line_start": 1,
+    "line_end": 124,
+    "purpose": "Full closed schema with bounded IDs, counts, UTC timestamp and opaque receipt namespace."
+  },
+  "static_fixtures": {
+    "path": "Plans/context_compaction_completion_contract_fixtures.json",
+    "sha256": "240a514e765da7979290decfc0d92007ab89e8827c80f9b46ec9cfd6706b352f",
+    "line_start": 1,
+    "line_end": 526,
+    "purpose": "39 executed static checks; 14 separate native oracle declarations remain UNPROVEN."
+  },
+  "retention_policy": {
+    "path": "Plans/storage_value_registry.json",
+    "sha256": "88183c7e864dde8816d0c55fdc976bc1f594079a1900f3213d2327e8664a3b1f",
+    "json_pointer": "/retention_policies/0",
+    "policy_id": "RP-AUTHORITY-INDEFINITE",
+    "policy_version": "1.0.0"
+  },
+  "external_verification": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/static-example-checks.json",
+      "sha256": "d1dd7ed089d0a996eb808c83035fded817d3a3510ecb53eeb4f7fbdfe9bb186f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/shared-command-validation.json",
+      "sha256": "23d91842a2e61212529455a39674a20c5c1842d37eafc3d1cd8548aeb18f992b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/pm7-validation.json",
+      "sha256": "4309867beed1bf01cc8a392c33409d45892d56a120969245ff2cb1dc82580bf7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/independent-validator.stdout",
+      "sha256": "3f2bb786d5693adcc4980b55bd42b2ae621e3461ea2a8d769b65372b26785e70"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/retained-fixtures/source-manifest.json",
+      "sha256": "371fc365970522672676a42acf5a786c6ff8ba909a1e3565f13ed6ce1d43167d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/run-gates.json",
+      "sha256": "4478cb9fc598bafef91efaba211bb061ce1f3c8bd013504baf2c4c7b2fffbd5f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/json-syntax-final.json",
+      "sha256": "6e358d482e9f28f15430da44935cd6d773828f25fc25a13d9a9909f2b7f2d52b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/wiring-validation-final.json",
+      "sha256": "30d3b23be220caa94948227330b3123086ededea0ee04b916279c37382bf363c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/path-refs-final.json",
+      "sha256": "4a4a65ead5e881677e8ac6be359b1218b83527fb246b8f41ec46eb56319741f0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/touch-closure-final.json",
+      "sha256": "ea70979f175c3822d4a187a028d1432b1a7e384b8c9504ce1f593e6a13b243e4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/changed-json-parse.json",
+      "sha256": "84065f765f4c9612a065174c27c9a5d5594737f5afbac60454be8efdcb46f6cf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/shard-generation.json",
+      "sha256": "ed317c08113deda3e2204b2588f41b593217f5227b3b8d304d4dd5ac05170e7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/index-generation.json",
+      "sha256": "bf94bbdb74fa9bd7107e2cfa30268de28dab9151291fc2b47238eda75c7c6e26"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/shard-check-final.json",
+      "sha256": "f74a71ad042393085cbb0f6ffff9728d09edd88b9e398d7d40e3f5f64c2257f3"
+    }
+  ]
+}

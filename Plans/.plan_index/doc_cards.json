@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 277
+        "True": 278
       },
-      "heading_count": 662,
+      "heading_count": 664,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -617,9 +617,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25284,
+      "line_count": 25340,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 460,
+      "plan_unit_count": 461,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1080,7 +1080,8 @@
         "ACD-457",
         "ACD-458",
         "ACD-459",
-        "ACD-460"
+        "ACD-460",
+        "ACD-461"
       ],
       "reasoning_tiers": [
         "high",
@@ -1146,6 +1147,7 @@
         "command_catalog",
         "command_routing",
         "compact_session_ui",
+        "compaction_completion_authority",
         "competitive_scope",
         "conflict_routing",
         "context_bundle_order",
@@ -1411,10 +1413,10 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "f5513c64efa1971abdfd94949abf1543ec7ee54808f480ed00c2a67da3fa1796",
+      "sha256": "35379f0b8c2fd1c3ea7425b336f90ed33f8a8f6b5220eba030e8a89af5a8b94c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 460
+        "accepted": 461
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1422,7 +1424,7 @@
         "constraint": 137,
         "decision": 6,
         "gui_requirement": 5,
-        "requirement": 303,
+        "requirement": 304,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1436,6 +1438,7 @@
         "Future hidden-by-policy mention autocomplete no-leak test.",
         "Future permission prompt not suppressed by chat visibility setting test.",
         "PlanUnit YAML parse and identifier uniqueness",
+        "Plans/context_compaction_completion_contract_fixtures.json",
         "RSP-ATOMIC-001",
         "RSP-ATOMIC-002",
         "RSP-ATOMIC-003",
@@ -1476,6 +1479,7 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
+        "reports/event-authority-20260911/step-06-contract-validation.md",
         "rg newfeatures.md Plans/assistant-chat-design.md",
         "scripts/pm-assistant-contract-check.py",
         "server-first Chat owner audit"
@@ -1791,7 +1795,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4288,
+      "line_count": 4292,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 47,
       "plan_unit_ids": [
@@ -1892,7 +1896,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec",
+      "sha256": "8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 47
@@ -3915,10 +3919,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 255,
+        "False": 256,
         "True": 73
       },
-      "heading_count": 498,
+      "heading_count": 500,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4000,9 +4004,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 21464,
+      "line_count": 21507,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 328,
+      "plan_unit_count": 329,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4331,7 +4335,8 @@
         "CV-325",
         "CV-326",
         "CV-327",
-        "CV-328"
+        "CV-328",
+        "CV-329"
       ],
       "reasoning_tiers": [
         "high",
@@ -4400,6 +4405,7 @@
         "clock_skew_schedule_projection_drift",
         "command_route_fork",
         "compact_usage_row_schema_drift",
+        "compaction_completion_authority",
         "compatibility_route_drift",
         "concern_action_audit_loss",
         "concern_escalation_alias_drift",
@@ -4666,10 +4672,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "9f6fcbd34976838f699d26ebbedd3869dcef019318b6ac4b51076ec442fe21ea",
+      "sha256": "a3d9d9192988b3a47e743b73b7b19db6452fac4d8295e8e4b8be9d64a8f9e89f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 328
+        "accepted": 329
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4678,7 +4684,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 1,
-        "requirement": 221,
+        "requirement": 222,
         "schema_contract": 18,
         "source_lineage_residual_disposition": 1
       },
@@ -4694,6 +4700,7 @@
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Contracts_V0.md#73-route_target",
         "Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context",
+        "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
         "Plans/shared_integration_runtime_expansion_fixtures.json",
         "Remote/tunnel WS requires configured auth",
@@ -4745,6 +4752,7 @@
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "python3 scripts/pm-touch-closure-verify.py --json",
+        "reports/event-authority-20260911/step-06-contract-validation.md",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
         "seglog replay tests",
@@ -5058,7 +5066,7 @@
         "False": 19,
         "True": 20
       },
-      "heading_count": 79,
+      "heading_count": 80,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5108,7 +5116,7 @@
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json"
       ],
-      "line_count": 2745,
+      "line_count": 2755,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 39,
       "plan_unit_ids": [
@@ -5197,7 +5205,7 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "b304a91ac0ca4563747eadc8f98e70fa94fc53c35d3184bc929d5f6a6d937f0a",
+      "sha256": "69f6778ea974bf0fa51216b40973674b21744688b02588de46bde85bec3b2ba9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 39
@@ -6506,7 +6514,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 37490,
+      "line_count": 37492,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 551,
       "plan_unit_ids": [
@@ -7158,7 +7166,7 @@
         "visualizer_script_policy_drift",
         "wand_overflow_or_demo_command_pollution"
       ],
-      "sha256": "751bf9ecc387524d8eafe2f31680a812cf28f783f4050701501edcc5624f5a08",
+      "sha256": "627f12aa6496bcb0f8b078cfa365673d66a29e1b61bcd8977462ec0a52445ae5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 550,
@@ -13591,7 +13599,7 @@
         "vision_prompt_injection_or_guessing",
         "widget_owner_boundary_drift"
       ],
-      "sha256": "cbda2ffd980a861f82ffab67431b1190940e9227a2d3302a8337a726502f14b7",
+      "sha256": "ec60ef5677e8a98ce3fb72a0631af134c1128a251bd1a1719d8a8d49c147bf8e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 89,
@@ -15588,10 +15596,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 14,
+        "False": 15,
         "True": 22
       },
-      "heading_count": 93,
+      "heading_count": 95,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -15640,9 +15648,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 1999,
+      "line_count": 2046,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 36,
+      "plan_unit_count": 37,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -15679,7 +15687,8 @@
         "SIR-034",
         "SIR-035",
         "SIR-036",
-        "SIR-037"
+        "SIR-037",
+        "SIR-038"
       ],
       "reasoning_tiers": [
         "high",
@@ -15688,6 +15697,7 @@
       "risk_classes": [
         "advisory_authority_widening",
         "command_route_authority_and_runtime_claim_boundary",
+        "compaction_completion_authority",
         "connection_domain_conflation",
         "copied_expansion_state_machine_or_local_authority_widening",
         "credential_scope_or_secret_material_leak",
@@ -15723,10 +15733,10 @@
         "topology_identity_race_or_unsettled_work",
         "unsafe_recovery"
       ],
-      "sha256": "3e3151a7b2db86520dfe4474332bdf3c0f053c87e36b241674452a5e612021e0",
+      "sha256": "a262a1e77b79f096be363d63b1531c1d3ad97b04d68e3b2a9cbf0b1ccdd26405",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 36
+        "accepted": 37
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -15739,7 +15749,7 @@
         "integration_contract": 2,
         "owner_boundary": 1,
         "platform_requirement": 1,
-        "requirement": 15,
+        "requirement": 16,
         "schema_contract": 4,
         "security_contract": 1
       },
@@ -15751,6 +15761,7 @@
         "Plans/Commands_System.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
+        "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contract_fixtures.json",
         "Plans/egolite_retained_requirement_contracts.schema.json",
         "Plans/full_thread_runtime_contract_fixtures.json",
@@ -15824,6 +15835,7 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "rate-limit",
         "replay/live races",
+        "reports/event-authority-20260911/step-06-contract-validation.md",
         "resource and security tests",
         "resource pressure tests",
         "restart/failure injection",
@@ -16087,10 +16099,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 158,
+        "False": 159,
         "True": 100
       },
-      "heading_count": 460,
+      "heading_count": 462,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16143,9 +16155,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19025,
+      "line_count": 19084,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 258,
+      "plan_unit_count": 259,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16404,13 +16416,15 @@
         "SP-255",
         "SP-256",
         "SP-257",
-        "SP-258"
+        "SP-258",
+        "SP-259"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "compaction_completion_authority",
         "containerized_host_storage_drift",
         "cross_domain_secret_leak_identity_collision_or_false_persistence_proof",
         "dry_method_provenance_storage_gap",
@@ -16459,17 +16473,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "2478a1aabda7f3fa3c39de5b3fab2e94fcf5c633c60b00645849b76098ac4ac6",
+      "sha256": "8e517f8404a5590c4d3939ec562cccf5203afa656e736872513a2e6f0bdf0eb9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 255,
+        "accepted": 256,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 234,
+        "requirement": 235,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 9,
@@ -16504,6 +16518,7 @@
         "Memory store and chat/session files have size/compaction policies.",
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
+        "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
         "Plans/working_notebook_contract_fixtures.json",
         "Quota exceeded degrades with warning and exact subsystem, not crash.",
@@ -16553,6 +16568,7 @@
         "python3 scripts/pm-storage-recovery-contracts.py --self-test",
         "python3 scripts/pm-terminal-command-block-contracts.py",
         "python3 scripts/pm-working-notebook-contracts.py validate",
+        "reports/event-authority-20260911/step-06-contract-validation.md",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)"
       ]
     },
@@ -17352,7 +17368,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "46e57138eeec16db54907afcf615a2a2512fa935f6d8a3e47e3be44519ff23c1",
+      "sha256": "05fc873e4f374c8af7ecb6edc20e87d03f77b4817e04e117c409d494db3607cc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 160,
@@ -18364,7 +18380,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T15:33:42Z",
+  "generated_at_utc": "2026-09-11T16:11:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18372,13 +18388,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3330,
-      "True": 3105
+      "False": 3333,
+      "True": 3106
     },
-    "plan_unit_count": 6435,
+    "plan_unit_count": 6439,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6244,
+      "accepted": 6248,
       "retired": 182,
       "superseded": 9
     },
@@ -18445,7 +18461,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5137,
+      "requirement": 5141,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -1531,7 +1531,10 @@
         },
         "event_types": {
           "type": "array",
-          "maxItems": 0
+          "items": {
+            "const": "context.compaction.completed"
+          },
+          "maxItems": 1
         },
         "context_revision_before": {
           "type": "integer",
@@ -1544,7 +1547,37 @@
         "compaction_history_ref": {
           "$ref": "#/$defs/non_secret_ref"
         }
-      }
+      },
+      "description": "Fixture-only command/result/receipt trace. outcome=completed represents successful committed compaction under ACD-461 / SP-259 and requires exactly one completion event; all other outcomes are noncommitted and event-silent. This static shape neither proves commit nor grants runtime emission authority.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "event_types": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "event_types": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

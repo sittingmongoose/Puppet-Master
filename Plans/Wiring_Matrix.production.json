@@ -14032,7 +14032,9 @@
       "ui_location": "Shared Assistant > Context ring menu > Compact Now",
       "ui_command_id": "cmd.chat.compact_context",
       "handler_location": "handlers::chat::compact_context",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "context.compaction.completed"
+      ],
       "acceptance_checks": [
         "cmd.chat.compact_context must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.chat.compact_context must expose projected state selector and disabled reason before dispatch",
@@ -14041,16 +14043,17 @@
         "cmd.chat.compact_context must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Opening or hovering the PMConcept7 context-ring menu is local and dispatches nothing; only explicit Compact Now selection invokes this command.",
         "started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results update the same ring/detail projection without cloning thread or context state.",
-        "While context.compaction.* is absent from Event Authority, the production row records a receipt/result projection and must not fabricate persisted event types."
+        "Successful committed compaction emits exactly one context.compaction.completed under ACD-461 / SP-259. started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, failed, soft-defer, and every other noncommitted outcome emit no compaction EventRecord; dispatch acceptance or receipt projection alone is not commit proof."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.compact_context; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_compact_context.availability",
       "disabled_reason_projection": "state.commands.chat_compact_context.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.compact_context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition. PMConcept7 menu disclosure is local; explicit Compact Now records this receipt and updates the shared thread context projection without a fabricated event family.",
+        "effect_kind": "mixed",
+        "description": "cmd.chat.compact_context records its dispatch receipt and result. Only successful committed compaction emits exactly one context.compaction.completed under ACD-461 / SP-259; replay must not append a duplicate. PMConcept7 menu disclosure is local, and all started, failed, soft-defer, no-op, or other noncommitted outcomes remain event-silent while updating the shared context projection.",
         "receipt_or_event_refs": [
-          "cmd.chat.compact_context.dispatch_receipt"
+          "cmd.chat.compact_context.dispatch_receipt",
+          "context.compaction.completed"
         ]
       },
       "accessibility_contract": {
@@ -14073,7 +14076,7 @@
         {
           "test_id": "wiring.catalog.chat_compact_context.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.compact_context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Assert one dispatch receipt and result, exactly one context.compaction.completed after successful committed compaction, no duplicate append on replay, and no compaction event for any noncommitted outcome."
         },
         {
           "test_id": "wiring.catalog.chat_compact_context.accessibility",
@@ -14083,12 +14086,17 @@
         {
           "test_id": "wiring.catalog.chat_compact_context.pm7_compact_now",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Assert menu open/hover emits nothing, explicit Compact Now dispatches exactly once, all result states update the same ring/detail projection, and no unregistered persisted event is emitted."
+          "requirement": "Assert menu open/hover emits nothing, explicit Compact Now dispatches exactly once, all result states update the same ring/detail projection, and only successful committed compaction emits exactly one context.compaction.completed."
+        },
+        {
+          "test_id": "wiring.catalog.chat_compact_context.completion_event",
+          "evidence_kind": "event_test",
+          "requirement": "Assert the ACD-461 / SP-259 completion payload/envelope identity and commit-only EventRecord effect, one event for committed success, no event for every noncommitted outcome, original-result reuse on retry, and no duplicate append during replay. Plans/context_compaction_completion_contract_fixtures.json provides static examples and separately marked UNPROVEN native commit/recovery/replay/deletion oracles; static fixture validation is not native execution evidence."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.compact_context records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
-        "Assert PMConcept7 context-ring disclosure emits nothing and explicit Compact Now records one receipt/result projection with no unregistered context.compaction.* event."
+        "Assert cmd.chat.compact_context records one dispatch receipt and result; successful committed compaction emits exactly one context.compaction.completed with no duplicate append on replay under ACD-461 / SP-259.",
+        "Assert PMConcept7 context-ring disclosure emits nothing; started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, failed, soft-defer, and every other noncommitted outcome emit no compaction EventRecord. A started/failed spelling, missing or duplicate completion, or premature completion fails."
       ]
     },
     "catalog.chat_context_lens_apply_subcompact": {

@@ -326,8 +326,8 @@
         "receipt_count": 1,
         "event_types": [],
         "context_revision_before": 24,
-        "context_revision_after": 25,
-        "compaction_history_ref": "context:compaction:history:degraded:25"
+        "context_revision_after": 24,
+        "compaction_history_ref": "context:compaction:history:degraded:24"
       }
     },
     {
@@ -363,7 +363,7 @@
       }
     },
     {
-      "name": "pm7_context_compaction_result_receipt_without_event",
+      "name": "pm7_context_compaction_committed_completion_event",
       "definition": "pm7_context_compaction_trace",
       "value": {
         "schema_id": "pm.pm7.context_compaction_trace.v1",
@@ -372,7 +372,9 @@
         "outcome": "completed",
         "command_result_count": 1,
         "receipt_count": 1,
-        "event_types": [],
+        "event_types": [
+          "context.compaction.completed"
+        ],
         "context_revision_before": 17,
         "context_revision_after": 18,
         "compaction_history_ref": "context:compaction:history:18"
@@ -1414,11 +1416,55 @@
       }
     },
     {
-      "name": "pm7_context_compaction_cannot_fabricate_event",
-      "base_valid": "pm7_context_compaction_result_receipt_without_event",
+      "name": "pm7_context_compaction_completed_requires_event",
+      "base_valid": "pm7_context_compaction_committed_completion_event",
+      "patch": {
+        "event_types": []
+      }
+    },
+    {
+      "name": "pm7_context_compaction_completed_cannot_duplicate_event",
+      "base_valid": "pm7_context_compaction_committed_completion_event",
+      "patch": {
+        "event_types": [
+          "context.compaction.completed",
+          "context.compaction.completed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_context_compaction_failed_cannot_emit_completion",
+      "base_valid": "pm7_context_compaction_failed_result_receipt_without_event",
       "patch": {
         "event_types": [
           "context.compaction.completed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_context_compaction_started_cannot_emit_completion",
+      "base_valid": "pm7_context_compaction_started_result_receipt_without_event",
+      "patch": {
+        "event_types": [
+          "context.compaction.completed"
+        ]
+      }
+    },
+    {
+      "name": "pm7_context_compaction_completed_cannot_emit_started",
+      "base_valid": "pm7_context_compaction_committed_completion_event",
+      "patch": {
+        "event_types": [
+          "context.compaction.started"
+        ]
+      }
+    },
+    {
+      "name": "pm7_context_compaction_completed_cannot_emit_failed",
+      "base_valid": "pm7_context_compaction_committed_completion_event",
+      "patch": {
+        "event_types": [
+          "context.compaction.failed"
         ]
       }
     },

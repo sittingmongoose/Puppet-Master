@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1237-L1542
+Source lines: L1237-L1544
 
-Source SHA256: `75f54e6757530820630eba4ea313696c19e37fca42e4ea214ae73e98c722ebec`
+Source SHA256: `8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02`
 
 ---
 
@@ -165,8 +165,9 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Compaction acceptance tests cover the chat context circle hover display for Usage, Tokens, Cost, and More Details;
   click reveal/selection of Compact Now before dispatch to `cmd.chat.compact_context`; `/compact` parity;
-  result/receipt-backed started, completed, failed, and visible failure/degraded state with no unregistered
-  context.compaction.* EventRecord; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
+  result/receipt-backed started, completed, failed, and visible failure/degraded state; exactly one
+  context.compaction.completed after successful committed compaction under ACD-461 / SP-259 and no compaction
+  EventRecord for started, failed, soft-defer, no-op, or any other noncommitted outcome; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
   retry_scheduled, completed, and failed; Prompt Pipeline
   compaction_immune handling; storage lineage proving manual Compact Now alone does not create new cache lineage; and
   stale Plans/newfeatures.md references remaining source-lineage only.
@@ -179,6 +180,7 @@ acceptance_criteria:
   - Tests prove context-circle click does not dispatch until the user chooses Compact Now.
   - Tests cover already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed result states.
   - Failure/degraded compaction produces a visible result/receipt-backed user-facing state and an empty event list.
+  - Successful committed compaction produces exactly one context.compaction.completed; missing, duplicate, premature, started, or failed event emission is rejected by the completion owner contract.
   - Manual Compact Now does not create a new cache lineage unless logical run lineage changes.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -225,7 +227,7 @@ negative_constraints:
   - Do not call compaction implementation-ready without testing the chat context circle Compact Now click.
   - Do not dispatch compaction from hover alone.
   - Do not revive Plans/newfeatures.md as a live owner for compaction.
-  - Do not treat the preserved context.compaction.started, context.compaction.completed, or context.compaction.failed tokens as registered Event Authority families.
+  - Do not treat context.compaction.started or context.compaction.failed as registered Event Authority families; only context.compaction.completed is admitted, and only successful committed compaction can produce it.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/assistant-chat-design.md

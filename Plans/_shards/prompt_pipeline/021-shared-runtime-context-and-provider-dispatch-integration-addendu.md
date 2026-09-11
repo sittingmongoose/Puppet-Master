@@ -4,7 +4,7 @@ Source: `Plans/Prompt_Pipeline.md`
 
 Source lines: L5113-L5677
 
-Source SHA256: `cbda2ffd980a861f82ffab67431b1190940e9227a2d3302a8337a726502f14b7`
+Source SHA256: `ec60ef5677e8a98ce3fb72a0631af134c1128a251bd1a1719d8a8d49c147bf8e`
 
 ---
 
@@ -155,9 +155,9 @@ The transaction contract is:
 3. Preserve system/runtime kernel, Persona behavior obligations, selected-schema identities, unresolved instructions/corrections, active Plan/Goal evidence refs, and exact skill/instruction provenance or deterministic reload handles.
 4. Replace eligible large historical bodies with bounded summaries plus immutable artifact refs. A `ghost-skill` or instruction-survival marker must preserve exact source/version, obligation IDs, and reload ref; loss or weakening of the marker fails the candidate.
 5. Validate role/message boundaries, causal tool/result lineage, branch ancestry, actionable-user tail, retained exact IDs, semantic closure, expected reclaimed size, and provider compatibility.
-6. Commit only when `input_context_revision`, branch/head, `ContextEpoch`, and transaction lease/fence remain current and reclaimed context meets `min_reclaim_tokens`. The artifact, `CompactionReceipt`, new head pointer, and commit marker become visible atomically.
+6. Commit only when `input_context_revision`, branch/head, `ContextEpoch`, and transaction lease/fence remain current and reclaimed context meets `min_reclaim_tokens`. The artifact, `CompactionReceipt`, new head pointer, and commit marker become visible atomically through the single Storage-owned logical commit decision in SP-259: the barrier `context.compaction.completed` EventRecord commits a durably prepared immutable bundle. Readers never infer cross-file/redb atomicity or publish prepared objects before that marker.
 7. A stale or late helper result is discarded. Lock contention or an unavailable lease is `soft_defer` and consumes neither the ordinary failure budget nor a compaction attempt. No-gain is a typed no-op receipt, not success.
-8. A failed/interrupted transaction leaves the prior context head authoritative. Canonical transcript, settled Usage, branch ancestry, Goal/Plan state, and tool evidence are never rewritten by compaction.
+8. A proven precommit failure/interruption leaves the prior context head authoritative. After a durable marker, interruption or lost acknowledgement recovers the committed bundle, without a second helper run or event; uncertain authority fences continuation until Storage reconciliation. Missing acknowledgement alone is not proof of noncommit. Canonical transcript, settled Usage, branch ancestry, Goal/Plan state, and tool evidence are never rewritten by compaction.
 
 Optional provider-aware micro-compaction may absorb eligible old assistant/tool exchanges only when the effective provider/model/cache economics and configured gain threshold justify the cache break. It never compacts user messages, never crosses protected head/tail fences, records a rolling cursor and cache impact, skips a repeatedly failing exchange after a bounded configured count, and cannot become the universal default.
 
@@ -364,7 +364,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Compaction uses finite input/output/time/gain bounds, deterministic head plus actionable-user-tail retention, redaction at every boundary, skill/instruction survival markers, immutable artifact refs, and a revision/epoch/lease commit fence; stale, interrupted, no-gain, and lock-contention outcomes cannot replace the current context head.
+  Compaction uses finite input/output/time/gain bounds, deterministic head plus actionable-user-tail retention, redaction at every boundary, skill/instruction survival markers, immutable artifact refs, and a revision/epoch/lease commit fence; stale, uncommitted interrupted, no-gain, and lock-contention outcomes cannot replace the current context head; postcommit interruption recovers the committed bundle under SP-259.
 gui_related: false
 gui_classification_reason: This unit defines backend compaction policy, validation, transaction predicates, and recovery semantics.
 depends_on: [PP-016, PP-017, PP-020, PP-024, PP-025, PP-075, PP-077]
@@ -373,7 +373,7 @@ acceptance_criteria:
   - Every compaction profile has finite summarizer input/output, actionable-tail, gain, progress-timeout, and absolute-timeout bounds.
   - Commit requires current revision, branch/head, ContextEpoch, lease/fence, valid markers, semantic closure, and minimum gain.
   - Late results discard, lock contention soft-defers, and no-gain emits a no-op receipt.
-  - Failed/interrupted compaction leaves canonical transcript, prior head, Usage, ancestry, Goal, Plan, and evidence intact.
+  - Precommit failure/interruption preserves the prior head; postcommit interruption recovers the committed bundle under SP-259 and never duplicates completion or rewinds a later head. Canonical transcript, Usage, ancestry, Goal, Plan, and evidence remain intact.
 validation_surfaces:
   - stale-result, soft-defer, no-gain, marker-loss, redaction, timeout, and crash-recovery fixtures
   - provider-aware micro-compaction/cache-break fixtures

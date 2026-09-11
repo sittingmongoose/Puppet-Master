@@ -1,0 +1,111 @@
+{
+  "schema_id": "pm.assurance.compaction_check_summary.v1",
+  "aggregate_original_status": "fail",
+  "aggregate_original_failed_checks": 13,
+  "latest_per_check_status": {
+    "check_project_artifact_requirements": "pass",
+    "check_shards": "pass",
+    "json_syntax": "fail",
+    "lint_banned_phrases": "pass",
+    "lint_contractrefs": "fail",
+    "lint_path_refs": "fail",
+    "validate_audit_closure": "fail",
+    "validate_audit_status_index": "fail",
+    "validate_auto_decisions": "pass",
+    "validate_case_l_non_event_materialization": "pass",
+    "validate_evidence": "fail",
+    "validate_filesafe_security_policy": "pass",
+    "validate_forge_backup_acceptance": "pass",
+    "validate_goal_runtime_event_fixtures": "pass",
+    "validate_gui_asset_policy": "pass",
+    "validate_implementation_readiness": "fail",
+    "validate_new_contracts": "pass",
+    "validate_plan_graph": "fail",
+    "validate_plan_migration": "fail",
+    "validate_plans_to_code_handoff_schema": "pass",
+    "validate_pm7_gui_fixtures": "fail",
+    "validate_prd_planning_runtime_contracts": "pass",
+    "validate_project_output_fixtures": "pass",
+    "validate_runtime_artifact_schemas": "pass",
+    "validate_server_command_gap": "pass",
+    "validate_touch_closure": "pass",
+    "validate_usage_contract_drift": "pass",
+    "validate_usage_gui_fixtures": "pass",
+    "validate_web_capability_contracts": "pass",
+    "validate_wiring_matrix": "pass",
+    "validate_working_notebook_contracts": "pass",
+    "verify_spec_lock": "fail"
+  },
+  "latest_failed_check_count": 11,
+  "latest_check_status_is_supplemental_not_a_new_aggregate_pass": true,
+  "patch_defect_fixed": "Compaction production wiring now has the required explicit event_test evidence requirement; unchanged wiring validator passes.",
+  "environment_and_retained_input_limits": [
+    "Original json-syntax run encountered a temporary tracked-fixture link escaping the worktree; restored the exact HEAD regular file. Final global json-syntax reaches a failure for the absent retained raw-capture manifest schema. That schema/manifest is not tracked at HEAD; its old 16-raw-capture census also assumes raw evidence belongs to the tracked verifier file set. No raw captures were imported or validator changed. Direct parsing of all changed JSON/JSONL passes.",
+    "Concepts materialization removed checkout-only path/Touch Closure failures. Touch Closure passes. Remaining path findings cite three absent old test/scratch implementation surfaces, none introduced by this patch.",
+    "Existing ignored PM7/Usage fixtures were source-hashed retained inputs, not new native completion evidence. Their old no-event assumptions remain a separate historical input limitation."
+  ],
+  "governance_limits": [
+    "Spec Lock, evidence/plan-graph hashes, migration snapshots, readiness/currentness, audit closure/status and one missing historical ContractRef remain unresolved; this task does not restamp or reseal them.",
+    "The current 40-family registry exceeds the approved 39-family PNC baseline. Approval DL-040 grants this contract binding/retention, not a fresh PNC baseline or seal.",
+    "Independent validator is byte-identical and fails; PM7 validator is byte-identical and rejects the new family and renamed old fixture expectations."
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/run-gates.json",
+      "sha256": "4478cb9fc598bafef91efaba211bb061ce1f3c8bd013504baf2c4c7b2fffbd5f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/json-syntax-final.json",
+      "sha256": "6e358d482e9f28f15430da44935cd6d773828f25fc25a13d9a9909f2b7f2d52b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/wiring-validation-final.json",
+      "sha256": "30d3b23be220caa94948227330b3123086ededea0ee04b916279c37382bf363c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/path-refs-final.json",
+      "sha256": "4a4a65ead5e881677e8ac6be359b1218b83527fb246b8f41ec46eb56319741f0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/touch-closure-final.json",
+      "sha256": "ea70979f175c3822d4a187a028d1432b1a7e384b8c9504ce1f593e6a13b243e4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/changed-json-parse.json",
+      "sha256": "84065f765f4c9612a065174c27c9a5d5594737f5afbac60454be8efdcb46f6cf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/shard-generation.json",
+      "sha256": "ed317c08113deda3e2204b2588f41b593217f5227b3b8d304d4dd5ac05170e7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/index-generation.json",
+      "sha256": "bf94bbdb74fa9bd7107e2cfa30268de28dab9151291fc2b47238eda75c7c6e26"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/shard-check-final.json",
+      "sha256": "f74a71ad042393085cbb0f6ffff9728d09edd88b9e398d7d40e3f5f64c2257f3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/rebase-currentness.json",
+      "sha256": "bc1e49da055b1d838e8aa8412acf32c846cc36831113e2381d910152240caad8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/rebase-shard-generation.json",
+      "sha256": "ed317c08113deda3e2204b2588f41b593217f5227b3b8d304d4dd5ac05170e7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-06/contract/rebase-index-generation.json",
+      "sha256": "78469a150221649900565dc15911cc80b3d473dab5df3ee87f4e649b67e40a54"
+    }
+  ],
+  "rebase": {
+    "onto": "396317f321e6eaf79a299efc4a06f2c35fc86b57",
+    "upstream_owner": "Plans/Jujutsu_Integration.md",
+    "compaction_cited_sources_changed": false,
+    "generated_conflicts_resolved_by_regeneration": true,
+    "plan_unit_count": 6439,
+    "acceptance_unit_count": 24536,
+    "qualification": "The 32-check run and focused reruns precede the unrelated Jujutsu landing. Their failed count is a dated observation, not a new aggregate certification of this rebased tree. All compaction cited bytes are identical; final regeneration/shard validation is repeated on this base."
+  }
+}

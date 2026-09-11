@@ -1,0 +1,526 @@
+{
+  "schema_id": "pm.context_compaction_completion.contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "authority_refs": [
+    "Plans/assistant-chat-design.md#ACD-461",
+    "Plans/storage-plan.md#SP-259",
+    "Plans/Shared_Integration_Runtime.md#SIR-038"
+  ],
+  "proof_boundary": "Static payload/envelope examples and required native acceptance oracles only. Declarative oracle rows are not executed runtime tests and grant no Event Authority, PNC-019 or seal clearance.",
+  "storage_instance_id": "store_fixture_alpha",
+  "valid": [
+    {
+      "name": "manual_committed_payload",
+      "payload": {
+        "schema_id": "pm.context_compaction_completed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "thread_id": "thr_01K00000000000000000000000",
+        "operation_id": "operation_fixture_compact_001",
+        "operation_generation": 7,
+        "compaction_receipt_ref": "compaction_receipt:12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+        "input_context_revision": 17,
+        "output_context_revision": 18,
+        "context_epoch_id": "epoch_fixture_3",
+        "trigger": "manual",
+        "disposition": "committed",
+        "input_tokens": 12000,
+        "output_tokens": 4000,
+        "reclaimed_tokens": 8000,
+        "input_bytes": 48000,
+        "output_bytes": 16000,
+        "committed_at_utc": "2026-09-11T16:00:00.123456Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "name": "automatic_committed_payload",
+      "payload": {
+        "schema_id": "pm.context_compaction_completed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "thread_id": "thr_01K00000000000000000000000",
+        "operation_id": "operation_fixture_compact_001",
+        "operation_generation": 7,
+        "compaction_receipt_ref": "compaction_receipt:12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+        "input_context_revision": 17,
+        "output_context_revision": 18,
+        "context_epoch_id": "epoch_fixture_3",
+        "trigger": "automatic",
+        "disposition": "committed",
+        "input_tokens": 12000,
+        "output_tokens": 4000,
+        "reclaimed_tokens": 8000,
+        "input_bytes": 48000,
+        "output_bytes": 16000,
+        "committed_at_utc": "2026-09-11T16:00:00.123456Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "name": "micro_compaction_committed_payload",
+      "payload": {
+        "schema_id": "pm.context_compaction_completed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project_fixture_alpha",
+        "thread_id": "thr_01K00000000000000000000000",
+        "operation_id": "operation_fixture_compact_001",
+        "operation_generation": 7,
+        "compaction_receipt_ref": "compaction_receipt:12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+        "input_context_revision": 17,
+        "output_context_revision": 18,
+        "context_epoch_id": "epoch_fixture_3",
+        "trigger": "micro_compaction",
+        "disposition": "committed",
+        "input_tokens": 12000,
+        "output_tokens": 4000,
+        "reclaimed_tokens": 8000,
+        "input_bytes": 48000,
+        "output_bytes": 16000,
+        "committed_at_utc": "2026-09-11T16:00:00.123456Z",
+        "redaction_profile": "no_secrets"
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "raw_transcript_forbidden",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "transcript": "fixture private text"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "raw_summary_forbidden",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "summary": "fixture private summary"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "content_hash_field_forbidden",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "summary_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "unknown_version",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "schema_version": "2.0.0"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "missing_receipt",
+      "base_valid": "manual_committed_payload",
+      "patch": {},
+      "remove": [
+        "compaction_receipt_ref"
+      ],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "application_null_project",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "project_id": null
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "empty_project",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "project_id": ""
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "invalid_thread",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "thread_id": "ordinary-arbitrary-thread"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "negative_generation",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "operation_generation": -1
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "unbounded_operation",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "operation_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "secret_shaped_receipt",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "compaction_receipt_ref": "sk-abcdefghijklmno"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "receipt_is_url",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "compaction_receipt_ref": "https://host/private/path"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "receipt_is_local_path",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "compaction_receipt_ref": "/fixture/private/receipt"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "receipt_oversized",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "compaction_receipt_ref": "compaction_receipt:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "timestamp_fraction_unbounded",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "committed_at_utc": "2026-09-11T16:00:00.11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111Z"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "timestamp_offset_not_canonical_utc",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "committed_at_utc": "2026-09-11T16:00:00+00:00"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "timestamp_invalid_calendar",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "committed_at_utc": "2026-02-30T16:00:00Z"
+      },
+      "remove": [],
+      "expected_rejection": "valid_utc_datetime"
+    },
+    {
+      "name": "not_committed",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "disposition": "no_op"
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "zero_gain",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "reclaimed_tokens": 0
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "noninteger_size",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "output_tokens": 1.5
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "unbounded_size",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "input_tokens": 9007199254740992
+      },
+      "remove": [],
+      "expected_rejection": "schema"
+    },
+    {
+      "name": "rewound_revision",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "output_context_revision": 16
+      },
+      "remove": [],
+      "expected_rejection": "revision_must_increase"
+    },
+    {
+      "name": "same_revision",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "output_context_revision": 17
+      },
+      "remove": [],
+      "expected_rejection": "revision_must_increase"
+    },
+    {
+      "name": "gain_equation_mismatch",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "reclaimed_tokens": 7000
+      },
+      "remove": [],
+      "expected_rejection": "gain_equation"
+    },
+    {
+      "name": "no_actual_gain",
+      "base_valid": "manual_committed_payload",
+      "patch": {
+        "output_tokens": 13000
+      },
+      "remove": [],
+      "expected_rejection": "gain_equation"
+    }
+  ],
+  "valid_event": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "evt_compaction_12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+    "event_type": "context.compaction.completed",
+    "project_id": "project_fixture_alpha",
+    "thread_id": "thr_01K00000000000000000000000",
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor:fixture:user",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T16:00:00.123456Z",
+    "observed_at_utc": "2026-09-11T16:00:00.123457Z",
+    "persisted_at_utc": "2026-09-11T16:00:00.123458Z",
+    "sequence_id": 100,
+    "producer_sequence_id": null,
+    "correlation_id": "correlation:fixture:compact",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "compaction:4d82c6fc2e68223f019a2b04bebe9f7b530db80fd2bd853ee861f61ea41e7986",
+    "payload_schema_id": "pm.context_compaction_completed.schema.v1",
+    "payload": {
+      "schema_id": "pm.context_compaction_completed.schema.v1",
+      "schema_version": "1.0.0",
+      "project_id": "project_fixture_alpha",
+      "thread_id": "thr_01K00000000000000000000000",
+      "operation_id": "operation_fixture_compact_001",
+      "operation_generation": 7,
+      "compaction_receipt_ref": "compaction_receipt:12952f348e21394a18d51f601fc90390edf579d5e599542d05a5b00774d3c35e",
+      "input_context_revision": 17,
+      "output_context_revision": 18,
+      "context_epoch_id": "epoch_fixture_3",
+      "trigger": "manual",
+      "disposition": "committed",
+      "input_tokens": 12000,
+      "output_tokens": 4000,
+      "reclaimed_tokens": 8000,
+      "input_bytes": 48000,
+      "output_bytes": 16000,
+      "committed_at_utc": "2026-09-11T16:00:00.123456Z",
+      "redaction_profile": "no_secrets"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null,
+      "compatibility_event_type": null
+    }
+  },
+  "invalid_events": [
+    {
+      "name": "cross_project_envelope",
+      "patch": {
+        "project_id": "project_fixture_beta"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "name": "cross_thread_envelope",
+      "patch": {
+        "thread_id": "thr_01K00000000000000000000001"
+      },
+      "expected_rejection": "payload_envelope_identity"
+    },
+    {
+      "name": "wrong_scope",
+      "patch": {
+        "scope_kind": "application",
+        "project_id": null
+      },
+      "expected_rejection": "project_only"
+    },
+    {
+      "name": "external_payload_forbidden",
+      "patch": {
+        "payload_ref": "artifact:fixture:content"
+      },
+      "expected_rejection": "inline_only"
+    },
+    {
+      "name": "wrong_event_type",
+      "patch": {
+        "event_type": "context.compaction.failed"
+      },
+      "expected_rejection": "family_identity"
+    },
+    {
+      "name": "wrong_payload_schema",
+      "patch": {
+        "payload_schema_id": "pm.fixture.other"
+      },
+      "expected_rejection": "family_identity"
+    },
+    {
+      "name": "wrong_replay_policy",
+      "patch": {
+        "replay_policy": "append_once"
+      },
+      "expected_rejection": "replay_policy"
+    },
+    {
+      "name": "timestamp_mismatch",
+      "patch": {
+        "occurred_at_utc": "2026-09-11T16:00:01Z"
+      },
+      "expected_rejection": "commit_time_equality"
+    },
+    {
+      "name": "wrong_event_id",
+      "patch": {
+        "event_id": "evt_compaction_0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_rejection": "event_identity"
+    },
+    {
+      "name": "wrong_idempotency",
+      "patch": {
+        "idempotency_key": "compaction:0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_rejection": "idempotency_identity"
+    }
+  ],
+  "required_native_oracles": [
+    {
+      "oracle_id": "COMPACT-COMMIT-01",
+      "given": "current fence, validated useful candidate, durable prepared bundle, successful barrier",
+      "required_result": "one completion; bundle visible together; old transcript unchanged",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-RETRY-01",
+      "given": "lost append acknowledgement, same logical operation",
+      "required_result": "reconcile adopted/committed bytes; original result; no helper rerun or duplicate event",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-PRECOMMIT-01",
+      "given": "helper failure, stale candidate, cancellation, no gain, soft-defer or append/dedupe outage",
+      "required_result": "no completion, no active-head change; visible typed existing outcome",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-IDENTITY-01",
+      "given": "wrong project/thread/receipt/operation or stale topology/lease/generation",
+      "required_result": "reject before append; no head or checkpoint advance",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-CUSTODY-01",
+      "given": "raw content/credential in any payload/envelope/ref or receipt points to another operation",
+      "required_result": "reject before durable append; no content-bearing audit record",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-CRASH-01",
+      "given": "crash before marker, after segment sync, after manifest barrier, or before redb projection",
+      "required_result": "reconcile verified marker authority; never partial publication, speculative retry or rollback of a durable commit",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-BUNDLE-01",
+      "given": "required current-head bundle corrupt or missing",
+      "required_result": "disclose and fence mutation; no invented summary or silent prior-head fallback",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-HISTORICAL-01",
+      "given": "legitimately expired superseded receipt; newer head valid",
+      "required_result": "typed unavailable audit detail; preserve newer head and continuation",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-REPLAY-01",
+      "given": "live/replay overlap and concurrent transcript/tool reducer",
+      "required_result": "one activity ref; serialize/CAS shared row; atomic effect/checkpoint; full-detail barrier before whole-row publication",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-COVERAGE-01",
+      "given": "unknown frame, gap, stale survivor proof, epoch mismatch, overflow or invalid snapshot",
+      "required_result": "no unsafe checkpoint/current-state advance; typed resnapshot/degraded path",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-DELETE-01",
+      "given": "logical delete/purge races commit, replay or restored snapshot",
+      "required_result": "delete fence; no normal search/detail visibility, thread/head/content reconstruction or permanent content retention",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-SEARCH-01",
+      "given": "successful compaction with retained transcript followed by agent history query",
+      "required_result": "retained transcript remains searchable through existing authority; no completion subscription required",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-WITHDRAW-01",
+      "given": "otherwise valid future payload version or governed family withdrawal",
+      "required_result": "preserve audit bytes; stop incompatible read/write/advance; require compatible owner migration",
+      "execution_status": "UNPROVEN"
+    },
+    {
+      "oracle_id": "COMPACT-RETENTION-01",
+      "given": "audit aging, thread deletion or pressure; detail window eviction",
+      "required_result": "event retained indefinitely; derived ref may evict/rebuild; no audit TTL or silent eviction",
+      "execution_status": "UNPROVEN"
+    }
+  ]
+}

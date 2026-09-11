@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L1252-L6888
 
-Source SHA256: `46e57138eeec16db54907afcf615a2a2512fa935f6d8a3e47e3be44519ff23c1`
+Source SHA256: `05fc873e4f374c8af7ecb6edc20e87d03f77b4817e04e117c409d494db3607cc`
 
 ---
 
@@ -3303,7 +3303,7 @@ plan_unit_id: UCC-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, project started/completed/failed and visible failure/degraded state from the command result and receipt without emitting unregistered context.compaction.* EventRecords, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
+canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, project started/completed/failed and visible failure/degraded state from the command result and receipt, consume exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259, and emit no compaction EventRecord for started, failed, soft-defer, no-op, or other noncommitted outcomes, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3354,13 +3354,13 @@ negative_constraints:
 - Hover-summary disclosure is passive UI and does not require its own stable command ID.
 - Compact Now must not dispatch from hover alone; it requires explicit click or command choice.
 - cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded and must not remain canonical IDs.
-- The preserved context.compaction.started, context.compaction.completed, and context.compaction.failed tokens are historical source lineage, not registered Event Authority families.
+- The preserved context.compaction.started and context.compaction.failed tokens remain historical source lineage, not registered Event Authority families. Only context.compaction.completed is admitted through the owner completion contract; menu disclosure, dispatch acceptance, a working animation, or a noncommitted outcome cannot emit it.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
 compatibility_only_notes:
 - Legacy callers that cite open/focus thread usage normalize to route/open Usage context and are not pure shell/layout toggles.
 stale_retired_dispositions:
-- The former instruction to emit context.compaction.started, context.compaction.completed, or context.compaction.failed is retired; current wiring projects command result, receipt, and compaction history with no context.compaction.* EventRecord.
+- The former blanket instruction to emit started/completed/failed lifecycle events remains retired. Current wiring preserves context.compaction.started and context.compaction.failed as non-emitting historical spellings and projects result, receipt, and compaction history; ACD-461 / SP-259 separately authorizes exactly one context.compaction.completed after successful committed compaction.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

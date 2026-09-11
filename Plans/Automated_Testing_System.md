@@ -1391,8 +1391,9 @@ owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
   Compaction acceptance tests cover the chat context circle hover display for Usage, Tokens, Cost, and More Details;
   click reveal/selection of Compact Now before dispatch to `cmd.chat.compact_context`; `/compact` parity;
-  result/receipt-backed started, completed, failed, and visible failure/degraded state with no unregistered
-  context.compaction.* EventRecord; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
+  result/receipt-backed started, completed, failed, and visible failure/degraded state; exactly one
+  context.compaction.completed after successful committed compaction under ACD-461 / SP-259 and no compaction
+  EventRecord for started, failed, soft-defer, no-op, or any other noncommitted outcome; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,
   retry_scheduled, completed, and failed; Prompt Pipeline
   compaction_immune handling; storage lineage proving manual Compact Now alone does not create new cache lineage; and
   stale Plans/newfeatures.md references remaining source-lineage only.
@@ -1405,6 +1406,7 @@ acceptance_criteria:
   - Tests prove context-circle click does not dispatch until the user chooses Compact Now.
   - Tests cover already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed result states.
   - Failure/degraded compaction produces a visible result/receipt-backed user-facing state and an empty event list.
+  - Successful committed compaction produces exactly one context.compaction.completed; missing, duplicate, premature, started, or failed event emission is rejected by the completion owner contract.
   - Manual Compact Now does not create a new cache lineage unless logical run lineage changes.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -1451,7 +1453,7 @@ negative_constraints:
   - Do not call compaction implementation-ready without testing the chat context circle Compact Now click.
   - Do not dispatch compaction from hover alone.
   - Do not revive Plans/newfeatures.md as a live owner for compaction.
-  - Do not treat the preserved context.compaction.started, context.compaction.completed, or context.compaction.failed tokens as registered Event Authority families.
+  - Do not treat context.compaction.started or context.compaction.failed as registered Event Authority families; only context.compaction.completed is admitted, and only successful committed compaction can produce it.
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/assistant-chat-design.md
@@ -3480,7 +3482,7 @@ depends_on: [F3-513, F3-515, F3-516, F3-517]
 unblocks: [ATS-038, ATS-039, ATS-040]
 acceptance_criteria:
   - "The shared fixture root contains exactly the seven named fixture families and each names owner PlanUnits, surfaces, must assertions, and must-not assertions."
-  - "Assistant/context fixtures statically encode one node/store identity, Home/global re-seating, active thread and transcript, draft, attachments, activity, detail-drawer identity/tab/scroll, focus continuity, failed/stale re-seat rollback, context metrics, Compact Now, More Details, and zero context.compaction.* events; the open-detail-drawer Compact Now fixture requires one existing cmd.chat.compact_context result and one receipt, zero domain events, a coherent ring/detail revision update, and preservation of drawer identity, selected tab, scroll position, and focus."
+  - "Assistant/context fixtures statically encode one node/store identity, Home/global re-seating, active thread and transcript, draft, attachments, activity, detail-drawer identity/tab/scroll, focus continuity, failed/stale re-seat rollback, context metrics, Compact Now, More Details, and local noncommitted compaction feedback without events; those GUI fixtures alone do not prove a committed completion. The open-detail-drawer Compact Now fixture requires one existing cmd.chat.compact_context result and one receipt, a coherent ring/detail revision update, and preservation of drawer identity, selected tab, scroll position, and focus."
   - "Home transaction fixtures statically encode Dashboard wrapper/host ownership rather than outer-grid mutation ownership, preview-spy emptiness, stable before/after insertion intent, measured placeholder footprint, pointer/keyboard move parity, frozen resize peers, live reorder displacement, last-painted-intent changed-only one-command commit without pointer-up retarget, Escape/pointercancel/lostpointercapture/blur/invalid/no-change rollback, settled persistence, and cleanup."
   - "Usage interaction and motion fixtures statically encode a real target footprint, live deterministic displacement of only obstructed peers during held pointer resize, stable peer node/paint/DOM-order/entrance state, preview-spy emptiness, exact preview-to-accepted-settlement topology parity, and exact rollback after cancellation, rejection, or adapter failure; Dashboard resize remains frozen-peer."
   - "Status and theme fixtures statically encode full-width non-overlapping status with no bell plus stable functional inventory in all eight themes and supported desktop widths."
@@ -3652,11 +3654,13 @@ canonical_text: >-
   command result and exactly one dispatch receipt, carries interaction/command/correlation identities, prior/new layout
   revisions, mutation and final-target data, the required nullable semantic-size preset, and no preview state. Context
   compaction is represented by cmd.chat.compact_context result, receipt, revision, and compaction-history
-  projection with an empty event list. A changed owner-accepted settled commit has exactly one dispatch receipt
+  projection. A completed trace represents successful committed compaction and requires exactly one
+  context.compaction.completed under ACD-461 / SP-259; all other outcomes require an empty event list. A changed owner-accepted settled commit has exactly one dispatch receipt
   and may emit only `workspace.layout_changed`; post-dispatch owner rejection or adapter failure retains exactly
   one command result and receipt, rolls back, records zero successful owner-store writes, and emits no settled event.
-  Preview, cancellation, no-change, and local Assistant compaction are event-silent. The event-family registry contains exactly one workspace.layout_changed family and no
-  context.compaction.started, context.compaction.completed, or context.compaction.failed family.
+  Preview, cancellation, no-change, and noncommitted Assistant compaction are event-silent. The event-family registry
+  contains exactly one workspace.layout_changed family and exactly one context.compaction.completed family;
+  context.compaction.started and context.compaction.failed remain unregistered.
 gui_related: true
 gui_classification_reason: This unit validates the command/event/receipt traces that drive visible PM7 settlement and context feedback.
 depends_on: [ATS-037, F3-515, F3-516, CS-068, UCC-147, WM-045]
@@ -3667,7 +3671,7 @@ acceptance_criteria:
   - "A changed settled commit fixture requires one existing command, one owner result, exactly one dispatch receipt, exactly one settled write, no duplicate dispatch, and an event list containing either the single applicable workspace.layout_changed event or no event when that family is not applicable; a post-dispatch owner-rejected fixture instead requires one existing command, one rejected result and receipt, dispatch_accepted=false, zero adapter attempts, zero successful writes, authoritative rollback, complete cleanup, and no event, while a persistence-adapter-failed fixture requires one existing command, one failed result and receipt, dispatch_accepted=true, one adapter attempt, zero successful writes, authoritative rollback, complete cleanup, and no event."
   - "workspace.layout_changed is the only allowed event type for a changed settled commit; valid fixtures satisfy schema_version 1.1.0, settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted command_result_ref, exactly one receipt_ref, prior/new revisions, mutation, final source/target/slot and settled-layout data, and required nullable semantic_size_preset_id."
   - "The currently supplied invalid workspace-event fixtures cover exactly 13 cases: preview_state_included=true; settled_only=false; persisted=false; missing command_result_ref; empty receipt_refs; missing project_id; missing new_layout_revision; an out-of-set mutation_kind; an out-of-set target_host; an out-of-set semantic_size_preset_id; a new_layout_revision that does not advance; a non-workspace command family; and more than one receipt_ref."
-  - "Preview, cancellation, and no-change traces contain no event; Context compaction requires cmd.chat.compact_context result and receipt projection but remains event-silent with no context.compaction.* type or new event-family registration."
+  - "Preview, cancellation, and no-change traces contain no event. Context compaction requires cmd.chat.compact_context result and receipt projection; a completed trace requires exactly one context.compaction.completed after successful commit, and every other outcome requires an empty event list. Fixtures reject missing or duplicate completion, a completion event on a failed or started outcome, and the historical started/failed spellings."
   - "Fixture validation establishes static representation only, so fresh browser execution, raw receipts, and independent review remain required for runtime behavior; the event registry, shared runtime command validator, PM7 GUI fixture validator, JSON syntax gate, and PlanUnit validation must also pass together."
   - "The shared runtime command validator resolves the reviewed Shared Integration Runtime expansion schema only from its exact repository path and canonical schema ID; an unknown external reference or any attempted network fallback fails closed, so PM7 fixture validation remains deterministic and offline."
 validation_surfaces:
@@ -3697,7 +3701,7 @@ source_lineage:
 preserved_exact_tokens: [pm.event.workspace_layout_changed.v1, schema_version, 1.1.0, settled_only, preview_state_included, persisted, command_result_ref, receipt_refs, semantic_size_preset_id, result_outcome, dispatch_accepted, persistence_write_attempt_count, persistence_write_count, owner_rejected, persistence_adapter_failed, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
   - "Do not add a persisted event for pointer-preview or local working-animation frames."
-  - "Do not register Context compaction lifecycle events when the command result and receipt already own the durable outcome."
+  - "Do not register context.compaction.started or context.compaction.failed, or emit completion for a local working animation, failed, soft-deferred, no-op, or other noncommitted outcome. Command results and receipts remain required alongside the committed completion event."
   - "Do not expand the canonical shared-runtime command census for PM7 trace-only fixture definitions."
 owner_hints: [Plans/Automated_Testing_System.md, Plans/Commands_System.md, Plans/event_family_registry.json]
 ```

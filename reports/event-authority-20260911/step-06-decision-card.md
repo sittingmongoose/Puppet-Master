@@ -1,6 +1,6 @@
 # Decision EA-S6-001 — Compaction completion history and retention
 
-Status: approved by Jared on 2026-09-11 at 15:26:49.325818 UTC; owner contract application remains outstanding. Owners: Assistant Chat and Storage, with Shared Integration Runtime for replay.
+Status: approved by Jared on 2026-09-11 at 15:26:49.325818 UTC; applied by the owner contract and one-family admission recorded in [Step 6 registration application](step-06-registration-application.json). Owners: Assistant Chat and Storage, with Shared Integration Runtime for replay.
 
 **Question:** Should the owners connect saved compaction completions to the existing focused-thread detail and replay path, and keep content-free completion receipts as permanent audit records?
 

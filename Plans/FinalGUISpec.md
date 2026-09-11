@@ -12384,10 +12384,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
-- "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.* EventRecord is emitted."
+- "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "The former context.compaction.failed event implication is retired because no context.compaction.* family is registered in Event Authority."
+- "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -34716,8 +34716,10 @@ canonical_text: >-
   same identity in the right-side global host without remounting or losing state, and failed re-seating restores
   the prior seat. The context ring exposes current-window use, effective window and loaded tokens, cache hit,
   and source composition. Its compact menu offers Compact Now and More Details. Compact Now dispatches
-  cmd.chat.compact_context and projects the existing result, receipt, and compaction history; it does not invent
-  context.compaction.started, context.compaction.completed, or context.compaction.failed EventRecord families.
+  cmd.chat.compact_context and projects the existing result, receipt, and compaction history. Successful committed
+  compaction emits exactly one context.compaction.completed under ACD-461 / SP-259; started, failed, soft-defer,
+  no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
+  context.compaction.failed family is introduced.
   The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
@@ -34728,7 +34730,7 @@ acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
   - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
   - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
-  - "Compact Now uses cmd.chat.compact_context result and receipt projection with zero registered context.compaction.* event families; More Details reuses the existing Context Detail Pane commands."
+  - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
