@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4421-L4670
+Source lines: L4423-L4672
 
-Source SHA256: `b36a08a7a664cb36bb9af94bb1605ac4be2bf71e904509ec739453d0c6c3ae67`
+Source SHA256: `c8fd296562b31353d23f956d1a866f90a81e9120958defa6a86259dbf384826e`
 
 ---
 
@@ -238,7 +238,7 @@ depends_on: [WM-046, DR-040, DR-041, BSD-020, ACD-460, ACD-462, F-082]
 unblocks: []
 acceptance_criteria:
   - The exact thirty-eight listed commands each have one partial Touch Closure row and the listed owner/profile; unrelated catalog or source tokens cannot expand that set.
-  - This repair moves the retained Touch inventory from 606 rows/93 profiles to 644 rows/131 profiles, preserves its 58 exclusions and 64 alias bindings, and removes eleven forbidden peer production rows from the 1154-row predecessor. These scoped counts are not native or semantic-review verdicts.
+  - The September 10 repair moves the retained Touch inventory from 606 rows/93 profiles to 644 rows/131 profiles, preserves its then-current 58 exclusions and 64 alias bindings, and removes eleven forbidden peer production rows from the 1154-row predecessor. The September 11 unarchive correction keeps 644 rows/131 profiles and 64 alias bindings, removes one exclusion (57 remain), and adds one owner command row (1144 production entries); it does not restore a forbidden peer or promote native closure. These scoped counts are not native or semantic-review verdicts.
   - The eleven excluded production spellings are cmd.actions.pin/unpin, seven cmd.github_actions compatibility spellings, retired cmd.chat.delete_message, and file-only cmd.chat.add_file_reference. The last retains its catalog signature and normalizes to cmd.chat.attachment.add before every gate; preserve its source identity and reject folder input without a peer handler.
   - Existing Browser and BSD mode rows remain single; BSD mode request/result/error refs resolve to the existing shared-runtime schemas without a parallel contract family.
   - Each new profile names its actual sole future handler and actual production placements plus intended family consumers; no native wiring status is inferred.
