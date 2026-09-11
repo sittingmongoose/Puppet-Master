@@ -70,6 +70,2616 @@
   ],
   "profiles": [
     {
+      "profile_id": "TCP-GAP-001",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDPolicyUpdateRequest -> BSDPolicyUpdateResult; expected policy revision and effective changed fields; no tool-profile widening. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::configure is the sole future UICommand target for cmd.bsd.configure; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDPolicyUpdateRequest -> BSDPolicyUpdateResult; expected policy revision and effective changed fields; no tool-profile widening.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-002",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDWorkflowBindingRequest -> BSDWorkflowBindingResult; exact workflow and frozen stage bindings; do not rewrite historical reviews. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::workflow_configure is the sole future UICommand target for cmd.bsd.workflow.configure; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > bsd.workflow_config",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDWorkflowBindingRequest -> BSDWorkflowBindingResult; exact workflow and frozen stage bindings; do not rewrite historical reviews.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-003",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDAssignmentControlRequest -> BSDAssignmentControlResult; pause only this assignment, retain held findings and leave the primary run unchanged. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::assignment_pause is the sole future UICommand target for cmd.bsd.assignment.pause; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDAssignmentControlRequest -> BSDAssignmentControlResult; pause only this assignment, retain held findings and leave the primary run unchanged.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-004",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDAssignmentControlRequest -> BSDAssignmentControlResult; resume a paused assignment at its current cursor, never resume a manually stopped assignment or the primary run. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::assignment_resume is the sole future UICommand target for cmd.bsd.assignment.resume; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDAssignmentControlRequest -> BSDAssignmentControlResult; resume a paused assignment at its current cursor, never resume a manually stopped assignment or the primary run.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-005",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDAssignmentRetryRequest -> BSDAssignmentRetryResult; one new cycle at the current epoch, preserving quarantine terminal action and duplicate-batch prevention. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::assignment_retry is the sole future UICommand target for cmd.bsd.assignment.retry; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDAssignmentRetryRequest -> BSDAssignmentRetryResult; one new cycle at the current epoch, preserving quarantine terminal action and duplicate-batch prevention.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-006",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDAssignmentControlRequest -> BSDAssignmentControlResult; terminal assignment stop with attributable held-finding closure; primary run unchanged. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::assignment_stop is the sole future UICommand target for cmd.bsd.assignment.stop; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDAssignmentControlRequest -> BSDAssignmentControlResult; terminal assignment stop with attributable held-finding closure; primary run unchanged.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-007",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDFindingRoute -> RouteResult; exact finding and generation, navigation only; opening cannot deliver, clear, close or reopen the finding. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::finding_open is the sole future UICommand target for cmd.bsd.finding.open; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDFindingRoute -> RouteResult; exact finding and generation, navigation only; opening cannot deliver, clear, close or reopen the finding.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-008",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDUsageRoute -> RouteResult; exact BSD attribution, navigation only and no Usage record created by opening. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::open_usage is the sole future UICommand target for cmd.bsd.open_usage; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDUsageRoute -> RouteResult; exact BSD attribution, navigation only and no Usage record created by opening.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-009",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Back_Seat_Driver.md",
+      "plan_unit": "BSD-020",
+      "dry_contract_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "payload_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "result_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "error_schema_ref": "Plans/Back_Seat_Driver.md#BSD-020",
+      "availability_rule": "BSDTranscriptRoute -> RouteResult; private advisor transcript only, respect retention and redaction, honest unavailable state when retention is off. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Read-only advisor authority; no primary mutation, tools, approval, protected-auth access or quota bypass.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::bsd::open_transcript is the sole future UICommand target for cmd.bsd.open_transcript; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > wand",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): bsd_details, context, planning_wizard, prd_builder, usage, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BSDTranscriptRoute -> RouteResult; private advisor transcript only, respect retention and redaction, honest unavailable state when retention is off.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-020",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-010",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Disclose the existing header mode chooser; no second context pane or implicit shaping effect. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_toggle is the sole future UICommand target for cmd.chat.context_lens.toggle; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Disclose the existing header mode chooser; no second context pane or implicit shaping effect.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-011",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Select mute, focus or subcompact for the exact thread; preserve the existing immediate-versus-preview semantics. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_set_mode is the sole future UICommand target for cmd.chat.context_lens.set_mode; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Select mute, focus or subcompact for the exact thread; preserve the existing immediate-versus-preview semantics.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-012",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Clear transient selection and release applied shaping with attributable disclosed counts; preserve canonical messages. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_turn_off is the sole future UICommand target for cmd.chat.context_lens.turn_off; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Clear transient selection and release applied shaping with attributable disclosed counts; preserve canonical messages.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-013",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Change one exact message selection; Mute/Focus update effective shaping immediately, never canonical history. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_toggle_message_selection is the sole future UICommand target for cmd.chat.context_lens.toggle_message_selection; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Change one exact message selection; Mute/Focus update effective shaping immediately, never canonical history.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-014",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Clear the active selection set without deleting canonical messages or silently changing an unrelated thread. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_clear_selection is the sole future UICommand target for cmd.chat.context_lens.clear_selection; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Clear the active selection set without deleting canonical messages or silently changing an unrelated thread.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-015",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Apply only the explicitly confirmed preview bound to exact thread/project, source identities/revisions/hashes, shaping revision and summary identity; stale previews refuse and duplicates reuse their result. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_apply_subcompact is the sole future UICommand target for cmd.chat.context_lens.apply_subcompact; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Apply only the explicitly confirmed preview bound to exact thread/project, source identities/revisions/hashes, shaping revision and summary identity; stale previews refuse and duplicates reuse their result.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-016",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-460",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-460",
+      "availability_rule": "Rehydrate the selected region from canonical source references; do not recover from a guessed current tab or mutate canonical history. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread/source permission and currentness; reuse Prompt Pipeline shaping and retrieval; no Lens-local history or memory authority.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::context_lens_revert_subcompact is the sole future UICommand target for cmd.chat.context_lens.revert_subcompact; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Assistant Chat surface",
+        "Existing Chat header mode chooser and in-flow selection row; exact per-action placement under ACD-460."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Rehydrate the selected region from canonical source references; do not recover from a guessed current tab or mutate canonical history.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-460",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-017",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentAddRequest -> AttachmentAddResult; one file/folder path for picker, drag/drop and file reference; bounded folder manifest. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_add is the sole future UICommand target for cmd.chat.attachment.add; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer.attach",
+        "File Manager Add to Assistant Chat: file-only cmd.chat.add_file_reference normalizes to this command before every gate; no peer handler or production row.",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentAddRequest -> AttachmentAddResult; one file/folder path for picker, drag/drop and file reference; bounded folder manifest.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-018",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentRemoveRequest -> AttachmentRemoveResult; selected unsent tray member only; no unrelated buffer loss. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_remove is the sole future UICommand target for cmd.chat.attachment.remove; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentRemoveRequest -> AttachmentRemoveResult; selected unsent tray member only; no unrelated buffer loss.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-019",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentRetryRequest -> AttachmentRetryResult; resume the exact recorded failed processing operation. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_retry is the sole future UICommand target for cmd.chat.attachment.retry; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentRetryRequest -> AttachmentRetryResult; resume the exact recorded failed processing operation.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-020",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentOpenRequest -> AttachmentOpenResult; supported viewer and exact recorded attachment identity. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_open is the sole future UICommand target for cmd.chat.attachment.open; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentOpenRequest -> AttachmentOpenResult; supported viewer and exact recorded attachment identity.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-021",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentDownloadRequest -> AttachmentDownloadResult; exact recorded version and permitted destination, never latest-by-implication. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_download is the sole future UICommand target for cmd.chat.attachment.download; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > attachment.download",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentDownloadRequest -> AttachmentDownloadResult; exact recorded version and permitted destination, never latest-by-implication.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-022",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentDetailsRequest -> AttachmentDetailsResult; producer, run, version/hash, trust/freshness, retention, export and materialization truth. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_details is the sole future UICommand target for cmd.chat.attachment.details; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentDetailsRequest -> AttachmentDetailsResult; producer, run, version/hash, trust/freshness, retention, export and materialization truth.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-023",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentFreeze_ReferenceRequest -> AttachmentFreeze_ReferenceResult; freeze the exact content current at send time. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_freeze_reference is the sole future UICommand target for cmd.chat.attachment.freeze_reference; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentFreeze_ReferenceRequest -> AttachmentFreeze_ReferenceResult; freeze the exact content current at send time.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-024",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/FileManager.md",
+      "plan_unit": "F-082",
+      "dry_contract_ref": "Plans/FileManager.md#F-082",
+      "payload_schema_ref": "Plans/FileManager.md#F-082",
+      "result_schema_ref": "Plans/FileManager.md#F-082",
+      "error_schema_ref": "Plans/FileManager.md#F-082",
+      "availability_rule": "AttachmentSave_To_ProjectRequest -> AttachmentSave_To_ProjectResult; FileSafe alone admits the exact project/path write with lineage. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact file/artifact version, granted read scope and currentness; FileSafe for writes; folder manifests cannot recursively dump content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat_attachments::attachment_save_to_project is the sole future UICommand target for cmd.chat.attachment.save_to_project; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > composer",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): attachment_details, composer, message_chrome."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileSafe.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/FileManager.md#F-082",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AttachmentSave_To_ProjectRequest -> AttachmentSave_To_ProjectResult; FileSafe alone admits the exact project/path write with lineage.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/FileManager.md#F-082",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-025",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-461",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "availability_rule": "ComposerDestinationSetRequest -> ComposerDestinationSetResult; bind and visibly name the exact existing destination without starting work or sending unrelated buffer content. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact originating thread and destination currentness; no new buffer or workflow owner.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::assistant_chat::composer_destination_set is the sole future UICommand target for cmd.chat.composer.destination.set; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > workflow_card.message",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): composer, goal_hover, thread_menu, wand, workflow_card, workflow_panel."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Collaborative_Workflows.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "ComposerDestinationSetRequest -> ComposerDestinationSetResult; bind and visibly name the exact existing destination without starting work or sending unrelated buffer content.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-026",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-461",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-461",
+      "availability_rule": "ThreadTitleRegenerateRequest -> ThreadTitleGenerationResult; explicit regeneration through the title owner, honoring policy/model availability and manual-title lock semantics. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact thread and title policy/currentness; no implicit cross-thread model call.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::assistant_chat::thread_regenerate_title is the sole future UICommand target for cmd.chat.thread.regenerate_title; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > title.regenerate",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): composer, goal_hover, thread_menu, wand, workflow_card, workflow_panel."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "ThreadTitleRegenerateRequest -> ThreadTitleGenerationResult; explicit regeneration through the title owner, honoring policy/model availability and manual-title lock semantics.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-461",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-027",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Goal_Runtime_System.md",
+      "plan_unit": "GRS-054",
+      "dry_contract_ref": "Plans/Goal_Runtime_System.md#GRS-054",
+      "payload_schema_ref": "Plans/Goal_Runtime_System.md#GRS-054",
+      "result_schema_ref": "Plans/Goal_Runtime_System.md#GRS-054",
+      "error_schema_ref": "Plans/Goal_Runtime_System.md#GRS-054",
+      "availability_rule": "GoalUpdateProposalRequest -> ApprovalRequest; an explicit user-requested replacement proposal writes no Goal state; only the approved existing update path can mutate it. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Existing approval host and exact originating Goal revision; no automatic approval or objective edit.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::goal_runtime::goal_propose_update is the sole future UICommand target for cmd.chat.goal.propose_update; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > goal.agent_proposal",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): agent_runtime, approved_agent_proposal, goal_activity, goal_activity_editor, goal_control, goal_hover, natural_language, slash, wand."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "GoalUpdateProposalRequest -> ApprovalRequest; an explicit user-requested replacement proposal writes no Goal state; only the approved existing update path can mutate it.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Goal_Runtime_System.md#GRS-054",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-028",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Assistant_Plan_Runtime.md#APR-007",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit": "APR-007",
+      "dry_contract_ref": "Plans/Assistant_Plan_Runtime.md#APR-007",
+      "payload_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-007",
+      "result_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-007",
+      "error_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-007",
+      "availability_rule": "AssistantPlanBuildRequest -> AssistantPlanBuildResult; one Build control and exact current Plan revision; goal_driven reuses its admitted topology, never a peer build_as_goal command. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact version/hash, Build admissibility and permission; no Orchestrator or WorkNode admission.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::assistant_plan::plan_build is the sole future UICommand target for cmd.chat.plan.build; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > plan.build",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): artifact_details, composer, crew_modal, mode_menu, natural_language, plan_card, slash, targeted_composer."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/ToDo_Runtime.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Assistant_Plan_Runtime.md#APR-007",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-007",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AssistantPlanBuildRequest -> AssistantPlanBuildResult; one Build control and exact current Plan revision; goal_driven reuses its admitted topology, never a peer build_as_goal command.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-007",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-007",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-029",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit": "APR-011",
+      "dry_contract_ref": "Plans/Assistant_Plan_Runtime.md#APR-011",
+      "payload_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-011",
+      "result_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-011",
+      "error_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-011",
+      "availability_rule": "AssistantPlanCrewBuildRequest -> AssistantPlanBuildResult; one configured Crew for the exact current Plan revision and the same four-label Build control. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact approved Plan and frozen Crew configuration; no silent topology substitution.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::assistant_plan::plan_build_with_crew is the sole future UICommand target for cmd.chat.plan.build_with_crew; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > plan.build_crew",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): artifact_details, composer, crew_modal, mode_menu, natural_language, plan_card, slash, targeted_composer."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Collaborative_Workflows.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AssistantPlanCrewBuildRequest -> AssistantPlanBuildResult; one configured Crew for the exact current Plan revision and the same four-label Build control.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-011",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-030",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit": "APR-003",
+      "dry_contract_ref": "Plans/Assistant_Plan_Runtime.md#APR-003",
+      "payload_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-003",
+      "result_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-003",
+      "error_schema_ref": "Plans/Assistant_Plan_Runtime.md#APR-003",
+      "availability_rule": "AssistantPlanExportRequest -> ArtifactExportResult; export the exact Plan revision through the artifact owner. content_kind is plan_document or execution_report beside the existing PDF/Markdown format; execution reports are separately versioned and never change plan_hash. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact retained Plan version and artifact/export permission; unsupported output remains unavailable.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::assistant_plan::plan_export is the sole future UICommand target for cmd.chat.plan.export; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > plan.export",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): artifact_details, composer, crew_modal, mode_menu, natural_language, plan_card, slash, targeted_composer."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "AssistantPlanExportRequest -> ArtifactExportResult; export the exact Plan revision through the artifact owner. content_kind is plan_document or execution_report beside the existing PDF/Markdown format; execution reports are separately versioned and never change plan_hash.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Assistant_Plan_Runtime.md#APR-003",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-031",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Collaborative_Workflows.md#CWR-004",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Collaborative_Workflows.md",
+      "plan_unit": "CWR-004",
+      "dry_contract_ref": "Plans/Collaborative_Workflows.md#CWR-004",
+      "payload_schema_ref": "Plans/Collaborative_Workflows.md#CWR-004",
+      "result_schema_ref": "Plans/Collaborative_Workflows.md#CWR-004",
+      "error_schema_ref": "Plans/Collaborative_Workflows.md#CWR-004",
+      "availability_rule": "CrewAutoSetRequest -> CrewAutoSetResult; enabling opens configuration and starts no run without committed config. The checkmark commits only after confirmation and a successful project Settings transaction; cancel preserves the prior state. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Existing scope permission/currentness and Crew admission contract; no settings or workflow peer store.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::collaboration::crew_auto_set is the sole future UICommand target for cmd.chat.crew_auto.set; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > crew_auto.menu",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): activity, brainstorm_card, brainstorm_panel, chat_room_card, chat_room_panel, composer, crew_auto_modal, multi_agent_menu, review_card, review_panel, workflow_card, workflow_modal, workflow_panel."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Settings_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Collaborative_Workflows.md#CWR-004",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-004",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "CrewAutoSetRequest -> CrewAutoSetResult; enabling opens configuration and starts no run without committed config. The checkmark commits only after confirmation and a successful project Settings transaction; cancel preserves the prior state.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-004",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-004",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-032",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Collaborative_Workflows.md#CWR-001",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Collaborative_Workflows.md",
+      "plan_unit": "CWR-001",
+      "dry_contract_ref": "Plans/Collaborative_Workflows.md#CWR-001",
+      "payload_schema_ref": "Plans/Collaborative_Workflows.md#CWR-001",
+      "result_schema_ref": "Plans/Collaborative_Workflows.md#CWR-001",
+      "error_schema_ref": "Plans/Collaborative_Workflows.md#CWR-001",
+      "availability_rule": "CollaborationStartRequest -> CollaborationStartResult; confirmed Start freezes configuration/roster and exact Review target; idempotent same binding, changed-binding refusal and no partial failed-Start card/participants. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Committed launch draft and permission ceiling; no provider attempt or persistent effect at modal open.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::collaboration::start is the sole future UICommand target for cmd.collaboration.start; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > crew.menu",
+        "Puppet Master Assistant > deep_plan.brainstorm",
+        "Puppet Master Assistant > review.start",
+        "Puppet Master Assistant > chat_room.start",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): activity, brainstorm_card, brainstorm_panel, chat_room_card, chat_room_panel, composer, crew_auto_modal, multi_agent_menu, review_card, review_panel, workflow_card, workflow_modal, workflow_panel."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Assistant_Plan_Runtime.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Settings_System.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Collaborative_Workflows.md#CWR-001",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-001",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "CollaborationStartRequest -> CollaborationStartResult; confirmed Start freezes configuration/roster and exact Review target; idempotent same binding, changed-binding refusal and no partial failed-Start card/participants.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-001",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-001",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-033",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Collaborative_Workflows.md#CWR-007",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Collaborative_Workflows.md",
+      "plan_unit": "CWR-007",
+      "dry_contract_ref": "Plans/Collaborative_Workflows.md#CWR-007",
+      "payload_schema_ref": "Plans/Collaborative_Workflows.md#CWR-007",
+      "result_schema_ref": "Plans/Collaborative_Workflows.md#CWR-007",
+      "error_schema_ref": "Plans/Collaborative_Workflows.md#CWR-007",
+      "availability_rule": "BrainstormSynthesisRequest -> AssistantPlanCreateResult; synthesize exactly one Deep Plan via Assistant Plan Runtime, with no unfinished current Plan conflict. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Current BrainStorm run, admissible synthesis and exact thread/Plan ownership; no Orchestrator handoff.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::collaboration::brainstorm_synthesize_plan is the sole future UICommand target for cmd.brainstorm.synthesize_plan; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > brainstorm.synthesize",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): activity, brainstorm_card, brainstorm_panel, chat_room_card, chat_room_panel, composer, crew_auto_modal, multi_agent_menu, review_card, review_panel, workflow_card, workflow_modal, workflow_panel."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Assistant_Plan_Runtime.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Collaborative_Workflows.md#CWR-007",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-007",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BrainstormSynthesisRequest -> AssistantPlanCreateResult; synthesize exactly one Deep Plan via Assistant Plan Runtime, with no unfinished current Plan conflict.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-007",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Collaborative_Workflows.md#CWR-007",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-034",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit": "SMPFS-089",
+      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "availability_rule": "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Capture policy and exact non-protected Browser identity; never include unrelated composer input.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::browser_runtime::capture_full_to_chat is the sole future UICommand target for cmd.browser.capture.full_to_chat; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > browser.full_capture",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-035",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit": "SMPFS-089",
+      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+      "availability_rule": "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Capture policy and exact non-protected Browser identity; never include unrelated composer input.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::browser_runtime::capture_region_to_chat is the sole future UICommand target for cmd.browser.capture.region_to_chat; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > browser.region_capture",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-089",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-036",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit": "SMPFS-090",
+      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "availability_rule": "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact non-protected Browser target and destination; zero/multiple/destroyed/mismatched targets require recapture, not guessed content.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::browser_runtime::component_send_now is the sole future UICommand target for cmd.browser.component.send_now; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > browser.component_send",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-037",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit": "SMPFS-090",
+      "dry_contract_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "payload_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "result_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "error_schema_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+      "availability_rule": "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact non-protected Browser target and originating thread/composer identity; preserve source lineage.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::browser_runtime::component_add_to_composer is the sole future UICommand target for cmd.browser.component.add_to_composer; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > browser.component_queue",
+        "Intended catalog family surfaces (command-specific placement remains owner-selected): browser_selection_bar, browser_toolbar."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Test_Capture_and_Motion_Evidence.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-090",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
+      "profile_id": "TCP-GAP-038",
+      "requirement_refs": [
+        "Plans/Wiring_Matrix.md#WM-056",
+        "Plans/assistant-chat-design.md#ACD-217",
+        "Plans/UI_Command_Catalog.md#UCC-156",
+        "Plans/UI_Command_Catalog.md#UCC-158"
+      ],
+      "owner_plan": "Plans/assistant-chat-design.md",
+      "plan_unit": "ACD-217",
+      "dry_contract_ref": "Plans/assistant-chat-design.md#ACD-217",
+      "payload_schema_ref": "Plans/assistant-chat-design.md#ACD-217",
+      "result_schema_ref": "Plans/assistant-chat-design.md#ACD-217",
+      "error_schema_ref": "Plans/assistant-chat-design.md#ACD-217",
+      "availability_rule": "Chat resolves one immutable complete whole-turn file manifest, then delegates to FileSafe; closed outcomes and exact journal/equality/rollback proof, never conversation rewind. Resolve the exact current owner projection before dispatch; missing native handler/owner remains unavailable. Markdown refs identify declarations, not executable request/result/error schemas.",
+      "permission_gate": "Exact project/thread/repository/worktree/path/manifest/permission binding; no eligible turn creates no transaction. Required unadmitted restore event families block mutation.",
+      "disabled_reason_rule": "Expose the exact owner reason and retain invoking state; distinguish command_not_registered from a registered but unavailable owner/handler. Missing required Event Authority refuses the effect; no optimistic success.",
+      "handler_owner": "handlers::chat::revert is the sole future UICommand target for cmd.chat.revert; its native implementation and authenticated result bridge are unproved.",
+      "handler_status": "specified",
+      "wiring_status": "specified",
+      "production_or_simulation": "Static owner declarations and existing production-intent placements only. Machine request/result/error schema materialization, native dispatch and reverse-surface proof remain absent; this row is partial.",
+      "gui_triggers": [
+        "Puppet Master Assistant > revert.action",
+        "Assistant Chat surface",
+        "Changes, eligible message and wand Revert controls; no conversation-rewind control."
+      ],
+      "return_route": "Bind the originating project/thread or owner scope, route, focus and continuation to the request; return there after the exact owner outcome or refusal, never to whichever tab is now active.",
+      "reverse_consumers": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileSafe.md",
+        "Plans/FileManager.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "event_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/event_family_registry.json",
+        "Plans/assistant-chat-design.md#ACD-217",
+        "Required but unadmitted effect families block dispatch; no EventRecord is invented by this inventory."
+      ],
+      "receipt_refs": [
+        "Plans/assistant-chat-design.md#ACD-217",
+        "Plans/ui_command_response.schema.json"
+      ],
+      "observable_work": [
+        "Chat resolves one immutable complete whole-turn file manifest, then delegates to FileSafe; closed outcomes and exact journal/equality/rollback proof, never conversation rewind.",
+        "Plans/Shared_Integration_Runtime.md"
+      ],
+      "persistence_refs": [
+        "Plans/assistant-chat-design.md#ACD-217",
+        "Plans/storage-plan.md",
+        "Actual owner persistence/rehydration and effect evidence remain unproved; a dispatch receipt is not a no-persist disposition for a mutating operation."
+      ],
+      "migration_refs": [
+        "Plans/assistant-chat-design.md#ACD-217",
+        "Plans/UI_Command_Catalog.md#UCC-157",
+        "Normalize only explicitly admitted aliases before all gates; never create a peer command, handler, schema or state store."
+      ],
+      "test_refs": [
+        "scripts/pm-assistant-contract-check.py",
+        "scripts/pm-touch-closure-verify.py",
+        "tests/test_pm_touch_closure_source.py",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "evidence_refs": [
+        "static_owner_and_production_intent_only; no machine-schema, native, storage, event-producer, visual, motion or accessibility acceptance evidence is asserted."
+      ]
+    },
+    {
       "profile_id": "TCP-SET-CMD",
       "requirement_refs": [
         "Plans/Settings_System.md#SSYS-018",
@@ -1745,9 +4355,9 @@
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
       "plan_unit": "SIR-010",
       "dry_contract_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_request",
-      "payload_schema_ref": "BackSeatDriverModeSetRequest",
-      "result_schema_ref": "BackSeatDriverModeSetResult",
-      "error_schema_ref": "typed policy, route, quota, health, permission, and availability error",
+      "payload_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_request",
+      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/back_seat_driver_mode_set_result",
+      "error_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/command_error",
       "availability_rule": "Current Project policy, requested/effective mode, route, quota, health, and owner generation are required.",
       "permission_gate": "BSD is advisory/read-only and cannot access AuthBrowserSession, secrets, tools, mutation, or approvals.",
       "disabled_reason_rule": "Expose disabled, unavailable, quota, route, policy, permission, or owner blocker without blocking primary work.",
@@ -4935,6 +7545,310 @@
     "residual_risk"
   ],
   "rows": [
+    [
+      "TOUCH-GAP-001",
+      "TCP-GAP-001",
+      "command",
+      "cmd.bsd.configure",
+      "partial",
+      "BSDPolicyUpdateRequest -> BSDPolicyUpdateResult; expected policy revision and effective changed fields; no tool-profile widening. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-002",
+      "TCP-GAP-002",
+      "command",
+      "cmd.bsd.workflow.configure",
+      "partial",
+      "BSDWorkflowBindingRequest -> BSDWorkflowBindingResult; exact workflow and frozen stage bindings; do not rewrite historical reviews. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-003",
+      "TCP-GAP-003",
+      "command",
+      "cmd.bsd.assignment.pause",
+      "partial",
+      "BSDAssignmentControlRequest -> BSDAssignmentControlResult; pause only this assignment, retain held findings and leave the primary run unchanged. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-004",
+      "TCP-GAP-004",
+      "command",
+      "cmd.bsd.assignment.resume",
+      "partial",
+      "BSDAssignmentControlRequest -> BSDAssignmentControlResult; resume a paused assignment at its current cursor, never resume a manually stopped assignment or the primary run. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-005",
+      "TCP-GAP-005",
+      "command",
+      "cmd.bsd.assignment.retry",
+      "partial",
+      "BSDAssignmentRetryRequest -> BSDAssignmentRetryResult; one new cycle at the current epoch, preserving quarantine terminal action and duplicate-batch prevention. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-006",
+      "TCP-GAP-006",
+      "command",
+      "cmd.bsd.assignment.stop",
+      "partial",
+      "BSDAssignmentControlRequest -> BSDAssignmentControlResult; terminal assignment stop with attributable held-finding closure; primary run unchanged. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-007",
+      "TCP-GAP-007",
+      "command",
+      "cmd.bsd.finding.open",
+      "partial",
+      "BSDFindingRoute -> RouteResult; exact finding and generation, navigation only; opening cannot deliver, clear, close or reopen the finding. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-008",
+      "TCP-GAP-008",
+      "command",
+      "cmd.bsd.open_usage",
+      "partial",
+      "BSDUsageRoute -> RouteResult; exact BSD attribution, navigation only and no Usage record created by opening. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-009",
+      "TCP-GAP-009",
+      "command",
+      "cmd.bsd.open_transcript",
+      "partial",
+      "BSDTranscriptRoute -> RouteResult; private advisor transcript only, respect retention and redaction, honest unavailable state when retention is off. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-010",
+      "TCP-GAP-010",
+      "command",
+      "cmd.chat.context_lens.toggle",
+      "partial",
+      "Disclose the existing header mode chooser; no second context pane or implicit shaping effect. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-011",
+      "TCP-GAP-011",
+      "command",
+      "cmd.chat.context_lens.set_mode",
+      "partial",
+      "Select mute, focus or subcompact for the exact thread; preserve the existing immediate-versus-preview semantics. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-012",
+      "TCP-GAP-012",
+      "command",
+      "cmd.chat.context_lens.turn_off",
+      "partial",
+      "Clear transient selection and release applied shaping with attributable disclosed counts; preserve canonical messages. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-013",
+      "TCP-GAP-013",
+      "command",
+      "cmd.chat.context_lens.toggle_message_selection",
+      "partial",
+      "Change one exact message selection; Mute/Focus update effective shaping immediately, never canonical history. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-014",
+      "TCP-GAP-014",
+      "command",
+      "cmd.chat.context_lens.clear_selection",
+      "partial",
+      "Clear the active selection set without deleting canonical messages or silently changing an unrelated thread. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-015",
+      "TCP-GAP-015",
+      "command",
+      "cmd.chat.context_lens.apply_subcompact",
+      "partial",
+      "Apply only the explicitly confirmed preview bound to exact thread/project, source identities/revisions/hashes, shaping revision and summary identity; stale previews refuse and duplicates reuse their result. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-016",
+      "TCP-GAP-016",
+      "command",
+      "cmd.chat.context_lens.revert_subcompact",
+      "partial",
+      "Rehydrate the selected region from canonical source references; do not recover from a guessed current tab or mutate canonical history. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-017",
+      "TCP-GAP-017",
+      "command",
+      "cmd.chat.attachment.add",
+      "partial",
+      "AttachmentAddRequest -> AttachmentAddResult; one file/folder path for picker, drag/drop and file reference; bounded folder manifest. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-018",
+      "TCP-GAP-018",
+      "command",
+      "cmd.chat.attachment.remove",
+      "partial",
+      "AttachmentRemoveRequest -> AttachmentRemoveResult; selected unsent tray member only; no unrelated buffer loss. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-019",
+      "TCP-GAP-019",
+      "command",
+      "cmd.chat.attachment.retry",
+      "partial",
+      "AttachmentRetryRequest -> AttachmentRetryResult; resume the exact recorded failed processing operation. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-020",
+      "TCP-GAP-020",
+      "command",
+      "cmd.chat.attachment.open",
+      "partial",
+      "AttachmentOpenRequest -> AttachmentOpenResult; supported viewer and exact recorded attachment identity. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-021",
+      "TCP-GAP-021",
+      "command",
+      "cmd.chat.attachment.download",
+      "partial",
+      "AttachmentDownloadRequest -> AttachmentDownloadResult; exact recorded version and permitted destination, never latest-by-implication. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-022",
+      "TCP-GAP-022",
+      "command",
+      "cmd.chat.attachment.details",
+      "partial",
+      "AttachmentDetailsRequest -> AttachmentDetailsResult; producer, run, version/hash, trust/freshness, retention, export and materialization truth. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-023",
+      "TCP-GAP-023",
+      "command",
+      "cmd.chat.attachment.freeze_reference",
+      "partial",
+      "AttachmentFreeze_ReferenceRequest -> AttachmentFreeze_ReferenceResult; freeze the exact content current at send time. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-024",
+      "TCP-GAP-024",
+      "command",
+      "cmd.chat.attachment.save_to_project",
+      "partial",
+      "AttachmentSave_To_ProjectRequest -> AttachmentSave_To_ProjectResult; FileSafe alone admits the exact project/path write with lineage. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-025",
+      "TCP-GAP-025",
+      "command",
+      "cmd.chat.composer.destination.set",
+      "partial",
+      "ComposerDestinationSetRequest -> ComposerDestinationSetResult; bind and visibly name the exact existing destination without starting work or sending unrelated buffer content. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-026",
+      "TCP-GAP-026",
+      "command",
+      "cmd.chat.thread.regenerate_title",
+      "partial",
+      "ThreadTitleRegenerateRequest -> ThreadTitleGenerationResult; explicit regeneration through the title owner, honoring policy/model availability and manual-title lock semantics. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-027",
+      "TCP-GAP-027",
+      "command",
+      "cmd.chat.goal.propose_update",
+      "partial",
+      "GoalUpdateProposalRequest -> ApprovalRequest; an explicit user-requested replacement proposal writes no Goal state; only the approved existing update path can mutate it. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-028",
+      "TCP-GAP-028",
+      "command",
+      "cmd.chat.plan.build",
+      "partial",
+      "AssistantPlanBuildRequest -> AssistantPlanBuildResult; one Build control and exact current Plan revision; goal_driven reuses its admitted topology, never a peer build_as_goal command. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-029",
+      "TCP-GAP-029",
+      "command",
+      "cmd.chat.plan.build_with_crew",
+      "partial",
+      "AssistantPlanCrewBuildRequest -> AssistantPlanBuildResult; one configured Crew for the exact current Plan revision and the same four-label Build control. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-030",
+      "TCP-GAP-030",
+      "command",
+      "cmd.chat.plan.export",
+      "partial",
+      "AssistantPlanExportRequest -> ArtifactExportResult; export the exact Plan revision through the artifact owner. content_kind is plan_document or execution_report beside the existing PDF/Markdown format; execution reports are separately versioned and never change plan_hash. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-031",
+      "TCP-GAP-031",
+      "command",
+      "cmd.chat.crew_auto.set",
+      "partial",
+      "CrewAutoSetRequest -> CrewAutoSetResult; enabling opens configuration and starts no run without committed config. The checkmark commits only after confirmation and a successful project Settings transaction; cancel preserves the prior state. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-032",
+      "TCP-GAP-032",
+      "command",
+      "cmd.collaboration.start",
+      "partial",
+      "CollaborationStartRequest -> CollaborationStartResult; confirmed Start freezes configuration/roster and exact Review target; idempotent same binding, changed-binding refusal and no partial failed-Start card/participants. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-033",
+      "TCP-GAP-033",
+      "command",
+      "cmd.brainstorm.synthesize_plan",
+      "partial",
+      "BrainstormSynthesisRequest -> AssistantPlanCreateResult; synthesize exactly one Deep Plan via Assistant Plan Runtime, with no unfinished current Plan conflict. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-034",
+      "TCP-GAP-034",
+      "command",
+      "cmd.browser.capture.full_to_chat",
+      "partial",
+      "BrowserCaptureFullRequest -> BrowserCaptureResult; exact viewport/full-page choice and destination, isolated immediate-send payload. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-035",
+      "TCP-GAP-035",
+      "command",
+      "cmd.browser.capture.region_to_chat",
+      "partial",
+      "BrowserCaptureRegionRequest -> BrowserCaptureResult; exact selected region and destination, isolated immediate-send payload. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-036",
+      "TCP-GAP-036",
+      "command",
+      "cmd.browser.component.send_now",
+      "partial",
+      "BrowserComponentSendRequest -> MessageAdmissionResult; revalidate session/page/frame/generation/locator/captured identity; stale_capture admits no message. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-037",
+      "TCP-GAP-037",
+      "command",
+      "cmd.browser.component.add_to_composer",
+      "partial",
+      "BrowserComponentComposerRequest -> ComposerBufferResult; append one hidden-reference-backed numbered component entry without sending unrelated text. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
+    [
+      "TOUCH-GAP-038",
+      "TCP-GAP-038",
+      "command",
+      "cmd.chat.revert",
+      "partial",
+      "Chat resolves one immutable complete whole-turn file manifest, then delegates to FileSafe; closed outcomes and exact journal/equality/rollback proof, never conversation rewind. Owner placement and intended wiring are recorded; Markdown references are declarations only. Executable request/result/error schemas, native dispatch, authenticated result/effect/storage evidence and actual reverse GUI interactions remain unproved."
+    ],
     [
       "TOUCH-SET-001",
       "TCP-SET-CMD",

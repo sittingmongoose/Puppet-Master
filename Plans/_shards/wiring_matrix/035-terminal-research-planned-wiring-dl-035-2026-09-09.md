@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L4335-L4419
 
-Source SHA256: `5a1c5450b287216918fb3f3c9c123c326aedfef3e8949cf087e790060efd268f`
+Source SHA256: `6ca27a8b1ded4d2afabba5699b417e0d2b7ecd4dae598f2d73cb0f0fef6fe313`
 
 ---
 
