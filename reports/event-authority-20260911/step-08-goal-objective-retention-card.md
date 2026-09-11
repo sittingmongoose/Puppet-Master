@@ -1,7 +1,7 @@
 # Keep Goal text and its history with the thread
 
 **Decision ID:** EA-S08-GOAL-OBJECTIVE-RETENTION  
-**Status:** Presented on 2026-09-11 at 23:03:19.781918 UTC; unanswered. The frozen source draft remains unchanged.  
+**Status:** Approved: retain with the chat; recorded in DL-047. Concrete owner contracts pending.
 **Owners:** Goal Runtime and Storage.
 
 **Question:** Should the exact accepted Goal objective and its revision history remain available while its thread is retained, then follow the existing deletion and hold rules when that thread is deleted?
@@ -24,12 +24,12 @@
 
 **Response choices:** Approve; Deny; Deny with changes; Ask a question.
 
-**Actual response:**
+**Actual response:** Approve: retain with the chat (recommended)
 
-**Responded by:**
+**Responded by:** Jared
 
-**Responded at UTC:**
+**Response recorded at UTC:** 2026-09-11T23:46:02Z
 
-**Source response ID:**
+**Source response ID:** EA-S08-GOAL-OBJECTIVE-RETENTION-RESPONSE-001
 
-Approval would select this bounded product retention policy and authorize the corresponding owner contract work. It would not change unrelated record policies, decide certification exceptions, revive retired Goal fields or roles, admit sibling events, authorize runtime execution, clear readiness or seal governance. No answer is inferred from either draft or from prior technical-work approval.
+The recorded approval selects this bounded product retention policy and authorizes the corresponding owner contract work. It would not change unrelated record policies, decide certification exceptions, revive retired Goal fields or roles, admit sibling events, authorize runtime execution, clear readiness or seal governance. No answer is inferred from either draft or from prior technical-work approval.

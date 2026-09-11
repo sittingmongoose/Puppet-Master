@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.assurance.event_authority.goal_objective_retention_presentation.v1",
   "decision_id": "EA-S08-GOAL-OBJECTIVE-RETENTION",
-  "status": "PRESENTED_UNANSWERED",
+  "status": "APPROVED_RECORDED_OWNER_CONTRACT_PENDING",
   "presented_at_utc": "2026-09-11T23:03:19.781918Z",
   "source_head": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
   "owners": [
@@ -17,17 +17,18 @@
     "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-objective-retention-card-20260911/manifest.json",
     "sha256": "030203e96e955bb9dd482664970d5fce8140b734dbbf49debdbde3a10b1df8ce"
   },
-  "response": null,
-  "response_id": null,
-  "responded_at_utc": null,
-  "dependent_work": "GoalRecordV2 current objective and accepted revision body custody remains held for the selected retention/deletion policy. Independent technical contracts may continue.",
+  "response": "Approve: retain with the chat (recommended)",
+  "response_id": "EA-S08-GOAL-OBJECTIVE-RETENTION-RESPONSE-001",
+  "dependent_work": "The retention choice is approved in DL-047. Goal Runtime and Storage physical body/history, reader/writer and deletion/recovery contracts remain to be authored and verified.",
   "not_inferred": [
     "prior bounded technical approval",
     "continue or keep-going instructions",
     "lack of a reply",
     "an unanswered source draft"
   ],
-  "policy_changed": false,
+  "policy_changed": true,
   "event_admitted": false,
-  "governance_sealed": false
+  "governance_sealed": false,
+  "response_recorded_at_utc": "2026-09-11T23:46:02Z",
+  "authority_ref": "Plans/Decision_Log.md#DL-047"
 }

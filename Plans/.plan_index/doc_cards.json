@@ -5150,9 +5150,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 21,
-        "True": 22
+        "True": 23
       },
-      "heading_count": 92,
+      "heading_count": 94,
       "implementation_surfaces": [
         ".gitignore",
         "Plans/Architecture_Invariants.md",
@@ -5212,9 +5212,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3229,
+      "line_count": 3312,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 43,
+      "plan_unit_count": 44,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5258,6 +5258,7 @@
         "DL-044",
         "DL-045",
         "DL-046",
+        "DL-047",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5287,6 +5288,7 @@
         "event_authority_decision_drift",
         "extraction_mapping_overauthority",
         "forge_wiring_provider_vocabulary_drift",
+        "goal_body_retention_and_deletion",
         "governance_label_copy_drift",
         "governance_role_conflation",
         "graph_governance_semantics_drift",
@@ -5309,19 +5311,21 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f",
+      "sha256": "a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 43
+        "accepted": 44
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 40
+        "requirement": 41
       },
       "validation_surfaces": [
+        "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
         "Decision Log PlanUnit YAML parsing and exact canonical scope comparison to the pinned manifest",
+        "Exact approval/card SHA-256 and response preservation",
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
         "Owner/consumer source-to-decision review",
@@ -18882,7 +18886,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T22:52:05Z",
+  "generated_at_utc": "2026-09-11T23:49:18Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18891,12 +18895,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3385,
-      "True": 3157
+      "True": 3158
     },
-    "plan_unit_count": 6542,
+    "plan_unit_count": 6543,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6351,
+      "accepted": 6352,
       "retired": 182,
       "superseded": 9
     },
@@ -18963,7 +18967,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5194,
+      "requirement": 5195,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

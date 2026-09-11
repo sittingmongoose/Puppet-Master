@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L645
+Source lines: L13-L657
 
-Source SHA256: `c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f`
+Source SHA256: `a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda`
 
 ---
 
@@ -641,3 +641,15 @@ The frozen proposal is `reports/packet-gap-closure-20260910/browser-binding-auth
 - `browser.session.reconstructed_on_host`, `browser.session.interrupted`
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-262
+
+### DL-047: Retain accepted Goal text and revisions with their chat
+
+On 2026-09-11, Jared answered exactly **“Approve: retain with the chat (recommended)”** to the `EA-S08-GOAL-OBJECTIVE-RETENTION` question (`call_kj3ZG4Ui0TdZN03B95Pwxv36`, item 0). The response was recorded at 23:46:02 UTC as `EA-S08-GOAL-OBJECTIVE-RETENTION-RESPONSE-001` in `reports/event-authority-20260911/decision-responses.jsonl`.
+
+`GoalRecordV2`, its current accepted objective, accepted objective revisions and the minimum replay lineage needed to read that history remain available to authorized history and recovery while their chat is retained, including archived chats. Context compaction, restart and model changes do not purge this history. Deleting the chat hides this Goal content immediately, purges active content within 24 hours and deleted backup content within 30 days, unless a valid hold delays physical purge. A hold does not restore ordinary visibility of deleted content.
+
+Goal Runtime owns the meaning and accepted revision history; Storage owns the explicit retention assignment, deletion, holds and coherent recovery. Permanent content-free audit and lineage records retain their existing policies and references, but add no extra hold on the Goal text and cannot reconstruct it after deletion. Attachments, source messages/context, Plans, To-Dos, workflow records and evidence retain their independent owners and policies; a Goal reference alone does not retain their bodies. Retaining a chat therefore retains every accepted objective version, including superseded versions; deleting it also removes ordinary access to that Goal history.
+
+This bounded retention choice resolves the body/history policy prerequisite left open by DL-045. It authorizes the corresponding owner contract work and does not select independent post-chat Goal-history retention, certification-exception semantics, sibling event admission or runtime execution. The exact approved card is `/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-objective-retention-card-20260911/goal-objective-retention-card.md`, SHA-256 `d3ac058594a52ea5231ebb1653d85b38ae3bf7898f5c90a3ba8a461208d35c67`; the repository card and response receipt preserve that choice. Concrete physical schemas, writer/read/recovery bindings and semantic checks remain required. This decision does not clear depth, readiness or governance gates.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md

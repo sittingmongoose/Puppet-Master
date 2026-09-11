@@ -1,0 +1,29 @@
+{
+  "status": "PASS_DECISION_CAPTURE_AND_DERIVED_VALIDATION",
+  "new_decision": "DL-047",
+  "exact_response": "Approve: retain with the chat (recommended)",
+  "frozen_card_and_manifest_unchanged": true,
+  "prior_decision_units_unchanged": 43,
+  "index": {
+    "plan_units.jsonl": {
+      "previous": 6542,
+      "current": 6543,
+      "changed_prior": 43,
+      "unrelated_changes": []
+    },
+    "acceptance_units.jsonl": {
+      "previous": 25141,
+      "current": 25148,
+      "changed_prior": 141,
+      "unrelated_changes": []
+    }
+  },
+  "shards": {
+    "docs": 98,
+    "shards": 2302,
+    "status": "pass"
+  },
+  "plan_index_validation": "pass",
+  "depth_or_native_proof": false,
+  "owner_contracts": "pending"
+}

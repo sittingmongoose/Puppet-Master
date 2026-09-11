@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L653-L3201
+Source lines: L665-L3284
 
-Source SHA256: `c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f`
+Source SHA256: `a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda`
 
 ---
 
@@ -2433,6 +2433,77 @@ negative_constraints:
   - Do not infer missing bindings or evidence from sibling names or turn technical permission into product or retention authority.
   - Do not bulk admit, enable runtime, restamp historical evidence or clear readiness/seal gates.
 owner_hints: [Plans/Decision_Log.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+```
+
+### DL-047 - Goal Objective And Revision Retention Follows Chat
+
+```yaml
+plan_unit_id: DL-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Jared approves retaining GoalRecordV2, current accepted objective, accepted revisions and minimum
+  replay lineage with the owning chat, including archived chats. Compaction, restart and model changes do not delete
+  that history. Chat deletion immediately hides the content, purges active content within 24 hours and deleted backup
+  content within 30 days unless held; a valid hold delays physical purge without restoring ordinary visibility.
+  Goal Runtime owns semantics and Storage owns explicit retention, deletion, holds and coherent recovery. Permanent
+  content-free audits keep their policies and references without holding or reconstructing deleted Goal text. Referenced
+  bodies remain under their independent owners and retention rules.
+gui_related: true
+gui_classification_reason: The accepted policy determines visibility and availability of Goal history on chat deletion
+  and archival.
+split_recommended: false
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact affirmative response and frozen card SHA-256 are preserved with genuine question identity and capture
+  time.
+- Current and superseded accepted Goal objectives and minimum replay lineage remain available while the owning chat
+  is retained, including archived chats.
+- Compaction, restart and model changes do not purge accepted Goal history.
+- Chat deletion immediately hides Goal content and purges active content within 24 hours and backups within 30 days
+  unless a valid hold delays physical purge; held deleted content remains ordinarily hidden.
+- Permanent content-free audit references do not add a body hold or reconstruct deleted Goal text.
+- Attachments, source messages/context, Plans, To-Dos and workflow records/evidence retain their independent owners
+  and policies.
+- Concrete physical custody, versioned readers/writers, deletion/recovery bindings and semantic verification are
+  still required; no event admission or depth/readiness/seal clearance follows from this decision alone.
+validation_surfaces:
+- Exact approval/card SHA-256 and response preservation
+- Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: goal_body_retention_and_deletion
+reasoning_tier: high
+context_scope: accepted_goal_objective_and_revision_chat_retention
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: bounded_retention_policy_approval
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- EA-S08-GOAL-OBJECTIVE-RETENTION-RESPONSE-001
+- call_kj3ZG4Ui0TdZN03B95Pwxv36
+- reports/event-authority-20260911/step-08-goal-objective-retention-card.md
+preserved_exact_tokens:
+- 'Approve: retain with the chat (recommended)'
+- GoalRecordV2
+- EA-S08-GOAL-OBJECTIVE-RETENTION
+- 24 hours
+- 30 days
+negative_constraints:
+- Do not retain Goal text independently after chat deletion or let archival/compaction act as deletion.
+- Do not restore ordinary visibility merely because a valid hold delays purge.
+- Do not extend permanent audit retention to Goal bodies or referenced attachments/workflow evidence.
+- Do not infer certification exceptions, event admission, native execution, depth/readiness clearance or governance
+  sealing.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
