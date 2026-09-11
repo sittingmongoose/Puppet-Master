@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12938-L13085
+Source lines: L12938-L13086
 
-Source SHA256: `1560e40520743e05097ad9438a9843be64ce147c1853d142601f602c1a82f27c`
+Source SHA256: `8284a6915b69ac969ca00e2b73620818e820e0b00edddb3bffd456be606cdd05`
 
 ---
 
@@ -151,8 +151,9 @@ Typed requests and results are mandatory at these placements; the former generic
 "typed contract or route/open disposition" fallback does not apply. Existing
 selectors project the typed owner availability/error, including `handler_unavailable`.
 Recording row scope remains record-only versus live-subject. Existing session event
-obligations are preserved and require separate Event Authority admission; export
+obligations consume the separate ATS-049 admission in
+`Plans/testing_session_event_admission.json`; export
 and recording controls retain receipt-only domain-event dispositions. No new native
 handler, visual design, command, storage family, runtime proof or readiness is claimed.
 
-ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Automated_Testing_System.md#ATS-049, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
