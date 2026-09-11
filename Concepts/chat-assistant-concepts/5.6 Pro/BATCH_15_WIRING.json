@@ -1,0 +1,305 @@
+{
+  "claim_boundary": "Concept handler and reverse-consumer review; not native command or Event Authority admission",
+  "new_canonical_commands": [],
+  "transaction_scope": "Synchronous shared-owner journal with deferred side effects, including explicit rollback conflicts; no native database or host-crash guarantee",
+  "rows": [
+    {
+      "actions": [
+        "goal-new",
+        "/goal + send",
+        "b15-start + send"
+      ],
+      "command": "cmd.chat.goal.start",
+      "owner": "goals.js:create",
+      "payload": "explicitRequest, threadId, objective, optional source message/workRef; scope derived from actual thread",
+      "guards": "explicit request; nonempty <=4000; project/thread/worktree; one current Goal",
+      "result": "new GoalRecordV2 projection or explicit_request_required/objective_too_long/active_goal_exists/scope_changed",
+      "projection": "Goal Activity only; ordinary composer clears only after admission",
+      "reverse_consumers": [
+        "Goal Activity",
+        "shared To-Dos",
+        "local work adapter"
+      ],
+      "tests": [
+        "explicit_only",
+        "objective_authority",
+        "browser:simple"
+      ]
+    },
+    {
+      "actions": [
+        "goal-edit",
+        "goal-open-editor",
+        "goal-save",
+        "goal-cancel-edit"
+      ],
+      "command": "cmd.chat.goal.update",
+      "owner": "goals.js:edit",
+      "payload": "captured Goal id/revision/hash/stop epoch/run/binding/scope/generation; full objective",
+      "guards": "direct user Save is authorization; completed/cancelled/stale/wrong-thread refused",
+      "result": "one accepted revision; pending old continuations fenced; no Plan bytes rewritten",
+      "projection": "Activity full objective and history; compact summary updates",
+      "reverse_consumers": [
+        "continuation currentness",
+        "bound Plan conflict handler"
+      ],
+      "tests": [
+        "objective_authority",
+        "unsupported_objective",
+        "bound_recovery_and_revise",
+        "browser:authority"
+      ]
+    },
+    {
+      "actions": [
+        "goal-request-change",
+        "ordinary composer send to goal-objective-proposal",
+        "goal-approve-proposal",
+        "goal-deny-proposal"
+      ],
+      "command": "cmd.chat.goal.propose_update -> approved cmd.chat.goal.update",
+      "owner": "goals.js:propose/approve/deny, existing Goal approval slot",
+      "payload": "explicit change request + captured Goal authority; entire replacement; expiry; approval id",
+      "guards": "unrequested/stale/expired/replayed/wrong-project proposals refused; approval cannot clear manual stop",
+      "result": "proposal only until approval; accepted revision exactly once or refusal; cancelled proposal leaves canon unchanged",
+      "projection": "Current/Proposed/Approve Change/Cancel in shared Activity; ordinary composer is request entry",
+      "reverse_consumers": [
+        "objective history",
+        "continuation fence",
+        "bound Plan conflict"
+      ],
+      "tests": [
+        "approval_cas",
+        "objective_authority",
+        "browser:authority"
+      ]
+    },
+    {
+      "actions": [
+        "goal-pause",
+        "goal-resume",
+        "goal-cancel",
+        "stop-run",
+        "goal-bound-pause",
+        "goal-bound-resume",
+        "goal-bound-cancel"
+      ],
+      "command": "cmd.chat.goal.pause / cmd.chat.goal.resume / cmd.chat.goal.cancel; existing composer Stop",
+      "owner": "goals.js:lifecycle; plans.js:boundPause/boundResume; scheduling.js:latchStop",
+      "payload": "same captured Goal authority; exact bound Plan/run and stop epoch",
+      "guards": "blocked Resume requires owner clearance; cancellation receipt not fifth state; no quota/window/reconnect bypass",
+      "result": "state/refusal + fenced continuation; Plan remains Building while paused; cancel removes current Goal and fences exact run",
+      "projection": "pinned/hover/transient Activity; working header; Plan reason/record",
+      "reverse_consumers": [
+        "Plan timer",
+        "scheduled windows",
+        "quota consent",
+        "work output admission"
+      ],
+      "tests": [
+        "epoch_fenced",
+        "bound_lifecycle",
+        "quota_resume",
+        "bound_quota_resume",
+        "recurring_reuses_run",
+        "surfaces:activity_and_step_rail"
+      ]
+    },
+    {
+      "actions": [
+        "goal-continue",
+        "host timer / admitted continuation"
+      ],
+      "command": "owner-internal continuation, not a new UI command",
+      "owner": "goals.js:evaluate/dispatch + registered workflow evidence inspector",
+      "payload": "single-use ticket captures Goal authority, owner work fingerprint, next attempt, completion evidence",
+      "guards": "dispatch rechecks currentness/scope/run/epoch/generation/evidence and runnable work; provider final is not proof",
+      "result": "continue/complete/pause/blocked/cancelled receipt; replay returns original without repeating work",
+      "projection": "Continuation decisions; work-owned output/evidence; accepted To-Dos",
+      "reverse_consumers": [
+        "Plan completion",
+        "shared To-Do rollups",
+        "artifact editor/download"
+      ],
+      "tests": [
+        "scope_and_work_fence",
+        "tickets_exactly_once",
+        "outcome_rejection",
+        "completion_currentness",
+        "work_effect_rollback"
+      ]
+    },
+    {
+      "actions": [
+        "pd-build",
+        "pd-build-goal",
+        "explicit build-this-plan-as-a-goal composer request"
+      ],
+      "command": "cmd.chat.plan.build with execution_topology agent|goal_driven (NO build_as_goal peer command)",
+      "owner": "plans.js:buildCommand with shared command-transaction.js journal",
+      "payload": "exact Plan id/V/hash, project/thread/worktree, frozen permissions/model/provider/account, topology/idempotency binding",
+      "guards": "all actual To-Do/Goal/PlanRun/binding/schedule seams commit or roll back; delayed effects after commit only; failed rollback conflicts visible",
+      "result": "one admitted PlanRun, optional one Goal and exact binding, or typed refusal/no success effects",
+      "projection": "same primary Build/Building/Completed/Canceled; Build as Goal secondary; Goal in Activity; exact reciprocal links",
+      "reverse_consumers": [
+        "goals.js",
+        "todos.js existing thread list",
+        "existing scoped Deep Plan bundle",
+        "scheduling.js"
+      ],
+      "tests": [
+        "atomic_*",
+        "preconditions",
+        "admission_preserves_intervening_source",
+        "intervening_scope",
+        "replay_wrong_scope",
+        "surfaces:deep_identity_and_routes",
+        "browser:plan",
+        "browser:normal"
+      ]
+    },
+    {
+      "actions": [
+        "pd-build-at",
+        "sched-create-build",
+        "sched-advance-window",
+        "scheduler dispatch",
+        "existing quota-resume consent and reset"
+      ],
+      "command": "existing scheduling owner commands and explicitly labelled local clock; same cmd.chat.plan.build at dispatch",
+      "owner": "scheduling.js:commitBuild/dispatchBuildAt/attemptAutoResume; plans.js:admitScheduled",
+      "payload": "frozen topology/Plan version/hash/route/scope; occurrence/epoch/idempotency; captured Goal quota token after admitted work",
+      "guards": "schedule commit creates no Goal/To-Dos; outer admission rollback; cancellation/manual stop/source drift; recurring occurrence reuses exact run",
+      "result": "schedule receipt or refusal; Goal created only at admitted dispatch; no duplicate turn/run",
+      "projection": "Schedule details/local clock; shared quota strip; Plan/Goal state only when admitted",
+      "reverse_consumers": [
+        "Plan admission journal",
+        "manual stop latch",
+        "Goal resumeFromQuota"
+      ],
+      "tests": [
+        "scheduled_admission",
+        "scheduled_stop_epoch",
+        "scheduled_outer_rollback",
+        "immediate_invalidates_only_target",
+        "recurring_reuses_run",
+        "quota_resume",
+        "browser:scheduled"
+      ]
+    },
+    {
+      "actions": [
+        "branch-from-message",
+        "create-restore-point",
+        "branch-from-restore",
+        "rewind-to-message",
+        "restore-rewind"
+      ],
+      "command": "existing thread/restore concept actions; no new native command ids",
+      "owner": "threadops.js + goals.js:checkpoint/rebind/fenceThread",
+      "payload": "accepted local checkpoint Goal revision, source/target thread/project/worktree; new paused controller identity",
+      "guards": "branches do not borrow workRef/live run; source accepted objective unchanged; rewind/restore fences queued callbacks",
+      "result": "paused rebind with explicit lineage or stopped source; no native durable replay claim",
+      "projection": "new branch thread; exact accepted objective/history; controller unavailable until new work binding",
+      "reverse_consumers": [
+        "Goal authority",
+        "Plan pause",
+        "thread lineage"
+      ],
+      "tests": [
+        "restore_branch",
+        "normal_branch",
+        "rewind_restore",
+        "restored_owner_no_fallback"
+      ]
+    },
+    {
+      "actions": [
+        "b15-open",
+        "b15-source",
+        "b15-artifact",
+        "b15-download",
+        "b15-plan",
+        "b15-goal",
+        "b15-todos",
+        "b15-hide-guide",
+        "pd-open-goal",
+        "goal-bound-open-plan",
+        "goal-revise-plan"
+      ],
+      "command": "local view/export actions or existing Plan Revise route; not production registration",
+      "owner": "goal-work-batch15.js view adapter; common editor/artifact array; plans.js/goals.js link owners",
+      "payload": "exact work/artifact/Plan/Goal ids, original thread; admitted output ids only for download",
+      "guards": "no navigation by title; no Goal link for normal Build; no output regeneration on download; narrow return-to-chat closes overlay",
+      "result": "same shared record opened; exact stored bytes downloaded; stale/unavailable relation shows refusal",
+      "projection": "normal editor, pinned Activity, transient Activity, ordinary composer target",
+      "reverse_consumers": [
+        "artifact provenance",
+        "Plan details",
+        "Goal detail",
+        "To-Do list"
+      ],
+      "tests": [
+        "browser CSV round-trip and exact download",
+        "surfaces reciprocal links and shared Activity",
+        "browser 700/900/1440"
+      ]
+    }
+  ],
+  "review_dimensions": [
+    {
+      "dimension": "owner/PlanUnit",
+      "assessment": "Current Simple Goal + Plan/To-Do/Scheduling owners; 43 worklist identities mapped separately; no new PlanUnits or native acceptance."
+    },
+    {
+      "dimension": "one DRY contract",
+      "assessment": "One Goal store; boundGoals is an index into same records. PlanRun/To-Do/scoped units/schedules/artifact metadata stay with shared owners. New orderExport store owns only task input, attempts, outputs and evidence."
+    },
+    {
+      "dimension": "command/typed action",
+      "assessment": "Existing six Goal commands and cmd.chat.plan.build correspondence above; no build_as_goal command invented; local-only exercises and clock explicit."
+    },
+    {
+      "dimension": "payload/result/error/availability/permissions",
+      "assessment": "CAS Goal token + exact Plan admission snapshot + frozen route; text bounds; eligibility; typed refusal paths; no actual native permission service."
+    },
+    {
+      "dimension": "sole handler",
+      "assessment": "Each row names the actual handler; atomic tests patch its real seams after actual writes, not a replacement model."
+    },
+    {
+      "dimension": "wiring",
+      "assessment": "PM56_EXT registrations and existing preSend hooks; action collision gate on each fresh browser; no changes to production wiring files."
+    },
+    {
+      "dimension": "GUI trigger/return route",
+      "assessment": "Public Demo Studio seeds only; ordinary Send, More, Build, Goal Activity, Revise and scheduling controls own work; guide can be dismissed."
+    },
+    {
+      "dimension": "reverse consumers",
+      "assessment": "Goal <-> Plan; Goal/Plan <-> To-Do outcomes; quota/window -> fenced same owner; branch/rewind -> Goal identity; artifacts open/download stored exact output."
+    },
+    {
+      "dimension": "events/receipts/ObservableWork",
+      "assessment": "Session-local continuation/admission/cancellation/item evidence receipts demonstrated. Shared working renderer consumes actual owner projection. No EventRecord, Event Authority or native ObservableWork registration proved."
+    },
+    {
+      "dimension": "persistence/migration",
+      "assessment": "In-memory accepted checkpoint/rebind and stale-generation rejection only; existing schedule local storage is not durable host execution. Native restart/transfer/V1 migration remains open."
+    },
+    {
+      "dimension": "tests",
+      "assessment": "B15 real-handler cases, ordinary desktop/900/700 journeys, Deep identity/Step Rail/Activity tests, cumulative B1-B14 reruns, actual extracted installer; final reports identify exact bytes."
+    },
+    {
+      "dimension": "evidence",
+      "assessment": "Original final-build captures/logs separated from intermediate failures and from ten recovered historical images. Motion capture does not itself imply smooth painting."
+    },
+    {
+      "dimension": "disposition/residual risk",
+      "assessment": "Bounded local concept only; general-purpose providers/internal workflows/Crash-safe DB transactions/formal audit and exhaustive packet wording remain separate."
+    }
+  ],
+  "evidence_html_sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c",
+  "integration_recheck_head": "900bf485393eaafa8ddea8f7e2fd7abc5d215736"
+}

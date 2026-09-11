@@ -545,6 +545,8 @@
 
   RT.plans = RT.plans || { records:hydrate(JSON.parse(JSON.stringify(PLANS0))), demo:true };
   function P(){ return RT.plans; }
+  RT.plans.runs=RT.plans.runs||{};
+  const workOwners=new Map();
   function rec(id){ return P().records[id]; }
   function body(r){ return r.revisions[r.version] || []; }
   function steps(blocks){ return list(blocks).filter(function(b){ return b.t==='plan_step'; }); }
@@ -1024,7 +1026,7 @@
      5. THE CARD
      ===================================================================== */
   function actionBtn(a,label,id,extra,kind){
-    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(extra||'')+'>'+esc(label)+'</button>';
+    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
   }
 
   function cardHeader(r){
@@ -1241,67 +1243,85 @@
     };
   }
 
-  function admitBuild(ctx,r,opts){
-    opts=opts||{};
-    if(r.status!=='ready'||!eligible(r).build) return false;
-    // Materialization is an atomic ToDo-owner operation. For a discovery Plan,
-    // reject its failure before approval, schedule invalidation or unit receipts.
-    var discoveryMade=null;
-    if(r.discoveryRunId){
-      discoveryMade=todoApi().materializeForPlan({plan_id:r.plan_id,thread_id:r.thread_id,version:r.version,
-        steps:steps(body(r)).map(s=>({id:s.plan_step_id,parent:s.parent_step_id,deps:list(s.depends_on),title:s.title,outcome:s.text}))});
-      if(!discoveryMade?.ok){ctx.toast('Build not admitted',discoveryMade?.error||'To-Do materialization refused');return false;}
-    }
-    /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
-       pending schedule for this Plan BEFORE the run is admitted, so a timer
-       cannot deliver a second dispatch for work that has already started.
-       Cancel did this and Build did not, which left exactly the duplicate
-       admission the correction names -- two owners of one PlanRun. */
-    r.scheduleInvalidation = invalidateSchedulesFor(r, opts.scheduleRef ? 'scheduled_build' : 'immediate_build', opts.scheduleRef);
-    r.approved = freeze(r,ctx);
-    if(opts.scheduleSnapshot){
-      r.approved.runtime=opts.scheduleSnapshot.modelName;
-      r.approved.modelId=opts.scheduleSnapshot.modelId;
-      r.approved.provider=opts.scheduleSnapshot.provider;
-      r.approved.accountId=opts.scheduleSnapshot.accountId;
-    }
-    if(opts.scheduleRef)r.approved.schedule_id=opts.scheduleRef;
-    r.status = 'building';
-    r.buildStep = 0;
-    r.wait = opts.wait || null;
-    /* Deep Plan: materialise + validate the SCOPED bundle first. Scoped means
-       plan_id + version -- it is not written to the global .plan_index and it
-       creates no NodeSeeds or WorkNodes. */
-    if(r.backend==='ledger_bound'){
-      r.unitsMaterialized = { at:r.approved.at, scope:r.plan_id+'@V'+r.version,
-        count:list(r.planunits).length, validated:true, ...(r.discoveryRunId?{validation_kind:'local_scoped_template_validation',plan_hash:r.approved.hash,scope_kind:'assistant_deep_plan',nodeSeeds:0}:{}), globalIndex:false, worknodes:0 };
-    }
-    /* PPROG-002/013: the To-Dos are REAL, created through the ToDo owner, and
-       they are what the projector derives from. A local build counter would
-       have made the gutter a decoration rather than a projection. */
-    var api=todoApi(), made=discoveryMade;
-    if(!discoveryMade && api && api.materializeForPlan){
-      made = api.materializeForPlan({
-        plan_id:r.plan_id, thread_id:r.thread_id, version:r.version,
-        steps:steps(body(r)).map(function(s){
-          return { id:s.plan_step_id, parent:s.parent_step_id, deps:list(s.depends_on), title:s.title, outcome:s.text };
-        })
-      });
-    }
-    r.todosCreated = { at:r.approved.at, from:(r.backend==='ledger_bound'?'planunits':'plan_steps'),
-                       count:r.discoveryRunId?made.created:((made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length)),
-                       reused:!!(made&&made.reused) };
-    // A direct Plan build is not a Goal. Use its own linked transcript record.
-    var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
-    if(thread)thread.messages.push({id:ctx.uid('plan-run'),role:'system',
-      type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',
-      detail:'V'+r.version+' · '+r.todosCreated.count+' To-Dos',time:new Date().toISOString()});
-    /* Advance the step gutter on a real interval so Building… is observable.
-       Nothing here is authoritative -- §7.2's gutter is a projection. */
-    stopRun(r);
-    if(!opts.paused) startRunTimer(ctx,r);
-    return true;
+  function admissionSnapshot(ctx,r){
+    const t=ctx.state.threads.find(t=>t.id===r.thread_id), model=ctx.selectedModel();
+    return {project_id:t?.projectId||'pm',thread_id:r.thread_id,worktree:window.PM56_GOAL.scope(r.thread_id)?.worktreeId,
+      version:r.version,hash:hashOf(body(r)),permissions:ctx.state.permissions,
+      route:{modelId:model?.id,modelName:model?.name,provider:model?.provider,accountId:model?.accountId}};
   }
+  function validateAdmission(ctx,r,frozen){
+    const t=ctx.state.threads.find(t=>t.id===frozen.thread_id),sc=window.PM56_GOAL.scope(frozen.thread_id);
+    if(!t||t.archived||r.thread_id!==frozen.thread_id||(t.projectId||'pm')!==frozen.project_id||r.project_id&&r.project_id!==frozen.project_id)return 'scope_changed';
+    if(!sc||sc.worktreeId!==frozen.worktree)return 'worktree_changed';
+    if(r.version!==frozen.version||hashOf(body(r))!==frozen.hash)return 'stale_plan_version';
+    if(ctx.state.permissions!==frozen.permissions)return 'permission_snapshot_changed';
+    const model=(D.models||[]).find(m=>m.id===frozen.route?.modelId);
+    if(!model||model.status!=='ready'||model.accountId!==frozen.route.accountId||model.provider!==frozen.route.provider)return 'provider_route_unavailable';
+    if(RT.quota?.waiting)return 'quota_unavailable';
+    if(r.status!=='ready'||!eligible(r).build)return 'plan_not_ready';
+    return null;
+  }
+  function commitRun(r,run){
+    if(P().runs[run.plan_run_id])return {ok:false,error:'active_run_exists'};
+    window.PM56_TX.set(P().runs,run.plan_run_id,run);return {ok:true,run};
+  }
+  function bindRun(r,g,run){
+    if(!g||g.binding.plan_run_id!==run.plan_run_id||g.binding.plan_hash!==run.plan_hash)return {ok:false,error:'binding_mismatch'};
+    window.PM56_TX.set(r,'goalBinding',g.binding);return {ok:true,binding:g.binding};
+  }
+  function buildCommand(ctx,r,opts={}){
+    if(!r)return {ok:false,error:'plan_not_found'};
+    const TX=window.PM56_TX,G=window.PM56_GOAL,api=window.PM56_PLANS;
+    const expected=opts.expected||admissionSnapshot(ctx,r),topology=opts.execution_topology||'agent';
+    if(!['agent','goal_driven'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
+    const key=[r.plan_id,expected.version,expected.hash,topology].join('|');
+    if(r.buildAdmission?.key===key){
+      const a=r.approved;
+      if(!a||expected.project_id!==a.project_id||expected.thread_id!==r.thread_id||expected.worktree!==a.worktree||expected.permissions!==a.permissions||expected.route?.modelId!==a.modelId||expected.route?.accountId!==a.accountId||expected.route?.provider!==a.provider)return {ok:false,error:'idempotency_binding_mismatch'};
+      return {ok:true,replayed:true,...r.buildAdmission};
+    }
+    const error=validateAdmission(ctx,r,expected);if(error)return {ok:false,error};
+    if(topology==='goal_driven'&&G.get(r.thread_id)&&G.get(r.thread_id).status!=='completed')return {ok:false,error:'active_goal_exists'};
+    const seq=(r.runSerial||0)+1,runId='run-'+r.plan_id+'-V'+r.version+'-'+seq,epoch=(r.runEpoch||0)+1;
+    const stop=window.PM56_SCHED?.stopSnapshot();
+    if(opts.scheduleRef&&stop?.stopped)return {ok:false,error:'manual_stop_latched'};
+    return TX.run(()=>{
+      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,run_id:runId,run_epoch:epoch,
+        strict:topology==='goal_driven'||!!r.workRef,workRef:r.workRef,
+        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text}))});
+      if(!made?.ok)TX.fail(made?.error||'todo_materialization_refused');
+      let error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      let goalResult=null;
+      if(topology==='goal_driven'){
+        goalResult=G.createBound({plan_id:r.plan_id,project_id:expected.project_id,scope:G.scope(r.thread_id),thread:r.thread_id,title:r.title,version:r.version,
+          plan_hash:expected.hash,expected_hash:expected.hash,plan_run_id:runId,idempotency_key:key,
+          planunit_bundle_ref:r.backend==='ledger_bound'?r.plan_id+'@V'+r.version+':planunits':null,
+          source_refs:list(r.sources).map(x=>x.ref).filter(Boolean)});
+        if(!goalResult?.ok)TX.fail(goalResult?.error||'goal_admission_refused');
+      }
+      const invalidation=invalidateSchedulesFor(r,opts.scheduleRef?'scheduled_build':'immediate_build',opts.scheduleRef);
+      error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      if(opts.scheduleRef&&!window.PM56_SCHED.checkEpoch(stop).ok)TX.fail('stale_stop_epoch');
+      const run={schema:'pm.concept.plan_run.v1',plan_run_id:runId,project_id:expected.project_id,thread_id:r.thread_id,plan_id:r.plan_id,plan_version:r.version,plan_hash:expected.hash,
+        epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
+        required_todo_ids:made.ids.slice(),planunit_bundle_ref:goalResult?.goal.binding.planunit_bundle_ref||null,created_at:new Date().toISOString()};
+      const admitted=api.commitRun(r,run);if(!admitted?.ok)TX.fail(admitted?.error||'plan_run_refused');
+      if(goalResult){const binding=api.bindRun(r,goalResult.goal,run);if(!binding?.ok)TX.fail(binding?.error||'goal_binding_refused');}
+      error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      const approved={...freeze(r,ctx),project_id:expected.project_id,thread_id:r.thread_id,worktree:expected.worktree,
+        runtime:expected.route.modelName,modelId:expected.route.modelId,provider:expected.route.provider,accountId:expected.route.accountId,permissions:expected.permissions,plan_run_id:runId,...(opts.scheduleRef?{schedule_id:opts.scheduleRef}:{})};
+      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:'cmd.chat.plan.build',execution_topology:topology};
+      const values={approved,buildAdmission:receipt,runSerial:seq,runEpoch:epoch,status:'building',current:true,buildStep:0,wait:opts.wait||null,attention:opts.paused?{kind:'paused',reason:'Paused at admission.',actions:['resume','cancel']}:null,
+        topology,scheduleInvalidation:invalidation,requiredTodoIds:made.ids.slice(),todosCreated:{at:approved.at,from:r.backend==='ledger_bound'?'planunits':'plan_steps',count:made.created,reused:!!made.reused}};
+      for(const [k,v] of Object.entries(values))TX.set(r,k,v);
+      if(r.backend==='ledger_bound')TX.set(r,'unitsMaterialized',{at:approved.at,scope:r.plan_id+'@V'+r.version,count:list(r.planunits).length,validated:true,validation_kind:'local_scoped_template_validation',plan_hash:expected.hash,scope_kind:'assistant_deep_plan',globalIndex:false,worknodes:0,nodeSeeds:0});
+      const t=ctx.state.threads.find(t=>t.id===r.thread_id);
+      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
+      TX.defer(()=>{stopRun(r);if(!opts.paused)startRunTimer(ctx,r);});
+      return {ok:true,...receipt};
+    });
+  }
+  function admitBuild(ctx,r,opts){const out=buildCommand(ctx,r,opts||{});if(!out.ok)ctx.toast('Build not admitted',out.error?.replaceAll('_',' ')||'Admission refused.');return out.ok;}
 
   /* ONE tick, used by the first admission and by every resume. It used to be
      duplicated, and the copy in resumeRun() simply stopped when no work was
@@ -1310,7 +1330,9 @@
   function runTick(ctx,r){
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
-    if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
+    if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){r.attention={kind:'attention',reason:moved.error,actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
+    else if(a && a.advanceForPlan && !r.goalBinding) moved=a.advanceForPlan(r.plan_id, r.thread_id);
     r._projRev=(r._projRev||1)+1;
     /* PFAIL-007: Completed requires the completion predicate to hold --
        every required leaf resolved. `moved===null` means the projector
@@ -1322,14 +1344,26 @@
         if(s.children) continue;
         if(s.state!=='completed' && s.state!=='skipped') open++;
       }
-      if(open===0){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
+      if(open===0&&(!r.workRef||inspectGoalPlan(r.plan_id).complete)){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
       else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
     }
     ctx.renderApp();
   }
   function startRunTimer(ctx,r){
-    stopRun(r);
-    runTimers[r.plan_id]=setInterval(function(){ runTick(ctx,r); }, 1400);
+    stopRun(r);const epoch=r.runEpoch||0,runId=r.approved?.plan_run_id;
+    function schedule(){
+      if(rec(r.plan_id)!==r||r.status!=='building'||r.runEpoch!==epoch||r.approved?.plan_run_id!==runId||r.attention?.kind==='paused')return;
+      const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
+      if(r.goalBinding&&(!g||G.cancelled(g)||g.binding?.plan_run_id!==runId||g.status!=='active')){r.attention={kind:'paused',reason:'The bound Goal is unavailable or not active. No alternate execution loop is admitted.',actions:['details','cancel']};return;}
+      const evaluation=g?G.evaluate(g.id):null;
+      runTimers[r.plan_id]=setTimeout(()=>{
+        if(rec(r.plan_id)!==r||r.status!=='building'||r.runEpoch!==epoch||r.approved?.plan_run_id!==runId)return;
+        if(g){const out=evaluation?.ok?G.dispatch(evaluation.ticket.id):evaluation;if(!out?.ok){r.attention={kind:out?.waitKind==='quota'?'quota_wait':'attention',reason:(out?.reason||out?.error||'Goal work is not eligible').replaceAll('_',' '),actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
+        else runTick(ctx,r);
+        ctx.renderApp();if(r.status==='building'&&!r.attention)schedule();
+      },1400);
+    }
+    schedule();
   }
 
   /* One place that invalidates every schedule bound to a Plan, whichever owner
@@ -1342,11 +1376,12 @@
       : 'The bound execution ended; this schedule can no longer dispatch.';
     var out={ card:0, scheduler:0, reason:reason };
     if(r.schedule && !r.schedule.invalid){
-      r.schedule.invalid=true; r.schedule.invalidReason=why; out.card=1;
+      window.PM56_TX.set(r.schedule,'invalid',true); window.PM56_TX.set(r.schedule,'invalidReason',why); out.card=1;
     }
     var S=window.PM56_SCHED;
     if(S && S.invalidateForExecution){
-      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, version:r.version, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
+      if(res?.ok===false)window.PM56_TX.fail(res.error||'schedule_invalidation_refused');
       out.scheduler=(res&&res.schedules)||0;
     }
     return out;
@@ -1365,17 +1400,11 @@
     var g=G.bound(r.plan_id); if(!g) return null;
     if(g.status==='completed') return { ok:true, replayed:true, goal_id:g.id, completion:g.completion||null };
     if(g.status==='canceled')  return { ok:false, error:'canceled_is_terminal', goal_id:g.id };
-    var lineage={ schema:'pm.goal.completion_lineage.v1', goal_id:g.id,
-                  assistant_plan_id:r.plan_id, plan_version:r.version,
-                  plan_hash:hashOf(body(r)),
-                  plan_run_id:r.goalBinding.plan_run_id,
-                  todo_list_ref:r.goalBinding.todo_list_ref,
-                  currentness_hash:currentnessOf(r),
-                  at:new Date().toISOString() };
-    G.boundTransition(r.plan_id,'completed',
-      'The bound Plan reached Completed: every required leaf resolved. Completed once, by the host, against the completion predicate — not because a model returned a final message.');
-    g=G.bound(r.plan_id); if(g) g.completion=lineage;
-    return { ok:true, replayed:false, goal_id:lineage.goal_id, completion:lineage };
+    // Only the Goal owner may settle completion. A rejected or stale predicate
+    // must not be turned into a successful lineage receipt by this consumer.
+    const out=G.boundTransition(r.plan_id,'completed');
+    g=G.bound(r.plan_id);
+    return out?.ok&&g?.status==='completed'?{ok:true,replayed:!!out.replayed,goal_id:g.id,completion:g.completion}:{ok:false,error:out?.error||'goal_completion_not_verified'};
   }
 
   /* Resume the demo run from wherever the durable To-Dos left it. */
@@ -1535,6 +1564,7 @@
        says, in words, that it used neither a ledger nor PlanUnits; a Deep Plan
        shows both plus the PlanUnit-to-To-Do mapping. Neither claims a
        guardrail it did not use. */
+    if(r.goalBinding)rows.push('<div class="pd-sec"><button class="soft-button" data-action="pd-open-goal" data-id="'+esc(r.plan_id)+'">Open bound Goal</button></div>');
     rows.push('<section class="pd-sec pd-sec-backend" data-backend="'+esc(r.backend)+'"><h4>Planning backend</h4>'+
       (r.backend==='ledger_bound'
         ? kv('backend','Deep Plan · ledger-bound')+
@@ -1854,7 +1884,9 @@
 
     'pd-cancel': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
+      const goal=window.PM56_GOAL.bound(r.plan_id);if(goal&&!window.PM56_GOAL.cancelled(goal)&&goal.status!=='completed'){window.PM56_GOAL.lifecycle(window.PM56_GOAL.capture(goal),'cancel');ctx.renderApp();return;}
       stopRun(r);
+      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
       r.status='canceled'; r.current=false;
       r.cancelReason='Canceled from the Plan card at V'+r.version+'.';
       r.scheduleInvalidation=invalidateSchedulesFor(r,'manual_cancel');
@@ -1872,6 +1904,7 @@
     // This is a concept action over the existing owner, not a native registration.
     'pd-stop-revise': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r || r.status!=='building') return;
+      window.PM56_GOAL.fenceThread(r.thread_id);r.runEpoch=(r.runEpoch||0)+1;
       stopRun(r);
       r.attention=null; r.wait=null; r.status='ready'; r.current=true;
       r.scheduleInvalidation=invalidateSchedulesFor(r,'stop_for_revision');
@@ -1991,47 +2024,10 @@
        execution_topology=goal_driven, and the Goal, the PlanRun and the
        binding commit together or not at all. */
     'pd-build-goal': function(ctx,btn){
-      var r=rec(btn.dataset.id); if(!r) return;
-      if(r.status!=='ready'){ ctx.toast('Not admissible','Build as Goal needs a Plan whose control reads Build.'); return; }
-      var G=window.PM56_GOAL;
-      if(!G || !G.createBound){ ctx.toast('Unavailable','The Goal owner is not loaded; nothing was created.'); return; }
-      var hash=hashOf(body(r));
-      var key=r.plan_id+'@V'+r.version+':'+hash;      /* PGOAL-012 idempotency */
-      var runId='run-'+r.plan_id+'-V'+r.version;
-      /* PGOAL-003: reserve the Goal FIRST and only then admit the run, so a
-         refused Goal leaves no PlanRun behind and a failed build leaves no
-         orphan Goal. */
-      var res=G.createBound({
-        plan_id:r.plan_id, thread:r.thread_id, title:r.title, version:r.version,
-        plan_hash:hash, expected_hash:hash, plan_run_id:runId,
-        idempotency_key:key,
-        planunit_bundle_ref:(r.backend==='ledger_bound' ? (r.plan_id+'@V'+r.version+':planunits') : null),
-        source_refs:['msg:'+r.thread_id+':plan-'+r.plan_id]
-      });
-      if(!res.ok){
-        ctx.toast('Refused', res.error==='active_run_exists'
-          ? 'A Goal is already bound to this Plan; exactly one binding may exist.'
-          : 'The Plan version changed; refresh and try again. Nothing was created.');
-        return;
-      }
-      if(res.replayed){
-        ctx.toast('Already bound','Same idempotency key — returned the original Goal and PlanRun. Exactly one of each exists.');
-        ctx.renderApp(); return;
-      }
-      r.topology='goal_driven';
-      r.goalBinding=res.goal.binding;
-      if(!admitBuild(ctx,r,{})){
-        /* All-or-none: the Goal is rolled back rather than left active. */
-        G.boundTransition(r.plan_id,'canceled','Rolled back: the PlanRun was not admitted.');
-        r.topology=null; r.goalBinding=null;
-        ctx.toast('Build not admitted','No Goal, no PlanRun, no binding. Nothing partial was left behind.');
-        return;
-      }
-      ctx.addReceipt && ctx.addReceipt('goal-receipt','Build as Goal admitted · '+r.title,
-        'One Goal, one PlanRun, one binding · V'+r.version+' · '+hash+' · reuses the existing To-Dos'+
-        (r.backend==='ledger_bound'?' and scoped PlanUnits':'')+' · Orchestrator not entered');
-      ctx.renderApp();
-      ctx.toast('Build as Goal','Goal, PlanRun and binding committed together. The Goal is in Activity, not on a card.');
+      const r=rec(btn.dataset.id);if(!r)return;
+      const expected=admissionSnapshot(ctx,r);if(btn.dataset.version)expected.version=Number(btn.dataset.version);if(btn.dataset.hash)expected.hash=btn.dataset.hash;
+      const out=buildCommand(ctx,r,{execution_topology:'goal_driven',expected});
+      ctx.renderApp();if(!out.ok)ctx.toast('Build not admitted',out.error.replaceAll('_',' '));else ctx.toast(out.replayed?'Already admitted':'Build as Goal','One Goal and one exact Plan run. Goal is in Activity; work stays in the shared To-Dos.');
     },
 
     /* --- Additive Correction v4: attention actions (PFAIL-002..005) -----
@@ -2044,9 +2040,7 @@
       if(a.allowed_action_ids.indexOf(act)<0){ ctx.toast('Not admitted','That action is not in the owner’s allowed set for this condition.'); return; }
       if(act==='details'){ openDlg(ctx,'info',r.plan_id); ctx.renderApp(); return; }
       if(act==='cancel'){ ACTIONS['pd-cancel'](ctx,btn); return; }
-      if(act==='revise'){ r.attention=null; r.status='ready'; r.current=true; stopRun(r);
-        ctx.toast('Stopped for revision','The run stopped at a safe boundary. Approved bytes never mutated under in-flight work.');
-        ctx.renderApp(); return; }
+      if(act==='revise'){ ACTIONS['pd-stop-revise'](ctx,btn); return; }
       if(act==='retry'){
         /* PFAIL-003: a NEW attempt under the SAME run. No duplicate PlanRun,
            and completed side effects are not replayed. */
@@ -2056,6 +2050,11 @@
         ctx.renderApp(); return;
       }
       if(act==='resume'||act==='recover'||act==='reconnect'){
+        const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
+        if(g){
+          if(act!=='resume'&&g.status!=='active'){ctx.toast('Explicit Goal Resume required','Recovery or reconnect does not override your manual stop.');return;}
+          if(act==='resume'&&g.status!=='active'){const out=G.lifecycle(G.capture(g),'active');if(!out.ok)ctx.toast('Not resumed',out.error);ctx.renderApp();return;}
+        }
         r.attention=null; resumeRun(ctx,r); ctx.renderApp();
         ctx.toast('Resumed','Continued from durable state; Plan and To-Do identity preserved.');
         return;
@@ -2229,6 +2228,7 @@
   EXT.chainAction('reset-all', function(){
     Object.keys(runTimers).forEach(function(k){ clearInterval(runTimers[k]); delete runTimers[k]; });
     P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      P().runs={};
     ui.expanded = {};
     return false;   /* fall through to app.js's own reset */
   });
@@ -2257,6 +2257,8 @@
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
   return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
+
+  EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
 
   // The existing Plan owner accepts a validated BrainStorm synthesis. Its
   // scoped ledger/units are concept records, not repository WorkNodes or canon.
@@ -2322,7 +2324,55 @@
     return {ok:true,planId:id,reused:false};
   }
 
+  function inspectGoalPlan(id){
+    const r=rec(id),run=r&&P().runs[r.approved?.plan_run_id];
+    const fail=(reason,waitKind=null)=>({eligible:false,complete:false,reason,waitKind,fingerprint:JSON.stringify({id,reason,version:r?.version,epoch:r?.runEpoch})});
+    if(!r||!run||r.status!=='building'||run.state==='canceled')return fail('Plan run unavailable');
+    if(r.version!==run.plan_version||hashOf(body(r))!==run.plan_hash)return fail('Bound Plan changed');
+    if(JSON.stringify(window.PM56_GOAL.scope(r.thread_id))!==JSON.stringify(run.scope))return fail('Plan scope changed');
+    const c=EXT.ctx(),model=(D.models||[]).find(m=>m.id===run.route.modelId);
+    if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
+    if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
+    if(r.attention)return fail(r.attention.reason);
+    if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
+    const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
+    const unitError=r.backend==='ledger_bound'?discoveryBuildError(r):null;
+    const complete=work.complete===true&&work.verified===true&&todos.ok&&!unitError;
+    return {eligible:work.eligible===true&&!unitError,complete,verified:complete,requiredResolved:complete,evidenceRefs:complete?todos.evidenceRefs:[],reason:unitError||work.reason,
+      fingerprint:JSON.stringify({version:r.version,hash:hashOf(body(r)),epoch:r.runEpoch,work:work.fingerprint,todos:todoApi().get(r.thread_id)?.map(t=>[t.todo_id,t.status,t.revision]),unitError}),nextAttemptRef:work.nextAttemptRef};
+  }
+  function finalizeGoalRun(id){const r=rec(id),x=inspectGoalPlan(id);if(!x.complete)return {ok:false,error:'plan_completion_not_verified'};
+    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);return {ok:true};
+  }
+  function createFromWorkRequest(o){
+    const c=EXT.ctx(),t=c.state.threads.find(t=>t.id===o?.threadId),owner=workOwners.get(o?.workRef?.kind);
+    if(!t||!o.explicitRequest||!owner?.plan)return {ok:false,error:'explicit_work_plan_request_required'};
+    if(currentPlan(t.id))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const payload=owner.plan(o.workRef.ref);if(!payload?.ok||!payload.steps?.length)return {ok:false,error:'work_plan_not_ready'};
+    const id='work-plan-'+o.workRef.ref,prior=rec(id);if(prior)return {ok:true,replayed:true,planId:id};
+    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>step(st.id,st.title,st.outcome,st.deps||[]))];
+    const r=planRec({id,thread:t.id,title:payload.title,strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,sources:payload.sourceRefs||[]});
+    r.project_id=t.projectId||'pm';r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
+    return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
+  }
+  window.PM56_GOAL.registerOwner('assistant_plan',{inspect:inspectGoalPlan,advance:(id)=>{const r=rec(id);if(!r)return {ok:false,error:'plan_missing'};runTick(EXT.ctx(),r);return r.attention?{ok:false,error:r.attention.reason}:{ok:true};},complete:finalizeGoalRun});
   window.PM56_PLANS = {
+    admissionSnapshot:id=>{const r=rec(id);return r?admissionSnapshot(EXT.ctx(),r):null;},
+    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}), commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,
+    runs:()=>P().runs,
+    scopedBundle:ref=>{const r=Object.values(P().records).find(r=>r.backend==='ledger_bound'&&ref===r.plan_id+'@V'+r.version+':planunits');return r?r.planunits:null;},
+    registerWorkOwner:(kind,owner)=>{if(workOwners.has(kind))throw new Error('duplicate_plan_work_owner');workOwners.set(kind,owner);},
+    goalConflict:id=>{const r=rec(id);if(!r)return;stopRun(r);r.runEpoch=(r.runEpoch||0)+1;r.attention={kind:'attention',reason:'Goal/Plan mismatch. Stop and use Revise; approved Plan bytes have not changed.',actions:['revise','cancel','details']};},
+    resumeFromQuota:b=>{
+      const r=rec(b.assistant_plan_id),g=window.PM56_GOAL.bound(b.assistant_plan_id);
+      if(!r||!g||window.PM56_GOAL.cancelled(g)||g.status!=='active'||r.status!=='building'||r.version!==b.plan_version||hashOf(body(r))!==b.plan_hash)return {ok:false,error:'bound_plan_not_current'};
+      if(r.attention&&r.attention.kind!=='quota_wait')return {ok:false,error:'nonquota_wait_requires_its_owner'};
+      if(RT.quota?.waiting)return {ok:false,error:'quota_unavailable'};
+      r.attention=null;const check=inspectGoalPlan(r.plan_id);if(!check.eligible&&!check.complete){r.attention={kind:'attention',reason:check.reason,actions:['details','cancel']};return {ok:false,error:check.reason};}
+      startRunTimer(EXT.ctx(),r);return {ok:true,goal_id:g.id,plan_run_id:r.approved.plan_run_id};
+    },
+    canResumeGoal:b=>{const r=rec(b.assistant_plan_id);return !r||r.status!=='building'||r.version!==b.plan_version||hashOf(body(r))!==b.plan_hash?{ok:false,error:'bound_plan_not_current'}:{ok:true};},
+
     createFromRoom:createFromRoom,
     createFromDiscovery:createFromDiscovery,
     createFromBrainstorm:createFromBrainstorm,
@@ -2330,14 +2380,12 @@
     // Concept-only admission seam. The scheduler validates its due time and
     // receipt; the Plan owner independently rechecks exact identity and state.
     admitScheduled:function(binding){
-      var c=EXT.ctx&&EXT.ctx(),r=binding&&rec(binding.target_id);
-      if(!c||!r||r.thread_id!==binding.thread_id)return {ok:false,clause:'target_not_found'};
-      if(r.version!==binding.exact_target_version||hashOf(body(r))!==binding.exact_target_hash)
-        return {ok:false,clause:'target_version_changed'};
-      if(r.status!=='ready'||!eligible(r).build)return {ok:false,clause:'plan_not_ready'};
-      var ok=admitBuild(c,r,{scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
-      c.renderApp();return {ok:ok,clause:ok?null:'plan_not_ready',approved:ok?r.approved:null};
+      const c=EXT.ctx(),r=rec(binding.target_id);if(!r)return {ok:false,clause:'target_not_found'};
+      const expected={project_id:binding.project_id,thread_id:binding.thread_id,worktree:binding.owner_worktree_snapshot||binding.worktree_snapshot,version:binding.exact_target_version,hash:binding.exact_target_hash,permissions:binding.permission_snapshot,route:binding.runtime_snapshot};
+      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      return {...out,clause:out.error||null,approved:out.ok?r.approved:null};
     },
+
     editorBody:editorBody,
     /* Which Plan an artifact id maps to, so app.js's artifact header can read
        the owner's version and Build label instead of the legacy record. */
@@ -2358,6 +2406,7 @@
          a Plan the caller believes it just reset. */
       for(var k in runTimers){ if(runTimers[k]){ clearInterval(runTimers[k]); runTimers[k]=null; } }
       P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      P().runs={};
       /* The question counters are durable run records, not view state: leaving
          them behind made a restored Plan report questions it had never asked. */
       if(RT.questionBudget){ RT.questionBudget.runs={}; RT.questionBudget.seq=0; }
@@ -2380,12 +2429,14 @@
     boundPause:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
       stopRun(r);
-      r.attention={ kind:'paused', reason:'Paused through the bound Goal at a shared safe boundary. The Build control stays Building….',
+      r.runEpoch=(r.runEpoch||0)+1;
+      r.attention={ kind:'paused', reason:'Paused at a shared safe boundary. The Build control stays Building….',
                     actions:['resume','cancel','details'] };
       return { paused:true, label:BUILD_LABEL[r.status] };
     },
     boundResume:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
+      const g=r.goalBinding&&window.PM56_GOAL.bound(planId);if(r.goalBinding&&(!g||window.PM56_GOAL.cancelled(g)||g.status!=='active'))return {resumed:false,error:'goal_not_active'};
       r.attention=null;
       var c=EXT.ctx&&EXT.ctx(); if(c) resumeRun(c,r);
       return { resumed:true, label:BUILD_LABEL[r.status] };
@@ -2393,6 +2444,7 @@
     boundCancel:function(planId, epoch){
       var r=rec(planId); if(!r) return null;
       stopRun(r);
+      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
       r.status='canceled'; r.current=false; r.attention=null;
       r.cancelReason='Cancelled through the bound Goal. The PlanRun and every attempt are fenced at continuation epoch '+epoch+'; no window or Usage reset can resume it.';
       /* PSCHED-010 / SMSG-016: association-scoped invalidation. Only THIS

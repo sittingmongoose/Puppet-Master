@@ -635,6 +635,7 @@
 
   function P() { return RT.scheduling; }
   function persistNow() {
+    if(window.PM56_TX?.isActive()){window.PM56_TX.defer(persistNow);return;}
     try {
       var out = JSON.parse(JSON.stringify(P()));
       out.lastSavedAt = nowIso();
@@ -689,6 +690,7 @@
     var S = P();
     S.stopped = false;
     S.stopReason = null;
+    for(const b of S.buildSchedules)if(['active','paused','held'].includes(b.state)&&!b.dispatchReceipt)b.user_stop_epoch=S.stopEpoch;
     logEvent('runtime.quota_resume_attempted', 'precedence', null, 'Manual Stop cleared by explicit user action at epoch ' + S.stopEpoch + '. Nothing automatic could have done this.');
   }
 
@@ -831,6 +833,7 @@
     var plan=window.PM56_PLANS&&window.PM56_PLANS.get(planId);
     return {
       contentHash:plan?window.PM56_PLANS.hash(planId):null,
+      expected:plan?window.PM56_PLANS.admissionSnapshot(planId):null,executionTopology:'agent',
       planId: planId, version: version, kind: 'recurring_window',
       date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
@@ -843,6 +846,9 @@
     if(!plan||plan.status!=='ready'||plan.version!==d.version||window.PM56_PLANS.hash(d.planId)!==d.contentHash){
       d.error='Plan changed. Close this form and schedule the current version.';ctx.renderOverlays();return null;
     }
+    const currentSnapshot=window.PM56_PLANS.admissionSnapshot(d.planId);
+    if(d.expected&&JSON.stringify(d.expected)!==JSON.stringify(currentSnapshot)){d.error='Project, worktree, permissions or provider route changed. Reopen this form.';ctx.renderOverlays();return null;}
+    if(!['agent','goal_driven'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
     var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
@@ -855,9 +861,11 @@
       scheduledUtc = new Date(ms).toISOString();
     }
     var rec = {
-      schedule_id: id, project_id: 'pm', target_kind: 'assistant_plan_run', target_id: d.planId,
+      schedule_id: id, project_id: currentSnapshot.project_id, target_kind: 'assistant_plan_run', target_id: d.planId,
       exact_target_version: d.version, exact_target_hash: hash,
-      binding_kind:'plan_content_v1',execution_topology:'agent',thread_id:plan.thread_id,
+      binding_kind:'plan_content_v1',execution_topology:d.executionTopology||'agent',thread_id:plan.thread_id,
+      topology_snapshot:{schema:'pm.schedule.plan_topology_snapshot.v1',execution_topology:d.executionTopology||'agent'},user_stop_epoch:P().stopEpoch,
+      owner_worktree_snapshot:currentSnapshot.worktree,runtime_created:false,plan_run_id:null,goal_id:null,
       runtime_snapshot:{modelId:model.id,modelName:model.name,provider:model.provider,accountId:model.accountId},
       permission_snapshot:ctx.state.permissions,worktree_snapshot:ctx.state.worktree,
       dispatchReceipt:null,
@@ -874,6 +882,7 @@
       log: [{ at: nowIso(), text: 'Schedule created: ' + (oneTime ? ('one-time build at ' + to12h(d.time) + ' ' + tzLabel(d.timezone)) : ('recurring window ' + to12h(d.startTime) + '–' + to12h(d.pauseTime) + ' ' + tzLabel(d.timezone) + ', ' + daysSummary(d.days))) + '.' }],
       createdAt: nowIso(), updatedAt: nowIso()
     };
+    if(!oneTime)rec.next_occurrence_at=new Date(computeNextOccurrence(rec,Date.now())).toISOString();
     if (existing) {
       // Edit the existing owner record atomically: no temporary schedule or
       // orphan creation event and no loss of already admitted occurrence IDs.
@@ -971,37 +980,44 @@
   // atMs is the demonstrated clock time, never a global Date override. This
   // checks a real content binding and admits through the existing Plan owner.
   // It is NOT a background service or production runtime implementation.
-  function dispatchBuildAt(id,atMs,expectedRevision){
-    var b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx&&EXT.ctx();
-    if(!b||!api||!c)return {ok:false,clause:'target_not_found'};
-    var fail=function(clause,detail){return {ok:false,clause:clause,detail:detail||clause};};
+  function dispatchBuildAt(id,atMs,expectedRevision,epochAtDecision){
+    const b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx?.(),TX=window.PM56_TX;
+    const fail=(clause,detail)=>({ok:false,clause,error:clause,detail:detail||clause});
+    if(!b||!api||!c)return fail('target_not_found');
     if(expectedRevision!=null&&expectedRevision!==b.revision)return fail('stale_schedule_revision');
     if(b.dispatchReceipt)return {ok:true,duplicate:true,receipt:b.dispatchReceipt};
-    var eligible=evaluateEligibility('build',b,P().stopEpoch);
-    if(!eligible.ok)return fail(eligible.clause,eligible.detail);
+    const captured=epochAtDecision??b.user_stop_epoch??P().stopEpoch;
+    const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
     if(b.state!=='active')return fail('schedule_not_active');
-    if(b.binding_kind!=='plan_content_v1'||b.schedule_kind!=='one_time'||b.execution_topology!=='agent')return fail('unsupported_demo_schedule');
-    if(!Number.isFinite(atMs)||atMs<Date.parse(b.scheduled_at_utc))return fail('window_not_open');
-    var plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
+    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
+    const due=b.schedule_kind==='one_time'?Date.parse(b.scheduled_at_utc):Date.parse(b.next_occurrence_at||b.createdAt);
+    if(!Number.isFinite(atMs)||!Number.isFinite(due)||atMs<due)return fail('window_not_open');
+    const plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
     if(!plan||!thread||thread.archived||plan.thread_id!==b.thread_id)return fail('target_not_found');
     if(plan.version!==b.exact_target_version||api.hash(plan.plan_id)!==b.exact_target_hash){
       b.state='invalidated';b.pendingVersion=plan.version;b.pendingHash=api.hash(plan.plan_id);b.revision++;
       b.invalidated_reason='The scheduled Plan content changed. Review the current version before dispatch.';
       logBuildLine(b,b.invalidated_reason);persistNow();c.renderApp();return fail('target_version_changed');
     }
-    var model=(D.models||[]).find(function(m){return m.id===b.runtime_snapshot.modelId&&m.accountId===b.runtime_snapshot.accountId;});
-    if(!model||model.status!=='ready')return fail('route_unavailable');
-    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_changed');
+    const runtime=b.runtime_snapshot||{},model=(D.models||[]).find(m=>m.id===runtime.modelId);
+    if(!model||model.accountId!==runtime.accountId||model.status!=='ready'||model.provider!==runtime.provider)return fail('route_unavailable');
+    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_snapshot_changed');
     if(c.state.permissions!==b.permission_snapshot)return fail('permission_snapshot_changed');
-    if(RT.quota&&RT.quota.waiting)return fail('quota_unavailable');
-    var result=api.admitScheduled(b);if(!result.ok)return result;
-    b.lastOccurrenceStart=b.scheduled_at_utc;b.occurrencesFired.push(b.scheduled_at_utc);
-    b.dispatchReceipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,
-      hash:b.exact_target_hash,occurrence:b.scheduled_at_utc,at:new Date(atMs).toISOString(),concept:true};
-    b.state='completed';b.runPhase='admitted';b.revision++;b.updatedAt=nowIso();
-    logBuildLine(b,'One-time occurrence admitted through the Plan owner. Repeated ticks return this receipt.');
-    logEvent('scheduled_dispatch.dispatched',id,null,'V'+b.exact_target_version+' started with its frozen content binding.');
-    persistNow();c.renderApp();return {ok:true,duplicate:false,receipt:b.dispatchReceipt};
+    if(RT.quota?.waiting)return fail('quota_unavailable');
+    const frozen=JSON.stringify(b),revision=b.revision;
+    const out=TX.run(()=>{
+      const result=api.admitScheduled(b);if(!result.ok)TX.fail(result.error||result.clause||'plan_admission_refused');
+      if(JSON.stringify(b)!==frozen||b.revision!==revision)TX.fail('schedule_changed_during_admission');
+      if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
+      const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
+        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null};
+      for(const [k,v] of Object.entries({lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
+        state:b.schedule_kind==='one_time'?'completed':'active',runPhase:'admitted',runtime_created:true,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null,revision:b.revision+1,updatedAt:nowIso(),
+        log:[{at:nowIso(),text:'Admitted through the shared Plan command. Duplicate delivery returns the original run and Goal.'},...b.log]}))TX.set(b,k,v);
+      TX.set(P(),'events',[{id:'ev-'+id+'-dispatch',at:nowIso(),type:'scheduled_dispatch.dispatched',ref:id,clause:null,detail:'V'+b.exact_target_version+' admitted with its frozen topology.'},...P().events].slice(0,60));
+      persistNow();TX.defer(()=>c.renderApp());return {ok:true,duplicate:false,receipt};
+    });
+    return {...out,clause:out.error||null};
   }
 
   function computeNextOccurrence(rec, fromMs) {
@@ -1014,9 +1030,26 @@
   }
   function advanceWindow(id) {
     var rec = findBuild(id); if (!rec) return { refused: true, detail: 'Schedule not found.' };
-    if(rec.binding_kind==='plan_content_v1'&&rec.schedule_kind==='one_time'){
-      var dispatched=dispatchBuildAt(id,Date.parse(rec.scheduled_at_utc),rec.revision);
+    if(rec.binding_kind==='plan_content_v1'&&!rec.dispatchReceipt){
+      var dispatched=dispatchBuildAt(id,Date.parse(rec.schedule_kind==='one_time'?rec.scheduled_at_utc:rec.next_occurrence_at),rec.revision,rec.user_stop_epoch);
       return {refused:!dispatched.ok,duplicate:!!dispatched.duplicate,detail:dispatched.detail||dispatched.clause||'Scheduled build started.'};
+    }
+    if(rec.binding_kind==='plan_content_v1'&&rec.dispatchReceipt){
+      const plan=window.PM56_PLANS.get(rec.target_id),g=rec.goal_id&&window.PM56_GOAL.byId(rec.goal_id);
+      if(rec.schedule_kind==='one_time')return {refused:false,duplicate:true,detail:'The original dispatch receipt is retained.'};
+      if(rec.state!=='active'||!evaluateEligibility('build',rec,rec.user_stop_epoch).ok)return {refused:true,detail:'Schedule or manual-stop latch prevents this window.'};
+      if(plan?.status==='completed'){rec.state='completed';persistNow();return {refused:false,detail:'The single admitted run completed; no duplicate build.'};}
+      if(plan?.status!=='building'||g&&window.PM56_GOAL.cancelled(g))return {refused:true,detail:'The bound run has ended.'};
+      if(g&&g.status!=='active')return {refused:true,detail:'A user-paused or blocked Goal is not resumed by an execution window.'};
+      if(rec.runPhase==='admitted'){
+        window.PM56_PLANS.boundPause(rec.target_id);rec.runPhase='paused_safe';rec.log.unshift({at:nowIso(),text:'Local window closed at a safe boundary. No duplicate run was created.'});
+      }else{
+        if(!rec.auto_resume_next_window)return {refused:true,detail:'Resume next window was not authorized.'};
+        const out=window.PM56_PLANS.canResumeGoal({assistant_plan_id:rec.target_id,plan_version:rec.exact_target_version,plan_hash:rec.exact_target_hash});
+        if(!out.ok)return {refused:true,detail:out.error};
+        window.PM56_PLANS.boundResume(rec.target_id);rec.runPhase='admitted';rec.log.unshift({at:nowIso(),text:'Local next window resumed the original run.'});
+      }
+      persistNow();return {refused:false,detail:'Advanced one local execution-window boundary for the existing run.'};
     }
     if (rec.state !== 'active') return { refused: true, detail: 'This schedule is ' + rec.state + '; nothing to advance.' };
     var epoch = P().stopEpoch;
@@ -1096,6 +1129,14 @@
      that composer-state.js renders; never renders a second strip or a
      second checkbox here.
      ===================================================================== */
+  // Bind this local consent to the admitted Goal, never current UI focus on reset.
+  function bindGoalQuotaConsent(enabled){
+    const G=window.PM56_GOAL,g=G?.get();if(!g||g.demo||!g.activeRunRef||G.cancelled(g))return null;
+    const id='quota-'+g.id,prior=P().quotaConsents.find(x=>x.consent_id===id);
+    const row={consent_id:id,enabled:!!enabled,state:enabled?'active':'revoked',goal_id:g.id,goal_token:G.capture(g),run_id:g.activeRunRef,thread_id:g.thread,project_id:g.projectId,association_id:g.binding?.assistant_plan_id||g.id,scope:'this_goal_and_run_only',updated_at:nowIso()};
+    if(prior)Object.assign(prior,row);else P().quotaConsents.push(row);persistNow();return row;
+  }
+  document.addEventListener('change',e=>{if(e.target.getAttribute?.('data-cs-input')==='quota-resume')bindGoalQuotaConsent(e.target.checked);});
   function attemptAutoResume() {
     var epoch = P().stopEpoch;
     var elig = evaluateEligibility('quota', null, epoch);
@@ -1108,6 +1149,12 @@
       consent.updated_at = nowIso();
     }
     logEvent('runtime.quota_resume_attempted', consent ? consent.consent_id : 'quota', elig.clause, elig.detail);
+    if(elig.ok){
+      const bound=P().quotaConsents.filter(x=>x.enabled&&x.state==='active'&&x.goal_token);
+      const outcomes=bound.map(x=>({consent_id:x.consent_id,...window.PM56_GOAL.resumeFromQuota(x.goal_token)}));
+      elig={...elig,goal_outcomes:outcomes};
+      if(outcomes.some(x=>!x.ok))elig={...elig,ok:false,clause:'goal_resume_fenced',detail:'One or more captured Goal consents were stale, manually stopped, or no longer eligible. No stopped Goal was resumed.'};
+    }
     persistNow();
     return elig;
   }
@@ -1193,7 +1240,7 @@
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
       (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
       (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
-      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+facts([
+      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Advance local clock to dispatch</button>':'')+facts([
         ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
       ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
       (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
@@ -1228,6 +1275,7 @@
     if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
     return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
       '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
+      '<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
       '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
       '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
       '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
@@ -1483,30 +1531,18 @@
      the schedules and quota consent tied to THAT execution are invalidated;
      a thread's unrelated scheduled user messages are never cleared. */
   function invalidateForExecution(assoc){
-    var out={ schedules:0, consents:0, untouched:0 }, i;
-    var builds=P().buildSchedules;
-    for(i=0;i<builds.length;i++){
-      var b=builds[i];
-      if(b.target_id===assoc.plan_id && b.schedule_id!==assoc.exclude_schedule_id && ['active','paused','held'].includes(b.state)){
-        b.state='invalidated';b.revision++;
-        b.invalidated_reason = assoc.why ||
-          ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
-        b.invalidReason = b.invalidated_reason;
-        b.updatedAt = nowIso();
-        logBuildLine(b, 'Invalidated: '+b.invalidated_reason);
-        out.schedules++;
-      }
+    const TX=window.PM56_TX,out={schedules:0,consents:0,untouched:0};
+    for(const b of P().buildSchedules){
+      if(b.target_id!==assoc.plan_id||b.schedule_id===assoc.exclude_schedule_id||!['active','paused','held'].includes(b.state))continue;
+      if(assoc.version!=null&&b.exact_target_version!==assoc.version)continue;
+      TX.set(b,'state','invalidated');TX.set(b,'revision',b.revision+1);
+      const why=assoc.why||'The bound execution was cancelled at continuation epoch '+assoc.epoch+'.';
+      TX.set(b,'invalidated_reason',why);TX.set(b,'invalidReason',why);TX.set(b,'updatedAt',nowIso());TX.set(b,'log',[{at:nowIso(),text:'Invalidated: '+why},...(b.log||[])].slice(0,40));out.schedules++;
     }
-    var consents=P().quotaConsents||[];
-    for(i=0;i<consents.length;i++){
-      var c=consents[i];
-      if((c.association_id===assoc.plan_id || c.target_id===assoc.plan_id) && c.state!=='revoked'){
-        c.state='revoked'; c.revokedReason='Bound execution cancelled.'; out.consents++;
-      }
-    }
-    out.untouched=P().scheduledMessages.filter(function(m){ return m.state==='scheduled'||m.state==='held'; }).length;
-    persistNow();
-    return out;
+    for(const c of P().quotaConsents||[]){if((c.association_id===assoc.plan_id||c.target_id===assoc.plan_id)&&c.state!=='revoked'){
+      TX.set(c,'state','revoked');TX.set(c,'revokedReason','Bound execution cancelled.');out.consents++;
+    }}
+    out.untouched=P().scheduledMessages.filter(m=>['scheduled','held'].includes(m.state)).length;persistNow();return out;
   }
 
   /* =====================================================================
@@ -1608,7 +1644,7 @@
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
-    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
   ACT['sched-create-build'] = function (ctx, btn) {
@@ -1730,6 +1766,7 @@
     else if (k === 'msg-model' && md) md.modelId = t.value;
     else if (k === 'msg-missed' && md) md.missed = t.value;
     else if (k === 'msg-grace' && md) md.grace = clamp(t.value, 1, 1440);
+    else if (k === 'build-topology' && bd) bd.executionTopology=t.value;
     else if (k === 'build-date' && bd) bd.date = t.value;
     else if (k === 'build-time' && bd) bd.time = t.value;
     else if (k === 'build-start' && bd) bd.startTime = t.value;
@@ -1752,8 +1789,12 @@
 
   window.PM56_SCHED = {
     openBuildAt: openBuildAt,
+    latchStop:(reason)=>{latchStop(reason);persistNow();},
+    stopSnapshot:()=>({epoch:P().stopEpoch,stopped:P().stopped}),
+    checkEpoch:token=>token?.epoch!==P().stopEpoch?{ok:false,error:"stale_stop_epoch"}:P().stopped?{ok:false,error:"manual_stop_latched"}:{ok:true},
     planSummary:planSummary,
     dispatchBuildAt:dispatchBuildAt,
+    bindGoalQuotaConsent,attemptAutoResume,simulateQuotaReset,
     list: function () { return { messages: P().scheduledMessages, builds: P().buildSchedules, consents: P().quotaConsents, events: P().events }; },
     /* Additive Correction v4 (SMSG / PSCHED). */
     messageProjection: function (id) { var r = smById(id); return r ? messageProjection(r) : null; },

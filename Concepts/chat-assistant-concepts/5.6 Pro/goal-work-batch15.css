@@ -1,0 +1,37 @@
+/* Batch 15 uses existing motion and theme tokens, not a new animation family. */
+.orders15-workspace {padding:clamp(14px,3vw,30px);max-width:1040px;margin:0 auto;min-width:0;overflow-wrap:anywhere;}
+.orders15-workspace header {margin-bottom:20px;}
+.orders15-workspace h1 {font-size:26px;margin:5px 0 10px;letter-spacing:-.035em;}
+.orders15-workspace p {line-height:1.6;color:var(--muted);}
+.orders15-eyebrow {font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.orders15-actions {display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.orders15-results {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin:22px 0;}
+.orders15-results section {border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--panel);min-width:0;}
+.orders15-results h2 {font-size:15px;margin:0 0 8px;}
+.orders15-results strong {font-size:13px;display:block;margin-top:16px;}
+.orders15-workspace pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.6;}
+.orders15-workspace details {border:1px solid var(--border);border-radius:12px;padding:16px;}
+.orders15-entry {min-width:0;margin:8px 0;}
+.orders15-entry-head {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 2px;}
+.orders15-entry-head p {margin:5px 0;font-size:12px;color:var(--muted);}
+.orders15-entry-head small {color:var(--muted);font-size:11px;}
+.orders15-entry .working-card {margin-top:8px;}
+.orders15-entry .working-head {flex-wrap:wrap;}
+.orders15-entry .working-controls {flex:0 0 auto;max-width:100%;margin-left:auto;flex-wrap:wrap;gap:6px;}
+.orders15-entry .working-controls button {font-size:11px;}
+.orders15-guide {display:flex;align-items:center;gap:12px;margin:9px 4px;font-size:11px;color:var(--muted);line-height:1.5;}
+.orders15-guide strong {display:block;color:var(--text);}
+.orders15-guide button {margin-left:auto;flex:none;}
+@media(max-width:750px){.orders15-entry .working-head {flex-wrap:wrap;}.orders15-entry .working-controls{margin-left:auto;}.orders15-workspace{padding:16px;}}
+
+/* Keep full Goal detail usable at the actual Activity column width. */
+.goal-section-v2 {min-width:0;overflow-wrap:anywhere;}
+.goal-section-v2 pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;line-height:1.55;}
+.goal-section-v2 .goal-history-row,.goal-section-v2 .goal-cont-row {grid-template-columns:minmax(0,1fr) auto;}
+.goal-section-v2 .goal-history-row p,.goal-section-v2 .goal-cont-row p {grid-column:1/-1;margin:2px 0;font-size:11px;line-height:1.5;}
+.goal-section-v2 .goal-history-row small,.goal-section-v2 .goal-cont-row small {font-size:10px;color:var(--muted);}
+.goal-section-v2 .goal-approval-pair {grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));}
+.goal-section-v2 .goal-edit-foot {flex-wrap:wrap;}
+
+.orders15-entry {padding-bottom:56px;}
+.goal-section-v2 .soft-button:disabled {opacity:.45;cursor:not-allowed;}

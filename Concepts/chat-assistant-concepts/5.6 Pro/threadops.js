@@ -336,7 +336,9 @@
         createdAt: new Date().toISOString()
       }
     };
+    nt.worktreeId=src.worktreeId||src.worktree?.id||ctx.state.worktree;
     ctx.state.threads.unshift(nt);
+    window.PM56_GOAL?.rebind(window.PM56_GOAL.checkpoint(src.id),nt.id,'branch');
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch');
     window.PM56_LENS?.fork(src.id, nt.id);
 
@@ -374,6 +376,8 @@
       messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
+      goalCheckpoint:window.PM56_GOAL?.checkpoint(t.id)||null,
+      goalCheckpointScope:'accepted objective at restore-point creation; not inferred from an older transcript anchor',
       deleted: false,
       /* Ordinary user-facing messages are captured in snapshot */
       snapshot: ctx.clone(ordinaryCovered),
@@ -421,7 +425,7 @@
       status: 'idle', pinned: false, archived: false, unread: 0, updated: 'now',
       model: src.model,
       summary: 'Branched from ' + rp.label + ' of ' + src.title,
-      worktree: null,
+      worktree: null,worktreeId:src.worktreeId||src.worktree?.id||ctx.state.worktree,
       /* The SNAPSHOT, not the live prefix: that is what an immutable restore
          point is for. Internal notes are filtered from ordinary messages. */
       messages: ctx.clone(rp.snapshot).filter(function (m) { return !isInternalNote(m); }),
@@ -439,6 +443,7 @@
       }
     };
     ctx.state.threads.unshift(nt);
+    window.PM56_GOAL?.rebind(rp.goalCheckpoint,nt.id,'branch');
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch-from-restore');
     dispatch(CMD.branchFromRestore, src.id);
     receipt(ctx, src, 'threadops-branch', 'Branched from ' + rp.label,
@@ -456,6 +461,7 @@
 
     /* Restore point FIRST. If this throws, nothing has been folded yet. */
     var rp = createRestorePoint(ctx, t, m, 'Before rewind to turn ' + (at + 1));
+    window.PM56_GOAL?.fenceThread(t.id);
 
     /* Everything after the anchor is captured verbatim BEFORE the restore
        point card and the fold card are appended, so those two stay visible. */
@@ -505,6 +511,8 @@
     var args = [insertAt, 0].concat(rec.messages);
     Array.prototype.splice.apply(t.messages, args);
     var n = rec.messages.length;
+    // Restoring folded transcript turns never clears a user's Goal stop latch.
+    window.PM56_GOAL?.fenceThread(t.id);
     rec.restored = true;
     rec.restoredAt = new Date().toISOString();
     rec.messages = [];

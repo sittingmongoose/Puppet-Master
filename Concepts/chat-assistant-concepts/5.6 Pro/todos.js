@@ -1083,29 +1083,35 @@
     var why=null;
     if(ev.expected_list_revision!=null && ev.expected_list_revision!==(store.revision||1)) why='stale_list_revision';
     else if(ev.expected_revision!=null && ev.expected_revision!==item.revision)            why='stale_item_revision';
-    else if(ev.work_binding && (item.active_work_ids||[]).indexOf(ev.work_binding)<0)      why='stale_work_binding';
+    else if(ev.work_binding && ev.to_status!=='in_progress' && (item.active_work_ids||[]).indexOf(ev.work_binding)<0)      why='stale_work_binding';
     else if(ev.plan_version!=null && item.plan_version!=null && ev.plan_version!==item.plan_version) why='stale_plan_version';
     else if(ev.run_epoch!=null && store.run_epoch!=null && ev.run_epoch!==store.run_epoch)  why='stale_run_epoch';
     if(why){
       store.rejected=(store.rejected||[]).concat([{ event:ev, reason:why, at:new Date().toISOString() }]);
       return { ok:false, error:why, retained_as_evidence:true };
     }
-    item.transitions=(item.transitions||[]).concat([TR(item.todo_id,item.status,ev.to_status,
-      ev.cause_kind||'work_admitted', ev.cause_ref||('event:'+item.todo_id), item.revision,
-      ev.at||new Date().toISOString(), ev.note||'')]);
-    item.status=ev.to_status; item.revision=item.revision+1;
-    if(ev.to_status==='in_progress' && !item.started_at) item.started_at=ev.at||new Date().toISOString();
-    if(ev.to_status==='completed') item.completed_at=ev.at||new Date().toISOString();
-    /* PPROG-007: `blocked` must reference its OWNING CONDITION. Only the
-       seeded fixture carried `blocked_reason_ref` before this, so any item
-       blocked through the ordinary transition path produced a projection cell
-       with `reason:null` -- a blocked step that could not say what blocked it.
-       Leaving `blocked` also clears the reference, so a resolved blocker
-       cannot linger as stale evidence on a running item. */
-    if(ev.to_status==='blocked')
-      item.blocked_reason_ref = ev.blocked_reason_ref || ev.cause_ref || ('blocker:'+item.todo_id);
-    else if(item.blocked_reason_ref)
-      item.blocked_reason_ref = null;
+    if(item.strict_outcome_contract){
+      if(!isLeaf(store.items,item))return {ok:false,error:'parent_not_executable'};
+      if(ev.run_id!==item.run_id||ev.run_epoch!==item.run_epoch)return {ok:false,error:'stale_run_binding'};
+      if(ev.to_status==='in_progress'){
+        if(item.status!=='pending'||!runnable(store.items,item)||!ev.work_binding)return {ok:false,error:'work_not_admissible'};
+      }else if(ev.to_status==='completed'){
+        const validator=outcomeOwners.get(item.outcome_owner);
+        if(item.status!=='in_progress'||ev.cause_kind!=='outcome_satisfied'||!ev.work_binding||!validator?.(item.workflow_ref,item,ev.cause_ref)?.ok)return {ok:false,error:'outcome_not_verified'};
+      }else if(ev.to_status==='skipped'){
+        if(!ev.skip_disposition?.user_approved||!ev.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted'};
+      }
+    }
+    const values={transitions:(item.transitions||[]).concat([TR(item.todo_id,item.status,ev.to_status,
+      ev.cause_kind||'work_admitted',ev.cause_ref||('event:'+item.todo_id),item.revision,
+      ev.at||new Date().toISOString(),ev.note||'')]),status:ev.to_status,revision:item.revision+1};
+    if(item.strict_outcome_contract&&ev.to_status==='in_progress')values.active_work_ids=[ev.work_binding];
+    if(ev.to_status==='skipped'&&ev.skip_disposition)values.skip_disposition=JSON.parse(JSON.stringify(ev.skip_disposition));
+    if(ev.to_status==='in_progress'&&!item.started_at)values.started_at=ev.at||new Date().toISOString();
+    if(ev.to_status==='completed')values.completed_at=ev.at||new Date().toISOString();
+    if(ev.to_status==='blocked')values.blocked_reason_ref=ev.blocked_reason_ref||ev.cause_ref||('blocker:'+item.todo_id);
+    else if(item.blocked_reason_ref)values.blocked_reason_ref=null;
+    for(const [k,v] of Object.entries(values))window.PM56_TX.set(item,k,v);
     return { ok:true, item:item };
   }
 
@@ -1113,22 +1119,54 @@
      has none yet -- the same thing admitBuild's `todosCreated` receipt claims.
      Without this the projector would have nothing to derive from and the
      Building… gutter would be a local counter pretending to be a projection. */
+  var outcomeOwners=new Map();
   function materializeForPlan(plan){
-    var threadId=plan.thread_id, store=threadStore(threadId);
-    var mk=itemFactory(threadId), items=[], i;
-    var existing=(store&&store.items)||[];
-    for(i=0;i<existing.length;i++){ if(existing[i].plan_id===plan.plan_id) return { ok:true, created:0, reused:true }; }
-    for(i=0;i<(plan.steps||[]).length;i++){
-      var s=plan.steps[i];
-      items.push(mk({ todo_id:'tp-'+plan.plan_id+'-'+s.id, display_order:i+1,
-        parent_todo_id:s.parent?('tp-'+plan.plan_id+'-'+s.parent):null,
-        depends_on:(s.deps||[]).map(function(d){ return 'tp-'+plan.plan_id+'-'+d; }),
-        plan_id:plan.plan_id, plan_version:plan.version, plan_step_ids:[s.id],
-        title:s.title, expected_outcome:s.outcome||null, status:'pending', revision:1, transitions:[] }));
+    var threadId=plan.thread_id, store=threadStore(threadId), mk=itemFactory(threadId), existing=(store&&store.items)||[];
+    var mine=existing.filter(t=>t.plan_id===plan.plan_id);
+    if(mine.length){
+      var expected=(plan.steps||[]).map(st=>'tp-'+plan.plan_id+'-'+st.id);
+      if(mine.length!==expected.length||expected.some(id=>!mine.find(t=>t.todo_id===id))||mine.some(t=>t.plan_version!==plan.version))return {ok:false,error:'existing_todo_binding_conflict'};
+      return {ok:true,created:0,reused:true,ids:mine.map(t=>t.todo_id)};
     }
-    var next=existing.concat(items);
-    var res=replaceThreadList(threadId, { items:next, revision:((store&&store.revision)||1)+1 }, {});
-    return res.ok ? { ok:true, created:items.length } : res;
+    var items=(plan.steps||[]).map((st,i)=>mk({todo_id:'tp-'+plan.plan_id+'-'+st.id,display_order:existing.length+i+1,
+      project_id:plan.project_id||PROJECT_ID,parent_todo_id:st.parent?'tp-'+plan.plan_id+'-'+st.parent:null,
+      depends_on:(st.deps||[]).map(d=>'tp-'+plan.plan_id+'-'+d),plan_id:plan.plan_id,plan_version:plan.version,plan_step_ids:[st.id],
+      title:st.title,expected_outcome:st.outcome||null,status:'pending',revision:1,transitions:[],
+      ...(plan.strict?{strict_outcome_contract:true,outcome_owner:plan.workRef?.kind||null,workflow_ref:plan.workRef?.ref||null,run_id:plan.run_id,run_epoch:plan.run_epoch||1}:{} )}));
+    if(!items.length)return {ok:false,error:'no_plan_steps'};
+    var check=validateGraph(threadId,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};
+    const TX=window.PM56_TX;
+    if(!store){store={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,threadId,store);}
+    TX.set(store,'items',existing.concat(items));TX.set(store,'revision',(store.revision||1)+1);
+    return {ok:true,created:items.length,reused:false,ids:items.map(t=>t.todo_id)};
+  }
+  function materializeForWork(work){
+    const store=threadStore(work.thread_id),existing=store?.items||[],mk=itemFactory(work.thread_id),prefix='tw-'+work.run_id+'-';
+    const ids=(work.steps||[]).map(st=>prefix+st.id);
+    const prior=existing.filter(t=>t.run_id===work.run_id);
+    if(prior.length)return prior.length===ids.length&&ids.every(id=>prior.some(t=>t.todo_id===id))?{ok:true,reused:true,ids}:{ok:false,error:'work_mapping_conflict'};
+    const items=(work.steps||[]).map((st,i)=>mk({todo_id:prefix+st.id,project_id:work.project_id,display_order:existing.length+i+1,title:st.title,expected_outcome:st.outcome,
+      depends_on:(st.deps||[]).map(d=>prefix+d),status:'pending',strict_outcome_contract:true,outcome_owner:work.owner,workflow_ref:work.ref,run_id:work.run_id,run_epoch:work.epoch||1}));
+    if(!items.length||!outcomeOwners.has(work.owner))return {ok:false,error:'work_owner_required'};
+    const check=validateGraph(work.thread_id,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph'};
+    const TX=window.PM56_TX;let target=store;if(!target){target={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,work.thread_id,target);}
+    TX.set(target,'items',existing.concat(items));TX.set(target,'revision',(target.revision||1)+1);return {ok:true,ids,created:items.length};
+  }
+  function outcomeSummary(threadId,ids){
+    const store=threadStore(threadId),items=store?.items||[],required=(ids||[]).map(id=>items.find(t=>t.todo_id===id));
+    if(!ids?.length||required.some(t=>!t))return {ok:false,error:'required_todo_missing',evidenceRefs:[]};
+    const leaves=required.filter(t=>isLeaf(items,t)),evidence=[];
+    for(const t of leaves){
+      if(t.status==='skipped'){if(!t.skip_disposition?.user_approved||!t.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted',evidenceRefs:[]};continue;}
+      if(t.status!=='completed')return {ok:false,error:'required_work_unfinished',evidenceRefs:[]};
+      const tr=t.transitions?.[t.transitions.length-1];
+      if(!tr||tr.to_status!=='completed'||tr.cause_kind!=='outcome_satisfied')return {ok:false,error:'accepted_outcome_missing',evidenceRefs:[]};
+      const validate=outcomeOwners.get(t.outcome_owner);
+      if(!validate||!validate(t.workflow_ref,t,tr.cause_ref)?.ok)return {ok:false,error:'completion_evidence_missing_or_stale',evidenceRefs:[]};
+      evidence.push(tr.cause_ref);
+    }
+    if(!leaves.length||!evidence.length)return {ok:false,error:'completion_evidence_missing',evidenceRefs:[]};
+    return {ok:true,evidenceRefs:Array.from(new Set(evidence)),requiredIds:ids.slice()};
   }
 
   /* One demo tick: admit the next runnable pending leaf, or complete the
@@ -1201,6 +1239,7 @@
   }
 
   window.PM56_TODOS = {
+    materializeForWork, outcomeSummary, registerOutcomeOwner:(kind,validator)=>{if(outcomeOwners.has(kind))throw new Error("duplicate_todo_outcome_owner");outcomeOwners.set(kind,validator);},
     materializeFromRoom:materializeFromRoom,
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,

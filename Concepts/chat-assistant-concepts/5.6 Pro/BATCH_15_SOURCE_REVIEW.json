@@ -1,0 +1,475 @@
+{
+  "status": "pass",
+  "pin": "79464dc0311b6e99dcef2e659d6c226a6f02348b",
+  "verified_live_baseline_paths": [
+    {
+      "path": "goals.js",
+      "live_git_blob": "0db81b76450794b9fb5403e3eeca7d968c3fd63d",
+      "baseline_git_blob": "0db81b76450794b9fb5403e3eeca7d968c3fd63d",
+      "match": true
+    },
+    {
+      "path": "plans.js",
+      "live_git_blob": "67d4aaf57bc625aa3ec6624dde2d965e8348a3a6",
+      "baseline_git_blob": "67d4aaf57bc625aa3ec6624dde2d965e8348a3a6",
+      "match": true
+    },
+    {
+      "path": "scheduling.js",
+      "live_git_blob": "78b1b0e43499826409a3ffb4055eda2b161cf0eb",
+      "baseline_git_blob": "78b1b0e43499826409a3ffb4055eda2b161cf0eb",
+      "match": true
+    },
+    {
+      "path": "todos.js",
+      "live_git_blob": "bc8b3c440ef149b34b16947bf80e8e0f81051b1b",
+      "baseline_git_blob": "bc8b3c440ef149b34b16947bf80e8e0f81051b1b",
+      "match": true
+    },
+    {
+      "path": "app.js",
+      "live_git_blob": "7b0b01647b3d32573fa46c0dedcd7ed69669c877",
+      "baseline_git_blob": "7b0b01647b3d32573fa46c0dedcd7ed69669c877",
+      "match": true
+    },
+    {
+      "path": "build.py",
+      "live_git_blob": "240f6794362222ca0133f5ad4212d105c2d65bbe",
+      "baseline_git_blob": "240f6794362222ca0133f5ad4212d105c2d65bbe",
+      "match": true
+    },
+    {
+      "path": "threadops.js",
+      "live_git_blob": "cba19081597fb4c08539a9c470913cbe67b36026",
+      "baseline_git_blob": "cba19081597fb4c08539a9c470913cbe67b36026",
+      "match": true
+    },
+    {
+      "path": "DEMO_REMAINING_WORKLIST.json",
+      "live_git_blob": "27a785fa79d5400162c916e9fb7b60c4483ab2ce",
+      "baseline_git_blob": "27a785fa79d5400162c916e9fb7b60c4483ab2ce",
+      "match": true
+    },
+    {
+      "path": "DELIVERY_MANIFEST.json",
+      "live_git_blob": "083a18b67ec40c3e000e13abdaf93a274edcd7af",
+      "baseline_git_blob": "083a18b67ec40c3e000e13abdaf93a274edcd7af",
+      "match": true
+    }
+  ],
+  "protected": [
+    {
+      "file": "motion.js",
+      "sha256": "51f9cf2c5d45a1e4b3fd206e37fc9361358e84c378b247cf047386e9e1460a5f",
+      "unchanged": true
+    },
+    {
+      "file": "motion.css",
+      "sha256": "73f0f49eb751cdd712ce456ed46ffa14bb0978845f55cadc2cc4b02e619c7e46",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.js",
+      "sha256": "3d98fb6a59d8f1398f95c2d26c64f520206d7bcc4d51d9465a8340c0f487740c",
+      "unchanged": true
+    },
+    {
+      "file": "variants-a.css",
+      "sha256": "d71668e6a03d47cfa9edf9213216e74d22947c96e45ddc3bcf6c1fed8fd7f2ed",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.js",
+      "sha256": "35ff2b32a94c2c89bd4b3ab64a6c9d97077fdf45c21a20eb3192aa3cdcf620dc",
+      "unchanged": true
+    },
+    {
+      "file": "variants-b.css",
+      "sha256": "0aaf390727a5aa52bd6bc820a684aadb75603406bc309024ff7e2dbab1f2e8a7",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.js",
+      "sha256": "6b185010c0673a3d31dec3dfb847b19dc1add0c7c2831672765f195774c0d37b",
+      "unchanged": true
+    },
+    {
+      "file": "variants-c.css",
+      "sha256": "59a3fe3487a4bbe31a4d1d908d3295df499883710561928afd0a1b9292d11ddf",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.js",
+      "sha256": "b35f451360173fd52cd2e8accc274db5a2ec22114b972e93c9b0cee765b3b87d",
+      "unchanged": true
+    },
+    {
+      "file": "orbit.css",
+      "sha256": "149b55088b8e7e9ab68ef0859adb5c86377eafbdf77f2b58bbc3987f351db205",
+      "unchanged": true
+    }
+  ],
+  "node_syntax": [
+    {
+      "file": "activity-bar.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "activity-panel.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "app.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "assistant-features.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "attachments.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "audit-inventory.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "batch8-polish.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "brainstorm-demo-batch4.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "brainstorm-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "browser-capture.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "bsd-demo-batch12.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "bsd-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "bsd.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "collaboration.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "command-transaction.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "composer-state.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "context.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "crew-demo-batch5.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "crew-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "data.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "debug-demo-batch9.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "debug-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "deep-plan-batch14.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "deep-plan-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "delivery-polish.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "eli5-demo-batch11.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "eli5-preferences.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "goal-work-batch15.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "goals.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "history.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "lens-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "lens-wonderer-batch13.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "lens.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "memory-demo-batch8.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "memory-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "menus.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "motion.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "narrow-review.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "orbit.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "plan-demo-batch1.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "plan-demo-batch2.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "plans.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "question-budget-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "questions.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "repair-demos.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "revert-demo-batch10.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "revert-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "review-demo-batch3.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "review-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "room-demo-batch6.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "room-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "scheduling.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "teach-demo-batch7.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "teach-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "threadops.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "todos.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "transcript-records.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "transcript.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "variants-a.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "variants-b.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "variants-c.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "file": "wonderer-protocol.js",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "clean_build": {
+    "exit_code": 0,
+    "output": "Built index.html and the standalone (sha256 511512052ee6506e).\n",
+    "raw_index_equal": true,
+    "raw_standalone_equal": true
+  },
+  "html": {
+    "bytes": 3319597,
+    "sha256": "fbc28efc7b8e1d041d0158e454a05e1eb97e2aba46c32c51937ce5b4420dec1c",
+    "git_blob": "71d456f3b60baad66154c0ba5f33a76f88394fd6"
+  },
+  "continuation_repository_recheck": {
+    "status": "reviewed_bounded_scope",
+    "method": "GitHub connector branch read, compare_commits and exact-file blob reads",
+    "observed_head": "900bf485393eaafa8ddea8f7e2fd7abc5d215736",
+    "implementation_pin": "79464dc0311b6e99dcef2e659d6c226a6f02348b",
+    "previous_recheck": "f12cc3d305a942a9a61c6860a5425c4e43384c18",
+    "commits_since_previous_recheck": 26,
+    "observed_head_message": "Record Jujutsu D5 rebased verification and cost checkpoint",
+    "read_utc": "2026-09-11T18:31:05.106499+00:00",
+    "AGENTS_git_blob": "4d38d9da451ee3fb4bf06138375cb9f7f1b9c8e9",
+    "AGENTS_changed": false,
+    "Plans_index": "Re-read current Change Summary at pinned observed head; owner map remains authoritative.",
+    "source_git_blobs": {
+      "goals.js": "0db81b76450794b9fb5403e3eeca7d968c3fd63d",
+      "plans.js": "67d4aaf57bc625aa3ec6624dde2d965e8348a3a6",
+      "scheduling.js": "78b1b0e43499826409a3ffb4055eda2b161cf0eb",
+      "todos.js": "bc8b3c440ef149b34b16947bf80e8e0f81051b1b",
+      "app.js": "7b0b01647b3d32573fa46c0dedcd7ed69669c877",
+      "build.py": "240f6794362222ca0133f5ad4212d105c2d65bbe",
+      "threadops.js": "cba19081597fb4c08539a9c470913cbe67b36026"
+    },
+    "source_paths_match_verified_B14": true,
+    "current_todo_owner_review": {
+      "path": "Plans/ToDo_Runtime.md",
+      "lines": [
+        570,
+        900
+      ],
+      "new_unit": "TDR-012",
+      "decision": "DL-042 / LC-CHAT-TODO-MIGRATION-RESPONSE-001",
+      "meaning": "Historical chat.plan_todo_updated remains readable, not aliased or newly emitted. Future per-item todo events require individual central admission. Controller proposal, graph, currentness, per-item evidence and no-bulk-status rules unchanged; import-cause contract gap explicit.",
+      "disposition": "No GUI behavior change is authorized by TDR-012; this package claims concept receipts/projections, not migration or central event emission. No event-authority or ToDo Plan doc writes included."
+    },
+    "preserved_new_work": "New source-control/Jujutsu, event-authority and related owner/derived/report changes are not replaced by this concept-only package. Hash guards refuse unknown overlaps.",
+    "limits": [
+      "Bounded recheck, not a fresh global audit of all Plans.",
+      "No remote write or push performed.",
+      "Final installer target bytes are revalidated locally; remote HEAD is not an override for a conflicting working tree."
+    ]
+  }
+}

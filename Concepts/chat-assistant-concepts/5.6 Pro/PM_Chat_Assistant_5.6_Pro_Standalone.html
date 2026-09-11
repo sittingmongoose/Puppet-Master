@@ -2454,6 +2454,8 @@ button.rail8-row {
     animation:none}
 }
 
+/* Shared concept command transaction: no visual surface. */
+
 /* activity-panel.css — feature module styles.  OWNER: Wave 2 — Activity Panel agent (item 1: the eight Activity Detail concepts)
  *
  * Concatenated LAST, after styles.css / motion.css / variants-*.css /
@@ -12691,6 +12693,44 @@ body[data-ph-drawer="pinned"] { --polish-history-gutter:var(--ph-w,200px); }
 
 .deep14-workspace,.deep14-source{box-sizing:border-box;width:100%;max-width:900px!important;margin:0 auto;padding:clamp(16px,3vw,30px)!important}.deep14-section,.deep14-entry{background:var(--surface-2)}.deep14-question p{font-size:12px;line-height:1.6}.deep14-section>summary{cursor:pointer;font-size:12px;font-weight:600}.deep14-guide{background:var(--surface-2)}
 
+/* Batch 15 uses existing motion and theme tokens, not a new animation family. */
+.orders15-workspace {padding:clamp(14px,3vw,30px);max-width:1040px;margin:0 auto;min-width:0;overflow-wrap:anywhere;}
+.orders15-workspace header {margin-bottom:20px;}
+.orders15-workspace h1 {font-size:26px;margin:5px 0 10px;letter-spacing:-.035em;}
+.orders15-workspace p {line-height:1.6;color:var(--muted);}
+.orders15-eyebrow {font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.orders15-actions {display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.orders15-results {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin:22px 0;}
+.orders15-results section {border:1px solid var(--border);border-radius:14px;padding:18px;background:var(--panel);min-width:0;}
+.orders15-results h2 {font-size:15px;margin:0 0 8px;}
+.orders15-results strong {font-size:13px;display:block;margin-top:16px;}
+.orders15-workspace pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;line-height:1.6;}
+.orders15-workspace details {border:1px solid var(--border);border-radius:12px;padding:16px;}
+.orders15-entry {min-width:0;margin:8px 0;}
+.orders15-entry-head {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:14px 2px;}
+.orders15-entry-head p {margin:5px 0;font-size:12px;color:var(--muted);}
+.orders15-entry-head small {color:var(--muted);font-size:11px;}
+.orders15-entry .working-card {margin-top:8px;}
+.orders15-entry .working-head {flex-wrap:wrap;}
+.orders15-entry .working-controls {flex:0 0 auto;max-width:100%;margin-left:auto;flex-wrap:wrap;gap:6px;}
+.orders15-entry .working-controls button {font-size:11px;}
+.orders15-guide {display:flex;align-items:center;gap:12px;margin:9px 4px;font-size:11px;color:var(--muted);line-height:1.5;}
+.orders15-guide strong {display:block;color:var(--text);}
+.orders15-guide button {margin-left:auto;flex:none;}
+@media(max-width:750px){.orders15-entry .working-head {flex-wrap:wrap;}.orders15-entry .working-controls{margin-left:auto;}.orders15-workspace{padding:16px;}}
+
+/* Keep full Goal detail usable at the actual Activity column width. */
+.goal-section-v2 {min-width:0;overflow-wrap:anywhere;}
+.goal-section-v2 pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px;line-height:1.55;}
+.goal-section-v2 .goal-history-row,.goal-section-v2 .goal-cont-row {grid-template-columns:minmax(0,1fr) auto;}
+.goal-section-v2 .goal-history-row p,.goal-section-v2 .goal-cont-row p {grid-column:1/-1;margin:2px 0;font-size:11px;line-height:1.5;}
+.goal-section-v2 .goal-history-row small,.goal-section-v2 .goal-cont-row small {font-size:10px;color:var(--muted);}
+.goal-section-v2 .goal-approval-pair {grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));}
+.goal-section-v2 .goal-edit-foot {flex-wrap:wrap;}
+
+.orders15-entry {padding-bottom:56px;}
+.goal-section-v2 .soft-button:disabled {opacity:.45;cursor:not-allowed;}
+
 /* composer.css — in-field composer chrome, selector collapse, follow-up queue.
  *
  * Concatenated after feature modules so these rules win over styles.css
@@ -17446,6 +17486,59 @@ window.PM56_EXT = window.PM56_EXT || {
   actionAfter(name,fn){ var prev=this._after[name]; if(prev){ (this.collisions=this.collisions||[]).push('after:'+name); console.info('PM56_EXT: duplicate actionAfter "'+name+'" - chaining both'); this._after[name]=function(c,b,e){ prev(c,b,e); return fn(c,b,e); }; } else { this._after[name]=fn; } return this; }
 };
 
+/* Shared synchronous concept command transaction.
+ * Owners remain the sole writers. This journal makes their related writes
+ * all-or-none and defers timers/storage/UI effects until admission commits.
+ * It is not a native storage transaction or Event Authority implementation.
+ */
+(function(){
+ 'use strict';
+ let active=null;
+ const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+ const fingerprint=x=>x===undefined?'undefined':JSON.stringify(x);
+ function set(o,k,value){
+  if(active){active.writes.push({o,k,had:own(o,k),before:o[k],after:value,fp:fingerprint(value)});}
+  o[k]=value;return value;
+ }
+ function remove(o,k){
+  if(!own(o,k))return;
+  if(active)active.writes.push({o,k,had:true,before:o[k],removed:true});
+  delete o[k];
+ }
+ function append(o,k,value){
+  if(!Array.isArray(o[k]))throw new Error('transaction_array_required');
+  if(active)active.writes.push({o,k,appended:true,value,fp:fingerprint(value)});
+  o[k].push(value);return value;
+ }
+ function defer(fn){if(active)active.effects.push(fn);else fn();}
+ function fail(code){const e=new Error(code);e.code=code;throw e;}
+ function run(fn){
+  if(active)return fn();
+  const tx={writes:[],effects:[]};active=tx;let out;
+  try{out=fn();if(out?.ok===false)fail(out.error||out.clause||'admission_refused');}
+  catch(e){
+   const conflicts=[];
+   for(const w of tx.writes.slice().reverse()){
+    if(w.appended){
+      const array=w.o[w.k],i=Array.isArray(array)?array.indexOf(w.value):-1;
+      if(i>=0&&fingerprint(w.value)===w.fp)array.splice(i,1);
+      else conflicts.push(w.k+':'+(w.value?.id||'appended-record'));
+      continue;
+    }
+    const equal=w.removed?!own(w.o,w.k):own(w.o,w.k)&&w.o[w.k]===w.after&&fingerprint(w.o[w.k])===w.fp;
+    if(!equal){conflicts.push(w.k);continue;}
+    if(w.had)w.o[w.k]=w.before;else delete w.o[w.k];
+   }
+   active=null;return {ok:false,error:e.code||e.message||'admission_failed',rollback:{complete:conflicts.length===0,conflicts},effects_started:0};
+  }
+  active=null;
+  const effectErrors=[];
+  for(const effect of tx.effects){try{effect();}catch(e){effectErrors.push(String(e.message||e));}}
+  return {...out,...(effectErrors.length?{effect_errors:effectErrors}:{}),committed:true};
+ }
+ window.PM56_TX={set,remove,append,defer,run,fail,isActive:()=>!!active};
+})();
+
 /* activity-panel.js — feature module.  OWNER: Wave 2 — Activity Panel agent (item 1: the eight Activity Detail concepts)
  *
  * Load order (see build.py): data.js, motion.js, variants-*.js, then EVERY feature
@@ -19145,59 +19238,33 @@ window.PM56_EXT = window.PM56_EXT || {
   });
 })();
 
-/* goals.js — feature module.  OWNER: Assistant redesign wave (2026-09-03), Goal V2.
- *
- * WHAT CHANGED AND WHY
- * --------------------
- * This file used to model a goal as a PHASE MACHINE: a phase list with exit
- * criteria and evidence, a currentPhaseId that could move backwards, a subgoal
- * (child goal) roster, a token budget, and a replan log.  The approved redesign
- * retires every one of those.  A Goal is now exactly:
- *
- *     one concise text objective  +  a four-value lifecycle  +  durable
- *     host continuation that keeps working until the objective is complete,
- *     paused, blocked or cancelled.
- *
- * The phase model was not a port and was never canon — the previous header in
- * this file said so itself ("Phases are OUR ADDITION, not a port").  It is gone
- * rather than hidden, because a phase was a second, weaker copy of a stage the
- * owning workflow already tracked, and the two drifted.  Progress is visible
- * through To-Dos (todos.js) and the ordinary transcript, not through a
- * Goal-owned tracker.  See Plans/Goal_Runtime_System.md (GRS-048..GRS-056) and
- * Plans/FinalGUISpec.md §7 of the 2026-09-03 redesign section.
- *
- * WHAT THIS FILE IS HONEST ABOUT
- * ------------------------------
- * Continuation is host-owned in the product.  A concept page has no host, so
- * the "continuation" here is a visible demo counter with a real stop epoch:
- * pressing Pause or Cancel latches `stopEpoch`, and every simulated
- * continuation compares the epoch it was decided against before it may land.
- * That is the one invariant worth demonstrating, and it is demonstrated for
- * real rather than described in copy.
- *
- * GOAL IS NOT A MODE.  Nothing here reads state.mode.
- * GOAL IS NOT A TRANSCRIPT CARD.  It renders in Activity only.
- * GOAL DOES NOT OWN TO-DOS.  This module never reads D.todos.
+/* Goal Runtime concept owner, Batch 15.
+ * One text objective, four lifecycle states, explicit authority and epoch-fenced
+ * continuation. Records are session-memory projections, not native durability.
+ * Plan/To-Do/work/evidence/scheduling ownership remains with the shared owners.
  */
 (function(){
-  'use strict';
-  var D = window.PM56_DATA;
-  if(!D) return;
-  var EXT = window.PM56_EXT;
-  if(!EXT || !EXT.slot) return;
-
-  /* =====================================================================
-     1. THE FIXTURE — GoalRecordV2 shape (pm.goal.record.v2)
-     ---------------------------------------------------------------------
-     Field-for-field the record in Plans/Goal_Runtime_System.md, minus the
-     storage-only columns.  The negative fields are listed in a comment rather
-     than as keys, because a key set to null is still a field a renderer can
-     find and start showing.
-       NEGATIVE FIELDS (must never appear): title, phase, tranche,
-       child_goal_ids, goal_budget, planner_role, verifier_role,
-       adjudicator_role, separate_done_when, separate_scope,
-       separate_constraints, attachment_manifest.
-     ===================================================================== */
+ 'use strict';
+ const D=window.PM56_DATA, E=window.PM56_EXT, TX=window.PM56_TX;
+ const RT=window.PM56_RUNTIME=window.PM56_RUNTIME||{};
+ const clone=x=>x==null?x:JSON.parse(JSON.stringify(x)), now=()=>new Date().toISOString();
+ const store=RT.goals={byId:{},currentByThread:{},cancellations:{},proposals:{},tickets:{},receipts:{},seq:0,generation:1};
+ RT.boundGoals={byPlan:{},seq:0};
+ const owners=new Map(),timers=new Map();
+ const ui={editing:null,draft:null,history:false,continuations:false,proposal:null};
+ const labels={active:'Running',paused:'Paused',blocked:'Blocked',completed:'Completed'};
+ const tones={active:'working',paused:'idle',blocked:'blocked',completed:'done'};
+ const origins=['user_request','agent_requested_by_user','plan_build','internal_workflow'];
+ const originLabels={user_request:'the user asked for it directly',agent_requested_by_user:'an agent created it because the user asked the agent to',plan_build:'an approved Plan was built as a Goal',internal_workflow:'a workflow uses it internally'};
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const context=()=>E.ctx?.();
+ const thread=tid=>context()?.state.threads.find(t=>t.id===tid);
+ function scope(tid){const t=thread(tid);if(!t)return null;return {projectId:t.projectId||'pm',threadId:t.id,worktreeId:t.worktreeId||t.worktree?.id||context().state.worktree||'concept:default'};}
+ const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+ const cancelled=g=>!!(g&&store.cancellations[g.id]);
+ function get(tid){tid=tid||context()?.thread.id||'query';const g=store.byId[store.currentByThread[tid]];if(g?.demo&&!g.scopeInitialized&&context()){g.scope=scope(tid);g.projectId=g.scope.projectId;g.scopeInitialized=true;}return g&&!cancelled(g)?g:null;}
+ const byId=id=>store.byId[id]||null;
+ function lineageFor(id,revision,kind,o={}){if(!origins.includes(kind))throw new Error('invalid_origin_kind');return {schema:'pm.goal.origin_lineage.v1',goal_id:id,goal_revision:revision,origin_kind:kind,origin_label:originLabels[kind],source_message_refs:o.source_message_refs||[],source_context_manifest_ref:o.source_context_manifest_ref||null,bound_plan_ref:o.bound_plan_ref||null,owning_workflow_ref:o.owning_workflow_ref||null};}
   var GOAL_FIXTURE = {
     demo:true,
     id:'goal-query-perf',
@@ -19233,554 +19300,210 @@ window.PM56_EXT = window.PM56_EXT || {
       { id:'cont-3', at:'2026-08-27T12:11:00Z', result:'continue', stopEpochAt:0, note:'Third host-admitted turn. One model response was never completion.' }
     ]
   };
-  var GOAL0 = JSON.stringify(GOAL_FIXTURE);
-  if(!D.goal || D.goal.id === GOAL_FIXTURE.id) D.goal = JSON.parse(GOAL0);
 
-  /* Local view state only. Nothing here is domain truth. */
-  var ui = { editing:false, draft:null, showHistory:false, showContinuations:false, confirmCancel:false, proposal:null };
-
-  function restoreFixture(){
-    D.goal = JSON.parse(GOAL0); ui.editing=false; ui.draft=null; ui.showHistory=false;
-    ui.confirmCancel=false; ui.proposal=null;
-    /* Plan-bound Goals live in the shared runtime, not in D.goal, so restoring
-       only the fixture left every Goal a previous Build as Goal had created
-       still bound -- the next admission then failed `active_run_exists` against
-       a Goal the caller had just asked to be rid of. A restore that leaves
-       durable records behind is a restore that lies. */
-    if(RT_G.boundGoals){ RT_G.boundGoals.byPlan={}; RT_G.boundGoals.seq=0; }
+ function change(g,values){for(const [k,v] of Object.entries(values))TX.set(g,k,v);}
+ function stamp(g){TX.set(g,'updatedAt',now());TX.set(g,'currentnessHash',g.id+':r'+g.revision+':e'+g.stopEpoch+':'+(++store.seq));}
+ function capture(g){return g?{goalId:g.id,revision:g.revision,hash:g.currentnessHash,epoch:g.stopEpoch,run:g.activeRunRef||null,scope:clone(g.scope),binding:clone(g.binding||null),generation:store.generation}:null;}
+ function current(token){const g=byId(token?.goalId);if(!g||cancelled(g))return 'goal_unavailable';if(token.generation!==store.generation)return 'restored_generation';if(token.revision!==g.revision||token.hash!==g.currentnessHash)return 'stale_objective_revision';if(token.epoch!==g.stopEpoch)return 'stale_stop_epoch';if(token.run!==(g.activeRunRef||null))return 'run_replaced';if(!equal(token.scope,g.scope)||!equal(g.scope,scope(g.thread)))return 'scope_changed';if(!equal(token.binding,g.binding||null))return 'binding_changed';return null;}
+ function allowedMutation(token){const error=current(token);if(error)return {ok:false,error};const g=byId(token.goalId);if(context()?.thread.id!==g.thread)return {ok:false,error:'wrong_thread'};if(!['active','paused','blocked'].includes(g.status))return {ok:false,error:'goal_not_mutable'};return {ok:true,goal:g};}
+ function textError(text){return typeof text!=='string'||!text.trim()?'objective_required':text.length>4000?'objective_too_long':null;}
+ function create(o){
+  const error=textError(o.objective);if(error)return {ok:false,error};
+  if(o.explicitRequest!==true)return {ok:false,error:'explicit_request_required'};
+  const sc=scope(o.threadId);if(!sc||o.projectId&&o.projectId!==sc.projectId)return {ok:false,error:'scope_changed'};
+  if(o.scope&&!equal(o.scope,sc))return {ok:false,error:'scope_changed'};
+  const prior=get(o.threadId);if(prior&&prior.status!=='completed')return {ok:false,error:'active_goal_exists'};
+  const kind=o.origin||'user_request';if(!origins.includes(kind))return {ok:false,error:'invalid_origin_kind'};
+  const seq=store.seq+1;TX.set(store,'seq',seq);const id='goal-'+seq+'-'+o.threadId;
+  const g={id,projectId:sc.projectId,thread:o.threadId,scope:clone(sc),objective:o.objective,revision:1,status:'active',blockedReason:null,activeRunRef:o.runId||null,createdAt:now(),updatedAt:now(),currentnessHash:id+':r1:e0',stopEpoch:0,
+   revisions:[{revision:1,at:now(),source:'user_direct',objective:o.objective,sourceMessageId:o.sourceMessageId||null}],continuations:[],history:[],
+   lineage:lineageFor(id,1,kind,{source_message_refs:o.sourceMessageId?[o.sourceMessageId]:[],owning_workflow_ref:o.workRef?.ref||null}),workRef:o.workRef?clone(o.workRef):null};
+  TX.set(store.byId,id,g);TX.set(store.currentByThread,o.threadId,id);return {ok:true,goal:g};
+ }
+ function fence(g,reason){clearTimeout(timers.get(g.id));timers.delete(g.id);TX.set(g,'stopEpoch',g.stopEpoch+1);TX.set(g,'history',(g.history||[]).concat({at:now(),what:'fenced',note:reason}));stamp(g);}
+ function edit(token,text,source='user_direct',approvalId=null){
+  const a=allowedMutation(token);if(!a.ok)return a;const g=a.goal,error=textError(text);if(error)return {ok:false,error};
+  if(!['user_direct','agent_proposed_user_approved'].includes(source))return {ok:false,error:'silent_rewrite_forbidden'};
+  if(source==='agent_proposed_user_approved'){
+   const p=store.proposals[approvalId];if(!p||p.state!=='approving'||p.objective!==text||!equal(p.token,token))return {ok:false,error:'approval_required'};
   }
-
-  var STATUS_LABEL = { active:'Running', paused:'Paused', blocked:'Blocked', completed:'Completed' };
-  var STATUS_TONE  = { active:'working', paused:'idle',   blocked:'blocked', completed:'done' };
-
-  function goal(){ var g=D.goal; return (g && g.status!=='cleared') ? g : null; }
-  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-  function clockOf(iso){
-    if(!iso) return '';
-    var d=new Date(iso); if(isNaN(d)) return '';
-    return d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  if(g.objective===text)return {ok:true,unchanged:true,goal:g};
+  fence(g,'Objective revision changed; earlier callbacks are invalid.');
+  change(g,{objective:text,revision:g.revision+1,revisions:g.revisions.concat({revision:g.revision+1,at:now(),source,approvalId,objective:text}),lineage:{...g.lineage,goal_revision:g.revision+1}});stamp(g);
+  if(g.binding){window.PM56_PLANS?.goalConflict?.(g.binding.assistant_plan_id);change(g,{status:'blocked',blockedReason:'The objective changed. Review the exact bound Plan through Revise before admitting more mutation.'});}
+  else if(g.status==='active')TX.defer(()=>kick(g.id));
+  return {ok:true,goal:g};
+ }
+ function propose(token,text,request){
+  const a=allowedMutation(token);if(!a.ok)return a;
+  const error=textError(text);if(error)return {ok:false,error};
+  if(!request?.explicit||typeof request.text!=='string'||!request.text.trim())return {ok:false,error:'explicit_change_request_required'};
+  const id='goal-approval-'+(++store.seq),p={id,token:clone(token),current:a.goal.objective,objective:text,request:request.text,state:'pending',createdAt:now(),expiresAt:Date.now()+300000};
+  store.proposals[id]=p;ui.proposal=id;return {ok:true,approval:clone(p)};
+ }
+ function approve(id){const p=store.proposals[id];if(!p||p.state!=='pending')return {ok:false,error:'approval_not_pending'};
+  if(Date.now()>p.expiresAt){p.state='expired';return {ok:false,error:'approval_expired'};}
+  const error=current(p.token);if(error){p.state='stale';return {ok:false,error};}
+  p.state='approving';const out=edit(p.token,p.objective,'agent_proposed_user_approved',id);p.state=out.ok?'approved':'stale';if(ui.proposal===id)ui.proposal=null;return out;
+ }
+ function deny(id){const p=store.proposals[id];if(!p||p.state!=='pending')return {ok:false,error:'approval_not_pending'};p.state='denied';if(ui.proposal===id)ui.proposal=null;return {ok:true};}
+ function lifecycle(token,to){
+  const a=allowedMutation(token);if(!a.ok)return a;const g=a.goal,P=window.PM56_PLANS;
+  if(to==='active'){
+   if(!['paused','blocked'].includes(g.status))return {ok:false,error:'not_resumable'};
+   const eligible=resumeEligibility(g);if(!eligible.ok)return eligible;
+   if(g.binding){const check=P?.canResumeGoal?.(g.binding);if(check&&!check.ok)return check;}
+  }else if(!['paused','cancel'].includes(to))return {ok:false,error:'invalid_transition'};
+  fence(g,'Explicit user '+to+'.');
+  if(to==='cancel'){
+   const receipt={goal_id:g.id,revision:g.revision,user_stop_epoch:g.stopEpoch,at:now(),event:'goal.cancelled'};
+   TX.set(store.cancellations,g.id,receipt);if(store.currentByThread[g.thread]===g.id)TX.remove(store.currentByThread,g.thread);
+   if(g.binding)P?.boundCancel(g.binding.assistant_plan_id,g.stopEpoch);
+   return {ok:true,receipt};
   }
-  function dayOf(iso){
-    if(!iso) return '';
-    var d=new Date(iso); if(isNaN(d)) return '';
-    return d.toLocaleDateString([], {month:'short', day:'numeric'});
-  }
-
-  /* Two-line preview for the Activity bar. Deliberately a character budget
-     rather than a word count, so a long single word cannot blow the card. */
-  function preview(text, max){
-    text=String(text||'');
-    if(text.length<=max) return text;
-    return text.slice(0, max-1).replace(/\s+\S*$/,'') + '…';
-  }
-
-  function summary(){
-    var g=goal();
-    if(!g) return { tone:'idle', status:'none', statusLine:'No goal', objective:'' };
-    return {
-      tone: g.blockedReason ? 'blocked' : (STATUS_TONE[g.status]||'idle'),
-      status: g.status,
-      statusLine: STATUS_LABEL[g.status]||g.status,
-      objective: g.objective,
-      revision: g.revision,
-      blocker: g.blockedReason
-    };
-  }
-
-  /* =====================================================================
-     2. AUTHORITY — exactly two paths write objective text
-     ---------------------------------------------------------------------
-     user_direct                    : the user edits and presses Save.
-     agent_proposed_user_approved   : the agent proposes, the user approves.
-     There is no third path. Nothing else in this file writes `objective`.
-     ===================================================================== */
-  function writeRevision(objective, source, approvalId){
-    var g=goal(); if(!g) return false;
-    objective=String(objective||'').trim();
-    if(!objective) return false;
-    if(objective.length>4000) return false;            /* rejected, not truncated */
-    if(objective===g.objective) return false;
-    g.revision += 1;
-    g.objective = objective;
-    g.updatedAt = new Date().toISOString();
-    g.currentnessHash = (Math.random().toString(16).slice(2,10));
-    var rec = { revision:g.revision, at:g.updatedAt, source:source, objective:objective };
-    if(approvalId) rec.approvalId = approvalId;
-    g.revisions.push(rec);
-    return true;
-  }
-
-  /* Pause / Cancel latch the stop epoch. A continuation decided before the
-     latch and delivered after it is discarded — that comparison is the whole
-     point of the field, so it is exercised rather than described. */
-  function latchStop(g){ g.stopEpoch = (g.stopEpoch||0) + 1; }
-
-  function admitContinuation(g, note){
-    var decidedAt = g.stopEpoch;
-    if(g.status!=='active') {
-      g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-        result: g.status==='paused' ? 'pause' : g.status==='blocked' ? 'blocked' : 'complete',
-        stopEpochAt:decidedAt, note:'Refused at dispatch: '+(STATUS_LABEL[g.status]||g.status).toLowerCase()+'.' });
-      return false;
-    }
-    if(decidedAt !== g.stopEpoch){
-      g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-        result:'pause', stopEpochAt:decidedAt, note:'Discarded: decided before a manual stop, delivered after it.' });
-      return false;
-    }
-    g.continuations.push({ id:'cont-'+(g.continuations.length+1), at:new Date().toISOString(),
-      result:'continue', stopEpochAt:decidedAt, note: note || 'Objective unfinished; host admitted another ordinary agent turn.' });
-    return true;
-  }
-
-  /* =====================================================================
-     3. RENDERERS
-     ===================================================================== */
-  function statusChip(g){
-    return '<span class="goal-chip goal-chip-'+esc(g.status)+'" data-k="goal-chip">'+
-      '<i class="goal-dot goal-dot-'+esc(g.status)+'"></i>'+esc(STATUS_LABEL[g.status]||g.status)+
-      '</span>';
-  }
-
-  /* Activity-bar hover preview: status, a two-line objective, and ACTIONABLE
-     controls. The edit icon opens Activity Detail in edit mode; the packet is
-     explicit that it is an icon and that it lands in edit mode, not view mode. */
-  function renderCompact(ctx){
-    var g=goal(); if(!g) return '';
-    /* The pencil's own tooltip promises "Edit objective in Activity Detail",
-       and goal-open-editor sets ui.editing. But the DEFAULT Activity Detail
-       concept (#2 Status Board) draws the COMPACT goal, which has no editor --
-       so the pencil opened the panel and then showed no way to edit, on the
-       one layout that ships selected. While an edit is in progress the compact
-       projection yields to the full section, which owns the textarea, Save and
-       Cancel. One editor, one owner, reachable from every concept. */
-    if(ui.editing) return renderSection(ctx);
-    var resumeable = g.status==='paused' || (g.status==='blocked' && !g.blockedReason);
-    var actions =
-      (g.status==='active'
-        ? '<button class="soft-button" data-action="goal-pause" data-k="goal-a-pause">'+ctx.icon('pause',12)+' Pause</button>'
-        : resumeable
-          ? '<button class="soft-button" data-action="goal-resume" data-k="goal-a-resume">'+ctx.icon('play',12)+' Resume</button>'
-          : '<button class="soft-button" data-action="goal-resume" data-k="goal-a-resume" disabled title="'+esc(g.blockedReason||'Not resumable')+'">'+ctx.icon('play',12)+' Resume</button>') +
-      '<button class="soft-button" data-action="goal-cancel" data-k="goal-a-cancel">'+ctx.icon('close',12)+' Cancel</button>'+
-      '<button class="icon-button" data-action="goal-open-editor" data-k="goal-a-edit" title="Edit objective in Activity Detail">'+ctx.icon('edit',12)+'</button>';
-    return '<div class="goal-compact" data-k="goal-compact">'+
-        '<div class="goal-compact-head" data-k="goal-compact-head">'+statusChip(g)+
-          '<span class="goal-rev" data-k="goal-rev">Revision '+g.revision+'</span></div>'+
-        '<p class="ab-objective goal-objective-2" data-k="ab-obj">'+esc(preview(g.objective, 150))+'</p>'+
-        (g.blockedReason?'<p class="goal-blocker-line" data-k="goal-blocked">'+esc(g.blockedReason)+'</p>':'')+
-        '<div class="goal-compact-actions" data-k="goal-compact-actions">'+actions+'</div>'+
-      '</div>';
-  }
-
-  /* Activity Detail. Objective area, Save / Cancel edit, lifecycle controls,
-     History. NO title field, NO phases, NO child goals, NO budget, NO current
-     action, NO next action, NO invented percentage. */
-
-  /* =====================================================================
-     BOUND GOALS — Additive Correction v4 (PGOAL-003..014, GREPLAY-001..011)
-     ---------------------------------------------------------------------
-     `Build as Goal` creates ONE simple Goal, ONE PlanRun and ONE
-     GoalPlanBinding, atomically. The Goal it creates is an ordinary simple
-     Goal: text only, no title, no phases, no child Goals, no budgets. What is
-     new is the hidden lineage beside it (origin, source refs, admitted context
-     manifest, bound Plan) and the binding record, neither of which is a
-     visible Goal field.
-
-     A bound Goal lives in Activity, exactly like the thread Goal. It never
-     becomes a thread card.
-     ===================================================================== */
-  var RT_G = window.PM56_RUNTIME = window.PM56_RUNTIME || {};
-  RT_G.boundGoals = RT_G.boundGoals || { byPlan:{}, seq:0 };
-
-  /* GREPLAY-002. The FOUR origin kinds, as a closed vocabulary the owner
-     publishes rather than a string one code path happens to write. Only
-     `plan_build` was ever produced here, so nothing could tell whether the
-     other three existed as a contract or had simply been forgotten; and
-     because a Goal has no title, origin can never be inferred from one.
-     `originOf()` is the single reader, so a future writer that invents a
-     fifth kind fails closed instead of leaking an unknown value into replay. */
-  var ORIGIN_KINDS = ['user_request','agent_requested_by_user','plan_build','internal_workflow'];
-  var ORIGIN_LABEL = {
-    user_request:'the user asked for it directly',
-    agent_requested_by_user:'an agent created it because the user asked the agent to',
-    plan_build:'an approved Plan was built as a Goal',
-    internal_workflow:'a workflow uses it internally'
-  };
-  function originOf(kind){
-    return ORIGIN_KINDS.indexOf(kind)>=0 ? kind : 'user_request';
-  }
-  /* The plain thread Goal has an origin too; it is simply not `plan_build`. */
-  function lineageFor(goalId, revision, kind, o){
-    o=o||{};
-    return { schema:'pm.goal.origin_lineage.v1', goal_id:goalId, goal_revision:revision||1,
-             origin_kind:originOf(kind), origin_label:ORIGIN_LABEL[originOf(kind)],
-             source_message_refs:o.source_message_refs||[],
-             source_context_manifest_ref:o.source_context_manifest_ref||null,
-             bound_plan_ref:o.bound_plan_ref||null,
-             owning_workflow_ref:o.owning_workflow_ref||null };
-  }
-
-  function boundFor(planId){ return RT_G.boundGoals.byPlan[planId] || null; }
-  function boundList(threadId){
-    var out=[], k, m=RT_G.boundGoals.byPlan;
-    for(k in m){ if(!threadId || m[k].thread===threadId) out.push(m[k]); }
-    return out;
-  }
-
-  /* PGOAL-003/011/012. Fails CLOSED on a stale hash, on an existing active run,
-     and returns the ORIGINAL result for a repeated idempotency key. */
-  function createBound(o){
-    var prior=boundFor(o.plan_id);
-    if(prior && prior.idempotency_key===o.idempotency_key) return { ok:true, goal:prior, replayed:true };
-    if(prior && prior.status!=='canceled' && prior.status!=='completed')
-      return { ok:false, error:'active_run_exists', goal:prior };
-    if(o.expected_hash && o.plan_hash && o.expected_hash!==o.plan_hash)
-      return { ok:false, error:'stale_plan_version' };
-    RT_G.boundGoals.seq++;
-    var id='goal-plan-'+o.plan_id+'-'+RT_G.boundGoals.seq;
-    var g={
-      id:id, projectId:'pm', thread:o.thread, bound:true,
-      objective:'Complete the approved Plan “'+o.title+'” at version V'+o.version+' exactly as written.',
-      revision:1, status:'active', blockedReason:null,
-      createdAt:new Date().toISOString(), updatedAt:new Date().toISOString(),
-      currentnessHash:o.plan_hash, stopEpoch:0, mode:null,
-      idempotency_key:o.idempotency_key,
-      /* GREPLAY-001..002: hidden lineage. Not rendered as Goal content. */
-      lineage:lineageFor(id, 1, o.origin_kind||'plan_build', {
-                source_message_refs:o.source_refs||[],
-                source_context_manifest_ref:'ctx-manifest:'+o.plan_id+'@V'+o.version,
-                bound_plan_ref:o.plan_id+'@V'+o.version,
-                owning_workflow_ref:o.owning_workflow_ref||null }),
-      /* PGOAL-003/004: the binding. todo_list_ref and planunit_bundle_ref are
-         REFERENCES to what already exists -- identity equality is the proof
-         that nothing was duplicated. */
-      binding:{ schema:'pm.goal.plan_binding.v1', goal_id:id,
-                assistant_plan_id:o.plan_id, plan_version:o.version, plan_hash:o.plan_hash,
-                plan_run_id:o.plan_run_id,
-                todo_list_ref:'todos:'+o.thread, planunit_bundle_ref:o.planunit_bundle_ref||null },
-      history:[{ at:new Date().toISOString(), what:'created', note:'Build as Goal admitted; Goal, PlanRun and binding committed together.' }],
-      continuations:[], revisions:[{ revision:1, at:new Date().toISOString(), source:'plan_build', objective:null }]
-    };
-    g.revisions[0].objective=g.objective;
-    RT_G.boundGoals.byPlan[o.plan_id]=g;
-    return { ok:true, goal:g };
-  }
-
-  function boundTransition(planId, to, note){
-    var g=boundFor(planId); if(!g) return null;
-    /* GREPLAY-009/010: pause, cancel and revision each fence the epoch, and a
-       manual stop is authoritative -- resume after cancel is refused. */
-    if(to==='active' && g.status==='canceled') return { ok:false, error:'canceled_is_terminal' };
-    if(to==='paused' || to==='canceled') g.stopEpoch++;
-    g.status=to; g.updatedAt=new Date().toISOString();
-    g.history.push({ at:g.updatedAt, what:to, note:note||'' });
-    return { ok:true, goal:g };
-  }
-
-  function renderBound(ctx, g){
-    var b=g.binding;
-    return '<div class="goal-bound goal-bound-'+esc(g.status)+'" data-k="goal-bound-'+esc(g.id)+'" data-goal-id="'+esc(g.id)+'" data-bound-plan="'+esc(b.assistant_plan_id)+'">'+
-      '<div class="goal-bound-head">'+
-        '<span class="goal-bound-chip">'+esc(g.status)+'</span>'+
-        '<span class="goal-bound-link">bound to '+esc(b.assistant_plan_id)+' · V'+b.plan_version+'</span>'+
-        '<span class="spacer"></span>'+
-        '<span class="goal-hash">'+esc(b.plan_hash)+'</span>'+
-      '</div>'+
-      '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
-      '<div class="goal-lifecycle">'+
-        (g.status==='active'
-          ? '<button class="soft-button" data-action="goal-bound-pause" data-id="'+esc(b.assistant_plan_id)+'">'+ctx.icon('pause',12)+' Pause</button>'
-          : '<button class="soft-button" data-action="goal-bound-resume" data-id="'+esc(b.assistant_plan_id)+'"'+(g.status==='paused'?'':' disabled')+'>'+ctx.icon('play',12)+' Resume</button>')+
-        '<button class="soft-button danger" data-action="goal-bound-cancel" data-id="'+esc(b.assistant_plan_id)+'"'+(g.status==='canceled'||g.status==='completed'?' disabled':'')+'>'+ctx.icon('close',12)+' Cancel Goal</button>'+
-        '<span class="spacer"></span>'+
-        '<button class="text-button" data-action="goal-bound-open-plan" data-id="'+esc(b.assistant_plan_id)+'">Open Plan</button>'+
-      '</div>'+
-      '<p class="goal-note">Reuses the thread To-Do list (<code>'+esc(b.todo_list_ref)+'</code>)'+
-        (b.planunit_bundle_ref?' and the scoped PlanUnit bundle (<code>'+esc(b.planunit_bundle_ref)+'</code>)':'')+
-        '. No phases, no child Goals, no Orchestrator. Editing this Goal never edits the approved Plan.</p>'+
-    '</div>';
-  }
-
-  function renderBoundAll(ctx){
-    var t=ctx && ctx.state && ctx.state.selectedThread;
-    var gs=boundList(t);
-    if(!gs.length) return '';
-    return '<div class="goal-bound-wrap" data-k="goal-bound-wrap">'+
-      '<h4 class="goal-bound-h">Plan-bound Goals</h4>'+
-      gs.map(function(g){ return renderBound(ctx,g); }).join('')+'</div>';
-  }
-
-  function renderSection(ctx){
-    var g=goal();
-    if(!g) return '<div class="goal-section-v2" data-k="goal-section-v2">'+renderBoundAll(ctx)+
-      '<div class="goal-empty" data-k="goal-empty"><p>No goal on this thread. Start one with <code>/goal</code>, the Goal control, or by asking for one directly.</p></div></div>';
-
-    var editing = ui.editing;
-    var draft = ui.draft==null ? g.objective : ui.draft;
-    var over = draft.length>4000;
-
-    var body = editing
-      ? '<div class="goal-edit" data-k="goal-edit">'+
-          '<textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="6" '+
-            'placeholder="One concise objective. The outcome, the finish condition and the constraints all live here.">'+esc(draft)+'</textarea>'+
-          '<div class="goal-edit-foot">'+
-            '<span class="goal-count'+(over?' over':'')+'">'+draft.length+' / 4000</span>'+
-            '<span class="spacer"></span>'+
-            '<button class="text-button" data-action="goal-cancel-edit">Cancel edit</button>'+
-            '<button class="primary-button" data-action="goal-save"'+(over?' disabled':'')+'>Save</button>'+
-          '</div>'+
-
-        '</div>'
-      : '<div class="goal-view" data-k="goal-view">'+
-          '<p class="goal-objective-full">'+esc(g.objective)+'</p>'+
-          '<button class="soft-button" data-action="goal-edit">'+ctx.icon('edit',12)+' Edit objective</button>'+
-        '</div>';
-
-    var resumeable = g.status==='paused';
-    var lifecycle = '<div class="goal-lifecycle" data-k="goal-lifecycle">'+
-      (g.status==='active'
-        ? '<button class="soft-button" data-action="goal-pause">'+ctx.icon('pause',12)+' Pause</button>'
-        : '<button class="soft-button" data-action="goal-resume"'+(resumeable?'':' disabled title="'+esc(g.blockedReason||'Not resumable')+'"')+'>'+ctx.icon('play',12)+' Resume</button>')+
-      '<button class="soft-button danger" data-action="goal-cancel">'+ctx.icon('close',12)+' Cancel Goal</button>'+
-      '<span class="spacer"></span>'+
-      '<button class="soft-button" data-action="goal-continue" data-k="goal-continue"'+(g.status==='active'?'':' disabled')+'>'+ctx.icon('play',12)+' Admit next turn</button>'+
-      '</div>';
-
-    var hist = ui.showHistory
-      ? '<div class="goal-history" data-k="goal-history">'+
-          g.revisions.slice().reverse().map(function(r){
-            return '<div class="goal-history-row" data-k="goal-hr-'+r.revision+'">'+
-              '<span class="goal-history-rev">V'+r.revision+'</span>'+
-              '<span class="goal-history-when">'+esc(dayOf(r.at)+' '+clockOf(r.at))+'</span>'+
-              '<span class="goal-history-src goal-src-'+esc(r.source)+'">'+esc(r.source==='user_direct'?'You edited it':'You approved an agent proposal')+'</span>'+
-              '<p class="goal-history-text">'+esc(r.objective)+'</p>'+
-            '</div>';
-          }).join('')+
-        '</div>' : '';
-
-    var conts = ui.showContinuations
-      ? '<div class="goal-conts" data-k="goal-conts">'+
-          g.continuations.slice().reverse().map(function(c){
-            return '<div class="goal-cont-row goal-cont-'+esc(c.result)+'" data-k="goal-cr-'+esc(c.id)+'">'+
-              '<span class="goal-cont-result">'+esc(c.result)+'</span>'+
-              '<span class="goal-cont-when">'+esc(clockOf(c.at))+'</span>'+
-              '<span class="goal-cont-epoch">stop epoch '+c.stopEpochAt+'</span>'+
-              '<p class="goal-cont-note">'+esc(c.note)+'</p>'+
-            '</div>';
-          }).join('')+
-          '<p class="goal-note">The host decides continuation and records the decision. One model response ending is never completion.</p>'+
-        '</div>' : '';
-
-    /* The approval host renders HERE as well as in the goal-artifact editor
-       pane. The control that raises an agent proposal lives in this section,
-       but renderEditor was only reachable through the `goalEditor` slot -- so a
-       proposal raised from Activity Detail was invisible until the user
-       happened to open a different pane, and "agent-proposed Goal changes
-       require the existing approval dialog" was not satisfied on the very
-       surface that raised it. */
-    return '<div class="goal-section-v2" data-k="goal-section-v2">'+
-      renderEditor(ctx)+
-      renderBoundAll(ctx)+
-      '<div class="goal-head" data-k="goal-head">'+statusChip(g)+
-        '<span class="goal-rev">Revision '+g.revision+'</span>'+
-        '<span class="spacer"></span>'+
-
-      '</div>'+
-      (g.blockedReason?'<div class="goal-blocked-card" data-k="goal-blocked-card">'+ctx.icon('lock',13)+'<div><strong>Blocked</strong><p>'+esc(g.blockedReason)+'</p></div></div>':'')+
-      body + lifecycle +
-      '<div class="goal-disclosures" data-k="goal-disclosures">'+
-        '<button class="text-button" data-action="goal-toggle-history">'+(ui.showHistory?'Hide':'Show')+' History ('+g.revisions.length+')</button>'+
-        '<button class="text-button" data-action="goal-toggle-conts">'+(ui.showContinuations?'Hide':'Show')+' continuation log ('+g.continuations.length+')</button>'+
-
-      '</div>'+ hist + conts + '<details class="goal-technical"><summary>Technical details</summary><dl><dt>Currentness</dt><dd>'+esc(g.currentnessHash)+'</dd></dl></details>' +
-    '</div>';
-  }
-
-  /* The approval host for an agent-proposed replacement. Shows exactly the
-     current objective, the proposed complete replacement, Approve Change and
-     Cancel — and writes nothing until Approve. */
-  function renderEditor(ctx){
-    if(!ui.proposal) return '';
-    var g=goal(); if(!g) return '';
-    return '<div class="goal-approval" data-k="goal-approval">'+
-      '<div class="goal-approval-head">'+ctx.icon('warning',13)+'<strong>The agent proposes a new objective</strong></div>'+
-      '<div class="goal-approval-pair">'+
-        '<div><label>Current</label><p>'+esc(g.objective)+'</p></div>'+
-        '<div><label>Proposed</label><p>'+esc(ui.proposal.objective)+'</p></div>'+
-      '</div>'+
-      '<p class="goal-note">Nothing changes until you approve. A denied or expired proposal leaves the revision and currentness hash untouched.</p>'+
-      '<div class="plan-actions">'+
-        '<button class="soft-button" data-action="goal-deny-proposal">Cancel</button>'+
-        '<button class="primary-button" data-action="goal-approve-proposal">Approve Change</button>'+
-      '</div>'+
-    '</div>';
-  }
-
-  function headerChip(){ return ''; }        /* no Goal chip in the header — packet §1 */
-  function sidebarSummary(){ var s=summary(); return s.statusLine; }
-
-  /* =====================================================================
-     4. ACTIONS
-     ===================================================================== */
-  var ACTIONS = {
-    'goal-edit': function(ctx){ var g=goal(); if(!g) return; ui.editing=true; ui.draft=g.objective; ctx.renderApp(); },
-    'goal-cancel-edit': function(ctx){ ui.editing=false; ui.draft=null; ctx.renderApp(); },
-    'goal-save': function(ctx){
-      var g=goal(); if(!g) return;
-      var next = ui.draft==null ? g.objective : ui.draft;
-      var ok = writeRevision(next, 'user_direct', null);
-      ui.editing=false; ui.draft=null;
-      ctx.renderApp();
-      if(ok) ctx.toast('Objective saved', 'Revision '+g.revision+' recorded as your own change. No approval was needed.');
-      else ctx.toast('No change recorded', 'The objective was unchanged, empty, or over the 4,000-character limit.');
-    },
-    'goal-open-editor': function(ctx){
-      var g=goal(); if(!g) return;
-      ui.editing=true; ui.draft=g.objective;
-      ctx.state.activity.open=true; ctx.state.activity.domain='goal'; ctx.state.activity.scope='focus';
-      if(ctx.state.activity.expanded && ctx.state.activity.expanded.indexOf('goal')<0) ctx.state.activity.expanded.push('goal');
-      ctx.closeMenu && ctx.closeMenu();
-      ctx.renderApp();
-    },
-    'goal-pause': function(ctx){
-      var g=goal(); if(!g||g.status!=='active') return;
-      g.status='paused'; latchStop(g); g.updatedAt=new Date().toISOString();
-      ctx.renderApp();
-      ctx.toast('Goal paused', 'Stop epoch '+g.stopEpoch+' is latched. Nothing auto-resumes it — not a quota reset, not a window opening.');
-    },
-    'goal-resume': function(ctx){
-      var g=goal(); if(!g) return;
-      if(g.status==='blocked' && g.blockedReason){ ctx.toast('Cannot resume', g.blockedReason); return; }
-      if(g.status!=='paused' && g.status!=='blocked') return;
-      g.status='active'; g.updatedAt=new Date().toISOString();
-      ctx.renderApp();
-      ctx.toast('Goal resumed', 'You resumed it explicitly. That is the only thing that clears a latched stop.');
-    },
-    'goal-cancel': function(ctx){
-      var g=goal(); if(!g) return;
-      latchStop(g);
-      ctx.addReceipt('goal-receipt','Goal cancelled','Objective ended at revision '+g.revision+'. Workflow-owned records remain under their own owners.');
-      D.goal = Object.assign({}, g, { status:'cleared' });
-      ui.editing=false; ui.draft=null;
-      ctx.renderApp();
-    },
-    'goal-continue': function(ctx){
-      var g=goal(); if(!g) return;
-      var admitted = admitContinuation(g);
-      ui.showContinuations = true;
-      ctx.renderApp();
-      ctx.toast(admitted?'Next turn admitted':'Continuation refused',
-        admitted ? 'The host reloaded canonical Goal state, compared the stop epoch, and admitted one ordinary agent turn.'
-                 : 'The stop epoch moved or the Goal is not active, so the decision was discarded rather than dispatched.');
-    },
-    'goal-toggle-history': function(ctx){ ui.showHistory=!ui.showHistory; ctx.renderApp(); },
-    'goal-toggle-conts': function(ctx){ ui.showContinuations=!ui.showContinuations; ctx.renderApp(); },
-    'goal-demo-proposal': function(ctx){
-      ui.proposal = { objective:'Reduce the tenant-scoped analytics query p95 below 80 ms, accept up to 12% write amplification, and drop the rehearsed rollback requirement.', at:new Date().toISOString() };
-      ctx.renderApp();
-      ctx.toast('Proposal raised', 'The agent wrote nothing. The approval host is showing the current and proposed objectives.');
-    },
-    'goal-approve-proposal': function(ctx){
-      var p=ui.proposal; if(!p) return;
-      var g=goal(); if(!g) return;
-      var ok = writeRevision(p.objective, 'agent_proposed_user_approved', 'apr-'+Math.floor(Math.random()*9000+1000));
-      ui.proposal=null;
-      ctx.renderApp();
-      ctx.toast(ok?'Change approved':'Nothing written', ok?('Revision '+g.revision+' recorded with its originating approval id.'):'The proposal did not change the objective.');
-    },
-    'goal-deny-proposal': function(ctx){
-      var g=goal(); var before = g?g.revision:0;
-      ui.proposal=null; ctx.renderApp();
-      ctx.toast('Proposal denied', 'Revision stayed at '+before+' and the currentness hash is untouched.');
-    },
-
-    /* --- Additive Correction v4: bound Goal lifecycle -------------------
-       PGOAL-007/008. These control the BOUND PlanRun. The Plan's Build
-       control stays Building… through pause; only cancel makes it Canceled,
-       and cancel fences that execution's schedules and quota consent while
-       leaving unrelated scheduled messages alone. */
-    'goal-bound-pause': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'paused','Paused by the user; the bound PlanRun stopped at a safe boundary.');
-      if(!res) return;
-      if(P && P.boundPause) P.boundPause(id, res.goal.stopEpoch);
-      ctx.renderApp();
-      ctx.toast('Goal paused','The Plan stays Building… with “Paused” as its secondary reason. Continuation epoch is now '+res.goal.stopEpoch+'.');
-    },
-    'goal-bound-resume': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'active','Resumed under the current epoch.');
-      if(!res) return;
-      if(res.ok===false){ ctx.toast('Refused', 'A cancelled Goal is terminal; resume is not available.'); return; }
-      if(P && P.boundResume) P.boundResume(id, res.goal.stopEpoch);
-      ctx.renderApp();
-      ctx.toast('Goal resumed','Revalidated against the current epoch before the bound run continued.');
-    },
-    'goal-bound-cancel': function(ctx,btn){
-      var id=btn.dataset.id, P=window.PM56_PLANS;
-      var res=boundTransition(id,'canceled','Cancelled by the user; the bound PlanRun and its schedules are fenced.');
-      if(!res) return;
-      var fenced = (P && P.boundCancel) ? P.boundCancel(id, res.goal.stopEpoch) : null;
-      ctx.renderApp();
-      ctx.toast('Goal cancelled', fenced
-        ? ('Plan is Canceled. Invalidated '+fenced.schedules+' schedule(s) for this execution; '+fenced.untouched+' unrelated scheduled message(s) untouched.')
-        : 'Plan is Canceled.');
-    },
-    'goal-bound-open-plan': function(ctx,btn){
-      var P=window.PM56_PLANS;
-      if(P && P.openDetails) P.openDetails(ctx, btn.dataset.id);
-    }
-  };
-  Object.keys(ACTIONS).forEach(function(name){
-    EXT.action(name, function(ctx,btn,ev){ ACTIONS[name](ctx,btn,ev); return true; });
-  });
-
-  EXT.slot('goalSection', renderSection);
-  EXT.slot('goalEditor',  renderEditor);
-
-  /* Reset must really reset. Chain rather than clobber, so whichever module
-     loads last does not silently drop the others. */
-  var prevReset = EXT._actions && EXT._actions['reset-all'];
-  EXT.chainAction('reset-all', function(ctx,btn,ev){
-    restoreFixture();
-    return false;
-  });
-
-  /* Own delegated input listener. Deliberately does NOT re-render: the
-     objective is a textarea and a re-render mid-keystroke would fight the
-     caret. The textarea carries data-pm-keep so pmPatch leaves it alone. */
-  document.addEventListener('input', function(e){
-    var t=e.target;
-    if(!t || !t.getAttribute) return;
-    if(t.getAttribute('data-goal-input')!=='objective') return;
-    ui.draft = t.value;
-    var foot = t.parentNode && t.parentNode.querySelector('.goal-count');
-    if(foot){ foot.textContent = ui.draft.length + ' / 4000'; foot.classList.toggle('over', ui.draft.length>4000); }
-  });
-
-  window.PM56_GOAL = {
-    get:goal, summary:summary,
-    /* phaseNumber/progress are retained as retired-shape stubs so any older
-       harness that still calls them gets a truthful empty answer instead of a
-       TypeError. Nothing in the redesign calls either. */
-    progress:function(){ return { completed:0, total:0, open:0, retired:true }; },
-    phaseNumber:function(){ return 0; },
-    restore:restoreFixture,
-    fixture:function(){ return JSON.parse(GOAL0); },
-    render:{ section:renderSection, compact:renderCompact, editor:renderEditor },
-    /* Additive Correction v4 (PGOAL/GREPLAY). Plan-bound simple Goals. */
-    bound:boundFor,
-    boundList:boundList,
-    createBound:createBound,
-    boundTransition:boundTransition,
-    chip:headerChip,
-    sidebar:sidebarSummary,
-    /* GREPLAY-002: the closed origin vocabulary, published by its owner. */
-    originKinds:function(){ return ORIGIN_KINDS.slice(); },
-    originLabel:function(k){ return ORIGIN_LABEL[originOf(k)]; },
-    lineageFor:lineageFor
-  };
+  TX.set(g,'status',to);if(to==='active')TX.set(g,'blockedReason',null);stamp(g);
+  if(g.binding){if(to==='paused')P?.boundPause(g.binding.assistant_plan_id,g.stopEpoch);else P?.boundResume(g.binding.assistant_plan_id,g.stopEpoch);}
+  else if(to==='active')kick(g.id);
+  return {ok:true,goal:g};
+ }
+ function inspector(g){const owner=g.workRef&&owners.get(g.workRef.kind);if(!owner)return {eligible:false,complete:false,reason:'No work/evidence evaluator is attached in this local concept.',fingerprint:'unbound'};
+  try{return owner.inspect(g.workRef.ref,g);}catch(e){return {eligible:false,complete:false,reason:'Owner inspection failed: '+e.message,fingerprint:'failed'};}
+ }
+ // A blocked owner must report its condition cleared; an explicit user Resume
+ // never means a provider reset or a stale callback may resume by itself.
+ function resumeEligibility(g){
+  if(!g||g.status==='completed'||cancelled(g))return {ok:false,error:'not_resumable'};
+  if(g.binding&&g.blockedReason)return {ok:false,error:'owner_block_not_cleared'};
+  if(g.status==='blocked'&&!g.demo){const x=inspector(g);if(!x.eligible&&!decisionComplete(x))return {ok:false,error:x.reason||'owner_block_not_cleared'};}
+  return {ok:true};
+ }
+ function block(g,reason,waitKind){if(waitKind==='quota')return;if(g.status==='active'){TX.set(g,'status','blocked');TX.set(g,'blockedReason',reason||'The work owner has no eligible attempt.');stamp(g);}}
+ function decisionComplete(x){return x?.complete===true&&x.requiredResolved===true&&x.verified===true&&Array.isArray(x.evidenceRefs)&&x.evidenceRefs.length>0;}
+ function evaluate(id){const g=byId(id);if(!g||cancelled(g))return {ok:false,error:'goal_unavailable'};
+  const error=current(capture(g));if(error)return {ok:false,error};
+  const x=inspector(g),key=[g.id,g.revision,g.activeRunRef,g.stopEpoch,x.nextAttemptRef||x.fingerprint].join('|');
+  const prior=Object.values(store.tickets).find(t=>t.key===key&&t.state==='pending');if(prior)return {ok:true,ticket:clone(prior),replayed:true};
+  const result=g.status==='paused'?'pause':g.status==='blocked'?'blocked':g.status==='completed'?'complete':decisionComplete(x)?'complete':x.eligible?'continue':'blocked';
+  const t={id:'continuation-'+(++store.seq),key,token:capture(g),fingerprint:x.fingerprint,result,state:'pending',evidenceRefs:clone(x.evidenceRefs||[]),reason:x.reason||null,waitKind:x.waitKind||null,at:now()};
+  store.tickets[t.id]=t;return {ok:true,ticket:clone(t)};
+ }
+ function recordDecision(g,t,result,note){g.continuations.push({id:t.id,at:now(),result,stopEpochAt:t.token.epoch,goalRevision:t.token.revision,runRef:t.token.run,note:note||'',completion_evidence_refs:clone(t.evidenceRefs)});}
+ function dispatch(ticketId){const t=store.tickets[ticketId];if(!t)return {ok:false,error:'unknown_continuation'};
+  if(t.state==='settled')return {ok:true,replayed:true,receipt:clone(t.receipt)};
+  if(t.state!=='pending')return {ok:false,error:'continuation_discarded'};
+  const g=byId(t.token.goalId),error=current(t.token);if(error){t.state='discarded';t.reason=error;if(g)recordDecision(g,t,'pause',error);return {ok:false,error};}
+  if(g.status!=='active'){t.state='discarded';recordDecision(g,t,g.status==='paused'?'pause':'blocked','Goal is not active.');return {ok:false,error:'goal_not_active'};}
+  const x=inspector(g);if(x.fingerprint!==t.fingerprint){t.state='discarded';recordDecision(g,t,'blocked','Work or evidence changed after evaluation.');return {ok:false,error:'work_currentness_changed',reason:x.reason,waitKind:x.waitKind||null};}
+  if(t.result==='complete'){
+   if(!decisionComplete(x)){t.state='discarded';return {ok:false,error:'completion_not_verified'};}
+   const owner=owners.get(g.workRef?.kind),settled=owner?.complete?.(g.workRef.ref,g,x)||{ok:true};
+   if(!settled.ok){t.state='discarded';return settled;}
+   change(g,{status:'completed',blockedReason:null,completion:{at:now(),revision:g.revision,runRef:g.activeRunRef,evidenceRefs:clone(x.evidenceRefs),binding:clone(g.binding||null)}});stamp(g);
+   recordDecision(g,t,'complete','The owning workflow verified all required outcomes and supplied current evidence.');
+  }else if(t.result==='continue'&&x.eligible){
+   const out=owners.get(g.workRef.kind)?.advance?.(g.workRef.ref,g,t);
+   if(!out?.ok){t.state='discarded';block(g,out?.error||'Work admission refused.');recordDecision(g,t,'blocked',out?.error||'Work admission refused.');return out||{ok:false,error:'work_admission_refused'};}
+   recordDecision(g,t,'continue','One ordinary local work attempt was admitted against the captured objective, scope and stop epoch.');
+  }else{t.state='discarded';block(g,x.reason||'No runnable work.',x.waitKind);recordDecision(g,t,'blocked',x.reason||'No runnable work.');return {ok:false,error:'work_not_eligible',reason:x.reason,waitKind:x.waitKind||null};}
+  t.state='settled';t.receipt={continuation_id:t.id,goal_id:g.id,result:t.result,revision:t.token.revision,run_ref:t.token.run};store.receipts[t.id]=clone(t.receipt);
+  return {ok:true,receipt:clone(t.receipt)};
+ }
+ function kick(id){const g=byId(id);if(!g||g.binding||cancelled(g)||g.status!=='active'||timers.has(id))return;
+  const e=evaluate(id);if(!e.ok)return;if(e.ticket.result==='blocked'){block(g,e.ticket.reason,e.ticket.waitKind);return;}if(!['continue','complete'].includes(e.ticket.result))return;
+  const timer=setTimeout(()=>{timers.delete(id);const out=dispatch(e.ticket.id);context()?.renderApp();if(out.ok&&g.status==='active')kick(id);},1000);timers.set(id,timer);
+ }
+ // Called only by an admitted shared quota consent. It never clears a manual
+ // stop or changes Goal lifecycle. The captured revision/run/epoch must match.
+ function resumeFromQuota(token){
+  const error=current(token),g=byId(token?.goalId);if(error)return {ok:false,error};
+  if(g.status!=='active')return {ok:false,error:'goal_not_active'};
+  if(g.binding){const out=window.PM56_PLANS.resumeFromQuota(g.binding);return out;}
+  const x=inspector(g);if(!x.eligible&&!decisionComplete(x))return {ok:false,error:x.reason||'work_not_eligible'};
+  kick(g.id);return {ok:true,goal_id:g.id,run_id:g.activeRunRef};
+ }
+ function bound(planId){return RT.boundGoals.byPlan[planId]||null;}
+ function boundList(tid){return Object.values(RT.boundGoals.byPlan).filter(g=>!cancelled(g)&&(!tid||g.thread===tid));}
+ function createBound(o){
+  const prior=bound(o.plan_id);if(prior?.idempotency_key===o.idempotency_key&&!cancelled(prior))return {ok:true,goal:prior,replayed:true};
+  if(prior&&!cancelled(prior)&&prior.status!=='completed')return {ok:false,error:'active_run_exists'};
+  if(o.expected_hash!==o.plan_hash)return {ok:false,error:'stale_plan_version'};
+  const out=create({threadId:o.thread,projectId:o.project_id,scope:o.scope,objective:'Complete the approved Plan “'+o.title+'” at version V'+o.version+' exactly as written.',explicitRequest:true,origin:'plan_build',runId:o.plan_run_id,workRef:{kind:'assistant_plan',ref:o.plan_id}});
+  if(!out.ok)return out;const g=out.goal;
+  change(g,{bound:true,idempotency_key:o.idempotency_key,binding:{schema:'pm.goal.plan_binding.v1',goal_id:g.id,assistant_plan_id:o.plan_id,plan_version:o.version,plan_hash:o.plan_hash,plan_run_id:o.plan_run_id,todo_list_ref:'todos:'+o.thread,planunit_bundle_ref:o.planunit_bundle_ref||null},lineage:lineageFor(g.id,1,'plan_build',{source_message_refs:o.source_refs||[],bound_plan_ref:o.plan_id+'@V'+o.version,owning_workflow_ref:o.plan_run_id})});
+  TX.set(RT.boundGoals.byPlan,o.plan_id,g);return {ok:true,goal:g};
+ }
+ function boundTransition(planId,to,note){const g=bound(planId);if(!g)return null;
+  if(to==='completed'){const e=evaluate(g.id);return e.ok?dispatch(e.ticket.id):e;}
+  return lifecycle(capture(g),to==='canceled'||to==='cancelled'?'cancel':to);
+ }
+ function checkpoint(tid){const g=get(tid);return {schema:'pm.concept.goal_checkpoint.v1',durability:'session_memory_only',goal:g?clone(g):null,scope:scope(tid),capturedAt:now()};}
+ function rebind(snapshot,targetId,kind){
+  if(!snapshot?.goal)return {ok:true,empty:true};if(!['branch','restore','rewind'].includes(kind))return {ok:false,error:'invalid_rebind_kind'};
+  const sc=scope(targetId);if(!sc||sc.projectId!==snapshot.scope?.projectId)return {ok:false,error:'project_mismatch'};
+  const old=get(targetId);if(old&&old.status!=='completed'){fence(old,'Explicit '+kind+' safe boundary.');if(old.binding)window.PM56_PLANS?.boundPause(old.binding.assistant_plan_id);}
+  const g=clone(snapshot.goal),id=kind==='branch'?'goal-branch-'+(++store.seq)+'-'+targetId:g.id;
+  g.id=id;g.thread=targetId;g.scope=clone(sc);g.projectId=sc.projectId;g.stopEpoch=Math.max(g.stopEpoch,old?.stopEpoch||0)+1;g.currentnessHash=id+':rebind:'+g.stopEpoch+':'+(++store.seq);g.status='paused';g.blockedReason=null;g.activeRunRef=null;g.binding=null;g.bound=false;g.workRef=null;
+  g.lineage={...g.lineage,goal_id:id,rebound_from:snapshot.goal.id,rebind_kind:kind,live_controller_reused:false};
+  store.byId[id]=g;store.currentByThread[targetId]=id;delete store.cancellations[id];return {ok:true,goal:g,requiresExplicitWorkRebind:true};
+ }
+ function restore(){for(const t of timers.values())clearTimeout(t);timers.clear();store.generation++;for(const k of ['byId','currentByThread','cancellations','proposals','tickets','receipts'])store[k]={};RT.boundGoals.byPlan={};RT.boundGoals.seq=0;Object.assign(ui,{editing:null,draft:null,proposal:null,history:false,continuations:false});const g=clone(GOAL_FIXTURE);g.scope=scope('query')||{projectId:g.projectId,threadId:'query',worktreeId:'concept:default'};g.projectId=g.scope.projectId;g.workRef=null;g.lineage=lineageFor(g.id,g.revision,'user_request');store.byId[g.id]=g;store.currentByThread.query=g.id;D.goal=g;}
+ function summary(tid){const g=get(tid);return g?{tone:tones[g.status],status:g.status,statusLine:labels[g.status],objective:g.objective,revision:g.revision,blocker:g.blockedReason}:{tone:'idle',status:'none',statusLine:'No goal',objective:''};}
+ const button=(action,label,extra='')=>'<button class="soft-button" data-action="'+action+'" '+extra+'>'+esc(label)+'</button>';
+ function renderEditor(c){const p=store.proposals[ui.proposal];if(!p||p.state!=='pending'||p.token.goalId!==get()?.id)return '';
+  return '<section class="goal-approval" data-k="goal-approval:'+p.id+'"><strong>Review objective change</strong><div class="goal-approval-pair"><div><label>Current</label><p>'+esc(p.current)+'</p></div><div><label>Proposed</label><p>'+esc(p.objective)+'</p></div></div><p class="goal-note">Nothing changes until you approve.</p><div class="plan-actions">'+button('goal-deny-proposal','Cancel')+button('goal-approve-proposal','Approve Change')+'</div></section>';
+ }
+ function renderSection(c){const g=get(c.thread.id);if(!g)return '<section class="goal-section-v2"><p>No Goal on this thread.</p>'+button('goal-new','Create Goal')+'</section>';
+  const editing=ui.editing?.goalId===g.id,wait=g.status==='active'?inspector(g):null;
+  return '<section class="goal-section-v2" data-goal-id="'+esc(g.id)+'" data-k="goal:'+esc(g.id)+'">'+renderEditor(c)+
+   '<div class="goal-head"><span class="goal-chip goal-chip-'+g.status+'"><i class="goal-dot goal-dot-'+g.status+'"></i>'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div>'+
+   (wait?.waitKind==='quota'?'<p class="goal-note">Waiting for provider Usage. The Goal stays running; continuation requires the shared quota owner.</p>':'')+
+   (g.blockedReason?'<p class="goal-blocker-line">'+esc(g.blockedReason)+'</p>':'')+
+   (editing?'<div class="goal-edit"><textarea class="goal-objective-input" data-goal-input="objective" data-pm-keep rows="5">'+esc(ui.draft)+'</textarea><div class="goal-edit-foot"><span class="goal-count">'+ui.draft.length+' / 4000</span><span class="spacer"></span>'+button('goal-cancel-edit','Cancel edit')+button('goal-save','Save')+'</div></div>':'<p class="goal-objective-full">'+esc(g.objective)+'</p>')+
+   '<div class="goal-lifecycle">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-cancel','Cancel Goal',g.status==='completed'?'disabled':'')+(!editing?button('goal-edit','Edit objective',g.status==='completed'?'disabled':''):'')+'</div>'+
+   (g.binding?'<div class="goal-lifecycle">'+button('goal-bound-open-plan','Open exact Plan · V'+g.binding.plan_version,'data-id="'+esc(g.binding.assistant_plan_id)+'"')+(g.blockedReason?button('goal-revise-plan','Revise Plan','data-id="'+esc(g.binding.assistant_plan_id)+'"'):'')+'</div>':'')+
+   '<div class="goal-disclosures">'+button('goal-toggle-history','Objective history')+button('goal-toggle-conts','Continuation decisions')+button('goal-request-change','Ask for a replacement',g.status==='completed'?'disabled':'')+'</div>'+
+   (ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'')+
+   (ui.continuations?'<div class="goal-conts">'+g.continuations.slice().reverse().map(t=>'<div class="goal-cont-row"><strong>'+esc(t.result)+'</strong><small>Stop epoch '+t.stopEpochAt+'</small><p>'+esc(t.note)+'</p></div>').join('')+(g.continuations.length?'':'<p>No continuation decision yet.</p>')+'</div>':'')+
+   '<details class="goal-technical"><summary>Details</summary><p>Session-memory concept. No native host persistence or provider execution.</p><pre>'+esc(JSON.stringify({goal_id:g.id,origin:g.lineage,scope:g.scope,binding:g.binding||null,active_run_ref:g.activeRunRef,currentness_hash:g.currentnessHash,user_stop_epoch:g.stopEpoch},null,2))+'</pre>'+(!g.binding?button('goal-continue','Evaluate next turn',g.status==='active'?'':'disabled'):'')+'</details></section>';
+ }
+ function renderCompact(c){const g=get(c.thread.id);if(!g)return '';if(ui.editing||ui.proposal||ui.history||ui.continuations)return renderSection(c);
+  return '<section class="goal-compact" data-goal-id="'+esc(g.id)+'"><div class="goal-compact-head"><span class="goal-chip goal-chip-'+g.status+'">'+labels[g.status]+'</span><span class="goal-rev">Revision '+g.revision+'</span></div><p class="ab-objective goal-objective-2">'+esc(g.objective)+'</p><div class="goal-compact-actions">'+(g.status==='active'?button('goal-pause','Pause'):button('goal-resume','Resume',!resumeEligibility(g).ok?'disabled':''))+button('goal-open-editor','Edit objective',g.status==='completed'?'disabled':'')+button('goal-cancel','Cancel',g.status==='completed'?'disabled':'')+button('goal-details','Details')+'</div></section>';
+ }
+ function refresh(c,out){c.renderApp();c.renderOverlays?.();if(out?.ok===false)c.toast('No change made',out.error?.replaceAll('_',' ')||'The owner refused this action.');}
+ function openGoal(c){c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.state.menu=null;if(c.state.activity.expanded&&!c.state.activity.expanded.includes('goal'))c.state.activity.expanded.push('goal');}
+ const actions={
+  'goal-new':c=>{c.state.composer='/goal '+c.state.composer.replace(/^\/goal\s*/,'');c.state.menu=null;refresh(c);setTimeout(()=>document.querySelector('textarea.composer-input,textarea[data-composer]')?.focus(),0);},
+  'goal-details':c=>{ui.history=true;openGoal(c);refresh(c);},
+  'goal-edit':c=>{const g=get();if(!g||g.status==='completed')return;ui.editing=capture(g);ui.draft=g.objective;refresh(c);},
+  'goal-open-editor':c=>{actions['goal-edit'](c);openGoal(c);refresh(c);},
+  'goal-cancel-edit':c=>{ui.editing=null;ui.draft=null;refresh(c);},
+  'goal-save':c=>{const out=edit(ui.editing,ui.draft);if(out.ok){ui.editing=null;ui.draft=null;}refresh(c,out);},
+  'goal-pause':c=>refresh(c,lifecycle(capture(get()),'paused')),
+  'goal-resume':c=>refresh(c,lifecycle(capture(get()),'active')),
+  'goal-cancel':c=>{const out=lifecycle(capture(get()),'cancel');if(out.ok){ui.editing=null;ui.proposal=null;}refresh(c,out);},
+  'goal-toggle-history':c=>{ui.history=!ui.history;refresh(c);},
+  'goal-toggle-conts':c=>{ui.continuations=!ui.continuations;refresh(c);},
+  'goal-request-change':c=>{const g=get();if(!g)return;RT.composer.destination={kind:'goal-objective-proposal',refId:g.id,label:'Request objective change',goalToken:capture(g)};c.toast('Composer targeted at the objective','Send the complete replacement you explicitly want proposed. Approval is still required.');refresh(c);},
+  'goal-approve-proposal':c=>refresh(c,approve(ui.proposal)),
+  'goal-deny-proposal':c=>refresh(c,deny(ui.proposal)),
+  'goal-continue':c=>{const g=get();if(!g)return;const out=evaluate(g.id);if(out.ok){setTimeout(()=>refresh(context(),dispatch(out.ticket.id)),450);}ui.continuations=true;refresh(c,out);},
+  'goal-bound-open-plan':(c,b)=>window.PM56_PLANS?.openDetails(c,b.dataset.id),
+  'goal-revise-plan':(c,b)=>E._actions[window.PM56_PLANS?.get(b.dataset.id)?.status==='building'?'pd-stop-revise':'pd-revise']?.(c,{dataset:{id:b.dataset.id}})
+ };
+ for(const [name,fn] of Object.entries(actions))E.action(name,(c,b)=>{fn(c,b);return true;});
+ for(const [name,to] of [['goal-bound-pause','paused'],['goal-bound-resume','active'],['goal-bound-cancel','cancel']])E.action(name,(c,b)=>{refresh(c,lifecycle(capture(bound(b.dataset.id)),to));return true;});
+ E.chainAction('stop-run',c=>{const g=get(c.thread.id);if(g?.status==='active')lifecycle(capture(g),'paused');else{const r=window.PM56_PLANS?.current(c.thread.id);if(r?.workRef&&r.status==='building')window.PM56_PLANS.boundPause(r.plan_id);}window.PM56_SCHED?.latchStop('Explicit Stop from the composer.');return false;});
+ E.slot('goalSection',renderSection);E.slot('goalEditor',renderEditor);E.chainAction('reset-all',()=>{restore();return false;});
+ document.addEventListener('input',e=>{if(e.target.getAttribute?.('data-goal-input')==='objective'){ui.draft=e.target.value;const count=e.target.parentNode.querySelector('.goal-count');if(count)count.textContent=ui.draft.length+' / 4000';}});
+ window.PM56_GOAL={get,byId,summary,create,capture,current,resumeEligibility,resumeFromQuota,edit,propose,approve,deny,lifecycle,evaluate,dispatch,kick,scope,checkpoint,rebind,
+  cancelled,proposal:id=>clone(store.proposals[id]||null),tickets:()=>clone(store.tickets),cancellation:id=>clone(store.cancellations[id]||null),
+  registerOwner:(kind,api)=>{if(owners.has(kind))throw new Error('duplicate_goal_work_owner');owners.set(kind,api);},
+  fenceThread:tid=>{const g=get(tid);if(g){fence(g,'Thread lineage changed.');g.status='paused';if(g.binding)window.PM56_PLANS?.boundPause(g.binding.assistant_plan_id);}return g;},
+  bound,boundList,createBound,boundTransition,restore,fixture:()=>clone(GOAL_FIXTURE),render:{section:renderSection,compact:renderCompact,editor:renderEditor},chip:()=>'',sidebar:()=>summary().statusLine,
+  originKinds:()=>origins.slice(),originLabel:k=>originLabels[k]||null,lineageFor,progress:()=>({completed:0,total:0,open:0,retired:true}),phaseNumber:()=>0,
+  exportRecord:id=>{const g=byId(id);return g?{schema_id:'pm.goal.record.v2',goal_id:g.id,project_id:g.projectId,thread_id:g.thread,objective_text:g.objective,revision:g.revision,state:g.status,blocked_reason_ref:g.blockedReason,active_run_ref:g.activeRunRef,created_at:g.createdAt,updated_at:g.updatedAt,currentness_hash:g.currentnessHash}:null;}
+ };
+ restore();
 })();
 
 /* context.js — feature module.  OWNER: Wave 3 — Context agent (item 6: u11 compact menu, drawer gaps, legible growth chart)
@@ -23335,7 +23058,9 @@ window.PM56_EXT = window.PM56_EXT || {
         createdAt: new Date().toISOString()
       }
     };
+    nt.worktreeId=src.worktreeId||src.worktree?.id||ctx.state.worktree;
     ctx.state.threads.unshift(nt);
+    window.PM56_GOAL?.rebind(window.PM56_GOAL.checkpoint(src.id),nt.id,'branch');
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch');
     window.PM56_LENS?.fork(src.id, nt.id);
 
@@ -23373,6 +23098,8 @@ window.PM56_EXT = window.PM56_EXT || {
       messageCount: ordinaryCovered.length,
       createdAt: new Date().toISOString(),
       immutable: true,
+      goalCheckpoint:window.PM56_GOAL?.checkpoint(t.id)||null,
+      goalCheckpointScope:'accepted objective at restore-point creation; not inferred from an older transcript anchor',
       deleted: false,
       /* Ordinary user-facing messages are captured in snapshot */
       snapshot: ctx.clone(ordinaryCovered),
@@ -23420,7 +23147,7 @@ window.PM56_EXT = window.PM56_EXT || {
       status: 'idle', pinned: false, archived: false, unread: 0, updated: 'now',
       model: src.model,
       summary: 'Branched from ' + rp.label + ' of ' + src.title,
-      worktree: null,
+      worktree: null,worktreeId:src.worktreeId||src.worktree?.id||ctx.state.worktree,
       /* The SNAPSHOT, not the live prefix: that is what an immutable restore
          point is for. Internal notes are filtered from ordinary messages. */
       messages: ctx.clone(rp.snapshot).filter(function (m) { return !isInternalNote(m); }),
@@ -23438,6 +23165,7 @@ window.PM56_EXT = window.PM56_EXT || {
       }
     };
     ctx.state.threads.unshift(nt);
+    window.PM56_GOAL?.rebind(rp.goalCheckpoint,nt.id,'branch');
     if (window.PM56_CTX && window.PM56_CTX.seedThread) window.PM56_CTX.seedThread(nt.id, src.id, 'branch-from-restore');
     dispatch(CMD.branchFromRestore, src.id);
     receipt(ctx, src, 'threadops-branch', 'Branched from ' + rp.label,
@@ -23455,6 +23183,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
     /* Restore point FIRST. If this throws, nothing has been folded yet. */
     var rp = createRestorePoint(ctx, t, m, 'Before rewind to turn ' + (at + 1));
+    window.PM56_GOAL?.fenceThread(t.id);
 
     /* Everything after the anchor is captured verbatim BEFORE the restore
        point card and the fold card are appended, so those two stay visible. */
@@ -23504,6 +23233,8 @@ window.PM56_EXT = window.PM56_EXT || {
     var args = [insertAt, 0].concat(rec.messages);
     Array.prototype.splice.apply(t.messages, args);
     var n = rec.messages.length;
+    // Restoring folded transcript turns never clears a user's Goal stop latch.
+    window.PM56_GOAL?.fenceThread(t.id);
     rec.restored = true;
     rec.restoredAt = new Date().toISOString();
     rec.messages = [];
@@ -29607,6 +29338,8 @@ window.PM56_EXT = window.PM56_EXT || {
 
   RT.plans = RT.plans || { records:hydrate(JSON.parse(JSON.stringify(PLANS0))), demo:true };
   function P(){ return RT.plans; }
+  RT.plans.runs=RT.plans.runs||{};
+  const workOwners=new Map();
   function rec(id){ return P().records[id]; }
   function body(r){ return r.revisions[r.version] || []; }
   function steps(blocks){ return list(blocks).filter(function(b){ return b.t==='plan_step'; }); }
@@ -30086,7 +29819,7 @@ window.PM56_EXT = window.PM56_EXT || {
      5. THE CARD
      ===================================================================== */
   function actionBtn(a,label,id,extra,kind){
-    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(extra||'')+'>'+esc(label)+'</button>';
+    return '<button type="button" class="'+(kind||'soft-button')+' pd-act" data-action="'+esc(a)+'" data-id="'+esc(id)+'"'+(a==='pd-build-goal'&&rec(id)?' data-version="'+rec(id).version+'" data-hash="'+hashOf(body(rec(id)))+'"':'')+(extra||'')+'>'+esc(label)+'</button>';
   }
 
   function cardHeader(r){
@@ -30303,67 +30036,85 @@ window.PM56_EXT = window.PM56_EXT || {
     };
   }
 
-  function admitBuild(ctx,r,opts){
-    opts=opts||{};
-    if(r.status!=='ready'||!eligible(r).build) return false;
-    // Materialization is an atomic ToDo-owner operation. For a discovery Plan,
-    // reject its failure before approval, schedule invalidation or unit receipts.
-    var discoveryMade=null;
-    if(r.discoveryRunId){
-      discoveryMade=todoApi().materializeForPlan({plan_id:r.plan_id,thread_id:r.thread_id,version:r.version,
-        steps:steps(body(r)).map(s=>({id:s.plan_step_id,parent:s.parent_step_id,deps:list(s.depends_on),title:s.title,outcome:s.text}))});
-      if(!discoveryMade?.ok){ctx.toast('Build not admitted',discoveryMade?.error||'To-Do materialization refused');return false;}
-    }
-    /* PSCHED-005 / PFAIL-010: an immediate Build ATOMICALLY invalidates the
-       pending schedule for this Plan BEFORE the run is admitted, so a timer
-       cannot deliver a second dispatch for work that has already started.
-       Cancel did this and Build did not, which left exactly the duplicate
-       admission the correction names -- two owners of one PlanRun. */
-    r.scheduleInvalidation = invalidateSchedulesFor(r, opts.scheduleRef ? 'scheduled_build' : 'immediate_build', opts.scheduleRef);
-    r.approved = freeze(r,ctx);
-    if(opts.scheduleSnapshot){
-      r.approved.runtime=opts.scheduleSnapshot.modelName;
-      r.approved.modelId=opts.scheduleSnapshot.modelId;
-      r.approved.provider=opts.scheduleSnapshot.provider;
-      r.approved.accountId=opts.scheduleSnapshot.accountId;
-    }
-    if(opts.scheduleRef)r.approved.schedule_id=opts.scheduleRef;
-    r.status = 'building';
-    r.buildStep = 0;
-    r.wait = opts.wait || null;
-    /* Deep Plan: materialise + validate the SCOPED bundle first. Scoped means
-       plan_id + version -- it is not written to the global .plan_index and it
-       creates no NodeSeeds or WorkNodes. */
-    if(r.backend==='ledger_bound'){
-      r.unitsMaterialized = { at:r.approved.at, scope:r.plan_id+'@V'+r.version,
-        count:list(r.planunits).length, validated:true, ...(r.discoveryRunId?{validation_kind:'local_scoped_template_validation',plan_hash:r.approved.hash,scope_kind:'assistant_deep_plan',nodeSeeds:0}:{}), globalIndex:false, worknodes:0 };
-    }
-    /* PPROG-002/013: the To-Dos are REAL, created through the ToDo owner, and
-       they are what the projector derives from. A local build counter would
-       have made the gutter a decoration rather than a projection. */
-    var api=todoApi(), made=discoveryMade;
-    if(!discoveryMade && api && api.materializeForPlan){
-      made = api.materializeForPlan({
-        plan_id:r.plan_id, thread_id:r.thread_id, version:r.version,
-        steps:steps(body(r)).map(function(s){
-          return { id:s.plan_step_id, parent:s.parent_step_id, deps:list(s.depends_on), title:s.title, outcome:s.text };
-        })
-      });
-    }
-    r.todosCreated = { at:r.approved.at, from:(r.backend==='ledger_bound'?'planunits':'plan_steps'),
-                       count:r.discoveryRunId?made.created:((made&&made.created) || (r.backend==='ledger_bound'?list(r.planunits).length:steps(body(r)).length)),
-                       reused:!!(made&&made.reused) };
-    // A direct Plan build is not a Goal. Use its own linked transcript record.
-    var thread=ctx.state.threads.find(function(t){return t.id===r.thread_id;});
-    if(thread)thread.messages.push({id:ctx.uid('plan-run'),role:'system',
-      type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',
-      detail:'V'+r.version+' · '+r.todosCreated.count+' To-Dos',time:new Date().toISOString()});
-    /* Advance the step gutter on a real interval so Building… is observable.
-       Nothing here is authoritative -- §7.2's gutter is a projection. */
-    stopRun(r);
-    if(!opts.paused) startRunTimer(ctx,r);
-    return true;
+  function admissionSnapshot(ctx,r){
+    const t=ctx.state.threads.find(t=>t.id===r.thread_id), model=ctx.selectedModel();
+    return {project_id:t?.projectId||'pm',thread_id:r.thread_id,worktree:window.PM56_GOAL.scope(r.thread_id)?.worktreeId,
+      version:r.version,hash:hashOf(body(r)),permissions:ctx.state.permissions,
+      route:{modelId:model?.id,modelName:model?.name,provider:model?.provider,accountId:model?.accountId}};
   }
+  function validateAdmission(ctx,r,frozen){
+    const t=ctx.state.threads.find(t=>t.id===frozen.thread_id),sc=window.PM56_GOAL.scope(frozen.thread_id);
+    if(!t||t.archived||r.thread_id!==frozen.thread_id||(t.projectId||'pm')!==frozen.project_id||r.project_id&&r.project_id!==frozen.project_id)return 'scope_changed';
+    if(!sc||sc.worktreeId!==frozen.worktree)return 'worktree_changed';
+    if(r.version!==frozen.version||hashOf(body(r))!==frozen.hash)return 'stale_plan_version';
+    if(ctx.state.permissions!==frozen.permissions)return 'permission_snapshot_changed';
+    const model=(D.models||[]).find(m=>m.id===frozen.route?.modelId);
+    if(!model||model.status!=='ready'||model.accountId!==frozen.route.accountId||model.provider!==frozen.route.provider)return 'provider_route_unavailable';
+    if(RT.quota?.waiting)return 'quota_unavailable';
+    if(r.status!=='ready'||!eligible(r).build)return 'plan_not_ready';
+    return null;
+  }
+  function commitRun(r,run){
+    if(P().runs[run.plan_run_id])return {ok:false,error:'active_run_exists'};
+    window.PM56_TX.set(P().runs,run.plan_run_id,run);return {ok:true,run};
+  }
+  function bindRun(r,g,run){
+    if(!g||g.binding.plan_run_id!==run.plan_run_id||g.binding.plan_hash!==run.plan_hash)return {ok:false,error:'binding_mismatch'};
+    window.PM56_TX.set(r,'goalBinding',g.binding);return {ok:true,binding:g.binding};
+  }
+  function buildCommand(ctx,r,opts={}){
+    if(!r)return {ok:false,error:'plan_not_found'};
+    const TX=window.PM56_TX,G=window.PM56_GOAL,api=window.PM56_PLANS;
+    const expected=opts.expected||admissionSnapshot(ctx,r),topology=opts.execution_topology||'agent';
+    if(!['agent','goal_driven'].includes(topology))return {ok:false,error:'unsupported_execution_topology'};
+    const key=[r.plan_id,expected.version,expected.hash,topology].join('|');
+    if(r.buildAdmission?.key===key){
+      const a=r.approved;
+      if(!a||expected.project_id!==a.project_id||expected.thread_id!==r.thread_id||expected.worktree!==a.worktree||expected.permissions!==a.permissions||expected.route?.modelId!==a.modelId||expected.route?.accountId!==a.accountId||expected.route?.provider!==a.provider)return {ok:false,error:'idempotency_binding_mismatch'};
+      return {ok:true,replayed:true,...r.buildAdmission};
+    }
+    const error=validateAdmission(ctx,r,expected);if(error)return {ok:false,error};
+    if(topology==='goal_driven'&&G.get(r.thread_id)&&G.get(r.thread_id).status!=='completed')return {ok:false,error:'active_goal_exists'};
+    const seq=(r.runSerial||0)+1,runId='run-'+r.plan_id+'-V'+r.version+'-'+seq,epoch=(r.runEpoch||0)+1;
+    const stop=window.PM56_SCHED?.stopSnapshot();
+    if(opts.scheduleRef&&stop?.stopped)return {ok:false,error:'manual_stop_latched'};
+    return TX.run(()=>{
+      const made=todoApi().materializeForPlan({plan_id:r.plan_id,project_id:expected.project_id,thread_id:r.thread_id,version:r.version,run_id:runId,run_epoch:epoch,
+        strict:topology==='goal_driven'||!!r.workRef,workRef:r.workRef,
+        steps:steps(body(r)).map(st=>({id:st.plan_step_id,parent:st.parent_step_id,deps:list(st.depends_on),title:st.title,outcome:st.text}))});
+      if(!made?.ok)TX.fail(made?.error||'todo_materialization_refused');
+      let error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      let goalResult=null;
+      if(topology==='goal_driven'){
+        goalResult=G.createBound({plan_id:r.plan_id,project_id:expected.project_id,scope:G.scope(r.thread_id),thread:r.thread_id,title:r.title,version:r.version,
+          plan_hash:expected.hash,expected_hash:expected.hash,plan_run_id:runId,idempotency_key:key,
+          planunit_bundle_ref:r.backend==='ledger_bound'?r.plan_id+'@V'+r.version+':planunits':null,
+          source_refs:list(r.sources).map(x=>x.ref).filter(Boolean)});
+        if(!goalResult?.ok)TX.fail(goalResult?.error||'goal_admission_refused');
+      }
+      const invalidation=invalidateSchedulesFor(r,opts.scheduleRef?'scheduled_build':'immediate_build',opts.scheduleRef);
+      error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      if(opts.scheduleRef&&!window.PM56_SCHED.checkEpoch(stop).ok)TX.fail('stale_stop_epoch');
+      const run={schema:'pm.concept.plan_run.v1',plan_run_id:runId,project_id:expected.project_id,thread_id:r.thread_id,plan_id:r.plan_id,plan_version:r.version,plan_hash:expected.hash,
+        epoch,state:'running',topology,scope:{projectId:expected.project_id,threadId:r.thread_id,worktreeId:expected.worktree},route:JSON.parse(JSON.stringify(expected.route)),permissions:expected.permissions,
+        required_todo_ids:made.ids.slice(),planunit_bundle_ref:goalResult?.goal.binding.planunit_bundle_ref||null,created_at:new Date().toISOString()};
+      const admitted=api.commitRun(r,run);if(!admitted?.ok)TX.fail(admitted?.error||'plan_run_refused');
+      if(goalResult){const binding=api.bindRun(r,goalResult.goal,run);if(!binding?.ok)TX.fail(binding?.error||'goal_binding_refused');}
+      error=validateAdmission(ctx,r,expected);if(error)TX.fail(error);
+      const approved={...freeze(r,ctx),project_id:expected.project_id,thread_id:r.thread_id,worktree:expected.worktree,
+        runtime:expected.route.modelName,modelId:expected.route.modelId,provider:expected.route.provider,accountId:expected.route.accountId,permissions:expected.permissions,plan_run_id:runId,...(opts.scheduleRef?{schedule_id:opts.scheduleRef}:{})};
+      const receipt={key,goal_id:goalResult?.goal.id||null,plan_run_id:runId,binding:goalResult?.goal.binding||null,version:r.version,hash:expected.hash,command:'cmd.chat.plan.build',execution_topology:topology};
+      const values={approved,buildAdmission:receipt,runSerial:seq,runEpoch:epoch,status:'building',current:true,buildStep:0,wait:opts.wait||null,attention:opts.paused?{kind:'paused',reason:'Paused at admission.',actions:['resume','cancel']}:null,
+        topology,scheduleInvalidation:invalidation,requiredTodoIds:made.ids.slice(),todosCreated:{at:approved.at,from:r.backend==='ledger_bound'?'planunits':'plan_steps',count:made.created,reused:!!made.reused}};
+      for(const [k,v] of Object.entries(values))TX.set(r,k,v);
+      if(r.backend==='ledger_bound')TX.set(r,'unitsMaterialized',{at:approved.at,scope:r.plan_id+'@V'+r.version,count:list(r.planunits).length,validated:true,validation_kind:'local_scoped_template_validation',plan_hash:expected.hash,scope_kind:'assistant_deep_plan',globalIndex:false,worknodes:0,nodeSeeds:0});
+      const t=ctx.state.threads.find(t=>t.id===r.thread_id);
+      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
+      TX.defer(()=>{stopRun(r);if(!opts.paused)startRunTimer(ctx,r);});
+      return {ok:true,...receipt};
+    });
+  }
+  function admitBuild(ctx,r,opts){const out=buildCommand(ctx,r,opts||{});if(!out.ok)ctx.toast('Build not admitted',out.error?.replaceAll('_',' ')||'Admission refused.');return out.ok;}
 
   /* ONE tick, used by the first admission and by every resume. It used to be
      duplicated, and the copy in resumeRun() simply stopped when no work was
@@ -30372,7 +30123,9 @@ window.PM56_EXT = window.PM56_EXT || {
   function runTick(ctx,r){
     if(r.status!=='building'){ stopRun(r); return; }
     var a=todoApi(), moved=null;
-    if(a && a.advanceForPlan) moved=a.advanceForPlan(r.plan_id, r.thread_id);
+    if(r.workRef&&!r.goalBinding&&inspectGoalPlan(r.plan_id).complete){finalizeGoalRun(r.plan_id);ctx.renderApp();return;}
+    if(r.workRef){moved=workOwners.get(r.workRef.kind)?.advance(r.workRef.ref,r);if(moved?.ok===false){r.attention={kind:'attention',reason:moved.error,actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
+    else if(a && a.advanceForPlan && !r.goalBinding) moved=a.advanceForPlan(r.plan_id, r.thread_id);
     r._projRev=(r._projRev||1)+1;
     /* PFAIL-007: Completed requires the completion predicate to hold --
        every required leaf resolved. `moved===null` means the projector
@@ -30384,14 +30137,26 @@ window.PM56_EXT = window.PM56_EXT || {
         if(s.children) continue;
         if(s.state!=='completed' && s.state!=='skipped') open++;
       }
-      if(open===0){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
+      if(open===0&&(!r.workRef||inspectGoalPlan(r.plan_id).complete)){ r.status='completed'; r.current=false; stopRun(r); completeBoundGoal(r); }
       else { r.attention={ kind:'attention', reason:'No further work can be admitted: '+open+' step(s) are unresolved and none is runnable.', actions:['details','revise','cancel'] }; stopRun(r); }
     }
     ctx.renderApp();
   }
   function startRunTimer(ctx,r){
-    stopRun(r);
-    runTimers[r.plan_id]=setInterval(function(){ runTick(ctx,r); }, 1400);
+    stopRun(r);const epoch=r.runEpoch||0,runId=r.approved?.plan_run_id;
+    function schedule(){
+      if(rec(r.plan_id)!==r||r.status!=='building'||r.runEpoch!==epoch||r.approved?.plan_run_id!==runId||r.attention?.kind==='paused')return;
+      const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
+      if(r.goalBinding&&(!g||G.cancelled(g)||g.binding?.plan_run_id!==runId||g.status!=='active')){r.attention={kind:'paused',reason:'The bound Goal is unavailable or not active. No alternate execution loop is admitted.',actions:['details','cancel']};return;}
+      const evaluation=g?G.evaluate(g.id):null;
+      runTimers[r.plan_id]=setTimeout(()=>{
+        if(rec(r.plan_id)!==r||r.status!=='building'||r.runEpoch!==epoch||r.approved?.plan_run_id!==runId)return;
+        if(g){const out=evaluation?.ok?G.dispatch(evaluation.ticket.id):evaluation;if(!out?.ok){r.attention={kind:out?.waitKind==='quota'?'quota_wait':'attention',reason:(out?.reason||out?.error||'Goal work is not eligible').replaceAll('_',' '),actions:['details','cancel']};stopRun(r);ctx.renderApp();return;}}
+        else runTick(ctx,r);
+        ctx.renderApp();if(r.status==='building'&&!r.attention)schedule();
+      },1400);
+    }
+    schedule();
   }
 
   /* One place that invalidates every schedule bound to a Plan, whichever owner
@@ -30404,11 +30169,12 @@ window.PM56_EXT = window.PM56_EXT || {
       : 'The bound execution ended; this schedule can no longer dispatch.';
     var out={ card:0, scheduler:0, reason:reason };
     if(r.schedule && !r.schedule.invalid){
-      r.schedule.invalid=true; r.schedule.invalidReason=why; out.card=1;
+      window.PM56_TX.set(r.schedule,'invalid',true); window.PM56_TX.set(r.schedule,'invalidReason',why); out.card=1;
     }
     var S=window.PM56_SCHED;
     if(S && S.invalidateForExecution){
-      var res=S.invalidateForExecution({ plan_id:r.plan_id, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
+      var res=S.invalidateForExecution({ plan_id:r.plan_id, version:r.version, epoch:reason, reason:reason, why:why, exclude_schedule_id:excludeScheduleId });
+      if(res?.ok===false)window.PM56_TX.fail(res.error||'schedule_invalidation_refused');
       out.scheduler=(res&&res.schedules)||0;
     }
     return out;
@@ -30427,17 +30193,11 @@ window.PM56_EXT = window.PM56_EXT || {
     var g=G.bound(r.plan_id); if(!g) return null;
     if(g.status==='completed') return { ok:true, replayed:true, goal_id:g.id, completion:g.completion||null };
     if(g.status==='canceled')  return { ok:false, error:'canceled_is_terminal', goal_id:g.id };
-    var lineage={ schema:'pm.goal.completion_lineage.v1', goal_id:g.id,
-                  assistant_plan_id:r.plan_id, plan_version:r.version,
-                  plan_hash:hashOf(body(r)),
-                  plan_run_id:r.goalBinding.plan_run_id,
-                  todo_list_ref:r.goalBinding.todo_list_ref,
-                  currentness_hash:currentnessOf(r),
-                  at:new Date().toISOString() };
-    G.boundTransition(r.plan_id,'completed',
-      'The bound Plan reached Completed: every required leaf resolved. Completed once, by the host, against the completion predicate — not because a model returned a final message.');
-    g=G.bound(r.plan_id); if(g) g.completion=lineage;
-    return { ok:true, replayed:false, goal_id:lineage.goal_id, completion:lineage };
+    // Only the Goal owner may settle completion. A rejected or stale predicate
+    // must not be turned into a successful lineage receipt by this consumer.
+    const out=G.boundTransition(r.plan_id,'completed');
+    g=G.bound(r.plan_id);
+    return out?.ok&&g?.status==='completed'?{ok:true,replayed:!!out.replayed,goal_id:g.id,completion:g.completion}:{ok:false,error:out?.error||'goal_completion_not_verified'};
   }
 
   /* Resume the demo run from wherever the durable To-Dos left it. */
@@ -30597,6 +30357,7 @@ window.PM56_EXT = window.PM56_EXT || {
        says, in words, that it used neither a ledger nor PlanUnits; a Deep Plan
        shows both plus the PlanUnit-to-To-Do mapping. Neither claims a
        guardrail it did not use. */
+    if(r.goalBinding)rows.push('<div class="pd-sec"><button class="soft-button" data-action="pd-open-goal" data-id="'+esc(r.plan_id)+'">Open bound Goal</button></div>');
     rows.push('<section class="pd-sec pd-sec-backend" data-backend="'+esc(r.backend)+'"><h4>Planning backend</h4>'+
       (r.backend==='ledger_bound'
         ? kv('backend','Deep Plan · ledger-bound')+
@@ -30916,7 +30677,9 @@ window.PM56_EXT = window.PM56_EXT || {
 
     'pd-cancel': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r) return;
+      const goal=window.PM56_GOAL.bound(r.plan_id);if(goal&&!window.PM56_GOAL.cancelled(goal)&&goal.status!=='completed'){window.PM56_GOAL.lifecycle(window.PM56_GOAL.capture(goal),'cancel');ctx.renderApp();return;}
       stopRun(r);
+      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
       r.status='canceled'; r.current=false;
       r.cancelReason='Canceled from the Plan card at V'+r.version+'.';
       r.scheduleInvalidation=invalidateSchedulesFor(r,'manual_cancel');
@@ -30934,6 +30697,7 @@ window.PM56_EXT = window.PM56_EXT || {
     // This is a concept action over the existing owner, not a native registration.
     'pd-stop-revise': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r || r.status!=='building') return;
+      window.PM56_GOAL.fenceThread(r.thread_id);r.runEpoch=(r.runEpoch||0)+1;
       stopRun(r);
       r.attention=null; r.wait=null; r.status='ready'; r.current=true;
       r.scheduleInvalidation=invalidateSchedulesFor(r,'stop_for_revision');
@@ -31053,47 +30817,10 @@ window.PM56_EXT = window.PM56_EXT || {
        execution_topology=goal_driven, and the Goal, the PlanRun and the
        binding commit together or not at all. */
     'pd-build-goal': function(ctx,btn){
-      var r=rec(btn.dataset.id); if(!r) return;
-      if(r.status!=='ready'){ ctx.toast('Not admissible','Build as Goal needs a Plan whose control reads Build.'); return; }
-      var G=window.PM56_GOAL;
-      if(!G || !G.createBound){ ctx.toast('Unavailable','The Goal owner is not loaded; nothing was created.'); return; }
-      var hash=hashOf(body(r));
-      var key=r.plan_id+'@V'+r.version+':'+hash;      /* PGOAL-012 idempotency */
-      var runId='run-'+r.plan_id+'-V'+r.version;
-      /* PGOAL-003: reserve the Goal FIRST and only then admit the run, so a
-         refused Goal leaves no PlanRun behind and a failed build leaves no
-         orphan Goal. */
-      var res=G.createBound({
-        plan_id:r.plan_id, thread:r.thread_id, title:r.title, version:r.version,
-        plan_hash:hash, expected_hash:hash, plan_run_id:runId,
-        idempotency_key:key,
-        planunit_bundle_ref:(r.backend==='ledger_bound' ? (r.plan_id+'@V'+r.version+':planunits') : null),
-        source_refs:['msg:'+r.thread_id+':plan-'+r.plan_id]
-      });
-      if(!res.ok){
-        ctx.toast('Refused', res.error==='active_run_exists'
-          ? 'A Goal is already bound to this Plan; exactly one binding may exist.'
-          : 'The Plan version changed; refresh and try again. Nothing was created.');
-        return;
-      }
-      if(res.replayed){
-        ctx.toast('Already bound','Same idempotency key — returned the original Goal and PlanRun. Exactly one of each exists.');
-        ctx.renderApp(); return;
-      }
-      r.topology='goal_driven';
-      r.goalBinding=res.goal.binding;
-      if(!admitBuild(ctx,r,{})){
-        /* All-or-none: the Goal is rolled back rather than left active. */
-        G.boundTransition(r.plan_id,'canceled','Rolled back: the PlanRun was not admitted.');
-        r.topology=null; r.goalBinding=null;
-        ctx.toast('Build not admitted','No Goal, no PlanRun, no binding. Nothing partial was left behind.');
-        return;
-      }
-      ctx.addReceipt && ctx.addReceipt('goal-receipt','Build as Goal admitted · '+r.title,
-        'One Goal, one PlanRun, one binding · V'+r.version+' · '+hash+' · reuses the existing To-Dos'+
-        (r.backend==='ledger_bound'?' and scoped PlanUnits':'')+' · Orchestrator not entered');
-      ctx.renderApp();
-      ctx.toast('Build as Goal','Goal, PlanRun and binding committed together. The Goal is in Activity, not on a card.');
+      const r=rec(btn.dataset.id);if(!r)return;
+      const expected=admissionSnapshot(ctx,r);if(btn.dataset.version)expected.version=Number(btn.dataset.version);if(btn.dataset.hash)expected.hash=btn.dataset.hash;
+      const out=buildCommand(ctx,r,{execution_topology:'goal_driven',expected});
+      ctx.renderApp();if(!out.ok)ctx.toast('Build not admitted',out.error.replaceAll('_',' '));else ctx.toast(out.replayed?'Already admitted':'Build as Goal','One Goal and one exact Plan run. Goal is in Activity; work stays in the shared To-Dos.');
     },
 
     /* --- Additive Correction v4: attention actions (PFAIL-002..005) -----
@@ -31106,9 +30833,7 @@ window.PM56_EXT = window.PM56_EXT || {
       if(a.allowed_action_ids.indexOf(act)<0){ ctx.toast('Not admitted','That action is not in the owner’s allowed set for this condition.'); return; }
       if(act==='details'){ openDlg(ctx,'info',r.plan_id); ctx.renderApp(); return; }
       if(act==='cancel'){ ACTIONS['pd-cancel'](ctx,btn); return; }
-      if(act==='revise'){ r.attention=null; r.status='ready'; r.current=true; stopRun(r);
-        ctx.toast('Stopped for revision','The run stopped at a safe boundary. Approved bytes never mutated under in-flight work.');
-        ctx.renderApp(); return; }
+      if(act==='revise'){ ACTIONS['pd-stop-revise'](ctx,btn); return; }
       if(act==='retry'){
         /* PFAIL-003: a NEW attempt under the SAME run. No duplicate PlanRun,
            and completed side effects are not replayed. */
@@ -31118,6 +30843,11 @@ window.PM56_EXT = window.PM56_EXT || {
         ctx.renderApp(); return;
       }
       if(act==='resume'||act==='recover'||act==='reconnect'){
+        const G=window.PM56_GOAL,g=r.goalBinding&&G.bound(r.plan_id);
+        if(g){
+          if(act!=='resume'&&g.status!=='active'){ctx.toast('Explicit Goal Resume required','Recovery or reconnect does not override your manual stop.');return;}
+          if(act==='resume'&&g.status!=='active'){const out=G.lifecycle(G.capture(g),'active');if(!out.ok)ctx.toast('Not resumed',out.error);ctx.renderApp();return;}
+        }
         r.attention=null; resumeRun(ctx,r); ctx.renderApp();
         ctx.toast('Resumed','Continued from durable state; Plan and To-Do identity preserved.');
         return;
@@ -31291,6 +31021,7 @@ window.PM56_EXT = window.PM56_EXT || {
   EXT.chainAction('reset-all', function(){
     Object.keys(runTimers).forEach(function(k){ clearInterval(runTimers[k]); delete runTimers[k]; });
     P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      P().runs={};
     ui.expanded = {};
     return false;   /* fall through to app.js's own reset */
   });
@@ -31319,6 +31050,8 @@ window.PM56_EXT = window.PM56_EXT || {
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
   return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('document',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
  });
+
+  EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
 
   // The existing Plan owner accepts a validated BrainStorm synthesis. Its
   // scoped ledger/units are concept records, not repository WorkNodes or canon.
@@ -31384,7 +31117,55 @@ window.PM56_EXT = window.PM56_EXT || {
     return {ok:true,planId:id,reused:false};
   }
 
+  function inspectGoalPlan(id){
+    const r=rec(id),run=r&&P().runs[r.approved?.plan_run_id];
+    const fail=(reason,waitKind=null)=>({eligible:false,complete:false,reason,waitKind,fingerprint:JSON.stringify({id,reason,version:r?.version,epoch:r?.runEpoch})});
+    if(!r||!run||r.status!=='building'||run.state==='canceled')return fail('Plan run unavailable');
+    if(r.version!==run.plan_version||hashOf(body(r))!==run.plan_hash)return fail('Bound Plan changed');
+    if(JSON.stringify(window.PM56_GOAL.scope(r.thread_id))!==JSON.stringify(run.scope))return fail('Plan scope changed');
+    const c=EXT.ctx(),model=(D.models||[]).find(m=>m.id===run.route.modelId);
+    if(c.state.permissions!==run.permissions||!model||model.status!=='ready'||model.accountId!==run.route.accountId)return fail('Permission or provider route changed');
+    if(RT.quota?.waiting)return fail('Waiting for Usage','quota');
+    if(r.attention)return fail(r.attention.reason);
+    if(!r.workRef||!workOwners.has(r.workRef.kind))return fail('No actual execution adapter is attached to this Plan in the local concept.');
+    const work=workOwners.get(r.workRef.kind).inspect(r.workRef.ref,r),todos=todoApi().outcomeSummary(r.thread_id,run.required_todo_ids);
+    const unitError=r.backend==='ledger_bound'?discoveryBuildError(r):null;
+    const complete=work.complete===true&&work.verified===true&&todos.ok&&!unitError;
+    return {eligible:work.eligible===true&&!unitError,complete,verified:complete,requiredResolved:complete,evidenceRefs:complete?todos.evidenceRefs:[],reason:unitError||work.reason,
+      fingerprint:JSON.stringify({version:r.version,hash:hashOf(body(r)),epoch:r.runEpoch,work:work.fingerprint,todos:todoApi().get(r.thread_id)?.map(t=>[t.todo_id,t.status,t.revision]),unitError}),nextAttemptRef:work.nextAttemptRef};
+  }
+  function finalizeGoalRun(id){const r=rec(id),x=inspectGoalPlan(id);if(!x.complete)return {ok:false,error:'plan_completion_not_verified'};
+    r.status='completed';r.current=false;r.attention=null;const run=P().runs[r.approved.plan_run_id];run.state='completed';run.completion_evidence_refs=x.evidenceRefs;stopRun(r);return {ok:true};
+  }
+  function createFromWorkRequest(o){
+    const c=EXT.ctx(),t=c.state.threads.find(t=>t.id===o?.threadId),owner=workOwners.get(o?.workRef?.kind);
+    if(!t||!o.explicitRequest||!owner?.plan)return {ok:false,error:'explicit_work_plan_request_required'};
+    if(currentPlan(t.id))return {ok:false,error:'current_plan_requires_explicit_resolution'};
+    const payload=owner.plan(o.workRef.ref);if(!payload?.ok||!payload.steps?.length)return {ok:false,error:'work_plan_not_ready'};
+    const id='work-plan-'+o.workRef.ref,prior=rec(id);if(prior)return {ok:true,replayed:true,planId:id};
+    const blocks=[h(payload.title,1),p(payload.objective),...payload.steps.map(st=>step(st.id,st.title,st.outcome,st.deps||[]))];
+    const r=planRec({id,thread:t.id,title:payload.title,strategy:'Standard',backend:'direct',version:1,revisions:{1:blocks},status:'ready',current:true,sources:payload.sourceRefs||[]});
+    r.project_id=t.projectId||'pm';r.workRef=JSON.parse(JSON.stringify(o.workRef));window.PM56_TX.set(P().records,id,r);window.PM56_TX.set(t,'messages',t.messages.concat({id:'plan-card-'+id,role:'system',type:'plan-card-v2',planId:id}));
+    return {ok:true,planId:id,version:1,hash:hashOf(body(r))};
+  }
+  window.PM56_GOAL.registerOwner('assistant_plan',{inspect:inspectGoalPlan,advance:(id)=>{const r=rec(id);if(!r)return {ok:false,error:'plan_missing'};runTick(EXT.ctx(),r);return r.attention?{ok:false,error:r.attention.reason}:{ok:true};},complete:finalizeGoalRun});
   window.PM56_PLANS = {
+    admissionSnapshot:id=>{const r=rec(id);return r?admissionSnapshot(EXT.ctx(),r):null;},
+    build:o=>buildCommand(EXT.ctx(),rec(o?.plan_id),o||{}), commitRun,bindRun,inspectGoalPlan,createFromWorkRequest,
+    runs:()=>P().runs,
+    scopedBundle:ref=>{const r=Object.values(P().records).find(r=>r.backend==='ledger_bound'&&ref===r.plan_id+'@V'+r.version+':planunits');return r?r.planunits:null;},
+    registerWorkOwner:(kind,owner)=>{if(workOwners.has(kind))throw new Error('duplicate_plan_work_owner');workOwners.set(kind,owner);},
+    goalConflict:id=>{const r=rec(id);if(!r)return;stopRun(r);r.runEpoch=(r.runEpoch||0)+1;r.attention={kind:'attention',reason:'Goal/Plan mismatch. Stop and use Revise; approved Plan bytes have not changed.',actions:['revise','cancel','details']};},
+    resumeFromQuota:b=>{
+      const r=rec(b.assistant_plan_id),g=window.PM56_GOAL.bound(b.assistant_plan_id);
+      if(!r||!g||window.PM56_GOAL.cancelled(g)||g.status!=='active'||r.status!=='building'||r.version!==b.plan_version||hashOf(body(r))!==b.plan_hash)return {ok:false,error:'bound_plan_not_current'};
+      if(r.attention&&r.attention.kind!=='quota_wait')return {ok:false,error:'nonquota_wait_requires_its_owner'};
+      if(RT.quota?.waiting)return {ok:false,error:'quota_unavailable'};
+      r.attention=null;const check=inspectGoalPlan(r.plan_id);if(!check.eligible&&!check.complete){r.attention={kind:'attention',reason:check.reason,actions:['details','cancel']};return {ok:false,error:check.reason};}
+      startRunTimer(EXT.ctx(),r);return {ok:true,goal_id:g.id,plan_run_id:r.approved.plan_run_id};
+    },
+    canResumeGoal:b=>{const r=rec(b.assistant_plan_id);return !r||r.status!=='building'||r.version!==b.plan_version||hashOf(body(r))!==b.plan_hash?{ok:false,error:'bound_plan_not_current'}:{ok:true};},
+
     createFromRoom:createFromRoom,
     createFromDiscovery:createFromDiscovery,
     createFromBrainstorm:createFromBrainstorm,
@@ -31392,14 +31173,12 @@ window.PM56_EXT = window.PM56_EXT || {
     // Concept-only admission seam. The scheduler validates its due time and
     // receipt; the Plan owner independently rechecks exact identity and state.
     admitScheduled:function(binding){
-      var c=EXT.ctx&&EXT.ctx(),r=binding&&rec(binding.target_id);
-      if(!c||!r||r.thread_id!==binding.thread_id)return {ok:false,clause:'target_not_found'};
-      if(r.version!==binding.exact_target_version||hashOf(body(r))!==binding.exact_target_hash)
-        return {ok:false,clause:'target_version_changed'};
-      if(r.status!=='ready'||!eligible(r).build)return {ok:false,clause:'plan_not_ready'};
-      var ok=admitBuild(c,r,{scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
-      c.renderApp();return {ok:ok,clause:ok?null:'plan_not_ready',approved:ok?r.approved:null};
+      const c=EXT.ctx(),r=rec(binding.target_id);if(!r)return {ok:false,clause:'target_not_found'};
+      const expected={project_id:binding.project_id,thread_id:binding.thread_id,worktree:binding.owner_worktree_snapshot||binding.worktree_snapshot,version:binding.exact_target_version,hash:binding.exact_target_hash,permissions:binding.permission_snapshot,route:binding.runtime_snapshot};
+      const out=buildCommand(c,r,{expected,execution_topology:binding.execution_topology,scheduleRef:binding.schedule_id,scheduleSnapshot:binding.runtime_snapshot});
+      return {...out,clause:out.error||null,approved:out.ok?r.approved:null};
     },
+
     editorBody:editorBody,
     /* Which Plan an artifact id maps to, so app.js's artifact header can read
        the owner's version and Build label instead of the legacy record. */
@@ -31420,6 +31199,7 @@ window.PM56_EXT = window.PM56_EXT || {
          a Plan the caller believes it just reset. */
       for(var k in runTimers){ if(runTimers[k]){ clearInterval(runTimers[k]); runTimers[k]=null; } }
       P().records = hydrate(JSON.parse(JSON.stringify(PLANS0)));
+      P().runs={};
       /* The question counters are durable run records, not view state: leaving
          them behind made a restored Plan report questions it had never asked. */
       if(RT.questionBudget){ RT.questionBudget.runs={}; RT.questionBudget.seq=0; }
@@ -31442,12 +31222,14 @@ window.PM56_EXT = window.PM56_EXT || {
     boundPause:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
       stopRun(r);
-      r.attention={ kind:'paused', reason:'Paused through the bound Goal at a shared safe boundary. The Build control stays Building….',
+      r.runEpoch=(r.runEpoch||0)+1;
+      r.attention={ kind:'paused', reason:'Paused at a shared safe boundary. The Build control stays Building….',
                     actions:['resume','cancel','details'] };
       return { paused:true, label:BUILD_LABEL[r.status] };
     },
     boundResume:function(planId){
       var r=rec(planId); if(!r||r.status!=='building') return null;
+      const g=r.goalBinding&&window.PM56_GOAL.bound(planId);if(r.goalBinding&&(!g||window.PM56_GOAL.cancelled(g)||g.status!=='active'))return {resumed:false,error:'goal_not_active'};
       r.attention=null;
       var c=EXT.ctx&&EXT.ctx(); if(c) resumeRun(c,r);
       return { resumed:true, label:BUILD_LABEL[r.status] };
@@ -31455,6 +31237,7 @@ window.PM56_EXT = window.PM56_EXT || {
     boundCancel:function(planId, epoch){
       var r=rec(planId); if(!r) return null;
       stopRun(r);
+      r.runEpoch=(r.runEpoch||0)+1;if(P().runs[r.approved?.plan_run_id])P().runs[r.approved.plan_run_id].state='canceled';
       r.status='canceled'; r.current=false; r.attention=null;
       r.cancelReason='Cancelled through the bound Goal. The PlanRun and every attempt are fenced at continuation epoch '+epoch+'; no window or Usage reset can resume it.';
       /* PSCHED-010 / SMSG-016: association-scoped invalidation. Only THIS
@@ -32559,29 +32342,35 @@ window.PM56_EXT = window.PM56_EXT || {
     var why=null;
     if(ev.expected_list_revision!=null && ev.expected_list_revision!==(store.revision||1)) why='stale_list_revision';
     else if(ev.expected_revision!=null && ev.expected_revision!==item.revision)            why='stale_item_revision';
-    else if(ev.work_binding && (item.active_work_ids||[]).indexOf(ev.work_binding)<0)      why='stale_work_binding';
+    else if(ev.work_binding && ev.to_status!=='in_progress' && (item.active_work_ids||[]).indexOf(ev.work_binding)<0)      why='stale_work_binding';
     else if(ev.plan_version!=null && item.plan_version!=null && ev.plan_version!==item.plan_version) why='stale_plan_version';
     else if(ev.run_epoch!=null && store.run_epoch!=null && ev.run_epoch!==store.run_epoch)  why='stale_run_epoch';
     if(why){
       store.rejected=(store.rejected||[]).concat([{ event:ev, reason:why, at:new Date().toISOString() }]);
       return { ok:false, error:why, retained_as_evidence:true };
     }
-    item.transitions=(item.transitions||[]).concat([TR(item.todo_id,item.status,ev.to_status,
-      ev.cause_kind||'work_admitted', ev.cause_ref||('event:'+item.todo_id), item.revision,
-      ev.at||new Date().toISOString(), ev.note||'')]);
-    item.status=ev.to_status; item.revision=item.revision+1;
-    if(ev.to_status==='in_progress' && !item.started_at) item.started_at=ev.at||new Date().toISOString();
-    if(ev.to_status==='completed') item.completed_at=ev.at||new Date().toISOString();
-    /* PPROG-007: `blocked` must reference its OWNING CONDITION. Only the
-       seeded fixture carried `blocked_reason_ref` before this, so any item
-       blocked through the ordinary transition path produced a projection cell
-       with `reason:null` -- a blocked step that could not say what blocked it.
-       Leaving `blocked` also clears the reference, so a resolved blocker
-       cannot linger as stale evidence on a running item. */
-    if(ev.to_status==='blocked')
-      item.blocked_reason_ref = ev.blocked_reason_ref || ev.cause_ref || ('blocker:'+item.todo_id);
-    else if(item.blocked_reason_ref)
-      item.blocked_reason_ref = null;
+    if(item.strict_outcome_contract){
+      if(!isLeaf(store.items,item))return {ok:false,error:'parent_not_executable'};
+      if(ev.run_id!==item.run_id||ev.run_epoch!==item.run_epoch)return {ok:false,error:'stale_run_binding'};
+      if(ev.to_status==='in_progress'){
+        if(item.status!=='pending'||!runnable(store.items,item)||!ev.work_binding)return {ok:false,error:'work_not_admissible'};
+      }else if(ev.to_status==='completed'){
+        const validator=outcomeOwners.get(item.outcome_owner);
+        if(item.status!=='in_progress'||ev.cause_kind!=='outcome_satisfied'||!ev.work_binding||!validator?.(item.workflow_ref,item,ev.cause_ref)?.ok)return {ok:false,error:'outcome_not_verified'};
+      }else if(ev.to_status==='skipped'){
+        if(!ev.skip_disposition?.user_approved||!ev.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted'};
+      }
+    }
+    const values={transitions:(item.transitions||[]).concat([TR(item.todo_id,item.status,ev.to_status,
+      ev.cause_kind||'work_admitted',ev.cause_ref||('event:'+item.todo_id),item.revision,
+      ev.at||new Date().toISOString(),ev.note||'')]),status:ev.to_status,revision:item.revision+1};
+    if(item.strict_outcome_contract&&ev.to_status==='in_progress')values.active_work_ids=[ev.work_binding];
+    if(ev.to_status==='skipped'&&ev.skip_disposition)values.skip_disposition=JSON.parse(JSON.stringify(ev.skip_disposition));
+    if(ev.to_status==='in_progress'&&!item.started_at)values.started_at=ev.at||new Date().toISOString();
+    if(ev.to_status==='completed')values.completed_at=ev.at||new Date().toISOString();
+    if(ev.to_status==='blocked')values.blocked_reason_ref=ev.blocked_reason_ref||ev.cause_ref||('blocker:'+item.todo_id);
+    else if(item.blocked_reason_ref)values.blocked_reason_ref=null;
+    for(const [k,v] of Object.entries(values))window.PM56_TX.set(item,k,v);
     return { ok:true, item:item };
   }
 
@@ -32589,22 +32378,54 @@ window.PM56_EXT = window.PM56_EXT || {
      has none yet -- the same thing admitBuild's `todosCreated` receipt claims.
      Without this the projector would have nothing to derive from and the
      Building… gutter would be a local counter pretending to be a projection. */
+  var outcomeOwners=new Map();
   function materializeForPlan(plan){
-    var threadId=plan.thread_id, store=threadStore(threadId);
-    var mk=itemFactory(threadId), items=[], i;
-    var existing=(store&&store.items)||[];
-    for(i=0;i<existing.length;i++){ if(existing[i].plan_id===plan.plan_id) return { ok:true, created:0, reused:true }; }
-    for(i=0;i<(plan.steps||[]).length;i++){
-      var s=plan.steps[i];
-      items.push(mk({ todo_id:'tp-'+plan.plan_id+'-'+s.id, display_order:i+1,
-        parent_todo_id:s.parent?('tp-'+plan.plan_id+'-'+s.parent):null,
-        depends_on:(s.deps||[]).map(function(d){ return 'tp-'+plan.plan_id+'-'+d; }),
-        plan_id:plan.plan_id, plan_version:plan.version, plan_step_ids:[s.id],
-        title:s.title, expected_outcome:s.outcome||null, status:'pending', revision:1, transitions:[] }));
+    var threadId=plan.thread_id, store=threadStore(threadId), mk=itemFactory(threadId), existing=(store&&store.items)||[];
+    var mine=existing.filter(t=>t.plan_id===plan.plan_id);
+    if(mine.length){
+      var expected=(plan.steps||[]).map(st=>'tp-'+plan.plan_id+'-'+st.id);
+      if(mine.length!==expected.length||expected.some(id=>!mine.find(t=>t.todo_id===id))||mine.some(t=>t.plan_version!==plan.version))return {ok:false,error:'existing_todo_binding_conflict'};
+      return {ok:true,created:0,reused:true,ids:mine.map(t=>t.todo_id)};
     }
-    var next=existing.concat(items);
-    var res=replaceThreadList(threadId, { items:next, revision:((store&&store.revision)||1)+1 }, {});
-    return res.ok ? { ok:true, created:items.length } : res;
+    var items=(plan.steps||[]).map((st,i)=>mk({todo_id:'tp-'+plan.plan_id+'-'+st.id,display_order:existing.length+i+1,
+      project_id:plan.project_id||PROJECT_ID,parent_todo_id:st.parent?'tp-'+plan.plan_id+'-'+st.parent:null,
+      depends_on:(st.deps||[]).map(d=>'tp-'+plan.plan_id+'-'+d),plan_id:plan.plan_id,plan_version:plan.version,plan_step_ids:[st.id],
+      title:st.title,expected_outcome:st.outcome||null,status:'pending',revision:1,transitions:[],
+      ...(plan.strict?{strict_outcome_contract:true,outcome_owner:plan.workRef?.kind||null,workflow_ref:plan.workRef?.ref||null,run_id:plan.run_id,run_epoch:plan.run_epoch||1}:{} )}));
+    if(!items.length)return {ok:false,error:'no_plan_steps'};
+    var check=validateGraph(threadId,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph',validation:check};
+    const TX=window.PM56_TX;
+    if(!store){store={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,threadId,store);}
+    TX.set(store,'items',existing.concat(items));TX.set(store,'revision',(store.revision||1)+1);
+    return {ok:true,created:items.length,reused:false,ids:items.map(t=>t.todo_id)};
+  }
+  function materializeForWork(work){
+    const store=threadStore(work.thread_id),existing=store?.items||[],mk=itemFactory(work.thread_id),prefix='tw-'+work.run_id+'-';
+    const ids=(work.steps||[]).map(st=>prefix+st.id);
+    const prior=existing.filter(t=>t.run_id===work.run_id);
+    if(prior.length)return prior.length===ids.length&&ids.every(id=>prior.some(t=>t.todo_id===id))?{ok:true,reused:true,ids}:{ok:false,error:'work_mapping_conflict'};
+    const items=(work.steps||[]).map((st,i)=>mk({todo_id:prefix+st.id,project_id:work.project_id,display_order:existing.length+i+1,title:st.title,expected_outcome:st.outcome,
+      depends_on:(st.deps||[]).map(d=>prefix+d),status:'pending',strict_outcome_contract:true,outcome_owner:work.owner,workflow_ref:work.ref,run_id:work.run_id,run_epoch:work.epoch||1}));
+    if(!items.length||!outcomeOwners.has(work.owner))return {ok:false,error:'work_owner_required'};
+    const check=validateGraph(work.thread_id,{items:existing.concat(items)});if(!check.valid)return {ok:false,error:'invalid_graph'};
+    const TX=window.PM56_TX;let target=store;if(!target){target={items:[],refusals:[],revision:1};TX.set(RT.todos.byThread,work.thread_id,target);}
+    TX.set(target,'items',existing.concat(items));TX.set(target,'revision',(target.revision||1)+1);return {ok:true,ids,created:items.length};
+  }
+  function outcomeSummary(threadId,ids){
+    const store=threadStore(threadId),items=store?.items||[],required=(ids||[]).map(id=>items.find(t=>t.todo_id===id));
+    if(!ids?.length||required.some(t=>!t))return {ok:false,error:'required_todo_missing',evidenceRefs:[]};
+    const leaves=required.filter(t=>isLeaf(items,t)),evidence=[];
+    for(const t of leaves){
+      if(t.status==='skipped'){if(!t.skip_disposition?.user_approved||!t.skip_disposition.reason?.trim())return {ok:false,error:'skip_not_accepted',evidenceRefs:[]};continue;}
+      if(t.status!=='completed')return {ok:false,error:'required_work_unfinished',evidenceRefs:[]};
+      const tr=t.transitions?.[t.transitions.length-1];
+      if(!tr||tr.to_status!=='completed'||tr.cause_kind!=='outcome_satisfied')return {ok:false,error:'accepted_outcome_missing',evidenceRefs:[]};
+      const validate=outcomeOwners.get(t.outcome_owner);
+      if(!validate||!validate(t.workflow_ref,t,tr.cause_ref)?.ok)return {ok:false,error:'completion_evidence_missing_or_stale',evidenceRefs:[]};
+      evidence.push(tr.cause_ref);
+    }
+    if(!leaves.length||!evidence.length)return {ok:false,error:'completion_evidence_missing',evidenceRefs:[]};
+    return {ok:true,evidenceRefs:Array.from(new Set(evidence)),requiredIds:ids.slice()};
   }
 
   /* One demo tick: admit the next runnable pending leaf, or complete the
@@ -32677,6 +32498,7 @@ window.PM56_EXT = window.PM56_EXT || {
   }
 
   window.PM56_TODOS = {
+    materializeForWork, outcomeSummary, registerOutcomeOwner:(kind,validator)=>{if(outcomeOwners.has(kind))throw new Error("duplicate_todo_outcome_owner");outcomeOwners.set(kind,validator);},
     materializeFromRoom:materializeFromRoom,
     /* Body only -- activity-bar.js wraps it in the shared hover-card shell. */
     hoverBody: renderCompact,
@@ -36010,6 +35832,7 @@ window.PM56_EXT = window.PM56_EXT || {
 
   function P() { return RT.scheduling; }
   function persistNow() {
+    if(window.PM56_TX?.isActive()){window.PM56_TX.defer(persistNow);return;}
     try {
       var out = JSON.parse(JSON.stringify(P()));
       out.lastSavedAt = nowIso();
@@ -36064,6 +35887,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var S = P();
     S.stopped = false;
     S.stopReason = null;
+    for(const b of S.buildSchedules)if(['active','paused','held'].includes(b.state)&&!b.dispatchReceipt)b.user_stop_epoch=S.stopEpoch;
     logEvent('runtime.quota_resume_attempted', 'precedence', null, 'Manual Stop cleared by explicit user action at epoch ' + S.stopEpoch + '. Nothing automatic could have done this.');
   }
 
@@ -36206,6 +36030,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var plan=window.PM56_PLANS&&window.PM56_PLANS.get(planId);
     return {
       contentHash:plan?window.PM56_PLANS.hash(planId):null,
+      expected:plan?window.PM56_PLANS.admissionSnapshot(planId):null,executionTopology:'agent',
       planId: planId, version: version, kind: 'recurring_window',
       date: new Date(Date.now()+86400000).toISOString().slice(0,10), time: '22:00', startTime: '22:00', pauseTime: '02:00',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone||'America/New_York', days: [1, 2, 3, 4, 5],
@@ -36218,6 +36043,9 @@ window.PM56_EXT = window.PM56_EXT || {
     if(!plan||plan.status!=='ready'||plan.version!==d.version||window.PM56_PLANS.hash(d.planId)!==d.contentHash){
       d.error='Plan changed. Close this form and schedule the current version.';ctx.renderOverlays();return null;
     }
+    const currentSnapshot=window.PM56_PLANS.admissionSnapshot(d.planId);
+    if(d.expected&&JSON.stringify(d.expected)!==JSON.stringify(currentSnapshot)){d.error='Project, worktree, permissions or provider route changed. Reopen this form.';ctx.renderOverlays();return null;}
+    if(!['agent','goal_driven'].includes(d.executionTopology||'agent')){d.error='Unsupported execution topology.';return null;}
     var hash=d.contentHash,model=ctx.selectedModel();
     var existing = ui.editingBuildId ? findBuild(ui.editingBuildId) : null;
     var id = existing ? existing.schedule_id : ctx.uid('bld');
@@ -36230,9 +36058,11 @@ window.PM56_EXT = window.PM56_EXT || {
       scheduledUtc = new Date(ms).toISOString();
     }
     var rec = {
-      schedule_id: id, project_id: 'pm', target_kind: 'assistant_plan_run', target_id: d.planId,
+      schedule_id: id, project_id: currentSnapshot.project_id, target_kind: 'assistant_plan_run', target_id: d.planId,
       exact_target_version: d.version, exact_target_hash: hash,
-      binding_kind:'plan_content_v1',execution_topology:'agent',thread_id:plan.thread_id,
+      binding_kind:'plan_content_v1',execution_topology:d.executionTopology||'agent',thread_id:plan.thread_id,
+      topology_snapshot:{schema:'pm.schedule.plan_topology_snapshot.v1',execution_topology:d.executionTopology||'agent'},user_stop_epoch:P().stopEpoch,
+      owner_worktree_snapshot:currentSnapshot.worktree,runtime_created:false,plan_run_id:null,goal_id:null,
       runtime_snapshot:{modelId:model.id,modelName:model.name,provider:model.provider,accountId:model.accountId},
       permission_snapshot:ctx.state.permissions,worktree_snapshot:ctx.state.worktree,
       dispatchReceipt:null,
@@ -36249,6 +36079,7 @@ window.PM56_EXT = window.PM56_EXT || {
       log: [{ at: nowIso(), text: 'Schedule created: ' + (oneTime ? ('one-time build at ' + to12h(d.time) + ' ' + tzLabel(d.timezone)) : ('recurring window ' + to12h(d.startTime) + '–' + to12h(d.pauseTime) + ' ' + tzLabel(d.timezone) + ', ' + daysSummary(d.days))) + '.' }],
       createdAt: nowIso(), updatedAt: nowIso()
     };
+    if(!oneTime)rec.next_occurrence_at=new Date(computeNextOccurrence(rec,Date.now())).toISOString();
     if (existing) {
       // Edit the existing owner record atomically: no temporary schedule or
       // orphan creation event and no loss of already admitted occurrence IDs.
@@ -36346,37 +36177,44 @@ window.PM56_EXT = window.PM56_EXT || {
   // atMs is the demonstrated clock time, never a global Date override. This
   // checks a real content binding and admits through the existing Plan owner.
   // It is NOT a background service or production runtime implementation.
-  function dispatchBuildAt(id,atMs,expectedRevision){
-    var b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx&&EXT.ctx();
-    if(!b||!api||!c)return {ok:false,clause:'target_not_found'};
-    var fail=function(clause,detail){return {ok:false,clause:clause,detail:detail||clause};};
+  function dispatchBuildAt(id,atMs,expectedRevision,epochAtDecision){
+    const b=findBuild(id),api=window.PM56_PLANS,c=EXT.ctx?.(),TX=window.PM56_TX;
+    const fail=(clause,detail)=>({ok:false,clause,error:clause,detail:detail||clause});
+    if(!b||!api||!c)return fail('target_not_found');
     if(expectedRevision!=null&&expectedRevision!==b.revision)return fail('stale_schedule_revision');
     if(b.dispatchReceipt)return {ok:true,duplicate:true,receipt:b.dispatchReceipt};
-    var eligible=evaluateEligibility('build',b,P().stopEpoch);
-    if(!eligible.ok)return fail(eligible.clause,eligible.detail);
+    const captured=epochAtDecision??b.user_stop_epoch??P().stopEpoch;
+    const eligible=evaluateEligibility('build',b,captured);if(!eligible.ok)return fail(eligible.clause,eligible.detail);
     if(b.state!=='active')return fail('schedule_not_active');
-    if(b.binding_kind!=='plan_content_v1'||b.schedule_kind!=='one_time'||b.execution_topology!=='agent')return fail('unsupported_demo_schedule');
-    if(!Number.isFinite(atMs)||atMs<Date.parse(b.scheduled_at_utc))return fail('window_not_open');
-    var plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
+    if(b.binding_kind!=='plan_content_v1'||!['one_time','recurring_window'].includes(b.schedule_kind)||!['agent','goal_driven'].includes(b.execution_topology))return fail('unsupported_demo_schedule');
+    const due=b.schedule_kind==='one_time'?Date.parse(b.scheduled_at_utc):Date.parse(b.next_occurrence_at||b.createdAt);
+    if(!Number.isFinite(atMs)||!Number.isFinite(due)||atMs<due)return fail('window_not_open');
+    const plan=api.get(b.target_id),thread=threadByIdRaw(b.thread_id);
     if(!plan||!thread||thread.archived||plan.thread_id!==b.thread_id)return fail('target_not_found');
     if(plan.version!==b.exact_target_version||api.hash(plan.plan_id)!==b.exact_target_hash){
       b.state='invalidated';b.pendingVersion=plan.version;b.pendingHash=api.hash(plan.plan_id);b.revision++;
       b.invalidated_reason='The scheduled Plan content changed. Review the current version before dispatch.';
       logBuildLine(b,b.invalidated_reason);persistNow();c.renderApp();return fail('target_version_changed');
     }
-    var model=(D.models||[]).find(function(m){return m.id===b.runtime_snapshot.modelId&&m.accountId===b.runtime_snapshot.accountId;});
-    if(!model||model.status!=='ready')return fail('route_unavailable');
-    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_changed');
+    const runtime=b.runtime_snapshot||{},model=(D.models||[]).find(m=>m.id===runtime.modelId);
+    if(!model||model.accountId!==runtime.accountId||model.status!=='ready'||model.provider!==runtime.provider)return fail('route_unavailable');
+    if(c.state.worktree!==b.worktree_snapshot)return fail('worktree_snapshot_changed');
     if(c.state.permissions!==b.permission_snapshot)return fail('permission_snapshot_changed');
-    if(RT.quota&&RT.quota.waiting)return fail('quota_unavailable');
-    var result=api.admitScheduled(b);if(!result.ok)return result;
-    b.lastOccurrenceStart=b.scheduled_at_utc;b.occurrencesFired.push(b.scheduled_at_utc);
-    b.dispatchReceipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,
-      hash:b.exact_target_hash,occurrence:b.scheduled_at_utc,at:new Date(atMs).toISOString(),concept:true};
-    b.state='completed';b.runPhase='admitted';b.revision++;b.updatedAt=nowIso();
-    logBuildLine(b,'One-time occurrence admitted through the Plan owner. Repeated ticks return this receipt.');
-    logEvent('scheduled_dispatch.dispatched',id,null,'V'+b.exact_target_version+' started with its frozen content binding.');
-    persistNow();c.renderApp();return {ok:true,duplicate:false,receipt:b.dispatchReceipt};
+    if(RT.quota?.waiting)return fail('quota_unavailable');
+    const frozen=JSON.stringify(b),revision=b.revision;
+    const out=TX.run(()=>{
+      const result=api.admitScheduled(b);if(!result.ok)TX.fail(result.error||result.clause||'plan_admission_refused');
+      if(JSON.stringify(b)!==frozen||b.revision!==revision)TX.fail('schedule_changed_during_admission');
+      if(!evaluateEligibility('build',b,captured).ok)TX.fail('stale_stop_epoch');
+      const occurrence=new Date(due).toISOString(),receipt={schedule_id:b.schedule_id,plan_id:b.target_id,version:b.exact_target_version,hash:b.exact_target_hash,occurrence,at:new Date(atMs).toISOString(),concept:true,
+        execution_topology:b.execution_topology,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null};
+      for(const [k,v] of Object.entries({lastOccurrenceStart:occurrence,occurrencesFired:b.occurrencesFired.concat(occurrence),dispatchReceipt:receipt,
+        state:b.schedule_kind==='one_time'?'completed':'active',runPhase:'admitted',runtime_created:true,plan_run_id:result.plan_run_id,goal_id:result.goal_id||null,revision:b.revision+1,updatedAt:nowIso(),
+        log:[{at:nowIso(),text:'Admitted through the shared Plan command. Duplicate delivery returns the original run and Goal.'},...b.log]}))TX.set(b,k,v);
+      TX.set(P(),'events',[{id:'ev-'+id+'-dispatch',at:nowIso(),type:'scheduled_dispatch.dispatched',ref:id,clause:null,detail:'V'+b.exact_target_version+' admitted with its frozen topology.'},...P().events].slice(0,60));
+      persistNow();TX.defer(()=>c.renderApp());return {ok:true,duplicate:false,receipt};
+    });
+    return {...out,clause:out.error||null};
   }
 
   function computeNextOccurrence(rec, fromMs) {
@@ -36389,9 +36227,26 @@ window.PM56_EXT = window.PM56_EXT || {
   }
   function advanceWindow(id) {
     var rec = findBuild(id); if (!rec) return { refused: true, detail: 'Schedule not found.' };
-    if(rec.binding_kind==='plan_content_v1'&&rec.schedule_kind==='one_time'){
-      var dispatched=dispatchBuildAt(id,Date.parse(rec.scheduled_at_utc),rec.revision);
+    if(rec.binding_kind==='plan_content_v1'&&!rec.dispatchReceipt){
+      var dispatched=dispatchBuildAt(id,Date.parse(rec.schedule_kind==='one_time'?rec.scheduled_at_utc:rec.next_occurrence_at),rec.revision,rec.user_stop_epoch);
       return {refused:!dispatched.ok,duplicate:!!dispatched.duplicate,detail:dispatched.detail||dispatched.clause||'Scheduled build started.'};
+    }
+    if(rec.binding_kind==='plan_content_v1'&&rec.dispatchReceipt){
+      const plan=window.PM56_PLANS.get(rec.target_id),g=rec.goal_id&&window.PM56_GOAL.byId(rec.goal_id);
+      if(rec.schedule_kind==='one_time')return {refused:false,duplicate:true,detail:'The original dispatch receipt is retained.'};
+      if(rec.state!=='active'||!evaluateEligibility('build',rec,rec.user_stop_epoch).ok)return {refused:true,detail:'Schedule or manual-stop latch prevents this window.'};
+      if(plan?.status==='completed'){rec.state='completed';persistNow();return {refused:false,detail:'The single admitted run completed; no duplicate build.'};}
+      if(plan?.status!=='building'||g&&window.PM56_GOAL.cancelled(g))return {refused:true,detail:'The bound run has ended.'};
+      if(g&&g.status!=='active')return {refused:true,detail:'A user-paused or blocked Goal is not resumed by an execution window.'};
+      if(rec.runPhase==='admitted'){
+        window.PM56_PLANS.boundPause(rec.target_id);rec.runPhase='paused_safe';rec.log.unshift({at:nowIso(),text:'Local window closed at a safe boundary. No duplicate run was created.'});
+      }else{
+        if(!rec.auto_resume_next_window)return {refused:true,detail:'Resume next window was not authorized.'};
+        const out=window.PM56_PLANS.canResumeGoal({assistant_plan_id:rec.target_id,plan_version:rec.exact_target_version,plan_hash:rec.exact_target_hash});
+        if(!out.ok)return {refused:true,detail:out.error};
+        window.PM56_PLANS.boundResume(rec.target_id);rec.runPhase='admitted';rec.log.unshift({at:nowIso(),text:'Local next window resumed the original run.'});
+      }
+      persistNow();return {refused:false,detail:'Advanced one local execution-window boundary for the existing run.'};
     }
     if (rec.state !== 'active') return { refused: true, detail: 'This schedule is ' + rec.state + '; nothing to advance.' };
     var epoch = P().stopEpoch;
@@ -36471,6 +36326,14 @@ window.PM56_EXT = window.PM56_EXT || {
      that composer-state.js renders; never renders a second strip or a
      second checkbox here.
      ===================================================================== */
+  // Bind this local consent to the admitted Goal, never current UI focus on reset.
+  function bindGoalQuotaConsent(enabled){
+    const G=window.PM56_GOAL,g=G?.get();if(!g||g.demo||!g.activeRunRef||G.cancelled(g))return null;
+    const id='quota-'+g.id,prior=P().quotaConsents.find(x=>x.consent_id===id);
+    const row={consent_id:id,enabled:!!enabled,state:enabled?'active':'revoked',goal_id:g.id,goal_token:G.capture(g),run_id:g.activeRunRef,thread_id:g.thread,project_id:g.projectId,association_id:g.binding?.assistant_plan_id||g.id,scope:'this_goal_and_run_only',updated_at:nowIso()};
+    if(prior)Object.assign(prior,row);else P().quotaConsents.push(row);persistNow();return row;
+  }
+  document.addEventListener('change',e=>{if(e.target.getAttribute?.('data-cs-input')==='quota-resume')bindGoalQuotaConsent(e.target.checked);});
   function attemptAutoResume() {
     var epoch = P().stopEpoch;
     var elig = evaluateEligibility('quota', null, epoch);
@@ -36483,6 +36346,12 @@ window.PM56_EXT = window.PM56_EXT || {
       consent.updated_at = nowIso();
     }
     logEvent('runtime.quota_resume_attempted', consent ? consent.consent_id : 'quota', elig.clause, elig.detail);
+    if(elig.ok){
+      const bound=P().quotaConsents.filter(x=>x.enabled&&x.state==='active'&&x.goal_token);
+      const outcomes=bound.map(x=>({consent_id:x.consent_id,...window.PM56_GOAL.resumeFromQuota(x.goal_token)}));
+      elig={...elig,goal_outcomes:outcomes};
+      if(outcomes.some(x=>!x.ok))elig={...elig,ok:false,clause:'goal_resume_fenced',detail:'One or more captured Goal consents were stale, manually stopped, or no longer eligible. No stopped Goal was resumed.'};
+    }
     persistNow();
     return elig;
   }
@@ -36568,7 +36437,7 @@ window.PM56_EXT = window.PM56_EXT || {
       (b.state==='invalidated'?'<button class="soft-button" data-action="sched-rebind-build" data-id="'+id+'">Use V'+esc(b.pendingVersion)+'</button>':'')+
       (b.state==='active'?'<button class="text-button" data-action="sched-edit-build" data-id="'+id+'">Edit window</button>':'')+
       (['active','paused','invalidated'].includes(b.state)?'<button class="text-button danger" data-action="sched-cancel-build" data-id="'+id+'">Cancel</button>':'')+'</div>'+
-      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+facts([
+      '<details class="schedule-details"><summary>Details '+ctx.icon('down',11)+'</summary><div class="sched-details-body">'+(b.binding_kind==='plan_content_v1'&&b.state==='active'?'<p class="schedule-caption">Local clock control only. This page does not run a background scheduling service.</p><button class="soft-button" data-action="sched-advance-window" data-id="'+id+'">Advance local clock to dispatch</button>':'')+facts([
         ['Timezone',b.timezone],['Wind-down',b.wind_down_seconds/60+' min'],['Resume next window',b.auto_resume_next_window?'On':'Off'],['If missed',b.missed_policy],['Exact plan version','V'+b.exact_target_version],['Revision',b.revision]
       ])+'<details class="sched-audit"><summary>Record & history</summary>'+facts([['Schedule ID',b.schedule_id],['Bound hash (demo)',b.exact_target_hash],['Idempotency key',idempotencyKey(b)]])+
       (b.log||[]).map(l=>'<p><time>'+esc(fmtClock(l.at))+'</time> '+esc(l.text)+'</p>').join('')+'</details></div></details></article>';
@@ -36603,6 +36472,7 @@ window.PM56_EXT = window.PM56_EXT || {
     if(!TZ_OPTIONS.some(t=>t.id===d.timezone))zones='<option selected value="'+esc(d.timezone)+'">'+esc(zoneName(d.timezone))+'</option>'+zones;
     return '<section class="dialog sched-dialog sched-dialog--build" role="dialog" aria-modal="true" aria-label="Build At"><div class="drawer-head">'+ctx.icon('document',16)+'<strong>'+(ui.editingBuildId?'Edit build window':'Schedule a build')+'</strong><span class="spacer"></span><button class="icon-button" data-action="sched-close-dialog" aria-label="Close">'+ctx.icon('close',14)+'</button></div><div class="dialog-body">'+
       '<div class="schedule-plan-target"><strong>'+esc(plan?.title||d.planId)+'</strong><span>V'+esc(d.version)+' · Fixed version</span></div>'+
+      '<label class="sched-field"><span>Execution</span><select data-sched-input="build-topology"><option value="agent" '+(d.executionTopology!=='goal_driven'?'selected':'')+'>Build normally</option><option value="goal_driven" '+(d.executionTopology==='goal_driven'?'selected':'')+'>Build as Goal</option></select></label>'+(d.executionTopology==='goal_driven'?'<p class="schedule-caption">The Goal is created only when this exact build is admitted.</p>':'')+
       '<div class="schedule-kind">'+[['one_time','Once'],['recurring_window','Recurring window']].map(([v,l])=>'<button class="soft-button '+(d.kind===v?'active':'')+'" data-action="sched-set-build-kind" data-value="'+v+'">'+l+'</button>').join('')+'</div>'+
       '<div class="sched-field-grid">'+(one?'<label class="sched-field"><span>Date</span><input type="date" data-sched-input="build-date" value="'+esc(d.date)+'"></label><label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-time" value="'+esc(d.time)+'"></label>':'<label class="sched-field"><span>Start</span><input type="time" data-sched-input="build-start" value="'+esc(d.startTime)+'"></label><label class="sched-field"><span>Pause</span><input type="time" data-sched-input="build-pause" value="'+esc(d.pauseTime)+'"></label>')+
       '<label class="sched-field schedule-zone"><span>Timezone</span><select data-sched-input="build-tz">'+zones+'</select></label></div>'+
@@ -36858,30 +36728,18 @@ window.PM56_EXT = window.PM56_EXT || {
      the schedules and quota consent tied to THAT execution are invalidated;
      a thread's unrelated scheduled user messages are never cleared. */
   function invalidateForExecution(assoc){
-    var out={ schedules:0, consents:0, untouched:0 }, i;
-    var builds=P().buildSchedules;
-    for(i=0;i<builds.length;i++){
-      var b=builds[i];
-      if(b.target_id===assoc.plan_id && b.schedule_id!==assoc.exclude_schedule_id && ['active','paused','held'].includes(b.state)){
-        b.state='invalidated';b.revision++;
-        b.invalidated_reason = assoc.why ||
-          ('The bound execution was cancelled at continuation epoch '+assoc.epoch+'.');
-        b.invalidReason = b.invalidated_reason;
-        b.updatedAt = nowIso();
-        logBuildLine(b, 'Invalidated: '+b.invalidated_reason);
-        out.schedules++;
-      }
+    const TX=window.PM56_TX,out={schedules:0,consents:0,untouched:0};
+    for(const b of P().buildSchedules){
+      if(b.target_id!==assoc.plan_id||b.schedule_id===assoc.exclude_schedule_id||!['active','paused','held'].includes(b.state))continue;
+      if(assoc.version!=null&&b.exact_target_version!==assoc.version)continue;
+      TX.set(b,'state','invalidated');TX.set(b,'revision',b.revision+1);
+      const why=assoc.why||'The bound execution was cancelled at continuation epoch '+assoc.epoch+'.';
+      TX.set(b,'invalidated_reason',why);TX.set(b,'invalidReason',why);TX.set(b,'updatedAt',nowIso());TX.set(b,'log',[{at:nowIso(),text:'Invalidated: '+why},...(b.log||[])].slice(0,40));out.schedules++;
     }
-    var consents=P().quotaConsents||[];
-    for(i=0;i<consents.length;i++){
-      var c=consents[i];
-      if((c.association_id===assoc.plan_id || c.target_id===assoc.plan_id) && c.state!=='revoked'){
-        c.state='revoked'; c.revokedReason='Bound execution cancelled.'; out.consents++;
-      }
-    }
-    out.untouched=P().scheduledMessages.filter(function(m){ return m.state==='scheduled'||m.state==='held'; }).length;
-    persistNow();
-    return out;
+    for(const c of P().quotaConsents||[]){if((c.association_id===assoc.plan_id||c.target_id===assoc.plan_id)&&c.state!=='revoked'){
+      TX.set(c,'state','revoked');TX.set(c,'revokedReason','Bound execution cancelled.');out.consents++;
+    }}
+    out.untouched=P().scheduledMessages.filter(m=>['scheduled','held'].includes(m.state)).length;persistNow();return out;
   }
 
   /* =====================================================================
@@ -36983,7 +36841,7 @@ window.PM56_EXT = window.PM56_EXT || {
     var b=findBuild(btn.dataset.id);if(!b||b.state!=='active')return;
     ui.editingBuildId=b.schedule_id;
     var local=tzParts(b.timezone,Date.parse(b.scheduled_at_utc));
-    ui.buildDraft={planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
+    ui.buildDraft={executionTopology:b.execution_topology||'agent',expected:window.PM56_PLANS.admissionSnapshot(b.target_id),planId:b.target_id,version:b.exact_target_version,contentHash:b.exact_target_hash,expectedRevision:b.revision,kind:b.schedule_kind,date:local?local.y+'-'+pad2(local.mo)+'-'+pad2(local.d):'',time:b.local_start,startTime:b.local_start,pauseTime:b.local_pause||'02:00',timezone:b.timezone,days:b.days_of_week.slice(),windDown:b.wind_down_seconds/60,autoResumeNext:b.auto_resume_next_window,missed:b.missed_policy};
     ctx.openDialog({type:'sched-build-at',planId:b.target_id,version:b.exact_target_version});
   };
   ACT['sched-create-build'] = function (ctx, btn) {
@@ -37105,6 +36963,7 @@ window.PM56_EXT = window.PM56_EXT || {
     else if (k === 'msg-model' && md) md.modelId = t.value;
     else if (k === 'msg-missed' && md) md.missed = t.value;
     else if (k === 'msg-grace' && md) md.grace = clamp(t.value, 1, 1440);
+    else if (k === 'build-topology' && bd) bd.executionTopology=t.value;
     else if (k === 'build-date' && bd) bd.date = t.value;
     else if (k === 'build-time' && bd) bd.time = t.value;
     else if (k === 'build-start' && bd) bd.startTime = t.value;
@@ -37127,8 +36986,12 @@ window.PM56_EXT = window.PM56_EXT || {
 
   window.PM56_SCHED = {
     openBuildAt: openBuildAt,
+    latchStop:(reason)=>{latchStop(reason);persistNow();},
+    stopSnapshot:()=>({epoch:P().stopEpoch,stopped:P().stopped}),
+    checkEpoch:token=>token?.epoch!==P().stopEpoch?{ok:false,error:"stale_stop_epoch"}:P().stopped?{ok:false,error:"manual_stop_latched"}:{ok:true},
     planSummary:planSummary,
     dispatchBuildAt:dispatchBuildAt,
+    bindGoalQuotaConsent,attemptAutoResume,simulateQuotaReset,
     list: function () { return { messages: P().scheduledMessages, builds: P().buildSchedules, consents: P().quotaConsents, events: P().events }; },
     /* Additive Correction v4 (SMSG / PSCHED). */
     messageProjection: function (id) { var r = smById(id); return r ? messageProjection(r) : null; },
@@ -42746,6 +42609,96 @@ window.PM56_EXT = window.PM56_EXT || {
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Deep Plan & question budgets · Batch 14</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b14-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
  window.PM56_DEEP_PLAN={engine,scope,flows,snapshot:tid=>{const s=sessions.get(tid||E.ctx().thread.id);return s?.runId?engine.view(s.runId):null;},session:tid=>clone(sessions.get(tid||E.ctx().thread.id)||null)};
 })();
+
+/* Batch 15 order-export workflow adapter. This owner computes source-bound files;
+ * Goal, Plan, To-Do, scheduling, artifacts and animation remain shared owners.
+ * All examples are local/session-memory. No provider, native host or background server.
+ */
+(function(){
+ 'use strict';
+ const E=window.PM56_EXT,D=window.PM56_DATA,G=window.PM56_GOAL,P=window.PM56_PLANS,T=window.PM56_TODOS,TX=window.PM56_TX,RT=window.PM56_RUNTIME;
+ const work=RT.orderExport={records:{},sessions:{},seq:0},clone=x=>JSON.parse(JSON.stringify(x));
+ const art=id=>D.artifacts.find(a=>a.id===id),now=()=>new Date().toISOString(),eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+ const digest=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'fnv1a:'+((h>>>0).toString(16).padStart(8,'0'));};
+ const STEPS=[{id:'normalize',title:'Normalize the supplied orders',outcome:'A source-bound JSON file preserves every order and represents money as integer cents.',deps:[]},{id:'export',title:'Write the exact CSV export',outcome:'The CSV preserves commas, quotes and newlines, with exact line totals and a stable header.',deps:['normalize']},{id:'verify',title:'Verify the export and unchanged source',outcome:'An independent CSV parse matches all source rows and exact totals; source bytes remain unchanged.',deps:['export']}];
+ const flows={simple:{title:'A Goal that produces a real file',detail:'Send a Goal, pause it, then finish an independently checked CSV.'},authority:{title:'You own the objective',detail:'Save a direct edit and approve or cancel a requested replacement.'},plan:{title:'Build a Plan as a Goal',detail:'Create a regular Plan, then explicitly choose its execution topology.'},scheduled:{title:'A future build is not a Goal yet',detail:'Schedule an exact Plan; admit its Goal only when the local clock dispatches.'}};
+ function refresh(){const c=E.ctx();c.renderApp();c.renderOverlays();}
+ function fail(c,out){if(out?.ok===false)c.toast('No change made',String(out.error||out.clause||'Owner refused this action').replaceAll('_',' '));refresh();return out;}
+ function artifact(name,content,threadId,projectId,id){return {id,name,title:name,kind:'code',type:'text',extension:name.split('.').pop(),updated:now(),summary:'Computed local order-export artifact. Session memory only.',projectId,threadId,version:1,status:'ready',content,provenance:'Computed by the local order-export owner, not a provider or native runtime.'};}
+ function sourceError(r){const a=art(r.source.id);if(!a||a.status!=='ready'||a.version!==r.source.version||digest(a.content)!==r.source.hash)return 'source_changed_or_unavailable';if(!eq(G.scope(r.threadId),r.scope))return 'scope_changed';return null;}
+ function cents(s){if(typeof s!=='string'||!/^\d{1,9}\.\d{2}$/.test(s))throw new Error('invalid_money');return BigInt(s.replace('.',''));}
+ function normalized(r){const error=sourceError(r);if(error)throw new Error(error);const rows=JSON.parse(art(r.source.id).content).orders;if(!Array.isArray(rows)||!rows.length||rows.length>1000)throw new Error('invalid_order_source');const ids=new Set();return rows.map(o=>{const id=String(o.id||'').trim();if(!id||ids.has(id)||typeof o.customer!=='string'||!Number.isSafeInteger(o.quantity)||o.quantity<1||o.quantity>100000)throw new Error('invalid_order');ids.add(id);return {id,customer:o.customer,quantity:o.quantity,unit_cents:cents(o.unit_price).toString(),total_cents:(cents(o.unit_price)*BigInt(o.quantity)).toString()};});}
+ const quote=s=>/[",\r\n]/.test(String(s))?'"'+String(s).replaceAll('"','""')+'"':String(s);
+ function csv(rows){return [['order_id','customer','quantity','unit_cents','total_cents'],...rows.map(o=>[o.id,o.customer,o.quantity,o.unit_cents,o.total_cents])].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n';}
+ function parseCSV(text){const rows=[];let row=[],field='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'){if(text[i+1]==='"'){field+='"';i++;}else quoted=false;}else field+=c;}else if(c==='"'){if(field)throw new Error('invalid_csv_quote');quoted=true;}else if(c===','){row.push(field);field='';}else if(c==='\r'&&text[i+1]==='\n'){row.push(field);rows.push(row);row=[];field='';i++;}else if(c==='\n'||c==='\r')throw new Error('invalid_csv_newline');else field+=c;}if(quoted||field||row.length)throw new Error('incomplete_csv');return rows;}
+ function checkedContent(r,stage){const rows=normalized(r);if(stage==='normalize')return JSON.stringify(rows,null,2);if(stage==='export')return csv(rows);const a=art(r.outputs.export);if(!a)throw new Error('csv_missing');const parsed=parseCSV(a.content),expected=[['order_id','customer','quantity','unit_cents','total_cents'],...rows.map(o=>[o.id,o.customer,String(o.quantity),o.unit_cents,o.total_cents])];if(!eq(parsed,expected))throw new Error('csv_round_trip_mismatch');return JSON.stringify({source_id:r.source.id,source_version:r.source.version,source_fingerprint:r.source.hash,source_unchanged:true,rows:rows.length,total_cents:rows.reduce((n,o)=>n+BigInt(o.total_cents),0n).toString(),csv_id:a.id,csv_version:a.version,csv_fingerprint:digest(a.content),round_trip:'equal',method:'Independent state-machine CSV parse compared with source-derived rows and integer totals'},null,2);}
+ function validate(ref,item,evidenceId){const r=work.records[ref],proof=art(evidenceId);if(!r||sourceError(r)||!proof||proof.threadId!==r.threadId||proof.projectId!==r.scope.projectId||proof.version!==1)return {ok:false,error:'evidence_unavailable'};try{const e=JSON.parse(proof.content),a=art(e.output_id),stage=STEPS.find(s=>item.todo_id.endsWith('-'+s.id))?.id;if(!stage||e.stage!==stage||e.workflow_id!==r.id||e.todo_id!==item.todo_id||e.work_binding!==item.active_work_ids?.[0]||e.source_fingerprint!==r.source.hash||e.output_id!==r.outputs[stage]||evidenceId!==r.evidence[stage]||!a||a.version!==e.output_version||digest(a.content)!==e.output_fingerprint||a.content!==checkedContent(r,stage))return {ok:false,error:'evidence_not_current_or_verified'};return {ok:true};}catch(e){return {ok:false,error:e.message};}}
+ function idsFor(r,owner){return owner?.requiredTodoIds||r.todoIds||[];}
+ function inspection(ref,owner){const r=work.records[ref];if(!r)return {eligible:false,complete:false,fingerprint:'missing',reason:'Order workflow unavailable.'};const c=E.ctx(),m=D.models.find(m=>m.id===r.route?.id),permission=c.state.permissions,error=sourceError(r)||(owner?.objective&&!owner.binding&&!objectiveCompatible(ref,owner.objective).ok?objectiveCompatible(ref,owner.objective).error:null)||(!m||m.status!=='ready'||m.accountId!==r.route.accountId?'provider_route_unavailable':permission!==r.permissions?'permission_snapshot_changed':RT.quota?.waiting?'quota_unavailable':null);
+  const ids=idsFor(r,owner),items=T.get(r.threadId)||[],mine=ids.map(id=>items.find(t=>t.todo_id===id)),summary=T.outcomeSummary(r.threadId,ids);
+  const fingerprint=digest(JSON.stringify({source:art(r.source.id),scope:G.scope(r.threadId),required:ids,items:mine,outputs:Object.values(r.outputs).map(art),evidence:Object.values(r.evidence).map(art),permission,route:{id:m?.id,status:m?.status,accountId:m?.accountId}}));
+  const complete=summary.ok&&Object.keys(r.outputs).length===3&&!error;let next=mine.find(t=>t?.status==='in_progress')||mine.find(t=>t?.status==='pending'&&t.depends_on.every(id=>items.find(x=>x.todo_id===id)?.status==='completed'));
+  return {waitKind:RT.quota?.waiting?'quota':null,eligible:!error&&!!next&&mine.every(Boolean),complete,verified:complete,requiredResolved:summary.ok,evidenceRefs:summary.evidenceRefs||[],fingerprint,nextAttemptRef:next?next.todo_id+':'+next.revision:null,reason:error||(!mine.every(Boolean)?'Required work was removed.':!complete&&!next?'No admitted executable outcome is available.':null)};
+ }
+ function advance(ref,owner){const r=work.records[ref];if(!r)return {ok:false,error:'work_missing'};const v=inspection(ref,owner);if(!v.eligible)return {ok:false,error:v.reason||'work_not_eligible'};const ids=idsFor(r,owner),items=T.get(r.threadId)||[],mine=ids.map(id=>items.find(t=>t.todo_id===id));const item=mine.find(t=>t.status==='in_progress')||mine.find(t=>t.status==='pending'&&t.depends_on.every(id=>items.find(x=>x.todo_id===id)?.status==='completed')),stage=STEPS.find(s=>item.todo_id.endsWith('-'+s.id)).id;
+  const event={todo_id:item.todo_id,expected_revision:item.revision,run_id:item.run_id,run_epoch:item.run_epoch,plan_version:item.plan_version,work_binding:item.active_work_ids?.[0]||r.id+':'+stage+':attempt1'};
+  if(item.status==='pending'){const out=T.applyTransition(r.threadId,{...event,to_status:'in_progress',cause_kind:'work_admitted',cause_ref:r.id+':admit:'+stage,note:'Source-bound local operation admitted.'});if(out.ok)r.attempts.push({stage,todo_id:item.todo_id,work_binding:event.work_binding,admitted_at:now()});return out;}
+  return TX.run(()=>{let content;try{content=checkedContent(r,stage);}catch(e){return {ok:false,error:e.message};}const suffix=stage==='export'?'orders.csv':stage==='verify'?'verification.json':'normalized-orders.json',id=r.id+'-'+stage,out=artifact(suffix,content,r.threadId,r.scope.projectId,id),proofId=id+'-evidence',proof=artifact(stage+'-evidence.json',JSON.stringify({workflow_id:r.id,stage,todo_id:item.todo_id,work_binding:event.work_binding,source_fingerprint:r.source.hash,output_id:id,output_version:1,output_fingerprint:digest(content),computed_at:now()},null,2),r.threadId,r.scope.projectId,proofId);
+   if(art(id)||art(proofId))return {ok:false,error:'output_identity_already_exists'};
+   TX.append(D,'artifacts',out);TX.append(D,'artifacts',proof);TX.set(r.outputs,stage,id);TX.set(r.evidence,stage,proofId);
+   const changed=T.applyTransition(r.threadId,{...event,to_status:'completed',cause_kind:'outcome_satisfied',cause_ref:proofId,note:'Computed output independently checked by the registered order-export outcome owner.'});if(!changed.ok)return changed;TX.set(r,'lastEffectAt',now());return {ok:true,output_id:id,evidence_ref:proofId};
+  });
+ }
+ // The local adapter is not a language model. This explicit small grammar
+ // recognizes only wording with the same tested three order-export predicates.
+ // Every other accepted Goal edit remains saved, but blocks this adapter.
+ function objectiveCompatible(ref,text){
+  const normalized=String(text).trim().replace(/\s+/g,' ').toLowerCase();
+  const original='export the supplied orders to a verified csv with exact cents, preserving quoted customer names and the unchanged source.';
+  const valid=normalized===original||normalized===original+' keep all five orders.'||normalized==='export all five supplied orders with exact cents and verify the csv independently.';
+  return valid?{ok:true}:{ok:false,error:'This local order-export adapter cannot validate the rewritten objective. Your text is saved; no further work is admitted. Restore the order-export objective or cancel and use a different workflow.'};
+ }
+ const owner={inspect:inspection,advance,objectiveCompatible,plan:ref=>{const r=work.records[ref];if(!r||sourceError(r))return {ok:false,error:'source_unavailable'};return {ok:true,title:'Verified order export',objective:r.objective,steps:clone(STEPS),sourceRefs:[r.source.id]};}};
+ T.registerOutcomeOwner('order_export',validate);G.registerOwner('order_export',owner);P.registerWorkOwner('order_export',owner);
+ function createWork(t,objective){const id='order-export-'+(++work.seq),a=art(work.sessions[t.id]?.sourceId);if(!a)return {ok:false,error:'source_not_selected'};const r={id,threadId:t.id,scope:G.scope(t.id),route:clone(E.ctx().selectedModel()),permissions:E.ctx().state.permissions,objective,source:{id:a.id,version:a.version,hash:digest(a.content)},outputs:{},evidence:{},attempts:[],todoIds:[],createdAt:now()};TX.set(work.records,id,r);try{normalized(r);}catch(e){return {ok:false,error:e.message};}return {ok:true,record:r};}
+ function seed(c,flow){if(!flows[flow])return;const t=clone(c.state.threads.find(t=>t.id==='query')||c.thread),id='batch15-'+flow+'-'+(++work.seq);Object.assign(t,{id,title:flows[flow].title+' · local example',projectId:'concept:batch15:'+work.seq,worktreeId:'concept:orders:'+work.seq,status:'ready',pinned:false,archived:false,goalId:null,messages:[]});c.state.threads.push(t);
+  const value={orders:[{id:' ORD-001 ',customer:'River, Inc.',quantity:3,unit_price:'19.99'},{id:'ORD-002',customer:'Ada "A" Chen',quantity:2,unit_price:'0.10'},{id:'ORD-003',customer:'North\nSouth',quantity:7,unit_price:'4.25'},{id:'ORD-004',customer:'München Studio',quantity:1,unit_price:'120.00'},{id:'ORD-005',customer:'Trailing space ',quantity:4,unit_price:'3.33'}]},a=artifact('Supplied orders.json',JSON.stringify(value,null,2),t.id,t.projectId,id+'-source');a.summary='Supplied exercise input; not computed or fetched.';a.provenance='Supplied Batch 15 order fixture.';D.artifacts.push(a);
+  work.sessions[t.id]={threadId:t.id,flow,guide:true,sourceId:a.id,workId:null};Object.assign(c.state,{menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false});c.state.activity.open=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};c.switchThread(t.id);c.state.mode=['plan','scheduled'].includes(flow)?'Plan':'Chat';c.state.composer=(c.state.mode==='Plan'?'':'/goal ')+'Export the supplied orders to a verified CSV with exact cents, preserving quoted customer names and the unchanged source.';refresh();
+ }
+ function accept(c,t,raw){const dest=RT.composer.destination;
+  if(dest?.kind==='goal-objective-proposal'){const out=G.propose(dest.goalToken,raw,{explicit:true,text:raw});if(!out.ok){fail(c,out);return {claimed:true,preserveComposer:true};}t.messages.push({id:'goal-proposal-request-'+(++work.seq),role:'user',type:'text',body:raw});RT.composer.destination=null;c.state.activity.open=true;c.state.activity.domain='goal';return {claimed:true,preserveComposer:false};}
+  if(dest&&dest.kind!=='assistant')return false;
+  if(/^build (?:this|the) plan as a goal\.?$/i.test(raw.trim())){const r=P.current(t.id),out=r?P.build({plan_id:r.plan_id,execution_topology:'goal_driven',expected:P.admissionSnapshot(r.plan_id)}):{ok:false,error:'current_plan_required'};if(!out.ok){fail(c,out);return {claimed:true,preserveComposer:true};}t.messages.push({id:'explicit-plan-goal-'+(++work.seq),role:'user',type:'text',body:raw});return {claimed:true,preserveComposer:false};}
+  const explicit=/^\/goal(?:\s|$)/i.test(raw.trim()),s=work.sessions[t.id];if(!explicit&&!(s&&c.state.mode==='Plan'&&!s.workId))return false;const objective=raw.replace(/^\s*\/goal\s*/i,'');
+  const out=TX.run(()=>{TX.set(t,'messages',t.messages.concat({id:'order-request-'+(++work.seq),role:'user',type:'text',body:raw}));let r;if(s){const made=createWork(t,objective);if(!made.ok)return made;r=made.record;}
+   if(explicit){let materialized;if(r){materialized=T.materializeForWork({run_id:r.id,thread_id:t.id,project_id:r.scope.projectId,steps:STEPS,owner:'order_export',ref:r.id,epoch:1});if(!materialized.ok)return materialized;TX.set(r,'todoIds',materialized.ids);}
+    const created=G.create({threadId:t.id,objective,explicitRequest:true,sourceMessageId:'goal-request-'+(r?.id||work.seq),runId:r?.id||null,workRef:r?{kind:'order_export',ref:r.id}:null});if(!created.ok)return created;if(r)TX.set(r,'goalId',created.goal.id);TX.defer(()=>{G.kick(created.goal.id);});
+   }else{const created=P.createFromWorkRequest({threadId:t.id,explicitRequest:true,workRef:{kind:'order_export',ref:r.id}});if(!created.ok)return created;TX.set(r,'planId',created.planId);}
+   if(r){TX.set(s,'workId',r.id);TX.set(t,'messages',t.messages.concat({id:'order-work-'+r.id,role:'assistant',type:'order-export-work',workId:r.id}));}return {ok:true};
+  });if(!out.ok){fail(c,out);return {claimed:true,preserveComposer:true};}return {claimed:true,preserveComposer:false};
+ }
+ RT.composer.preSendHooks.unshift(accept);
+ const btn=(a,label,r,extra='')=>'<button class="soft-button" data-action="'+a+'"'+(r?' data-work="'+r.id+'"':'')+' '+extra+'>'+E.ctx().esc(label)+'</button>';
+ function activeOwner(r){return r.planId?P.get(r.planId):G.byId(r.goalId);}
+ function projection(r){const own=activeOwner(r),ids=idsFor(r,own),items=T.get(r.threadId)||[],mine=ids.map(id=>items.find(t=>t.todo_id===id)),resolved=mine.filter(t=>t?.status==='completed').length,active=mine.findIndex(t=>t?.status==='in_progress'),g=r.planId?G.bound(r.planId):G.byId(r.goalId),running=own&&(r.planId?own.status==='building'&&!own.attention:g?.status==='active'),complete=inspection(r.id,own).complete;
+  const steps=STEPS.map((st,i)=>({id:'b15-'+st.id,uid:r.id+':'+st.id,kind:i===2?'testing':'file',label:['Normalize orders','Write CSV','Verify export'][i],icon:i===2?'check':'file',verb:st.title,detail:st.outcome,startAt:i*2,dur:2,evidence:r.evidence[st.id]?[r.evidence[st.id]]:[],rows:[{at:0,text:mine[i]?.status==='completed'?'Verified output: '+art(r.outputs[st.id])?.name:mine[i]?.status==='in_progress'?'Source-bound attempt admitted.':'Waiting for admitted work.'}],stat:mine[i]?.status||'Not admitted'}));
+  const statusLabel=complete?'Completed':g&&G.cancelled(g)?'Canceled':g?.status==='paused'||own?.attention?.kind==='paused'?'Paused':own?.attention?.kind==='quota_wait'?'Waiting for Usage':g?.status==='blocked'?'Blocked':own?.attention?'Needs attention':'Working';
+  return {ownerProjection:true,statusLabel,workId:r.id,runId:r.id,steps,step:active>=0?active:Math.min(resolved,2),clock:complete?6:(active>=0?active:Math.min(resolved,2))*2,running:!!running,completed:complete,expanded:false,elapsed:r.attempts.length?Math.max(0,Math.floor(((complete?Date.parse(r.lastEffectAt):Date.now())-Date.parse(r.attempts[0].admitted_at))/1000)):0,started:!!ids.length};
+ }
+ function workspace(c,r){if(!r)return '<p>Local workflow unavailable.</p>';const own=activeOwner(r),v=inspection(r.id,own),g=r.planId?G.bound(r.planId):G.byId(r.goalId);return '<article class="orders15-workspace" data-order-work="'+r.id+'"><header><p class="orders15-eyebrow">Local file workflow · session memory</p><h1>Order export</h1><p>Real file transformations, owner-accepted To-Dos, and an independently parsed CSV. No provider execution. This bounded adapter understands the order-export objective; an unrelated rewrite is saved but blocks this workflow.</p></header><div class="orders15-actions">'+btn('b15-source','Open source',r)+(r.planId?btn('b15-plan','Open Plan',r):'')+(g&&!G.cancelled(g)?btn('b15-goal','Open Goal',r):'')+btn('b15-todos','Open To-Dos',r)+'</div>'+(!v.eligible&&!v.complete?'<p class="orders15-note">'+c.esc(v.reason||'Waiting for explicit Build.')+'</p>':'')+'<div class="orders15-results">'+STEPS.map(st=>{const a=art(r.outputs[st.id]);return '<section><h2>'+c.esc(st.title)+'</h2><p>'+c.esc(st.outcome)+'</p>'+(a?'<strong>'+c.esc(a.name)+'</strong><div class="orders15-actions">'+btn('b15-artifact','Open',r,'data-artifact="'+a.id+'"')+btn('b15-download','Download',r,'data-artifact="'+a.id+'"')+'</div>':'<small>No output committed.</small>')+'</section>';}).join('')+'</div><details data-k="orders15-details:'+r.id+'"><summary>Source and evidence identities</summary><p>Fingerprints below are local currentness tokens, not cryptographic attestations. Goal and Plan details retain their own identity and authority.</p><pre>'+c.esc(JSON.stringify({source:r.source,scope:r.scope,outputs:r.outputs,evidence:r.evidence,attempts:r.attempts},null,2))+'</pre></details></article>';}
+ E.slot('transcriptMessage',c=>{if(c.m?.type!=='order-export-work')return '';const r=work.records[c.m.workId];if(!r)return '<p>Local order workflow is unavailable.</p>';return '<section class="orders15-entry" data-k="orders15-entry:'+r.id+'"><div class="orders15-entry-head"><div><strong>Order export</strong><p>Supplied source → computed files → accepted evidence.</p><small>Local workflow. Goal controls live in Activity.</small></div>'+btn('b15-open','Open files',r)+'</div>'+((activeOwner(r)?.approved||r.goalId)?c.renderOwnedWorking({id:'order-animation-'+r.id,workId:r.id},projection(r)):'<p>The Plan is ready for your explicit Build action.</p>')+'</section>';});
+ E.slot('workingOwnerControls',c=>{const r=work.records[c.rec.workId];const g=r&&(r.planId?G.bound(r.planId):G.byId(r.goalId));return r?(g&&!G.cancelled(g)?btn('b15-goal','Goal controls',r):r.planId?btn('b15-plan','Plan',r):'')+btn('b15-open','Files',r):'';});
+ E.slot('editorTabLabel',c=>c.editorId?.startsWith('order-export:')?'Order export':'');E.slot('editorDocument',c=>c.editorId?.startsWith('order-export:')?workspace(c,work.records[c.editorId.slice(13)]):'');
+ E.slot('composerBelow',c=>{const s=work.sessions[c.thread.id];return s?.guide?'<div class="orders15-guide"><span><strong>'+c.esc(flows[s.flow].title)+'</strong> '+(s.workId?'Continue through the Plan, Goal Activity, and file controls.':s.flow==='scheduled'?'Send to create a Plan. Choose Build At, then Build as Goal.':'Send the prefilled request to begin. The guide starts no work.')+'</span>'+btn('b15-hide-guide','Dismiss')+'</div>':'';});
+ E.action('b15-start',(c,b)=>{seed(c,b.dataset.flow);return true;});E.action('b15-hide-guide',c=>{if(work.sessions[c.thread.id])work.sessions[c.thread.id].guide=false;refresh();return true;});
+ const withWork=(name,fn)=>E.action(name,(c,b)=>{const r=work.records[b.dataset.work];if(r&&r.threadId===c.thread.id)fn(c,r,b);return true;});
+ withWork('b15-open',(c,r)=>c.openEditor('order-export:'+r.id));withWork('b15-source',(c,r)=>c.openEditor(r.source.id));withWork('b15-artifact',(c,r,b)=>{if(Object.values(r.outputs).includes(b.dataset.artifact))c.openEditor(b.dataset.artifact);});
+ withWork('b15-plan',(c,r)=>r.planId&&P.openDetails(c,r.planId));withWork('b15-goal',(c,r)=>{const g=r.planId?G.bound(r.planId):G.byId(r.goalId);if(!g||G.cancelled(g)){c.toast('No active Goal','A scheduled or ordinary Build does not create a Goal before goal-driven admission.');return;}c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';if(innerWidth<=1100)c.state.editorRevealed=false;refresh();});
+ withWork('b15-todos',(c,r)=>{c.state.activity.open=true;c.state.activity.domain='todo';refresh();});
+ withWork('b15-download',(c,r,b)=>{if(!Object.values(r.outputs).includes(b.dataset.artifact))return;const a=art(b.dataset.artifact);if(!a)return;const url=URL.createObjectURL(new Blob([a.content],{type:a.extension==='csv'?'text/csv;charset=utf-8':'application/json'})),link=document.createElement('a');link.href=url;link.download=a.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});
+ const gallery=window.PM56_REPAIR_DEMOS,old=gallery.gallery;gallery.gallery=c=>'<section class="demo-section"><h3>Simple Goal & explicit execution · Batch 15</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="b15-start" data-flow="'+id+'"><strong>'+c.esc(f.title)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
+ window.PM56_ORDER_EXPORT={seed,flows,get:id=>work.records[id],snapshot:tid=>clone(work.records[work.sessions[tid||E.ctx().thread.id]?.workId]||null),session:tid=>clone(work.sessions[tid||E.ctx().thread.id]||null),inspect:inspection,advance,validate,digest,parseCSV};
+})();
 </script>
   <script>(() => {
   'use strict';
@@ -43011,7 +42964,7 @@ window.PM56_EXT = window.PM56_EXT || {
       /* mutators -- each triggers the render the change actually needs */
       renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
-      openDialog, closeDialog, copyText, savePrefs, extRender
+      openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation
     }, extra);
   }
   function extEach(name, extra, each){
@@ -43628,13 +43581,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const extActions=extRender('systemCardActions',{message:m}); if(extActions) actions.push(extActions);
     return `<article class="event-card ${d[2]}" data-message-id="${esc(m.id||'')}"${m.dispatchId?` data-dispatch-id="${esc(m.dispatchId)}"`:''}${m.commandId?` data-command-id="${esc(m.commandId)}"`:''}${m.resultStatus?` data-result-status="${esc(m.resultStatus)}"`:''}><span class="event-icon">${icon(d[0],14)}</span><div class="event-copy">${m.title&&m.title!==d[1]?`<span class="event-kind">${esc(d[1])}</span>`:''}<strong>${esc(m.title||d[1])}</strong><p>${formatText(m.detail||'')}</p>${m.type==='bsd-advice'?`<p><strong>Impact:</strong> The primary agent changed from rewriting history to a forward migration with rollback evidence.</p>`:''}</div>${actions.length?`<div class="plan-actions">${actions.join('')}</div>`:''}</article>`;
   }
-  function renderWorkingAnimation(m){
-    const rec=workRecFor(m)||state.work;
+  function renderWorkingAnimation(m,ownedProjection){
+    const rec=ownedProjection||workRecFor(m)||state.work;
     const v=state.variants[2];
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.completed?'Completed':'Working'}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button></div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon">${icon(step.icon,14)}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):`${rec.running?`<button class="icon-button" data-action="pause-working" title="Pause the live demo">${icon('pause',13)}</button>`:`<button class="icon-button" data-action="start-working" title="Start or resume the complete work sequence">${icon('play',13)}</button>`}<button class="icon-button" data-action="step-working" title="Advance one operation">${icon('step',13)}</button><button class="icon-button" data-action="complete-working" title="Complete the sequence">${icon('check',13)}</button><button class="icon-button" data-action="reset-working" title="Reset this work run">${icon('reset',13)}</button><button class="icon-button ${rec.expanded?'active':''}" data-action="toggle-work-history" title="${rec.expanded?'Hide':'Show'} organized work history and evidence">${icon(rec.expanded?'collapse':'expand',13)}</button>`}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Everything a working-animation take needs, so takes can live outside
@@ -43679,6 +43632,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   const RUN_CACHE={};
   function rowsFromPhase(s){ return (D.phaseRows[s.kind]&&D.phaseRows[s.kind][s.id])||(s.evidence||[]).slice(0,3).map(t=>({text:t})); }
   function workInstancesFor(rec){
+    if(rec?.ownerProjection&&rec.steps)return rec.steps;
     const runId=rec&&rec.runId, key=runId||'__legacy';
     if(RUN_CACHE[key]) return RUN_CACHE[key];
     let list;
@@ -44058,7 +44012,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      a Goal has no numerator. Legacy phase fields are read only to migrate an
      older fixture's text, never to render structure. */
   function goalSummary(){
-    const g=D.goal;
+    const g=window.PM56_GOAL?.get?.()||null;
     if(!g) return {...GOAL_FALLBACK, derived:false};
     return {
       title:g.objective||g.title||GOAL_FALLBACK.title,
@@ -44099,13 +44053,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     tid=tid||state.selectedThread;
     const thread=threadById(tid);
     const msgs=(thread&&thread.messages)||[];
-    const g=D.goal;
-    const hasAttachedGoal=!!(g&&g.status!=='cleared'&&(g.thread===tid||(thread&&thread.goalId&&g.id&&thread.goalId===g.id)));
-    const hasGoalReceipt=msgs.some(m=>m.type==='goal-receipt');
-    const hasGoalArtifact=(D.artifacts||[]).some(a=>a.threadId===tid&&(a.id==='goal-artifact'||a.kind==='goal'||a.type==='goal'));
-    const hasGoalHistory=hasAttachedGoal||hasGoalReceipt||hasGoalArtifact;
-    const capGoal=!!(state.activityCaps&&state.activityCaps.goal&&state.activityCaps.goal[tid]);
-    const hasGoal=hasGoalHistory||(!!state.capabilities.goal&&capGoal);
+    const g=window.PM56_GOAL?.get?.(tid)||null;
+    const hasAttachedGoal=!!g;
+    const hasGoalHistory=hasAttachedGoal;
+    const hasGoal=hasAttachedGoal;
     /* Assistant-redesign wave: To-Dos have ONE owner, todos.js (ToDo_Runtime.md).
        The legacy flat `D.todos` fixture is thread-scoped only for `query`, so
        reading it here hid the chip on every other thread that genuinely has a
@@ -44134,7 +44085,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const runs=collabRuns(tid);
     const collab={brainstorm:runs.filter(r=>r.kind==='brainstorm'),review:runs.filter(r=>r.kind==='review'),chat_room:runs.filter(r=>r.kind==='chat_room'),crew:runs.filter(r=>r.kind==='crew')};
     return {
-      tid, hasAttachedGoal, hasGoalReceipt, hasGoalHistory, capGoal, hasGoal,
+      tid, hasAttachedGoal, hasGoalReceipt:false, hasGoalHistory, capGoal:false, hasGoal,
       todos, subagents, hasSubagents, hasCrewEvent, hasCrew, crew, changes, artifacts,
       collab,
       live:{
@@ -44447,7 +44398,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return `<div class="send-queue" data-k="send-queue">${q.map(e=>`<div class="send-queue-row" data-k="q:${esc(e.id)}"><span class="send-queue-text"${hoverAttrs('q-text-'+e.id,e.text)}>${esc(e.text)}</span><button class="icon-button" data-action="queue-edit" data-id="${esc(e.id)}"${hoverAttrs('q-edit-'+e.id,'Edit')}>${icon('edit',13)}</button><button class="icon-button" data-action="queue-send-now" data-id="${esc(e.id)}"${hoverAttrs('q-send-'+e.id,'Send now')}>${icon('send',13)}</button></div>`).join('')}</div>`;
   }
   function sendButtonHtml(){
-    const busy=runningRecs().length>0;
+    const liveGoal=window.PM56_GOAL?.get(activeThread().id),livePlan=window.PM56_PLANS?.current(activeThread().id);const busy=runningRecs().length>0||!!(liveGoal?.status==='active'&&liveGoal.workRef&&(liveGoal.workRef.kind==='order_export'||livePlan?.workRef))||!!(livePlan?.workRef&&livePlan.status==='building'&&!livePlan.attention);
     const qlen=(state.sendQueue[state.selectedThread]||[]).length;
     const queueFull=busy&&qlen>=2;
     if(busy && !state.composer.trim()){
