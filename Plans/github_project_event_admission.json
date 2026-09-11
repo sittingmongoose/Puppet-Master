@@ -1,8 +1,8 @@
 {
-  "schema_id": "pm.github_project_event_admission.v1",
+  "schema_id": "pm.github_project_event_admission.v2",
   "scope": "Two existing production-intent events for cmd.project.new_github_repo only",
-  "preexisting_family_prefix_count": 96,
-  "preexisting_family_prefix_sha256": "9b3b0cebf471111ecc1c859e7eb434e729599d5680a7e75a38e76e1ea46bba0c",
+  "preexisting_family_prefix_count": 92,
+  "preexisting_family_prefix_sha256": "99c53d0bf95bac68e57bb60f7df54e0b48e46884ac33511ee3a9a9ee33bb2c69",
   "global_event_denominator": "UNKNOWN_OPEN",
   "native_handlers_proven": false,
   "governance_sealed": false,
@@ -21,14 +21,16 @@
         "json_pointer": "#/$defs/create_requested",
         "schema_id": "pm.github_project_event.create_requested.schema.v1"
       },
-      "retention_policy_ref": {
+      "producer_implementation": "unimplemented",
+      "emission_rule": "Once after approved owner intake, before remote mutation; not repository or Project success. Send-only intent under DL-039; this rule authorizes no persisted EventRecord or admitted-event replay.",
+      "admission_status": "quarantined_not_admitted",
+      "metadata_disposition": "proposed_contract_only_no_registration",
+      "proposed_retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "producer_implementation": "unimplemented",
-      "emission_rule": "Once after approved owner intake, before remote mutation; not repository or Project success.",
-      "physical_storage_owner": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
+      "proposed_physical_storage_owner": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
     },
     {
       "family_id": "event-family-project-github-repo-bound",
@@ -43,14 +45,25 @@
         "json_pointer": "#/$defs/project_bound",
         "schema_id": "pm.github_project_event.project_bound.schema.v1"
       },
-      "retention_policy_ref": {
+      "producer_implementation": "unimplemented",
+      "emission_rule": "Once after verified repository/source receipts and atomic listed Project commit/readback; never pending, rejection, no-change, cancellation, unknown or replay. Send-only intent under DL-039; this rule authorizes no persisted EventRecord or admitted-event replay.",
+      "admission_status": "quarantined_not_admitted",
+      "metadata_disposition": "proposed_contract_only_no_registration",
+      "proposed_retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "producer_implementation": "unimplemented",
-      "emission_rule": "Once after verified repository/source receipts and atomic listed Project commit/readback; never pending, rejection, no-change, cancellation, unknown or replay.",
-      "physical_storage_owner": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
+      "proposed_physical_storage_owner": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
     }
-  ]
+  ],
+  "claim_boundary": "DL-039 EMIT-PERSIST-026: send-only command obligations with closed candidate payload and owner-binding contracts. These exact events remain quarantined_not_admitted. No EventRecord registration, append, admitted-event projection/replay/checkpoint advance, retention assignment, native producer proof or governance seal. The retained admission filename and proposed family metadata grant no admission.",
+  "authority_ref": "Plans/Decision_Log.md#DL-039",
+  "decision_id": "EMIT-PERSIST-026",
+  "owner_disposition": "ACCEPT_EMIT_OBLIGATION_ONLY",
+  "admission_status": "quarantined_not_admitted",
+  "event_persistence_authorized": false,
+  "event_projection_authorized": false,
+  "replay_rule": "Every attempted EventRecord append or replay of these unadmitted event types is quarantined without consuming event identity, projecting facts or advancing checkpoints. Separately validating candidate payloads and retained owner bindings grants no admission; command-result retry remains owner-routed and distinct.",
+  "retention_rule": "RP-AUTHORITY-INDEFINITE 1.0.0 and Case L are proposals only for any separately authorized future storage decision. There is no active event retention assignment or new physical family; command/Project receipt retention remains with its existing owner."
 }
