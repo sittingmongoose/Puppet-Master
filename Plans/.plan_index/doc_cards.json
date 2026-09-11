@@ -5063,10 +5063,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 19,
+        "False": 20,
         "True": 22
       },
-      "heading_count": 86,
+      "heading_count": 89,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -5123,9 +5123,9 @@
         "Plans/storage_value_registry.schema.json",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 3029,
+      "line_count": 3142,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 41,
+      "plan_unit_count": 42,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5167,6 +5167,7 @@
         "DL-039",
         "DL-043",
         "DL-044",
+        "DL-045",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5191,6 +5192,7 @@
         "debug_evidence_capture_hygiene_gap",
         "decision_log_authority_drift",
         "decision_review_flow_drift",
+        "event_authority_binding_scope_expansion",
         "event_authority_decision_drift",
         "extraction_mapping_overauthority",
         "forge_wiring_provider_vocabulary_drift",
@@ -5216,18 +5218,20 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd",
+      "sha256": "7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 41
+        "accepted": 42
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 38
+        "requirement": 39
       },
       "validation_surfaces": [
+        "Decision Log PlanUnit YAML parsing and exact canonical scope comparison to the pinned manifest",
+        "Exact response-byte preservation and source SHA-256 checks",
         "Owner/consumer source-to-decision review",
         "PlanUnit YAML parse and identifier-uniqueness check",
         "exact Case L 76-decision set-equality check",
@@ -18398,7 +18402,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T17:22:03Z",
+  "generated_at_utc": "2026-09-11T17:43:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18406,13 +18410,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3334,
+      "False": 3335,
       "True": 3108
     },
-    "plan_unit_count": 6442,
+    "plan_unit_count": 6443,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6251,
+      "accepted": 6252,
       "retired": 182,
       "superseded": 9
     },
@@ -18479,7 +18483,7 @@
       "recovery_requirement": 3,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5144,
+      "requirement": 5145,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

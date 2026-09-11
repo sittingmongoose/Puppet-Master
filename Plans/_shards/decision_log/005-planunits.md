@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L562-L3001
+Source lines: L620-L3114
 
-Source SHA256: `12127d14ae3598f327457bfae17a443bcb8b5e0af3a1d4c43f1ac9af8c0feccd`
+Source SHA256: `7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5`
 
 ---
 
@@ -2324,6 +2324,61 @@ owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/UI_Command_Catalog.md
   - Plans/Forge_Integrations.md
+```
+
+### DL-045 - Bounded Event Authority Technical Binding Definition Approval
+
+```yaml
+plan_unit_id: DL-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's exact answer Approve the bounded proposal at 2026-09-11T17:38:05.609154Z authorizes
+  a bounded exception to DL-039 for the exact 285 families in the adjacent DL-045 canonical
+  scope table and frozen manifest at dc5ba81f422dfe71ecfa69f700d6c774f441b71a. Responsible
+  owners may explicitly author proven-missing technical consumer, projector and checkpoint
+  definitions for already specified behavior only after per-event scoped canonical search,
+  documented negative evidence and review of existing partial contracts. Existing definitions
+  come first; new definitions are labelled new and never inferred from sibling semantics.
+  The 39 registered families receive depth-only work; 226 unadmitted technical rows and
+  20 independently product-gated rows remain subject to full contracts and their own gates.
+  Root review and positive/negative semantic checks remain required, and each new registry
+  admission is a separate Storage-owned family landing. This approval changes no membership,
+  product/retention/deletion decision, runtime proof, validator, frozen accounting or clearance.
+gui_related: false
+gui_classification_reason: This decision authorizes bounded technical contract definition work and changes no GUI behavior.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - The canonical scope table exactly equals the frozen 285-family manifest with disjoint R39, T226 and C20 categories across 35 owner batches; the six exclusions stay outside.
+  - Each missing definition has per-event current-source search scope, existing-contract citations and negative evidence before a newly labelled owner definition is authored.
+  - Existing binding reuse proves the owner-defined role, version and scope without sibling, descriptive-role or schema-version inference.
+  - Product choices remain independent and the 20 card-gated rows receive no dependent semantic or admission approval from this response.
+  - Every family requires its complete owner-backed contract, exact schema refs, positive and negative semantic checks and root review; new admission is one family per landing.
+  - Registered membership, validator logic, frozen accounting, freeze/closure hashes, Spec Lock, readiness clearance and seal status are unchanged by this decision.
+validation_surfaces:
+  - Decision Log PlanUnit YAML parsing and exact canonical scope comparison to the pinned manifest
+  - Exact response-byte preservation and source SHA-256 checks
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: event_authority_binding_scope_expansion
+reasoning_tier: high
+context_scope: event_authority_steps_8_9_technical_binding_approval
+implementation_surfaces: [Plans/Decision_Log.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+node_compile_hint: {mode: bounded_technical_binding_authority, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - EA-BINDINGS-285-RESPONSE-001
+  - call_DvY9cAd5SBCN8ACboljCpno8
+  - reports/event-authority-20260911/step-09-binding-authority-scope.json@dc5ba81f422dfe71ecfa69f700d6c774f441b71a
+  - reports/event-authority-20260911/step-09-binding-authority-question.md@dc5ba81f422dfe71ecfa69f700d6c774f441b71a
+preserved_exact_tokens: ["Approve the bounded proposal", "DL-039", "DL-040", "EA-BINDINGS-285-RESPONSE-001"]
+negative_constraints:
+  - Do not expand the frozen exact scope through later report edits or claim 285 proven absence findings.
+  - Do not invent evidence, borrow sibling bindings, or represent newly authored identifiers as pre-existing definitions.
+  - Do not decide feature, integration, retention, deletion or competing-owner questions through this technical approval.
+  - Do not bulk admit, re-admit registered families, hardcode a pass, enable runtime or change validators, frozen accounting, clearance or seal state.
+owner_hints: [Plans/Decision_Log.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
