@@ -1,0 +1,117 @@
+{
+  "status": "NOT_RUN",
+  "pairs": [
+    {
+      "id": "CRR-01",
+      "case": "lawful_retirement",
+      "positive": "Original committed result/outcome survives RP90 capture retirement",
+      "negative": "Terminal summary or append locator cannot fabricate original result",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-02",
+      "case": "lifetime",
+      "positive": "Original typed result still replays after365days",
+      "negative": "Delivery record expiry cannot erase this custody",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-03",
+      "case": "global_gate",
+      "positive": "Pre-dispatch read-only refusal has zero durable writes",
+      "negative": "Receipt/result writer exemption forbidden",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-04",
+      "case": "barrier1",
+      "positive": "Point pending companion and pending result atomic",
+      "negative": "Capture without identity custody not admitted",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-05",
+      "case": "barrier2",
+      "positive": "Lost append ack reconciles original durable event",
+      "negative": "Unknown append effect not guessed failure",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-06",
+      "case": "barrier3",
+      "positive": "Companion/result/outcome/response commit before success",
+      "negative": "Premature success or partial custody forbidden",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-07",
+      "case": "retry",
+      "positive": "Same original request returns same owner result",
+      "negative": "Changed digest conflicts without new point",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-08",
+      "case": "source_change",
+      "positive": "Retry reuses original frozen input despite changed live thread",
+      "negative": "Live recapture with same request forbidden",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-09",
+      "case": "owner_auth",
+      "positive": "Actual original SIR outcome authenticated and retained",
+      "negative": "Schema-valid synthetic outcome no authority",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-10",
+      "case": "hash_cycle",
+      "positive": "Owner result hashed independently of container/outcome",
+      "negative": "Including own result hash or recursive dereference forbidden",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-11",
+      "case": "joined_result",
+      "positive": "Result/hash/outcome/response identities exact",
+      "negative": "Mismatched operation/generation/request/refs rejected",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-12",
+      "case": "backup",
+      "positive": "Original joint canonical custody restored from backup",
+      "negative": "Index/event/summary rebuild of missing native result forbidden",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-13",
+      "case": "permission",
+      "positive": "Historical result remains subject access check",
+      "negative": "Success cannot unhide deleted thread or authorize branch",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-14",
+      "case": "no_effect",
+      "positive": "Admitted failed/no-effect backed by original proof",
+      "negative": "After possible append failure cannot claim no effect",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-15",
+      "case": "history",
+      "positive": "Genuine historical point reader remains valid without command receipt",
+      "negative": "No guessed historical outcome backfill",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "CRR-16",
+      "case": "withdrawal",
+      "positive": "Unsupported result version preserves custody and fences",
+      "negative": "No fallback writer/default-filled success",
+      "native_status": "NOT_RUN"
+    }
+  ]
+}

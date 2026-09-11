@@ -1,0 +1,45 @@
+{
+  "assessment_id": "EA-STEP08-RESTORE-CREATED-CHECKS",
+  "base_commit": "f359b6aed30dc38433dec1e3929c09288f8155ca",
+  "static_integration": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/integration-validation-final.json",
+    "sha256": "86a54094bd0c77f530b7e09b5fbcdaca1ee5db1c007f87a96eb8f01e5c572da9"
+  },
+  "original_result_static": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/result-integration-validation.json",
+    "sha256": "c955b1b82dcdda9a3fa6e92e2d179705992a4e4b9d3b62204a1819bf39417f91"
+  },
+  "index_scope": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/index-scope-final.json",
+    "sha256": "199eab834bf75b3bc17362c5aa9526a09ac546e61d670d0dd25a52869ef33b5e"
+  },
+  "source_review": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/current-source-review-final.json",
+    "sha256": "0a1dfa070f19f647167a21921c210f110fb3a3fc18d389e1edbb06ac87c9cefe"
+  },
+  "shards": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/shard-check-final.json",
+    "sha256": "27986137fd32c51a85c9c816614479c69a04b8f8a303d8c8fd926475bccf0a81"
+  },
+  "run_gates": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/run-gates-final.json",
+    "sha256": "f2cc4cd0b1b86209dd59ac5747f8d0dfaa6ae95b63757a028a5a8e3e666efc55"
+  },
+  "run_gates_summary": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/run-gates-summary.json",
+    "sha256": "064de3483fd9521f130ef6608d173c9b144edbb61d9cd739d79c507fbe775b6a"
+  },
+  "standard_governance_status": "fail",
+  "native_execution": "UNPROVEN_NOT_RUN",
+  "frozen_independent_validator_modified": false,
+  "Spec_Lock_or_evidence_resealed": false,
+  "post_review_new_contracts": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/new-contracts-final.json",
+    "sha256": "fe9cb2e4092850acc490c3ae1ac651b111f11ac51b9b69a31fccf490d2b220e6"
+  },
+  "independent_RESULT01_resolution": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-created-result-review-20260911/resolution.json",
+    "sha256": "71fde511fae8ba7daf25d0ad9cb6bf316159e0decf2181560ad8e4b3d6edc0d9"
+  },
+  "cost": "Two existing Astra medium workers supplied the creation/independent review/original-result drafts; root reviewed, integrated and validated. Billing data unavailable."
+}

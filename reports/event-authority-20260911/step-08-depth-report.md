@@ -1,6 +1,6 @@
 # Step 08 — live registered depth assessment
 
-Current supplement: `run.started` now has a root-reviewed complete normative 12-facet contract in [step-08-run-started-depth.json](step-08-run-started-depth.json), with [validation and limits](step-08-run-started-validation.md). This completes one of the original 39 contract-depth rows; the other 38 have not been closed by this supplement. Runtime execution, frozen-validator clearance, overall Step 8 and governance remain incomplete. The separately completed compaction contract is outside this 39-row wave.
+Current supplement: `run.started` and `restore_point.created` have root-reviewed family-specific contracts, with normative closure reopened by the newly identified shared generic EventRecord-index checkpoint prerequisite. See [run.started](step-08-run-started-depth.json) and [restore_point.created](step-08-restore-created-depth.json), with [creation validation and limits](step-08-restore-created-validation.md). This supplement closes no additional row. The earlier run-start completion report is dated lineage; its consumer/checkpoint assessment now also requires the exact shared physical checkpoint contract. Runtime execution, frozen-validator clearance, overall Steps 8–9 and governance remain incomplete. The separately completed compaction contract is outside this 39-row wave.
 
 ## Historical initial assessment (before DL-045 contract definitions)
 

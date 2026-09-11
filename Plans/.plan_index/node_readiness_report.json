@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14913,
+    "depends_on_edge_count": 14935,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17562,
-    "node_count": 6521,
+    "edge_count": 17584,
+    "node_count": 6527,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T19:43:28Z",
+  "generated_at_utc": "2026-09-11T20:00:13Z",
   "gui_related_units": {
-    "count": 3151,
+    "count": 3153,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3478,6 +3478,17 @@
           "heading_level": 3,
           "heading_line": 25349,
           "line": 25351,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-465",
+        "source_location": {
+          "heading": "ACD-465 — Restore-point created consumers",
+          "heading_level": 3,
+          "heading_line": 25460,
+          "line": 25462,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -25977,6 +25988,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-059",
+        "source_location": {
+          "heading": "RAP-059 — Restore-point created consumers",
+          "heading_level": 3,
+          "heading_line": 2876,
+          "line": 2878,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Remote_Access_System.md",
         "plan_unit_id": "RAS-001",
         "source_location": {
@@ -34685,10 +34707,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6521,
+  "plan_unit_count": 6527,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1977,
+      "high": 1983,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -37382,8 +37404,11 @@
       "restore_manifest_or_custody_drift": 1,
       "restore_outcome_enum_drift": 1,
       "restore_outcome_or_restart_drift": 1,
+      "restore_point_created_completion_authority": 3,
       "restore_point_ghost_command_or_misleading_undo": 1,
       "restore_point_ghost_or_composite_command": 1,
+      "restore_point_original_result_authority": 2,
+      "restore_point_terminal_retention_authority": 1,
       "restriction_laundering": 2,
       "result_trace_contract": 1,
       "result_visibility_loss": 1,
@@ -38436,7 +38461,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6330,
+      "accepted": 6336,
       "retired": 182,
       "superseded": 9
     },
@@ -38503,7 +38528,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5178,
+      "requirement": 5184,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38591,7 +38616,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "6fd73e9787d7e8fc0c676cb1414836e5ed74dae8a2bdcf606f33cf3030c095cb",
+        "expected": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38659,7 +38684,7 @@
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/browser-workspace-created-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "detail": "[Errno 2] No such file or directory: '/home/sittingmongoose/pm-worktrees/event-authority-restore-created-depth-20260911/Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
         "error": "event_authority_currentness_audit_unavailable"
       },
       {

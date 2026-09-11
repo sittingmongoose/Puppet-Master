@@ -2232,3 +2232,69 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+
+### SIR-044 - Original create-command outcome delegated custody
+
+```yaml
+plan_unit_id: SIR-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: For cmd.chat.create_restore_point, Shared Integration Runtime delegates custody of its
+  exact original CommandOutcomeRecord to the canonical SP-274 command-result value while retaining exclusive
+  semantic production and authentication authority. The resolver returns the same original outcome and
+  its separately typed owner-result join for app-root replay.
+gui_related: false
+gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
+  no visual presentation contract.
+split_recommended: false
+depends_on:
+- SP-274
+- CV-333
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only the actual original SIR operation authority can supply or advance its pending outcome; Storage
+  cannot synthesize an outcome from a caller, result, event or current topology.
+- Terminal outcome bytes, identity, schema and separately computed owner-result hash and references are
+  preserved in the same committed SP-274 publication and mandatory backup.
+- Historical resolution preserves the original operation, topology and command identity; passive replay
+  writes nothing and cannot create a global outcome writer.
+validation_surfaces:
+- Plans/restore_point_create_result.schema.json
+- Plans/restore_point_create_result_fixtures.json
+- Plans/restore_point_create_result_join_fixtures.json
+- Plans/restore_point_create_result_native_pairs.json
+- Plans/storage_value_registry.json
+risk_class: restore_point_original_result_authority
+reasoning_tier: high
+context_scope: restore_point_create_original_result
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: restore_point_create_result_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/UI_Command_Catalog.md#UCC-164
+- Plans/Contracts_V0.md#CV-333
+preserved_exact_tokens:
+- cmd.chat.create_restore_point
+- RP-AUTHORITY-INDEFINITE
+- CommandOutcomeRecord
+- pre_dispatch_rejection
+negative_constraints:
+- No new event admission, retention policy, global command architecture, launch-critical promotion, native
+  execution proof, readiness clearance or governance seal.
+- No guessed original outcome, hidden pre-dispatch writer, point resurrection, source visibility grant
+  or passive replay mutation.
+owner_hints:
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Contracts_V0.md
+```
+
+For exactly `cmd.chat.create_restore_point`, Storage SP-274 retains the ORIGINAL SIR-owned CommandOutcomeRecord as delegated app-root command-replay custody within the command-specific canonical value. SIR remains the sole semantic producer/owner; Storage cannot generate an outcome from a typed result, schema-valid caller body, event, receipt ref, current topology or defaults. Native creation authenticates the actual operation owner and current dispatch identity before admitting the initial record and its true terminal successor. Once terminal, preserve the exact original record and schema; no conversion to a newly observed topology or new operation is permitted. The delegated resolver exposes that same original record to CV-333 through the exact stored command_outcome_ref and validates its separately owned typed result/hash/ref join. A retained actual outcome is not a global outcome writer or a substitute for initial native acknowledgement/effect evidence. Pending updates require the original SIR authority; passive replay writes nothing. This narrowly supplies custody for the existing app-root original-owner-result obligation; it does not materialize a global CommandOutcome family or alter RP-DELIVERY-365D.

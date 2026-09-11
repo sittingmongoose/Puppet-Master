@@ -1,0 +1,314 @@
+{
+  "recipe_id": "pm.restore_point.immutable_capture_sha256.v1",
+  "fields": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "restore_point_id",
+    "source_thread_id",
+    "source_branch_id",
+    "source_message_id",
+    "context_provenance_refs",
+    "attachment_refs",
+    "citation_refs",
+    "safe_point_id",
+    "created_at_utc",
+    "redaction_profile"
+  ],
+  "base_preimage_utf8": "{\"attachment_refs\":[\"attachment:one\",\"attachment:two\"],\"citation_refs\":[],\"context_provenance_refs\":[\"context:é\",\"provenance:𐀀\"],\"created_at_utc\":\"2026-09-11T17:00:00Z\",\"project_id\":\"project-A\",\"redaction_profile\":\"no_secrets\",\"restore_point_id\":\"restore-A\",\"safe_point_id\":null,\"schema_id\":\"pm.storage_value.restore_point_record.v1\",\"schema_version\":\"1.0.0\",\"source_branch_id\":\"branch-A\",\"source_message_id\":\"message-A\",\"source_thread_id\":\"thread-A\"}",
+  "vectors": [
+    {
+      "id": "RSC-HASH-P-base",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+      "same_as_base": true
+    },
+    {
+      "id": "RSC-HASH-status",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "expired",
+        "hold_refs": []
+      },
+      "expected_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+      "same_as_base": true
+    },
+    {
+      "id": "RSC-HASH-holds",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": [
+          "hold:legal-A"
+        ]
+      },
+      "expected_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+      "same_as_base": true
+    },
+    {
+      "id": "RSC-HASH-selfhash",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+      "same_as_base": true
+    },
+    {
+      "id": "RSC-HASH-null-versus-value",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": "safe-A",
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "a3bd4f09de10cbf447e23f3d51c460a2ba7c07c5265f9cc8d89923dc7de053e8",
+      "same_as_base": false
+    },
+    {
+      "id": "RSC-HASH-array-order",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:two",
+          "attachment:one"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "e5cd613daa7a6e1cde196e09670694ddceb59086d88a761803c5fa482f105a92",
+      "same_as_base": false
+    },
+    {
+      "id": "RSC-HASH-capture-time",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00.000Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "df4c78a1c42e8fc4fa72d2a055e8c9b56b518f9cb91d9850e41346474d1f852f",
+      "same_as_base": false
+    },
+    {
+      "id": "RSC-HASH-source-message",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-B",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "f8a474d58db35e5c1b4a9d3c13462e5eb9bcf3cbe64e38af302df7c8941db895",
+      "same_as_base": false
+    },
+    {
+      "id": "RSC-HASH-unicode-normalization",
+      "record": {
+        "schema_id": "pm.storage_value.restore_point_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "source_thread_id": "thread-A",
+        "source_branch_id": "branch-A",
+        "source_message_id": "message-A",
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "citation_refs": [],
+        "safe_point_id": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "redaction_profile": "no_secrets",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "status": "available",
+        "hold_refs": []
+      },
+      "expected_sha256": "cc7ac29f367cb1d09e0fcc2b221eec5aabafc5e7b9adab4534f932bd97cace4f",
+      "same_as_base": false
+    },
+    {
+      "id": "RSC-HASH-object-order",
+      "record": {
+        "hold_refs": [],
+        "status": "available",
+        "record_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+        "redaction_profile": "no_secrets",
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "safe_point_id": null,
+        "citation_refs": [],
+        "attachment_refs": [
+          "attachment:one",
+          "attachment:two"
+        ],
+        "context_provenance_refs": [
+          "context:é",
+          "provenance:𐀀"
+        ],
+        "source_message_id": "message-A",
+        "source_branch_id": "branch-A",
+        "source_thread_id": "thread-A",
+        "restore_point_id": "restore-A",
+        "project_id": "project-A",
+        "schema_version": "1.0.0",
+        "schema_id": "pm.storage_value.restore_point_record.v1"
+      },
+      "expected_sha256": "9435d909af6360290677aab0173b882977755f2f0a9df5b05cb30633a08b1329",
+      "same_as_base": true
+    }
+  ],
+  "validation": "PASS on declared string/array/null subset; no runtime/storage claim"
+}

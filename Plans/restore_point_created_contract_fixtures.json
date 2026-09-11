@@ -1,0 +1,1782 @@
+{
+  "schema_id": "pm.restore_point_created_contract_fixtures.v1",
+  "schema_version": "1.0.0",
+  "event_type": "restore_point.created",
+  "family_id": "event-family-restore-point-created",
+  "family_revision": "2.0.0",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+  "source_retention_policy_ref": {
+    "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+    "policy_version": "1.0.0"
+  },
+  "schema_cases": [
+    {
+      "id": "RSC-CP-P01",
+      "kind": "schema",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-version",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "2.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-consumer",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.runtime_artifacts",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-emptyproject",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-application",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "app",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-secretprofile",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "raw",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-offset",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": -1,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-extra",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0",
+          "local_path": "/machine/path"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-epoch",
+      "kind": "schema",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": []
+      },
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-P-history",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": []
+            },
+            "retired_at_utc": "2026-09-11T17:00:01Z",
+            "successor_publication_id": "publication-current-A"
+          }
+        ]
+      },
+      "kind": "schema",
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-missing-retired-time",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": []
+            },
+            "successor_publication_id": "publication-current-A"
+          }
+        ]
+      },
+      "kind": "schema",
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-too-many-history",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": []
+            },
+            "retired_at_utc": "2026-09-11T17:00:01Z",
+            "successor_publication_id": "publication-current-A"
+          },
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": []
+            },
+            "retired_at_utc": "2026-09-11T17:00:01Z",
+            "successor_publication_id": "publication-current-A"
+          },
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": []
+            },
+            "retired_at_utc": "2026-09-11T17:00:01Z",
+            "successor_publication_id": "publication-current-A"
+          }
+        ]
+      },
+      "kind": "schema",
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CP-N-nested-history",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_created",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_created",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 1,
+          "recovery_epoch": 0,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "last_sequence_id": 7,
+          "last_event_id": "created-A",
+          "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "storage-A",
+        "full_index_checkpoint_ref": "index-publication-A",
+        "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "published_at_utc": "2026-09-11T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [
+          {
+            "checkpoint": {
+              "schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+              "schema_version": "1.0.0",
+              "project_id": "project-A",
+              "scope_partition": "project~cHJvamVjdC1B",
+              "consumer_id": "consumer.chat.restore_point_created",
+              "consumer_version": "1.0.0",
+              "projector_id": "projector.chat.restore_point_created",
+              "projector_version": "1.0.0",
+              "cursor": {
+                "manifest_generation": 1,
+                "recovery_epoch": 0,
+                "segment_generation": 1,
+                "segment_name": "seg-000001-00000000000000000000.active",
+                "byte_offset": 512,
+                "last_sequence_id": 7,
+                "last_event_id": "created-A",
+                "survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "projector_schema_version": "1.0.0"
+              },
+              "redaction_profile": "no_secrets",
+              "storage_instance_id": "storage-A",
+              "full_index_checkpoint_ref": "index-publication-A",
+              "index_selection_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "published_at_utc": "2026-09-10T17:00:00Z",
+              "publication_id": "publication-old-A",
+              "hold_refs": [],
+              "retired_generations": []
+            },
+            "retired_at_utc": "2026-09-11T17:00:01Z",
+            "successor_publication_id": "publication-current-A"
+          }
+        ]
+      },
+      "kind": "schema",
+      "value_family": "restore_point_created_checkpoint"
+    },
+    {
+      "id": "RSC-CC-P01",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "pending_append",
+        "append_receipt": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": null,
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-P02",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-missing_split",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-fake_sequence",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          },
+          "sequence_id": 7
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-pending_marked",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "pending_append",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-unsynced",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "buffered",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-missing_request",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "created-A",
+          "sequence_id": 7,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000000.active",
+          "byte_offset": 512,
+          "commit_group_id": "group-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1024,
+          "durability_state": "synced",
+          "manifest_generation": 1,
+          "acknowledged_at_utc": "2026-09-11T17:00:01Z"
+        },
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": "2026-09-11T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.immutable_capture_sha256.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-missing_hash_recipe",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "pending_append",
+        "append_receipt": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": null,
+        "redaction_profile": "no_secrets"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    },
+    {
+      "id": "RSC-CC-N-wrong_hash_recipe",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "restore_point_id": "restore-A",
+        "record_ref": "rp:project-A:restore-A",
+        "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "command_request": {
+          "command_id": "cmd.chat.create_restore_point",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "source_message_id": "message-A",
+          "idempotency_key": "create-A"
+        },
+        "command_request_sha256": "52b2ddd32d5728861c3991b80c88f3cd06da868a4f3d10874fc19265aae05f44",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "created-A",
+          "event_type": "restore_point.created",
+          "project_id": "project-A",
+          "thread_id": "thread-A",
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T17:00:00Z",
+          "observed_at_utc": "2026-09-11T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "create-A",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "restore-A",
+            "project_id": "project-A",
+            "source_thread_ref": "thread-ref-A",
+            "source_branch_ref": "branch-ref-A",
+            "message_boundary_ref": "message-ref-A",
+            "record_ref": "rp:project-A:restore-A",
+            "record_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "context_refs": [
+              "ctx-ref-A"
+            ],
+            "provenance_refs": [
+              "prov-ref-A"
+            ],
+            "attachment_refs": [],
+            "citation_refs": [],
+            "status": "available",
+            "created_at_utc": "2026-09-11T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "efc89969905a2dfcaab952b698108facfd09cc8fe463ff16d37bc30fc086e509",
+        "state": "pending_append",
+        "append_receipt": null,
+        "created_at_utc": "2026-09-11T17:00:00Z",
+        "committed_at_utc": null,
+        "redaction_profile": "no_secrets",
+        "record_hash_recipe_id": "pm.restore_point.unknown.v1"
+      },
+      "kind": "schema",
+      "value_family": "restore_point_creation_commit"
+    }
+  ],
+  "semantic_cases": [
+    {
+      "id": "RSC-SEM-01",
+      "topic": "identity",
+      "positive_setup": "current project/record/source boundary/hash and immutable durable available record all agree",
+      "negative_setup": "different envelope project, wrong record_ref/hash, unresolved source identity, or different source branch",
+      "positive_oracle": "one first append then checkpoint after source lookup durability",
+      "negative_oracle": "zero append for producer refusal; replay quarantine, no checkpoint movement",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-02",
+      "topic": "scope_cursor",
+      "positive_setup": "scope_partition equals base64url(project_id); segment/header/manifest/epoch/prefix/sequence/event all match committed source",
+      "negative_setup": "schema-valid checkpoint with other project, stale epoch, wrong header offset, or wrong survivor-prefix hash",
+      "positive_oracle": "publish one snapshot-certified logical view",
+      "negative_oracle": "reject checkpoint and require verified rebuild; never trust value shape alone",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-03",
+      "topic": "refs",
+      "positive_setup": "context/provenance category refs from frozen capture union matches canonical unique context_provenance_refs; attachment/citation refs match",
+      "negative_setup": "missing referenced material or incompatible frozen inventory",
+      "positive_oracle": "read retained canonical record and refs only",
+      "negative_oracle": "unavailable/refused; do not synthesize content or mislabel missing bytes corruption",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-04",
+      "topic": "safe_point",
+      "positive_setup": "optional safe_point_id absent or equal nonempty lineage ref",
+      "negative_setup": "safe_point_id used as identity or triggers file restore",
+      "positive_oracle": "same conversation-only creation and no file effects",
+      "negative_oracle": "reject illegal consumer side effect; no apply/revert/restore dispatch",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-05",
+      "topic": "first_create",
+      "positive_setup": "preflight and refs durable, immutable record committed, first event append committed",
+      "negative_setup": "permission/schema/family/writer failure before admission",
+      "positive_oracle": "one record and event, existing result returned",
+      "negative_oracle": "zero record, append, checkpoint, branch or filesystem mutation",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-06",
+      "topic": "equal_retry",
+      "positive_setup": "same original identity/semantic capture with fully proven dedupe",
+      "negative_setup": "same identity with changed semantic capture",
+      "positive_oracle": "return original record/event with zero new append",
+      "negative_oracle": "idempotency_conflict; original bytes and result unchanged",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-07",
+      "topic": "record_first_crash",
+      "positive_setup": "crash after immutable record durability before append, then exact create retry under writer lock",
+      "negative_setup": "retry cannot establish original capture/ref identity or dedupe tail proof",
+      "positive_oracle": "reuse pending original identity/time/bytes and append at most once",
+      "negative_oracle": "remain in-progress/unavailable; no guessed record, overwrite, or checkpoint",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-08",
+      "topic": "append_ack_crash",
+      "positive_setup": "crash after durable append before reply or checkpoint",
+      "negative_setup": "second event_id or second record allocated on retry",
+      "positive_oracle": "recover original durable event/result; no duplicate",
+      "negative_oracle": "hard failure even if payload is individually schema-valid",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-09",
+      "topic": "projection_atomicity",
+      "positive_setup": "event/index already durable, stable record/event join verified, checkpoint transaction commits",
+      "negative_setup": "failure before checkpoint commit or partially durable generic event lookup",
+      "positive_oracle": "publish view and checkpoint through same committed snapshot",
+      "negative_oracle": "old checkpoint retained and no new visible coverage",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-10",
+      "topic": "checkpoint_order",
+      "positive_setup": "read all records in canonical cursor order and certify only validated contiguous survivor prefix",
+      "negative_setup": "mtime ordering, skipped unknown event, unsupported valid future schema, or hole",
+      "positive_oracle": "monotonic cursor in same manifest/epoch",
+      "negative_oracle": "stop before offending record; no advance across hole/future value",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-11",
+      "topic": "creation_after_terminal",
+      "positive_setup": "created event replay after canonical expired/deleted/corrupt state with verified source evidence",
+      "negative_setup": "replayed available payload overwrites terminal state or clears holds",
+      "positive_oracle": "historical creation observation only; current unavailable status remains",
+      "negative_oracle": "zero canonical mutation, branch, hold clearing, artifact event or filesystem action",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-12",
+      "topic": "source_deleted",
+      "positive_setup": "source logically deleted but complete frozen boundary retained under holds",
+      "negative_setup": "source-required bytes already purged",
+      "positive_oracle": "existing branch preflight may branch new thread while source remains hidden",
+      "negative_oracle": "source_deleted_content_unavailable; zero new thread/branch and no reconstruction",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-13",
+      "topic": "retention",
+      "positive_setup": "owner-proven reference_release plus7776000 inclusive with no overriding refs",
+      "negative_setup": "age from created_at, missing release proof, legal/branch/application/backup/recovery/maintenance hold",
+      "positive_oracle": "existing lifecycle owner alone may expire eligible record, hash summary retained",
+      "negative_oracle": "creation projector never expires/deletes/clears hold; no new policy",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-14",
+      "topic": "cap",
+      "positive_setup": "cap2048 pressure with at least one owner-proven oldest eligible record",
+      "negative_setup": "cap pressure while every candidate is held/ineligible",
+      "positive_oracle": "only existing lifecycle owner chooses oldest eligible",
+      "negative_oracle": "no forced release/deletion or artificial2048 schema ceiling",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-15",
+      "topic": "recovery",
+      "positive_setup": "checkpoint missing but verified retained seglog/index and canonical record available",
+      "negative_setup": "canonical rp bytes absent while event/artifact still exists",
+      "positive_oracle": "rebuild only checkpoint; canonical backup recovery remains independent",
+      "negative_oracle": "do not recreate rp from payload/artifact; unavailable and backup-owned recovery",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-16",
+      "topic": "artifact",
+      "positive_setup": "passive Runtime Artifacts reader consumes verified rp identity/current status",
+      "negative_setup": "reader emits runtime_artifact.restore_point or other semantic event during replay",
+      "positive_oracle": "ref-only passive view, no event admission",
+      "negative_oracle": "hard failure; held sibling remains separately gated",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-17",
+      "topic": "withdrawal",
+      "positive_setup": "reader version supported and projection family admitted with current registry/schema",
+      "negative_setup": "missing registration, unsupported binding version, or unrecognized alias",
+      "positive_oracle": "continue exact supported read binding",
+      "negative_oracle": "withdraw affected projection currentness, preserve history/source bytes and stop before future value",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-18",
+      "topic": "compatibility",
+      "positive_setup": "registered legacy EventRecord normalized projector_replay_only and rp alias resolved by migration coordinator",
+      "negative_setup": "ordinary writer uses record.v1 alias, legacy reappend, ambiguous alias",
+      "positive_oracle": "read-only normalization; owned checkpoint may rebuild",
+      "negative_oracle": "no append/canonical write/lazy migration or checkpoint advance",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-19",
+      "topic": "redaction",
+      "positive_setup": "nonsecret refs/hash-only canonical value and event pass registered reject_unhandled_secrets policy",
+      "negative_setup": "raw file body, credentials, ephemeral stream state, queue bytes or unhandled secret",
+      "positive_oracle": "persist references only",
+      "negative_oracle": "refuse/quarantine without append/checkpoint, never invent redaction transform",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-SEM-20",
+      "topic": "read_race",
+      "positive_setup": "reader captures rp/event index/checkpoint in one redb snapshot then action repeats current owner preflight",
+      "negative_setup": "view cached available before concurrent deletion or permission/hold change",
+      "positive_oracle": "current source visibility/status governs presentation and action",
+      "negative_oracle": "cached creation checkpoint never authorizes mutation",
+      "execution": "NOT_RUN_RUNTIME; normative proposal"
+    },
+    {
+      "id": "RSC-V2-01",
+      "positive_setup": "barrier1 commits rp+pending companion with context_refs=[ctx-A],provenance_refs=[prov-B], then process crashes before append",
+      "negative_setup": "only rp merged refs exist; companion omitted or partial",
+      "positive_oracle": "restart uses saved distinct arrays and every frozen envelope field; one append and original capture, no live recapture",
+      "negative_oracle": "reject incomplete custody protocol; ordinary crash cannot be declared handled by an unavailable fallback",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V2-02",
+      "positive_setup": "synced matching event exists; companion remains pending after lost marker transaction",
+      "negative_setup": "committed marker exists but matching event is absent or has different digest",
+      "positive_oracle": "owner recovery verifies original source/dedupe and CAS commits marker; zero append",
+      "negative_oracle": "no success/branch/artifact/currentness publication; marker alone is not proof",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V2-03",
+      "positive_setup": "rp.available with committed companion and matching synced source all in current snapshot",
+      "negative_setup": "rp.available with pending companion, including legacy reader path ignoring companion",
+      "positive_oracle": "creation completed observation allowed; branch still revalidates current state",
+      "negative_oracle": "in-progress/unavailable; all reader paths disabled for completion, no bypass",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V2-04",
+      "positive_setup": "one rp and one companion for each of2048 distinct project restore-point IDs",
+      "negative_setup": "count4096 physical rows as4096 user points or purge pending companion independently",
+      "positive_oracle": "logical point count2048; same source release/holds/oldest eligible selection",
+      "negative_oracle": "reject changed cap accounting and independent custody purge",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V2-05",
+      "positive_setup": "derived checkpoint generations obey projection policy and point/companion obey exact90-day release policy",
+      "negative_setup": "checkpoint assigned restore90 policy or companion given new independent release clock",
+      "positive_oracle": "derived eviction rebuilds only checkpoint; unchanged source TTL/holds",
+      "negative_oracle": "policy mismatch fails static contract review",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V3-01",
+      "positive_setup": "Supported pre-introduction rp with genuine durable matching created event, owner source-generation/custody proof, retained boundary; no companion and no original command request",
+      "negative_setup": "Same rp but no genuine completion event or wrong source/project/hash",
+      "positive_oracle": "Passive history and existing branch preflight remain available; zero companion mint, zero reconstructed command, zero append",
+      "negative_oracle": "Unavailable/recovery; do not treat bare rp.available as committed",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V3-02",
+      "positive_setup": "Legacy point validates completed creation but lacks enough original fields for companion backfill",
+      "negative_setup": "Coordinator guesses original idempotency/correlation/request to fill companion",
+      "positive_oracle": "Historical reader remains valid; backfill not performed",
+      "negative_oracle": "Reject guessed canonical custody; no mutation/append",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V3-03",
+      "positive_setup": "Native point has missing/corrupt companion, another unrelated point has valid completion",
+      "negative_setup": "Native point attempts legacy fallback using absent companion or old-looking timestamp/ID",
+      "positive_oracle": "Affected native point fenced; unrelated point and read-only diagnostics unaffected",
+      "negative_oracle": "No legacy bypass; zero dependent branch/delete/hold release",
+      "execution": "NOT_RUN_RUNTIME"
+    }
+  ],
+  "runtime_execution": "NOT_RUN",
+  "authority": "Plans/Decision_Log.md#DL-045",
+  "validation_scope": "Schema-shape cases were checked in the external draft; semantic cases are normative acceptance obligations, not native execution evidence.",
+  "v4_additional_semantic_pairs": [
+    {
+      "id": "RSC-V4-terminal-retention",
+      "positive": "Lawfully expired native point and companion removed together; surviving created event matches retained summary and durable complete owner disposition; current index/source proof permits terminal-only checkpoint advance.",
+      "negative": "Same missing rows without complete owner disposition, or disposition does not cover companion removal; preserve cursor and affected-record recovery fence.",
+      "oracle": "No rp/companion reconstruction, live availability, action, event, hold release or source resurrection in either case.",
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "RSC-V4-immutable-hash",
+      "positive": "Object-key reordering, lifecycle transition and hold-list update preserve immutable-capture SHA-256; native marker and exact capture recomputation match.",
+      "negative": "Changed source ID, array order, timestamp spelling or safe-point value changes SHA-256; absent/wrong native recipe discriminator rejects.",
+      "oracle": "Hash validation does not replace lifecycle/hold permission checks.",
+      "runtime": "NOT_RUN"
+    },
+    {
+      "id": "RSC-V4-historical-hash-adoption",
+      "positive": "Historical stored digest remains unchanged; admitted historical hash/custody proof validates without a new companion; optional native backfill only when complete data recomputes to same existing digest.",
+      "negative": "Unknown original hash semantics or differing recomputation cannot be repaired by overwriting record/event digest or assigning new recipe marker.",
+      "oracle": "No genuine historical hash rewrite and no inference of native/historical mode from timestamp or missing companion.",
+      "runtime": "NOT_RUN"
+    }
+  ],
+  "immutable_capture_hash_vectors_ref": "Plans/restore_point_created_hash_vectors.json",
+  "terminal_retention_oracle_cases_ref": "Plans/restore_point_created_terminal_retention_fixtures.json",
+  "v5_joined_value_examples_ref": "Plans/restore_point_created_joined_value_fixtures.json",
+  "v5_checkpoint_generation_cases_ref": "Plans/restore_point_created_generation_fixtures.json",
+  "v5_native_semantic_pairs": [
+    {
+      "id": "RSC-V5-retirement-atomicity",
+      "positive_setup": "A fully eligible point and its exact required companions are present; inject a crash immediately before and immediately after the one redb summary/removal commit.",
+      "positive_oracle": "Before commit all original keys remain and no summary exists; after commit the complete summary exists and all listed keys are absent. Retry returns the same retirement identity without another semantic effect.",
+      "negative_setup": "Inject a partial key removal, summary with a remaining conflicting point, or missing required native companion.",
+      "negative_oracle": "Preserve affected-record integrity/recovery fencing; do not infer retirement, reconstruct a point, publish an action or advance its traversal checkpoint.",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V5-hold-and-release-race",
+      "positive_setup": "Complete owner release, all eleven class evaluations, inclusive 7776000-second age and exact eligible selection remain unchanged through commit.",
+      "positive_oracle": "One summary/removal transaction commits the verified selection and embedded content-free owner facts.",
+      "negative_setup": "A new protecting hold, changed release inventory, owner revision or source generation appears after selection and before CAS.",
+      "negative_oracle": "Abort the complete retirement transaction; retain all canonical custody and existing checkpoint; clear no hold.",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V5-bounded-custody",
+      "positive_setup": "Exact admitted same-store point, required creation companion and any separately admitted required deletion companion match the closed unique retired set.",
+      "positive_oracle": "Only those one-to-three canonical keys are removed with the summary in one transaction; unrelated applications/source events remain under their owners.",
+      "negative_setup": "A required key is omitted, an unregistered fourth custody family is inserted, or a target belongs to another transaction store.",
+      "negative_oracle": "Retirement remains unavailable with zero partial removal; no best-effort cross-store cleanup or invented optional companion.",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V5-summary-recovery",
+      "positive_setup": "The mandatory backup boundary carries the canonical retained summary and the current verified source/survivor authority.",
+      "positive_oracle": "Recovery preserves the terminal summary result and cannot reactivate an older pre-retirement point.",
+      "negative_setup": "A candidate backup lacks required summary custody or an unexplained missing point is paired only with a lifecycle event.",
+      "negative_oracle": "Disclose incomplete recovery and preserve affected-point fencing; do not choose the incomplete candidate as complete authority or fabricate a summary.",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V5-cursor-generation",
+      "positive_setup": "Advance one validated projection generation through 100 source records with repeated full current-source/index proof.",
+      "positive_oracle": "Publication identity, generation birth and prior history stay fixed; the cursor advances atomically without consuming another generation slot.",
+      "negative_setup": "Each cursor update mints a new generation, archives the old cursor, slides a birth/retirement time or skips current source proof.",
+      "negative_oracle": "Reject the invalid checkpoint publication and preserve prior durable coverage; no per-event retention-slot exhaustion is introduced.",
+      "execution": "NOT_RUN_RUNTIME"
+    },
+    {
+      "id": "RSC-V5-real-generation-retirement",
+      "positive_setup": "A verified rebuild publishes a distinct generation with a lawful slot and preserves final predecessor cursor and existing older retirement facts.",
+      "positive_oracle": "One transaction archives the exact prior core with retirement time equal to the new birth and successor equal to the new generation ID.",
+      "negative_setup": "Transition supplies stale predecessor bytes, self-successor, inconsistent time, protected-history eviction or an archived cursor as current coverage.",
+      "negative_oracle": "Reject publication without changing prior authority, retirement anchors or holds; disclose unavailable currentness where no lawful slot exists.",
+      "execution": "NOT_RUN_RUNTIME"
+    }
+  ]
+}

@@ -1,0 +1,711 @@
+{
+  "assessment_id": "EA-STEP08-RESTORE-CREATED-CONTRACT",
+  "assessed_at_utc": "2026-09-11T20:03:06.198795+00:00",
+  "base_commit": "f359b6aed30dc38433dec1e3929c09288f8155ca",
+  "event_type": "restore_point.created",
+  "family_id": "event-family-restore-point-created",
+  "family_revision": "2.0.0",
+  "registry_revision": "2026-09-11.2",
+  "normative_contract_complete": false,
+  "family_specific_contract_defined": true,
+  "open_shared_prerequisite": "Exact admitted generic EventRecord-index checkpoint physical key/value/publication proof; SP-278 external definition in progress.",
+  "runtime_execution": "UNPROVEN_NOT_RUN",
+  "independent_validator_pass": false,
+  "seal_prerequisites_met": false,
+  "status_meaning": "PASS supplies this individual normative contract facet. It is not native execution, frozen-validator clearance, implementation readiness or governance certification.",
+  "new_plan_units": [
+    "SP-281",
+    "SP-269",
+    "SP-274",
+    "ACD-465",
+    "RAP-059",
+    "SIR-044"
+  ],
+  "cells": {
+    "membership_version": {
+      "status": "PASS",
+      "assessment": "Existing event/family/payload/envelope versions remain exact and unchanged.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+          "purpose": "Unchanged project-only family2.0 and closed inline payload1.0, identity and retention binding.",
+          "json_pointer": "#/families/24"
+        },
+        {
+          "path": "Plans/event_record.schema.json",
+          "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "purpose": "Unchanged closed current/legacy envelope contract.",
+          "json_pointer": "#"
+        }
+      ]
+    },
+    "owner_doc": {
+      "status": "PASS",
+      "assessment": "Chat retains creation semantics; Storage owns durable custody/currentness; explicit passive readers and delegated SIR outcome custody are bounded.",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f",
+          "purpose": "Bounded technical-definition authority, without product/retention invention.",
+          "line_start": 2978,
+          "line_end": 2978
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Chat owns original capture, canonical command semantics and native/historical consumers.",
+          "line_start": 25387,
+          "line_end": 25387
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Exact new projector, canonical creation companion and checkpoint definitions.",
+          "line_start": 19620,
+          "line_end": 19620
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "41ba1415a3dc399589d19cdf7fd511d3e5a00afce1b54e903b71c5634db31013",
+          "purpose": "Runtime Artifacts passive exact point/summary reader, sharing currentness with Chat.",
+          "line_start": 2864,
+          "line_end": 2864
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "sha256": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339",
+          "purpose": "No conversation-created FileSafe consumer or automatic filesystem restore.",
+          "line_start": 14920,
+          "line_end": 14920
+        },
+        {
+          "path": "Plans/Shared_Integration_Runtime.md",
+          "sha256": "ac4ef5acd01b4cd2914b766c2665b50730a227413236b96b780b1afd16544777",
+          "purpose": "Actual SIR outcome custody is delegated narrowly; no synthetic outcome or global writer.",
+          "line_start": 2237,
+          "line_end": 2237
+        }
+      ]
+    },
+    "producer": {
+      "status": "PASS",
+      "assessment": "Exact immutable capture and original input with point/intent/result pending commit, real synced append, and atomic terminal commit before success.",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Three ordered durability barriers; frozen capture cannot be recomputed on retry.",
+          "line_start": 25414,
+          "line_end": 25414
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Exact13-field immutable capture hash recipe, explicit introduction and genuine history preservation.",
+          "line_start": 25444,
+          "line_end": 25444
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Closed cross-record status, key, request, receipt and hash publication guards.",
+          "line_start": 19957,
+          "line_end": 19957
+        }
+      ]
+    },
+    "closed_payload_schema": {
+      "status": "PASS",
+      "assessment": "Existing closed EventRecord/payload preserved; all new non-event physical/result values have real closed schemas.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+          "purpose": "Unchanged project-only family2.0 and closed inline payload1.0, identity and retention binding.",
+          "json_pointer": "#/families/24"
+        },
+        {
+          "path": "Plans/event_record.schema.json",
+          "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "purpose": "Unchanged closed current/legacy envelope contract.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/restore_point_created_contracts.schema.json",
+          "sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821",
+          "purpose": "Real closed schema pointers for three exact new physical values.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/restore_point_create_result.schema.json",
+          "sha256": "d34bb9e3d46ee806dfcf61d41abe1410f77882f1d195ccb394d347ce835c3c82",
+          "purpose": "Closed typed result/custody schema preserving original shared outcome and UI response definitions.",
+          "json_pointer": "#"
+        }
+      ]
+    },
+    "scope_identity": {
+      "status": "PASS",
+      "assessment": "Project, reversible partition, point/ref, storage instance, original command identity and actual shared topology/outcome joins are explicit.",
+      "evidence": [
+        {
+          "path": "Plans/event_family_registry.json",
+          "sha256": "e0a368e89e89921726849f4724199c11b6f1a9b3a9e7d2bfb80b8ad0ccdbc623",
+          "purpose": "Unchanged project-only family2.0 and closed inline payload1.0, identity and retention binding.",
+          "json_pointer": "#/families/24"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Exact new projector, canonical creation companion and checkpoint definitions.",
+          "line_start": 19620,
+          "line_end": 19620
+        },
+        {
+          "path": "Plans/restore_point_created_contracts.schema.json",
+          "sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821",
+          "purpose": "Real closed schema pointers for three exact new physical values.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Closed cross-record status, key, request, receipt and hash publication guards.",
+          "line_start": 19957,
+          "line_end": 19957
+        }
+      ]
+    },
+    "replay_idempotency": {
+      "status": "PASS",
+      "assessment": "Native retry preserves the same original request/result; original command evidence survives lawful point retirement and passive replay has no owner effects.",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Three ordered durability barriers; frozen capture cannot be recomputed on retry.",
+          "line_start": 25414,
+          "line_end": 25414
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/Shared_Integration_Runtime.md",
+          "sha256": "ac4ef5acd01b4cd2914b766c2665b50730a227413236b96b780b1afd16544777",
+          "purpose": "Actual SIR outcome custody is delegated narrowly; no synthetic outcome or global writer.",
+          "line_start": 2237,
+          "line_end": 2237
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Historic original creation result survives lawful point retirement without granting fresh availability/action rights.",
+          "line_start": 25530,
+          "line_end": 25530
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Verified current source/index snapshot and atomic owned checkpoint; passive consumers cannot publish canonical effects.",
+          "line_start": 19642,
+          "line_end": 19642
+        }
+      ]
+    },
+    "retention": {
+      "status": "PASS",
+      "assessment": "RP90 remains release/hold/oldest-eligible based; derived history follows existing3GEN; original command result follows the existing app-root duty. No policy object changes.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Different existing source/custody and derived-checkpoint policies with exact release, hold and cap obligations.",
+          "line_start": 19652,
+          "line_end": 19652
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "New content-free final retain_hash_summary residue and exact canonical owner proof.",
+          "line_start": 19768,
+          "line_end": 19768
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "One redb transaction publishes terminal summary and removes exactly eligible named custody, without changing lifecycle or holds.",
+          "line_start": 19784,
+          "line_end": 19784
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Ordinary cursor advances preserve generation identity; actual generation replacement records original retirement anchor atomically.",
+          "line_start": 19677,
+          "line_end": 19677
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        }
+      ]
+    },
+    "redaction_custody": {
+      "status": "PASS",
+      "assessment": "Content-free residue and result evidence, mandatory backup, owner authentication, access checks and affected-record fences prevent source/authority reconstruction.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "New content-free final retain_hash_summary residue and exact canonical owner proof.",
+          "line_start": 19768,
+          "line_end": 19768
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/Shared_Integration_Runtime.md",
+          "sha256": "ac4ef5acd01b4cd2914b766c2665b50730a227413236b96b780b1afd16544777",
+          "purpose": "Actual SIR outcome custody is delegated narrowly; no synthetic outcome or global writer.",
+          "line_start": 2237,
+          "line_end": 2237
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Chat owns original capture, canonical command semantics and native/historical consumers.",
+          "line_start": 25387,
+          "line_end": 25387
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "41ba1415a3dc399589d19cdf7fd511d3e5a00afce1b54e903b71c5634db31013",
+          "purpose": "Runtime Artifacts passive exact point/summary reader, sharing currentness with Chat.",
+          "line_start": 2864,
+          "line_end": 2864
+        },
+        {
+          "path": "Plans/FileSafe.md",
+          "sha256": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339",
+          "purpose": "No conversation-created FileSafe consumer or automatic filesystem restore.",
+          "line_start": 14920,
+          "line_end": 14920
+        }
+      ]
+    },
+    "transitions": {
+      "status": "PASS",
+      "assessment": "Explicit durability barriers, pending/terminal outcomes, atomic generation transitions and summary/removal commit; lifecycle and source visibility remain separately owned.",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Three ordered durability barriers; frozen capture cannot be recomputed on retry.",
+          "line_start": 25414,
+          "line_end": 25414
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Closed cross-record status, key, request, receipt and hash publication guards.",
+          "line_start": 19957,
+          "line_end": 19957
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "One redb transaction publishes terminal summary and removes exactly eligible named custody, without changing lifecycle or holds.",
+          "line_start": 19784,
+          "line_end": 19784
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Verified current source/index snapshot and atomic owned checkpoint; passive consumers cannot publish canonical effects.",
+          "line_start": 19642,
+          "line_end": 19642
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Ordinary cursor advances preserve generation identity; actual generation replacement records original retirement anchor atomically.",
+          "line_start": 19677,
+          "line_end": 19677
+        }
+      ]
+    },
+    "consumers_checkpoints": {
+      "status": "PARTIAL",
+      "assessment": "Exact shared checkpoint and native/historical/terminal reader predicates; complete current-generation coverage and typed result joins required. Shared generic index checkpoint physical custody is still undefined; an unresolved reference cannot establish a working positive read path.",
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Exact new projector, canonical creation companion and checkpoint definitions.",
+          "line_start": 19620,
+          "line_end": 19620
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Verified current source/index snapshot and atomic owned checkpoint; passive consumers cannot publish canonical effects.",
+          "line_start": 19642,
+          "line_end": 19642
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Ordinary cursor advances preserve generation identity; actual generation replacement records original retirement anchor atomically.",
+          "line_start": 19677,
+          "line_end": 19677
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Independent passive summary result after lawful custody removal; never current completion or command replay.",
+          "line_start": 19691,
+          "line_end": 19691
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "sha256": "41ba1415a3dc399589d19cdf7fd511d3e5a00afce1b54e903b71c5634db31013",
+          "purpose": "Runtime Artifacts passive exact point/summary reader, sharing currentness with Chat.",
+          "line_start": 2864,
+          "line_end": 2864
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee",
+          "purpose": "New exact physical family, schema pointer, encoding, recovery, retention and owner binding.",
+          "json_pointer": "#/families/90"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee",
+          "purpose": "New exact physical family, schema pointer, encoding, recovery, retention and owner binding.",
+          "json_pointer": "#/families/91"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee",
+          "purpose": "New exact physical family, schema pointer, encoding, recovery, retention and owner binding.",
+          "json_pointer": "#/families/92"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "sha256": "213f5116acb623f0db6e44090439b70bd9e90ebd73695fbf398b3c7f510f65ee",
+          "purpose": "New exact physical family, schema pointer, encoding, recovery, retention and owner binding.",
+          "json_pointer": "#/families/93"
+        }
+      ]
+    },
+    "compatibility_withdrawal": {
+      "status": "PASS",
+      "assessment": "True pre-introduction reads preserve original history; unsupported/withdrawn bindings fence coverage, with no guessed backfill, point resurrection or rewritten payload.",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Genuine supported historical completion has a separate proof; missing native custody is not historical.",
+          "line_start": 25424,
+          "line_end": 25424
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "sha256": "89eb140b2ed704c7e5733438fd216ff5594967366837f2e0323175f4c9b5cfdd",
+          "purpose": "Exact13-field immutable capture hash recipe, explicit introduction and genuine history preservation.",
+          "line_start": 25444,
+          "line_end": 25444
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Different existing source/custody and derived-checkpoint policies with exact release, hold and cap obligations.",
+          "line_start": 19652,
+          "line_end": 19652
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "SP274 separately retains original request, typed result, original shared outcome/response and receipt for app-root replay.",
+          "line_start": 19856,
+          "line_end": 19856
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "sha256": "7d1d0bb2f109eb645d674e7848036caf8fc70e5c1ec095b730787e8ac16f5739",
+          "purpose": "Independent passive summary result after lawful custody removal; never current completion or command replay.",
+          "line_start": 19691,
+          "line_end": 19691
+        }
+      ]
+    },
+    "positive_negative_oracles": {
+      "status": "PASS",
+      "assessment": "138 focused static shape/hash/generation/summary/join checks executed;53 paired native obligations remain explicitly NOT_RUN.",
+      "evidence": [
+        {
+          "path": "Plans/restore_point_created_contract_fixtures.json",
+          "sha256": "f554d0d8ba3b804a5530a72c0b81077f92cb097a2d58c13a60fbdf20ac896412",
+          "purpose": "22 shape cases and37 unexecuted native pairs with referenced concrete join/hash/generation/summary fixtures.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/restore_point_created_joined_value_fixtures.json",
+          "sha256": "281abbb390fe5cc0e9e1dfa4e56f1c69d30b8fffcb0fc1f0de6bcc69cfe230fa",
+          "purpose": "Three concrete positive branches and27 negative typed value joins.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/restore_point_create_result_join_fixtures.json",
+          "sha256": "f69b2d52c6c462340efb032b804a341dfa3fa108bf74e8d66631b5220eab61eb",
+          "purpose": "Seven positive original-result states/boundaries and32 schema-valid cross-record negative cases.",
+          "json_pointer": "#"
+        },
+        {
+          "path": "Plans/restore_point_create_result_native_pairs.json",
+          "sha256": "0cd0dfd8c55bbc4b4f868a72301e820104e7bd80ac2b416394102049d49ee771",
+          "purpose": "16 additional native result-custody test pairs, explicitly NOT_RUN.",
+          "json_pointer": "#"
+        }
+      ]
+    }
+  },
+  "scope": {
+    "event_membership_changed": false,
+    "registered_event_families_preserved": 41,
+    "physical_rows_before": 90,
+    "physical_rows_after": 94,
+    "physical_rows_added": 4,
+    "prior_physical_rows_preserved": true,
+    "all 24_retention_policy_objects_preserved": true,
+    "critical_mvp_arrays_changed": false,
+    "depth_wave_size": 39,
+    "family_specific_contracts_defined": [
+      "run.started",
+      "restore_point.created"
+    ],
+    "normative_closure_reopened_for_shared_prerequisite": [
+      "run.started",
+      "restore_point.created"
+    ],
+    "new_normative_rows_closed_by_this_supplement": 0,
+    "separate_compaction_contract_counted_in39": false,
+    "quarantine252_outcomes_changed": false
+  },
+  "validation": {
+    "static_checks_passed": 138,
+    "creation_schema_cases": 22,
+    "immutable_hash_vectors": 10,
+    "checkpoint_generation_cases": 7,
+    "summary_shape_and_join_cases": 17,
+    "creation_typed_join_positive": 3,
+    "creation_typed_join_negative": 27,
+    "result_shape_cases": 13,
+    "result_typed_join_positive": 7,
+    "result_typed_join_schema_valid_negative": 32,
+    "native_pairs_unexecuted": 53,
+    "native_cases_unexecuted": 106,
+    "full_physical_registry_json_schema": "PASS",
+    "real_schema_pointers_and_inline_equality": "PASS",
+    "unchanged_storage_registry_data_check": {
+      "status": "FAIL",
+      "baseline_failures": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 90
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 68,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 3
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "runtime_resource_admission",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "observable_work_projection",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        }
+      ],
+      "current_failures": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 94
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 72,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 75,
+            "migration_only": 3
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "runtime_resource_admission",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "observable_work_projection",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        }
+      ]
+    },
+    "index_preservation": {
+      "plan_units.jsonl": {
+        "prior_count": 6521,
+        "current_count": 6527,
+        "added_count": 6,
+        "all_prior_semantics_preserved": true
+      },
+      "acceptance_units.jsonl": {
+        "prior_count": 25014,
+        "current_count": 25048,
+        "added_count": 34,
+        "all_prior_semantics_preserved": true
+      }
+    },
+    "validator_edits_or_overrides": false
+  },
+  "root_corrections": [
+    "Resolved latest-main new-unit collisions as ACD465/RAP059 without editing original owners.",
+    "Real standalone schema pointers replace invalid named-array pointers.",
+    "SP274/SIR044 supply actual original command-result/outcome custody after RP90 retirement.",
+    "Created-result positive joins correct copied no_op status, placeholder hash keys and inconsistent clocks; new negative cases preserve schema validity.",
+    "Independent RESULT-01 removes only arbitrary caps on new derived partition/record refs and adds ASCII, multibyte and maximum admitted ID boundary pairs."
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/integration-validation-final.json",
+      "sha256": "86a54094bd0c77f530b7e09b5fbcdaca1ee5db1c007f87a96eb8f01e5c572da9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/result-integration-validation.json",
+      "sha256": "c955b1b82dcdda9a3fa6e92e2d179705992a4e4b9d3b62204a1819bf39417f91"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/index-scope-final.json",
+      "sha256": "199eab834bf75b3bc17362c5aa9526a09ac546e61d670d0dd25a52869ef33b5e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/current-source-review-final.json",
+      "sha256": "0a1dfa070f19f647167a21921c210f110fb3a3fc18d389e1edbb06ac87c9cefe"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-created-contract/root/shard-check-final.json",
+      "sha256": "27986137fd32c51a85c9c816614479c69a04b8f8a303d8c8fd926475bccf0a81"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-created-result-review-20260911/review.json",
+      "sha256": "207bb7fb4e17598b5c2be692e18da255cfee8e938ed175f4ccafdb9f853f411f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-created-result-review-20260911/resolution.json",
+      "sha256": "71fde511fae8ba7daf25d0ad9cb6bf316159e0decf2181560ad8e4b3d6edc0d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-created-20260911/v5/manifest.json",
+      "sha256": "3479a3722b61ec9e8a8e3579e94835f2bb40f6adebd038035f3179a57b25a1e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-created-result-20260911/package-manifest.json",
+      "sha256": "1375490e6cc21b925d4c83d4980e2c8e8b4c75d368e061d34c7f6050ae8c30cd"
+    }
+  ],
+  "cost": "Two existing Astra medium workers supplied the creation/independent review/original-result drafts; root reviewed, integrated and validated. Billing data unavailable."
+}

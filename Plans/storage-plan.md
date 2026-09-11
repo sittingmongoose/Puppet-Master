@@ -19615,3 +19615,343 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-167, ContractName:Plans/Contracts_V0.md#CV-332, SchemaID:pm.storage_value.event_record_index.v2, SchemaID:pm.storage_value.browser_workspace_created_index_checkpoint.v1
+
+
+## Restore-point created consumer checkpoint contract
+
+This addendum defines the previously missing restore-created bindings under `DL-045` for already specified behavior. These are new owner definitions, not claims that the identifiers pre-existed. The existing `event-family-restore-point-created@2.0.0`, `restore_point.created`, project-only scope, EventRecord `pm.event.v0@2.0.0`, inline payload `https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0` and source policy `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` remain unchanged. This is a static contract; native runtime, crash, GUI and durable-storage behavior remain unproven. No sibling event is admitted.
+
+Storage newly owns `projector.chat.restore_point_created@1.0.0`. The exact consumers are Chat ACD-465 and Runtime Artifacts RAP-059; FileSafe has no conversation-created consumer. The source search found existing generic checkpoint mechanics and canonical `rp:` custody, but no exact versioned restore-created projector/checkpoint binding. Runtime Artifacts storage is deferred; event-dedupe and shared-runtime checkpoints have other authority. None supplies this new binding.
+
+The logical read projection has no per-record projection key. The canonical creation companion described below is separate required producer custody. It joins the existing `rp:` canonical record with verified existing `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` rows and the following one new physical checkpoint family. Event-index ownership stays with the existing EventRecord lookup writer; this projector may verify its durable result but cannot replace it or write a second event index. Querying the existing source/index range for created events is allowed; this contract promises no new index performance characteristic.
+
+Checkpoint key: `projector.checkpoint.restore_point_created.v1:{scope_partition}`. `scope_partition` is exactly `project~` plus unpadded base64url of UTF-8 `project_id`, using the existing Storage §2.2.5 encoding. No application checkpoint is admitted. Family: `restore_point_created_checkpoint`; value ID `pm.storage_value.restore_point_created_checkpoint.v1`, version 1.0.0. The inline closed `restore_point_created_checkpoint` value schema in `Plans/storage_value_registry.json` closes every value and nested cursor field. The value also binds the actual storage_instance_id, verified full_index_checkpoint_ref, current selected index generation digest and published_at_utc. All required fields are present; no optional/null fields or local paths exist. Integer generation/epoch/offset/sequence fields are nonnegative, hashes lowercase 64-hex. The storage key's project partition must byte-equal the encoding of the value's project ID. Binding IDs and versions are constants.
+
+The cursor's `byte_offset` denotes the beginning of the verified source record identified by `last_sequence_id,last_event_id`; resume validates that record and starts immediately after its length-checked end. Segment name, segment generation, manifest generation, recovery epoch, survivor prefix digest and projector schema version must all resolve against the current Storage manifest/recovery authority. A schema-valid but unprovable cursor is unusable. Missing checkpoint is the uninitialized state, not a fabricated zero cursor. The first checkpoint is written only after at least one complete validated source record.
+
+The `restore_point_created_checkpoint` physical row in `Plans/storage_value_registry.json` supplies **all required physical registry metadata**, inline closed value schema, existing policy reference, source-family recovery binding, migration/restore dispositions, encoding and exact owner references. Storage §2.3.1 requires that row be materialized in `Plans/storage_value_registry.json` in the same canonical transaction as this key definition. Until then no code may persist the key. The second required physical family described below must also be registered before creation depends on it; neither family is silently added to critical/MVP arrays. Existing Runtime Artifacts storage family is deferred and cannot supply it; event-dedupe and shared-runtime checkpoints have different authority and cannot be borrowed. This definition changes no event-registry membership. The physical family needs normal StorageMigrationCoordinator introduction against the actual store graph/version ceilings; this contract allocates no store integer or production write authority. The unchanged full Storage admission validators remain required; a row-shape check alone does not establish readiness.
+
+### Required native creation custody
+
+`restore_point_creation_commit@1.0.0` is a materialized redb canonical family at `restore_point_creation_commit.v1:{project_id}:{restore_point_id}`, with value ID `pm.storage_value.restore_point_creation_commit.v1` and the complete inline closed schema in `Plans/storage_value_registry.json`. Its sole purpose is required original restore-point creation custody and completion verification. It is `canonical_non_rebuildable`, requires mandatory backup together with its canonical point and cannot be regenerated from merged `context_provenance_refs`, the EventRecord alone, a UI projection or an artifact. Its frozen command/input and pending/committed/receipt field conditions, three-barrier producer protocol, native completion predicate and separately valid historical reader are owned by Chat ACD-465.
+
+Commit the immutable `rp` and complete pending companion in one redb transaction; append seglog only from that frozen input; after proof of a matching synced source event, CAS the companion to committed in another redb transaction. Do not assert cross-store atomicity. Original capture, category-separated refs, command identity and all producer envelope values are preserved; only `sequence_id` and `persisted_at_utc` come from the append writer. A stored commit marker is an accelerator, never independent durable-event authority. Owner reconciliation, not event replay, finishes a pending marker after source/dedupe verification.
+
+`restore_disposition.mutation_fence_on_unresolved=true` applies only to canonical operations dependent on the unresolved native `project_id,restore_point_id`, including branch, lifecycle mutation and release of required custody. Read-only diagnostics/owner recovery and unrelated records remain unaffected. Historical points satisfying ACD-465's complete supported pre-introduction read predicate are not unresolved merely because no new companion exists. There is no project-wide FileSafe/runtime fence or automatic filesystem restore.
+
+### Consumption, atomic checkpoint and currentness
+
+Read in canonical segment/offset/sequence order through the current verified survivor range. Validate EventRecord 2.0, exact payload schema, project identity, registered policy, secret posture, record/source joins and event-index lookup bytes before certifying a restore-created observation. Generic valid nonmatching records may advance traversal after envelope/registry validation without restore-specific effects. Unknown/malformed records quarantine without crossing them; valid future versions halt as unsupported and are not recast as corruption. Timestamps never order processing.
+
+Within one redb write transaction/snapshot, verify the existing event-index row and exactly one supported branch: present native point plus full native completion proof; present historical point plus the full historical completion predicate; or the independent complete lawful terminal-retention traversal predicate below. Branch C does not require lawfully purged rp/companion bytes. Commit the projector checkpoint only after the selected branch and all shared current-generation/source checks pass. The logical view is computed from that same committed snapshot and selected proof; branch C yields only terminal/summary unavailability, never live creation completion or an action. Verify the existing full-index CURRENT selection, publication_locator and resolved full-index checkpoint, source_locator frame bounds/CRC/event/payload digest and same-generation coverage. Any changed selected index digest, source manifest/epoch or missing complete range aborts publication. This consumer cannot advance the globally owned index checkpoint or infer it from its own cursor. Its only owned durable write is this checkpoint, so there are no partially published projection rows. Missing/stale index durability, failed CAS against predecessor checkpoint, unresolved retention proof, or transaction failure leaves the checkpoint unchanged. Cursor advancement cannot race source generation/recovery changes; revalidate the Storage manifest/epoch authority under its maintenance exclusion before commit. UI notification timing is not durability.
+
+The checkpoint certifies **source traversal**, not live restore-point availability. Reader lookup uses the current canonical record and owner permission/source-visibility/hold state in that snapshot. Action dispatch re-runs current Chat preflight. Creation replay never writes `status=available` back, consumes a record, branches a thread, touches source files/Git/worktree/queues, clears holds, charges Usage, notifies, dispatches or emits any EventRecord. Replay after expired/deleted/corrupt retains the canonical unavailable state. A source-thread deletion stays hidden; branching remains governed by Chat’s immutable conversation restore-point lifecycle, including `source_deleted_content_unavailable` when retained bytes are insufficient. Historical creation visibility must not revive deleted source visibility.
+
+Repeated source identity/digest is a no-op except safe cursor traversal; conflicting content quarantines and preserves the prior checkpoint. After crash before checkpoint commit, replay revalidates the same join and commits once. Checkpoint/schema rebuild may clear only this derived checkpoint. Missing canonical `rp:` bytes without complete lawful terminal-retention removal proof require the existing mandatory-backup recovery; neither a created event nor artifact projection can rebuild that non-rebuildable value. Missing referenced material is unavailable, not automatically corrupt. Backup/remote/root ownership follows the existing Storage and Backup contracts; no raw local machine path or silent local fallback is introduced.
+
+### Retention, compatibility and withdrawal
+
+The checkpoint is directly assigned **`RP-PROJECTION-3GEN@1.0.0`**, not the source restore-point policy. The existing machine policy is `current_plus_history`, anchor `terminal_transition`, TTL 604800 seconds, maximum 3 generations per logical key, hold-eligible, overflow `rebuild_projection`, expiry `rebuild`. Storage's committed actual projection-generation transition is its terminal history transition recorded in retired_generations[].retired_at_utc; ordinary cursor updates do not retire a generation; `published_at_utc` records publication but does not pretend to prove a source-record release. Current publication and eligible prior generations follow that existing policy and the exact embedded retired_generations/retired_at_utc structure below. Eviction rebuilds only derived traversal/currentness. Source EventRecord and canonical `rp` keep the unchanged 90-day-after-release policy independently.
+
+The companion is directly assigned **`RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` as required custody of the same restore_point_id**, with its actual TTL/cap/eligibility, not a mislabeled source-coupled checkpoint. Chat’s creation contract defines a point as one inclusive captured boundary; Chat’s retention contract gives the 2,048/project cap and required source-lineage/in-flight/backup/rollback/recovery/maintenance hold overrides. The canonical record registry binds the same identity, policy and required custody. Exactly one companion joins exactly one `rp` and cannot exist as a second independently user-created point. Thus logical-point count is `count(distinct canonical project_id,restore_point_id)`, never rp-plus-companion row count. A point over count pressure remains subject to the same oldest-eligible selection; the companion cannot create a second eligibility pool or independently remove a still-required capture.
+
+Resolve companion `reference_release`, all holds and eligibility from that exact canonical point's durable owner release evidence. TTL is inclusively 7,776,000 seconds after that release; no companion creation/commit timestamp supplies it. Pending uses only existing in-flight/required-source-lineage obligations. Completion releases only the proved creation in-flight claim; it cannot clear any other source/descendant/application/legal/preserve/backup/recovery hold. Required capture and canonical record are included together in mandatory backup and restore custody. Missing companion cannot be reconstructed from merged rp refs or an artifact. Owner-authorized point expiry/delete applies the same eligible custody disposition and required hash-summary preservation; no pending/held point is purged, no new permanent hold or 365-day delivery retention is imposed. The capture stores only data already required for the created event and its creation identity, not an extra feature history.
+
+Checkpoint translation/rebuild still needs verified retained source/survivor evidence. If source ranges were lawfully removed, owner retention successor proof is required; absence alone cannot certify a gap. Event-record identity indexes keep their separate app-root-lifetime policy. Read predicates never use an evicted checkpoint/companion to revive expired or deleted source content.
+
+The registry admits no event aliases/extensions. Registered envelope-v1 compatibility is read-only normalization into `projector_replay_only`; it may update only the owned disposable checkpoint and existing permitted projections, never append or mutate canonical records. The `record.v1` storage alias remains coordinator-only; ordinary writers do not rewrite on read. An unsupported future envelope, payload, value, reader, projector or checkpoint version halts affected coverage and preserves the last supported checkpoint/source bytes.
+
+Withdrawing or replacing this consumer binding requires an owner-reviewed versioned successor and verified source-range/currentness handoff before publishing successor coverage. It does not remove event membership or make old records unknown, rewrite historical payloads, clear holds, alter retention, or permit new writes with old IDs. Until a supported successor is available, affected projection currentness is unavailable and canonical owner routes remain subject to their existing preflight. A stored checkpoint cannot self-upgrade by substituting a version string. This contract does not withdraw an event family.
+
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#restore-point-created-native-and-historical-consumers, ContractName:Plans/storage_value_registry.json, ContractName:Plans/event_family_registry.json, ContractName:Plans/Contracts_V0.md, DecisionID:DL-045
+
+### Lawful terminal-retention traversal
+
+Creation completion and terminal-retention traversal are separate predicates. For an indexed surviving created event, classify exactly one supported read branch: (A) a present native point with complete required native creation proof; (B) a present supported historical point with its complete historical completion proof; or (C) an owner-proven **already completed terminal retention disposition** for this exact project/restore identity and original capture hash. Branch C is not a relaxed version of A or B and does not require a purged native companion, original command request or removed `rp` bytes.
+
+Branch C must join the surviving event's project, restore ID, canonical record ref and original hash to the durable owner-authorized terminal disposition and retained required hash summary; prove the exact point's owner-defined reference release, all required hold/ref release evidence, and the applicable existing age/count/deletion authorization; and verify committed deletion/retention/successor-generation custody for the bytes actually removed. Native custody may be absent only where that same durable disposition explicitly covers its lawful removal. Verify the current source/index manifest, survivor prefix and permitted range coverage exactly as for ordinary traversal. No terminal state inferred from missing rows, elapsed wall time, event time, a deleted source thread, UI status or an unverified summary is proof. `corrupt` alone is not a removal authorization. A lifecycle event by itself is not proof of completed purge. Storage SP-269 now defines the exact new canonical restore_point_retention_summary family and atomic retirement result supplying these embedded proofs. Branch C must resolve and validate that physical value; generic storage_deletion_record, an unresolved manifest pointer or a self-issued summary is not a substitute.
+
+Branch C may advance only this derived traversal checkpoint and expose read-only terminal/summary availability with the owner reason. It never publishes completed native creation, actionable availability, success for a retried create command, target creation, a recreated `rp`/companion, source visibility, a new EventRecord, deletion dispatch or cleared holds. Missing canonical custody without this complete lawful-removal proof remains unexplained loss: preserve the prior checkpoint and apply the existing affected-record recovery fence. Do not route a missing/corrupt native companion through historical mode or branch C. A proven terminal-disposition read does not resurrect bytes for the purpose of satisfying a creation predicate.
+
+### Concrete checkpoint generation history
+
+The newly registered checkpoint value requires `publication_id`, `hold_refs`, and `retired_generations` in addition to its current identity/cursor/publication fields. Here `publication_id` is the stable **projection-generation** identity, and `published_at_utc` is that generation's first verified publication time. The exact generation discriminator is `(storage_instance_id, scope_partition, consumer_id, consumer_version, projector_id, projector_version, cursor.projector_schema_version, publication_id)`. Source segment rotation, source/index cursor advancement, updated full-index checkpoint/selection and a new event do not by themselves change this discriminator. No timestamp, filename or event sequence allocates a new generation.
+
+Ordinary traversal performs a CAS update to the same current generation's cursor and verified source/index fields, revalidating every current source/index/survivor proof and predecessor checkpoint. It preserves `publication_id`, `published_at_utc` and every retired generation/anchor. It does not archive the previous cursor position or consume a retention-generation slot. No per-cursor timestamp is needed for this contract. Source recovery/translation may continue this same generation only when the existing owner source-range/currentness proof remains valid; otherwise the projector must take the separately verified rebuild path, never copy a stale cursor into CURRENT.
+
+Only first initialization, an explicit verified projection rebuild, or an owner-reviewed supported schema/binding successor establishes a new projection generation. Repeated retry of the same unpublished generation transition reuses its selected identity; it does not slide a retirement anchor. A transition cannot publish until the new full source coverage/currentness proof succeeds. On that real generation transition, one redb transaction writes the new current core, archives the previous current core, and sets that archived entry's `retired_at_utc` exactly to the new generation's `published_at_utc`, with `successor_publication_id` exactly the new generation ID. The archived core contains the final cursor of its old generation. Retained older entries preserve their original retirement facts. The terminal-transition TTL anchor is the explicitly persisted retirement time, never the old generation's birth time or an inferred timestamp. The new publication time must be valid and cannot predate the archived core's birth; a clock/authority inconsistency fails publication rather than rewriting history.
+
+`retired_generations` contains zero to two entries, each a complete closed prior checkpoint core **without** recursive history, its required `retired_at_utc`, and `successor_publication_id`. One current plus at most two prior generations is the existing three-generation cap. No secondary history key or unspecified metadata supplies retention facts.
+
+Each archived core retains the exact old storage/project/consumer/projector identity, cursor, selected-index reference/digest, original publication ID/time and owned hold refs. All project/scope/storage identities match this logical key; publication IDs are distinct and a generation cannot retire into itself. Completed generation transition records the timestamp and successor relation atomically, so no archived generation has an unknown terminal anchor. The exact existing registry policy is `RP-PROJECTION-3GEN@1.0.0`: `current_plus_history`, `terminal_transition`, TTL `604800`, `max_cardinality=3`, `cardinality_scope=logical_key`, `overflow_action=rebuild_projection`, `hold_eligible=true`, `expiry_action=rebuild`. History expiry checks the persisted retirement anchor and owner hold state. Overflow invokes that existing rebuild disposition; these fields are not new permission for early eviction, dropping a held generation, or bypassing the stated retirement window. If the owner cannot establish a policy-permitted generation slot, preserve the last committed checkpoint and disclose affected currentness as unavailable until a lawful rebuild/publication is possible. Ordinary cursor advances do not need new slots and continue after fresh proof. Rebuild never fabricates retirement times.
+
+Archived cursors are retention/history data only. None certifies currentness or becomes a fallback CURRENT selection. The current core must independently validate against the current source/index generation and survivor authority. Moving an old core into the current position without a fresh verified publication is rejected even if its schema and earlier retirement facts are valid. No old generation can authorize a point action.
+
+### Concrete typed terminal-summary result
+
+The third result is `kind = terminal_retention_summary`, backed by the exact registered `restore_point_retention_summary` family and Storage SP-269 atomic retirement contract. Its `summary_ref` resolves to `restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}`; project/point/ref/original-hash and the surviving created event's ID/schema/payload/frame/semantic digests match the embedded summary facts. Required native creation custody is explicitly present in the summary's retired-key set. The summary is independently canonical atomic retirement authority, so this branch does not first require a present `rp`, a removed native companion, a removed original request or the present-point historical completion predicate.
+
+Only `reader.chat.restore_point_history` and `reader.runtime_artifacts.restore_point_record` consume this third result for passive terminal/hash-summary inspection. It carries the actual terminal status and no action authority. `reader.chat.branch_from_restore` accepts only a present point satisfying native or supported historical creation completion plus its full fresh Chat preflight; it never accepts the summary result. Missing/unproven summary authority keeps unexplained-loss recovery/fencing and does not produce a terminal result. The common typed result contract distinguishes `native_completion`, `historical_completion`, and `terminal_retention_summary`; they are not interchangeable truthy success values.
+
+### SP-281 — Restore-point created custody and checkpoint
+
+```yaml
+plan_unit_id: SP-281
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage defines the restore-created projector and complete physical checkpoint and canonical
+  creation-companion families under DL-045. The logical read view reuses the verified existing EventRecord
+  index and rp values, with atomic current-generation checkpoint publication and separate native/historical
+  completion predicates. The disposable checkpoint follows RP-PROJECTION-3GEN exactly; canonical per-point
+  creation custody follows the existing restore-point release/hold/cap policy and mandatory-backup recovery.
+  No sibling checkpoint or deferred family is borrowed.
+gui_related: false
+gui_classification_reason: This unit defines canonical custody, storage schemas and checkpoint mechanics.
+split_recommended: false
+depends_on:
+- SP-269
+- SP-242
+- CV-320
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication identity; stale history never certifies currentness.
+- Typed terminal-summary traversal resolves the physical SP-269 value and its exact retired native custody set without requiring removed rp/companion bytes.
+- A complete lawful terminal-retention disposition independently permits passive traversal after covered point and companion removal; unexplained loss never selects this branch.
+- Both physical rows include exact closed schemas, key/value joins, migration/recovery/retention metadata
+  before use.
+- Checkpoint currentness proves full-index selection, source durability, contiguous source coverage and
+  atomic snapshot publication.
+- Checkpoint projection policy differs explicitly from unchanged per-point source/custody retention; no
+  new timer or hold authority is inferred.
+- Missing native custody imposes an affected-record fence; verified supported historical completion does
+  not require a fabricated companion.
+- The unchanged implementation-readiness physical-family count check may remain failing; no validator
+  edit or count override is permitted.
+validation_surfaces:
+- Plans/restore_point_created_contract_fixtures.json
+- Plans/storage_value_registry.json
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: restore_point_created_completion_authority
+reasoning_tier: high
+context_scope: restore_point_created_event_authority
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: restore_point_created_storage_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20260911/step-08-depth-binding-work-records.md#ea-s8-restore-binding--restore-consumercheckpoint-evidence
+preserved_exact_tokens:
+- restore_point.created
+- event-family-restore-point-created
+- RP-RESTOREPOINT-90D-AFTER-RELEASE
+- RP-PROJECTION-3GEN
+- projector_replay_only
+negative_constraints:
+- No new event-family admission, retention policy, runtime proof, readiness clearance, WorkNodes, NodeSeeds
+  or governance seal.
+- No recreation of missing canonical creation custody from projections or guessed original command data.
+- No passive replay side effects, hold clearing, source resurrection or filesystem restore.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/FileSafe.md
+```
+
+## Restore-point retention summary contract
+
+This is a NEW shared technical prerequisite under `DL-045`, owned by Storage SP-269. The existing `restore_point_record` is a full canonical record, and `storage_deletion_record` has thread/project hide-and-purge semantics with no closed restore-point identity field. Neither is an already registered restore-point retirement summary. No event-family admission, new lifecycle edge, source-body purge command or retention policy is introduced here.
+
+The physical family is `restore_point_retention_summary@1.0.0`, key `restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}`, value `pm.storage_value.restore_point_retention_summary.v1@1.0.0`. `scope_partition` is exactly `project~` plus unpadded base64url of exact UTF-8 `project_id`. Its inline closed `value_schema` is registered with the family before any writer or reader depends on it. New writer binding is `writer.storage.restore_point_retention_summary@1.0.0`. This writer is a Storage retention action, not a producer of any new EventRecord. The value is canonical, content-free and non-rebuildable; required summary custody is included in mandatory canonical backup/recovery. It is not a derived artifact or a second logical restore point.
+
+The exact fields are the inline schema: immutable project/point/ref/original-hash identity; `representation = retained_hash_summary`; actual storage instance; an owner-verified native-or-supported-historical capture-hash relation; original created and terminal event IDs, schema IDs, payload/semantic/frame digests and verified source coordinates; existing policy ID/version/expiry action; a complete owner reference-release fact; eligibility selection/time/count and eligible-set digest; exactly one complete evaluation for each named hold/ref class; exact canonical family/key/schema/encoding/value-byte digests removed in the transaction; owner-proven flags identifying required creation/deletion companions; and the retiring actor, operation, owner gate revision, summary transaction and commit time/source generation.
+
+These are embedded durable owner decision facts. Original evidence refs/IDs are supplemental lineage, not the only available proof after lawful source-manifest retirement. `value_bytes_sha256` is SHA-256 of the exact validated canonical encoded value bytes read for the named key, using its registered encoding; it is distinct from immutable `original_record_hash`. Event payload and frame digests are SHA-256 of the exact canonical payload/frame bytes actually verified under their owners. No digest is substituted for an unperformed check. The writer must validate the real records and receipt/source authority before recording these facts; schema-shaped, self-issued or pointer-only claims cannot create a summary. The snapshot captures only minimal content-free identity, digest and decision facts needed for future terminal verification, not original command/input, title, transcript, attachment/file bytes, runtime queue, secrets or raw machine paths.
+
+`hold_evaluations` contains exactly one entry for each of `descendant_branch`, `application`, `preserve`, `legal_hold`, `in_flight_application`, `source_lineage`, `live_ref`, `backup`, `rollback`, `recovery_anchor`, and `maintenance`. Each records its actual owner/revision, completed scope enumeration, zero active blockers and the count plus canonical set digests of the genuine released refs/release facts evaluated. A zero released-ref count means the owner positively verified that no released refs were needed for that class in this closure; observing an empty cache is insufficient. The summary does not retain historical hold/ref/input arrays: each of the eleven fixed classes has one compact authoritative evaluated-result witness. Pending creation/deletion or other required canonical custody is a live/maintenance/source-custody blocker; do not manufacture an exception to fit an eligible snapshot. The separate `reference_release` closure must already exist as a complete owner fact and bind the exact point/ref set. No event, creation, deletion, summary or mtime timestamp supplies that anchor.
+
+Retirement eligibility remains the exact existing `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: inclusive `reference_release + 7,776,000 seconds`, all protecting refs released, and `2,048/project` logical point count with oldest-eligible-only count pressure. `selection_kind = reference_release_ttl` requires the inclusive release age predicate. `oldest_eligible_count_pressure` additionally requires count greater than 2,048 and rank zero in the actual owner-verified eligible set; count pressure does not bypass age or holds. The 2,048 cap counts distinct full canonical `rp:` points awaiting or retaining full custody, never their companion rows. Once a point is lawfully retired, its required final hash-summary residue is not counted again as another full point; otherwise the required residue would defeat the same policy's eviction rule. Residues provide only existing-reference/history terminal inspection, not a new user history feature or point-creation surface. The summary is the existing policy's final `retain_hash_summary` residue; it is not an independently newly aging object. Do not restart 90 days at summary creation, recursively delete the required residue using that same expiry action, assign `RP-AUTHORITY-INDEFINITE`, or invent a summary TTL, cleanup timer or permanent hold. Any future change to this residual disposition requires explicit owner policy authority.
+
+The point must already have an owner-proven terminal status `expired | deleted | corrupt`, and the terminal event's actual type must equal that status. A deleted point first requires the existing exact-hash `available -> deleted` command authorization; an expired or corrupt point uses its own existing owner transition. Retirement creates none of those transitions and emits none of their events. Logical explicit delete is not a 90-day bypass for physical custody retirement. A terminal label, corruption finding or matching hash alone is not permission to remove custody.
+
+### Atomic owner retirement
+
+1. Under the aggregate writer and current maintenance exclusion, resolve the exact canonical point, its required creation/application/deletion custody and current source/index generation. Verify the actual complete native creation proof or supported historical completion proof, original capture hash relation, already committed terminal owner event, and actual closed source/payload schema. No pending marker or missing native companion qualifies as historical data. Capture their exact encoded bytes/digests before retirement.
+2. In the same owner authority boundary, revalidate the entire current release/ref/hold inventory, source visibility permissions, policy, inclusive age, logical count and selected eligible rank against canonical state. Freeze the exact list of eligible canonical keys to remove. The list must include the canonical `rp:` row and every required custody row whose removal is being authorized; it never invents a row for a historically never-required companion or silently omits an actual required native companion. Other retained source/event/receipt/backup objects remain under their own owners.
+3. In ONE redb write transaction, compare-and-swap all frozen canonical bytes and the owner gate revision, write the complete immutable committed summary, and remove exactly the listed eligible `rp`/companion keys. Either the complete summary and every listed removal commit durably together, or none of them changes. All selected keys must be in this same admitted redb store/transaction domain; an unavailable cross-store target keeps retirement unavailable and is not handled by sequential best effort. The removable custody set is bounded by the known schema: one `restore_point_record`, at most one `restore_point_creation_commit`, and at most one separately admitted `restore_point_deletion_commit`, with unique family IDs and at most three entries. The owner-proven requirement flags must match that exact set. A future extra custody family requires a versioned contract change; applications and other objects are not silently folded into this removal batch. No seglog, blob, thread, worktree, file, Git, queue or external deletion occurs in this transaction. No hold is cleared by it.
+4. A crash before commit leaves the original rows authoritative and no summary. A crash after commit leaves the summary authoritative and the exact listed rows absent; replay of the same retirement identity and facts is a no-op. A summary conflicting with remaining canonical bytes, another summary, the original hash or retirement identity is a disclosed affected-point integrity/recovery failure; do not overwrite either side, infer successful retirement, reconstruct missing points or advance dependent traversal. Writer/maintenance exclusion prevents source-generation changes racing this transaction.
+
+The summary itself is the canonical atomic retirement result, not a promise that another manifest will later prove it. Existing seglog compaction may later remove eligible event frames under its independent verified successor protocol and frozen semantic set, which must preserve this required canonical summary custody. A source range no longer present still needs the existing verified compaction/source-range handoff before a projector translates its cursor; a summary cannot certify an arbitrary missing range. Required canonical backup/restore sets include the retained summary. A restored pre-retirement point cannot become available while a valid retained summary says it was retired; recovery must carry and honor that terminal authority before any read/action publication. A backup or rollback set missing required summary custody is incomplete and yields disclosed recovery-unavailable; do not silently select it as a complete authority or invent a new backup-retention window.
+
+### Typed terminal traversal
+
+The created/deleted reader may return `kind = terminal_retention_summary` only by reading this exact registered summary in the current storage instance/project partition, validating its schema and immutable record/hash/event joins, and proving it was admitted through the actual owner summary transaction/source-generation path. The named event's surviving payload/frame must match the stored original digest and identity. For native-created data, `retired_custody` must explicitly cover its required creation companion at `restore_point_creation_commit.v1:{project_id}:{restore_point_id}` as well as the `rp` key. Each additional required native companion is checked against its own owner introduction and exact key; absence never proves it was optional. Supported historical status is proven from genuine admitted history, not timestamps or key spelling.
+
+This terminal result needs no present `rp` bytes or lawfully removed companion. It authorizes only passive traversal and terminal/hash-summary display with the actual unavailable reason. It never becomes native or historical live completion, successful create replay, action/branch permission, restored source visibility, a reconstructed point, another EventRecord or a hold clear. Missing/corrupt summary or unexplained missing canonical custody preserves the existing affected-record fence and prior traversal checkpoint. Actual current-generation/index/cursor proof remains mandatory regardless of result kind.
+
+ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle, ContractName:Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract, DecisionID:DL-045
+
+### SP-269 — Restore-point final retention summary custody
+
+```yaml
+plan_unit_id: SP-269
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage defines one canonical content-free restore-point retention summary family as the existing retain_hash_summary policy residue. A single owner-authorized redb transaction writes complete validated terminal identity, hash, release, hold, selection and exact retired-custody facts while removing only the named eligible point and companion keys. The summary permits typed passive terminal traversal after lawful removal without requiring those removed rows, and never supplies live completion, action, reconstruction or source visibility.
+gui_related: false
+gui_classification_reason: This unit defines canonical storage custody, atomic retirement and passive reader proof.
+split_recommended: false
+depends_on:
+- SP-242
+- CV-320
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact registered summary key, closed value schema and mandatory-backup recovery are required before use; generic storage deletion scope is not a substitute.
+- Owner-proven release plus 7776000 seconds, all holds, 2048 logical points and oldest-eligible selection remain unchanged; residue gains no independent TTL, timer, policy or hold.
+- Summary publication and exact listed redb removals commit together or not at all; pending native custody, changed owner revisions and unexplained loss fail closed.
+- Embedded content-free validated facts survive lawful original-manifest retirement and are not mere unresolved proof pointers.
+- Typed terminal traversal is distinct from present native and supported historical completion and cannot authorize an action or resurrect source content.
+- Missing required canonical summary custody is disclosed recovery loss, not an invitation to reconstruct a point from events.
+validation_surfaces:
+- Plans/storage_value_registry.json
+- Plans/restore_point_retention_summary_fixtures.json
+- python3 scripts/pm-plans-verify.py run-gates
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+risk_class: restore_point_terminal_retention_authority
+reasoning_tier: high
+context_scope: restore_point_retention_summary
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: restore_point_retention_summary_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle
+preserved_exact_tokens:
+- RP-RESTOREPOINT-90D-AFTER-RELEASE
+- retain_hash_summary
+- restore_point_retention_summary
+- terminal_retention_summary
+negative_constraints:
+- No new event admission, lifecycle edge, source-body deletion command, retention policy, independent summary TTL, runtime proof or governance seal.
+- No inference of release or successful retirement from missing rows, wall time, pointer-only claims or deleted-source UI state.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+```
+
+
+### SP-274 - Create restore-point original result custody
+
+```yaml
+plan_unit_id: SP-274
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage supplies canonical content-free custody of the original create-restore-point command
+  identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced
+  append receipt. Pending custody commits atomically with the point and creation intent; terminal custody
+  commits atomically with the committed creation marker. Original command replay survives lawful point
+  retirement without creating current point availability or accessing retired content.
+gui_related: false
+gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
+  no visual presentation contract.
+split_recommended: false
+depends_on:
+- CV-333
+- SP-281
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact registered result key binds the original scope, idempotency key and canonical request digest;
+  a changed request or hash-key collision fails without another point.
+- Pre-dispatch rejection writes nothing. Native point, pending companion and pending result commit together;
+  terminal companion, original owner result, actual outcome and original response commit together after
+  the real synced append.
+- Original typed result, normalized request identity, CommandOutcomeRecord, UICommandResponse and AppendReceipt
+  agree through exact field, hash, reference and authenticated producer joins; the result hash excludes
+  the containing record and outcome.
+- Unknown append effects remain pending and recovery-required; an admitted terminal refusal or failure
+  requires actual no-created-effect proof and cannot erase an acknowledged effect.
+- Original content-free result custody follows the existing app-root lifetime, mandatory backup and permission
+  rules; RP90 point retirement neither erases it nor grants current availability, branching, recovery
+  or source visibility.
+- Missing required native result custody is disclosed and fenced; events, dedupe locators, summaries,
+  current points and schema-shaped outcomes cannot reconstruct it.
+validation_surfaces:
+- Plans/restore_point_create_result.schema.json
+- Plans/restore_point_create_result_fixtures.json
+- Plans/restore_point_create_result_join_fixtures.json
+- Plans/restore_point_create_result_native_pairs.json
+- Plans/storage_value_registry.json
+risk_class: restore_point_original_result_authority
+reasoning_tier: high
+context_scope: restore_point_create_original_result
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: restore_point_create_result_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/UI_Command_Catalog.md#UCC-164
+- Plans/Contracts_V0.md#CV-333
+preserved_exact_tokens:
+- cmd.chat.create_restore_point
+- RP-AUTHORITY-INDEFINITE
+- CommandOutcomeRecord
+- pre_dispatch_rejection
+negative_constraints:
+- No new event admission, retention policy, global command architecture, launch-critical promotion, native
+  execution proof, readiness clearance or governance seal.
+- No guessed original outcome, hidden pre-dispatch writer, point resurrection, source visibility grant
+  or passive replay mutation.
+owner_hints:
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/Contracts_V0.md
+```
+
+**Existing obligation and precise gap.** UI Command Catalog Case L requires original owner-result replay for the app-root lifetime. CV-333 preserves actual command, scope, outcome, result, receipt, error and event identities. The four-field `original_append_result` in existing EventRecord dedupe indexes proves an append locator, not an original command request or typed owner result. `thread_command_outbox_record` has delivery custody and RP-DELIVERY-365D; `receipt_record_baseline` is deferred. Neither supplies this command's app-root original-result authority. The RP90 creation companion and SP-269 terminal summary cannot supply successful original command replay once the companion retires. This unit fills exactly that create-command custody gap, without changing point retention or shared command architecture.
+
+**Physical and result authority.** Define NEW `restore_point_create_result` redb canonical family, value `pm.storage_value.restore_point_create_result.v1@1.0.0`, at `Plans/restore_point_create_result.schema.json#` and its exact registered physical row. The key is `restore_point_create_result.v1:{sha256_utf8(scope_partition)}:{sha256_utf8(idempotency_key)}`. Use raw UTF-8 SHA-256 with lowercase hex, no normalization; retain the unhashed values in the closed row and reject any key/value collision. Only `cmd.chat.create_restore_point` and project scope are admitted. Partition follows existing reversible project encoding. Same key is scoped command identity; do not key on request hash, point ID, attempt, dispatch time or current conversation content. The first admitted original command/request hash binds identity permanently.
+
+`original_owner_result` is NEW Chat-owned content-free `RestorePointCreateCommandResult`, distinct from the exact embedded existing Full Thread `CommandOutcomeRecord`. Created result holds only original point ID, canonical record ref, original record hash, event ID, original AppendReceipt hash and owner receipt ref. It is historical command success, never current `available`, permission, record contents, FileSafe recovery or branch success. Refused/failed results have no created target/event/hash claim and use an actual owner reason ref. `cleanup_performed=false` always. No frozen append input, source message bodies, provenance arrays, attachments, filesystem contents, raw machine paths, secret or arbitrary dynamic text is retained here. Original identifiers in the authentic existing Full Thread outcome remain content-free command evidence.
+
+The embedded `original_command_outcome` is the actual existing SIR-owned record, captured through SIR-044, not a locally authored substitute. Its schema definition and identity semantics remain byte-identical to current `Plans/full_thread_runtime_contracts.schema.json#/$defs/CommandOutcomeRecord`; the containing schema imports its exact definitions. `original_ui_response` is a frozen exact existing CV-333 2.0.0 projection for that same authenticated terminal result, retained to preserve original error/status/request/dispatch/receipt/event references. It is not domain authority. No second global Full Thread producer or response format is created.
+
+**Admission boundary.** Existing global registry/handler/schema, permission, storage access, backup/custody and actual operation dispatch gates precede durable admission. A pre-dispatch refusal, including read-only storage, writes no result, outbox, receipt, point or event and fabricates no operation/Full Thread outcome. Its CV-333 response_kind is `pre_dispatch_rejection`, with existing closed error code and null owner/operation refs; no ninth generic error code or receipt-writer exemption is introduced. A retry that can only read may return an already durable permitted historical result; it cannot mutate or perform recovery. Once accepted by the actual owner operation, native terminal refused/failed results may be stored under this command-specific identity only when authoritative no-created-effect proof exists. This does not convert a failed pre-dispatch gate into an accepted operation.
+
+**Three barriers and terminal publication.** Extend native creation barrier1: atomically commit the original immutable `rp`, frozen pending creation companion, and `admitted_pending` result custody row in the SAME redb transaction, with the genuine initial Full Thread outcome/dispatch identity. The row binds the exact companion `command_request_sha256`, frozen input hash and producer semantic digest. No terminal owner result/response/hash/time exists yet. Pending already protects replay identity; a retry compares the original canonical command request digest before consulting changed live content. It resumes the same authenticated operation and frozen append input, never recaptures from current thread state.
+
+Barrier2 remains the same genuine synced seglog append and AppendReceipt; no cross-redb/seglog transaction is asserted. Barrier3 verifies that source and CASes the same companion committed AND result row terminal in one redb transaction. The actual SIR owner supplies/authenticates its terminal original outcome, matching this separately computed typed result; the dispatcher supplies the exact original CV-333 response. None is exposed as terminal until this commit. Retention cannot observe completed creation with missing required terminal result custody. An admitted no-effect refusal/failure commits its terminal typed result/outcome/response without a created event or point; it must prove no created effect and must not fabricate a pending capture for a rejected source. After any possible append or unknown effect, failed/no-effect is forbidden: keep pending, reconcile under the existing owner gates, and expose the existing recovery-required/effect-unknown posture without replacing the original terminal result with guessed failure.
+
+Before barrier1, no creation effect exists. After barrier1, original pending custody can recover the same frozen input. After barrier2 before3, recovery verifies the real original source/dedupe result and finishes the same barrier3 without reappend. After barrier3 before response, replay returns the original result/outcome/response identities. Outcome and response publication use this same committed custody boundary; an independently emitted premature success cannot be repaired by claiming later storage. Concurrent retries serialize under existing owner/aggregate fences and exact key/request CAS. Unsupported/unregistered required family or unresolved mandatory backup fails before admission. Passive event/projector replay never writes this family or repairs command state.
+
+**Hash graph and joins.** `command_request_sha256` is the exact already defined creation companion canonical request digest, distinct from Full Thread payload_sha256 and the event producer digest. Compare incoming normalized domain request to this original digest; transport retry dispatch identifiers do not re-key it. Validate the original Full Thread envelope joins independently. Hash `original_owner_result` alone with RFC8785 UTF-8 SHA-256; the object contains neither its own hash nor outcome/container/response. Use that hash and the exact schema path/root definition to bind Full Thread owner_result_sha256/ref/schema_ref. The owner-result ref resolves to this row's `#/original_owner_result`; the outcome ref resolves to `#/original_command_outcome`. The typed receipt_ref resolves to the same authenticated committed command result evidence. References are identities, not recursively dereferenced hash inputs. The result's AppendReceipt digest is computed from the original exact synced AppendReceipt before retirement; it is evidence of the original creation, not a live source locator. Do not invent a later receipt from an event index.
+
+Command ID, project/partition, idempotency key, request hash, original dispatch, actual Full Thread command instance/operation/topology/payload/generation/frames, typed owner result and CV-333 response must agree through their existing contracts. The initial response is not replayed; replay sets only CV-333's replay/dispatch presentation fields as that contract permits while preserving original status/error/request/outcome/result/receipt/events and original_dispatch_id. Its timestamp follows the original projection's semantics; do not mint domain completion time. References to external acknowledgements or historical request lineage remain genuine original refs, never self-issued replacements; this retained actual terminal outcome and result is the custody proof, not re-performing the retired operation. Missing genuine evidence during first publication fails closed.
+
+**Retention and recovery.** Assign this one new row `RP-AUTHORITY-INDEFINITE@1.0.0`, whose existing no-TTL/no-cardinality/fail-closed policy materializes UCC's existing app-root original-owner-result duty. No policy object or new retention choice is created. The point/companion retain RP90 and their existing release/hold/cap rules; this content-free result is not a second point, capture hold, 365-day delivery record or SP-269 terminal summary. Point expiry/deletion does not remove original command result custody. Existing project deletion/tombstone/access policy still governs disclosure; historical success cannot unhide a thread, provide retained content, branch, restore files or release holds. Original results may remain internally authoritative but access-refused to an unauthorized caller.
+
+This family is canonical_non_rebuildable, mandatory-backup, restore-from-backup, with a mutation fence limited to commands dependent on the unresolved identity. The embedded outcome is canonical delegated custody under SIR-044, not rebuildable from current shared-runtime views. Preserve its terminal bytes/schema and authentic record provenance for app-root lifetime. Missing/corrupt native result cannot be reconstructed from the event, terminal summary, dedupe locator, current point or default-filled outcome; disclose/fence, never create a second point. Backup must contain the committed joint value. Existing historical completed point inspection remains unchanged; absent original command evidence means command replay unavailable, not an invalid historical point. Coordinator backfill requires complete genuine original request, typed result, outcome and response evidence with exact hashes and identities; no fabricated historical receipt, dispatch, field or date.
+
+The physical row must be materialized with normal coordinator/version admission before native creation depends on it. It is not silently added to launch-critical/MVP arrays, and it creates no global CommandOutcome physical family. This specification is static contract/schema/oracle work; native durability, authentication, replay, deletion, crash and CV-333 publication tests remain NOT_RUN.
+
+**Retained original evidence closure.** The same row also retains the exact authenticated `original_normalized_request` identity projection used by CV-333 (request ref, command/instance/operation, original full owner identity, payload digest, idempotency key, target generation and dispatch frame), plus the original successful synced `AppendReceipt` object. These are closed content-free evidence, not a new UICommand envelope or recaptured domain arguments. The canonical domain request digest remains the companion's separate exact recipe. First capture must authenticate the actual original request; a fixture-shaped identity cannot establish it. Successful terminal publication proves the receipt's event/frame/durable watermark through barrier2 and requires its canonical digest to equal the typed result's append_receipt_sha256. Thereafter lawful point/event retirement need not preserve the old segment: the original receipt is historical committed command evidence, never a live locator or authority to read purged bytes. Pending and no-effect refused/failed rows have null original_append_receipt. Native retained outcome/request/response resolution is delegated through the one canonical row; original refs remain exact, with no replacement identities. The complete command-result row is preserved atomically in mandatory backup, separately from expiring point/companion custody.
+
+**Closed semantic publication guards.** Pending custody requires both frozen append-input and producer semantic digests, each equal to the same admitted creation companion. A terminal created result requires those same non-null original digests, actual successful outcome, accepted/succeeded response with no error, the exact point/ref/hash/event identity, and the original synced receipt with `durable_end_offset > byte_offset`. A terminal refused result requires the actual rejected outcome, rejected response with its original error and null result status, no event refs, no append receipt and no frozen append-input or producer digests. A terminal failed no-effect result requires the actual failed outcome, accepted/failed response with its original error, and the same absence of created-event/append/digest claims. All result/receipt/outcome references resolve through this one committed value's exact typed members; the canonical schema pointer is `Plans/restore_point_create_result.schema.json#/$defs/RestorePointCreateCommandResult`. Request and outcome identity joins remain mandatory in every state. The terminal time cannot precede admission; an admitted terminal value is immutable. Shape validation alone cannot establish these relational guards or native provenance.

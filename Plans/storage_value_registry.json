@@ -26097,6 +26097,4681 @@
           }
         }
       }
+    },
+    {
+      "family_id": "restore_point_created_checkpoint",
+      "storage_kind": "redb_checkpoint",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "projector.checkpoint.restore_point_created.v1:{scope_partition}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.restore_point_created_checkpoint.v1",
+      "value_schema_ref": "Plans/restore_point_created_contracts.schema.json#/$defs/checkpoint",
+      "owner_doc": "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+      "producer": [
+        "projector.chat.restore_point_created@1.0.0"
+      ],
+      "consumers": [
+        "consumer.chat.restore_point_created@1.0.0",
+        "reader.chat.restore_point_history@1.0.0",
+        "reader.chat.branch_from_restore@1.0.0",
+        "reader.runtime_artifacts.restore_point_record@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "projection_checkpoint",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "scope_partition",
+        "consumer_id",
+        "consumer_version",
+        "projector_id",
+        "projector_version",
+        "cursor",
+        "redaction_profile",
+        "storage_instance_id",
+        "full_index_checkpoint_ref",
+        "index_selection_sha256",
+        "published_at_utc",
+        "publication_id",
+        "hold_refs",
+        "retired_generations"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Verify the canonical created EventRecord and its existing durable EventRecord lookup; publish the logical record/event-index join with this checkpoint in one redb snapshot. Replay mutates only this disposable checkpoint, never the canonical rp record, source branch, files, holds, or a sibling artifact event. Native rows require complete companion evidence; supported historical rows use the owner-defined genuine durable-event/custody path without companion fabrication.",
+      "migration": "New physical family: no aliases. Register this complete row before use; StorageMigrationCoordinator binds introduction to the actual store migration graph/ceilings under Case L-1. Unsupported values halt; supported rebuild discards only this checkpoint under maintenance authority. No store version integer allocated by this draft.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+        "mutation_fence_on_unresolved": false,
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract"
+        ]
+      },
+      "retention_compaction": "Exact RP-PROJECTION-3GEN@1.0.0: current_plus_history,terminal_transition,604800seconds,maximum3 generations/logical key,hold eligible,overflow rebuild_projection,expiry rebuild. publication_id/published_at_utc name stable projection-generation identity/birth. Ordinary verified cursor/index advancement CAS-updates that same generation and preserves history/times. Only verified rebuild or supported binding/schema successor retires a generation, atomically captures its final core and sets retired_at_utc to successor published_at_utc. At most two prior cores; old cursors never certify currentness. Overflow is not inferred early-eviction or hold-bypass authority.",
+      "retention_policy_ref": "RP-PROJECTION-3GEN",
+      "redaction_no_secret_rule": "Non-secret project identity, scope partition, binding identifiers, verified source cursor and digest only; no content, raw path, credentials, or secrets.",
+      "legacy_canonical_crosswalk_status": "New event-specific technical checkpoint; no predecessor spelling, sibling checkpoint, or artifact-record alias.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "restore_point_record",
+          "restore_point_creation_commit"
+        ],
+        "source_refs": [
+          "SchemaID:pm.event.v0",
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+          "Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": false
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "scope_partition",
+          "consumer_id",
+          "consumer_version",
+          "projector_id",
+          "projector_version",
+          "cursor",
+          "redaction_profile",
+          "storage_instance_id",
+          "full_index_checkpoint_ref",
+          "index_selection_sha256",
+          "published_at_utc",
+          "publication_id",
+          "hold_refs",
+          "retired_generations"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.restore_point_created_checkpoint.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "pattern": "^project~[A-Za-z0-9_-]+$"
+          },
+          "consumer_id": {
+            "const": "consumer.chat.restore_point_created"
+          },
+          "consumer_version": {
+            "const": "1.0.0"
+          },
+          "projector_id": {
+            "const": "projector.chat.restore_point_created"
+          },
+          "projector_version": {
+            "const": "1.0.0"
+          },
+          "cursor": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "manifest_generation",
+              "recovery_epoch",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "last_sequence_id",
+              "last_event_id",
+              "survivor_prefix_sha256",
+              "projector_schema_version"
+            ],
+            "properties": {
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "last_sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "last_event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "survivor_prefix_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "projector_schema_version": {
+                "const": "1.0.0"
+              }
+            }
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "full_index_checkpoint_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "index_selection_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "published_at_utc": {
+            "type": "string",
+            "minLength": 1,
+            "format": "date-time"
+          },
+          "publication_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hold_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "retired_generations": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "checkpoint",
+                "retired_at_utc",
+                "successor_publication_id"
+              ],
+              "properties": {
+                "checkpoint": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "schema_id",
+                    "schema_version",
+                    "project_id",
+                    "scope_partition",
+                    "consumer_id",
+                    "consumer_version",
+                    "projector_id",
+                    "projector_version",
+                    "cursor",
+                    "redaction_profile",
+                    "storage_instance_id",
+                    "full_index_checkpoint_ref",
+                    "index_selection_sha256",
+                    "published_at_utc",
+                    "publication_id",
+                    "hold_refs"
+                  ],
+                  "properties": {
+                    "schema_id": {
+                      "const": "pm.storage_value.restore_point_created_checkpoint.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "scope_partition": {
+                      "type": "string",
+                      "pattern": "^project~[A-Za-z0-9_-]+$"
+                    },
+                    "consumer_id": {
+                      "const": "consumer.chat.restore_point_created"
+                    },
+                    "consumer_version": {
+                      "const": "1.0.0"
+                    },
+                    "projector_id": {
+                      "const": "projector.chat.restore_point_created"
+                    },
+                    "projector_version": {
+                      "const": "1.0.0"
+                    },
+                    "cursor": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "manifest_generation",
+                        "recovery_epoch",
+                        "segment_generation",
+                        "segment_name",
+                        "byte_offset",
+                        "last_sequence_id",
+                        "last_event_id",
+                        "survivor_prefix_sha256",
+                        "projector_schema_version"
+                      ],
+                      "properties": {
+                        "manifest_generation": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "recovery_epoch": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "segment_generation": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "segment_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "byte_offset": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "last_sequence_id": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "last_event_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "survivor_prefix_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        "projector_schema_version": {
+                          "const": "1.0.0"
+                        }
+                      }
+                    },
+                    "redaction_profile": {
+                      "const": "no_secrets"
+                    },
+                    "storage_instance_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "full_index_checkpoint_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "index_selection_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "published_at_utc": {
+                      "type": "string",
+                      "minLength": 1,
+                      "format": "date-time"
+                    },
+                    "publication_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "hold_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "uniqueItems": true
+                    }
+                  }
+                },
+                "retired_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "successor_publication_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "family_id": "restore_point_creation_commit",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "restore_point_creation_commit.v1:{project_id}:{restore_point_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.restore_point_creation_commit.v1",
+      "value_schema_ref": "Plans/restore_point_created_contracts.schema.json#/$defs/creation_companion",
+      "owner_doc": "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+      "producer": [
+        "handlers::chat::create_restore_point",
+        "Assistant Chat restore-point creation reconciliation"
+      ],
+      "consumers": [
+        "consumer.chat.restore_point_created@1.0.0",
+        "reader.chat.restore_point_history@1.0.0",
+        "reader.chat.branch_from_restore@1.0.0",
+        "reader.runtime_artifacts.restore_point_record@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "restore_point_id",
+        "record_ref",
+        "record_sha256",
+        "command_request",
+        "command_request_sha256",
+        "frozen_append_input",
+        "frozen_append_input_sha256",
+        "state",
+        "append_receipt",
+        "created_at_utc",
+        "committed_at_utc",
+        "redaction_profile",
+        "record_hash_recipe_id"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "append_receipt",
+        "committed_at_utc"
+      ],
+      "replay_behavior": "The complete frozen append input and command request commit atomically with the immutable rp row in one redb transaction. Owner restart/retry appends or verifies the same event and then records committed. Event replay never produces or repairs canonical custody. A marker alone is not proof: readers require the matching durable source event and current record joins. Native missing custody fences only mutations dependent on the affected project/restore identity. Supported historical completed points use the separately verified legacy reader and do not require fabricated companions.",
+      "migration": "New canonical required native creation custody family, no aliases. StorageMigrationCoordinator introduces it against actual store graph/ceilings. Historical completed rp plus genuine matching durable created event and retained owner source-generation/custody proof remains readable without companion or reconstructed original command fields. Coordinator backfill is permitted only with complete original evidence; no lazy writes or guessed data.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+          "Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle",
+          "Plans/assistant-chat-design.md#restore-point-created-native-and-historical-consumers"
+        ]
+      },
+      "retention_compaction": "Required source custody of the SAME logical restore_point_id under exact RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0. Resolve reference_release and every hold through that canonical rp identity; 7776000-second inclusive eligibility and2048/project logical restore-point cap are unchanged. One companion per point is custody, not a second user-created point. Pending creation uses only existing in-flight/required-source-lineage holds; completion releases only its proved in-flight claim, never another hold. Eligible expiry follows the same point disposition and retains required hash summary. No independent release clock, additional permanent hold,365-day delivery policy or unconditional purge.",
+      "retention_policy_ref": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+      "redaction_no_secret_rule": "Original nonsecret command identities, exact immutable ref-only created payload, frozen producer envelope fields, hashes and synced append receipt only. Apply EventRecord reject_unhandled_secrets checks before first durable write and on diagnostic copies; no body, credentials, local machine paths, stream state or queue content.",
+      "legacy_canonical_crosswalk_status": "New required restore-point creation custody and commit accelerator; not an EventRecord, generic command outbox, application receipt or second restore point.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract",
+          "Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "restore_point_id",
+          "record_ref",
+          "record_sha256",
+          "command_request",
+          "command_request_sha256",
+          "frozen_append_input",
+          "frozen_append_input_sha256",
+          "state",
+          "append_receipt",
+          "created_at_utc",
+          "committed_at_utc",
+          "redaction_profile",
+          "record_hash_recipe_id"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.restore_point_creation_commit.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "restore_point_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "command_request": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_id",
+              "project_id",
+              "thread_id",
+              "source_message_id",
+              "idempotency_key"
+            ],
+            "properties": {
+              "command_id": {
+                "const": "cmd.chat.create_restore_point"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "thread_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_message_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "command_request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "frozen_append_input": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "observed_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "type": "string",
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "type": "string",
+                "const": "2.0.0"
+              },
+              "scope_kind": {
+                "const": "project"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "const": "restore_point.created"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "thread_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "run_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "node_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "attempt_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requested_account_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "effective_account_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              },
+              "observed_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              },
+              "producer_sequence_id": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "causation_event_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "parent_event_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "payload_schema_id": {
+                "const": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0"
+              },
+              "payload": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "$id": "https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_version",
+                  "restore_point_id",
+                  "project_id",
+                  "source_thread_ref",
+                  "source_branch_ref",
+                  "message_boundary_ref",
+                  "record_ref",
+                  "record_hash",
+                  "context_refs",
+                  "provenance_refs",
+                  "attachment_refs",
+                  "citation_refs",
+                  "status",
+                  "created_at_utc"
+                ],
+                "properties": {
+                  "schema_version": {
+                    "type": "string",
+                    "const": "1.0.0"
+                  },
+                  "restore_point_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_thread_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_branch_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "message_boundary_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "record_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "record_hash": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "context_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "provenance_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "attachment_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "citation_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "const": "available"
+                  },
+                  "created_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "minLength": 1
+                  },
+                  "safe_point_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "payload_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
+              },
+              "replay_policy": {
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key"
+                ]
+              },
+              "migration": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "migrated_from_schema_id",
+                  "migrated_from_schema_version",
+                  "migration_id",
+                  "compatibility_event_type"
+                ],
+                "properties": {
+                  "migrated_from_schema_id": {
+                    "type": "null"
+                  },
+                  "migrated_from_schema_version": {
+                    "type": "null"
+                  },
+                  "migration_id": {
+                    "type": "null"
+                  },
+                  "compatibility_event_type": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          },
+          "frozen_append_input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "state": {
+            "enum": [
+              "pending_append",
+              "committed"
+            ]
+          },
+          "append_receipt": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event_id",
+                  "sequence_id",
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "commit_group_id",
+                  "durability_class",
+                  "durable_end_offset",
+                  "durability_state",
+                  "manifest_generation",
+                  "acknowledged_at_utc"
+                ],
+                "properties": {
+                  "event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "commit_group_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "durability_class": {
+                    "enum": [
+                      "ordinary",
+                      "barrier"
+                    ]
+                  },
+                  "durable_end_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "durability_state": {
+                    "const": "synced"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "acknowledged_at_utc": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "date-time"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at_utc": {
+            "type": "string",
+            "minLength": 1,
+            "format": "date-time"
+          },
+          "committed_at_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "record_hash_recipe_id": {
+            "const": "pm.restore_point.immutable_capture_sha256.v1"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "pending_append"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "append_receipt": {
+                  "type": "null"
+                },
+                "committed_at_utc": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "append_receipt": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "event_id",
+                    "sequence_id",
+                    "segment_generation",
+                    "segment_name",
+                    "byte_offset",
+                    "commit_group_id",
+                    "durability_class",
+                    "durable_end_offset",
+                    "durability_state",
+                    "manifest_generation",
+                    "acknowledged_at_utc"
+                  ],
+                  "properties": {
+                    "event_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sequence_id": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "byte_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "commit_group_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "durability_class": {
+                      "enum": [
+                        "ordinary",
+                        "barrier"
+                      ]
+                    },
+                    "durable_end_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "durability_state": {
+                      "const": "synced"
+                    },
+                    "manifest_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "acknowledged_at_utc": {
+                      "type": "string",
+                      "minLength": 1,
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "committed_at_utc": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "restore_point_retention_summary",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.restore_point_retention_summary.v1",
+      "value_schema_ref": "Plans/restore_point_created_contracts.schema.json#/$defs/retention_summary",
+      "owner_doc": "Plans/storage-plan.md#restore-point-retention-summary-contract",
+      "producer": [
+        "writer.storage.restore_point_retention_summary@1.0.0"
+      ],
+      "consumers": [
+        "projector.chat.restore_point_created@1.0.0",
+        "reader.chat.restore_point_history@1.0.0",
+        "reader.runtime_artifacts.restore_point_record@1.0.0",
+        "Storage restore-point retention/recovery"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "representation",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "restore_point_id",
+        "record_ref",
+        "original_record_hash",
+        "terminal_status",
+        "hash_verification",
+        "creation_event",
+        "terminal_event",
+        "retention_policy",
+        "selection",
+        "hold_evaluations",
+        "creation_companion_required",
+        "deletion_companion_required",
+        "terminal_source_admission_receipt_sha256",
+        "retired_custody",
+        "retirement_operation_id",
+        "retirement_actor_ref",
+        "owner_gate_revision_sha256",
+        "summary_transaction_id",
+        "summary_committed_at_utc",
+        "source_manifest_generation_at_commit",
+        "source_recovery_epoch_at_commit",
+        "redaction_profile"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Canonical content-free final retain_hash_summary residue of one exact logical point. Write only in one durable owner-authorized redb transaction that removes the exact eligible rp/companion keys listed in retired_custody. Same summary identity and immutable content is read-only replay; conflict quarantines. No lifecycle transition, EventRecord append, source-content purge, restoration, or action is caused by the summary writer or reader.",
+      "migration": "NEW explicitly defined shared physical prerequisite under SP-269. StorageMigrationCoordinator binds actual source/target store generations and version ceilings before writes; no guessed store integer, unverified historical backfill or lazy rewrite.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-retention-summary-contract"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#restore-point-retention-summary-contract",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-retention-summary-contract"
+        ]
+      },
+      "retention_compaction": "Exact RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 final retain_hash_summary residue, not a new logical point and not a new independently aging object. Source-custody retirement requires inclusive owner-proven release+7776000seconds, all holds/refs cleared, and 2048/project oldest-eligible count semantics. Residue contains only identity/hash and necessary content-free validated release/selection/retirement facts. Do not restart TTL at summary creation, apply the same expiry action recursively to delete its mandatory residue, assign a new indefinite policy, or invent a new cleanup timer/hold. Future change to residue disposition requires owner policy authority.",
+      "retention_policy_ref": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+      "redaction_no_secret_rule": "Only stable IDs, refs, hashes, owner decision facts/times/counts and exact canonical-key/value-digest retirement descriptors. No original command/input, transcript, attachment/file bytes, source content, titles, raw paths, credentials or secrets. Evidence refs are supplemental; embedded validated facts remain usable after lawfully pruned source manifests.",
+      "legacy_canonical_crosswalk_status": "No preexisting exact summary family in searched registry. Native writes are new; historical summaries may be materialized only from genuinely retained complete validated source/release/retirement evidence under coordinator authority, never invented from terminal labels or missing rows.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#restore-point-retention-summary-contract"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "representation",
+          "storage_instance_id",
+          "project_id",
+          "scope_partition",
+          "restore_point_id",
+          "record_ref",
+          "original_record_hash",
+          "terminal_status",
+          "hash_verification",
+          "creation_event",
+          "terminal_event",
+          "retention_policy",
+          "selection",
+          "hold_evaluations",
+          "creation_companion_required",
+          "deletion_companion_required",
+          "terminal_source_admission_receipt_sha256",
+          "retired_custody",
+          "retirement_operation_id",
+          "retirement_actor_ref",
+          "owner_gate_revision_sha256",
+          "summary_transaction_id",
+          "summary_committed_at_utc",
+          "source_manifest_generation_at_commit",
+          "source_recovery_epoch_at_commit",
+          "redaction_profile"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.restore_point_retention_summary.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "representation": {
+            "const": "retained_hash_summary"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "pattern": "^project~[A-Za-z0-9_-]+$"
+          },
+          "restore_point_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_record_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "terminal_status": {
+            "enum": [
+              "expired",
+              "deleted",
+              "corrupt"
+            ]
+          },
+          "hash_verification": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "native_recipe_id",
+              "owner_verification_id",
+              "verified_capture_relation_sha256",
+              "source_store_generation_id",
+              "source_admission_receipt_sha256"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "verified_native_immutable_capture",
+                  "verified_supported_historical"
+                ]
+              },
+              "native_recipe_id": {
+                "anyOf": [
+                  {
+                    "const": "pm.restore_point.immutable_capture_sha256.v1"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_verification_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verified_capture_relation_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "source_store_generation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_admission_receipt_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "verified_native_immutable_capture"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "native_recipe_id": {
+                      "const": "pm.restore_point.immutable_capture_sha256.v1"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "verified_supported_historical"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "native_recipe_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "creation_event": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "event_type",
+              "payload_schema_id",
+              "payload_sha256",
+              "producer_semantic_sha256",
+              "original_record_hash",
+              "original_frame_sha256",
+              "original_sequence_id",
+              "original_manifest_generation",
+              "original_recovery_epoch",
+              "original_segment_generation",
+              "original_segment_name",
+              "original_byte_offset",
+              "original_durable_end_offset"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "const": "restore_point.created"
+              },
+              "payload_schema_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "payload_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "producer_semantic_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_record_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_frame_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "terminal_event": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "event_type",
+              "payload_schema_id",
+              "payload_sha256",
+              "producer_semantic_sha256",
+              "original_record_hash",
+              "original_frame_sha256",
+              "original_sequence_id",
+              "original_manifest_generation",
+              "original_recovery_epoch",
+              "original_segment_generation",
+              "original_segment_name",
+              "original_byte_offset",
+              "original_durable_end_offset"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "enum": [
+                  "restore_point.expired",
+                  "restore_point.deleted",
+                  "restore_point.corrupt"
+                ]
+              },
+              "payload_schema_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "payload_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "producer_semantic_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_record_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_frame_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_recovery_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "original_durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "retention_policy": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "policy_id",
+              "policy_version",
+              "expiry_action"
+            ],
+            "properties": {
+              "policy_id": {
+                "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+              },
+              "policy_version": {
+                "const": "1.0.0"
+              },
+              "expiry_action": {
+                "const": "retain_hash_summary"
+              }
+            }
+          },
+          "selection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "selection_kind",
+              "reference_release",
+              "evaluated_at_utc",
+              "logical_point_count_before",
+              "eligible_point_set_sha256",
+              "selected_oldest_eligible_rank"
+            ],
+            "properties": {
+              "selection_kind": {
+                "enum": [
+                  "reference_release_ttl",
+                  "oldest_eligible_count_pressure"
+                ]
+              },
+              "reference_release": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "closure_kind",
+                  "owner_authority_id",
+                  "release_id",
+                  "released_at_utc",
+                  "closed_ref_set_sha256",
+                  "release_fact_sha256"
+                ],
+                "properties": {
+                  "closure_kind": {
+                    "const": "owner_verified_reference_release"
+                  },
+                  "owner_authority_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "release_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "released_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "minLength": 1
+                  },
+                  "closed_ref_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "release_fact_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "evaluated_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              },
+              "logical_point_count_before": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "eligible_point_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "selected_oldest_eligible_rank": {
+                "anyOf": [
+                  {
+                    "const": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "selection_kind": {
+                      "const": "oldest_eligible_count_pressure"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "logical_point_count_before": {
+                      "type": "integer",
+                      "minimum": 2049
+                    },
+                    "selected_oldest_eligible_rank": {
+                      "const": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "selection_kind": {
+                      "const": "reference_release_ttl"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "selected_oldest_eligible_rank": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "hold_evaluations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref_kind",
+                "owner_authority_id",
+                "evaluated_revision_sha256",
+                "enumeration_complete",
+                "active_blocker_count",
+                "released_ref_count",
+                "released_ref_set_sha256",
+                "release_fact_set_sha256",
+                "evaluated_at_utc"
+              ],
+              "properties": {
+                "ref_kind": {
+                  "enum": [
+                    "descendant_branch",
+                    "application",
+                    "preserve",
+                    "legal_hold",
+                    "in_flight_application",
+                    "source_lineage",
+                    "live_ref",
+                    "backup",
+                    "rollback",
+                    "recovery_anchor",
+                    "maintenance"
+                  ]
+                },
+                "owner_authority_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evaluated_revision_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "enumeration_complete": {
+                  "const": true
+                },
+                "active_blocker_count": {
+                  "const": 0
+                },
+                "released_ref_count": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "released_ref_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "release_fact_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "evaluated_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                }
+              }
+            },
+            "minItems": 11,
+            "maxItems": 11
+          },
+          "creation_companion_required": {
+            "type": "boolean"
+          },
+          "deletion_companion_required": {
+            "type": "boolean"
+          },
+          "terminal_source_admission_receipt_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "retired_custody": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "family_id",
+                "canonical_key",
+                "value_schema_id",
+                "value_schema_version",
+                "canonical_encoding",
+                "value_bytes_sha256",
+                "disposition"
+              ],
+              "properties": {
+                "family_id": {
+                  "enum": [
+                    "restore_point_record",
+                    "restore_point_creation_commit",
+                    "restore_point_deletion_commit"
+                  ]
+                },
+                "canonical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value_schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value_schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "canonical_encoding": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value_bytes_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "disposition": {
+                  "const": "removed_in_summary_transaction"
+                }
+              }
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "retirement_operation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retirement_actor_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner_gate_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "summary_transaction_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary_committed_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          },
+          "source_manifest_generation_at_commit": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "source_recovery_epoch_at_commit": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "terminal_status": {
+                  "const": "expired"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "terminal_event": {
+                  "properties": {
+                    "event_type": {
+                      "const": "restore_point.expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "terminal_status": {
+                  "const": "deleted"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "terminal_event": {
+                  "properties": {
+                    "event_type": {
+                      "const": "restore_point.deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "terminal_status": {
+                  "const": "corrupt"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "terminal_event": {
+                  "properties": {
+                    "event_type": {
+                      "const": "restore_point.corrupt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "restore_point_create_result",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "restore_point_create_result.v1:{sha256_utf8(scope_partition)}:{sha256_utf8(idempotency_key)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.restore_point_create_result.v1",
+      "value_schema_ref": "Plans/restore_point_create_result.schema.json#",
+      "owner_doc": "Plans/storage-plan.md#SP-274",
+      "producer": [
+        "handlers::chat::create_restore_point",
+        "Assistant Chat restore-point creation reconciliation"
+      ],
+      "consumers": [
+        "handlers::chat::create_restore_point original result lookup",
+        "CV-333 original response projection"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "scope_partition",
+        "project_id",
+        "idempotency_key",
+        "command_request_sha256",
+        "frozen_append_input_sha256",
+        "producer_semantic_digest",
+        "original_dispatch_id",
+        "command_outcome_ref",
+        "state",
+        "original_owner_result",
+        "owner_result_sha256",
+        "original_command_outcome",
+        "created_at_utc",
+        "terminal_at_utc",
+        "redaction_profile",
+        "original_ui_response",
+        "original_normalized_request",
+        "original_append_receipt"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "frozen_append_input_sha256",
+        "producer_semantic_digest",
+        "original_owner_result",
+        "owner_result_sha256",
+        "terminal_at_utc",
+        "original_ui_response",
+        "original_append_receipt"
+      ],
+      "replay_behavior": "Same scoped identity and canonical original request digest returns the retained typed original owner result and actual original Full Thread outcome without re-executing or dereferencing a retired restore point. Missing authoritative result is fenced, not reconstructed.",
+      "migration": "Coordinator-only introduction; historical backfill only from complete genuine original request/result/outcome evidence. No guessed fields, dispatch identity, receipt, timestamp or success.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-274"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-274",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-274"
+        ]
+      },
+      "retention_compaction": "Existing UCC Case L original-owner-result app-root lifetime duty, materialized with RP-AUTHORITY-INDEFINITE@1.0.0. No TTL, no point cap, no delivery365-day eviction. Only content-free original command/result/outcome evidence survives lawful RP90 retirement; no capture/source bodies retained.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Closed original identity, hashes and owner-result/outcome refs only. No conversation body, frozen payload, context/provenance arrays, attachments, file bodies, raw paths, secrets or dynamic error text.",
+      "legacy_canonical_crosswalk_status": "NEW narrow created-command custody, not a global CommandOutcome registry or reconstructed restore point.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-274"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "command_id",
+          "scope_partition",
+          "project_id",
+          "idempotency_key",
+          "command_request_sha256",
+          "frozen_append_input_sha256",
+          "producer_semantic_digest",
+          "original_dispatch_id",
+          "command_outcome_ref",
+          "state",
+          "original_owner_result",
+          "owner_result_sha256",
+          "original_command_outcome",
+          "created_at_utc",
+          "terminal_at_utc",
+          "redaction_profile",
+          "original_ui_response",
+          "original_normalized_request",
+          "original_append_receipt"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.restore_point_create_result.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "command_id": {
+            "const": "cmd.chat.create_restore_point"
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "frozen_append_input_sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "producer_semantic_digest": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_dispatch_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_outcome_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "state": {
+            "enum": [
+              "admitted_pending",
+              "terminal"
+            ]
+          },
+          "original_owner_result": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/RestorePointCreateCommandResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "owner_result_sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_command_outcome": {
+            "$ref": "#/$defs/CommandOutcomeRecord"
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "terminal_at_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "original_ui_response": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/OriginalUICommandResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_normalized_request": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_ref",
+              "command_instance_id",
+              "operation_id",
+              "idempotency_key",
+              "dispatch_frame_id",
+              "command_id",
+              "owner_identity",
+              "payload_sha256",
+              "target_generation"
+            ],
+            "properties": {
+              "request_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "dispatch_frame_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_id": {
+                "const": "cmd.chat.create_restore_point"
+              },
+              "owner_identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "payload_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "target_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "original_append_receipt": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event_id",
+                  "sequence_id",
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "commit_group_id",
+                  "durability_class",
+                  "durable_end_offset",
+                  "durability_state",
+                  "manifest_generation",
+                  "acknowledged_at_utc"
+                ],
+                "properties": {
+                  "event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "commit_group_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "durability_class": {
+                    "enum": [
+                      "ordinary",
+                      "barrier"
+                    ]
+                  },
+                  "durable_end_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "durability_state": {
+                    "const": "synced"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "acknowledged_at_utc": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "date-time"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "pm.storage_value.restore_point_create_result.v1",
+        "$defs": {
+          "Id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "Sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "UtcTimestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "OwnerResultSchemaRef": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "json_pointer",
+              "schema_id"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json$"
+              },
+              "json_pointer": {
+                "type": "string",
+                "pattern": "^#(?:/\\$defs/[A-Za-z0-9_]+)?$"
+              },
+              "schema_id": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          },
+          "IdentityEnvelope": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Explicit application-or-Project operation scope with exact controlling Server, execution Host, Environment, and topology bindings. named_plan_id is only a NamedPlan identity and is nullable when no NamedPlan participates.",
+            "required": [
+              "scope_kind",
+              "operation_id",
+              "operation_generation",
+              "server_id",
+              "project_id",
+              "project_home_server_id",
+              "named_plan_id",
+              "execution_host_id",
+              "execution_environment_id",
+              "topology_generation"
+            ],
+            "properties": {
+              "scope_kind": {
+                "enum": [
+                  "application",
+                  "project"
+                ]
+              },
+              "operation_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "operation_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_instance_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "server_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "project_home_server_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "named_plan_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "thread_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "goal_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "execution_host_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "execution_environment_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "source_location_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "topology_generation": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_home_server_id": {
+                      "type": "null"
+                    },
+                    "named_plan_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "project_home_server_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "GovernorDecisionRecord": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "identity",
+              "resource_family",
+              "physical_parent_budget_id",
+              "requested_budget_ref",
+              "effective_budget_ref",
+              "decision",
+              "reason_code",
+              "policy_generation",
+              "host_observation_ref",
+              "reevaluation_trigger",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "governor_decision"
+              },
+              "identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "resource_family": {
+                "enum": [
+                  "cpu",
+                  "memory",
+                  "gpu",
+                  "media",
+                  "process",
+                  "watcher",
+                  "descriptor",
+                  "queue",
+                  "log",
+                  "artifact",
+                  "network",
+                  "port",
+                  "storage",
+                  "index",
+                  "browser",
+                  "capture",
+                  "provider",
+                  "lsp",
+                  "dap",
+                  "eval",
+                  "mcp",
+                  "test_host",
+                  "device",
+                  "container",
+                  "worktree",
+                  "package_manager_root"
+                ]
+              },
+              "physical_parent_budget_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "requested_budget_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "effective_budget_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "decision": {
+                "enum": [
+                  "admitted",
+                  "queued",
+                  "admitted_degraded",
+                  "permission_blocked",
+                  "resource_blocked",
+                  "cancelled"
+                ]
+              },
+              "reason_code": {
+                "$ref": "#/$defs/Id"
+              },
+              "policy_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "host_observation_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "lease_refs": {
+                "type": "array",
+                "maxItems": 64,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              },
+              "reevaluation_trigger": {
+                "$ref": "#/$defs/Id"
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            }
+          },
+          "CommandOutcomeRecord": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "identity",
+              "command_id",
+              "payload_sha256",
+              "idempotency_key",
+              "target_generation",
+              "outcome",
+              "dispatch_frame_id",
+              "acknowledgement_frame_id",
+              "acknowledgement_frame_offset",
+              "same_frame_acknowledged",
+              "acknowledgement_receipt_ref",
+              "result_receipt_ref",
+              "error_ref",
+              "owner_result_ref",
+              "owner_result_schema_ref",
+              "owner_result_sha256",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "command_outcome"
+              },
+              "identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "command_id": {
+                "type": "string",
+                "pattern": "^cmd\\.[a-z0-9_.-]+$",
+                "maxLength": 160
+              },
+              "payload_sha256": {
+                "$ref": "#/$defs/Sha256"
+              },
+              "owner_result_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_result_schema_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/OwnerResultSchemaRef"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_result_sha256": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/Sha256"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/Id"
+              },
+              "target_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "acknowledged",
+                  "executing",
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "rejected",
+                  "terminal_unknown"
+                ]
+              },
+              "dispatch_frame_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "acknowledgement_frame_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "acknowledgement_frame_offset": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "same_frame_acknowledged": {
+                "type": "boolean"
+              },
+              "acknowledgement_receipt_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_receipt_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "error_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            },
+            "allOf": [
+              {
+                "properties": {
+                  "identity": {
+                    "required": [
+                      "command_instance_id"
+                    ],
+                    "properties": {
+                      "command_instance_id": {
+                        "$ref": "#/$defs/Id"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "succeeded",
+                        "failed",
+                        "cancelled",
+                        "rejected",
+                        "terminal_unknown"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "owner_result_ref": {
+                      "$ref": "#/$defs/Id"
+                    },
+                    "owner_result_schema_ref": {
+                      "$ref": "#/$defs/OwnerResultSchemaRef"
+                    },
+                    "owner_result_sha256": {
+                      "$ref": "#/$defs/Sha256"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "owner_result_ref": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "owner_result_schema_ref": {
+                      "$ref": "#/$defs/OwnerResultSchemaRef"
+                    },
+                    "owner_result_sha256": {
+                      "$ref": "#/$defs/Sha256"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "owner_result_schema_ref": {
+                      "type": "null"
+                    },
+                    "owner_result_sha256": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "acknowledged",
+                        "executing",
+                        "succeeded"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "acknowledgement_receipt_ref": {
+                      "$ref": "#/$defs/Id"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "acknowledgement_receipt_ref": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "acknowledgement_receipt_ref"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "acknowledgement_frame_id": {
+                      "$ref": "#/$defs/Id"
+                    },
+                    "acknowledgement_frame_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "acknowledgement_frame_id": {
+                      "type": "null"
+                    },
+                    "acknowledgement_frame_offset": {
+                      "type": "null"
+                    },
+                    "same_frame_acknowledged": {
+                      "const": false
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "succeeded",
+                        "cancelled"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "result_receipt_ref": {
+                      "$ref": "#/$defs/Id"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "failed",
+                        "rejected",
+                        "terminal_unknown"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "error_ref": {
+                      "$ref": "#/$defs/Id"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "same_frame_acknowledged": {
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "same_frame_acknowledged"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "acknowledgement_frame_id",
+                    "acknowledgement_frame_offset",
+                    "acknowledgement_receipt_ref"
+                  ],
+                  "properties": {
+                    "acknowledgement_frame_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "acknowledgement_frame_offset": {
+                      "const": 0
+                    },
+                    "acknowledgement_receipt_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "ObservableWorkRecord": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "identity",
+              "observable_work_id",
+              "owner_domain",
+              "title",
+              "subject_refs",
+              "blocking_scope",
+              "work_state",
+              "phase",
+              "progress_kind",
+              "progress_source",
+              "last_activity_at",
+              "heartbeat_at",
+              "activity_evidence_ref",
+              "parent_work_id",
+              "child_work_ids",
+              "freshness",
+              "projection_generation",
+              "cancel_available",
+              "background_available",
+              "retry_available",
+              "dedupe_key",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "observable_work"
+              },
+              "identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "observable_work_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "subject_refs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 64,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              },
+              "blocking_scope": {
+                "enum": [
+                  "none",
+                  "object",
+                  "project",
+                  "application"
+                ]
+              },
+              "last_activity_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              },
+              "heartbeat_at": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/UtcTimestamp"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "activity_evidence_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "parent_work_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "child_work_ids": {
+                "type": "array",
+                "maxItems": 256,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              },
+              "owner_domain": {
+                "enum": [
+                  "chat",
+                  "thread",
+                  "plan",
+                  "goal",
+                  "worknode",
+                  "provider",
+                  "installation",
+                  "authentication",
+                  "connection",
+                  "browser",
+                  "capture",
+                  "testing",
+                  "migration",
+                  "storage",
+                  "plugin",
+                  "release",
+                  "lsp",
+                  "dap",
+                  "eval",
+                  "mcp",
+                  "worktree",
+                  "container",
+                  "other_registered"
+                ]
+              },
+              "work_state": {
+                "enum": [
+                  "accepted",
+                  "queued",
+                  "starting",
+                  "running",
+                  "waiting",
+                  "retrying",
+                  "reconnecting",
+                  "backgrounded",
+                  "degraded",
+                  "stalled",
+                  "committing",
+                  "verifying",
+                  "testing-route",
+                  "migrating-route",
+                  "rolling-back",
+                  "completed",
+                  "failed",
+                  "cancelled",
+                  "recovery-required"
+                ]
+              },
+              "phase": {
+                "$ref": "#/$defs/Id"
+              },
+              "wait_reason": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  null,
+                  "provider",
+                  "host",
+                  "network",
+                  "resource",
+                  "permission",
+                  "sign-in",
+                  "idle",
+                  "user",
+                  "package-manager",
+                  "lease",
+                  "rate-limit",
+                  "owner-recovery"
+                ]
+              },
+              "next_reevaluation_condition": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "progress_kind": {
+                "enum": [
+                  "none",
+                  "indeterminate",
+                  "units",
+                  "bytes",
+                  "items",
+                  "steps",
+                  "time"
+                ]
+              },
+              "progress_source": {
+                "enum": [
+                  "measured",
+                  "provider_reported",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "completed_units": {
+                "type": [
+                  "integer",
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "total_units": {
+                "type": [
+                  "integer",
+                  "number",
+                  "null"
+                ],
+                "exclusiveMinimum": 0
+              },
+              "progress_source_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "freshness": {
+                "enum": [
+                  "current",
+                  "cached",
+                  "stale",
+                  "unknown",
+                  "conflicted"
+                ]
+              },
+              "projection_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cancel_available": {
+                "type": "boolean"
+              },
+              "background_available": {
+                "type": "boolean"
+              },
+              "retry_available": {
+                "type": "boolean"
+              },
+              "dedupe_key": {
+                "$ref": "#/$defs/Id"
+              },
+              "result_receipt_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "error_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "work_state": {
+                      "enum": [
+                        "queued",
+                        "waiting"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "work_state"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "wait_reason",
+                    "next_reevaluation_condition"
+                  ],
+                  "properties": {
+                    "wait_reason": {
+                      "not": {
+                        "type": "null"
+                      }
+                    },
+                    "next_reevaluation_condition": {
+                      "not": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "progress_kind": {
+                      "enum": [
+                        "units",
+                        "bytes",
+                        "items",
+                        "steps",
+                        "time"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "progress_kind"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "completed_units",
+                    "total_units",
+                    "progress_source_ref"
+                  ],
+                  "properties": {
+                    "completed_units": {
+                      "not": {
+                        "type": "null"
+                      }
+                    },
+                    "total_units": {
+                      "not": {
+                        "type": "null"
+                      }
+                    },
+                    "progress_source_ref": {
+                      "not": {
+                        "type": "null"
+                      }
+                    },
+                    "progress_source": {
+                      "not": {
+                        "const": "unknown"
+                      }
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "completed_units": {
+                      "type": "null"
+                    },
+                    "total_units": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "work_state": {
+                      "enum": [
+                        "completed",
+                        "cancelled"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "work_state"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "result_receipt_ref"
+                  ],
+                  "properties": {
+                    "result_receipt_ref": {
+                      "$ref": "#/$defs/Id"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "work_state": {
+                      "enum": [
+                        "failed",
+                        "recovery-required"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "work_state"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "error_ref"
+                  ],
+                  "properties": {
+                    "error_ref": {
+                      "$ref": "#/$defs/Id"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "work_state": {
+                      "enum": [
+                        "completed",
+                        "failed",
+                        "cancelled"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "work_state"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "cancel_available": {
+                      "const": false
+                    },
+                    "background_available": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "FullThreadProjectionRecord": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "identity",
+              "collection_id",
+              "collection_generation",
+              "projection_generation",
+              "window_start",
+              "window_count",
+              "overscan_count",
+              "total_item_count",
+              "stable_item_ids",
+              "hidden_surface_policy",
+              "durable_work_continues",
+              "latest_request_generation",
+              "stale_generation_disposition",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "full_thread_projection"
+              },
+              "identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "collection_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "collection_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "projection_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "window_start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "window_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000
+              },
+              "overscan_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 250
+              },
+              "total_item_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "stable_item_ids": {
+                "type": "array",
+                "maxItems": 1250,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              },
+              "hidden_surface_policy": {
+                "enum": [
+                  "visible_hydrated",
+                  "visible_compact",
+                  "hidden_paint_suppressed",
+                  "offscreen_paint_suppressed",
+                  "collapsed_paint_suppressed"
+                ]
+              },
+              "durable_work_continues": {
+                "type": "boolean",
+                "const": true
+              },
+              "latest_request_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "stale_generation_disposition": {
+                "enum": [
+                  "not_stale",
+                  "rejected",
+                  "superseded_projection_only"
+                ]
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            }
+          },
+          "ContinuityRecord": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "identity",
+              "prior_identity",
+              "continuity_trigger",
+              "prior_transport_epoch",
+              "current_transport_epoch",
+              "continuation_generation",
+              "expected_continuation_generation",
+              "duplicate_effect_count",
+              "duplicate_usage_count",
+              "return_route_ref",
+              "dedupe_key",
+              "disposition",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "continuity"
+              },
+              "identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "prior_identity": {
+                "$ref": "#/$defs/IdentityEnvelope"
+              },
+              "expected_continuation_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "duplicate_effect_count": {
+                "type": "integer",
+                "const": 0
+              },
+              "duplicate_usage_count": {
+                "type": "integer",
+                "const": 0
+              },
+              "continuity_trigger": {
+                "enum": [
+                  "reconnect",
+                  "restart",
+                  "sleep",
+                  "external-return"
+                ]
+              },
+              "prior_transport_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "current_transport_epoch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "continuation_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "return_route_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "dedupe_key": {
+                "$ref": "#/$defs/Id"
+              },
+              "disposition": {
+                "enum": [
+                  "same_logical_operation_resumed",
+                  "same_logical_operation_reconciled",
+                  "duplicate_suppressed",
+                  "stale_generation_rejected",
+                  "manual_recovery_required"
+                ]
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            }
+          },
+          "PublicIngressGateDecision": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "record_kind",
+              "endpoint_id",
+              "endpoint_generation",
+              "request_id",
+              "exposure_class",
+              "authentication_decision_ref",
+              "rate_decision_ref",
+              "checked_before_expensive_hydration",
+              "decision",
+              "response_class",
+              "operational_attribution_ref",
+              "observed_at"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.full_thread_runtime.contracts.v1"
+              },
+              "record_kind": {
+                "const": "public_ingress_gate"
+              },
+              "endpoint_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "endpoint_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "request_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "exposure_class": {
+                "enum": [
+                  "lan_private",
+                  "tailscale_private",
+                  "public_funnel",
+                  "public_reverse_proxy",
+                  "public_custom_domain"
+                ]
+              },
+              "authentication_decision_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "rate_decision_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "permission_security_refs": {
+                "type": "array",
+                "maxItems": 32,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/Id"
+                }
+              },
+              "checked_before_expensive_hydration": {
+                "type": "boolean",
+                "const": true
+              },
+              "decision": {
+                "enum": [
+                  "admitted",
+                  "authentication_required",
+                  "authentication_rejected",
+                  "rate_limited",
+                  "blocked_policy",
+                  "stale_generation"
+                ]
+              },
+              "response_class": {
+                "enum": [
+                  "bounded_admitted",
+                  "bounded_redacted_rejection",
+                  "bounded_redacted_challenge",
+                  "bounded_redacted_rate_limit"
+                ]
+              },
+              "operational_attribution_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "usage_record_ref": {
+                "type": "null"
+              },
+              "observed_at": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            }
+          },
+          "RestorePointCreateCommandResult": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "command_id",
+              "project_id",
+              "command_request_sha256",
+              "outcome",
+              "restore_point_id",
+              "record_ref",
+              "record_sha256",
+              "created_event_id",
+              "append_receipt_sha256",
+              "receipt_ref",
+              "reason_ref",
+              "cleanup_performed"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.restore_point.create_command_result.v1"
+              },
+              "command_id": {
+                "const": "cmd.chat.create_restore_point"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "command_request_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "outcome": {
+                "enum": [
+                  "created",
+                  "refused",
+                  "failed"
+                ]
+              },
+              "restore_point_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "record_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "record_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "created_event_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "append_receipt_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "receipt_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "cleanup_performed": {
+                "const": false
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "created"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "restore_point_id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "record_ref": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "record_sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "created_event_id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 256
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "append_receipt_sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "reason_ref": {
+                      "type": "null"
+                    }
+                  },
+                  "not": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "restore_point_id": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "record_ref": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "record_sha256": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "created_event_id": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "properties": {
+                          "append_receipt_sha256": {
+                            "type": "null"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "restore_point_id": {
+                      "type": "null"
+                    },
+                    "record_ref": {
+                      "type": "null"
+                    },
+                    "record_sha256": {
+                      "type": "null"
+                    },
+                    "created_event_id": {
+                      "type": "null"
+                    },
+                    "append_receipt_sha256": {
+                      "type": "null"
+                    },
+                    "reason_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "UIResponse_Id": {
+            "$ref": "#/$defs/Id"
+          },
+          "UIResponse_NonSecretRef": {
+            "$ref": "#/$defs/SharedNonSecretRef"
+          },
+          "UIResponse_CommandId": {
+            "type": "string",
+            "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+            "maxLength": 160
+          },
+          "UIResponse_OwnerIdentity": {
+            "$ref": "#/$defs/IdentityEnvelope"
+          },
+          "UIResponse_UICommandError": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "reason",
+              "offending_field"
+            ],
+            "properties": {
+              "code": {
+                "enum": [
+                  "invalid_route",
+                  "unknown_command",
+                  "invalid_args",
+                  "permission_denied",
+                  "blocked_state_required",
+                  "stale_projection",
+                  "handler_unavailable",
+                  "internal_error"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "offending_field": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 160
+              }
+            }
+          },
+          "UIResponse_OwnerSchemaRef": {
+            "$ref": "#/$defs/OwnerResultSchemaRef"
+          },
+          "OriginalUICommandResponse": {
+            "title": "Puppet Master central UICommandResponse",
+            "description": "Contracts_V0 owns this dispatcher projection. Owner operations consume the existing Full Thread CommandOutcomeRecord and separately validated typed owner result; local projections and pre-dispatch refusals never fabricate durable scope. Static shape is not authenticated producer or runtime proof.",
+            "x-owner-ref": "Plans/Contracts_V0.md#CV-333",
+            "x-compatibility-boundary": "Version-1 response minima are read/import lineage only. New output is version 2; migration requires actual owner/request/receipt lookup or remains unbound and cannot claim success.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "dispatch_id",
+              "request_ref",
+              "command_id",
+              "command_instance_id",
+              "response_kind",
+              "ack_status",
+              "result_status",
+              "error",
+              "event_refs",
+              "receipt_ref",
+              "operation_id",
+              "owner_identity",
+              "command_outcome_ref",
+              "owner_result_ref",
+              "owner_result_schema_ref",
+              "replayed",
+              "original_dispatch_id",
+              "ts"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.ui_command_response.v2"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "dispatch_id": {
+                "$ref": "#/$defs/UIResponse_Id"
+              },
+              "request_ref": {
+                "$ref": "#/$defs/UIResponse_NonSecretRef"
+              },
+              "command_id": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_CommandId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "command_instance_id": {
+                "$ref": "#/$defs/UIResponse_Id"
+              },
+              "response_kind": {
+                "enum": [
+                  "owner_operation",
+                  "local_projection",
+                  "pre_dispatch_rejection"
+                ]
+              },
+              "ack_status": {
+                "enum": [
+                  "accepted",
+                  "rejected"
+                ]
+              },
+              "result_status": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  null,
+                  "pending",
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "no_op",
+                  "recovery_required"
+                ]
+              },
+              "error": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_UICommandError"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "event_refs": {
+                "type": "array",
+                "maxItems": 64,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/UIResponse_NonSecretRef"
+                }
+              },
+              "receipt_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_NonSecretRef"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "operation_id": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_identity": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_OwnerIdentity"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "command_outcome_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_NonSecretRef"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_result_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_NonSecretRef"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_result_schema_ref": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "original_dispatch_id": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse_Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "ts": {
+                "$ref": "#/$defs/UtcTimestamp"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "command_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "response_kind": {
+                      "const": "pre_dispatch_rejection"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "const": "unknown_command"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "const": "unknown_command"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "command_id": {
+                      "type": "null"
+                    },
+                    "response_kind": {
+                      "const": "pre_dispatch_rejection"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "response_kind": {
+                      "const": "owner_operation"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "command_id": {
+                      "$ref": "#/$defs/UIResponse_CommandId"
+                    },
+                    "operation_id": {
+                      "$ref": "#/$defs/UIResponse_Id"
+                    },
+                    "owner_identity": {
+                      "$ref": "#/$defs/UIResponse_OwnerIdentity"
+                    },
+                    "command_outcome_ref": {
+                      "$ref": "#/$defs/UIResponse_NonSecretRef"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "response_kind": {
+                      "enum": [
+                        "local_projection",
+                        "pre_dispatch_rejection"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "operation_id": {
+                      "type": "null"
+                    },
+                    "owner_identity": {
+                      "type": "null"
+                    },
+                    "command_outcome_ref": {
+                      "type": "null"
+                    },
+                    "owner_result_ref": {
+                      "type": "null"
+                    },
+                    "owner_result_schema_ref": {
+                      "type": "null"
+                    },
+                    "event_refs": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "response_kind": {
+                      "const": "local_projection"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "command_id": {
+                      "$ref": "#/$defs/UIResponse_CommandId"
+                    },
+                    "ack_status": {
+                      "const": "accepted"
+                    },
+                    "result_status": {
+                      "enum": [
+                        "pending",
+                        "succeeded",
+                        "failed",
+                        "cancelled",
+                        "no_op"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "response_kind": {
+                      "const": "pre_dispatch_rejection"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "ack_status": {
+                      "const": "rejected"
+                    },
+                    "result_status": {
+                      "type": "null"
+                    },
+                    "error": {
+                      "$ref": "#/$defs/UIResponse_UICommandError"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "ack_status": {
+                      "const": "rejected"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "result_status": {
+                      "type": "null"
+                    },
+                    "error": {
+                      "$ref": "#/$defs/UIResponse_UICommandError"
+                    },
+                    "event_refs": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "ack_status": {
+                      "const": "accepted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "command_id": {
+                      "$ref": "#/$defs/UIResponse_CommandId"
+                    },
+                    "result_status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "result_status": {
+                      "enum": [
+                        "failed",
+                        "recovery_required"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "error": {
+                      "$ref": "#/$defs/UIResponse_UICommandError"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "result_status": {
+                      "enum": [
+                        "pending",
+                        "succeeded",
+                        "cancelled",
+                        "no_op"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "error": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "result_status": {
+                      "enum": [
+                        "succeeded",
+                        "cancelled",
+                        "no_op"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "receipt_ref": {
+                      "$ref": "#/$defs/UIResponse_NonSecretRef"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "response_kind": {
+                      "const": "owner_operation"
+                    },
+                    "result_status": {
+                      "enum": [
+                        "succeeded",
+                        "failed",
+                        "cancelled",
+                        "no_op",
+                        "recovery_required"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "owner_result_ref": {
+                      "$ref": "#/$defs/UIResponse_NonSecretRef"
+                    },
+                    "owner_result_schema_ref": {
+                      "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "owner_result_ref": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "owner_result_schema_ref": {
+                      "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "owner_result_schema_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "replayed": {
+                      "const": true
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "original_dispatch_id": {
+                      "$ref": "#/$defs/UIResponse_Id"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "original_dispatch_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "SharedNonSecretRef": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "admitted_pending"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_owner_result": {
+                  "type": "null"
+                },
+                "owner_result_sha256": {
+                  "type": "null"
+                },
+                "terminal_at_utc": {
+                  "type": "null"
+                },
+                "original_command_outcome": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "accepted",
+                        "acknowledged",
+                        "executing"
+                      ]
+                    },
+                    "owner_result_ref": {
+                      "type": "null"
+                    },
+                    "owner_result_schema_ref": {
+                      "type": "null"
+                    },
+                    "owner_result_sha256": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "original_ui_response": {
+                  "type": "null"
+                },
+                "original_append_receipt": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "original_owner_result": {
+                  "$ref": "#/$defs/RestorePointCreateCommandResult"
+                },
+                "owner_result_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "terminal_at_utc": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "original_command_outcome": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "succeeded",
+                        "failed",
+                        "rejected"
+                      ]
+                    }
+                  }
+                },
+                "original_ui_response": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/OriginalUICommandResponse"
+                    },
+                    {
+                      "properties": {
+                        "command_id": {
+                          "const": "cmd.chat.create_restore_point"
+                        },
+                        "response_kind": {
+                          "const": "owner_operation"
+                        },
+                        "replayed": {
+                          "const": false
+                        },
+                        "original_dispatch_id": {
+                          "type": "null"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "original_command_outcome": {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.chat.create_restore_point"
+                  },
+                  "identity": {
+                    "properties": {
+                      "scope_kind": {
+                        "const": "project"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "terminal"
+                },
+                "original_owner_result": {
+                  "type": "object",
+                  "properties": {
+                    "outcome": {
+                      "const": "created"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_command_outcome": {
+                  "properties": {
+                    "outcome": {
+                      "const": "succeeded"
+                    }
+                  }
+                },
+                "frozen_append_input_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "producer_semantic_digest": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_append_receipt": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "event_id",
+                    "sequence_id",
+                    "segment_generation",
+                    "segment_name",
+                    "byte_offset",
+                    "commit_group_id",
+                    "durability_class",
+                    "durable_end_offset",
+                    "durability_state",
+                    "manifest_generation",
+                    "acknowledged_at_utc"
+                  ],
+                  "properties": {
+                    "event_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sequence_id": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "byte_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "commit_group_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "durability_class": {
+                      "enum": [
+                        "ordinary",
+                        "barrier"
+                      ]
+                    },
+                    "durable_end_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "durability_state": {
+                      "const": "synced"
+                    },
+                    "manifest_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "acknowledged_at_utc": {
+                      "type": "string",
+                      "minLength": 1,
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "terminal"
+                },
+                "original_owner_result": {
+                  "type": "object",
+                  "properties": {
+                    "outcome": {
+                      "const": "refused"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_command_outcome": {
+                  "properties": {
+                    "outcome": {
+                      "const": "rejected"
+                    }
+                  }
+                },
+                "original_append_receipt": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "terminal"
+                },
+                "original_owner_result": {
+                  "type": "object",
+                  "properties": {
+                    "outcome": {
+                      "const": "failed"
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_command_outcome": {
+                  "properties": {
+                    "outcome": {
+                      "const": "failed"
+                    }
+                  }
+                },
+                "original_append_receipt": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   ]
 }

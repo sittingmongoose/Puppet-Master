@@ -1,0 +1,236 @@
+{
+  "cases": [
+    {
+      "id": "RSC-TERM-P-expired-purged-native",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": true,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-same_project",
+      "input": {
+        "same_project": false,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-same_restore_id",
+      "input": {
+        "same_project": true,
+        "same_restore_id": false,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-same_original_hash",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": false,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-same_record_ref",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": false,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-retained_hash_summary",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": false,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-owner_authorized_terminal_disposition",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": false,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-release_and_all_refs_proved",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": false,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-completed_removal_custody",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": false,
+        "removed_companion_covered": true,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-removed_companion_covered",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": false,
+        "current_source_index_generation": true,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    },
+    {
+      "id": "RSC-TERM-N-current_source_index_generation",
+      "input": {
+        "same_project": true,
+        "same_restore_id": true,
+        "same_original_hash": true,
+        "same_record_ref": true,
+        "retained_hash_summary": true,
+        "owner_authorized_terminal_disposition": true,
+        "release_and_all_refs_proved": true,
+        "completed_removal_custody": true,
+        "removed_companion_covered": true,
+        "current_source_index_generation": false,
+        "native_companion_present": false,
+        "rp_present": false,
+        "terminal_reason": "expired"
+      },
+      "expected_advance": false,
+      "expected_action": false,
+      "expected_recreate": false
+    }
+  ],
+  "validation": "PASS boolean join oracle only; actual retention proof readers/runtime NOT_RUN"
+}

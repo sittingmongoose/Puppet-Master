@@ -1,0 +1,2752 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "command_id",
+    "scope_partition",
+    "project_id",
+    "idempotency_key",
+    "command_request_sha256",
+    "frozen_append_input_sha256",
+    "producer_semantic_digest",
+    "original_dispatch_id",
+    "command_outcome_ref",
+    "state",
+    "original_owner_result",
+    "owner_result_sha256",
+    "original_command_outcome",
+    "created_at_utc",
+    "terminal_at_utc",
+    "redaction_profile",
+    "original_ui_response",
+    "original_normalized_request",
+    "original_append_receipt"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.restore_point_create_result.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "command_id": {
+      "const": "cmd.chat.create_restore_point"
+    },
+    "scope_partition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "command_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "frozen_append_input_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "producer_semantic_digest": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_dispatch_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "command_outcome_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "state": {
+      "enum": [
+        "admitted_pending",
+        "terminal"
+      ]
+    },
+    "original_owner_result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RestorePointCreateCommandResult"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "owner_result_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_command_outcome": {
+      "$ref": "#/$defs/CommandOutcomeRecord"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "terminal_at_utc": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "redaction_profile": {
+      "const": "no_secrets"
+    },
+    "original_ui_response": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OriginalUICommandResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_normalized_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "command_instance_id",
+        "operation_id",
+        "idempotency_key",
+        "dispatch_frame_id",
+        "command_id",
+        "owner_identity",
+        "payload_sha256",
+        "target_generation"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.create_restore_point"
+        },
+        "owner_identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "original_append_receipt": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "sequence_id",
+            "segment_generation",
+            "segment_name",
+            "byte_offset",
+            "commit_group_id",
+            "durability_class",
+            "durable_end_offset",
+            "durability_state",
+            "manifest_generation",
+            "acknowledged_at_utc"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "commit_group_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "durability_class": {
+              "enum": [
+                "ordinary",
+                "barrier"
+              ]
+            },
+            "durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "durability_state": {
+              "const": "synced"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "acknowledged_at_utc": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.storage_value.restore_point_create_result.v1",
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "Sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "UtcTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "OwnerResultSchemaRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "json_pointer",
+        "schema_id"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^Plans/[A-Za-z0-9_.-]+\\.schema\\.json$"
+        },
+        "json_pointer": {
+          "type": "string",
+          "pattern": "^#(?:/\\$defs/[A-Za-z0-9_]+)?$"
+        },
+        "schema_id": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "IdentityEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Explicit application-or-Project operation scope with exact controlling Server, execution Host, Environment, and topology bindings. named_plan_id is only a NamedPlan identity and is nullable when no NamedPlan participates.",
+      "required": [
+        "scope_kind",
+        "operation_id",
+        "operation_generation",
+        "server_id",
+        "project_id",
+        "project_home_server_id",
+        "named_plan_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "topology_generation"
+      ],
+      "properties": {
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "operation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "operation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempt_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "server_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "project_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_home_server_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "named_plan_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_host_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "execution_environment_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "source_location_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              },
+              "project_home_server_id": {
+                "type": "null"
+              },
+              "named_plan_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "project_home_server_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GovernorDecisionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "identity",
+        "resource_family",
+        "physical_parent_budget_id",
+        "requested_budget_ref",
+        "effective_budget_ref",
+        "decision",
+        "reason_code",
+        "policy_generation",
+        "host_observation_ref",
+        "reevaluation_trigger",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "governor_decision"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "resource_family": {
+          "enum": [
+            "cpu",
+            "memory",
+            "gpu",
+            "media",
+            "process",
+            "watcher",
+            "descriptor",
+            "queue",
+            "log",
+            "artifact",
+            "network",
+            "port",
+            "storage",
+            "index",
+            "browser",
+            "capture",
+            "provider",
+            "lsp",
+            "dap",
+            "eval",
+            "mcp",
+            "test_host",
+            "device",
+            "container",
+            "worktree",
+            "package_manager_root"
+          ]
+        },
+        "physical_parent_budget_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "requested_budget_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "effective_budget_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "decision": {
+          "enum": [
+            "admitted",
+            "queued",
+            "admitted_degraded",
+            "permission_blocked",
+            "resource_blocked",
+            "cancelled"
+          ]
+        },
+        "reason_code": {
+          "$ref": "#/$defs/Id"
+        },
+        "policy_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "host_observation_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "lease_refs": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "reevaluation_trigger": {
+          "$ref": "#/$defs/Id"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      }
+    },
+    "CommandOutcomeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "identity",
+        "command_id",
+        "payload_sha256",
+        "idempotency_key",
+        "target_generation",
+        "outcome",
+        "dispatch_frame_id",
+        "acknowledgement_frame_id",
+        "acknowledgement_frame_offset",
+        "same_frame_acknowledged",
+        "acknowledgement_receipt_ref",
+        "result_receipt_ref",
+        "error_ref",
+        "owner_result_ref",
+        "owner_result_schema_ref",
+        "owner_result_sha256",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "command_outcome"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.[a-z0-9_.-]+$",
+          "maxLength": 160
+        },
+        "payload_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "owner_result_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_schema_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/OwnerResultSchemaRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/Id"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outcome": {
+          "enum": [
+            "accepted",
+            "acknowledged",
+            "executing",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "rejected",
+            "terminal_unknown"
+          ]
+        },
+        "dispatch_frame_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "acknowledgement_frame_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "acknowledgement_frame_offset": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "same_frame_acknowledged": {
+          "type": "boolean"
+        },
+        "acknowledgement_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "result_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "error_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "identity": {
+              "required": [
+                "command_instance_id"
+              ],
+              "properties": {
+                "command_instance_id": {
+                  "$ref": "#/$defs/Id"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "rejected",
+                  "terminal_unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result_ref": {
+                "$ref": "#/$defs/Id"
+              },
+              "owner_result_schema_ref": {
+                "$ref": "#/$defs/OwnerResultSchemaRef"
+              },
+              "owner_result_sha256": {
+                "$ref": "#/$defs/Sha256"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "owner_result_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result_schema_ref": {
+                "$ref": "#/$defs/OwnerResultSchemaRef"
+              },
+              "owner_result_sha256": {
+                "$ref": "#/$defs/Sha256"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "owner_result_schema_ref": {
+                "type": "null"
+              },
+              "owner_result_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "acknowledged",
+                  "executing",
+                  "succeeded"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "acknowledgement_receipt_ref": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "acknowledgement_receipt_ref": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "acknowledgement_receipt_ref"
+            ]
+          },
+          "then": {
+            "properties": {
+              "acknowledgement_frame_id": {
+                "$ref": "#/$defs/Id"
+              },
+              "acknowledgement_frame_offset": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "acknowledgement_frame_id": {
+                "type": "null"
+              },
+              "acknowledgement_frame_offset": {
+                "type": "null"
+              },
+              "same_frame_acknowledged": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "succeeded",
+                  "cancelled"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "result_receipt_ref": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "failed",
+                  "rejected",
+                  "terminal_unknown"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error_ref": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "same_frame_acknowledged": {
+                "const": true
+              }
+            },
+            "required": [
+              "same_frame_acknowledged"
+            ]
+          },
+          "then": {
+            "required": [
+              "acknowledgement_frame_id",
+              "acknowledgement_frame_offset",
+              "acknowledgement_receipt_ref"
+            ],
+            "properties": {
+              "acknowledgement_frame_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "acknowledgement_frame_offset": {
+                "const": 0
+              },
+              "acknowledgement_receipt_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ObservableWorkRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "identity",
+        "observable_work_id",
+        "owner_domain",
+        "title",
+        "subject_refs",
+        "blocking_scope",
+        "work_state",
+        "phase",
+        "progress_kind",
+        "progress_source",
+        "last_activity_at",
+        "heartbeat_at",
+        "activity_evidence_ref",
+        "parent_work_id",
+        "child_work_ids",
+        "freshness",
+        "projection_generation",
+        "cancel_available",
+        "background_available",
+        "retry_available",
+        "dedupe_key",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "observable_work"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "observable_work_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "blocking_scope": {
+          "enum": [
+            "none",
+            "object",
+            "project",
+            "application"
+          ]
+        },
+        "last_activity_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        },
+        "heartbeat_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UtcTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "activity_evidence_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "parent_work_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "child_work_ids": {
+          "type": "array",
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "owner_domain": {
+          "enum": [
+            "chat",
+            "thread",
+            "plan",
+            "goal",
+            "worknode",
+            "provider",
+            "installation",
+            "authentication",
+            "connection",
+            "browser",
+            "capture",
+            "testing",
+            "migration",
+            "storage",
+            "plugin",
+            "release",
+            "lsp",
+            "dap",
+            "eval",
+            "mcp",
+            "worktree",
+            "container",
+            "other_registered"
+          ]
+        },
+        "work_state": {
+          "enum": [
+            "accepted",
+            "queued",
+            "starting",
+            "running",
+            "waiting",
+            "retrying",
+            "reconnecting",
+            "backgrounded",
+            "degraded",
+            "stalled",
+            "committing",
+            "verifying",
+            "testing-route",
+            "migrating-route",
+            "rolling-back",
+            "completed",
+            "failed",
+            "cancelled",
+            "recovery-required"
+          ]
+        },
+        "phase": {
+          "$ref": "#/$defs/Id"
+        },
+        "wait_reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "provider",
+            "host",
+            "network",
+            "resource",
+            "permission",
+            "sign-in",
+            "idle",
+            "user",
+            "package-manager",
+            "lease",
+            "rate-limit",
+            "owner-recovery"
+          ]
+        },
+        "next_reevaluation_condition": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "progress_kind": {
+          "enum": [
+            "none",
+            "indeterminate",
+            "units",
+            "bytes",
+            "items",
+            "steps",
+            "time"
+          ]
+        },
+        "progress_source": {
+          "enum": [
+            "measured",
+            "provider_reported",
+            "derived",
+            "unknown"
+          ]
+        },
+        "completed_units": {
+          "type": [
+            "integer",
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "total_units": {
+          "type": [
+            "integer",
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "progress_source_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "cached",
+            "stale",
+            "unknown",
+            "conflicted"
+          ]
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancel_available": {
+          "type": "boolean"
+        },
+        "background_available": {
+          "type": "boolean"
+        },
+        "retry_available": {
+          "type": "boolean"
+        },
+        "dedupe_key": {
+          "$ref": "#/$defs/Id"
+        },
+        "result_receipt_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "error_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": [
+                  "queued",
+                  "waiting"
+                ]
+              }
+            },
+            "required": [
+              "work_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "wait_reason",
+              "next_reevaluation_condition"
+            ],
+            "properties": {
+              "wait_reason": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "next_reevaluation_condition": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "progress_kind": {
+                "enum": [
+                  "units",
+                  "bytes",
+                  "items",
+                  "steps",
+                  "time"
+                ]
+              }
+            },
+            "required": [
+              "progress_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "completed_units",
+              "total_units",
+              "progress_source_ref"
+            ],
+            "properties": {
+              "completed_units": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "total_units": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "progress_source_ref": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "progress_source": {
+                "not": {
+                  "const": "unknown"
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "completed_units": {
+                "type": "null"
+              },
+              "total_units": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": [
+                  "completed",
+                  "cancelled"
+                ]
+              }
+            },
+            "required": [
+              "work_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "result_receipt_ref"
+            ],
+            "properties": {
+              "result_receipt_ref": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": [
+                  "failed",
+                  "recovery-required"
+                ]
+              }
+            },
+            "required": [
+              "work_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "error_ref"
+            ],
+            "properties": {
+              "error_ref": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "work_state": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "cancelled"
+                ]
+              }
+            },
+            "required": [
+              "work_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "cancel_available": {
+                "const": false
+              },
+              "background_available": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "FullThreadProjectionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "identity",
+        "collection_id",
+        "collection_generation",
+        "projection_generation",
+        "window_start",
+        "window_count",
+        "overscan_count",
+        "total_item_count",
+        "stable_item_ids",
+        "hidden_surface_policy",
+        "durable_work_continues",
+        "latest_request_generation",
+        "stale_generation_disposition",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "full_thread_projection"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "collection_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "collection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "overscan_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 250
+        },
+        "total_item_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stable_item_ids": {
+          "type": "array",
+          "maxItems": 1250,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "hidden_surface_policy": {
+          "enum": [
+            "visible_hydrated",
+            "visible_compact",
+            "hidden_paint_suppressed",
+            "offscreen_paint_suppressed",
+            "collapsed_paint_suppressed"
+          ]
+        },
+        "durable_work_continues": {
+          "type": "boolean",
+          "const": true
+        },
+        "latest_request_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale_generation_disposition": {
+          "enum": [
+            "not_stale",
+            "rejected",
+            "superseded_projection_only"
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      }
+    },
+    "ContinuityRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "identity",
+        "prior_identity",
+        "continuity_trigger",
+        "prior_transport_epoch",
+        "current_transport_epoch",
+        "continuation_generation",
+        "expected_continuation_generation",
+        "duplicate_effect_count",
+        "duplicate_usage_count",
+        "return_route_ref",
+        "dedupe_key",
+        "disposition",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "continuity"
+        },
+        "identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "prior_identity": {
+          "$ref": "#/$defs/IdentityEnvelope"
+        },
+        "expected_continuation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_effect_count": {
+          "type": "integer",
+          "const": 0
+        },
+        "duplicate_usage_count": {
+          "type": "integer",
+          "const": 0
+        },
+        "continuity_trigger": {
+          "enum": [
+            "reconnect",
+            "restart",
+            "sleep",
+            "external-return"
+          ]
+        },
+        "prior_transport_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "current_transport_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "continuation_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_route_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "dedupe_key": {
+          "$ref": "#/$defs/Id"
+        },
+        "disposition": {
+          "enum": [
+            "same_logical_operation_resumed",
+            "same_logical_operation_reconciled",
+            "duplicate_suppressed",
+            "stale_generation_rejected",
+            "manual_recovery_required"
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      }
+    },
+    "PublicIngressGateDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "record_kind",
+        "endpoint_id",
+        "endpoint_generation",
+        "request_id",
+        "exposure_class",
+        "authentication_decision_ref",
+        "rate_decision_ref",
+        "checked_before_expensive_hydration",
+        "decision",
+        "response_class",
+        "operational_attribution_ref",
+        "observed_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.full_thread_runtime.contracts.v1"
+        },
+        "record_kind": {
+          "const": "public_ingress_gate"
+        },
+        "endpoint_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "endpoint_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "request_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "exposure_class": {
+          "enum": [
+            "lan_private",
+            "tailscale_private",
+            "public_funnel",
+            "public_reverse_proxy",
+            "public_custom_domain"
+          ]
+        },
+        "authentication_decision_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "rate_decision_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "permission_security_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "checked_before_expensive_hydration": {
+          "type": "boolean",
+          "const": true
+        },
+        "decision": {
+          "enum": [
+            "admitted",
+            "authentication_required",
+            "authentication_rejected",
+            "rate_limited",
+            "blocked_policy",
+            "stale_generation"
+          ]
+        },
+        "response_class": {
+          "enum": [
+            "bounded_admitted",
+            "bounded_redacted_rejection",
+            "bounded_redacted_challenge",
+            "bounded_redacted_rate_limit"
+          ]
+        },
+        "operational_attribution_ref": {
+          "$ref": "#/$defs/Id"
+        },
+        "usage_record_ref": {
+          "type": "null"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      }
+    },
+    "RestorePointCreateCommandResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "command_id",
+        "project_id",
+        "command_request_sha256",
+        "outcome",
+        "restore_point_id",
+        "record_ref",
+        "record_sha256",
+        "created_event_id",
+        "append_receipt_sha256",
+        "receipt_ref",
+        "reason_ref",
+        "cleanup_performed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.restore_point.create_command_result.v1"
+        },
+        "command_id": {
+          "const": "cmd.chat.create_restore_point"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "outcome": {
+          "enum": [
+            "created",
+            "refused",
+            "failed"
+          ]
+        },
+        "restore_point_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "created_event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "append_receipt_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "reason_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cleanup_performed": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "created"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "restore_point_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "record_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "record_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "created_event_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "append_receipt_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason_ref": {
+                "type": "null"
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "properties": {
+                    "restore_point_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "record_ref": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "record_sha256": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "created_event_id": {
+                      "type": "null"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "append_receipt_sha256": {
+                      "type": "null"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "else": {
+            "properties": {
+              "restore_point_id": {
+                "type": "null"
+              },
+              "record_ref": {
+                "type": "null"
+              },
+              "record_sha256": {
+                "type": "null"
+              },
+              "created_event_id": {
+                "type": "null"
+              },
+              "append_receipt_sha256": {
+                "type": "null"
+              },
+              "reason_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "UIResponse_Id": {
+      "$ref": "#/$defs/Id"
+    },
+    "UIResponse_NonSecretRef": {
+      "$ref": "#/$defs/SharedNonSecretRef"
+    },
+    "UIResponse_CommandId": {
+      "type": "string",
+      "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+      "maxLength": 160
+    },
+    "UIResponse_OwnerIdentity": {
+      "$ref": "#/$defs/IdentityEnvelope"
+    },
+    "UIResponse_UICommandError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "reason",
+        "offending_field"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_route",
+            "unknown_command",
+            "invalid_args",
+            "permission_denied",
+            "blocked_state_required",
+            "stale_projection",
+            "handler_unavailable",
+            "internal_error"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "offending_field": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 160
+        }
+      }
+    },
+    "UIResponse_OwnerSchemaRef": {
+      "$ref": "#/$defs/OwnerResultSchemaRef"
+    },
+    "OriginalUICommandResponse": {
+      "title": "Puppet Master central UICommandResponse",
+      "description": "Contracts_V0 owns this dispatcher projection. Owner operations consume the existing Full Thread CommandOutcomeRecord and separately validated typed owner result; local projections and pre-dispatch refusals never fabricate durable scope. Static shape is not authenticated producer or runtime proof.",
+      "x-owner-ref": "Plans/Contracts_V0.md#CV-333",
+      "x-compatibility-boundary": "Version-1 response minima are read/import lineage only. New output is version 2; migration requires actual owner/request/receipt lookup or remains unbound and cannot claim success.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "dispatch_id",
+        "request_ref",
+        "command_id",
+        "command_instance_id",
+        "response_kind",
+        "ack_status",
+        "result_status",
+        "error",
+        "event_refs",
+        "receipt_ref",
+        "operation_id",
+        "owner_identity",
+        "command_outcome_ref",
+        "owner_result_ref",
+        "owner_result_schema_ref",
+        "replayed",
+        "original_dispatch_id",
+        "ts"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.ui_command_response.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "dispatch_id": {
+          "$ref": "#/$defs/UIResponse_Id"
+        },
+        "request_ref": {
+          "$ref": "#/$defs/UIResponse_NonSecretRef"
+        },
+        "command_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_CommandId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/UIResponse_Id"
+        },
+        "response_kind": {
+          "enum": [
+            "owner_operation",
+            "local_projection",
+            "pre_dispatch_rejection"
+          ]
+        },
+        "ack_status": {
+          "enum": [
+            "accepted",
+            "rejected"
+          ]
+        },
+        "result_status": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "pending",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "no_op",
+            "recovery_required"
+          ]
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_UICommandError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_refs": {
+          "type": "array",
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/UIResponse_NonSecretRef"
+          }
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_NonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_identity": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_OwnerIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_outcome_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_NonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_NonSecretRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result_schema_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replayed": {
+          "type": "boolean"
+        },
+        "original_dispatch_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/UIResponse_Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ts": {
+          "$ref": "#/$defs/UtcTimestamp"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "response_kind": {
+                "const": "pre_dispatch_rejection"
+              },
+              "error": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "const": "unknown_command"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "const": "unknown_command"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              },
+              "response_kind": {
+                "const": "pre_dispatch_rejection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "response_kind": {
+                "const": "owner_operation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "$ref": "#/$defs/UIResponse_CommandId"
+              },
+              "operation_id": {
+                "$ref": "#/$defs/UIResponse_Id"
+              },
+              "owner_identity": {
+                "$ref": "#/$defs/UIResponse_OwnerIdentity"
+              },
+              "command_outcome_ref": {
+                "$ref": "#/$defs/UIResponse_NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "response_kind": {
+                "enum": [
+                  "local_projection",
+                  "pre_dispatch_rejection"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_id": {
+                "type": "null"
+              },
+              "owner_identity": {
+                "type": "null"
+              },
+              "command_outcome_ref": {
+                "type": "null"
+              },
+              "owner_result_ref": {
+                "type": "null"
+              },
+              "owner_result_schema_ref": {
+                "type": "null"
+              },
+              "event_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "response_kind": {
+                "const": "local_projection"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "$ref": "#/$defs/UIResponse_CommandId"
+              },
+              "ack_status": {
+                "const": "accepted"
+              },
+              "result_status": {
+                "enum": [
+                  "pending",
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "no_op"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "response_kind": {
+                "const": "pre_dispatch_rejection"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ack_status": {
+                "const": "rejected"
+              },
+              "result_status": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/UIResponse_UICommandError"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ack_status": {
+                "const": "rejected"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result_status": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/UIResponse_UICommandError"
+              },
+              "event_refs": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ack_status": {
+                "const": "accepted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "$ref": "#/$defs/UIResponse_CommandId"
+              },
+              "result_status": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result_status": {
+                "enum": [
+                  "failed",
+                  "recovery_required"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "$ref": "#/$defs/UIResponse_UICommandError"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result_status": {
+                "enum": [
+                  "pending",
+                  "succeeded",
+                  "cancelled",
+                  "no_op"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "result_status": {
+                "enum": [
+                  "succeeded",
+                  "cancelled",
+                  "no_op"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "receipt_ref": {
+                "$ref": "#/$defs/UIResponse_NonSecretRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "response_kind": {
+                "const": "owner_operation"
+              },
+              "result_status": {
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "cancelled",
+                  "no_op",
+                  "recovery_required"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result_ref": {
+                "$ref": "#/$defs/UIResponse_NonSecretRef"
+              },
+              "owner_result_schema_ref": {
+                "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "owner_result_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result_schema_ref": {
+                "$ref": "#/$defs/UIResponse_OwnerSchemaRef"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "owner_result_schema_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "replayed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_dispatch_id": {
+                "$ref": "#/$defs/UIResponse_Id"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "original_dispatch_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SharedNonSecretRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "admitted_pending"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_owner_result": {
+            "type": "null"
+          },
+          "owner_result_sha256": {
+            "type": "null"
+          },
+          "terminal_at_utc": {
+            "type": "null"
+          },
+          "original_command_outcome": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "acknowledged",
+                  "executing"
+                ]
+              },
+              "owner_result_ref": {
+                "type": "null"
+              },
+              "owner_result_schema_ref": {
+                "type": "null"
+              },
+              "owner_result_sha256": {
+                "type": "null"
+              }
+            }
+          },
+          "original_ui_response": {
+            "type": "null"
+          },
+          "original_append_receipt": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "original_owner_result": {
+            "$ref": "#/$defs/RestorePointCreateCommandResult"
+          },
+          "owner_result_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "terminal_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "original_command_outcome": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "succeeded",
+                  "failed",
+                  "rejected"
+                ]
+              }
+            }
+          },
+          "original_ui_response": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/OriginalUICommandResponse"
+              },
+              {
+                "properties": {
+                  "command_id": {
+                    "const": "cmd.chat.create_restore_point"
+                  },
+                  "response_kind": {
+                    "const": "owner_operation"
+                  },
+                  "replayed": {
+                    "const": false
+                  },
+                  "original_dispatch_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "original_command_outcome": {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.create_restore_point"
+            },
+            "identity": {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "terminal"
+          },
+          "original_owner_result": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "created"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_command_outcome": {
+            "properties": {
+              "outcome": {
+                "const": "succeeded"
+              }
+            }
+          },
+          "frozen_append_input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "producer_semantic_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "original_append_receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "terminal"
+          },
+          "original_owner_result": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "refused"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_command_outcome": {
+            "properties": {
+              "outcome": {
+                "const": "rejected"
+              }
+            }
+          },
+          "original_append_receipt": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "terminal"
+          },
+          "original_owner_result": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "failed"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_command_outcome": {
+            "properties": {
+              "outcome": {
+                "const": "failed"
+              }
+            }
+          },
+          "original_append_receipt": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

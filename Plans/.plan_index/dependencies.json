@@ -5855,6 +5855,7 @@
     "PS-132",
     "RAP-046",
     "SP-243",
+    "SP-269",
     "ACD-217",
     "CS-056",
     "UCC-075",
@@ -5877,6 +5878,7 @@
     "SP-244",
     "SP-246",
     "WN-001",
+    "SP-281",
     "ACD-435",
     "CS-059",
     "UCC-001",
@@ -5902,6 +5904,7 @@
     "WN-004",
     "WN-009",
     "WN-017",
+    "SP-274",
     "ACD-436",
     "RAP-003",
     "RAP-007",
@@ -6011,6 +6014,7 @@
     "OSI-421",
     "OSI-422",
     "PSMERA-021",
+    "ACD-465",
     "SMPFS-036",
     "SMPFS-101",
     "F2-208",
@@ -6025,6 +6029,7 @@
     "PP-086",
     "SP-255",
     "WN-018",
+    "SIR-044",
     "RAP-025",
     "RAP-051",
     "RAP-043",
@@ -6050,6 +6055,7 @@
     "OSI-338",
     "OSI-343",
     "OSI-423",
+    "RAP-059",
     "F2-209",
     "F-080",
     "UIW-010",
@@ -10196,6 +10202,31 @@
       "edge_type": "depends_on",
       "from": "ACD-462",
       "to": "UCC-158"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "ACD-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "ACD-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "CV-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "SP-269"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-465",
+      "to": "SP-281"
     },
     {
       "edge_type": "depends_on",
@@ -49269,6 +49300,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-059",
+      "to": "ACD-465"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-059",
+      "to": "RAP-046"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-059",
+      "to": "SP-269"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-059",
+      "to": "SP-281"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RAS-001",
       "to": "PDS-003"
     },
@@ -54986,6 +55037,21 @@
       "edge_type": "depends_on",
       "from": "SIR-043",
       "to": "SIR-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-044",
+      "to": "CV-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-044",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-044",
+      "to": "SP-274"
     },
     {
       "edge_type": "depends_on",
@@ -65571,6 +65637,56 @@
       "edge_type": "depends_on",
       "from": "SP-266",
       "to": "SP-262"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-269",
+      "to": "CV-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-269",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-269",
+      "to": "SP-242"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-274",
+      "to": "CV-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-274",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-274",
+      "to": "SP-281"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-281",
+      "to": "CV-320"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-281",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-281",
+      "to": "SP-242"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-281",
+      "to": "SP-269"
     },
     {
       "edge_type": "depends_on",
@@ -94338,7 +94454,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T19:43:27Z",
+  "generated_at_utc": "2026-09-11T20:00:13Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -103349,6 +103465,23 @@
       },
       "status": "accepted",
       "unit_type": "integration_contract"
+    },
+    {
+      "context_scope": "restore_point_created_event_authority",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-465",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_created_completion_authority",
+      "source_location": {
+        "heading": "ACD-465 — Restore-point created consumers",
+        "heading_level": 3,
+        "heading_line": 25460,
+        "line": 25462,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "azure_devops_provider_identity",
@@ -181279,6 +181412,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "restore_point_created_event_authority",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-059",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_created_completion_authority",
+      "source_location": {
+        "heading": "RAP-059 — Restore-point created consumers",
+        "heading_level": 3,
+        "heading_line": 2876,
+        "line": 2878,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "remote_access_owner_routing",
       "gui_related": true,
       "owner_doc": "Plans/Remote_Access_System.md",
@@ -184741,6 +184891,23 @@
         "heading_level": 3,
         "heading_line": 2075,
         "line": 2077,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "restore_point_create_original_result",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-044",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_original_result_authority",
+      "source_location": {
+        "heading": "SIR-044 - Original create-command outcome delegated custody",
+        "heading_level": 3,
+        "heading_line": 2237,
+        "line": 2239,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -192068,6 +192235,57 @@
         "heading_level": 3,
         "heading_line": 19579,
         "line": 19581,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "restore_point_retention_summary",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-269",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_terminal_retention_authority",
+      "source_location": {
+        "heading": "SP-269 — Restore-point final retention summary custody",
+        "heading_level": 3,
+        "heading_line": 19801,
+        "line": 19803,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "restore_point_create_original_result",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-274",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_original_result_authority",
+      "source_location": {
+        "heading": "SP-274 - Create restore-point original result custody",
+        "heading_level": 3,
+        "heading_line": 19856,
+        "line": 19858,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "restore_point_created_event_authority",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-281",
+      "reasoning_tier": "high",
+      "risk_class": "restore_point_created_completion_authority",
+      "source_location": {
+        "heading": "SP-281 — Restore-point created custody and checkpoint",
+        "heading_level": 3,
+        "heading_line": 19697,
+        "line": 19699,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -205204,10 +205422,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14913,
+    "depends_on_edge_count": 14935,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17562,
-    "node_count": 6521,
+    "edge_count": 17584,
+    "node_count": 6527,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2649,
     "unresolved_reference_count": 0
