@@ -688,7 +688,20 @@
     {
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-index-adoption-root-20260911/checks.json",
       "sha256": "c612fe0c8197c90dfa90788b6f79efbafaf0b7bb8c9cd727df7e7e26c26df4e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-index-adoption-root-20260911/rebase-review.json",
+      "sha256": "4c7a282e3239c54c4d57d6d0d24b7cdc8c63ac36a70b02e9e8a8eb8dd300eb09"
     }
   ],
-  "cost": "Root integration and source adjudication plus Astra-medium author/independent review. Exact billed cost is not exposed; no native runs."
+  "cost": "Root integration and source adjudication plus Astra-medium author/independent review. Exact billed cost is not exposed; no native runs.",
+  "rebase_review": {
+    "pre_rebase_contract_commit": "3750e7ca4226caeffef69bdd440f8b3c435786f7",
+    "reviewed_origin_main": "2fdd86c1c5efa73ef7ad4bc22de7c64f9953b1e0",
+    "rebased_contract_commit": "38d896d3f08c0cfbf6dc970f395c81e78ad7f0a9",
+    "all_Plans_bytes_unchanged_by_rebase": true,
+    "upstream_Plans_changes": [],
+    "branch": "plans/event-authority-index-adoption-final-20260911",
+    "reason_for_fresh_publish_branch": "Publish rebased work without replacing an already pushed branch history."
+  }
 }
