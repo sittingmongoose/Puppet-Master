@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.server_wan_backup.command_gap_adjudication.v1",
   "generated_at_utc": "2026-09-01T04:00:06.922696+00:00",
-  "claim_boundary": "Canonical 171-row command disposition and source-custody registry. It records owner/schema/alias/local/rejection decisions and is consumed by central catalog, production-intent, Touch Closure, and audit gates. It proves no executable native handler, Event Authority admission, provider/runtime behavior, security, visual, performance, or Slint readiness; every primary remains handler_unavailable until source-hashed native evidence exists. source_gap_findings are the frozen pre-merge observations that motivated this adjudication, not current-surface claims.",
+  "claim_boundary": "Canonical 171-row command disposition and source-custody registry. It records owner/schema/alias/local/rejection decisions and is consumed by central catalog, production-intent, Touch Closure, and audit gates. It proves no executable native handler, Event Authority admission, provider/runtime behavior, security, visual, performance, or Slint readiness; every primary remains handler_unavailable until source-hashed native evidence exists. source_gap_findings are the frozen pre-merge observations that motivated this adjudication, not current-surface claims. USER-PROJECT-UNARCHIVE-REGISTRY-20260911 re-adjudicates only row 128 as a Project-owner archived-to-listed registry mutation; its predecessor local-only routing is superseded, while all 171 packet identities, source verification and original finding lineage remain unchanged.",
   "source": {
     "gap_register": "scratchpad/pm-integration-20260831/audits/server-wan-exact-recheck/rerun-20260901T032121Z/canonical-gap-register.json",
     "gap_register_sha256": "e2b7436ae822004909b73be65078556e2a61a5827dc2ffe2e7e404d68df2c1af",
@@ -15,9 +15,9 @@
     "unique_tokens": 171,
     "dispositions": {
       "approved_alias_to_exact": 43,
-      "new_canonical_required": 86,
+      "new_canonical_required": 87,
       "rejected_with_reason": 3,
-      "typed_local_ui_action": 39
+      "typed_local_ui_action": 38
     },
     "retired_process_only": 0,
     "reuse_exact_canonical": 0
@@ -67,9 +67,9 @@
     },
     "Project lifecycle/settings/templates": {
       "approved_alias_to_exact": 4,
-      "new_canonical_required": 6,
+      "new_canonical_required": 7,
       "rejected_with_reason": 1,
-      "typed_local_ui_action": 3
+      "typed_local_ui_action": 2
     },
     "Project move": {
       "new_canonical_required": 7,
@@ -128,9 +128,9 @@
     },
     "project": {
       "approved_alias_to_exact": 1,
-      "new_canonical_required": 6,
+      "new_canonical_required": 7,
       "rejected_with_reason": 1,
-      "typed_local_ui_action": 3
+      "typed_local_ui_action": 2
     },
     "project_host": {
       "new_canonical_required": 8,
@@ -177,9 +177,9 @@
     },
     "Plans/Project_System.md": {
       "approved_alias_to_exact": 1,
-      "new_canonical_required": 6,
+      "new_canonical_required": 7,
       "rejected_with_reason": 1,
-      "typed_local_ui_action": 3
+      "typed_local_ui_action": 2
     },
     "Plans/Release_Supply_Chain.md": {
       "new_canonical_required": 7,
@@ -388,9 +388,6 @@
       "ui.project.open_details": [
         "cmd.project.open_details"
       ],
-      "ui.project.restore_archived": [
-        "cmd.project.unarchive"
-      ],
       "ui.project.source_location.open_details": [
         "cmd.project.source_location.open_details"
       ],
@@ -416,7 +413,7 @@
         "cmd.update.content.open_details"
       ]
     },
-    "new_distinct_semantics": 86,
+    "new_distinct_semantics": 87,
     "rejected_command_shaped_rows": 3,
     "analysis_rule": "Exact string uniqueness does not imply semantic uniqueness; normalize only where payload/result and owner effects can preserve the source behavior without a second handler."
   },
@@ -8210,21 +8207,21 @@
       "intended_semantics": "Restore an archived Project row to listed state without recreating or moving Project data.",
       "canonical_owner": "Plans/Project_System.md",
       "owner_component": "ProjectRegistry/ProjectCompositionService",
-      "disposition": "typed_local_ui_action",
-      "disposition_reason": "The retained behavior is presentation/choreography/read-only disclosure, so it stays typed and testable without a false semantic-domain command.",
-      "proposed_exact_target": "ui.project.restore_archived",
+      "disposition": "new_canonical_required",
+      "disposition_reason": "USER-PROJECT-UNARCHIVE-REGISTRY-20260911 approves persisted archived-to-listed registry metadata through Project System. A non-mutating local action cannot perform this semantic. The old ui.project.restore_archived entry is now only a pre-gate adapter to this one command, not a local writer or independently replayable mutation.",
+      "proposed_exact_target": "cmd.project.unarchive",
       "alias_registration": null,
       "normalization_rule": null,
-      "proposed_schema": "Plans/project_system_contracts.schema.json#/$defs/project_local_action_request|project_local_action_result (extend)",
-      "proposed_sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "proposed_schema": "Plans/project_system_contracts.schema.json#/$defs/project_action_request|project_action_result",
+      "proposed_sole_handler": "handlers::project::unarchive",
       "gui_consumers": [
         "Projects page",
         "K3 Project manager",
         "Product Onboarding First Project",
         "palette/API"
       ],
-      "availability_until_native_proof": "local action state",
-      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence",
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success",
       "conflict_evidence": [
         {
           "ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1374",
@@ -8235,12 +8232,16 @@
           "note": "Candidates require live-catalog reconciliation and complete typed closure; semantic equivalents must be reused."
         },
         {
-          "ref": "Plans/Project_System.md:48-62",
-          "note": "Current Project command set splits registration kinds and has an explicit local restore-archived action."
+          "ref": "Plans/Project_System.md#PJCT-002",
+          "note": "The September 11 user correction admits cmd.project.unarchive through the existing Project action family; source identity and original intended semantics are retained."
         },
         {
-          "ref": "Plans/Project_System.md:21-25",
-          "note": "Settings, Move, Source Control, Backup, and topology retain separate owners."
+          "ref": "Plans/Project_System.md#PJCT-003",
+          "note": "Two local detail actions remain read-only. Unarchive alone moves to the Project registry owner; Settings, Move, Source Control, Backup, and topology keep their boundaries."
+        },
+        {
+          "ref": "USER-PROJECT-UNARCHIVE-REGISTRY-20260911",
+          "note": "User selected changing the Project registry rather than navigation-only restoration. The predecessor ui.project.restore_archived routing is superseded, not an additional command or handler."
         }
       ],
       "source_gap_findings": [
