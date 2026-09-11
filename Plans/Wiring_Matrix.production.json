@@ -60503,16 +60503,18 @@
         "Regression evidence proves backgrounding does not mark testing complete or hide critical blockers",
         "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/2; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.background must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.backgrounded"
+          "testing.session.backgrounded",
+          "Plans/testing_session_event_admission.json#/rows/2"
         ]
       },
       "accessibility_contract": {
@@ -60535,7 +60537,7 @@
         {
           "test_id": "wiring.catalog.testing_session_background.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.background must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.catalog.testing_session_background.accessibility",
@@ -60545,11 +60547,11 @@
         {
           "test_id": "wiring.catalog.testing_session_background.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60568,16 +60570,18 @@
         "Regression evidence proves Open never fabricates a running test session from fixture/demo state",
         "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/0; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.opened"
+          "testing.session.opened",
+          "Plans/testing_session_event_admission.json#/rows/0"
         ]
       },
       "accessibility_contract": {
@@ -60600,7 +60604,7 @@
         {
           "test_id": "wiring.catalog.testing_session_open.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.catalog.testing_session_open.accessibility",
@@ -60610,11 +60614,11 @@
         {
           "test_id": "wiring.catalog.testing_session_open.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60633,16 +60637,18 @@
         "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
         "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/3; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.redaction_inspected"
+          "testing.session.redaction_inspected",
+          "Plans/testing_session_event_admission.json#/rows/3"
         ]
       },
       "accessibility_contract": {
@@ -60665,7 +60671,7 @@
         {
           "test_id": "wiring.catalog.testing_session_redaction_inspect.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.catalog.testing_session_redaction_inspect.accessibility",
@@ -60675,11 +60681,11 @@
         {
           "test_id": "wiring.catalog.testing_session_redaction_inspect.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60698,16 +60704,18 @@
         "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
         "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/1; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.watch_started"
+          "testing.session.watch_started",
+          "Plans/testing_session_event_admission.json#/rows/1"
         ]
       },
       "accessibility_contract": {
@@ -60730,7 +60738,7 @@
         {
           "test_id": "wiring.catalog.testing_session_watch.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.catalog.testing_session_watch.accessibility",
@@ -60740,11 +60748,11 @@
         {
           "test_id": "wiring.catalog.testing_session_watch.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -67893,16 +67901,18 @@
         "Regression evidence proves backgrounding does not mark testing complete or hide critical blockers",
         "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/2; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.background must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.backgrounded"
+          "testing.session.backgrounded",
+          "Plans/testing_session_event_admission.json#/rows/2"
         ]
       },
       "accessibility_contract": {
@@ -67925,7 +67935,7 @@
         {
           "test_id": "wiring.testing.session.background.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.background must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.testing.session.background.accessibility",
@@ -67935,11 +67945,11 @@
         {
           "test_id": "wiring.testing.session.background.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -67958,16 +67968,18 @@
         "Regression evidence proves Open never fabricates a running test session from fixture/demo state",
         "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/0; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.opened"
+          "testing.session.opened",
+          "Plans/testing_session_event_admission.json#/rows/0"
         ]
       },
       "accessibility_contract": {
@@ -67990,7 +68002,7 @@
         {
           "test_id": "wiring.testing.session.open.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.testing.session.open.accessibility",
@@ -68000,11 +68012,11 @@
         {
           "test_id": "wiring.testing.session.open.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -68023,16 +68035,18 @@
         "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
         "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/3; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.redaction_inspected"
+          "testing.session.redaction_inspected",
+          "Plans/testing_session_event_admission.json#/rows/3"
         ]
       },
       "accessibility_contract": {
@@ -68055,7 +68069,7 @@
         {
           "test_id": "wiring.testing.session.redaction.inspect.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.testing.session.redaction.inspect.accessibility",
@@ -68065,11 +68079,11 @@
         {
           "test_id": "wiring.testing.session.redaction.inspect.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -68088,16 +68102,18 @@
         "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
         "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
-        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution."
+        "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
+        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
       ],
-      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof.",
+      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/1; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence.",
+        "description": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
         "receipt_or_event_refs": [
-          "testing.session.watch_started"
+          "testing.session.watch_started",
+          "Plans/testing_session_event_admission.json#/rows/1"
         ]
       },
       "accessibility_contract": {
@@ -68120,7 +68136,7 @@
         {
           "test_id": "wiring.testing.session.watch.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         },
         {
           "test_id": "wiring.testing.session.watch.accessibility",
@@ -68130,11 +68146,11 @@
         {
           "test_id": "wiring.testing.session.watch.events",
           "evidence_kind": "event_test",
-          "requirement": "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+          "requirement": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+        "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"

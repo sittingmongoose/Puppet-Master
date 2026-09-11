@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/testing_session_events/1.0.0/testing_session_event_payloads.schema.json",
+  "title": "Testing session settled-transition event metadata",
+  "description": "Four existing ATS session events only. Reuses exact closed ordinary-session subject and owner result; no EventRecord replacement, raw capture, new command or native producer proof.",
+  "oneOf": [
+    {
+      "$ref": "https://puppetmaster.local/schemas/testing_session_events/1.0.0/testing_session_event_payloads.schema.json#/$defs/opened"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/testing_session_events/1.0.0/testing_session_event_payloads.schema.json#/$defs/watch_started"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/testing_session_events/1.0.0/testing_session_event_payloads.schema.json#/$defs/backgrounded"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/testing_session_events/1.0.0/testing_session_event_payloads.schema.json#/$defs/redaction_inspected"
+    }
+  ],
+  "$defs": {
+    "opened": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.testing_session_event.opened.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "subject",
+        "owner_result",
+        "settled_session_revision",
+        "projection_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.testing_session_event.opened.schema.v1"
+        },
+        "event_type": {
+          "const": "testing.session.opened"
+        },
+        "subject": {
+          "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/session_subject"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
+            },
+            {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.testing.session.open"
+                },
+                "status": {
+                  "const": "completed"
+                },
+                "replayed": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        },
+        "settled_session_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "watch_started": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.testing_session_event.watch_started.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "subject",
+        "owner_result",
+        "settled_session_revision",
+        "projection_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.testing_session_event.watch_started.schema.v1"
+        },
+        "event_type": {
+          "const": "testing.session.watch_started"
+        },
+        "subject": {
+          "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/session_subject"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
+            },
+            {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.testing.session.watch"
+                },
+                "status": {
+                  "const": "completed"
+                },
+                "replayed": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        },
+        "settled_session_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "backgrounded": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.testing_session_event.backgrounded.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "subject",
+        "owner_result",
+        "settled_session_revision",
+        "projection_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.testing_session_event.backgrounded.schema.v1"
+        },
+        "event_type": {
+          "const": "testing.session.backgrounded"
+        },
+        "subject": {
+          "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/session_subject"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
+            },
+            {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.testing.session.background"
+                },
+                "status": {
+                  "const": "completed"
+                },
+                "replayed": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        },
+        "settled_session_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "redaction_inspected": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "pm.testing_session_event.redaction_inspected.schema.v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "event_type",
+        "subject",
+        "owner_result",
+        "settled_session_revision",
+        "projection_generation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.testing_session_event.redaction_inspected.schema.v1"
+        },
+        "event_type": {
+          "const": "testing.session.redaction_inspected"
+        },
+        "subject": {
+          "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/session_subject"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
+            },
+            {
+              "properties": {
+                "command_id": {
+                  "const": "cmd.testing.session.redaction.inspect"
+                },
+                "status": {
+                  "const": "completed"
+                },
+                "replayed": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        },
+        "settled_session_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_generation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

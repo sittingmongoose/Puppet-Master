@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14685,
+    "depends_on_edge_count": 14686,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17333,
-    "node_count": 6460,
+    "edge_count": 17334,
+    "node_count": 6461,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2648,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-11T15:28:07Z",
+  "generated_at_utc": "2026-09-11T15:28:34Z",
   "gui_related_units": {
     "count": 3119,
     "units": [
@@ -34333,10 +34333,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6460,
+  "plan_unit_count": 6461,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1916,
+      "high": 1917,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35421,6 +35421,7 @@
       "eval_policy_escape_or_false_proof": 1,
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
+      "event_authority_and_false_completion": 1,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
       "event_authority_payload_depth_drift": 1,
@@ -38052,7 +38053,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6269,
+      "accepted": 6270,
       "retired": 182,
       "superseded": 9
     },
@@ -38119,7 +38120,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5152,
+      "requirement": 5153,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -38189,7 +38190,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "7d1bb2a80711aa93d2e8ca866c0d888b58f3456a6336d2153c607c5fa7053c60",
+        "expected": "e1182af260cff296f401b1bc58180fab1fa101439594089d2ce0636e706c0dbd",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -38237,19 +38238,19 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "7a3edcfa4e3a2ee65ebf0ae46343c895ee0d447c402eda7c2314f39f45d0c150",
+        "expected": "d0315a8fa74dc85add77991a73679eddd763692afb2e552b75fc073418f24acb",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "73e980362759242bf03730702fb65f44d2cabd21a16d2bd7dd09ace390483212",
+        "expected": "10078dc7390883cc421c68891a060f7c12b07aaf04883ae91a0983fcaaafd5e8",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "b04baa7337c2892bd885459fb2ef41b5b9e7351659241b04d677f4f161c304c4",
+        "expected": "4b695edc4249ed738ac46f014df730b353b07c7395f00959444c62bed7cdfe8b",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -38280,8 +38281,8 @@
       },
       {
         "actual_checkpoint": {
-          "registered_kernel_rows": 92,
-          "registry_revision": "2026-09-10.1",
+          "registered_kernel_rows": 96,
+          "registry_revision": "2026-09-11.1",
           "registry_schema_id": "pm.event_family_registry.v1",
           "registry_schema_version": "2.0.0"
         },
@@ -38328,7 +38329,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 92
+        "registered_kernel_rows": 96
       },
       {
         "bulk_registration_allowed": false,
@@ -38347,7 +38348,7 @@
           }
         ],
         "quarantined_row_count": 252,
-        "registered_kernel_rows": 92
+        "registered_kernel_rows": 96
       }
     ],
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
