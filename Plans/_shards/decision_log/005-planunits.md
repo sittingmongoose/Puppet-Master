@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L433-L2715
+Source lines: L433-L2717
 
-Source SHA256: `edbbc32ab17f43465e17ebf1e445e73c160877697db87c5f5c283513393b5c45`
+Source SHA256: `b304a91ac0ca4563747eadc8f98e70fa94fc53c35d3184bc929d5f6a6d937f0a`
 
 ---
 
@@ -2106,7 +2106,8 @@ canonical_text: >-
   ESCALATE_AS_PERSISTED_FAMILY pending an owner-backed contract; EMIT-PERSIST-026
   is ACCEPT_EMIT_OBLIGATION_ONLY; J40-VETO-BATCH is CONFIRM_UNRESOLVED_NO_ADMIT;
   AUG-CP-WLC-001 and AUG-CP-TWM-001 are VETO_KEEP_REGISTERED_PROVISIONAL with depth
-  work authorized; J248-VETO-BATCH-252 remains pending; the 54-row close path is a
+  work authorized; J248-VETO-BATCH-252 is CONFIRM_ALL_QUARANTINE_NO_ADMIT as an interim
+  stance with an owner-batched registration campaign, recorded 2026-09-11; the 54-row close path is a
   receipted quarantined_not_admitted holding bucket; registry revision 2026-08-27.1
   is the approved PNC-019 baseline; the 21 Goal Runtime payload schemas are promoted
   to authoritative through their owner; the seal is go only after application,
@@ -2119,7 +2120,7 @@ depends_on: [DL-031]
 unblocks: []
 acceptance_criteria:
   - OWNER_DECISION_SHEET.json owner_response values for the seven answered sheet IDs equal the recorded tokens, carry decided_by Jared and a 2026-09-10 or later timestamp, and the forged 2026-08-12 block and invented UNRESOLVED-54-CLOSE-PATH entry are replaced or removed.
-  - J248-VETO-BATCH-252 is not applied until Jared records a choice.
+  - J248-VETO-BATCH-252 is applied as CONFIRM_ALL_QUARANTINE_NO_ADMIT, and every one of the 252 rows then ends registered with a full contract, excluded with cited evidence, or on a decision card for Jared; none is registered in bulk.
   - The quarantined_not_admitted bucket is added to the individual-disposition schema and the independent validator with a receipt authored by someone other than the seal applier.
   - context.compaction.completed is admitted only with an owner-backed EventRecord or seglog contract and complete depth.
   - The PNC-019 checkpoint records registry revision 2026-08-27.1.
@@ -2154,6 +2155,7 @@ preserved_exact_tokens:
   - ACCEPT_EMIT_OBLIGATION_ONLY
   - CONFIRM_UNRESOLVED_NO_ADMIT
   - VETO_KEEP_REGISTERED_PROVISIONAL
+  - CONFIRM_ALL_QUARANTINE_NO_ADMIT
   - quarantined_not_admitted
   - 2026-08-27.1
   - UNKNOWN_OPEN

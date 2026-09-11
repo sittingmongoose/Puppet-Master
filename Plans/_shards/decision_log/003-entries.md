@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L425
 
-Source SHA256: `edbbc32ab17f43465e17ebf1e445e73c160877697db87c5f5c283513393b5c45`
+Source SHA256: `b304a91ac0ca4563747eadc8f98e70fa94fc53c35d3184bc929d5f6a6d937f0a`
 
 ---
 
@@ -408,7 +408,7 @@ Approved on 2026-09-10 by Jared in conversation, answering the plain-language de
 - `J40-VETO-BATCH` = `CONFIRM_UNRESOLVED_NO_ADMIT`. The 28 unclassified names remain unresolved and out of the registry.
 - `AUG-CP-WLC-001` = `VETO_KEEP_REGISTERED_PROVISIONAL`. `workspace.layout_changed` stays registered; its consumers, projector and checkpoint remain unknown until cited from the Plans, and that depth work is authorized.
 - `AUG-CP-TWM-001` = `VETO_KEEP_REGISTERED_PROVISIONAL`. `terminal.workgroup_moved` stays registered on the same terms.
-- `J248-VETO-BATCH-252` = pending. Jared asked whether the 252 confirmed-persisted-unregistered rows should be worked through. The recommended interim stance is `CONFIRM_ALL_QUARANTINE_NO_ADMIT` with an owner-batched registration campaign that returns only genuine product questions. Nothing is applied for this ID until Jared records a choice.
+- `J248-VETO-BATCH-252` = `CONFIRM_ALL_QUARANTINE_NO_ADMIT`, recorded 2026-09-11 after Jared asked on 2026-09-10 whether the 252 confirmed-persisted-unregistered rows should be worked through. All 252 rows are quarantined as an interim stance: counted in the denominator, not registered, with explicit acceptance that counted is not registered. An owner-batched registration campaign then works every row to exactly one outcome: registered with a full Event Authority contract through the Storage owner, excluded with cited evidence, or returned to Jared as a plain-language decision card. No bulk registration, no inference from sibling rows, and no row left silently in quarantine.
 - Close path for the 54 leftover rows (26 emit-only plus 28 unresolved) = add a `quarantined_not_admitted` holding bucket recognized by the individual-disposition schema and the independent validator, fail-closed, implemented openly with a receipt by someone other than the seal applier. This is the honest form of the question the forged 2026-08-12 answers invented as `UNRESOLVED-54-CLOSE-PATH`.
 - Registry checkpoint = approve `Plans/event_family_registry.json` revision `2026-08-27.1` (39 families; `workspace.layout_changed` payload 1.1.0) as the PNC-019 baseline, superseding the pinned `2026-08-04.1`.
 - Goal Runtime payload schema authority (the historical "SS-001" question) = promote all 21 Goal Runtime event payload schemas from candidate draft to authoritative now, landed by the Goal Runtime System owner. Authoritative status does not satisfy contract depth; depth evidence is still required per family.

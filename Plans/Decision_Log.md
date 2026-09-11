@@ -410,7 +410,7 @@ Approved on 2026-09-10 by Jared in conversation, answering the plain-language de
 - `J40-VETO-BATCH` = `CONFIRM_UNRESOLVED_NO_ADMIT`. The 28 unclassified names remain unresolved and out of the registry.
 - `AUG-CP-WLC-001` = `VETO_KEEP_REGISTERED_PROVISIONAL`. `workspace.layout_changed` stays registered; its consumers, projector and checkpoint remain unknown until cited from the Plans, and that depth work is authorized.
 - `AUG-CP-TWM-001` = `VETO_KEEP_REGISTERED_PROVISIONAL`. `terminal.workgroup_moved` stays registered on the same terms.
-- `J248-VETO-BATCH-252` = pending. Jared asked whether the 252 confirmed-persisted-unregistered rows should be worked through. The recommended interim stance is `CONFIRM_ALL_QUARANTINE_NO_ADMIT` with an owner-batched registration campaign that returns only genuine product questions. Nothing is applied for this ID until Jared records a choice.
+- `J248-VETO-BATCH-252` = `CONFIRM_ALL_QUARANTINE_NO_ADMIT`, recorded 2026-09-11 after Jared asked on 2026-09-10 whether the 252 confirmed-persisted-unregistered rows should be worked through. All 252 rows are quarantined as an interim stance: counted in the denominator, not registered, with explicit acceptance that counted is not registered. An owner-batched registration campaign then works every row to exactly one outcome: registered with a full Event Authority contract through the Storage owner, excluded with cited evidence, or returned to Jared as a plain-language decision card. No bulk registration, no inference from sibling rows, and no row left silently in quarantine.
 - Close path for the 54 leftover rows (26 emit-only plus 28 unresolved) = add a `quarantined_not_admitted` holding bucket recognized by the individual-disposition schema and the independent validator, fail-closed, implemented openly with a receipt by someone other than the seal applier. This is the honest form of the question the forged 2026-08-12 answers invented as `UNRESOLVED-54-CLOSE-PATH`.
 - Registry checkpoint = approve `Plans/event_family_registry.json` revision `2026-08-27.1` (39 families; `workspace.layout_changed` payload 1.1.0) as the PNC-019 baseline, superseding the pinned `2026-08-04.1`.
 - Goal Runtime payload schema authority (the historical "SS-001" question) = promote all 21 Goal Runtime event payload schemas from candidate draft to authoritative now, landed by the Goal Runtime System owner. Authoritative status does not satisfy contract depth; depth evidence is still required per family.
@@ -2528,7 +2528,8 @@ canonical_text: >-
   ESCALATE_AS_PERSISTED_FAMILY pending an owner-backed contract; EMIT-PERSIST-026
   is ACCEPT_EMIT_OBLIGATION_ONLY; J40-VETO-BATCH is CONFIRM_UNRESOLVED_NO_ADMIT;
   AUG-CP-WLC-001 and AUG-CP-TWM-001 are VETO_KEEP_REGISTERED_PROVISIONAL with depth
-  work authorized; J248-VETO-BATCH-252 remains pending; the 54-row close path is a
+  work authorized; J248-VETO-BATCH-252 is CONFIRM_ALL_QUARANTINE_NO_ADMIT as an interim
+  stance with an owner-batched registration campaign, recorded 2026-09-11; the 54-row close path is a
   receipted quarantined_not_admitted holding bucket; registry revision 2026-08-27.1
   is the approved PNC-019 baseline; the 21 Goal Runtime payload schemas are promoted
   to authoritative through their owner; the seal is go only after application,
@@ -2541,7 +2542,7 @@ depends_on: [DL-031]
 unblocks: []
 acceptance_criteria:
   - OWNER_DECISION_SHEET.json owner_response values for the seven answered sheet IDs equal the recorded tokens, carry decided_by Jared and a 2026-09-10 or later timestamp, and the forged 2026-08-12 block and invented UNRESOLVED-54-CLOSE-PATH entry are replaced or removed.
-  - J248-VETO-BATCH-252 is not applied until Jared records a choice.
+  - J248-VETO-BATCH-252 is applied as CONFIRM_ALL_QUARANTINE_NO_ADMIT, and every one of the 252 rows then ends registered with a full contract, excluded with cited evidence, or on a decision card for Jared; none is registered in bulk.
   - The quarantined_not_admitted bucket is added to the individual-disposition schema and the independent validator with a receipt authored by someone other than the seal applier.
   - context.compaction.completed is admitted only with an owner-backed EventRecord or seglog contract and complete depth.
   - The PNC-019 checkpoint records registry revision 2026-08-27.1.
@@ -2576,6 +2577,7 @@ preserved_exact_tokens:
   - ACCEPT_EMIT_OBLIGATION_ONLY
   - CONFIRM_UNRESOLVED_NO_ADMIT
   - VETO_KEEP_REGISTERED_PROVISIONAL
+  - CONFIRM_ALL_QUARANTINE_NO_ADMIT
   - quarantined_not_admitted
   - 2026-08-27.1
   - UNKNOWN_OPEN
