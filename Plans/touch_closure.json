@@ -3456,7 +3456,7 @@
         "Plans/Test_Capture_and_Motion_Evidence.md"
       ],
       "event_refs": [
-        "Session events require separate Event Authority admission; export and recording viewer commands are receipt-only."
+        "Plans/Automated_Testing_System.md#ATS-049 and Plans/testing_session_event_admission.json admit exactly four existing session transitions. Export and recording viewer commands remain receipt-only; native producers are unimplemented."
       ],
       "receipt_refs": [
         "Typed settlement through Plans/ui_command_response.schema.json; accepted is pending; replay returns original identity."

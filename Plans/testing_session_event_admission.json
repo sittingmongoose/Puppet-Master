@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.testing_session_event_admission.v1",
+  "admission_id": "ATS-SESSION-4-20260911",
+  "owner_ref": "Plans/Automated_Testing_System.md#ATS-049",
+  "scope": "exact_four_existing_session_events",
+  "claim_boundary": "Static owner and Event Authority contract admission only. No native producer, durable event/receipt lookup, runtime permission/redaction/recovery proof, new physical record family, global closure or seal.",
+  "preexisting_family_prefix_count": 92,
+  "preexisting_family_prefix_sha256": "99c53d0bf95bac68e57bb60f7df54e0b48e46884ac33511ee3a9a9ee33bb2c69",
+  "maximum_payload_utf8_bytes": 65536,
+  "producer_component": "AutomatedTestingService.visible_session",
+  "replay_rule": "Validate the retained committed owner transition and EventRecord 2.0 identity; deduplicate before projection, quarantine conflicting identity without checkpoint advance, and never re-execute commands or emit events.",
+  "retention_rule": "RP-AUTHORITY-INDEFINITE 1.0.0 under the existing EventRecord family, including legal hold/delete integrity. No separate physical owner-record family is admitted. Loss/quarantine of referenced owner receipt fails closed; retention never re-authorizes access.",
+  "rows": [
+    {
+      "event_type": "testing.session.opened",
+      "command_id": "cmd.testing.session.open",
+      "family_id": "event-family-testing-session-opened",
+      "family_revision": "1.0.0",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Automated_Testing_System.md#ATS-049",
+      "scope_policy": "project_only",
+      "producer_component": "AutomatedTestingService.visible_session",
+      "transition_rule": "Only after the owner resolves the exact ordinary session and commits its visible route with settled receipt/projection.",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/opened",
+        "schema_id": "pm.testing_session_event.opened.schema.v1"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "native_producer_status": "unimplemented"
+    },
+    {
+      "event_type": "testing.session.watch_started",
+      "command_id": "cmd.testing.session.watch",
+      "family_id": "event-family-testing-session-watch-started",
+      "family_revision": "1.0.0",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Automated_Testing_System.md#ATS-049",
+      "scope_policy": "project_only",
+      "producer_component": "AutomatedTestingService.visible_session",
+      "transition_rule": "Only after the owner commits an authorized redacted live projection binding for the exact session and stream generation; not capture start.",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/watch_started",
+        "schema_id": "pm.testing_session_event.watch_started.schema.v1"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "native_producer_status": "unimplemented"
+    },
+    {
+      "event_type": "testing.session.backgrounded",
+      "command_id": "cmd.testing.session.background",
+      "family_id": "event-family-testing-session-backgrounded",
+      "family_revision": "1.0.0",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Automated_Testing_System.md#ATS-049",
+      "scope_policy": "project_only",
+      "producer_component": "AutomatedTestingService.visible_session",
+      "transition_rule": "Only after the owner commits foreground/background disposition under the exact continuation policy; not run cancellation or capture stop.",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/backgrounded",
+        "schema_id": "pm.testing_session_event.backgrounded.schema.v1"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "native_producer_status": "unimplemented"
+    },
+    {
+      "event_type": "testing.session.redaction_inspected",
+      "command_id": "cmd.testing.session.redaction.inspect",
+      "family_id": "event-family-testing-session-redaction-inspected",
+      "family_revision": "1.0.0",
+      "admission_status": "admitted_static_contract",
+      "semantic_owner_ref": "Plans/Automated_Testing_System.md#ATS-049",
+      "scope_policy": "project_only",
+      "producer_component": "AutomatedTestingService.visible_session",
+      "transition_rule": "Only after the owner commits the authorized redaction/evidence inspection route for the exact frozen evidence selection; not content disclosure.",
+      "payload_schema_ref": {
+        "path": "Plans/testing_session_event_payloads.schema.json",
+        "json_pointer": "#/$defs/redaction_inspected",
+        "schema_id": "pm.testing_session_event.redaction_inspected.schema.v1"
+      },
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      },
+      "native_producer_status": "unimplemented"
+    }
+  ]
+}

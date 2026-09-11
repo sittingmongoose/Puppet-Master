@@ -1,0 +1,230 @@
+{
+  "schema_id": "pm.testing_session_event_admission_fixtures.v1",
+  "claim_boundary": "Synthetic joins to authored ATS-048 request/result fixtures, not runtime producer or persistence evidence.",
+  "positive_source": "Plans/testing_session_command_contract_fixtures.json",
+  "valid_case_refs": [
+    "session_open",
+    "session_watch",
+    "session_background",
+    "session_redaction_inspect"
+  ],
+  "invalid_for_each_valid": [
+    {
+      "name": "untrusted_producer",
+      "target": "producer",
+      "pointer": null,
+      "value": "Client.UI",
+      "expected_error": "producer_not_authorized"
+    },
+    {
+      "name": "application_scope",
+      "target": "event",
+      "pointer": "/scope_kind",
+      "value": "application",
+      "expected_error": "envelope_scope"
+    },
+    {
+      "name": "foreign_project",
+      "target": "event",
+      "pointer": "/project_id",
+      "value": "project:other",
+      "expected_error": "envelope_scope"
+    },
+    {
+      "name": "foreign_actor",
+      "target": "event",
+      "pointer": "/actor_ref",
+      "value": "actor:other",
+      "expected_error": "envelope_scope"
+    },
+    {
+      "name": "node_invented",
+      "target": "event",
+      "pointer": "/node_id",
+      "value": "node:other",
+      "expected_error": "unowned_envelope_identity"
+    },
+    {
+      "name": "account_invented",
+      "target": "event",
+      "pointer": "/effective_account_ref",
+      "value": "account:other",
+      "expected_error": "unowned_envelope_identity"
+    },
+    {
+      "name": "payload_detached",
+      "target": "event",
+      "pointer": "/payload_ref",
+      "value": "payload:other",
+      "expected_error": "unowned_envelope_identity"
+    },
+    {
+      "name": "foreign_correlation",
+      "target": "event",
+      "pointer": "/correlation_id",
+      "value": "operation:other",
+      "expected_error": "transition_identity"
+    },
+    {
+      "name": "foreign_transition",
+      "target": "event",
+      "pointer": "/idempotency_key",
+      "value": "idempotency:other",
+      "expected_error": "transition_identity"
+    },
+    {
+      "name": "wrong_payload_id",
+      "target": "event",
+      "pointer": "/payload_schema_id",
+      "value": "schema:other",
+      "expected_error": "payload_identity"
+    },
+    {
+      "name": "producer_sequence_missing",
+      "target": "event",
+      "pointer": "/producer_sequence_id",
+      "value": null,
+      "expected_error": "event_replay_contract"
+    },
+    {
+      "name": "redaction_disabled",
+      "target": "event",
+      "pointer": "/redaction_profile",
+      "value": "unsafe",
+      "expected_error": "redaction_or_unadmitted_migration"
+    },
+    {
+      "name": "unadmitted_migration",
+      "target": "event",
+      "pointer": "/migration/migration_id",
+      "value": "migration:other",
+      "expected_error": "redaction_or_unadmitted_migration"
+    },
+    {
+      "name": "raw_frame",
+      "target": "event",
+      "pointer": "/payload/raw_frame",
+      "value": "unredacted:frame",
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "result_pending",
+      "target": "event",
+      "pointer": "/payload/owner_result/status",
+      "value": "accepted",
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "result_noop",
+      "target": "event",
+      "pointer": "/payload/owner_result/status",
+      "value": "no_change",
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "result_replay",
+      "target": "event",
+      "pointer": "/payload/owner_result/replayed",
+      "value": true,
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "capture_effect",
+      "target": "event",
+      "pointer": "/payload/owner_result/capture_lifecycle_changed",
+      "value": true,
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "verdict_effect",
+      "target": "event",
+      "pointer": "/payload/owner_result/test_verdict_changed",
+      "value": true,
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "protected_subject",
+      "target": "event",
+      "pointer": "/payload/subject/security_class",
+      "value": "protected_auth",
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "foreign_subject",
+      "target": "event",
+      "pointer": "/payload/subject/test_session_id",
+      "value": "session:other",
+      "expected_error": "settled_owner_binding"
+    },
+    {
+      "name": "foreign_receipt",
+      "target": "event",
+      "pointer": "/payload/owner_result/receipt_ref",
+      "value": "receipt:other",
+      "expected_error": "settled_owner_binding"
+    },
+    {
+      "name": "foreign_policy",
+      "target": "request",
+      "pointer": "/context/permission_snapshot_ref",
+      "value": "policy:other",
+      "expected_error": "evidence_owner_context_mismatch"
+    },
+    {
+      "name": "native_absent",
+      "target": "snapshot",
+      "pointer": "/native_handler_available",
+      "value": false,
+      "expected_error": "evidence_owner_gate_native_handler_available"
+    },
+    {
+      "name": "permission_denied",
+      "target": "snapshot",
+      "pointer": "/permission_allowed",
+      "value": false,
+      "expected_error": "evidence_owner_gate_permission_allowed"
+    },
+    {
+      "name": "redaction_denied",
+      "target": "snapshot",
+      "pointer": "/redaction_allowed",
+      "value": false,
+      "expected_error": "evidence_owner_gate_redaction_allowed"
+    },
+    {
+      "name": "transition_uncommitted",
+      "target": "snapshot",
+      "pointer": "/transition_committed",
+      "value": false,
+      "expected_error": "transition_not_committed"
+    },
+    {
+      "name": "wrong_transition",
+      "target": "snapshot",
+      "pointer": "/transition_event_type",
+      "value": "testing.session.other",
+      "expected_error": "transition_not_committed"
+    },
+    {
+      "name": "foreign_generation",
+      "target": "snapshot",
+      "pointer": "/projection_generation",
+      "value": 9,
+      "expected_error": "owner_projection_generation_mismatch"
+    },
+    {
+      "name": "generation_not_advanced",
+      "target": "snapshot",
+      "pointer": "/prior_projection_generation",
+      "value": 8,
+      "expected_error": "projection_generation_not_advanced"
+    },
+    {
+      "name": "stale_settled_revision",
+      "target": "event",
+      "pointer": "/payload/settled_session_revision",
+      "value": 3,
+      "expected_error": "session_revision_regressed"
+    }
+  ]
+}
