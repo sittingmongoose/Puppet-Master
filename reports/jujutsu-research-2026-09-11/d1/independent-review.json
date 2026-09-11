@@ -1,0 +1,66 @@
+{
+  "status": "PASS_D1_PREPARATION",
+  "checked_at": "2026-09-11T03:17:08.685227+00:00",
+  "snapshot_commit": "bc7569b3f5bcd8147bc4a8b51eee6d03255a0e46",
+  "tracked_paths": 6694,
+  "matched_paths": 83,
+  "included_original_byte_files": 199,
+  "case_files": 204,
+  "case_total_bytes": 30319593,
+  "errors": [],
+  "source_artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/census.json",
+      "sha256": "9bb00c17bac78112c48e05e88002c842cc0abfe7e3551fa1bf26f7fb31dd5aa8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/case_freeze.json",
+      "sha256": "9668a590f0a21bb66c8486085f18120cb1bf827a991436df96e2a1a4baf96579"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/includes.json",
+      "sha256": "fb58b9e73d4d8bfbbc963f3011886e9a7b77ee4ae0b23247c6e65ec795c5d96c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/prepare_invocation.json",
+      "sha256": "7a547e5edbd795bcbb18a83f7ab4f266783df2fcce1e84a04fbc2f78139b6715"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/d1/product-brief.md",
+      "sha256": "d94193bb97a1465b00cdfd7352e11422bb217f673bb7d00790884289e1203de1"
+    }
+  ],
+  "scope": "Preparation and compact report audit only. Independent complete mechanical census and original-byte manifest verification; brief reviewed for neutral frozen owner baseline. No research quality, runtime readiness, governance seal or completion of commit/push/report certified.",
+  "portable_report_review": {
+    "status": "PASS",
+    "errors": [],
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 3104,
+        "sha256": "6ceaf7796a6c57b1cb7b722e392b54bad8d8965ac79133347b66967888cb43e7"
+      },
+      {
+        "name": "evidence-receipts.json",
+        "bytes": 3498,
+        "sha256": "2087440788d280bb6632f03dfc42538591fceee2fb28c244d6fa520a3e6f1753"
+      },
+      {
+        "name": "product-brief.md",
+        "bytes": 7070,
+        "sha256": "d94193bb97a1465b00cdfd7352e11422bb217f673bb7d00790884289e1203de1"
+      },
+      {
+        "name": "selection.json",
+        "bytes": 147289,
+        "sha256": "8ff74499d23d7da0544162ef782196cc2522b7e7492baef6cb7a32e7233d3b89"
+      },
+      {
+        "name": "verification.json",
+        "bytes": 608,
+        "sha256": "fd4cadc918b73075a2d11c5d8a2170f6b8fec1c2c3ea5795fbef576d3f198114"
+      }
+    ],
+    "assessment": "Compact 162 KB result bundle contains source selection, brief, integrity receipts and external evidence references; no raw campaign captures or answer key. Full 30 MB corpus remains external."
+  }
+}
