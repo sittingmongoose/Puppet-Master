@@ -180,6 +180,17 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         request["source_surface"] = "onboarding"
         self.assertIn("forge_request_schema", FORGE.request_failures(request))
 
+    def test_owner_issued_uuid_ids_are_not_forced_into_reference_syntax(self):
+        for case in GATE.fixture_cases():
+            request, result, snapshot = (case[key] for key in ("request", "result", "snapshot"))
+            snapshot.update(operation_id="12345678-1234-1234-1234-123456789012", server_id="23456789-1234-1234-1234-123456789012")
+            result["project_id"] = snapshot["project"]["project_id"] = "34567890-1234-1234-1234-123456789012"
+            snapshot["settled_result"] = copy.deepcopy(result)
+            event = case["event"]
+            event["payload"] = GATE.payload_for(event["event_type"], request, result, snapshot)
+            event.update(project_id=event["payload"]["project_id"], correlation_id=snapshot["operation_id"], idempotency_key=GATE.transition_key(event["event_type"], request, snapshot))
+            self.assertEqual(GATE.event_failures(case), [])
+
     def test_current_payloads_resolve_without_unsealing_historical_kernel(self):
         readiness = RESPONSE.module("github_project_readiness", "pm-implementation-readiness.py")
         for row in GATE.load("Plans/event_family_registry.json")["families"]:
