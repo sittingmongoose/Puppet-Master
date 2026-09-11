@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.packet_gap_closure_result.v1",
+  "step": "scoped_browser_event_admission",
+  "status": "scoped_static_admission_and_consumer_repairs_verified",
+  "base_commit": "5166fd9f58",
+  "owner_docs": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Wiring_Matrix.md"
+  ],
+  "new_plan_units": [
+    "SMPFS-166",
+    "CV-330",
+    "SP-259",
+    "UF-102",
+    "PP-091",
+    "WM-054"
+  ],
+  "repairs": [
+    "Individually adjudicated the exact 53 required Section 3.18A browser event families: producer, actual transition, scope, unique closed payload, retention, redaction, compatibility, replay, recovery, consumer and command binding.",
+    "Preserved all 39 existing central registry rows and historical Known-37 assignment; the current registry has 92 rows while the global denominator remains UNKNOWN_OPEN.",
+    "Added direct representation result_count, omitted_count, byte_estimate and token_estimate with invalidation, coverage and base-generation guards; phase-correct blocked/interrupted handoff receipts do not fabricate completed reconstruction.",
+    "Allowed paired-null Run/Attempt for manual non-program browser context while retaining real Run/Attempt for compilation, program execution, segments and ProgramWorkspace.",
+    "Reconciled stale owner registration prose, storage retention/recovery, operational Usage without synthetic billing, and independent Prompt Pipeline content admission.",
+    "Bound the 15 existing command/wiring rows to admitted conditional events and their explicit event-test requirements without changing handler_unavailable; inspect remains receipt-only."
+  ],
+  "static_checks": {
+    "required_and_admitted_event_families": 53,
+    "preexisting_family_rows_unchanged": true,
+    "registry_family_count": 92,
+    "run_bound_runtime_retention_families": 23,
+    "creation_anchored_metadata_retention_families": 30,
+    "browser_event_positive_cases": 53,
+    "browser_event_negative_cases": 576,
+    "browser_regression_tests": 25,
+    "aggregate_contract_positive_cases": 958,
+    "aggregate_contract_negative_cases": 3166,
+    "command_event_bindings": 15,
+    "whole_touch_closure_rows": 606,
+    "touch_profiles": 93,
+    "actionable_primary_commands": 428,
+    "primary_commands_with_one_declared_handler_and_wiring": 428,
+    "alias_bindings": 64,
+    "alias_peer_wiring": 0,
+    "production_intent_wiring_rows": 1154,
+    "sharded_sources_checked": 98,
+    "shards_checked": 2159,
+    "plan_units_indexed": 6443,
+    "acceptance_units_indexed": 24571,
+    "unexpected_generated_owner_changes": [],
+    "node_readiness_status": "blocked_runtime_certification_incomplete"
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-event-admission-check.json",
+      "sha256": "a2ada9618d93af819790c5288179d11283803e7496753f777c5bb2a393f93da8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-event-standard-gate.json",
+      "sha256": "a2ada9618d93af819790c5288179d11283803e7496753f777c5bb2a393f93da8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-combined-tests.log",
+      "sha256": "79e0326f7c00405482ac026e18727d9c9b10934624380d54484d9b3e891d8c13"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-runtime-restore-contract-gate.json",
+      "sha256": "52af733428d7177eb3c0a10af79ab5bcd818602743ceef16de0c4bd38593f673"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-touch-closure-check.json",
+      "sha256": "1626dee23d6f7fcd17d9e0f3dc74dca73912d30a1295cfade52e572aca8ffc89"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-wiring-gate.json",
+      "sha256": "d38eb1bff81f007733581c8c8c9650ea71f7cace562468d4754a5dd1709d9d8c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-shards-check.log",
+      "sha256": "40641b5b423163cdad8367575d021e7458e45cf2a5b753e0cf2f16662d4e2872"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-index-validate.log",
+      "sha256": "5b701dec17a265a391407ce66fd0e493b03b9e48fa912b6689c61f5f432e09b1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/browser-derived-scope-check.json",
+      "sha256": "93f95c83477484c1bd0325b821d703a98e01079ba3ab00755575e38122a55abd"
+    }
+  ],
+  "source_and_admission_freeze": [
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "sha256": "2acf702d5b34c4129304bf45a2aeb44df0c3e19e6159bb08457b969596f7961d"
+    },
+    {
+      "path": "Plans/browser_event_admission.json",
+      "sha256": "b4ba275fd91f2b08bb2b017c87a3542b9988c2710e50d5dc5a372d5829bf60df"
+    },
+    {
+      "path": "Plans/browser_event_payloads.schema.json",
+      "sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+    }
+  ],
+  "outside_this_step": [
+    "Central UICommandResponse / CommandOutcome adoption and owner-result binding.",
+    "September 3 onboarding reconciliation and stale Guided Tour index summary.",
+    "Fresh complete multi-packet formal review and final whole-command/UI-wiring/DRY/governance check classification.",
+    "Other historical Browser event candidates and the complete global Event Authority denominator remain outside this exact Section 3.18A admission."
+  ],
+  "claim_boundary": "Static schema/fixture/oracle and declared wiring consistency only. No native producer authentication, actual owner-record lookup, journal/checkpoint atomicity, BrowserRuntimeService/CEF, runtime handler or UI implementation, security execution, provider/billing evidence, benchmark result, physical owner-record admission, global Event Authority currentness, readiness admission or governance reseal is claimed."
+}

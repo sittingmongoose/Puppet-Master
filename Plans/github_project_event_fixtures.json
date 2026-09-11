@@ -1,0 +1,302 @@
+{
+  "schema_id": "pm.github_project_event_fixtures.v1",
+  "fixture_authority": "Synthetic resolved owner snapshots only; no native authorization, GitHub API, Project commit, replay durability, or runtime proof.",
+  "source_refs": [
+    "Plans/project_system_contract_fixtures.json#command_project_new_github_repo",
+    "Plans/project_system_contract_fixtures.json#listed_git_project_is_identity_not_path",
+    "Plans/project_system_contract_fixtures.json#project_setup_commit_requires_actual_listed_result"
+  ],
+  "resolved_owner_fixture": {
+    "operation_id": "operation:github-project:01",
+    "server_id": "srv-home-01",
+    "account_realm": "github_api",
+    "account_ref": "account:github:01",
+    "admission_receipt_ref": "receipt:github:intake:01",
+    "repository_receipt_ref": "receipt:github:created:01",
+    "registration_receipt_ref": "receipt:project:registered:01",
+    "readback_receipt_ref": "receipt:project:readback:01",
+    "native_handler_available": true,
+    "permission_allowed": true,
+    "filesafe_allowed": true,
+    "remote_side_effect_approved": true,
+    "account_authorized": true,
+    "intake_committed": true,
+    "registry_current": true,
+    "repository_created_verified": true,
+    "local_source_ready": true,
+    "project_commit_verified": true,
+    "readback_verified": true,
+    "new_project_identity_verified": true,
+    "emit_new_transition": true
+  },
+  "invalid_for_each_event": [
+    {
+      "name": "wrong_producer",
+      "pointer": "/producer",
+      "value": "Client",
+      "expected_error": "producer_not_authorized"
+    },
+    {
+      "name": "wrong_actor",
+      "pointer": "/event/actor_ref",
+      "value": "actor:other",
+      "expected_error": "event_scope"
+    },
+    {
+      "name": "wrong_project",
+      "pointer": "/event/project_id",
+      "value": "project:other",
+      "expected_error": ["event_schema", "event_scope"]
+    },
+    {
+      "name": "wrong_request_actor",
+      "pointer": "/request/actor_ref",
+      "value": "actor:other",
+      "expected_error": "forge_request_binding"
+    },
+    {
+      "name": "wrong_request_key",
+      "pointer": "/request/idempotency_key",
+      "value": "idempotency:other",
+      "expected_error": "forge_request_binding"
+    },
+    {
+      "name": "missing_permission",
+      "pointer": "/request/permission_snapshot_ref",
+      "value": null,
+      "expected_error": "forge_request_schema"
+    },
+    {
+      "name": "missing_filesafe",
+      "pointer": "/request/filesafe_evidence_ref",
+      "value": null,
+      "expected_error": "forge_request_schema"
+    },
+    {
+      "name": "unapproved",
+      "pointer": "/snapshot/remote_side_effect_approved",
+      "value": false,
+      "expected_error": "forge_gate:remote_side_effect_approved"
+    },
+    {
+      "name": "denied",
+      "pointer": "/snapshot/permission_allowed",
+      "value": false,
+      "expected_error": "forge_gate:permission_allowed"
+    },
+    {
+      "name": "filesafe_denied",
+      "pointer": "/snapshot/filesafe_allowed",
+      "value": false,
+      "expected_error": "forge_gate:filesafe_allowed"
+    },
+    {
+      "name": "unauthenticated",
+      "pointer": "/snapshot/account_authorized",
+      "value": false,
+      "expected_error": "forge_gate:account_authorized"
+    },
+    {
+      "name": "wrong_account_realm",
+      "pointer": "/snapshot/account_realm",
+      "value": "github_copilot",
+      "expected_error": "forge_account_realm"
+    },
+    {
+      "name": "native_absent",
+      "pointer": "/snapshot/native_handler_available",
+      "value": false,
+      "expected_error": "forge_gate:native_handler_available"
+    },
+    {
+      "name": "intake_uncommitted",
+      "pointer": "/snapshot/intake_committed",
+      "value": false,
+      "expected_error": "forge_gate:intake_committed"
+    },
+    {
+      "name": "stale_registry",
+      "pointer": "/snapshot/registry_current",
+      "value": false,
+      "expected_error": "forge_gate:registry_current"
+    },
+    {
+      "name": "foreign_home_server",
+      "pointer": "/snapshot/resolved_home_server_ref",
+      "value": "server:other",
+      "expected_error": "forge_home_server_resolution"
+    },
+    {
+      "name": "changed_registry_fence",
+      "pointer": "/snapshot/before_registry/revision",
+      "value": 17,
+      "expected_error": "forge_registry_fence"
+    },
+    {
+      "name": "replayed_transition",
+      "pointer": "/snapshot/emit_new_transition",
+      "value": false,
+      "expected_error": "not_new_owner_transition"
+    },
+    {
+      "name": "wrong_operation",
+      "pointer": "/event/correlation_id",
+      "value": "operation:other",
+      "expected_error": "event_transition_identity"
+    },
+    {
+      "name": "wrong_idempotency",
+      "pointer": "/event/idempotency_key",
+      "value": "idempotency:other",
+      "expected_error": "event_transition_identity"
+    },
+    {
+      "name": "wrong_payload_id",
+      "pointer": "/event/payload_schema_id",
+      "value": "pm.other.schema.v1",
+      "expected_error": "event_replay_contract"
+    },
+    {
+      "name": "unknown_payload_field",
+      "pointer": "/event/payload/raw_credentials",
+      "value": "redacted-test-only",
+      "expected_error": "payload_schema"
+    },
+    {
+      "name": "wrong_payload_digest",
+      "pointer": "/event/payload/request_sha256",
+      "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "expected_error": "event_owner_binding"
+    },
+    {
+      "name": "wrong_intake_receipt",
+      "pointer": "/event/payload/admission_receipt_ref",
+      "value": "receipt:other",
+      "expected_error": "event_owner_binding"
+    },
+    {
+      "name": "unowned_thread",
+      "pointer": "/event/thread_id",
+      "value": "thread:other",
+      "expected_error": "unowned_event_identity"
+    },
+    {
+      "name": "unowned_account",
+      "pointer": "/event/effective_account_ref",
+      "value": "account:other",
+      "expected_error": "unowned_event_identity"
+    },
+    {
+      "name": "payload_ref_escape",
+      "pointer": "/event/payload_ref",
+      "value": "artifact:other",
+      "expected_error": "unowned_event_identity"
+    },
+    {
+      "name": "migration_not_admitted",
+      "pointer": "/event/migration/migration_id",
+      "value": "migration:other",
+      "expected_error": "event_redaction_or_migration"
+    },
+    {
+      "name": "unredacted",
+      "pointer": "/event/redaction_profile",
+      "value": "default",
+      "expected_error": "event_schema"
+    },
+    {
+      "name": "unknown_event",
+      "pointer": "/event/event_type",
+      "value": "github.repo.unknown",
+      "expected_error": "unknown_event"
+    }
+  ],
+  "invalid_for_bound_event": [
+    {
+      "name": "repository_unverified",
+      "pointer": "/snapshot/repository_created_verified",
+      "value": false,
+      "expected_error": "forge_gate:repository_created_verified"
+    },
+    {
+      "name": "local_source_unready",
+      "pointer": "/snapshot/local_source_ready",
+      "value": false,
+      "expected_error": "forge_gate:local_source_ready"
+    },
+    {
+      "name": "project_uncommitted",
+      "pointer": "/snapshot/project_commit_verified",
+      "value": false,
+      "expected_error": "forge_gate:project_commit_verified"
+    },
+    {
+      "name": "readback_unverified",
+      "pointer": "/snapshot/readback_verified",
+      "value": false,
+      "expected_error": "forge_gate:readback_verified"
+    },
+    {
+      "name": "identity_unverified",
+      "pointer": "/snapshot/new_project_identity_verified",
+      "value": false,
+      "expected_error": "forge_gate:new_project_identity_verified"
+    },
+    {
+      "name": "wrong_repository_receipt",
+      "pointer": "/snapshot/repository_receipt_ref",
+      "value": "receipt:other",
+      "expected_error": "forge_settlement_receipts"
+    },
+    {
+      "name": "wrong_readback_project",
+      "pointer": "/snapshot/project/project_id",
+      "value": "project:other",
+      "expected_error": "forge_project_project_id"
+    },
+    {
+      "name": "wrong_readback_repository",
+      "pointer": "/snapshot/project/repository_refs",
+      "value": [
+        "repository:other"
+      ],
+      "expected_error": "forge_project_source_binding"
+    },
+    {
+      "name": "wrong_readback_fence",
+      "pointer": "/snapshot/project/revision",
+      "value": 27,
+      "expected_error": "forge_project_fence"
+    },
+    {
+      "name": "wrong_registry_commit",
+      "pointer": "/snapshot/after_registry/revision",
+      "value": 27,
+      "expected_error": "forge_registry_commit"
+    },
+    {
+      "name": "foreign_repository_intent",
+      "pointer": "/snapshot/repository_ref",
+      "value": "repository:other",
+      "expected_error": "forge_repository_intent_binding"
+    },
+    {
+      "name": "substituted_result",
+      "pointer": "/result/project_id",
+      "value": "project:other",
+      "expected_error": "forge_settlement_binding"
+    },
+    {
+      "name": "no_change_not_bound",
+      "pointer": "/result/outcome",
+      "value": "no_change",
+      "expected_error": "forge_result_schema"
+    },
+    {
+      "name": "replay_not_bound",
+      "pointer": "/result/replayed",
+      "value": true,
+      "expected_error": "forge_settlement_binding"
+    }
+  ]
+}

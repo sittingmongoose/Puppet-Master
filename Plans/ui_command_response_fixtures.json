@@ -1,0 +1,4286 @@
+{
+  "schema_id": "pm.ui_command_response_fixtures.v1",
+  "claim_boundary": "Static cross-record conformance only; request and record lookup are fixture inputs, not authenticated native producer, receipt-store, general numeric RFC8785, event emission or UI dispatch proof.",
+  "valid": [
+    {
+      "case_id": "shared_accepted",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_accepted",
+        "request_ref": "request:shared_accepted",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_accepted",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_accepted",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_accepted",
+        "owner_result_ref": "owner-result:shared_accepted",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_accepted",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_accepted",
+        "operation_id": "operation:shared_accepted",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_accepted",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_accepted",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_accepted",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "accepted",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": null,
+        "acknowledgement_frame_offset": null,
+        "same_frame_acknowledged": false,
+        "acknowledgement_receipt_ref": null,
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_accepted",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "22617bc890edce646810b434301e1d08aec11ab39cda9db814acaa5af8350017",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_accepted",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_accepted",
+        "command_instance_id": "command-instance:shared_accepted",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_accepted"
+      }
+    },
+    {
+      "case_id": "shared_acknowledged",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": "owner-result:shared_acknowledged",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_acknowledged",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "acknowledged",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_acknowledged",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_acknowledged",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "886cbb947e867fb0c884021e9fb8ef51c013af507131af31e67a7665775d0937",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_acknowledged",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_acknowledged",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_acknowledged"
+      }
+    },
+    {
+      "case_id": "shared_executing",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_executing",
+        "request_ref": "request:shared_executing",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_executing",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_executing",
+        "operation_id": "operation:shared_executing",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_executing",
+        "owner_result_ref": "owner-result:shared_executing",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_executing",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_executing",
+        "operation_id": "operation:shared_executing",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_executing",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_executing",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_executing",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "executing",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_executing",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_executing",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "4a9b820f7d0160c21b62cbc63ddd682df71ac973e2815cfc2b3643a12f8f6dfa",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_executing",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_executing",
+        "command_instance_id": "command-instance:shared_executing",
+        "outcome": "accepted",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_executing"
+      }
+    },
+    {
+      "case_id": "shared_succeeded",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_succeeded",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:shared_succeeded",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "ec024a1ac7404ec16c24605675d25744e354cffeac8bae6a64aba2fb68dcf760",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_succeeded",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_succeeded",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "outcome": "no_change",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_succeeded"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_succeeded",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_succeeded"
+      }
+    },
+    {
+      "case_id": "shared_failed",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_failed",
+        "request_ref": "request:shared_failed",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_failed",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "failed",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_failed",
+        "operation_id": "operation:shared_failed",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_failed",
+        "owner_result_ref": "owner-result:shared_failed",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_failed",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_failed",
+        "operation_id": "operation:shared_failed",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_failed",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_failed",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_failed",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "failed",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_failed",
+        "result_receipt_ref": "receipt:shared_failed",
+        "error_ref": "error:shared_failed",
+        "owner_result_ref": "owner-result:shared_failed",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "bd2313bad949b00db2088086741c0780259fe7d75ddbbc2b7e78b9bfb17d38e9",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_failed",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_failed",
+        "command_instance_id": "command-instance:shared_failed",
+        "outcome": "failed",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_failed"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_failed"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_failed",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_failed"
+      }
+    },
+    {
+      "case_id": "shared_cancelled",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_cancelled",
+        "request_ref": "request:shared_cancelled",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "cancelled",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_cancelled",
+        "operation_id": "operation:shared_cancelled",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_cancelled",
+        "owner_result_ref": "owner-result:shared_cancelled",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_cancelled",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "operation_id": "operation:shared_cancelled",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_cancelled",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_cancelled",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_cancelled",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "cancelled",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_cancelled",
+        "result_receipt_ref": "receipt:shared_cancelled",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_cancelled",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "a01e566012aac13680984c29420194d8a2f1343969eb9e5c6ca9c3d1de3b2914",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_cancelled",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_cancelled",
+        "command_instance_id": "command-instance:shared_cancelled",
+        "outcome": "cancelled",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_cancelled"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_cancelled",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_cancelled"
+      }
+    },
+    {
+      "case_id": "shared_rejected",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_rejected",
+        "request_ref": "request:shared_rejected",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_rejected",
+        "response_kind": "owner_operation",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_rejected",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_rejected",
+        "owner_result_ref": "owner-result:shared_rejected",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_rejected",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_rejected",
+        "operation_id": "operation:shared_rejected",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_rejected",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_rejected",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_rejected",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "rejected",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": null,
+        "acknowledgement_frame_offset": null,
+        "same_frame_acknowledged": false,
+        "acknowledgement_receipt_ref": null,
+        "result_receipt_ref": null,
+        "error_ref": "error:shared_rejected",
+        "owner_result_ref": "owner-result:shared_rejected",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "269fc011fdd6667e614d8c1b7868f9eca7017c0432eb312ca09c41436f60bdd7",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_rejected",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_rejected",
+        "command_instance_id": "command-instance:shared_rejected",
+        "outcome": "blocked",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_rejected"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_rejected"
+      }
+    },
+    {
+      "case_id": "shared_terminal_unknown",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_terminal_unknown",
+        "request_ref": "request:shared_terminal_unknown",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "recovery_required",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:shared_terminal_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_terminal_unknown",
+        "owner_result_ref": "owner-result:shared_terminal_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_terminal_unknown",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "operation_id": "operation:shared_terminal_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_terminal_unknown",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_terminal_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_terminal_unknown",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "terminal_unknown",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_terminal_unknown",
+        "result_receipt_ref": null,
+        "error_ref": "error:shared_terminal_unknown",
+        "owner_result_ref": "owner-result:shared_terminal_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "36b3ad99d08e0e12d4e0a2edfdfc7a689964fc951ee8d509be3673439d87eb58",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_terminal_unknown",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_terminal_unknown",
+        "command_instance_id": "command-instance:shared_terminal_unknown",
+        "outcome": "recovery_required",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:admission:1"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": "permission_required",
+        "error": {
+          "schema_id": "pm.shared_runtime.command_error.v1",
+          "category": "recovery",
+          "code": "recovery_required",
+          "retryability": "manual_recovery_required",
+          "safe_user_message": "Owner state requires explicit recovery.",
+          "detail_ref": "error:shared_terminal_unknown"
+        },
+        "recovery_actions": [
+          "reconcile_same_operation"
+        ],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": null,
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_terminal_unknown"
+      }
+    },
+    {
+      "case_id": "ack_before_owner_result",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_acknowledged",
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "pending",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "ack:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_acknowledged",
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_acknowledged",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_acknowledged",
+        "operation_id": "operation:shared_acknowledged",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_acknowledged",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_acknowledged",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_acknowledged",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "acknowledged",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_acknowledged",
+        "result_receipt_ref": null,
+        "error_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "owner_result_sha256": null,
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "browser_succeeded",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:browser_succeeded",
+        "request_ref": "request:browser_succeeded",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:browser-workspace:create:1",
+        "operation_id": "operation:browser_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:browser_succeeded",
+        "owner_result_ref": "owner-result:browser_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:browser_succeeded",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "operation_id": "operation:browser_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:browser_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_succeeded",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_id": "cmd.browser.workspace.create",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:browser_succeeded",
+        "result_receipt_ref": "receipt:browser-workspace:create:1",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:browser_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "owner_result_sha256": "8888c8607a5299acd8a51ae3f16eeef36db8609102d5bf9b3a279a0c3666f4d0",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:browser_succeeded",
+      "owner_result": {
+        "schema_id": "pm.browser_program.command_result.v1",
+        "record_kind": "browser_command_result",
+        "command_instance_id": "browser-command:browser_succeeded",
+        "scope": {
+          "command_id": "cmd.browser.workspace.create",
+          "lineage": {
+            "project_id": "project-cmd",
+            "run_id": "run-cmd",
+            "attempt_id": "attempt-cmd",
+            "home_server_id": "server-cmd",
+            "execution_host_id": "host-cmd",
+            "execution_environment_id": "env-cmd",
+            "source_location_id": "source-cmd"
+          },
+          "browser_session_id": "browser-session-cmd",
+          "session_security_class": "ordinary",
+          "workspace_policy_ref": "policy:browser-workspace:1",
+          "capability_profile_id": "browser-capability-standard"
+        },
+        "outcome": "succeeded",
+        "effect_state": "effects_reconciled",
+        "result_refs": [
+          "receipt:browser-workspace:create:1"
+        ],
+        "dispatch_receipt_ref": null,
+        "completed_at_utc": "2026-08-31T13:10:00Z"
+      }
+    },
+    {
+      "case_id": "browser_effect_unknown",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:browser_effect_unknown",
+        "request_ref": "request:browser_effect_unknown",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "recovery_required",
+        "error": {
+          "code": "blocked_state_required",
+          "reason": "The owner requires recovery or reports a blocked operation.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": null,
+        "operation_id": "operation:browser_effect_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:browser_effect_unknown",
+        "owner_result_ref": "owner-result:browser_effect_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:browser_effect_unknown",
+        "command_id": "cmd.browser.workspace.create",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "operation_id": "operation:browser_effect_unknown",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:browser_effect_unknown",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:browser_effect_unknown",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "browser-command:browser_effect_unknown",
+          "server_id": "server-cmd",
+          "project_id": "project-cmd",
+          "project_home_server_id": "server-cmd",
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-cmd",
+          "execution_environment_id": "env-cmd",
+          "source_location_id": "source-cmd",
+          "topology_generation": 8
+        },
+        "command_id": "cmd.browser.workspace.create",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "terminal_unknown",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:browser_effect_unknown",
+        "result_receipt_ref": null,
+        "error_ref": "error:browser_effect_unknown",
+        "owner_result_ref": "owner-result:browser_effect_unknown",
+        "owner_result_schema_ref": {
+          "path": "Plans/section15_browser_program_contracts.schema.json",
+          "json_pointer": "#/$defs/browser_command_result",
+          "schema_id": "pm.browser_program.command_result.v1"
+        },
+        "owner_result_sha256": "ee775bbaeb6c9aec7963f947765cca66b869e5d685eece929b4c6bf6cc018c7b",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:browser_effect_unknown",
+      "owner_result": {
+        "schema_id": "pm.browser_program.command_result.v1",
+        "record_kind": "browser_command_result",
+        "command_instance_id": "browser-command:browser_effect_unknown",
+        "scope": {
+          "command_id": "cmd.browser.workspace.create",
+          "lineage": {
+            "project_id": "project-cmd",
+            "run_id": "run-cmd",
+            "attempt_id": "attempt-cmd",
+            "home_server_id": "server-cmd",
+            "execution_host_id": "host-cmd",
+            "execution_environment_id": "env-cmd",
+            "source_location_id": "source-cmd"
+          },
+          "browser_session_id": "browser-session-cmd",
+          "session_security_class": "ordinary",
+          "workspace_policy_ref": "policy:browser-workspace:1",
+          "capability_profile_id": "browser-capability-standard"
+        },
+        "outcome": "effect_unknown",
+        "effect_state": "effect_unknown",
+        "result_refs": [],
+        "dispatch_receipt_ref": null,
+        "completed_at_utc": "2026-08-31T13:10:00Z"
+      }
+    },
+    {
+      "case_id": "server_application_scope",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:server_application_scope",
+        "request_ref": "request:server_application_scope",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "srcpt_result-00000000001",
+        "operation_id": "operation:server_application_scope",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:server_application_scope",
+        "owner_result_ref": "owner-result:server_application_scope",
+        "owner_result_schema_ref": {
+          "path": "Plans/server_system_contracts.schema.json",
+          "json_pointer": "#/$defs/command_result",
+          "schema_id": "server.command.result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:server_application_scope",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "operation_id": "operation:server_application_scope",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:server_application_scope",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:server_application_scope",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "scmd_result-000000000001",
+          "server_id": "server:abcdefghijkl",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.server.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:server_application_scope",
+        "result_receipt_ref": "srcpt_result-00000000001",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:server_application_scope",
+        "owner_result_schema_ref": {
+          "path": "Plans/server_system_contracts.schema.json",
+          "json_pointer": "#/$defs/command_result",
+          "schema_id": "server.command.result.v1"
+        },
+        "owner_result_sha256": "15a3eeb89755be029cb8cd5517f0818b9cb71a6a886e5e19608335c6535d5283",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:server_application_scope",
+      "owner_result": {
+        "record_type": "server.command.result.v1",
+        "command_id": "cmd.server.connect",
+        "command_instance_id": "scmd_result-000000000001",
+        "correlation_id": "corr_result-000000000001",
+        "server_id": "server:abcdefghijkl",
+        "status": "succeeded",
+        "receipt_id": "srcpt_result-00000000001",
+        "resulting_catalog_revision": 8,
+        "return_context": {
+          "surface_id": "settings.server",
+          "route_id": "settings/server",
+          "focus_target": "server-card",
+          "invocation_token": "ret_abcdefghijkl"
+        },
+        "output": {
+          "action": "cmd.server.connect",
+          "changed": true,
+          "server_endpoint_id": "server-endpoint:abcdefghijkl",
+          "currentness": "current",
+          "requested_connection_mode": "reconnect",
+          "effective_connection_mode": "reconnect",
+          "session_id": "session:abcdefghijkl",
+          "cursor_ref": "cursor:server:abcdefghijkl:984"
+        }
+      }
+    },
+    {
+      "case_id": "local_projection_success",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_success",
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_success",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:local_projection_success",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_success",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "local_projection_no_change",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:local_projection_no_change",
+        "request_ref": "request:local_projection_no_change",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_no_change",
+        "response_kind": "local_projection",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:local_projection_no_change",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:local_projection_no_change",
+        "command_id": "cmd.settings.open",
+        "command_instance_id": "command-instance:local_projection_no_change",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "predispatch_handler_unavailable",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:predispatch_handler_unavailable",
+        "request_ref": "request:predispatch_handler_unavailable",
+        "command_id": "cmd.browser.program.run",
+        "command_instance_id": "command-instance:predispatch_handler_unavailable",
+        "response_kind": "pre_dispatch_rejection",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "handler_unavailable",
+          "reason": "No domain handler was invoked.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:predispatch_handler_unavailable",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:predispatch_handler_unavailable",
+        "command_id": "cmd.browser.program.run",
+        "command_instance_id": "command-instance:predispatch_handler_unavailable",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "predispatch_unknown_command",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:predispatch_unknown_command",
+        "request_ref": "request:predispatch_unknown_command",
+        "command_id": null,
+        "command_instance_id": "command-instance:predispatch_unknown_command",
+        "response_kind": "pre_dispatch_rejection",
+        "ack_status": "rejected",
+        "result_status": null,
+        "error": {
+          "code": "unknown_command",
+          "reason": "No domain handler was invoked.",
+          "offending_field": null
+        },
+        "event_refs": [],
+        "receipt_ref": "receipt:predispatch_unknown_command",
+        "operation_id": null,
+        "owner_identity": null,
+        "command_outcome_ref": null,
+        "owner_result_ref": null,
+        "owner_result_schema_ref": null,
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:predispatch_unknown_command",
+        "command_id": null,
+        "command_instance_id": "command-instance:predispatch_unknown_command",
+        "operation_id": null,
+        "owner_identity": null
+      },
+      "resolved_outcome_ref": null,
+      "outcome": null,
+      "resolved_owner_result_ref": null,
+      "owner_result": null
+    },
+    {
+      "case_id": "replay_returns_original_owner_result",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:retry",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": true,
+        "original_dispatch_id": "dispatch:shared_succeeded",
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:shared_succeeded",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.environment.connect",
+        "payload_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "idempotency_key": "idem-command",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:shared_succeeded",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "owner_result_sha256": "ec024a1ac7404ec16c24605675d25744e354cffeac8bae6a64aba2fb68dcf760",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:shared_succeeded",
+      "owner_result": {
+        "schema_id": "pm.shared_runtime.command_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "EnvironmentConnectionCommandResult",
+        "command_id": "cmd.environment.connect",
+        "operation_id": "operation:shared_succeeded",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "outcome": "no_change",
+        "observable_work_id": "work:1",
+        "current_revision_or_epoch": 1,
+        "projection_ref": "projection:environment:1",
+        "receipt_refs": [
+          "receipt:shared_succeeded"
+        ],
+        "artifact_refs": [],
+        "disabled_reason": null,
+        "error": null,
+        "recovery_actions": [],
+        "replayed": false,
+        "original_operation_id": null,
+        "terminal_owner_result_ref": "receipt:shared_succeeded",
+        "subject_ref": "environment:1",
+        "command_outcome_ref": "outcome:shared_succeeded"
+      },
+      "original_response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:shared_succeeded",
+        "request_ref": "request:shared_succeeded",
+        "command_id": "cmd.environment.connect",
+        "command_instance_id": "command-instance:shared_succeeded",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "no_op",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:shared_succeeded",
+        "operation_id": "operation:shared_succeeded",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:shared_succeeded",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command-instance:shared_succeeded",
+          "server_id": "srv-1",
+          "project_id": "p-1",
+          "project_home_server_id": "srv-1",
+          "named_plan_id": null,
+          "thread_id": "thread-1",
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:shared_succeeded",
+        "owner_result_ref": "owner-result:shared_succeeded",
+        "owner_result_schema_ref": {
+          "path": "Plans/shared_runtime_command_contracts.schema.json",
+          "json_pointer": "#/$defs/environment_connection_command_result",
+          "schema_id": "pm.shared_runtime.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      }
+    },
+    {
+      "case_id": "evidence_session_open",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_session_open",
+        "request_ref": "request:evidence_session_open",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:session_open",
+        "operation_id": "operation:session_open",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_open",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_open",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_session_open",
+        "owner_result_ref": "owner-result:evidence_session_open",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_session_open",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "operation_id": "operation:session_open",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_open",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_open",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+        "idempotency_key": "idempotency:session_open",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_session_open",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_open",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_open",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.testing.session.open",
+        "payload_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+        "idempotency_key": "idempotency:session_open",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:session_open",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_session_open",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "owner_result_sha256": "2f9aa9b374b6c0aa185dbc0c4557a81bb2a9187b6397aca56d386cd33ab91b04",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_session_open",
+      "owner_result": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "operation_id": "operation:session_open",
+        "request_binding_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_open",
+        "status": "completed",
+        "receipt_ref": "receipt:session_open",
+        "projection_ref": "projection:session_open",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.testing_session.command_request.v1",
+        "record_kind": "TestingSessionCommandRequest",
+        "command_id": "cmd.testing.session.open",
+        "command_instance_id": "command:session_open",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_open",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "c82f0b1576bdf8c54f0fab6c833471e4ca949cc7a066d700339aa8d91fe9c5f2",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "requested_surface": "editor_target",
+          "fallback_route_ref": "fallback:readonly",
+          "effective_policy_ref": "policy:testing",
+          "redaction_profile_ref": "redaction:ordinary"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_session_watch",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_session_watch",
+        "request_ref": "request:evidence_session_watch",
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:session_watch",
+        "operation_id": "operation:session_watch",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_watch",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_watch",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_session_watch",
+        "owner_result_ref": "owner-result:evidence_session_watch",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_session_watch",
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "operation_id": "operation:session_watch",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_watch",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_watch",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+        "idempotency_key": "idempotency:session_watch",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_session_watch",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_watch",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_watch",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.testing.session.watch",
+        "payload_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+        "idempotency_key": "idempotency:session_watch",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:session_watch",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_session_watch",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "owner_result_sha256": "765843d035c74d8e9f3803140f702214e388cdc916a8fad80aa7bd88b03f3e12",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_session_watch",
+      "owner_result": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "operation_id": "operation:session_watch",
+        "request_binding_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_watch",
+        "status": "completed",
+        "receipt_ref": "receipt:session_watch",
+        "projection_ref": "projection:session_watch",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.testing_session.command_request.v1",
+        "record_kind": "TestingSessionCommandRequest",
+        "command_id": "cmd.testing.session.watch",
+        "command_instance_id": "command:session_watch",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_watch",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "0e3c4229c2b74726410126b73498b53508b7d50a5cf60e8217e82081060e0f62",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "stream_ref": "stream:test",
+          "expected_stream_generation": 3,
+          "fallback_route_ref": "fallback:readonly",
+          "effective_policy_ref": "policy:testing",
+          "redaction_profile_ref": "redaction:ordinary"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_session_background",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_session_background",
+        "request_ref": "request:evidence_session_background",
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:session_background",
+        "operation_id": "operation:session_background",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_background",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_background",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_session_background",
+        "owner_result_ref": "owner-result:evidence_session_background",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_session_background",
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "operation_id": "operation:session_background",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_background",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_background",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+        "idempotency_key": "idempotency:session_background",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_session_background",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_background",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_background",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.testing.session.background",
+        "payload_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+        "idempotency_key": "idempotency:session_background",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:session_background",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_session_background",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "owner_result_sha256": "b5b11deae3bcec726470ee483a38c26cf9ae6bd3268ec4116b42982f725f8591",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_session_background",
+      "owner_result": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "operation_id": "operation:session_background",
+        "request_binding_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_background",
+        "status": "completed",
+        "receipt_ref": "receipt:session_background",
+        "projection_ref": "projection:session_background",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.testing_session.command_request.v1",
+        "record_kind": "TestingSessionCommandRequest",
+        "command_id": "cmd.testing.session.background",
+        "command_instance_id": "command:session_background",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_background",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "143df9157a2cc468a41f1103b5d29c5926f6d01ce96993b7f8ccc4c34eea5d3f",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "reason_code": "user_requested",
+          "continuation_policy_ref": "policy:continuation"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_session_redaction_inspect",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_session_redaction_inspect",
+        "request_ref": "request:evidence_session_redaction_inspect",
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:session_redaction_inspect",
+        "operation_id": "operation:session_redaction_inspect",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_redaction_inspect",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_redaction_inspect",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_session_redaction_inspect",
+        "owner_result_ref": "owner-result:evidence_session_redaction_inspect",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_session_redaction_inspect",
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "operation_id": "operation:session_redaction_inspect",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_redaction_inspect",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_redaction_inspect",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+        "idempotency_key": "idempotency:session_redaction_inspect",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_session_redaction_inspect",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:session_redaction_inspect",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:session_redaction_inspect",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "payload_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+        "idempotency_key": "idempotency:session_redaction_inspect",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:session_redaction_inspect",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_session_redaction_inspect",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "owner_result_sha256": "5ad454b9caef284763cdd3dd2800f4b2bd88d6f93fdfe44aefabef43297a82dc",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_session_redaction_inspect",
+      "owner_result": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "operation_id": "operation:session_redaction_inspect",
+        "request_binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:session_redaction_inspect",
+        "status": "completed",
+        "receipt_ref": "receipt:session_redaction_inspect",
+        "projection_ref": "projection:session_redaction_inspect",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.testing_session.command_request.v1",
+        "record_kind": "TestingSessionCommandRequest",
+        "command_id": "cmd.testing.session.redaction.inspect",
+        "command_instance_id": "command:session_redaction_inspect",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:session_redaction_inspect",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "cae0e533944764014ca100ce9ee5d61f323442c584121dfc839f48f2eb06215e",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "visible_test_session",
+          "test_session_id": "session:test",
+          "expected_session_revision": 4,
+          "target_ref": "target:test",
+          "target_generation": 5,
+          "security_class": "ordinary"
+        },
+        "args": {
+          "selected_evidence": [
+            {
+              "artifact_id": "artifact:recording",
+              "artifact_version": 2,
+              "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "security_class": "ordinary"
+            }
+          ],
+          "redaction_profile_ref": "redaction:ordinary",
+          "inspection_policy_ref": "policy:inspect"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_export_bundle",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_export_bundle",
+        "request_ref": "request:evidence_export_bundle",
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:export_bundle",
+        "operation_id": "operation:export_bundle",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:export_bundle",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:export_bundle",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_export_bundle",
+        "owner_result_ref": "owner-result:evidence_export_bundle",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_export_bundle",
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "operation_id": "operation:export_bundle",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:export_bundle",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:export_bundle",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+        "idempotency_key": "idempotency:export_bundle",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_export_bundle",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:export_bundle",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:export_bundle",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.testing.export_bundle",
+        "payload_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+        "idempotency_key": "idempotency:export_bundle",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:export_bundle",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_export_bundle",
+        "owner_result_schema_ref": {
+          "path": "Plans/testing_session_command_contracts.schema.json",
+          "json_pointer": "#/$defs/TestingSessionCommandResult",
+          "schema_id": "pm.testing_session.command_result.v1"
+        },
+        "owner_result_sha256": "c273b9a6d94264e990e909b768eb668eb1545bef409cbdc8d878bc0c011bc8e4",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_export_bundle",
+      "owner_result": {
+        "schema_id": "pm.testing_session.command_result.v1",
+        "record_kind": "TestingSessionCommandResult",
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "operation_id": "operation:export_bundle",
+        "request_binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:export_bundle",
+        "status": "completed",
+        "receipt_ref": "receipt:export_bundle",
+        "projection_ref": "projection:export_bundle",
+        "artifact_refs": [
+          "artifact:bundle"
+        ],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.testing_session.command_request.v1",
+        "record_kind": "TestingSessionCommandRequest",
+        "command_id": "cmd.testing.export_bundle",
+        "command_instance_id": "command:export_bundle",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:export_bundle",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "ed6afdb97bd932c2bc3b852186b15775c6c18f15076a23223dddde42ae153365",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "test_run",
+          "test_run_id": "run:test",
+          "expected_run_revision": 8,
+          "selected_evidence": [
+            {
+              "artifact_id": "artifact:recording",
+              "artifact_version": 2,
+              "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "security_class": "ordinary"
+            }
+          ],
+          "security_class": "ordinary"
+        },
+        "args": {
+          "file_safe_export_plan_ref": "export:plan",
+          "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "approval_receipt_ref": "approval:export",
+          "bundle_policy_ref": "policy:bundle",
+          "redaction_review_ref": "review:redaction"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_play_recording",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_play_recording",
+        "request_ref": "request:evidence_play_recording",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:play_recording",
+        "operation_id": "operation:play_recording",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:play_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:play_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_play_recording",
+        "owner_result_ref": "owner-result:evidence_play_recording",
+        "owner_result_schema_ref": {
+          "path": "Plans/artifact_recording_command_contracts.schema.json",
+          "json_pointer": "#/$defs/ArtifactRecordingCommandResult",
+          "schema_id": "pm.artifact_recording.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_play_recording",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "operation_id": "operation:play_recording",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:play_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:play_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+        "idempotency_key": "idempotency:play_recording",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_play_recording",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:play_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:play_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.artifacts.play_recording",
+        "payload_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+        "idempotency_key": "idempotency:play_recording",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:play_recording",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_play_recording",
+        "owner_result_schema_ref": {
+          "path": "Plans/artifact_recording_command_contracts.schema.json",
+          "json_pointer": "#/$defs/ArtifactRecordingCommandResult",
+          "schema_id": "pm.artifact_recording.command_result.v1"
+        },
+        "owner_result_sha256": "69a5e135853977ee50d745390fb7c52b3c3669629cc44b24c6e68db9527fbf33",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_play_recording",
+      "owner_result": {
+        "schema_id": "pm.artifact_recording.command_result.v1",
+        "record_kind": "ArtifactRecordingCommandResult",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "operation_id": "operation:play_recording",
+        "request_binding_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:play_recording",
+        "status": "completed",
+        "receipt_ref": "receipt:play_recording",
+        "projection_ref": "projection:play_recording",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.artifact_recording.command_request.v1",
+        "record_kind": "ArtifactRecordingCommandRequest",
+        "command_id": "cmd.artifacts.play_recording",
+        "command_instance_id": "command:play_recording",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:play_recording",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "f2b792b2f20b74f6f3d44401c251248a7d16bed321f029f23f6f2cfa36e377ec",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "terminal_recording",
+          "artifact_id": "artifact:recording",
+          "artifact_version": 2,
+          "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "security_class": "ordinary",
+          "capture_id": "capture:test",
+          "provenance_ref": "provenance:recording",
+          "recording_state": "terminal"
+        },
+        "args": {
+          "redaction_profile_ref": "redaction:ordinary",
+          "viewer_policy_ref": "policy:viewer",
+          "fallback_route_ref": "fallback:readonly",
+          "clock_alignment_ref": "clock:recording"
+        }
+      }
+    },
+    {
+      "case_id": "evidence_watch_recording",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:evidence_watch_recording",
+        "request_ref": "request:evidence_watch_recording",
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:watch_recording",
+        "operation_id": "operation:watch_recording",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:watch_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:watch_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_outcome_ref": "outcome:evidence_watch_recording",
+        "owner_result_ref": "owner-result:evidence_watch_recording",
+        "owner_result_schema_ref": {
+          "path": "Plans/artifact_recording_command_contracts.schema.json",
+          "json_pointer": "#/$defs/ArtifactRecordingCommandResult",
+          "schema_id": "pm.artifact_recording.command_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:evidence_watch_recording",
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "operation_id": "operation:watch_recording",
+        "owner_identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:watch_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:watch_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "payload_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+        "idempotency_key": "idempotency:watch_recording",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:evidence_watch_recording",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "project",
+          "operation_id": "operation:watch_recording",
+          "operation_generation": 1,
+          "attempt_id": "attempt:test",
+          "command_instance_id": "command:watch_recording",
+          "server_id": "server:home",
+          "project_id": "project:alpha",
+          "project_home_server_id": "server:home",
+          "named_plan_id": null,
+          "thread_id": "thread:test",
+          "goal_id": null,
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "topology_generation": 7
+        },
+        "command_id": "cmd.artifacts.watch_recording",
+        "payload_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+        "idempotency_key": "idempotency:watch_recording",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:shared_succeeded",
+        "result_receipt_ref": "receipt:watch_recording",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:evidence_watch_recording",
+        "owner_result_schema_ref": {
+          "path": "Plans/artifact_recording_command_contracts.schema.json",
+          "json_pointer": "#/$defs/ArtifactRecordingCommandResult",
+          "schema_id": "pm.artifact_recording.command_result.v1"
+        },
+        "owner_result_sha256": "5c16343b49554972f961b8742c92367a2ee7f6bb41ff4398a3d98d67f24c680e",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:evidence_watch_recording",
+      "owner_result": {
+        "schema_id": "pm.artifact_recording.command_result.v1",
+        "record_kind": "ArtifactRecordingCommandResult",
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "operation_id": "operation:watch_recording",
+        "request_binding_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject_ref": "subject:watch_recording",
+        "status": "completed",
+        "receipt_ref": "receipt:watch_recording",
+        "projection_ref": "projection:watch_recording",
+        "artifact_refs": [],
+        "error": null,
+        "currentness_ref": "currentness:after",
+        "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "observable_work_ref": null,
+        "replayed": false,
+        "original_result_ref": null,
+        "capture_lifecycle_changed": false,
+        "test_verdict_changed": false,
+        "protected_content_exposed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.artifact_recording.command_request.v1",
+        "record_kind": "ArtifactRecordingCommandRequest",
+        "command_id": "cmd.artifacts.watch_recording",
+        "command_instance_id": "command:watch_recording",
+        "idempotency": {
+          "schema_id": "pm.shared_runtime.command_idempotency.v1",
+          "idempotency_key": "idempotency:watch_recording",
+          "scope_ref": "scope:testing",
+          "binding_sha256": "9924f110cfb9346800e7e5d0c5146fe299bc2a297f633570e8130af22e238f77",
+          "replay_policy": "return_original_result",
+          "conflict_behavior": "reject_same_key_different_binding"
+        },
+        "context": {
+          "project_id": "project:alpha",
+          "home_server_id": "server:home",
+          "execution_host_id": "host:test",
+          "execution_environment_id": "environment:test",
+          "source_location_id": "source:alpha",
+          "thread_id": "thread:test",
+          "run_id": "run:test",
+          "attempt_id": "attempt:test",
+          "topology_generation": 7,
+          "actor_ref": "actor:human",
+          "permission_snapshot_ref": "permission:test",
+          "initiating_client_id": "client:desktop",
+          "client_session_generation": 3,
+          "expected_currentness_ref": "currentness:before",
+          "expected_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "return_context_ref": "return:testing",
+          "return_context_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "subject": {
+          "kind": "live_recording",
+          "capture_session_id": "capture-session:test",
+          "capture_id": "capture:test",
+          "stream_ref": "stream:recording",
+          "expected_stream_generation": 2,
+          "expected_capture_revision": 6,
+          "recording_state": "recording_in_progress",
+          "security_class": "ordinary"
+        },
+        "args": {
+          "redaction_profile_ref": "redaction:ordinary",
+          "viewer_policy_ref": "policy:viewer",
+          "fallback_route_ref": "fallback:readonly",
+          "clock_alignment_ref": "clock:recording"
+        }
+      }
+    },
+    {
+      "case_id": "github_project_creation",
+      "response": {
+        "schema_id": "pm.ui_command_response.v2",
+        "schema_version": "2.0.0",
+        "dispatch_id": "dispatch:github_project_creation",
+        "request_ref": "request:github_project_creation",
+        "command_id": "cmd.project.new_github_repo",
+        "command_instance_id": "command:project:new-github:01",
+        "response_kind": "owner_operation",
+        "ack_status": "accepted",
+        "result_status": "succeeded",
+        "error": null,
+        "event_refs": [],
+        "receipt_ref": "receipt:project:registered:01",
+        "operation_id": "operation:github-project:01",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:github-project:01",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command:project:new-github:01",
+          "server_id": "srv-home-01",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_outcome_ref": "outcome:github_project_creation",
+        "owner_result_ref": "owner-result:github_project_creation",
+        "owner_result_schema_ref": {
+          "path": "Plans/project_system_contracts.schema.json",
+          "json_pointer": "#/$defs/project_action_result",
+          "schema_id": "pm.project.action_result.v1"
+        },
+        "replayed": false,
+        "original_dispatch_id": null,
+        "ts": "2026-09-10T20:00:00Z"
+      },
+      "normalized_request": {
+        "request_ref": "request:github_project_creation",
+        "command_id": "cmd.project.new_github_repo",
+        "command_instance_id": "command:project:new-github:01",
+        "operation_id": "operation:github-project:01",
+        "owner_identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:github-project:01",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command:project:new-github:01",
+          "server_id": "srv-home-01",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "payload_sha256": "ac426166792ec65fffaf77956c6544614e9184aee0d25204ef0dedd59c5e1521",
+        "idempotency_key": "idempotency:project:new-github:01",
+        "target_generation": 8,
+        "dispatch_frame_id": "frame-101"
+      },
+      "resolved_outcome_ref": "outcome:github_project_creation",
+      "outcome": {
+        "schema_id": "pm.full_thread_runtime.contracts.v1",
+        "record_kind": "command_outcome",
+        "identity": {
+          "scope_kind": "application",
+          "operation_id": "operation:github-project:01",
+          "operation_generation": 1,
+          "attempt_id": null,
+          "command_instance_id": "command:project:new-github:01",
+          "server_id": "srv-home-01",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "thread_id": null,
+          "goal_id": null,
+          "execution_host_id": "host-1",
+          "execution_environment_id": "env-1",
+          "source_location_id": null,
+          "topology_generation": 8
+        },
+        "command_id": "cmd.project.new_github_repo",
+        "payload_sha256": "ac426166792ec65fffaf77956c6544614e9184aee0d25204ef0dedd59c5e1521",
+        "idempotency_key": "idempotency:project:new-github:01",
+        "target_generation": 8,
+        "outcome": "succeeded",
+        "dispatch_frame_id": "frame-101",
+        "acknowledgement_frame_id": "frame-101",
+        "acknowledgement_frame_offset": 0,
+        "same_frame_acknowledged": true,
+        "acknowledgement_receipt_ref": "ack:github_project_creation",
+        "result_receipt_ref": "receipt:project:registered:01",
+        "error_ref": null,
+        "owner_result_ref": "owner-result:github_project_creation",
+        "owner_result_schema_ref": {
+          "path": "Plans/project_system_contracts.schema.json",
+          "json_pointer": "#/$defs/project_action_result",
+          "schema_id": "pm.project.action_result.v1"
+        },
+        "owner_result_sha256": "6229293e91ada5c2df7b7e8dbb624b2f07934c97214e12cd8557aa5e8869043d",
+        "observed_at": "2026-08-31T00:00:00Z"
+      },
+      "resolved_owner_result_ref": "owner-result:github_project_creation",
+      "owner_result": {
+        "schema_id": "pm.project.action_result.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_github_repo",
+        "command_instance_id": "command:project:new-github:01",
+        "outcome": "accepted",
+        "project_id": "project:github-new:01",
+        "project_revision": 1,
+        "project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "resulting_registry_revision": 5,
+        "resulting_registry_currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "lifecycle": "listed",
+        "route_ref": null,
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "projects.add_project",
+          "invocation_token": "return:project:new-github:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        },
+        "receipt_refs": [
+          "receipt:github:created:01",
+          "receipt:project:registered:01",
+          "receipt:project:readback:01"
+        ],
+        "persistence_disposition": "persisted",
+        "error_code": null,
+        "replayed": false
+      },
+      "owner_request": {
+        "schema_id": "pm.project.action_request.v1",
+        "schema_version": "1.0.0",
+        "action_id": "cmd.project.new_github_repo",
+        "command_instance_id": "command:project:new-github:01",
+        "project_id": null,
+        "display_name": "New GitHub Project",
+        "registration_kind": "forge_created",
+        "source_ref": "forge-create-intent:github:01",
+        "project_home_server_ref": "server:home:01",
+        "source_location_ref": "source_location:github-new:01",
+        "repository_ref": "repository:github-new:01",
+        "owner_receipt_refs": [],
+        "expected_registry_revision": 4,
+        "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "expected_project_revision": null,
+        "expected_project_currentness_sha256": null,
+        "actor_ref": "actor:user:01",
+        "permission_snapshot_ref": "permission:project:new-github:01",
+        "filesafe_evidence_ref": "filesafe:project:new-github:01",
+        "idempotency_key": "idempotency:project:new-github:01",
+        "source_surface": "projects_page",
+        "return_context": {
+          "surface_id": "projects_page",
+          "route_ref": "route:projects:list",
+          "focus_id": "projects.add_project",
+          "invocation_token": "return:project:new-github:01",
+          "caller_context_ref": null,
+          "expected_caller_revision": null,
+          "continuation_generation": null
+        }
+      },
+      "owner_snapshot": {
+        "operation_id": "operation:github-project:01",
+        "server_id": "srv-home-01",
+        "account_realm": "github_api",
+        "account_ref": "account:github:01",
+        "admission_receipt_ref": "receipt:github:intake:01",
+        "repository_receipt_ref": "receipt:github:created:01",
+        "registration_receipt_ref": "receipt:project:registered:01",
+        "readback_receipt_ref": "receipt:project:readback:01",
+        "native_handler_available": true,
+        "permission_allowed": true,
+        "filesafe_allowed": true,
+        "remote_side_effect_approved": true,
+        "account_authorized": true,
+        "intake_committed": true,
+        "registry_current": true,
+        "repository_created_verified": true,
+        "local_source_ready": true,
+        "project_commit_verified": true,
+        "readback_verified": true,
+        "new_project_identity_verified": true,
+        "emit_new_transition": true,
+        "request": {
+          "schema_id": "pm.project.action_request.v1",
+          "schema_version": "1.0.0",
+          "action_id": "cmd.project.new_github_repo",
+          "command_instance_id": "command:project:new-github:01",
+          "project_id": null,
+          "display_name": "New GitHub Project",
+          "registration_kind": "forge_created",
+          "source_ref": "forge-create-intent:github:01",
+          "project_home_server_ref": "server:home:01",
+          "source_location_ref": "source_location:github-new:01",
+          "repository_ref": "repository:github-new:01",
+          "owner_receipt_refs": [],
+          "expected_registry_revision": 4,
+          "expected_registry_currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "expected_project_revision": null,
+          "expected_project_currentness_sha256": null,
+          "actor_ref": "actor:user:01",
+          "permission_snapshot_ref": "permission:project:new-github:01",
+          "filesafe_evidence_ref": "filesafe:project:new-github:01",
+          "idempotency_key": "idempotency:project:new-github:01",
+          "source_surface": "projects_page",
+          "return_context": {
+            "surface_id": "projects_page",
+            "route_ref": "route:projects:list",
+            "focus_id": "projects.add_project",
+            "invocation_token": "return:project:new-github:01",
+            "caller_context_ref": null,
+            "expected_caller_revision": null,
+            "continuation_generation": null
+          }
+        },
+        "request_sha256": "ac426166792ec65fffaf77956c6544614e9184aee0d25204ef0dedd59c5e1521",
+        "settled_result": {
+          "schema_id": "pm.project.action_result.v1",
+          "schema_version": "1.0.0",
+          "action_id": "cmd.project.new_github_repo",
+          "command_instance_id": "command:project:new-github:01",
+          "outcome": "accepted",
+          "project_id": "project:github-new:01",
+          "project_revision": 1,
+          "project_currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "resulting_registry_revision": 5,
+          "resulting_registry_currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "lifecycle": "listed",
+          "route_ref": null,
+          "return_context": {
+            "surface_id": "projects_page",
+            "route_ref": "route:projects:list",
+            "focus_id": "projects.add_project",
+            "invocation_token": "return:project:new-github:01",
+            "caller_context_ref": null,
+            "expected_caller_revision": null,
+            "continuation_generation": null
+          },
+          "receipt_refs": [
+            "receipt:github:created:01",
+            "receipt:project:registered:01",
+            "receipt:project:readback:01"
+          ],
+          "persistence_disposition": "persisted",
+          "error_code": null,
+          "replayed": false
+        },
+        "project": {
+          "schema_id": "pm.project.record.v1",
+          "schema_version": "1.0.0",
+          "project_id": "project:github-new:01",
+          "display_name": "New GitHub Project",
+          "lifecycle": "listed",
+          "registration_kind": "forge_created",
+          "stable_config_ref": "project_config:github-new:01",
+          "project_home_server_ref": "server:home:01",
+          "project_vault_ref": "vault:git:01",
+          "source_location_refs": [
+            "source_location:github-new:01"
+          ],
+          "repository_refs": [
+            "repository:github-new:01"
+          ],
+          "created_at_utc": "2026-08-31T00:00:00Z",
+          "updated_at_utc": "2026-08-31T00:00:00Z",
+          "last_opened_at_utc": null,
+          "revision": 1,
+          "currentness_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "warning_codes": [],
+          "migration_alias_refs": []
+        },
+        "resolved_home_server_ref": "server:home:01",
+        "repository_ref": "repository:github-new:01",
+        "source_ref": "forge-create-intent:github:01",
+        "before_registry": {
+          "revision": 4,
+          "currentness_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "after_registry": {
+          "revision": 5,
+          "currentness_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "case_id": "response_command_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_id": "cmd.environment.disconnect"
+      },
+      "expected_error": "response_request_command_id_mismatch"
+    },
+    {
+      "case_id": "response_command_instance_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_instance_id": "other-instance"
+      },
+      "expected_error": "response_request_command_instance_id_mismatch"
+    },
+    {
+      "case_id": "response_operation_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.operation_id": "operation:other"
+      },
+      "expected_error": "command_outcome_operation_id_mismatch"
+    },
+    {
+      "case_id": "response_command_outcome_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.command_outcome_ref": "outcome:wrong"
+      },
+      "expected_error": "command_outcome_reference_mismatch"
+    },
+    {
+      "case_id": "response_owner_identity_project_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_identity.project_id": "project:other"
+      },
+      "expected_error": "response_outcome_scope_mismatch"
+    },
+    {
+      "case_id": "response_owner_identity_execution_host_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_identity.execution_host_id": "host:other"
+      },
+      "expected_error": "response_outcome_scope_mismatch"
+    },
+    {
+      "case_id": "response_owner_result_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_ref": "owner-result:wrong"
+      },
+      "expected_error": "outcome_owner_result_ref_mismatch"
+    },
+    {
+      "case_id": "response_owner_result_schema_ref_schema_id",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.schema_id": "wrong.schema"
+      },
+      "expected_error": "outcome_owner_result_schema_ref_mismatch"
+    },
+    {
+      "case_id": "response_receipt_ref",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.receipt_ref": "receipt:wrong"
+      },
+      "expected_error": "terminal_response_receipt_mismatch"
+    },
+    {
+      "case_id": "request_payload_sha256",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_error": "outcome_request_payload_sha256_mismatch"
+    },
+    {
+      "case_id": "request_idempotency_key",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.idempotency_key": "other-key"
+      },
+      "expected_error": "outcome_request_idempotency_key_mismatch"
+    },
+    {
+      "case_id": "request_target_generation",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.target_generation": 999
+      },
+      "expected_error": "outcome_request_target_generation_mismatch"
+    },
+    {
+      "case_id": "request_dispatch_frame_id",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "normalized_request.dispatch_frame_id": "frame:other"
+      },
+      "expected_error": "outcome_request_dispatch_frame_id_mismatch"
+    },
+    {
+      "case_id": "ack_cannot_claim_success",
+      "base_case_id": "shared_acknowledged",
+      "patch": {
+        "response.result_status": "succeeded"
+      },
+      "expected_error": "acknowledgement_is_not_terminal_success"
+    },
+    {
+      "case_id": "accepted_cannot_claim_noop",
+      "base_case_id": "shared_accepted",
+      "patch": {
+        "response.result_status": "no_op"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "missing_outcome",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "outcome": null
+      },
+      "expected_error": "outcome_schema"
+    },
+    {
+      "case_id": "missing_typed_owner_result",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result": null
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "wrong_owner_ref_lookup",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "resolved_owner_result_ref": "owner-result:other"
+      },
+      "expected_error": "owner_result_reference_mismatch"
+    },
+    {
+      "case_id": "changed_owner_result_body",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.subject_ref": "environment:other"
+      },
+      "expected_error": "owner_result_digest_mismatch"
+    },
+    {
+      "case_id": "same_shape_wrong_command",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.command_id": "cmd.environment.disconnect"
+      },
+      "expected_error": "command_outcome_command_mismatch"
+    },
+    {
+      "case_id": "same_shape_wrong_operation",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.operation_id": "operation:other"
+      },
+      "expected_error": "command_outcome_operation_id_mismatch"
+    },
+    {
+      "case_id": "owner_accepted_cannot_be_terminal",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.outcome": "accepted"
+      },
+      "expected_error": "shared_owner_outcome_mismatch"
+    },
+    {
+      "case_id": "terminal_owner_receipt_unbound",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.terminal_owner_result_ref": "receipt:other"
+      },
+      "expected_error": "shared_owner_terminal_receipt_mismatch"
+    },
+    {
+      "case_id": "owner_result_wrong_schema",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "owner_result.schema_id": "wrong.schema"
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "schema_pointer_unknown",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.json_pointer": "#/$defs/missing"
+      },
+      "expected_error": "owner_result_schema"
+    },
+    {
+      "case_id": "unregistered_owner_schema",
+      "base_case_id": "shared_succeeded",
+      "patch": {
+        "response.owner_result_schema_ref.path": "Plans/ui_command_response.schema.json"
+      },
+      "expected_error": "unadmitted_owner_result_schema"
+    },
+    {
+      "case_id": "local_cannot_invent_operation",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.operation_id": "operation:fake"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "local_cannot_attach_owner",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.command_outcome_ref": "outcome:fake"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "predispatch_cannot_invent_project",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {
+        "normalized_request.owner_identity": {
+          "project_id": "fake"
+        }
+      },
+      "expected_error": "non_operation_fabricated_scope"
+    },
+    {
+      "case_id": "predispatch_cannot_emit_event",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {
+        "response.event_refs": [
+          "event:fake"
+        ]
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "legacy_response_not_silently_upgraded",
+      "base_case_id": "local_projection_success",
+      "patch": {
+        "response.schema_version": "1.0.0"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "unknown_effect_not_success",
+      "base_case_id": "browser_effect_unknown",
+      "patch": {
+        "response.result_status": "succeeded"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "browser_wrong_project",
+      "base_case_id": "browser_succeeded",
+      "patch": {
+        "owner_result.scope.lineage.project_id": "project:other"
+      },
+      "expected_error": "browser_owner_scope_mismatch"
+    },
+    {
+      "case_id": "browser_receipt_not_bound",
+      "base_case_id": "browser_succeeded",
+      "patch": {
+        "owner_result.result_refs": [
+          "receipt:wrong"
+        ]
+      },
+      "expected_error": "browser_owner_result_receipt_mismatch"
+    },
+    {
+      "case_id": "server_wrong_scope",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.server_id": "server:mnopqrstuvwx"
+      },
+      "expected_error": "server_owner_scope_mismatch"
+    },
+    {
+      "case_id": "server_accepted_cannot_be_success",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.status": "accepted"
+      },
+      "expected_error": "server_owner_outcome_mismatch"
+    },
+    {
+      "case_id": "server_receipt_not_bound",
+      "base_case_id": "server_application_scope",
+      "patch": {
+        "owner_result.receipt_id": "srcpt_result-00000000002"
+      },
+      "expected_error": "server_owner_result_receipt_mismatch"
+    },
+    {
+      "case_id": "replay_original_missing",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "original_response": null
+      },
+      "expected_error": "replay_original_response_missing"
+    },
+    {
+      "case_id": "replay_changed_receipt",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "response.receipt_ref": "receipt:other"
+      },
+      "expected_error": "replay_changed_original_result_identity"
+    },
+    {
+      "case_id": "replay_wrong_dispatch",
+      "base_case_id": "replay_returns_original_owner_result",
+      "patch": {
+        "response.original_dispatch_id": "dispatch:other"
+      },
+      "expected_error": "replay_original_dispatch_mismatch"
+    },
+    {
+      "case_id": "unknown_command_cannot_claim_canonical_id",
+      "base_case_id": "predispatch_unknown_command",
+      "patch": {
+        "response.command_id": "cmd.settings.open"
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "known_handler_refusal_cannot_drop_canonical_id",
+      "base_case_id": "predispatch_handler_unavailable",
+      "patch": {
+        "response.command_id": null
+      },
+      "expected_error": "response_schema"
+    },
+    {
+      "case_id": "evidence_session_open_foreign_run",
+      "base_case_id": "evidence_session_open",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_session_open_no_change_as_success",
+      "base_case_id": "evidence_session_open",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_session_watch_foreign_run",
+      "base_case_id": "evidence_session_watch",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_session_watch_no_change_as_success",
+      "base_case_id": "evidence_session_watch",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_session_background_foreign_run",
+      "base_case_id": "evidence_session_background",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_session_background_no_change_as_success",
+      "base_case_id": "evidence_session_background",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_session_redaction_inspect_foreign_run",
+      "base_case_id": "evidence_session_redaction_inspect",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_session_redaction_inspect_no_change_as_success",
+      "base_case_id": "evidence_session_redaction_inspect",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_export_bundle_foreign_run",
+      "base_case_id": "evidence_export_bundle",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_export_bundle_no_change_as_success",
+      "base_case_id": "evidence_export_bundle",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_play_recording_foreign_run",
+      "base_case_id": "evidence_play_recording",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_play_recording_no_change_as_success",
+      "base_case_id": "evidence_play_recording",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "evidence_watch_recording_foreign_run",
+      "base_case_id": "evidence_watch_recording",
+      "patch": {
+        "owner_result.context.run_id": "run:foreign"
+      },
+      "expected_error": "evidence_owner_request_result_mismatch"
+    },
+    {
+      "case_id": "evidence_watch_recording_no_change_as_success",
+      "base_case_id": "evidence_watch_recording",
+      "patch": {
+        "owner_result.status": "no_change"
+      },
+      "expected_error": "evidence_owner_no_change_mismatch"
+    },
+    {
+      "case_id": "github_project_missing_request",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_request": null
+      },
+      "expected_error": "forge_request_schema"
+    },
+    {
+      "case_id": "github_project_missing_snapshot",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_snapshot": null
+      },
+      "expected_error": "forge_settlement_binding"
+    },
+    {
+      "case_id": "github_project_foreign_request_actor",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_request.actor_ref": "actor:foreign"
+      },
+      "expected_error": "forge_request_binding"
+    },
+    {
+      "case_id": "github_project_unapproved_remote",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_snapshot.remote_side_effect_approved": false
+      },
+      "expected_error": "forge_gate:remote_side_effect_approved"
+    },
+    {
+      "case_id": "github_project_unverified_project",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_snapshot.project_commit_verified": false
+      },
+      "expected_error": "forge_gate:project_commit_verified"
+    },
+    {
+      "case_id": "github_project_wrong_project_readback",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_snapshot.project.project_id": "project:foreign"
+      },
+      "expected_error": "forge_project_project_id"
+    },
+    {
+      "case_id": "github_project_wrong_return",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "owner_result.return_context.focus_id": "foreign.focus"
+      },
+      "expected_error": "forge_result_request_join"
+    },
+    {
+      "case_id": "github_project_noop_escape",
+      "base_case_id": "github_project_creation",
+      "patch": {
+        "response.result_status": "no_op"
+      },
+      "expected_error": "forge_response_outcome"
+    }
+  ]
+}

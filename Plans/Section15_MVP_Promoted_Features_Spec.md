@@ -813,7 +813,7 @@ Browser Program owns its action-oriented `PageRepresentation` and `Representatio
 
 Representation modes are `minimal`, `standard`, `full`, `scoped`, and `delta`. A request declares exact page/generation, base representation when applicable, scope roots, detail classes, node/frame/shadow/listener/style/layout/time/byte budgets, action refs, and continuation. Queries permit only bounded local `filter`, `project`, `group`, `sort`, `dedupe`, `limit`, `count`, and `preview` operators.
 
-One base index is built per PageGeneration and may serve concurrent bounded queries. Frames may be collected concurrently, but result ordering and coverage are deterministic. Results disclose complete, partial, root-only, cross-origin/frame/shadow/virtualized/listener/style/layout omissions, invalidation reason, continuation, and budget consumption. Stale generations are rejected as current; delta requires an admitted base; synthetic action/node IDs are generation-scoped and collision-detected.
+One base index is built per PageGeneration and may serve concurrent bounded queries. Frames may be collected concurrently, but result ordering and coverage are deterministic. Every query result directly carries nonnegative integer `result_count`, `omitted_count`, `byte_estimate`, and `token_estimate`; these measures cannot be replaced by a promise in a companion record. Coverage discloses complete, partial, root-only, cross-origin/frame/shadow/virtualized/listener/style/layout omissions and budget consumption. Covered frames cannot exceed total frames; complete coverage cannot hide omissions, exhaustion, or synthetic-ID collisions. `base_index_generation` equals the subject PageGeneration. An invalidated result is `stale_rejected`, carries a closed `invalidation_reason`, and has no continuation; a current result carries no invalidation reason. Stale generations are rejected as current; delta requires an admitted base; synthetic action/node IDs are generation-scoped and collision-detected.
 
 Navigation, redirect, reload, document replacement, crash/restore, and controller handoff advance or revalidate PageGeneration and invalidate incompatible representations. A stale representation can remain historical evidence but cannot authorize a current mutation.
 
@@ -827,7 +827,7 @@ Exactly one mutating controller lease is valid per BrowserPage PageGeneration. L
 
 Takeover/delegation is scoped, explicit, timed, and receipted. Pending late actions from the old holder are rejected deterministically. FileSafe mediates upload/download and records the exact transferred artifact, target, permission, and disposition.
 
-Host handoff is reconstructive, not live process/stack migration. The source checkpoints durable ProgramWorkspace state and finalized capture/artifacts, fences the old page/workspace/controller generations, closes or interrupts source runtime truthfully, recreates the destination on the exact Home Server/Execution Host/Environment, restores only eligible state, revalidates page generation and capabilities, and emits a source/destination handoff receipt. Unknown effects or an unfenced source block retry.
+Host handoff is reconstructive, not live process/stack migration. A completed handoff checkpoints durable ProgramWorkspace state and finalized capture/artifacts, fences the old page/workspace/controller generations, closes or interrupts source runtime truthfully, recreates the destination on the exact Home Server/Execution Host/Environment, restores only eligible state, revalidates page generation and capabilities, and emits a source/destination handoff receipt. Blocked or interrupted receipts describe only the phase actually reached: checkpoint and destination identities/generation remain null when not obtained, and `source_fenced` and `reconstructed` report actual facts. Completed receipts require a fenced source, known effects, checkpoint, and fully identified reconstructed destination; unknown effects, an unfenced source, destination failure, or interruption cannot claim completion or authorize retry. No phase claims live process migration.
 
 #### Routing, screenshot policy, routines, and adapters
 
@@ -867,7 +867,7 @@ Required command-catalog rows are:
 
 Protected-auth UI handoff reuses the existing authentication-owner commands `cmd.authentication.start`, `cmd.authentication.cancel`, and `cmd.authentication.resume`. Start carries `auth_surface=protected_auth_browser` plus the exact provider, route, account, Home Server, Execution Host, Environment, and initiating active Client binding. When the authentication owner runs on a remote Host, the human-only surface opens and returns only on that exact initiating active Client; missing, inactive, disconnected, or mismatched Client identity blocks or interrupts the handoff and never falls back to an arbitrary connected Client. Status is the redacted protected-auth lifecycle projection, not a browser-content projection. No `cmd.browser.auth.*`, inspect, watch, capture, share, takeover, program, page-evaluate, or representation command is minted or applicable to `AuthBrowserSession`.
 
-Command and event lists here are requirements for the command/event/wiring owners; they are not registrations or handler proof. GUI projections show human strategy, Host/Environment, requested/effective visibility and capability, current step, coverage/degradation, controller/takeover state, and safe actions. Raw generation, lease, hash, AST, budget, checkpoint, and reconciliation data belongs in Technical Details.
+Command and event lists here define the exact owner census. The fifteen commands have central catalog and production-intent wiring rows; the fifty-three events have prepared contracts in `Plans/browser_event_admission.json` with unique closed payloads in `Plans/browser_event_payloads.schema.json`. Preparation is not admission: only an exact `admitted_static_contract` row with its matching `Plans/event_family_registry.json` binding is registered, after that family's complete owner/Storage review and separate landing. A `prepared_not_admitted` row remains quarantined without checkpoint advance. Those machine owners, not this list or passing payload fixtures, establish registration. Native handlers/producers and runtime proof remain absent, and command availability stays `handler_unavailable`. Non-program manual browser commands may have null Run/Attempt together without fabricating agent execution; compiled programs, segments, and ProgramWorkspace execution retain real Run/Attempt lineage. GUI projections show human strategy, Host/Environment, requested/effective visibility and capability, current step, coverage/degradation, controller/takeover state, and safe actions. Raw generation, lease, hash, AST, budget, checkpoint, and reconciliation data belongs in Technical Details.
 
 Settings may expose automatic strategy, requested/effective fallback, capability `Auto|On|Off`, benchmark-only Diagnostics override, and resource/remote limits. Capability policy never replaces access permission. There is no global Expert Mode, Python/Browser Use/Playwright jargon, or protected-auth inspect/watch/capture control.
 
@@ -8805,7 +8805,7 @@ This addendum closes the static owner/schema gap identified for PM Browser Scrip
 
 Validators and storage routing fail closed when either member is missing, unknown, or mismatched. The former aggregate payload ID is migration input only: an explicit pre-validation migrator must first identify one exact known `record_kind`, rewrite to its canonical ID above, and retain migration provenance; unknown or missing kinds are rejected. The aggregate ID is never persisted as record identity and is not accepted as a compatibility alias during normal validation. No Browser Program record admits `AuthBrowserSession`, protected-auth content, credentials, cookie/storage state, capture, or automation authority; only `ordinary` browser subjects validate.
 
-The existing fifteen canonical `cmd.browser.workspace.*`, `cmd.browser.page.*`, and `cmd.browser.program.*` identities in §15.11 use one owner-DRY `browser_command_scope` discriminator and five generic request/result/error/availability/disabled-reason record shapes. Each command ID has command-specific required workspace, page, PageGeneration, controller, representation, program, ProgramWorkspace revision, checkpoint/effect, policy, or capability fields as applicable. Fields for arbitrary JavaScript, raw browser protocol, hidden interpreters, `AuthBrowserSession`, protected-auth state, and `cmd.playwright.*` do not exist in the closed scope. These are static owner contracts only: the central command catalog, native BrowserRuntimeService handlers, production wiring, Event Authority admission, and runtime/security/visual proof remain absent.
+The existing fifteen canonical `cmd.browser.workspace.*`, `cmd.browser.page.*`, and `cmd.browser.program.*` identities in §15.11 use one owner-DRY `browser_command_scope` discriminator and five generic request/result/error/availability/disabled-reason record shapes. Each command ID has command-specific required workspace, page, PageGeneration, controller, representation, program, ProgramWorkspace revision, checkpoint/effect, policy, or capability fields as applicable. Fields for arbitrary JavaScript, raw browser protocol, hidden interpreters, `AuthBrowserSession`, protected-auth state, and `cmd.playwright.*` do not exist in the closed scope. The September central catalog/production-intent wiring supersedes the earlier command registration gap; the fifty-three prepared event contracts still require separate row-local admission. Native BrowserRuntimeService handlers/producers and runtime/security/visual proof remain absent. Registration does not enable dispatch.
 
 ### SMPFS-147 - PM Browser Script Compiler And Typed BrowserProgram
 
@@ -8854,6 +8854,7 @@ acceptance_criteria:
   - Unknown effect state blocks retry until explicit reconciliation.
   - Cancellation and timeout preserve completed, rejected, unknown, artifact/capture, and safe-next-action truth.
   - Handoff checkpoints eligible durable state, finalizes evidence, fences the source, reconstructs exact destination topology, and rejects unfenced/unknown-effect retry.
+  - Blocked or interrupted handoff receipts do not invent a checkpoint, destination, generation, or successful reconstruction; only a completed handoff requires all completed-phase facts.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future cancellation timeout duplicate-effect and handoff reconstruction matrix]
 risk_class: program_workspace_effect_or_handoff_drift
 reasoning_tier: high
@@ -8882,6 +8883,7 @@ unblocks: [SMPFS-152]
 acceptance_criteria:
   - Query and mutation authority always name exact BrowserPage and PageGeneration.
   - Coverage identifies frame/shadow/cross-origin/virtualized/listener/style/layout omissions and budget exhaustion.
+  - Every result directly includes result_count, omitted_count, byte_estimate, and token_estimate; coverage and base generation are semantically checked, and stale rejection requires an invalidation reason with no continuation.
   - Delta requires an admitted base and stale generations cannot be presented as current.
   - Site Reader and Browser Program representations remain explicitly distinct owners.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future large-page budget partial stale and synthetic-ID collision matrix]
@@ -8963,7 +8965,7 @@ plan_unit_id: SMPFS-152
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Browser compile/execution, workspace revision, segment/effect, representation, lease/takeover, routing, routine, adapter, handoff, and owner-DRY command request/result/error/availability/disabled-reason records preserve exact lineage and truthful effect state. The fifteen canonical cmd.browser.workspace/page/program identities have discriminated static schemas, while central catalog registration, native BrowserRuntimeService handlers, production wiring, Event Authority admission, and runtime proof remain absent. GUI/Settings/Technical Details show human requested/effective, Host/Environment, progress, coverage, degradation, controller, reconciliation, and safe actions without treating static contracts or progress as success.
+canonical_text: Browser compile/execution, workspace revision, segment/effect, representation, lease/takeover, routing, routine, adapter, handoff, and owner-DRY command request/result/error/availability/disabled-reason records preserve exact lineage and truthful effect state. The fifteen canonical cmd.browser.workspace/page/program identities have discriminated static schemas, central catalog rows and production-intent wiring; the fifty-three exact required events have prepared contracts, not blanket Event Authority admission. Each family remains quarantined until its complete owner/Storage review and separate central registration. Native BrowserRuntimeService handlers/producers and runtime proof remain absent, with handler_unavailable preserved. GUI/Settings/Technical Details show human requested/effective, Host/Environment, progress, coverage, degradation, controller, reconciliation, and safe actions without treating static contracts or progress as success.
 gui_related: true
 gui_classification_reason: This unit owns the visible Browser/Testing/Settings/Technical Details projections and safe action states.
 depends_on: [SMPFS-147, SMPFS-148, SMPFS-149, SMPFS-150, SMPFS-151]
@@ -8971,7 +8973,7 @@ unblocks: []
 acceptance_criteria:
   - Every long browser operation exposes ObservableWork without converting queued/admitted/lease-held/visible/artifact-present into a verdict.
   - The generic command scope admits exactly the fifteen canonical command IDs and discriminates their required workspace/page/generation/program/controller/representation fields; protected AuthBrowserSession and arbitrary-code/protocol fields are structurally untargetable.
-  - Future dispatch must target exact workspace/page/generation/program/lease identities through one registered native handler; this static contract does not claim that handler, catalog row, or production wiring exists.
+  - Future dispatch must target exact workspace/page/generation/program/lease identities through one native handler; the catalog and production-intent rows resolve owner contracts but do not prove handler implementation or dispatch availability.
   - GUI shows human state first and confines raw hashes/AST/generation/lease/budgets/checkpoints to Technical Details.
   - Migration either losslessly normalizes legacy code/evaluate/global/focus inputs or fails typed/no-effect without inventing runtime proof.
 validation_surfaces: [Plans/section15_browser_program_contract_fixtures.json, future command reverse-coverage GUI disabled-state migration and protected-boundary matrix]
@@ -9017,7 +9019,7 @@ negative_constraints:
 
 ### Browser Program migration coverage
 
-This addendum writes product canon, PlanUnits, and machine contract/fixture owners only. The fifteen Browser command request/result/error/availability/disabled-reason shapes are now statically specified and fixture-covered, but this creates no WorkNodes, NodeSeeds, executable queues, BrowserRuntimeService implementation, compiler, CEF process, adapter, GUI, native command handler, production wiring, Event Authority admission, generated governance artifact, benchmark result, or runtime-certification claim. Central command catalog, event, wiring, index registration, and consumer-doc reconciliation remain root-owned follow-on work.
+This addendum writes product canon, PlanUnits, and machine contract/fixture owners only. The fifteen Browser command request/result/error/availability/disabled-reason shapes are statically specified and fixture-covered. Later catalog, production-intent wiring, index and consumer reconciliation are materialized in their respective owners; the earlier statement that all command registration was absent is superseded. The fifty-three event contracts remain prepared inputs, with each central admission requiring a separate completed owner/Storage review and landing. No WorkNodes, NodeSeeds, executable queues, BrowserRuntimeService implementation, compiler, CEF process, adapter, GUI implementation, native command handler/producer, benchmark result, runtime-certification claim, global Event Authority closure, or governance reseal follows from this static work.
 
 ## Remaining Runtime Onboarding Ownership Addendum (2026-08-14)
 
@@ -11261,10 +11263,15 @@ owner_hints:
 <a id="browser-event-contract-admission-20260910"></a>
 
 The 53 exact Browser event names in §15.11 remain the required Browser admission set.
-`Plans/browser_event_payloads.schema.json` gives each a closed, event-specific payload candidate
+`Plans/browser_event_payload_candidates.schema.json` preserves each predecessor event-specific payload candidate
 and reuses the existing Browser identity/lineage definitions. Its companion candidate inventory
 records each exact name, schema identity, semantic checks, producer/consumer roles, and proposed
 retention. These are admission inputs, not central registry entries or runtime emission authority.
+The later row-local disposition in `Plans/browser_event_admission.json` and SMPFS-166 below
+supersedes those candidate payloads as the prepared contract for the same exact event names, not as admission.
+The predecessor candidate schema IDs, subject/lineage shapes, and proposed retention do not become aliases for successor schema IDs,
+context shapes, or row-specific retention in `Plans/browser_event_payloads.schema.json`.
+Candidate-only records remain quarantined unless a separately admitted transform exists.
 The existing `pm.event.v0` EventRecord envelope is unchanged; no Browser-specific envelope,
 per-page event store, arbitrary payload catch-all, or duplicate event registry is introduced.
 
@@ -11294,3 +11301,53 @@ visibility, a controller token string, a result card, or a percent-complete disp
 Browser mutation, test-verdict, protected-auth, or build-readiness authority.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/event_record.schema.json, ContractName:Plans/event_family_registry.json, ContractName:Plans/storage-plan.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/Permissions_System.md
+
+## Scoped Browser Event Admission — 2026-09-10
+
+### SMPFS-166 - Browser Event And Consumer Admission Boundary
+
+```yaml
+plan_unit_id: SMPFS-166
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: >-
+  The exact fifty-three Section 3.18A browser event families have prepared metadata-only payload and consumer
+  contracts. Each row is either prepared_not_admitted or admitted_static_contract; only the latter with its exact
+  central EventRecord binding establishes membership after complete row-local review and one-family Storage landing.
+  The manifest specifies producer, transition, subject scope, retention assignment, compatibility, recovery,
+  redaction, replay, consumer and command-event intent. These declarations do not prove resolved authority,
+  register a physical owner-record family, close contract-depth review or prove a native producer.
+gui_related: false
+gui_classification_reason: This unit binds event authority and consumer contracts, not GUI implementation.
+depends_on: [SMPFS-147, SMPFS-156, CV-332]
+unblocks: []
+acceptance_criteria:
+  - The exact owner event census equals all fifty-three manifest rows; the admitted subset alone equals central membership, with no missing, duplicate, inferred or bulk-admitted families. Historical thirty-nine rows and the separately approved compaction-completion family remain unchanged.
+  - All fifty-three rows begin prepared_not_admitted in the preparation landing. Complete current owner/Storage contracts, exact schema refs, positive and negative semantic checks, independent product gates and root review precede each separate family admission; passing consistency checks is not admission completion.
+  - Every family has one unique closed payload schema ID and event_type pair, exact project and topology lineage, owner-record and transition refs, and separately evaluated permission/capability refs.
+  - Manual non-program browser commands and events may omit Run/Attempt only as paired nulls; program execution, compilation, segments, and ProgramWorkspace events remain Run-bound.
+  - Representation results include direct result and omission counts and byte/token estimates; current/stale, continuation, coverage, and generation semantics are checked by the shared owner validator.
+  - Handoff failure receipts express only achieved phases, and unknown effects or unfenced sources cannot authorize retry or claim reconstruction.
+  - The fifteen existing command rows consume exact conditional event intent; prepared or centrally unregistered families never emit, persist, project or advance checkpoints. Unavailable, rejected, acceptance-only and no-change outcomes emit no transition event, and inspect remains receipt-only.
+  - Runtime producer, handler, journal adapter, security, recovery execution, provider usage, empirical savings, readiness and global Event Authority closure remain unproved.
+validation_surfaces:
+  - python3 scripts/pm-browser-event-admission.py
+  - python3 scripts/pm-plans-verify.py validate-browser-event-admission
+  - Plans/browser_event_admission_fixtures.json
+  - Plans/section15_browser_program_contract_fixtures.json
+  - tests/test_pm_browser_event_admission.py
+  - tests/test_pm_browser_program_semantics.py
+risk_class: browser_event_scope_retention_replay_or_consumer_drift
+reasoning_tier: high
+context_scope: scoped_browser_event_admission
+implementation_surfaces: [Plans/browser_event_admission.json, Plans/browser_event_payloads.schema.json, Plans/event_family_registry.json, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
+node_compile_hint: {mode: prepared_contracts_with_separate_family_admission, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [source_ref:packet:PKT-04/04_COMMAND_EVENT_WIRING_REGISTER.md, source_ref:egolite-requirement:HBU-010, source_ref:egolite-requirement:HBU-017, source_ref:egolite-requirement:HBU-021, source_ref:egolite-requirement:HBU-022, source_ref:egolite-requirement:EGO-006, USER-PACKET-GAP-CLOSURE-20260910]
+negative_constraints:
+  - No protected authentication identity or content, arbitrary page code, source body, inline capture, credential, or event alias.
+  - No handler availability lift, physical record admission by reference, global denominator completion, historical currentness rewrite, WorkNodes, NodeSeeds or governance seal.
+  - The Browser one-family landing workflow does not expand DL-045's frozen 285-family technical-definition authority or decide missing technical bindings, retention or competing-owner questions.
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-262, ContractName:Plans/usage-feature.md#UF-103, ContractName:Plans/Prompt_Pipeline.md#PP-091, ContractName:Plans/Wiring_Matrix.md#WM-057, ContractName:Plans/browser_event_admission.json, ContractName:Plans/browser_event_payloads.schema.json

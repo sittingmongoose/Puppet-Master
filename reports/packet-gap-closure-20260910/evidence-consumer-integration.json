@@ -1,0 +1,210 @@
+{
+  "schema_id": "pm.packet_gap_closure.evidence_consumer_integration.v1",
+  "date": "2026-09-11",
+  "status": "bounded_existing_command_bindings_reconciled",
+  "authority": "User instruction: do the non-design integration work; Tour/Onboarding visual choices deferred and Settings work preserved.",
+  "claim_boundary": "Static canonical contracts, fixtures, planned wiring and validator consumption only; not native execution or complete packet integration.",
+  "owner_bindings": [
+    {
+      "owner": "Plans/Automated_Testing_System.md#ATS-048",
+      "commands": 5,
+      "schema": "Plans/testing_session_command_contracts.schema.json",
+      "touch_profile": "TCP-TESTING-EVIDENCE"
+    },
+    {
+      "owner": "Plans/Runtime_Artifacts_Panel.md#RAP-056",
+      "commands": 2,
+      "schema": "Plans/artifact_recording_command_contracts.schema.json",
+      "touch_profile": "TCP-ARTIFACT-RECORDING"
+    }
+  ],
+  "changes": [
+    "Seven existing consumer commands now resolve to schemas that admit their actual IDs and exact subjects; eleven existing placements consume typed requests and results.",
+    "Shared evidence metadata and idempotency are reused by reference without widening the shared-runtime 26-command or capture ten-command enums.",
+    "Central response joins bind typed request, result, scope, payload and receipt; pending/no-op/rejected/failed/cancelled/unknown-effect distinctions are enforced.",
+    "Eleven existing Touch residuals (three auth, six Named Plan, Server Add and Remote Open) and one Server supplemental profile now describe current registration/hosted-Tailscale handoff truth without promoting native status.",
+    "Standard server-gap wrapper now consumes the already approved 87/43/38/3 partition, preserving all 171 source rows."
+  ],
+  "verification": {
+    "contracts": {
+      "status": "pass",
+      "contract_pairs": 26,
+      "positive_cases": 1009,
+      "negative_cases": 3298,
+      "internal_self_tests": 12
+    },
+    "focused_tests": {
+      "status": "pass",
+      "evidence_commands": 9,
+      "central_response": 12,
+      "touch_and_whole_wiring": 19,
+      "project_unarchive": 14,
+      "total": 54
+    },
+    "central_response": {
+      "status": "pass",
+      "positive_cases": 24,
+      "negative_cases": 56,
+      "outcome_states": 8
+    },
+    "wiring": "pass",
+    "touch": {
+      "status": "pass",
+      "rows": 644,
+      "profiles": 133,
+      "open_residuals": 644,
+      "new_rows": 0
+    },
+    "whole_wiring": {
+      "status": "structural_accounting_only",
+      "commands": 1080,
+      "placements": 1144,
+      "commands_in_packet_touch": 467,
+      "commands_outside_packet_touch": 613,
+      "rows_with_request_and_result_pointers": 399,
+      "rows_missing_one_or_both_pointers": 745,
+      "structural_errors": 0
+    },
+    "shards": {
+      "status": "pass",
+      "sources": 98,
+      "shards": 2180
+    },
+    "index": {
+      "status": "pass",
+      "plan_units": 6460,
+      "acceptance_units": 24691,
+      "readiness": "blocked_runtime_certification_incomplete"
+    },
+    "standard_governance": {
+      "status": "fail_not_sealed",
+      "full_run": "2026-09-11T03:29:07Z",
+      "corrected_after_full_run": "validate_server_command_gap wrapper partition; targeted wrapper and regression test pass.",
+      "remaining_failure_checks": [
+        "json_syntax_missing_raw_capture_manifest_schema",
+        "verify_spec_lock_stale_hashes",
+        "validate_plan_graph",
+        "validate_evidence",
+        "lint_contractrefs_missing_prior_audit_report",
+        "lint_path_refs_missing_preexisting_surfaces",
+        "validate_implementation_readiness",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_audit_closure",
+        "validate_audit_status_index"
+      ],
+      "edited_owner_contractref_failures": 0,
+      "note": "No Spec Lock, evidence bundle, plan graph, historical audit closure or governance seal was refreshed."
+    }
+  },
+  "unchanged_scope": {
+    "commands_added": 0,
+    "native_handlers_added": 0,
+    "production_placements_added": 0,
+    "event_families_added": 0,
+    "physical_storage_families_added": 0,
+    "settings_or_concepts_edited": false,
+    "worknodes_created": false
+  },
+  "open_work": [
+    "Four existing Testing session event obligations and the two repository-creation/Project-binding events require complete separate owner/central admission and wiring reconciliation.",
+    "Whole-packet source and Touch semantic review is not complete; historical verdicts are not rewritten by these static fixes.",
+    "745 production-intent rows still lack one or both explicit machine request/result references; pointer coverage itself is not semantic/runtime proof.",
+    "Native dispatch, authenticated owner lookup, capture/playback, persistence/readback, permissions/security, recovery, GUI acceptance and readiness remain unproved.",
+    "Tour and Onboarding visual design remains deferred by the user."
+  ],
+  "artifacts": [
+    {
+      "path": ".gitignore",
+      "sha256": "b5e7a285e1d1596a4799e2b5ae436c8d66309cf6eb7428daf1bfc426a36551d6"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "7a3edcfa4e3a2ee65ebf0ae46343c895ee0d447c402eda7c2314f39f45d0c150"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "sha256": "b005dd938261f638656acfd0cfd18256bfae45b3188e836c9d5b4b805b374a5b"
+    },
+    {
+      "path": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "sha256": "3e13c528f7a95b1d30cba8832d689ed316f6957d6a7a4d4e039614f00994475b"
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "sha256": "eb07d023dbec3945908b0d5385fefb8cac5caab15f86877656022727f7a7b95c"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "73e980362759242bf03730702fb65f44d2cabd21a16d2bd7dd09ace390483212"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "sha256": "e5bbee97525e45989ff55ebdebae180936db0dce97b128abf34e6da8fa0f24d5"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "sha256": "b04baa7337c2892bd885459fb2ef41b5b9e7351659241b04d677f4f161c304c4"
+    },
+    {
+      "path": "Plans/touch_closure.json",
+      "sha256": "91e0a2267d443fb71f539282cd04de1d21b8c0524132dd77f940b3ea06de42fc"
+    },
+    {
+      "path": "Plans/testing_session_command_contracts.schema.json",
+      "sha256": "2081fe00136d3a49aa3a895a38d92cbab80662df8c1241d56c0900612ef2a630"
+    },
+    {
+      "path": "Plans/testing_session_command_contract_fixtures.json",
+      "sha256": "42d5876d8dfc9de7082f2a5a328ce9cecd4ec3bfc7a82f8373f7b831d87299e3"
+    },
+    {
+      "path": "Plans/artifact_recording_command_contracts.schema.json",
+      "sha256": "2a1cda1e3e6459b039cc59fe079877c90e394cf1b40c8e012974e4890c5348e8"
+    },
+    {
+      "path": "Plans/artifact_recording_command_contract_fixtures.json",
+      "sha256": "d9da16e52d82bd5a3e6189784a16dfbef29ee217dd65a33c7353a04af1701cac"
+    },
+    {
+      "path": "Plans/ui_command_response_fixtures.json",
+      "sha256": "912fffc320cb8a8aef4185228bc6d1bfc6f661452a8623befb2233fa61c5e712"
+    },
+    {
+      "path": "scripts/pm-new-contracts-verify.py",
+      "sha256": "6579eea1bf77e6c039bed8fca517426e86e5eebec624106fccf83f2f827d0dac"
+    },
+    {
+      "path": "scripts/pm-touch-closure-verify.py",
+      "sha256": "b175457b07d57fe14536bb5fd65fb75a3631ab57581eaf8f01e1e8e0958585dd"
+    },
+    {
+      "path": "scripts/pm_ui_command_response.py",
+      "sha256": "0a82b7bf70fc6a946f1c1d8cdce5a59411971823ba880aab6e581e8193048e98"
+    },
+    {
+      "path": "scripts/pm_evidence_command_semantics.py",
+      "sha256": "45e49c9cb89e7cdd64f9832d93e978a29368fbd3f7aed9e6becf0b135f6fb747"
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "sha256": "6776fa76ab13676a419cb62d64893841f494ee78f401cc63f0b39633ebec1e28"
+    },
+    {
+      "path": "tests/test_pm_evidence_commands.py",
+      "sha256": "a3a92914f425f2c2d80764389ebccd36d22ad3be682861f913d8ac0b96ca87ff"
+    },
+    {
+      "path": "tests/test_pm_ui_command_response.py",
+      "sha256": "d8c86ebb9259d495d74f57300b46116c3faf8a09d19836e13c518e3b6b8f8072"
+    },
+    {
+      "path": "tests/test_pm_touch_closure_source.py",
+      "sha256": "ee98927038e251a0a52e63860fa1bb7555a09696fe6739cf3d3f18ea3548944b"
+    },
+    {
+      "path": "tests/test_pm_project_unarchive.py",
+      "sha256": "86bf788a4dea36b456152f4a25079add985cdd139772f85f0ebc09877a3a8407"
+    }
+  ]
+}

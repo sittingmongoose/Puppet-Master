@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L620-L3114
+Source lines: L651-L3195
 
-Source SHA256: `7276d7b8b85d08abe0b5560f76512433a9bac921d5badf9830b2a509f21e0fd5`
+Source SHA256: `83cc8cbd2e7669deb9e95f72ac469d68d5e595602979bed719a38357c92d56ef`
 
 ---
 
@@ -2379,6 +2379,56 @@ negative_constraints:
   - Do not decide feature, integration, retention, deletion or competing-owner questions through this technical approval.
   - Do not bulk admit, re-admit registered families, hardcode a pass, enable runtime or change validators, frozen accounting, clearance or seal state.
 owner_hints: [Plans/Decision_Log.md, Plans/storage-plan.md, Plans/Contracts_V0.md]
+```
+
+### DL-046 - Bounded Browser Technical Binding Authority And Individual Admission
+
+```yaml
+plan_unit_id: DL-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's two exact answers at 2026-09-11T18:26:45.328890Z apply individual Storage
+  admission landings and bounded technical binding definition authority to the
+  adjacent exact 53-family Browser scope. Browser and Storage owners must first
+  search current canonical definitions per family and document existing partial
+  contracts and scoped absence before labelling any missing technical binding as
+  a new owner definition for already specified behavior. Existing owner-defined
+  role, version and scope control reuse. Complete contracts, independent product
+  gates, exact schema references, positive/negative semantic checks and root review
+  precede each family's own admission landing. Prepared contracts are not admitted.
+gui_related: false
+gui_classification_reason: Records technical authority and admission constraints without changing presentation.
+split_recommended: false
+depends_on: [DL-039]
+unblocks: []
+acceptance_criteria:
+  - The exact canonical 53-name scope matches the pinned proposal and response and is disjoint from DL-045's original 285 families.
+  - Each new definition has per-family current-source search, existing-contract citations and scoped negative evidence; neither all-family absence nor sibling-derived authority is presumed.
+  - New technical definitions are labelled newly authored and remain limited to already specified behavior.
+  - Feature, integration, retention/deletion and competing-owner decisions remain separate and block dependent work when unresolved.
+  - Each family has full owner/schema/positive-negative/root review gates and an individual Storage admission landing; preparation alone does not authorize persistence or checkpoint advancement.
+  - No binding identifier, event membership, runtime proof, historical accounting, Spec Lock, readiness or seal state changes through this decision.
+validation_surfaces:
+  - Exact response SHA-256 and scope-name comparison
+  - python3 scripts/pm-browser-event-admission.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: browser_event_authority_scope_expansion
+reasoning_tier: high
+context_scope: browser_53_bounded_binding_authority
+implementation_surfaces: [Plans/Decision_Log.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
+node_compile_hint: {mode: bounded_technical_binding_authority, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - BROWSER-BINDINGS-53-RESPONSE-20260911
+  - reports/packet-gap-closure-20260910/browser-binding-authority-proposal-20260911.json
+  - reports/packet-gap-closure-20260910/browser-binding-authority-response-20260911.json
+preserved_exact_tokens: ["Apply it to the Browser families too", "Approve the bounded Browser permission", "DL-039", "DL-045"]
+negative_constraints:
+  - Do not expand the frozen 53-family scope or DL-045 membership.
+  - Do not infer missing bindings or evidence from sibling names or turn technical permission into product or retention authority.
+  - Do not bulk admit, enable runtime, restamp historical evidence or clear readiness/seal gates.
+owner_hints: [Plans/Decision_Log.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/Contracts_V0.md, Plans/storage-plan.md]
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired

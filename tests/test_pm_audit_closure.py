@@ -108,7 +108,8 @@ def closure_matrix_row(audit_refs: dict[str, str], finding: dict, *, source_row:
         "exact_tokens": finding["exact_tokens"],
         "finding_key": finding["finding_key"],
         "closure_status": "repaired",
-        "closure_evidence": ["AGENTS.md"],
+        # Tracked evidence is available in fresh worktrees; local AGENTS.md is not.
+        "closure_evidence": ["tests/test_pm_audit_closure.py"],
         "closure_reason": "closed in test",
         "registry_closure_id": "closure-test-001",
     }

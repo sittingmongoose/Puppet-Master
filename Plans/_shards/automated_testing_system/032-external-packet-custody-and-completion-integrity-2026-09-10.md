@@ -1,10 +1,10 @@
-# Shard 031: External Packet Custody and Completion Integrity — 2026-09-10
+# Shard 032: External Packet Custody and Completion Integrity — 2026-09-10
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4262-L4292
+Source lines: L4358-L4388
 
-Source SHA256: `8da4f03f3b5e35fd3c85d5093e649b04ce29ec6c583710ca5b4df764db454c02`
+Source SHA256: `69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076`
 
 ---
 

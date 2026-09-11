@@ -35,13 +35,15 @@ MATERIALIZED_SCHEMA_PATHS = (
 )
 
 # Content-addressed identity of the accepted canonical registry bytes.
-EXPECTED_CANONICAL_REGISTRY_SHA256 = "d45da4082814b15fc92e6d7b074e6e10f429e1e3e090c4969a778564fac74fcd"
+# USER-PROJECT-UNARCHIVE-REGISTRY-20260911: only row 128 moves from local-only
+# presentation to a Project-owner registry mutation; packet identity hashes stay fixed.
+EXPECTED_CANONICAL_REGISTRY_SHA256 = "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
 EXPECTED_GAP_REGISTER_SHA256 = "e2b7436ae822004909b73be65078556e2a61a5827dc2ffe2e7e404d68df2c1af"
 EXPECTED_PACKET_CENSUS_SHA256 = "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b"
 EXPECTED_PARTITION = {
-    "new_canonical_required": 86,
+    "new_canonical_required": 87,
     "approved_alias_to_exact": 43,
-    "typed_local_ui_action": 39,
+    "typed_local_ui_action": 38,
     "rejected_with_reason": 3,
 }
 EXPECTED_FINDINGS = [
@@ -409,7 +411,7 @@ def main() -> int:
     print("PASS server command gap adjudication")
     print(f"registry_sha256={sha256(REGISTRY_PATH)}")
     print(f"schema_sha256={sha256(SCHEMA_PATH)}")
-    print("rows=171 partition=new_canonical_required:86,approved_alias_to_exact:43,typed_local_ui_action:39,rejected_with_reason:3")
+    print("rows=171 partition=new_canonical_required:87,approved_alias_to_exact:43,typed_local_ui_action:38,rejected_with_reason:3")
     print(f"source_gap_register_sha256={EXPECTED_GAP_REGISTER_SHA256}")
     print(f"source_packet_census_sha256={EXPECTED_PACKET_CENSUS_SHA256}")
     print(f"resolved_schema_refs={resolved_schema_refs}")

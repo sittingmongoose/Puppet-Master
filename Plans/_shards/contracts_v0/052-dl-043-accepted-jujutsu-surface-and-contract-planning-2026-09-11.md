@@ -1,10 +1,10 @@
-# Shard 051: DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)
+# Shard 052: DL-043 — Accepted Jujutsu Surface And Contract Planning (2026-09-11)
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21512-L21711
+Source lines: L21602-L21801
 
-Source SHA256: `2d937f032d6076fce0bf40a45601431223a349e4a834c80838ea85e64074ff12`
+Source SHA256: `a3685be18003c3800423c52467425d2cdfe2104a8af0b606c6cd8ef3d21157e3`
 
 ---
 

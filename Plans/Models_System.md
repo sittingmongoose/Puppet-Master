@@ -8304,81 +8304,106 @@ plan_unit_id: MS-122
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  First-run onboarding initializes provider/model setup with a paid-provider-first posture. The GUI may use friendly
-  row labels such as `Connected`, `Needs sign-in`, and `Could not connect`, but `Connected` is presentation shorthand
-  only and must not collapse authentication, entitlement, billing, workspace trust, route validation, quota, or
-  provider-readiness proof into `Ready`. `Free Models` and the exact accepted token `Fee models` appear after the
-  paid-provider prompt, not before it. Free Models setup and top-10 behavior continue to follow MS-120 and MS-121:
-  the top-10 list remains global across all providers/models, paid providers are preferred by default unless the user
-  explicitly ranks Free Models above them, setup delegates to the underlying provider/account flow, and current scope
-  uses no recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration
-  language.
+canonical_text: After an actual Project owner commit, first-run onboarding initializes provider/model setup with
+  a paid-provider-first posture. Detected usable accounts and copied routes are verified and become Ready automatically
+  without a Connect or Use This Provider gate. Authentication alone does not prove entitlement, billing, trust,
+  capability, route, quota or readiness. Free Models and the retained exact token Fee models appear after that paid-provider
+  prompt, including after explicit Skip, as an optional Set Up Free Models continuation inside Onboarding. MS-118..121
+  retain canonical provider/model/account identity, exact underlying setup returns, paid-first default ordering,
+  explicit user overrides, truthful eligibility and no recommendation/quality-ranking scope.
 gui_related: true
-gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10 copy, and readiness labels.
-depends_on: [MS-120, MS-121, MA-040, MA-064, F3-409]
-unblocks: [F3-411, MA-066, ATS-020]
+gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10
+  copy, and readiness labels.
+depends_on:
+- MS-120
+- MS-121
+- MA-040
+- MA-064
+- F3-409
+unblocks:
+- F3-411
+- MA-066
+- ATS-020
 acceptance_criteria:
-  - Paid-provider setup is prompted before Free Models in first-run onboarding.
-  - Friendly `Connected` copy is not treated as proof that the provider is fully Ready unless owner readiness contracts prove it.
-  - Free Models top-10 and fallback behavior continues to preserve paid-first defaults and explicit user ordering.
-  - Free Models setup labels and availability reasons map through MS-121 and underlying provider/account state.
-  - Recommendation, quality-rank, coding-strength, online-review, local-learning, and benchmark/probe-calibration language remains absent from this first-run flow.
+- Paid-provider setup is prompted before Free Models in first-run onboarding.
+- Friendly `Connected` copy is not treated as proof that the provider is fully Ready unless owner readiness contracts
+  prove it.
+- Free Models top-10 and fallback behavior continues to preserve paid-first defaults and explicit user ordering.
+- Free Models setup labels and availability reasons map through MS-121 and underlying provider/account state.
+- Recommendation, quality-rank, coding-strength, online-review, local-learning, and benchmark/probe-calibration
+  language remains absent from this first-run flow.
+- Both provider_setup and free_models_setup require the actual committed Project context; copied routes or cached
+  credentials never substitute for current owner readiness.
+- Skipping the paid-provider prompt still offers optional Set Up Free Models; no second credential model or retired
+  cmd.onboarding.free_models command is created.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future first-run provider sequencing fixtures
-  - future Free Models paid-first/top-10 copy fixtures
+- python3 scripts/pm-plan-index.py validate
+- future first-run provider sequencing fixtures
+- future Free Models paid-first/top-10 copy fixtures
 risk_class: provider_readiness_false_ready
 reasoning_tier: high
 context_scope: first_run_provider_model_setup
 implementation_surfaces:
-  - Plans/Models_System.md
-  - Plans/FinalGUISpec.md
-  - Plans/Multi-Account.md
-  - Plans/usage-feature.md
+- Plans/Models_System.md
+- Plans/FinalGUISpec.md
+- Plans/Multi-Account.md
+- Plans/usage-feature.md
 node_compile_hint:
   mode: first_run_provider_model_sequence_planunit
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
-source_atom_ids: [atom-0016, atom-0033, atom-0038, atom-0039, atom-0040, atom-0041, atom-0047]
-decision_refs: [dec-0004, dec-0008]
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+- Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+source_atom_ids:
+- atom-0016
+- atom-0033
+- atom-0038
+- atom-0039
+- atom-0040
+- atom-0041
+- atom-0047
+decision_refs:
+- dec-0004
+- dec-0008
 preserved_exact_tokens:
-  - "Fee models"
-  - "Free Models"
-  - "paid providers"
-  - "Start with a paid provider for the most reliable setup"
-  - "Set up a paid provider"
-  - "Connected"
-  - "Needs sign-in"
-  - "Could not connect"
-  - "Optional: Free Models"
-  - "top 10"
-  - "paid providers should be preferred over the free models unless the user configured the free models above the paid ones in the top 10 list"
-  - "assistant features may need a provider before they can run"
+- Fee models
+- Free Models
+- paid providers
+- Start with a paid provider for the most reliable setup
+- Set up a paid provider
+- Connected
+- Needs sign-in
+- Could not connect
+- 'Optional: Free Models'
+- top 10
+- paid providers should be preferred over the free models unless the user configured the free models above the paid
+  ones in the top 10 list
+- assistant features may need a provider before they can run
 negative_constraints:
-  - Do not show Free Models before the paid-provider prompt.
-  - Do not make Free Models the primary first-run path unless Jared later corrects this decision.
-  - Do not treat `Connected` or `Logged in` as equivalent to Ready.
-  - Do not silently fall back to unrelated paid/costed routes.
-  - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration.
-  - Do not silently insert or reorder Free Models in the saved top-10 list.
+- Do not show Free Models before the paid-provider prompt.
+- Do not make Free Models the primary first-run path unless Jared later corrects this decision.
+- Do not treat `Connected` or `Logged in` as equivalent to Ready.
+- Do not silently fall back to unrelated paid/costed routes.
+- Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation
+  confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration.
+- Do not silently insert or reorder Free Models in the saved top-10 list.
+- Do not prompt broad AI-provider setup before the Project commit or undo the Project when provider setup closes
+  or fails.
 owner_hints:
-  - Plans/Models_System.md
-  - Plans/Multi-Account.md
-  - Plans/FinalGUISpec.md
-  - Plans/usage-feature.md
+- Plans/Models_System.md
+- Plans/Multi-Account.md
+- Plans/FinalGUISpec.md
+- Plans/usage-feature.md
 ```
 
 ### MS-121 - Free Models Availability Reason Model And Setup Eligibility

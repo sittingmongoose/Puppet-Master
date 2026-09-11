@@ -8,6 +8,7 @@ Slint, browser, WAN, recovery, security, performance, or readiness evidence.
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import re
 import sys
@@ -22,6 +23,13 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts"))
+from pm_full_thread_semantics import full_thread_semantic_failures
+from pm_restore_semantics import restore_semantic_failures
+from pm_browser_program_semantics import browser_program_semantic_failures
+from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
+from pm_evidence_command_semantics import evidence_command_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -50,9 +58,11 @@ CONTRACT_PAIRS = (
     ("Plans/plugin_contracts.schema.json", "Plans/plugin_contract_fixtures.json"),
     ("Plans/shared_integration_runtime.schema.json", "Plans/shared_integration_runtime_fixtures.json"),
     ("Plans/multi_account_contracts.schema.json", "Plans/multi_account_contract_fixtures.json"),
+    ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
+    ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 24
+EXPECTED_CONTRACT_PAIR_COUNT = 26
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -61,6 +71,16 @@ EGOLITE_SCHEMA_REL = "Plans/egolite_retained_requirement_contracts.schema.json"
 # These reviewed pairs use a command-oriented fixture protocol.  Support is
 # deliberately path-bound; another pack cannot opt in by imitating field names.
 AUTHORED_COMMAND_PAIR_CONTRACTS = {
+    "Plans/testing_session_command_contracts.schema.json": {
+        "fixture": "Plans/testing_session_command_contract_fixtures.json",
+        "request_mode": "template_patch",
+        "implicit_runtime_schema_id_policy": None,
+    },
+    "Plans/artifact_recording_command_contracts.schema.json": {
+        "fixture": "Plans/artifact_recording_command_contract_fixtures.json",
+        "request_mode": "template_patch",
+        "implicit_runtime_schema_id_policy": None,
+    },
     "Plans/plugin_contracts.schema.json": {
         "fixture": "Plans/plugin_contract_fixtures.json",
         "request_mode": "inline_instance",
@@ -977,6 +997,25 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
+        return evidence_command_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/product_onboarding_contracts.schema.json":
+        return onboarding_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/settings_system_contracts.schema.json":
+        return settings_draft_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
+        return browser_program_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
+        return restore_semantic_failures(definition_name, value)
+    if schema_rel == "Plans/full_thread_runtime_contracts.schema.json":
+        if definition_name == "<root>" and isinstance(value, dict):
+            definition_name = {
+                "command_outcome": "CommandOutcomeRecord",
+                "observable_work": "ObservableWorkRecord",
+                "full_thread_projection": "FullThreadProjectionRecord",
+                "continuity": "ContinuityRecord",
+            }.get(value.get("record_kind"), definition_name)
+        return full_thread_semantic_failures(definition_name, value)
     if schema_rel in SERVER_REMOTE_OWNER_CHECKS:
         return server_remote_semantic_failures(definition_name, value)
     if schema_rel == EGOLITE_SCHEMA_REL:
@@ -1074,6 +1113,19 @@ def validate_server_remote_inventory(
     return findings
 
 
+def validate_onboarding_storage_contract() -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Check the existing family's offline owner bundle, not native persistence."""
+    try:
+        spec = importlib.util.spec_from_file_location("onboarding_storage_contract", ROOT / "scripts/pm-onboarding-contracts.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        failures = module.validate(load_json(ROOT / "Plans/storage_value_registry.json"))
+    except (OSError, ValueError, KeyError, TypeError, SchemaError) as exc:
+        return [{"code": "onboarding_storage_contract_unreadable", "detail": str(exc)}], {"onboarding_storage_contracts_checked": 1}
+    return ([{"code": code, "path": "Plans/storage_value_registry.json"} for code in failures],
+            {"onboarding_storage_contracts_checked": 1, "onboarding_storage_contracts_valid": int(not failures)})
+
+
 def main() -> int:
     findings: list[dict[str, Any]] = []
     counts = Counter()
@@ -1088,6 +1140,10 @@ def main() -> int:
     counts["internal_self_tests"] = self_test_count
     counts["internal_self_tests_passed"] = self_test_count - len(self_test_failures)
     findings.extend(self_test_failures)
+
+    storage_findings, storage_counts = validate_onboarding_storage_contract()
+    findings.extend(storage_findings)
+    counts.update(storage_counts)
 
     try:
         schema_registry = offline_schema_registry()

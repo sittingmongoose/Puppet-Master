@@ -45,6 +45,9 @@
     },
     {
       "$ref": "#/$defs/project_backup_consumer_projection"
+    },
+    {
+      "$ref": "#/$defs/project_setup_commit_binding"
     }
   ],
   "$defs": {
@@ -118,7 +121,7 @@
         "cmd.project.refresh",
         "cmd.project.open_settings",
         "cmd.project.delete_data",
-        "ui.project.restore_archived"
+        "cmd.project.unarchive"
       ]
     },
     "return_context": {
@@ -424,6 +427,9 @@
         },
         "return_context": {
           "$ref": "#/$defs/return_context"
+        },
+        "onboarding_setup_binding": {
+          "$ref": "#/$defs/onboarding_project_setup_binding"
         }
       },
       "allOf": [
@@ -492,6 +498,18 @@
                 "$ref": "#/$defs/safe_ref"
               },
               "source_location_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "expected_project_revision": {
+                "type": "null"
+              },
+              "expected_project_currentness_sha256": {
+                "type": "null"
+              },
+              "permission_snapshot_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "filesafe_evidence_ref": {
                 "$ref": "#/$defs/safe_ref"
               }
             }
@@ -574,7 +592,7 @@
                   "cmd.project.remove",
                   "cmd.project.open_settings",
                   "cmd.project.delete_data",
-                  "ui.project.restore_archived"
+                  "cmd.project.unarchive"
                 ]
               }
             },
@@ -618,12 +636,79 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "source_surface": {
+                "const": "onboarding"
+              },
+              "action_id": {
+                "enum": [
+                  "cmd.project.new_local",
+                  "cmd.project.new_github_repo",
+                  "cmd.project.add_existing"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "onboarding_setup_binding"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "cmd.project.unarchive"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "permission_snapshot_ref": {
+                "$ref": "#/$defs/safe_ref"
+              },
+              "display_name": {
+                "type": "null"
+              },
+              "registration_kind": {
+                "type": "null"
+              },
+              "source_ref": {
+                "type": "null"
+              },
+              "project_home_server_ref": {
+                "type": "null"
+              },
+              "source_location_ref": {
+                "type": "null"
+              },
+              "repository_ref": {
+                "type": "null"
+              },
+              "owner_receipt_refs": {
+                "maxItems": 0
+              }
+            },
+            "not": {
+              "required": [
+                "onboarding_setup_binding"
+              ]
+            }
+          }
         }
       ],
       "x-puppet-master-assertions": [
         "return_context is echoed byte-for-byte by the terminal project_action_result",
         "caller close or navigation does not cancel a dispatched owner operation",
-        "stale expected registry or Project currentness rejects before mutation"
+        "stale expected registry or Project currentness rejects before mutation",
+        "cmd.project.unarchive is a permission-fenced registry mutation, never an executable local UI action or a creation/backup/runtime operation"
       ]
     },
     "project_action_result": {
@@ -820,12 +905,222 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "cmd.project.unarchive"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "accepted",
+                        "no_change"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    },
+                    "project_revision": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "project_currentness_sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "lifecycle": {
+                      "const": "listed"
+                    },
+                    "receipt_refs": {
+                      "minItems": 1
+                    },
+                    "error_code": {
+                      "type": "null"
+                    },
+                    "route_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "accepted"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "persistence_disposition": {
+                      "const": "persisted"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "no_change"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "persistence_disposition": {
+                      "const": "no_change"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "rejected"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "error_code": {
+                      "type": "string"
+                    },
+                    "persistence_disposition": {
+                      "enum": [
+                        "not_attempted",
+                        "rolled_back"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action_id": {
+                "const": "cmd.project.new_github_repo"
+              }
+            },
+            "required": [
+              "action_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "accepted",
+                  "rejected",
+                  "cancelled"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "outcome": {
+                      "const": "accepted"
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    },
+                    "project_revision": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "project_currentness_sha256": {
+                      "$ref": "#/$defs/sha256"
+                    },
+                    "lifecycle": {
+                      "const": "listed"
+                    },
+                    "persistence_disposition": {
+                      "const": "persisted"
+                    },
+                    "receipt_refs": {
+                      "minItems": 3
+                    },
+                    "error_code": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    },
+                    "project_revision": {
+                      "type": "null"
+                    },
+                    "project_currentness_sha256": {
+                      "type": "null"
+                    },
+                    "lifecycle": {
+                      "type": "null"
+                    },
+                    "persistence_disposition": {
+                      "enum": [
+                        "not_attempted",
+                        "rolled_back"
+                      ]
+                    },
+                    "error_code": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          }
         }
       ],
       "x-puppet-master-assertions": [
         "return_context equals the initiating request return_context exactly",
         "route_ref does not override the caller return route",
-        "cancelled registration leaves no listed half-row"
+        "cancelled registration leaves no listed half-row",
+        "Unarchive accepted follows atomic archived-to-listed persistence/readback: same project_id, exactly one Project and registry revision advance, new currentness hashes, correlated owner receipt, and no change outside lifecycle/update/revision/currentness metadata",
+        "An already-listed no_change preserves Project and registry fences; replay returns the original committed binding/result without another write; stale, denied, removed/deletion-state or uncertain persistence cannot report success"
       ]
     },
     "project_migration_receipt": {
@@ -2043,7 +2338,6 @@
       "type": "string",
       "enum": [
         "ui.project.open_details",
-        "ui.project.restore_archived",
         "ui.project_template.open_details"
       ]
     },
@@ -2185,14 +2479,26 @@
           "$ref": "#/$defs/safe_ref"
         },
         "operation": {
-          "enum": ["copy_preferences", "move_project", "restore_as_new", "backup_project", "open_history", "browse_snapshot"]
+          "enum": [
+            "copy_preferences",
+            "move_project",
+            "restore_as_new",
+            "backup_project",
+            "open_history",
+            "browse_snapshot"
+          ]
         },
         "project_owned_refs": {
           "type": "array",
           "uniqueItems": true,
           "minItems": 3,
           "items": {
-            "enum": ["concrete_backup_preferences", "source_capture_lineage", "snapshot_restore_receipts", "source_control_forge_binding_refs"]
+            "enum": [
+              "concrete_backup_preferences",
+              "source_capture_lineage",
+              "snapshot_restore_receipts",
+              "source_control_forge_binding_refs"
+            ]
           }
         },
         "server_owned_refs": {
@@ -2200,37 +2506,382 @@
           "uniqueItems": true,
           "minItems": 5,
           "items": {
-            "enum": ["destination_connection_metadata", "scheduler_occurrences_writer_assignments", "recovery_set_public_metadata", "credential_references", "cross_project_full_capture_indexes"]
+            "enum": [
+              "destination_connection_metadata",
+              "scheduler_occurrences_writer_assignments",
+              "recovery_set_public_metadata",
+              "credential_references",
+              "cross_project_full_capture_indexes"
+            ]
           }
         },
-        "secret_bytes_present": {"const": false},
-        "credentials_copied": {"const": false},
-        "recovery_key_copied": {"const": false},
-        "schedule_or_writer_duplicated": {"const": false},
-        "billing_consent_inherited": {"const": false},
-        "one_writer_transfer_verified": {"type": "boolean"},
-        "fresh_project_id_required": {"type": "boolean"},
-        "external_repository_revalidation_required": {"type": "boolean"},
-        "recovered_runtime_activated": {"const": false},
-        "owner_route_ref": {"$ref": "#/$defs/safe_ref"},
-        "return_context_ref": {"$ref": "#/$defs/safe_ref"},
-        "handler_availability": {"const": "handler_unavailable"},
-        "expected_event_types": {"type": "array", "maxItems": 0},
-        "proc_execution_evidence": {"const": "partial_not_implemented"},
-        "runtime_evidence_claimed": {"const": false}
+        "secret_bytes_present": {
+          "const": false
+        },
+        "credentials_copied": {
+          "const": false
+        },
+        "recovery_key_copied": {
+          "const": false
+        },
+        "schedule_or_writer_duplicated": {
+          "const": false
+        },
+        "billing_consent_inherited": {
+          "const": false
+        },
+        "one_writer_transfer_verified": {
+          "type": "boolean"
+        },
+        "fresh_project_id_required": {
+          "type": "boolean"
+        },
+        "external_repository_revalidation_required": {
+          "type": "boolean"
+        },
+        "recovered_runtime_activated": {
+          "const": false
+        },
+        "owner_route_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "return_context_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "handler_availability": {
+          "const": "handler_unavailable"
+        },
+        "expected_event_types": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "proc_execution_evidence": {
+          "const": "partial_not_implemented"
+        },
+        "runtime_evidence_claimed": {
+          "const": false
+        }
       },
       "allOf": [
         {
-          "if": {"properties": {"operation": {"const": "move_project"}}, "required": ["operation"]},
-          "then": {"properties": {"one_writer_transfer_verified": {"const": true}, "fresh_project_id_required": {"const": false}}}
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "move_project"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "one_writer_transfer_verified": {
+                "const": true
+              },
+              "fresh_project_id_required": {
+                "const": false
+              }
+            }
+          }
         },
         {
-          "if": {"properties": {"operation": {"const": "restore_as_new"}}, "required": ["operation"]},
-          "then": {"properties": {"fresh_project_id_required": {"const": true}, "external_repository_revalidation_required": {"const": true}}}
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "restore_as_new"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "fresh_project_id_required": {
+                "const": true
+              },
+              "external_repository_revalidation_required": {
+                "const": true
+              }
+            }
+          }
         },
         {
-          "if": {"properties": {"operation": {"enum": ["copy_preferences", "backup_project", "open_history", "browse_snapshot"]}}, "required": ["operation"]},
-          "then": {"properties": {"one_writer_transfer_verified": {"const": false}, "fresh_project_id_required": {"const": false}}}
+          "if": {
+            "properties": {
+              "operation": {
+                "enum": [
+                  "copy_preferences",
+                  "backup_project",
+                  "open_history",
+                  "browse_snapshot"
+                ]
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "one_writer_transfer_verified": {
+                "const": false
+              },
+              "fresh_project_id_required": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "onboarding_project_setup_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "setup_plan_ref",
+        "reviewed_setup_plan_revision",
+        "approved_setup_plan_sha256",
+        "project_draft_ref",
+        "project_draft_revision",
+        "commit_authorization_ref",
+        "preflight_validation_ref",
+        "settings_transfer_draft_preview_ref",
+        "settings_transfer_draft_preview_sha256"
+      ],
+      "properties": {
+        "setup_plan_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "reviewed_setup_plan_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approved_setup_plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "commit_authorization_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "preflight_validation_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "settings_transfer_draft_preview_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_transfer_draft_preview_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "settings_transfer_draft_preview_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "settings_transfer_draft_preview_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "settings_transfer_draft_preview_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "project_setup_commit_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "binding_id",
+        "setup_plan_ref",
+        "reviewed_setup_plan_revision",
+        "approved_setup_plan_sha256",
+        "project_draft_ref",
+        "project_draft_revision",
+        "commit_authorization_ref",
+        "command_id",
+        "command_instance_id",
+        "idempotency_key",
+        "project_action_result_ref",
+        "project_action_result_sha256",
+        "project_id",
+        "project_revision",
+        "registry_revision",
+        "lifecycle",
+        "persistence_disposition",
+        "terminal_receipt_refs",
+        "settings_transfer_rebind_ref",
+        "settings_transfer_result_ref",
+        "required_owner_result_refs",
+        "replayed"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.project.setup_commit_binding.v1"
+        },
+        "binding_id": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "setup_plan_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "reviewed_setup_plan_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approved_setup_plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "project_draft_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_draft_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "commit_authorization_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "command_id": {
+          "enum": [
+            "cmd.project.new_local",
+            "cmd.project.new_github_repo",
+            "cmd.project.add_existing",
+            "cmd.project.open"
+          ]
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_action_result_ref": {
+          "$ref": "#/$defs/safe_ref"
+        },
+        "project_action_result_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "registry_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lifecycle": {
+          "const": "listed"
+        },
+        "persistence_disposition": {
+          "enum": [
+            "persisted",
+            "no_persist_navigation"
+          ]
+        },
+        "terminal_receipt_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "settings_transfer_rebind_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "settings_transfer_result_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_owner_result_refs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_ref"
+          }
+        },
+        "replayed": {
+          "type": "boolean"
+        }
+      },
+      "description": "Project-owned read model binding an actual typed Project action result, listing and required child receipts to the one confirmed setup. A schema-valid value is not authenticated owner verification, and no new physical receipt family is admitted.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.project.open"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "persistence_disposition": {
+                "const": "no_persist_navigation"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "persistence_disposition": {
+                "const": "persisted"
+              }
+            }
+          }
         }
       ]
     }
@@ -2349,6 +3000,24 @@
       "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
       "intended_semantics": "Save a portable, versioned, secret-free Project template from an exact current Project configuration.",
       "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1404"
+    },
+    "cmd.project.unarchive": {
+      "request_ref": "#/$defs/project_action_request",
+      "result_ref": "#/$defs/project_action_result",
+      "error_ref": "#/$defs/project_action_result",
+      "sole_handler": "handlers::project::unarchive",
+      "gui_consumers": [
+        "Projects page",
+        "K3 Project manager",
+        "Product Onboarding First Project",
+        "palette/API"
+      ],
+      "initial_availability": "handler_unavailable",
+      "availability_rule": "Exact Project and registry revisions/currentness, permission snapshot, lifecycle and owner availability; stale or denied state blocks before mutation.",
+      "permission_rule": "Project owner validates the actor's existing Project registry mutation permission; a snapshot ref alone grants no authority.",
+      "event_effect_policy": "receipt_only_no_eventrecord_pending_event_authority",
+      "intended_semantics": "Restore an archived Project row to listed state without recreating or moving Project data.",
+      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1374"
     }
   },
   "x-server-gap-local-action-contracts": {
@@ -2361,15 +3030,6 @@
       "intended_semantics": "Open a bounded, redacted, lazy details projection for the exact Project without mutating it.",
       "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1308"
     },
-    "ui.project.restore_archived": {
-      "request_ref": "#/$defs/project_local_action_request",
-      "result_ref": "#/$defs/project_local_action_result",
-      "source_token": "cmd.project.unarchive",
-      "domain_handler": null,
-      "domain_eventrecord": false,
-      "intended_semantics": "Restore an archived Project row to listed state without recreating or moving Project data.",
-      "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1374"
-    },
     "ui.project_template.open_details": {
       "request_ref": "#/$defs/project_local_action_request",
       "result_ref": "#/$defs/project_local_action_result",
@@ -2378,6 +3038,19 @@
       "domain_eventrecord": false,
       "intended_semantics": "Open a bounded, redacted, lazy details projection for the exact Project template without mutating it.",
       "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1392"
+    }
+  },
+  "x-project-ui-entry-adapters": {
+    "ui.project.restore_archived": {
+      "command_id": "cmd.project.unarchive",
+      "request_ref": "#/$defs/project_action_request",
+      "result_ref": "#/$defs/project_action_result",
+      "normalize_before_all_gates": true,
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "local_registry_mutation_allowed": false,
+      "legacy_request_replay_allowed": false,
+      "adjudication_ref": "USER-PROJECT-UNARCHIVE-REGISTRY-20260911"
     }
   },
   "x-server-gap-alias-normalization": {
@@ -2494,21 +3167,23 @@
     },
     "128": {
       "source_token": "cmd.project.unarchive",
-      "canonical_target": "ui.project.restore_archived",
-      "disposition": "typed_local_ui_action",
+      "canonical_target": "cmd.project.unarchive",
+      "disposition": "new_canonical_required",
       "intended_semantics": "Restore an archived Project row to listed state without recreating or moving Project data.",
       "packet_source_ref": "PM_Server_First_Backbone_Delivery_Bundle_FINAL_WAN_MVP_2026-08-14/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14.zip.contents/PM_Server_First_Backbone_Implementation_Packet_FINAL_WAN_MVP_2026-08-14/machine/command_census.json:1374",
       "packet_source_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
       "owner_component": "ProjectRegistry/ProjectCompositionService",
-      "sole_handler": "owner-local typed UI controller; no semantic-domain handler",
+      "sole_handler": "handlers::project::unarchive",
       "gui_consumers": [
         "Projects page",
         "K3 Project manager",
         "Product Onboarding First Project",
         "palette/API"
       ],
-      "availability_until_native_proof": "local action state",
-      "event_receipt_rule": "no domain EventRecord; preserve accessibility/currentness/return evidence"
+      "availability_until_native_proof": "handler_unavailable",
+      "event_receipt_rule": "Persisted Project owner result/receipt only; no new EventRecord; no local-only success or file/backup/runtime restoration.",
+      "adjudication_ref": "USER-PROJECT-UNARCHIVE-REGISTRY-20260911",
+      "predecessor_target": "ui.project.restore_archived"
     },
     "129": {
       "source_token": "cmd.project_template.create_project",

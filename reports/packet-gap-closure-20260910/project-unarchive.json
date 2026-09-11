@@ -1,0 +1,154 @@
+{
+  "schema_id": "pm.packet_gap_closure.project_unarchive.v1",
+  "date": "2026-09-11",
+  "status": "static_contract_reconciliation_complete",
+  "approval": {
+    "reference": "USER-PROJECT-UNARCHIVE-REGISTRY-20260911",
+    "reference_kind": "local label for the user's conversation correction",
+    "user_text": "i woudl think changing the registry would make sense.",
+    "decision": "Persistently restore an archived Project to listed state through Project System, not navigation-only presentation."
+  },
+  "authority": "Plans/Project_System.md#PJCT-002",
+  "source_reconciliation": {
+    "registry": "Plans/server_command_gap_adjudication.json",
+    "registry_sha256": "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae",
+    "changed_rows": [
+      128
+    ],
+    "case_ref": "server_command_candidates/cmd.project.unarchive",
+    "source_token": "cmd.project.unarchive",
+    "source_packet_sha256": "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b",
+    "source_identity_or_intended_semantic_changes": [],
+    "source_rows_preserved": 171,
+    "predecessor": {
+      "disposition": "typed_local_ui_action",
+      "target": "ui.project.restore_archived"
+    },
+    "current": {
+      "disposition": "new_canonical_required",
+      "target": "cmd.project.unarchive",
+      "sole_handler": "handlers::project::unarchive",
+      "request_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
+      "result_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
+    },
+    "current_partition": {
+      "new_canonical_required": 87,
+      "approved_alias_to_exact": 43,
+      "typed_local_ui_action": 38,
+      "rejected_with_reason": 3
+    }
+  },
+  "semantics": [
+    "Only the existing Project registry lifecycle and update/revision/currentness metadata change; immutable identity, data, Settings, topology, backup and runtime owners remain unchanged.",
+    "The old UI entry constructs the one command before all gates. It cannot mutate locally, define a peer handler or production row, or replay a historical local request as mutation authority.",
+    "Accepted means persisted listed readback with exact identity, fences, return context and correlated Project receipt; dispatch acknowledgement is not completion.",
+    "Already-listed no-change and original-binding replay do not write again. Stale, denied, removed/deletion-state and uncertain-recovery cases cannot report success."
+  ],
+  "static_verification": {
+    "new_contracts": {
+      "positive_cases": 991,
+      "negative_cases": 3240,
+      "contract_pairs": 24,
+      "internal_self_tests": 12,
+      "status": "pass"
+    },
+    "focused_tests": {
+      "project_unarchive": 13,
+      "onboarding": 42,
+      "touch_and_whole_accounting": 19,
+      "ui_command_response": 12,
+      "total": 86,
+      "status": "pass"
+    },
+    "adjudication": {
+      "rows": 171,
+      "negative_self_tests": 11,
+      "status": "pass"
+    },
+    "wiring_matrix": "pass",
+    "shards": {
+      "sources": 98,
+      "shards": 2178,
+      "status": "pass"
+    },
+    "plan_index": {
+      "plan_units": 6458,
+      "acceptance_units": 24686,
+      "status": "pass"
+    },
+    "whole_accounting": {
+      "status": "structure_checked_only",
+      "command_ids": 1080,
+      "production_intent_rows": 1144,
+      "commands_in_packet_touch": 467,
+      "commands_outside_packet_touch": 613,
+      "rows_with_request_and_result_pointers": 388,
+      "rows_missing_one_or_both_pointers": 756,
+      "structural_errors": 0
+    },
+    "touch": {
+      "rows": 644,
+      "profiles": 131,
+      "exclusions": 57,
+      "alias_bindings": 64,
+      "open_residuals": 644
+    },
+    "browser_scoped_admission": {
+      "families": 53,
+      "negative_cases": 576,
+      "status": "pass",
+      "global_event_denominator": "UNKNOWN_OPEN"
+    }
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-new-contracts-corrected-20260911.json",
+      "sha256": "3a32fb6eed09b52ae76d108f8485746433767ed578cc85f24cccc83be5ee6e38"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-unit-tests-corrected-20260911.log",
+      "sha256": "c8779bcad772c3ec0670ffd7a689c96a47f79c8e6f19f2e3c41a8c471b1414b1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-adjudication-20260911.json",
+      "sha256": "e19fa3262c1b5c05c19eb4a461890294042bbf08997db06614c8e8de6f197713"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-whole-accounting-20260911.json",
+      "sha256": "e9e2b11693a1997ebc7025ed0dec4ca3e2929d700db5bb89b760be1dbe47e4de"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/project-unarchive-touch-20260911.json",
+      "sha256": "169c43d94dd61a215739b0c205b5b2d620942a6424c1776dad78ab17de1083ed"
+    }
+  ],
+  "claim_boundary": {
+    "native_handler_or_runtime_proven": false,
+    "permission_authority_or_authenticated_storage_proven": false,
+    "new_eventrecord_families": 0,
+    "new_storage_families": 0,
+    "concept_files_changed": false,
+    "worknodes_or_readiness_admitted": false,
+    "governance_sealed": false,
+    "formal_packet_audit_completed": false
+  },
+  "audit_followup": {
+    "historical_manifest_sha256": "5ba19e0650b13b1761868d786140fe316532d150b05cb6c56717359d87453098",
+    "historical_snapshot": "d7d6a4452f2dd6c9d9a53f7be32a086e9250ffdd",
+    "historical_reviewed_cells": 910,
+    "historical_status_counts": {
+      "pass": 303,
+      "partial": 603,
+      "fail": 4
+    },
+    "correction_for": "touch_closure_dimensions/TOUCH-PJCT-010/single_dry_contract",
+    "historical_receipts_preserved": true,
+    "current_snapshot_requires_new_freeze_and_review_binding": true,
+    "other_recorded_findings": [
+      "Settings concept replay-onboarding bypasses its route-only Settings binding.",
+      "Settings concept guided-tour replay bypasses its route-only Settings binding.",
+      "GitHub Project creation wiring requires two event families absent from the current Event Authority registry."
+    ]
+  },
+  "governance_status": "The earlier full governance run is not green (stale locks/readiness/evidence and missing baseline inputs). This scoped repair does not reseal or claim a fresh full-governance pass."
+}
