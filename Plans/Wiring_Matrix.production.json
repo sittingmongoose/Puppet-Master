@@ -10987,9 +10987,11 @@
       "ui_command_id": "cmd.browser.add_full_screenshot_to_chat",
       "handler_location": "handlers::browser::add_full_screenshot_to_chat",
       "expected_event_types": [
-        "runtime_artifact.created"
+        "runtime_artifact.screenshot"
       ],
       "acceptance_checks": [
+        "RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded.",
+        "Payload schema pm.runtime_artifact.screenshot.schema.v1 shape is not proof of real IDs, native capture, or retention execution.",
         "cmd.browser.add_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_full_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
@@ -11001,10 +11003,13 @@
       "disabled_reason_projection": "state.commands.browser_add_full_screenshot_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.browser.add_full_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "description": "cmd.browser.add_full_screenshot_to_chat declares consumer intent for runtime_artifact.screenshot under Plans/Runtime_Artifacts_Panel.md#RAP-054 and pm.runtime_artifact.screenshot.schema.v1; event admission remains pending and current dispatch must fail closed with handler_unavailable.",
         "receipt_or_event_refs": [
-          "runtime_artifact.created",
-          "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt"
+          "runtime_artifact.screenshot",
+          "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt",
+          "Plans/Runtime_Artifacts_Panel.md#RAP-054",
+          "Plans/runtime_artifact_screenshot.schema.json",
+          "pm.runtime_artifact.screenshot.schema.v1"
         ]
       },
       "accessibility_contract": {
@@ -11017,7 +11022,7 @@
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.add_full_screenshot_to_chat reaches handlers::browser::add_full_screenshot_to_chat with typed args/result contract."
+          "requirement": "After separate native implementation authorization, prove dispatch reaches handlers::browser::add_full_screenshot_to_chat with typed args/result contract; currently the native handler is absent and dispatch must return handler_unavailable."
         },
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.state_projection",
@@ -11027,7 +11032,7 @@
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_full_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+          "requirement": "While RAP-054 / Event Authority admission remains pending, cmd.browser.add_full_screenshot_to_chat fails closed with handler_unavailable without persistence, event emission, checkpoint advance, or successful capture claims."
         },
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.accessibility",
@@ -11037,11 +11042,11 @@
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.events",
           "evidence_kind": "event_test",
-          "requirement": "Dispatching cmd.browser.add_full_screenshot_to_chat emits expected event(s): runtime_artifact.created."
+          "requirement": "Only after separate RAP-054 / Event Authority admission and authorized native persistence with real owner-resolved project_id, run_id, and attempt_id, prove cmd.browser.add_full_screenshot_to_chat emits intended event(s): runtime_artifact.screenshot."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_full_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_full_screenshot_to_chat emits runtime_artifact.screenshot with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_screenshot_to_chat": {
@@ -11050,9 +11055,11 @@
       "ui_command_id": "cmd.browser.add_screenshot_to_chat",
       "handler_location": "handlers::browser::add_screenshot_to_chat",
       "expected_event_types": [
-        "runtime_artifact.created"
+        "runtime_artifact.screenshot"
       ],
       "acceptance_checks": [
+        "RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded.",
+        "Payload schema pm.runtime_artifact.screenshot.schema.v1 shape is not proof of real IDs, native capture, or retention execution.",
         "cmd.browser.add_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
@@ -11064,10 +11071,13 @@
       "disabled_reason_projection": "state.commands.browser_add_screenshot_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.browser.add_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "description": "cmd.browser.add_screenshot_to_chat declares consumer intent for runtime_artifact.screenshot under Plans/Runtime_Artifacts_Panel.md#RAP-054 and pm.runtime_artifact.screenshot.schema.v1; event admission remains pending and current dispatch must fail closed with handler_unavailable.",
         "receipt_or_event_refs": [
-          "runtime_artifact.created",
-          "cmd.browser.add_screenshot_to_chat.dispatch_receipt"
+          "runtime_artifact.screenshot",
+          "cmd.browser.add_screenshot_to_chat.dispatch_receipt",
+          "Plans/Runtime_Artifacts_Panel.md#RAP-054",
+          "Plans/runtime_artifact_screenshot.schema.json",
+          "pm.runtime_artifact.screenshot.schema.v1"
         ]
       },
       "accessibility_contract": {
@@ -11080,7 +11090,7 @@
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.add_screenshot_to_chat reaches handlers::browser::add_screenshot_to_chat with typed args/result contract."
+          "requirement": "After separate native implementation authorization, prove dispatch reaches handlers::browser::add_screenshot_to_chat with typed args/result contract; currently the native handler is absent and dispatch must return handler_unavailable."
         },
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.state_projection",
@@ -11090,7 +11100,7 @@
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+          "requirement": "While RAP-054 / Event Authority admission remains pending, cmd.browser.add_screenshot_to_chat fails closed with handler_unavailable without persistence, event emission, checkpoint advance, or successful capture claims."
         },
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.accessibility",
@@ -11100,11 +11110,11 @@
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.events",
           "evidence_kind": "event_test",
-          "requirement": "Dispatching cmd.browser.add_screenshot_to_chat emits expected event(s): runtime_artifact.created."
+          "requirement": "Only after separate RAP-054 / Event Authority admission and authorized native persistence with real owner-resolved project_id, run_id, and attempt_id, prove cmd.browser.add_screenshot_to_chat emits intended event(s): runtime_artifact.screenshot."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_screenshot_to_chat emits runtime_artifact.screenshot with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_full_screenshot_to_chat": {
@@ -11114,9 +11124,11 @@
       "handler_location": "handlers::browser::add_selection_full_screenshot_to_chat",
       "expected_event_types": [
         "browser.context_captured",
-        "runtime_artifact.created"
+        "runtime_artifact.screenshot"
       ],
       "acceptance_checks": [
+        "RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded.",
+        "Payload schema pm.runtime_artifact.screenshot.schema.v1 shape is not proof of real IDs, native capture, or retention execution.",
         "cmd.browser.add_selection_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_selection_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_selection_full_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
@@ -11128,11 +11140,14 @@
       "disabled_reason_projection": "state.commands.browser_add_selection_full_screenshot_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.browser.add_selection_full_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "description": "cmd.browser.add_selection_full_screenshot_to_chat declares consumer intent for runtime_artifact.screenshot under Plans/Runtime_Artifacts_Panel.md#RAP-054 and pm.runtime_artifact.screenshot.schema.v1; event admission remains pending and current dispatch must fail closed with handler_unavailable.",
         "receipt_or_event_refs": [
           "browser.context_captured",
-          "runtime_artifact.created",
-          "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt"
+          "runtime_artifact.screenshot",
+          "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt",
+          "Plans/Runtime_Artifacts_Panel.md#RAP-054",
+          "Plans/runtime_artifact_screenshot.schema.json",
+          "pm.runtime_artifact.screenshot.schema.v1"
         ]
       },
       "accessibility_contract": {
@@ -11145,7 +11160,7 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.add_selection_full_screenshot_to_chat reaches handlers::browser::add_selection_full_screenshot_to_chat with typed args/result contract."
+          "requirement": "After separate native implementation authorization, prove dispatch reaches handlers::browser::add_selection_full_screenshot_to_chat with typed args/result contract; currently the native handler is absent and dispatch must return handler_unavailable."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.state_projection",
@@ -11155,7 +11170,7 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_selection_full_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+          "requirement": "While RAP-054 / Event Authority admission remains pending, cmd.browser.add_selection_full_screenshot_to_chat fails closed with handler_unavailable without persistence, event emission, checkpoint advance, or successful capture claims."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.accessibility",
@@ -11165,12 +11180,12 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.events",
           "evidence_kind": "event_test",
-          "requirement": "Dispatching cmd.browser.add_selection_full_screenshot_to_chat emits expected event(s): browser.context_captured, runtime_artifact.created."
+          "requirement": "Only after separate RAP-054 / Event Authority admission and authorized native persistence with real owner-resolved project_id, run_id, and attempt_id, prove cmd.browser.add_selection_full_screenshot_to_chat emits intended event(s): browser.context_captured, runtime_artifact.screenshot."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_selection_full_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
-        "Assert cmd.browser.add_selection_full_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_selection_full_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_selection_full_screenshot_to_chat emits runtime_artifact.screenshot with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_screenshot_to_chat": {
@@ -11180,9 +11195,11 @@
       "handler_location": "handlers::browser::add_selection_screenshot_to_chat",
       "expected_event_types": [
         "browser.context_captured",
-        "runtime_artifact.created"
+        "runtime_artifact.screenshot"
       ],
       "acceptance_checks": [
+        "RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded.",
+        "Payload schema pm.runtime_artifact.screenshot.schema.v1 shape is not proof of real IDs, native capture, or retention execution.",
         "cmd.browser.add_selection_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_selection_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_selection_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
@@ -11194,11 +11211,14 @@
       "disabled_reason_projection": "state.commands.browser_add_selection_screenshot_to_chat.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "cmd.browser.add_selection_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "description": "cmd.browser.add_selection_screenshot_to_chat declares consumer intent for runtime_artifact.screenshot under Plans/Runtime_Artifacts_Panel.md#RAP-054 and pm.runtime_artifact.screenshot.schema.v1; event admission remains pending and current dispatch must fail closed with handler_unavailable.",
         "receipt_or_event_refs": [
           "browser.context_captured",
-          "runtime_artifact.created",
-          "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt"
+          "runtime_artifact.screenshot",
+          "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt",
+          "Plans/Runtime_Artifacts_Panel.md#RAP-054",
+          "Plans/runtime_artifact_screenshot.schema.json",
+          "pm.runtime_artifact.screenshot.schema.v1"
         ]
       },
       "accessibility_contract": {
@@ -11211,7 +11231,7 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.dispatcher",
           "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.add_selection_screenshot_to_chat reaches handlers::browser::add_selection_screenshot_to_chat with typed args/result contract."
+          "requirement": "After separate native implementation authorization, prove dispatch reaches handlers::browser::add_selection_screenshot_to_chat with typed args/result contract; currently the native handler is absent and dispatch must return handler_unavailable."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.state_projection",
@@ -11221,7 +11241,7 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_selection_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+          "requirement": "While RAP-054 / Event Authority admission remains pending, cmd.browser.add_selection_screenshot_to_chat fails closed with handler_unavailable without persistence, event emission, checkpoint advance, or successful capture claims."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.accessibility",
@@ -11231,12 +11251,12 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.events",
           "evidence_kind": "event_test",
-          "requirement": "Dispatching cmd.browser.add_selection_screenshot_to_chat emits expected event(s): browser.context_captured, runtime_artifact.created."
+          "requirement": "Only after separate RAP-054 / Event Authority admission and authorized native persistence with real owner-resolved project_id, run_id, and attempt_id, prove cmd.browser.add_selection_screenshot_to_chat emits intended event(s): browser.context_captured, runtime_artifact.screenshot."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_selection_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
-        "Assert cmd.browser.add_selection_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_selection_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "After separate RAP-054 / Event Authority admission and authorized native persistence, assert cmd.browser.add_selection_screenshot_to_chat emits runtime_artifact.screenshot with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_to_chat": {
@@ -44405,20 +44425,21 @@
         "Regression evidence covers unauthenticated, permission-denied, existing-repo, dirty-project, and user-declined cases",
         "cmd.project.new_github_repo must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Validate PJCT-007 onboarding_setup_binding against the actual closed draft/revision/approved hash and Review confirmation. The Project owner coordinates one commit chain and returns the actual persisted/listed Project with required owner/Settings results; caller Close/resume/Back never cancels, erases, recreates or repeats that committed Project.",
-        "GI-042 / PJCT-008 consume the existing Project action family and application-scoped creation operation; retain handler_unavailable until native auth/permission/FileSafe, owner dispatch, receipt resolution and registry readback are proved. Static admission is not handler availability."
+        "GI-042 / PJCT-008 consume the existing Project action family and application-scoped creation operation; retain handler_unavailable until native auth/permission/FileSafe, owner dispatch, receipt resolution and registry readback are proved. DL-039 keeps both candidate events quarantined_not_admitted without EventRecord persistence/replay authority; command-intake admission_receipt_ref is not an Event Authority registration receipt."
       ],
       "evidence_required": "Production wiring contract for cmd.project.new_github_repo; Production certification requires GitHub/project render evidence, dispatcher fixture, typed create/bind payload/result assertion, auth and permission disabled-reason proof, repo/project receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.project_new_github_repo.availability",
       "disabled_reason_projection": "state.commands.project_new_github_repo.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "GI-042 / PJCT-008: owner-approved creation intake emits github.repo.create_requested in application scope; only verified repository/source receipts plus atomic listed Project commit/readback emit project.github_repo_bound in Project scope. Pending, rejected, cancelled, unknown and replay cannot fabricate the bound event; replay executes no effects.",
+        "description": "GI-042 / PJCT-008 / DL-039: github.repo.create_requested is an application-scoped approved-intake send-only obligation; project.github_repo_bound follows verified repository/source receipts and atomic listed Project commit/readback in Project scope. Both remain quarantined_not_admitted: candidate validity grants no EventRecord append/replay, identity consumption, projection or checkpoint advance. Pending, rejected, cancelled, unknown and replay cannot fabricate Project completion; command retry executes no new effects.",
         "receipt_or_event_refs": [
           "github.repo.create_requested",
           "project.github_repo_bound",
           "Plans/github_project_event_admission.json#/rows/0",
           "Plans/github_project_event_admission.json#/rows/1",
-          "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
+          "Plans/project_system_contracts.schema.json#/$defs/project_action_result",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -44460,8 +44481,8 @@
         }
       ],
       "event_test_requirements": [
-        "Assert github.repo.create_requested only for a new GI-042 approved intake, with no invented Project identity; resolve admission row 0 and retained request/operation binding.",
-        "Assert project.github_repo_bound only for PJCT-008 verified committed Project/readback, joined to the same creation operation and request digest; resolve admission row 1. Duplicates never repeat API/clone/registration effects."
+        "Validate the github.repo.create_requested candidate only for new GI-042 approved intake, without invented Project identity; resolve non-admission row 0 and exact retained request/operation binding. Its valid payload still fails EventRecord admission under DL-039.",
+        "Validate the project.github_repo_bound candidate only for PJCT-008 committed/readback Project, joined to the same creation operation and request digest; resolve non-admission row 1. Valid, duplicate, changed-ID and restart deliveries all remain quarantined_not_admitted without identity consumption or checkpoint/projection change. Command-result retries never repeat API/clone/registration effects."
       ],
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request",
       "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_result"
@@ -60456,17 +60477,18 @@
         "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/2; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.backgrounded obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.backgrounded",
-          "Plans/testing_session_event_admission.json#/rows/2"
+          "Plans/testing_session_event_admission.json#/rows/2",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -60503,7 +60525,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.backgrounded obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60523,17 +60546,18 @@
         "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/0; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.opened obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.opened",
-          "Plans/testing_session_event_admission.json#/rows/0"
+          "Plans/testing_session_event_admission.json#/rows/0",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -60570,7 +60594,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.opened obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60590,17 +60615,18 @@
         "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/3; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.redaction_inspected obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.redaction_inspected",
-          "Plans/testing_session_event_admission.json#/rows/3"
+          "Plans/testing_session_event_admission.json#/rows/3",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -60637,7 +60663,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.redaction_inspected obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -60657,17 +60684,18 @@
         "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/1; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.watch_started obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.watch_started",
-          "Plans/testing_session_event_admission.json#/rows/1"
+          "Plans/testing_session_event_admission.json#/rows/1",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -60704,7 +60732,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.watch_started obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -67854,17 +67883,18 @@
         "cmd.testing.session.background must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.background; Production certification requires typed Automated Testing owner evidence for testing.session.backgrounded, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/2; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_background.availability",
       "disabled_reason_projection": "state.commands.testing_session_background.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.backgrounded obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.backgrounded",
-          "Plans/testing_session_event_admission.json#/rows/2"
+          "Plans/testing_session_event_admission.json#/rows/2",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -67901,7 +67931,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.backgrounded from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.backgrounded obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -67921,17 +67952,18 @@
         "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/0; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_open.availability",
       "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.opened obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.opened",
-          "Plans/testing_session_event_admission.json#/rows/0"
+          "Plans/testing_session_event_admission.json#/rows/0",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -67968,7 +68000,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.opened from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.opened obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -67988,17 +68021,18 @@
         "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/3; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_redaction_inspect.availability",
       "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.redaction_inspected obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.redaction_inspected",
-          "Plans/testing_session_event_admission.json#/rows/3"
+          "Plans/testing_session_event_admission.json#/rows/3",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -68035,7 +68069,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.redaction_inspected from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.redaction_inspected obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
@@ -68055,17 +68090,18 @@
         "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
         "Plans/Automated_Testing_System.md#ATS-048 binds exact request/result/error/availability; accepted is pending, unknown effects require reconciliation, and replay returns original receipts without new effects.",
         "Availability consumes Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandAvailability; native absence is handler_unavailable. No capture/verdict mutation, protected-auth access or latest/focused-subject substitution.",
-        "ATS-049 admission validates exact owner transition, Project scope, producer, operation, session/generation and settled receipt; duplicate/conflicting replay cannot advance the projection checkpoint or execute effects."
+        "ATS-049 / DL-039 validate candidate owner/Project/producer/operation/session/generation/receipt joins independently of admission. Even a valid candidate remains quarantined_not_admitted, without EventRecord append/replay, identity consumption, projection or checkpoint advance; native absence remains handler_unavailable."
       ],
       "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Plans/Automated_Testing_System.md#ATS-048; static fixtures are not native execution proof. Event Authority uses Plans/testing_session_event_admission.json#/rows/1; static producer labels are not authenticated native producer proof.",
       "state_selector": "state.commands.testing_session_watch.availability",
       "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
       "effect_contract": {
         "effect_kind": "event",
-        "description": "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation.",
+        "description": "ATS-049 / DL-039: retain the send-only testing.session.watch_started obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
         "receipt_or_event_refs": [
           "testing.session.watch_started",
-          "Plans/testing_session_event_admission.json#/rows/1"
+          "Plans/testing_session_event_admission.json#/rows/1",
+          "Plans/Decision_Log.md#DL-039"
         ]
       },
       "accessibility_contract": {
@@ -68102,7 +68138,8 @@
         }
       ],
       "event_test_requirements": [
-        "After the exact ATS-049 committed transition, emit testing.session.watch_started from AutomatedTestingService.visible_session with the closed payload and settled owner receipt. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay emit none; no capture/verdict mutation."
+        "ATS-049 / DL-039: retain the send-only testing.session.watch_started obligation from AutomatedTestingService.visible_session for the exact committed owner transition and closed candidate payload. It remains quarantined_not_admitted: no EventRecord append, admitted-event replay/projection, identity consumption or checkpoint advance. Pending, no-change, refusal/failure/cancellation, unknown effects and command replay create no new transition; no capture/verdict mutation.",
+        "Independently reject malformed/protected payloads and foreign or uncommitted owner bindings; test valid candidates, duplicate transport IDs, old retained records and restart inputs all fail persisted-event admission without changing existing identity/checkpoint state."
       ],
       "request_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandRequest",
       "result_schema_ref": "Plans/testing_session_command_contracts.schema.json#/$defs/TestingSessionCommandResult"
