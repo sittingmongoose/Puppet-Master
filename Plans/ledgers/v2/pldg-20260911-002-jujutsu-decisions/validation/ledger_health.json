@@ -1,0 +1,18 @@
+{
+  "schema_id": "pm.bootstrap_ledger_state.v1",
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+  "status": "pass_intake",
+  "summary": {
+    "events": 1,
+    "design_atoms": 44,
+    "decisions": 44,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 0
+  },
+  "validator_status": "pass",
+  "errors": [],
+  "notes": "All44 decisions validated before owner compilation; independent intake review passed; canonical compile and final review remain pending."
+}

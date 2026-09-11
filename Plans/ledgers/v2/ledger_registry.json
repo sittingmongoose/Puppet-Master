@@ -22,6 +22,18 @@
         "no_nodeseeds_created": true,
         "no_worknodes_created": true
       }
+    },
+    {
+      "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+      "title": "Jujutsu DL-043 decisions",
+      "status": "active",
+      "phase": "ready_for_owner_compile",
+      "created_at_utc": "2026-09-11T17:28:15.827337+00:00",
+      "last_updated_at_utc": "2026-09-11T17:28:15.827337+00:00",
+      "last_event_id": "evt-001",
+      "canonical_plan_targets": [],
+      "resume_file": "Plans/ledgers/v2/pldg-20260911-002-jujutsu-decisions/state/handoff.json",
+      "notes": "All44 DL-043 answers captured;36 require owner planning and8 remain declined/deferred. D5 compilation and independent review active; no seal or runtime implementation."
     }
   ],
   "compiled_ledgers": [

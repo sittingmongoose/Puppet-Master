@@ -1,0 +1,357 @@
+{
+  "ledger_id": "pldg-20260911-002-jujutsu-decisions",
+  "rows": [
+    {
+      "sheet_id": "J01",
+      "decision_id": "D002",
+      "name": "Named history markers",
+      "answer": "Add named markers on existing checkpoints",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J02",
+      "decision_id": "D003",
+      "name": "Grouped history actions",
+      "answer": "Group display and provide verified group undo",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J03",
+      "decision_id": "D004",
+      "name": "Recent actions and redo",
+      "answer": "Add recent actions and supported redo",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J04",
+      "decision_id": "D005",
+      "name": "Filter operation history",
+      "answer": "Add simple action and time filters",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J05",
+      "decision_id": "D006",
+      "name": "Readable operation descriptions",
+      "answer": "Add structured descriptions from existing receipts",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J06",
+      "decision_id": "D007",
+      "name": "History storage maintenance",
+      "answer": "Diagnose growth and offer explicit maintenance",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J07",
+      "decision_id": "D042",
+      "name": "Reverse one selected operation",
+      "answer": "Add a separately labeled reverse-selected-operation action",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J08",
+      "decision_id": "D043",
+      "name": "Preview a rewrite before applying it",
+      "answer": "Add an explicitly managed rewrite preview and apply workflow",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J09",
+      "decision_id": "D044",
+      "name": "Browse an earlier repository state",
+      "answer": "Add a clearly labeled earlier-state browsing mode",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J10",
+      "decision_id": "D037",
+      "name": "Export operation diagnostics",
+      "answer": "Add explicit sanitized export",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J11",
+      "decision_id": "D038",
+      "name": "View source-control commands",
+      "answer": "Add an optional technical log view",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J12",
+      "decision_id": "D010",
+      "name": "Combine divergent versions",
+      "answer": "Add guided convergence when supported",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J13",
+      "decision_id": "D011",
+      "name": "Duplicate a change",
+      "answer": "Add a duplicate action",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J14",
+      "decision_id": "D012",
+      "name": "Create a merge change",
+      "answer": "Add a merge action",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J15",
+      "decision_id": "D013",
+      "name": "Absorb edits into earlier changes",
+      "answer": "Add absorption with preview",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J16",
+      "decision_id": "D014",
+      "name": "Back out a change",
+      "answer": "Add a back-out action",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J17",
+      "decision_id": "D015",
+      "name": "Compare versions of a change",
+      "answer": "Add a version-to-version comparison",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J18",
+      "decision_id": "D016",
+      "name": "Change evolution",
+      "answer": "Add a focused evolution view",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J19",
+      "decision_id": "D031",
+      "name": "Edit history by dragging",
+      "answer": "Add previewed drag actions and keyboard equivalents",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J20",
+      "decision_id": "D019",
+      "name": "Scriptable partial changes",
+      "answer": "Add a structured hunk selection interface",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J21",
+      "decision_id": "D001",
+      "name": "Read-only repositories",
+      "answer": "Add a supported read-only browsing mode",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J22",
+      "decision_id": "D008",
+      "name": "Adopt existing workspaces",
+      "answer": "Add an explicit adoption and repair flow",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J23",
+      "decision_id": "D009",
+      "name": "Hide inactive workspaces",
+      "answer": "Add hide and unhide",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J24",
+      "decision_id": "D036",
+      "name": "Very large repository backends",
+      "answer": "Defer specialized storage",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J25",
+      "decision_id": "D029",
+      "name": "Prioritize graph lanes",
+      "answer": "Add explicit lane priorities",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J26",
+      "decision_id": "D030",
+      "name": "Help with history queries",
+      "answer": "Add native query assistance",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J27",
+      "decision_id": "D032",
+      "name": "Keep comparison context visible",
+      "answer": "Add pinned comparison and selected-change details",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J28",
+      "decision_id": "D017",
+      "name": "Line attribution and file history",
+      "answer": "Add bounded attribution and file history",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J29",
+      "decision_id": "D018",
+      "name": "Review marks that survive edits",
+      "answer": "Add conservative matching with stale markers",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    },
+    {
+      "sheet_id": "J30",
+      "decision_id": "D033",
+      "name": "Review a workspace with AI",
+      "answer": "Use existing chat review workflows",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J31",
+      "decision_id": "D020",
+      "name": "New line endings in mixed-ending text",
+      "answer": "Use the nearest existing line ending; preserve existing endings on ordinary Save.",
+      "decision_class": "policy",
+      "canonical_class_text": "policy set"
+    },
+    {
+      "sheet_id": "J32",
+      "decision_id": "D021",
+      "name": "Use an external diff or merge editor",
+      "answer": "Keep resolution inside Puppet Master",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J33",
+      "decision_id": "D027",
+      "name": "Publish unresolved conflicts",
+      "answer": "Block by default; add an advanced path only for qualified compatible targets.",
+      "decision_class": "conditional",
+      "canonical_class_text": "accepted with the stated condition"
+    },
+    {
+      "sheet_id": "J34",
+      "decision_id": "D028",
+      "name": "Resolve a conflicted bookmark",
+      "answer": "Add a guided picker only if it clarifies rather than hides the target states.",
+      "decision_class": "conditional",
+      "canonical_class_text": "accepted with the stated condition"
+    },
+    {
+      "sheet_id": "J35",
+      "decision_id": "D039",
+      "name": "Publish a stack of reviews",
+      "answer": "Add one explicitly supported forge workflow at a time.",
+      "decision_class": "conditional",
+      "canonical_class_text": "accepted with the stated condition"
+    },
+    {
+      "sheet_id": "J36",
+      "decision_id": "D040",
+      "name": "Additional review services",
+      "answer": "Add only for a concrete user workflow and keep local history independent.",
+      "decision_class": "conditional",
+      "canonical_class_text": "accepted with the stated condition"
+    },
+    {
+      "sheet_id": "J37",
+      "decision_id": "D041",
+      "name": "Custom actions around publishing",
+      "answer": "Keep publication within existing adapter behavior",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J38",
+      "decision_id": "D022",
+      "name": "How the adapter runs",
+      "answer": "Own a separate internal service",
+      "decision_class": "architecture",
+      "canonical_class_text": "architecture choice"
+    },
+    {
+      "sheet_id": "J39",
+      "decision_id": "D023",
+      "name": "Reuse a diff library",
+      "answer": "Keep an independently owned diff implementation",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J40",
+      "decision_id": "D024",
+      "name": "Connect external IDEs",
+      "answer": "Keep source-control interaction in Puppet Master",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J41",
+      "decision_id": "D025",
+      "name": "Shared source-control service",
+      "answer": "Use existing owner services only",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J42",
+      "decision_id": "D026",
+      "name": "Connect other agent tools",
+      "answer": "Keep existing internal agent routes",
+      "decision_class": "declined_or_deferred",
+      "canonical_class_text": "declined or deferred"
+    },
+    {
+      "sheet_id": "J43",
+      "decision_id": "D034",
+      "name": "Store or rebuild history indexes",
+      "answer": "Prefer rebuilding correctness-critical indexes in the isolated drill; keep captured indexes only as an optional speed aid.",
+      "decision_class": "policy",
+      "canonical_class_text": "policy set"
+    },
+    {
+      "sheet_id": "J44",
+      "decision_id": "D035",
+      "name": "Complete missing repository data",
+      "answer": "Add a separately authorized completion workflow",
+      "decision_class": "accepted_for_planning",
+      "canonical_class_text": "accepted for planning"
+    }
+  ]
+}
