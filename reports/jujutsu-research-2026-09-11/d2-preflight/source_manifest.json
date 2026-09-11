@@ -1,0 +1,74 @@
+{
+  "schema": "jujutsu.d2_preflight.source_manifest.v1",
+  "frozen_protocol": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze.json",
+    "sha256": "570abec19007627eb77b548bebf0122316a495f7cf09ded22f1bb23f368dae9c"
+  },
+  "sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/PRICING_BASIS.md",
+      "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/codex_native.py",
+      "sha256": "397c16c1bc37c2112599bc7da0fa3faa1c6280525093d9ba65ec128fd73d6bc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/adapters/omp_native.py",
+      "sha256": "4de1b993bc0263cf13c0e45fdc36665b23cfd96a2b0c1db910d83f37888ac3b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/bounded_campaign.py",
+      "sha256": "9d221be33f89625485bca0b74a7f184de7fd279869b335036e05a097ad0f5bab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/child_transport.py",
+      "sha256": "a3398ec76bb027328e0c1da1a673e3021eaff871bf0f780057abd987950f9597"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/discovery_to_plan.py",
+      "sha256": "0009845be6b30791f495d930be0826bd0bafc2bb94029e88b21607c709df7e91"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/freeze_protocol.py",
+      "sha256": "715d7f948c11b8737fee8280cad4dd31fa146d795b790c548b636c65f214da8d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/prepare_case.py",
+      "sha256": "b74e7120af6fffb46fd208e83139668cdee6bf9fc5839479d521ec0d421d8302"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/protocol/research_base.py",
+      "sha256": "0ea05bbdd0c21bb25a064d2e28fca060600ae90470cee8d28f3730963c9a345a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/research.py",
+      "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/research_shared_v3.py",
+      "sha256": "354e943a59610fc9b45c3e2f2e41db2f98797863c6743edaafb67e3d3f8a30a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/test_bounded_campaign.py",
+      "sha256": "3db2878ac4e780c4454439a1faf47cb52e5e13b4433811b4b27713086206fe1f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/valuation.py",
+      "sha256": "69cff5562be53d9e1cb4ae99056a7cb9c16fa01e5b5513850f5234bc854a3930"
+    }
+  ],
+  "stable_source_lineage": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/source-manifest.json",
+    "sha256": "3148dcd257a7eff3a1ffd1100917ed33ead03beb364076318385744669e51fea"
+  },
+  "preparation_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/preparation-receipt.json",
+    "sha256": "7da674202d129032d1069e30c89f6b33141790d4a03ca18ba72e0f643d72115d"
+  },
+  "pricing_basis": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol/PRICING_BASIS.md",
+    "sha256": "039ce4eb044c3690087ccaec5a23be91dcab3bf347f04639263bc53e860fd55d"
+  },
+  "scope": "Source references only; no experiment source, raw capture, native workspace, or local configuration copied into publication."
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "jujutsu.d2_preflight.budget_probe.v1",
+  "source_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/root-preflight/budget-probe/receipt.json",
+    "sha256": "ed17bc7eef5371b9835964289e9aa21b384c197f821663ba052a23b653a40aa0"
+  },
+  "source_raw_events": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/root-preflight/budget-probe/native/server.stdout.raw.jsonl",
+    "sha256": "0deae5b9aa085f940a28aca19d102a9d12e508bc349ebc55f2aa5de1c33db9f3"
+  },
+  "synthetic_no_campaign_subject": true,
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "medium",
+  "confirmed_service_tier": "default",
+  "token_budget": 1,
+  "elapsed_seconds": 31.273838819994126,
+  "native_goal_time_seconds": 8,
+  "terminal_status": "budgetLimited",
+  "goal_tokens_used": 14770,
+  "usage": {
+    "total": {
+      "totalTokens": 28722,
+      "inputTokens": 28644,
+      "cachedInputTokens": 13952,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 78,
+      "reasoningOutputTokens": 0
+    },
+    "last": {
+      "totalTokens": 14505,
+      "inputTokens": 14473,
+      "cachedInputTokens": 13952,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 32,
+      "reasoningOutputTokens": 0
+    },
+    "modelContextWindow": 258400
+  },
+  "events": [
+    {
+      "raw_line": 6,
+      "kind": "goal_status",
+      "status": "active",
+      "tokens_used": 0
+    },
+    {
+      "raw_line": 40,
+      "kind": "command_completed",
+      "purpose": "print alpha",
+      "status": "completed"
+    },
+    {
+      "raw_line": 41,
+      "kind": "goal_status",
+      "status": "budgetLimited",
+      "tokens_used": 14217
+    },
+    {
+      "raw_line": 43,
+      "kind": "usage",
+      "token_usage": {
+        "total": {
+          "totalTokens": 14217,
+          "inputTokens": 14171,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 46,
+          "reasoningOutputTokens": 0
+        },
+        "last": {
+          "totalTokens": 14217,
+          "inputTokens": 14171,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 46,
+          "reasoningOutputTokens": 0
+        },
+        "modelContextWindow": 258400
+      }
+    },
+    {
+      "raw_line": 80,
+      "kind": "usage",
+      "token_usage": {
+        "total": {
+          "totalTokens": 28722,
+          "inputTokens": 28644,
+          "cachedInputTokens": 13952,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 78,
+          "reasoningOutputTokens": 0
+        },
+        "last": {
+          "totalTokens": 14505,
+          "inputTokens": 14473,
+          "cachedInputTokens": 13952,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 32,
+          "reasoningOutputTokens": 0
+        },
+        "modelContextWindow": 258400
+      }
+    },
+    {
+      "raw_line": 82,
+      "kind": "goal_status",
+      "status": "budgetLimited",
+      "tokens_used": 14770
+    }
+  ],
+  "observed_behavior": [
+    "One turn executed alpha; beta and gamma did not execute.",
+    "budgetLimited was observed after the first response/alpha command, before a second model response.",
+    "A second paid model response supplied the final incomplete-work summary in the same turn.",
+    "Final Goal tokensUsed 14770 equals captured totalTokens 28722 minus cachedInputTokens 13952."
+  ],
+  "inference": "For this installed-runtime probe, native Goal tokensUsed is not a total-token monetary meter; the requested budget does not prevent a further paid summary response after budgetLimited. This falsifies the proposed simple strict-cap certificate; it does not characterize every provider, route or failure case.",
+  "conditional_september8_captured_api_equivalent_usd": 0.164772,
+  "valuation_assumptions": [
+    "Default tier confirmed; both requests below 272K input; cache writes zero; input includes cache reads, subtracted once; output includes reasoning.",
+    "Captured native usage only; not account billing and not all non-arm support usage."
+  ],
+  "sanitization": "Thread, turn, item IDs, objective text, native response text and raw captures omitted. Only aggregate usage, relevant event semantics and evidence locators retained.",
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/audit/native_budget_probe_review.json",
+    "sha256": "e4bccad5af48b94f11e1a71c2d5dceebbec762f72dc1a35a63385d264435bed2"
+  }
+}

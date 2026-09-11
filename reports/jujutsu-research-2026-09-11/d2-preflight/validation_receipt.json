@@ -1,0 +1,45 @@
+{
+  "status": "PASS_TESTED_SCHEDULER_CONTROLS_LAUNCH_NOT_CERTIFIED",
+  "tests_passed": 12,
+  "tests_failed": 0,
+  "preparer_test_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/protocol-preparation/test-results.txt",
+    "sha256": "d9ff7af7bbe30d96fdd4d63ec822839c0c1b7aa6edc33042de2e47768f8720d3"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/audit/protocol_preflight_review.json",
+    "sha256": "b605fdef3c42369794f630c093a32f107d5ce2068be5994d687474dc858cf61c"
+  },
+  "independent_test_run": {
+    "command": "python3 -B -m unittest -v test_bounded_campaign.py",
+    "passed": 12,
+    "failed": 0,
+    "elapsed_seconds": 0.478,
+    "scope": "No model or research calls; temporary synthetic filesystem/process fixtures only."
+  },
+  "resolved_findings": [
+    "P02",
+    "P03",
+    "P04",
+    "P05"
+  ],
+  "open_findings": [
+    {
+      "id": "P01",
+      "severity": "blocker",
+      "status": "open",
+      "finding": "No verified prospective per-job monetary enforcer. Native Goal tokenBudget plus one-response headroom is insufficient without request-boundary stop and token-category semantics. Model context/output maximum bounds one response, not repeated native tool turns or internal retries."
+    }
+  ],
+  "claim_scope": "Synthetic filesystem/process tests, static source review and mocked scheduler timing; no research or paid model calls in these 12 tests. Paid budget probe is separate.",
+  "implementation_start": "2026-09-11T03:10:29.945312+00:00",
+  "implementation_closed_at": "2026-09-11T03:23:31.117776+00:00",
+  "implementation_elapsed_seconds": 781.172464,
+  "campaigns_launched": 0,
+  "campaign_restarts": 0,
+  "independent_budget_probe_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-20260911/audit/native_budget_probe_review.json",
+    "sha256": "e4bccad5af48b94f11e1a71c2d5dceebbec762f72dc1a35a63385d264435bed2"
+  },
+  "audit_receipt_lineage": "The original preparation receipt captured the pre-probe audit hash. This publication references the successor audit after probe evidence was added; frozen scheduler code is unchanged."
+}
