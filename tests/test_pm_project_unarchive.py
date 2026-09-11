@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import copy
+import argparse
+import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -177,6 +179,15 @@ class ProjectUnarchiveTests(unittest.TestCase):
         self.assertEqual(row["packet_source_verification"]["source_sha256"], "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b")
         self.assertEqual(len(self.schema["$defs"]["ProjectCompositionCommandId"]["enum"]), 6)
         self.assertNotIn(row["token"], self.schema["$defs"]["ProjectCompositionCommandId"]["enum"])
+
+    def test_standard_gate_consumes_the_approved_partition(self):
+        spec = importlib.util.spec_from_file_location("project_unarchive_standard_gate", ROOT / "scripts/pm-plans-verify.py")
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        result = gate.cmd_validate_server_command_gap(argparse.Namespace())
+        self.assertEqual(result["status"], "pass", result)
+        self.assertEqual(result["partition"], {"new_canonical_required": 87, "approved_alias_to_exact": 43,
+                                                "typed_local_ui_action": 38, "rejected_with_reason": 3})
 
 
 if __name__ == "__main__":

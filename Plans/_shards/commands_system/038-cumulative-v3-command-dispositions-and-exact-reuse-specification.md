@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6180-L6300
+Source lines: L6180-L6319
 
-Source SHA256: `68d538943b60ee956209d89b7c4adf321d99f77656a31278a414b826cd42c575`
+Source SHA256: `eb07d023dbec3945908b0d5385fefb8cac5caab15f86877656022727f7a7b95c`
 
 ---
 
@@ -129,3 +129,22 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
+
+### Existing Evidence-Consumer Dispatch Bindings — 2026-09-11
+
+ATS-048 owns the five existing Testing session/bundle command contracts; RAP-056
+owns the two existing recording Play/Watch command contracts. Dispatch uses the
+exact request/result schema references on all eleven existing placements in
+`Plans/Wiring_Matrix.production.json`, with the same sole planned handlers.
+The central response bridge requires the typed owner request, its authenticated
+normalized request binding, typed owner result and shared CommandOutcome to agree.
+It consumes the owners' status/currentness/receipt/replay rules; acceptance is not
+terminal success. Native owner lookup and policy enforcement remain unimplemented.
+
+Shared metadata/idempotency fields are referenced, not redefined; the shared-runtime
+26-command enum and TCME ten-command enum do not expand. No generic schema whose
+closed command enum excludes a command is a valid binding for that command. The
+owner schemas, static fixtures and planned handler names confer no execution,
+capture, test-verdict, protected-auth, storage or Event Authority permission.
+
+ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Contracts_V0.md#CV-329, ContractName:Plans/UI_Command_Catalog.md
