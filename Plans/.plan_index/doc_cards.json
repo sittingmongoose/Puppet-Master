@@ -16437,10 +16437,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 170,
+        "False": 171,
         "True": 100
       },
-      "heading_count": 495,
+      "heading_count": 496,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16499,9 +16499,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 20428,
+      "line_count": 20550,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 270,
+      "plan_unit_count": 271,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16772,7 +16772,8 @@
         "SP-274",
         "SP-271",
         "SP-277",
-        "SP-280"
+        "SP-280",
+        "SP-278"
       ],
       "reasoning_tiers": [
         "high",
@@ -16791,6 +16792,7 @@
         "eventrecord_scope_legacy_dedupe_drift",
         "execution_boundary",
         "false_durability",
+        "false_generic_event_index_publication_or_source_coverage",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
@@ -16838,17 +16840,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "798d86dea79d14b9480a6a7bfc805b7091bb0158cddef788ea589851fa3e2d50",
+      "sha256": "c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 267,
+        "accepted": 268,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 245,
+        "requirement": 246,
         "schema_contract": 8,
         "security_contract": 1,
         "storage_contract": 10,
@@ -16892,6 +16894,9 @@
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "Plans/event_record_index_binding_hash_vectors.json",
+        "Plans/event_record_index_checkpoint.schema.json",
+        "Plans/event_record_index_checkpoint_contract_fixtures.json",
         "Plans/goal_child_status_history_contract_fixtures.json",
         "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_runtime_events.schema.json",
@@ -18832,7 +18837,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T20:49:27Z",
+  "generated_at_utc": "2026-09-11T20:58:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18840,13 +18845,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3380,
+      "False": 3381,
       "True": 3156
     },
-    "plan_unit_count": 6536,
+    "plan_unit_count": 6537,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6345,
+      "accepted": 6346,
       "retired": 182,
       "superseded": 9
     },
@@ -18913,7 +18918,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5190,
+      "requirement": 5191,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

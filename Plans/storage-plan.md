@@ -20426,3 +20426,125 @@ preserved_exact_tokens:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
+
+<a id="generic-eventrecord-index-checkpoint-and-publication"></a>
+### Generic EventRecord index checkpoint and publication
+
+**Status and authority.** This is the NEW concrete full-index checkpoint prerequisite authorized as technical materialization by DL-045. It supplies the physical target already required by `event_record_index.v2.publication_locator.checkpoint_ref`. Storage §2.2.4–§2.2.5, the redb checkpoints namespace, and Case L-2/L-3/L-5 own source validation, indexing, publication, recovery and retention. Contracts owns EventRecord and payload schema dispatch. This contract does not emit an event or operate a domain producer. The existing index family keeps its key/value wire shape but explicitly qualifies its publication-locator description and physical reader routing below; this is a reader-contract semantic qualification. Dedupe, replay snapshot, EventRecord schemas and individual filtered checkpoints retain their registrations.
+
+**Exact custody.** Register `event_record_index_checkpoint@1.0.0`, produced by `projector.storage.event_record_index@1.0.0` and read by `reader.storage.event_record_index@1.0.0`, in the actual redb table named `checkpoints`. Its one root key per actual Storage instance is `event_record_index_checkpoint.v1:{storage_instance_id}`. The value is canonical MessagePack `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`, defined at `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`. It is derived/rebuildable, has no mandatory canonical backup, and contains no EventRecord payload or alternate event source. No compatibility alias is allocated. Admit the family through the actual StorageMigrationCoordinator graph/ceilings; this text does not invent store-version integers. Existing unsupported or unbound lookup rows require governed rebuild before this reader treats them as published.
+
+The root owns `current_generation_id` and a map of at most three generation nodes. Each node identifies one complete index dataset using the existing `event_record_index.v2` key/value contract; the internal dataset name `event_record_index.v2@{generation_id}` separates verified shadows from current data without creating a second lookup family. A row's checkpoint reference is exactly the root key followed by `#/generations/{generation_id}`. This is a real JSON Pointer into an admitted physical value. The generation is `eig_` plus the new binding digest (defined below) of the object with domain `pm.event_index.generation.v1`, actual storage instance, projector version, birth source-selection object and `generation_seed_sha256`. Allocate that seed once from fresh 256-bit entropy and durably preserve it with the prepared generation; crash continuation reuses it. A deliberate later rebuild receives a fresh seed even against identical source. No caller, timestamp, row maximum or filtered checkpoint chooses a generation.
+
+**Physical table routing.** The root table is exactly `checkpoints` in the same redb database instance that holds the generation tables. A generation table's exact name is `event_record_index.v2@{generation_id}`; within it, keys are the existing UTF-8 logical `event_record_index.v2:{scope_partition}:{sequence_id:020}:{event_id}` keys and values use the existing canonical MessagePack index-row schema. The root key is a UTF-8 string and its value is canonical MessagePack. The root `current_generation_id` resolves that exact table under one redb read snapshot; there is no implicit flat `event_record_index.v2` table fallback, cross-database resolution or second visibility selector. A writer creates/registers a staged table and root node together in a write transaction. Each append transaction inserts its new rows and advances the same root frontier atomically. Target activation atomically changes the root pointer and both node states; synchronized CURRENT remains the sole source selector. A missing, foreign or partial table invalidates derived publication and requires governed rebuild from CURRENT; it never changes CURRENT. Retired table deletion and removal of its root node occur together only after the existing retention/hold/reference predicates and serialized slot reservation admit cleanup. These are required native redb operations, not a claim the Python fixture dictionaries execute redb.
+
+**Exact new binding digest codec.** Only NEW SP-278 internal digests use `pm.event_index.binding.msgpack_sha256.v1`: SHA-256 of canonical MessagePack encoding of `{ "domain": "pm.event_index.binding.msgpack_sha256.v1", "value": V }`. The allowed V types are nil, boolean, unsigned integer 0 through 18446744073709551615, UTF-8 string, array, and map with unique string keys. Reject floats (including NaN/infinity), negative/overflow integers, binary and extension values. Integers use the shortest positive fixint/uint8/uint16/uint32/uint64 encoding. Strings use shortest fixstr/str8/str16/str32 prefixes, arrays shortest fixarray/array16/array32, maps shortest fixmap/map16/map32. Multi-byte lengths and integers are big endian. Sort map keys lexicographically by their strict UTF-8 bytes, with no Unicode normalization; reject lone surrogates, preserve non-BMP characters and array order. Do not pass through an IEEE-754 number representation. No whitespace, BOM or JSON serialization enters these new digest preimages.
+
+Apply this wrapper to the explicitly described generation/prefix/row-set objects, source-selection objects used in translation, inventory/watermark/exclusion/retired-input arrays, anchor gap array, generation anchor objects, frontier/predecessor objects, and complete translation body/outcome arrays. The source CURRENT/manifest byte hashes, exact source-value hashes, payload hash, existing producer-semantic digest, legacy/minimal-envelope normalization and existing compaction artifact digest algorithms remain the owning contract's exact recipes. The synthetic fixture controls and translation object encoding are assumed adapter witnesses; their test-only digest recipe is not a new canonical control or compaction artifact format. Generation entropy is a durably allocated 256-bit seed encoded as 64 lowercase hex digits; the fixture-only deterministic seed is not production entropy. `Plans/event_record_index_binding_hash_vectors.json` supplies exact integer/non-BMP bytes and rejection vectors.
+
+**Existing source metadata, not another control file.** `source_selection` is a closed decoded binding to the actual existing `storage/seglog/CURRENT` and `storage/seglog/manifest.v1.msgpack`: Storage instance, selected segment generation, exact CURRENT and manifest byte digests, manifest generation, recovery epoch, survivor-prefix digest, and hashes of the retained inventory, durable watermarks, excluded ranges and retired inputs. These facts already belong to Case L-2. The sidecar defines this reader binding, not a new disk representation of CURRENT or manifest. The existing owner codec, intent/journal, synchronized controls and verified source bytes must establish it. A matching caller-provided hash or synthetic JSON object is insufficient.
+
+A new node has an immutable `anchor` containing its birth binding and verified retained prefix count/range/digest/gap digest. The admitted initial publication verifies that binding against actual owner controls and frames before writing it. Ordinary reads do not require forever-retained copies of overwritten birth manifests or CURRENT files: they use the trusted stored anchor and reverify the anchored prefix against the presently selected canonical source. The anchor prefix digest is the new binding digest of `{domain: "pm.event_index.retained_prefix.v1", entries: [...]}`, ordered by source sequence, each entry containing `sequence_id`, `event_id`, canonical scope partition and SHA-256 of exact source EventRecord value bytes. The gap digest covers only the exact closed-reason gaps within the anchored first/through range. Empty prefix uses an empty array and null bounds. Native generation admission remains required; hash consistency alone does not authenticate a fabricated checkpoint.
+
+**Fixed row references and advancing frontier.** A generation's immutable anchor is distinct from its mutable `frontier`. Existing lookup rows' publication locator fields `manifest_generation`, `recovery_epoch` and `survivor_prefix_sha256` bind the immutable generation anchor; they do not assert equality to every later append's latest whole-manifest digest. `checkpoint_ref` resolves that anchor's node. The node's frontier separately contains the current captured source binding, complete source coverage, index row count/digest, monotonic publication revision, prior frontier hash, transaction identity and observation time. The reader requires both joins. A frontier advance changes no older row or anchor. New rows point to the same generation and are committed with the new frontier in one redb write transaction.
+
+A native reader pins one redb read snapshot and the actual Storage source/maintenance fence. It resolves the exact root/node/dataset; confirms that node is uniquely current; resolves current synchronized controls and source; verifies the frontier matches that captured source; verifies the original anchored prefix remains a prefix with unchanged value identities/bytes and exclusions; and validates the complete row-set/source join. `source_locator` always resolves the actual selected frame and is checked through Case L-2 bounds, CRC, supported schema, payload dispatch and duplicate identity checks. Payload and producer-semantic digests, scope, sequence and event ID must match the existing index contract. No lookup-only record can establish a source fact.
+
+The index row-set digest is the new binding digest of `{domain: "pm.event_index.row_set.v1", entries: [{key, value}, ...]}`, ordered by sequence then event ID. It is an integrity binding of the pinned complete dataset, not an independent authority or a substitute for frame verification. No encoded bytes or field order are silently normalized when checking the existing payload/source hash recipes. Caches may accelerate only beneath the exact generation/anchor/frontier/source/read-snapshot token.
+
+**Coverage.** Coverage is global across application and every project partition, not the largest matching row or one requested scope. It enumerates all selected retained segments and their verified byte boundaries, hashes, first/last sequence and event counts, plus the exact closed-reason sequence gaps. Each segment starts scanning at offset zero; its verified scan reaches the captured durable end. Segment framing and decompression still obey Case L-2. The last cursor names the final complete source frame, including frame-end offset and event identity. Inclusive restart revalidates that frame, then continues without repeating consumer effects. For a proven empty retained source, count is zero, range and last frame are null, and actual selected inventory/watermark evidence proves emptiness; sequence zero is never a fabricated cursor.
+
+Legal sequence gaps are exactly `allocator_lease_abandoned | corruption_loss | retention_compaction` and require actual manifest/owner evidence. Ordering is by canonical source order, not timestamps. A complete survivor index can be fresh relative to verified survivors while `health=degraded`; loss provenance and global integrity/mutation fences remain. An unsupported otherwise-valid future source version stops indexing before that record and prevents a claim of complete current coverage; it is not skipped or quarantined as corruption. Source controls changing during the read invalidate the current token. A reader pinned to an older coherent snapshot may finish only under the existing fence/lease; it cannot claim the latest boundary or disclose after invalidation.
+
+**Publication and ordinary append.** Source frame sync and manifest-watermark sync precede indexing, through the existing append barriers. The index writer captures the verified durable source under the writer/maintenance fence. If the same selected source/recovery generation only extends the immutable anchored prefix, it verifies all newly durable frames, adds only their rows, and atomically commits the complete advancing frontier with those rows under predecessor-frontier CAS. No row-only or checkpoint-only state is publishable. A crash before that transaction leaves the old coherent snapshot; a crash after it leaves the new one. A later source append may make the checkpoint stale until catch-up; stale does not become a fabricated complete boundary. Manifest revision/digest and survivor digest may change on append without replacing the generation or rewriting old rows.
+
+Rotation, recovery, exclusions, compaction or any source change that cannot satisfy the exact same-prefix rule uses a fresh verified generation. In particular, this version conservatively rebuilds on a changed CURRENT byte digest, selected segment generation or recovery epoch. Rebuild reads the current retained source, including supported compatibility inputs, and preserves source schema/version, source-value hash, original identity and the existing normalization rules. It writes only derived target rows and the new checkpoint generation. It never repairs or reproduces canonical source bytes.
+
+**Compaction and crash convergence.** Build a complete target shadow under existing compaction intent/journal/lease and exact retained semantic set. The staged checkpoint is durably registered but never current. The old current node continues to win while CURRENT is proven unchanged. All target rows and staged frontier must be complete and mutually consistent before the existing synchronized CURRENT promotion. After CURRENT selects target, old index rows immediately cease to be current authority; startup activates the verified complete target shadow or rebuilds from target survivors. In a single redb transaction, activate the target, update `current_generation_id`, retire the old node with its first retirement time and successor, and clear the existing pending-generation state. No checkpoint can roll CURRENT back or choose a source by mtime. Ambiguous controls follow Case L's existing recovery-required fence.
+
+An actual owner compaction translation manifest may support a target build only when its source/target selection, exact sequence/event identity, unchanged source value/semantic digests and survivor/removal outcomes verify. Its ref and digest must resolve actual evidence; copying a locator, equating sequence alone, or supplying an opaque ref is insufficient. Target rows always contain target physical locators and target generation anchor refs. Translation target selection and exhaustive target outcomes bind the immutable target birth anchor and its retained prefix only. A later ordinary append suffix is outside the historical translation set and independently joins complete current source/frontier coverage; original translated row refs remain stable and new suffix rows use no translation ref. The source generation node and its actual source selection must resolve; both body generations, exact preserved/removed counts, and unique exhaustive source outcomes join the actual source and target sets. Every removal resolves actual owner evidence and its exact manifest exclusion; a self-consistent removal entry is insufficient. Removed events have no current row. If exact translation cannot be established, rebuild from target survivors. A retained old node never grants permission to preserve an old source segment: it is historical derived metadata only. The new contract does not extend detailed compaction-manifest custody; a missing proof makes a translation-dependent reader unavailable or triggers a governed rebuild using current canonical source.
+
+**Retention and rebuild.** The checkpoint uses existing `RP-PROJECTION-3GEN@1.0.0`: current-plus-history, terminal-transition anchor, 604800 seconds, maximum three generations for the exact logical root key, hold eligible, overflow `rebuild_projection`, expiry `rebuild`. Current, staged and retired nodes all count toward the ceiling; current has no terminal TTL. The sole terminal anchor is the first successful activation transaction changing that node from current to retired. Retried activation, append, observation and later rebuild do not reset it. A retired node is removable only after that window, current complete hold/ref checks, and confirmed nonselection. Its old derived dataset follows existing source-bounded index custody and live-reference rules; this checkpoint does not keep expired canonical events alive. No retired dataset is served as current.
+
+Reserve a slot before staging. If all three slots are protected by current selection, history window, actual holds or live references, stop new generation publication and disclose the rebuild requirement; do not silently exceed three or evict protected state. The current valid snapshot remains governed by source currentness. Eligible retired cleanup and slot reservation are serialized with hold/ref admission and generation publication. A never-visible staged candidate may be removed only through existing intent-governed abandoned-candidate cleanup after proving it was never selected/activated and clearing references. Age alone is not permission. A partially published or ambiguous candidate enters existing recovery instead.
+
+Missing, malformed or inconsistent derived checkpoint/index bytes enter existing Q-DERIVED quarantine before governed rebuild. Source loss uses canonical recovery and disclosure, not reconstruction from the checkpoint. Projectors and rebuild writes honor aggregate lock, maintenance lease, space/I/O budget and viewer/read-only gates; this family creates no hidden writer. Read-only valid existing inspection may continue under current owner permissions. Retained metadata contains only non-secret relative control names, identities, hashes, cursors and authorized refs; redaction does not authorize exposing referenced content.
+
+**Consumer integration and proof boundary.** This supplies the actual generic publication prerequisite for run-start (SP-265), restore-created (SP-281), and other admitted filtered readers. Each filtered owner must adopt the exact root/generation/current-frontier read token and still satisfy its own complete filter, source payload, snapshot/restore-point, permission, hold and cursor CAS joins. A metadata index row alone never satisfies those dependencies. Frozen sibling proposals are not silently rewritten or upgraded. A full-index checkpoint change invalidates a dependent publication token even when its generation ID stays stable through an append. A generation-only comparison is insufficient.
+
+Static fixtures are single-segment adapters; multi-segment rotation/global lifetime history remain unexecuted source-adapter obligations. Static fixtures demonstrate admitted shape, real JSON-pointer resolution, mixed scopes, proven empty source, preserved old rows across a changed manifest, current read without old control snapshots, gaps, target activation and exact semantic translation. Their source adapters, control encodings and transaction witnesses are explicitly synthetic. Native SeglogFrameV2/CRC, real CURRENT/manifest codec, disk sync, redb atomicity, source locks, concurrency, migration, retention, backup and crash behavior remain NOT_RUN. No row obtains DEPTH_PASS from these fixtures.
+
+```yaml
+plan_unit_id: SP-278
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage materializes one generic EventRecord index checkpoint whose immutable generation
+  anchors resolve existing row publication references and whose atomic advancing frontier proves complete
+  CURRENT-selected canonical coverage, with exact rebuild, translation and retention semantics.
+gui_related: false
+gui_classification_reason: Defines backend derived custody, source coverage and durable publication.
+depends_on:
+- SP-235
+- SP-236
+- SP-237
+- SP-241
+- DL-045
+unblocks:
+- SP-265
+- SP-281
+acceptance_criteria:
+- The registered physical root and actual generation JSON Pointer resolve every published lookup row.
+- Ordinary append commits new rows and frontier atomically while preserving older rows and anchors.
+- Current read needs actual live source proof but no permanently retained old manifest snapshots.
+- Complete global coverage distinguishes empty, legal gaps, degraded survivors and unsupported input.
+- Synchronized CURRENT chooses the source across every compaction and crash cut.
+- Existing RP-PROJECTION-3GEN controls real retirement anchors, holds and the three-node ceiling.
+- Static synthetic fixtures never establish native durability, concurrency or DEPTH_PASS.
+validation_surfaces:
+- Plans/event_record_index_checkpoint.schema.json
+- Plans/event_record_index_checkpoint_contract_fixtures.json
+- Plans/event_record_index_binding_hash_vectors.json
+risk_class: false_generic_event_index_publication_or_source_coverage
+reasoning_tier: high
+context_scope: event_authority_step08_generic_event_index_checkpoint
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Case-L:L-007
+- SEG-D-012
+- SEG-D-013
+- SEG-D-017
+- Plans/storage-plan.md#SP-236
+- Plans/storage-plan.md#SP-237
+- Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe
+split_recommended: false
+source_atom_ids: []
+preserved_exact_tokens:
+- event_record_index_checkpoint
+- projector.storage.event_record_index
+- reader.storage.event_record_index
+- checkpoints
+- event_record_index.v2@{generation_id}
+- RP-PROJECTION-3GEN
+- RP-EVENT-INDEX-SOURCE
+- pm.event_index.binding.msgpack_sha256.v1
+- CURRENT
+negative_constraints:
+- No new event family, producer permission, canonical source, retention policy, critical/MVP array entry,
+  WorkNode, readiness admission or governance seal.
+- No current publication inferred from birth anchor, maximum matching sequence, caller hashes, synthetic
+  transaction witnesses, old source controls, missing translation custody or unadopted filtered reader.
+- Existing EventRecord, payload, producer-semantic, legacy-normalization and control/artifact digest algorithms
+  remain unchanged.
+owner_hints:
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Log.md#DL-045, SchemaID:pm.storage_value.event_record_index_checkpoint.v1

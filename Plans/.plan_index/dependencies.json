@@ -5850,6 +5850,7 @@
     "GRS-042",
     "UCC-124",
     "CS-058",
+    "SP-278",
     "AI-068",
     "CS-057",
     "F3-344",
@@ -65809,6 +65810,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-278",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-278",
+      "to": "SP-235"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-278",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-278",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-278",
+      "to": "SP-241"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-280",
       "to": "CV-336"
     },
@@ -93174,6 +93200,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "SP-278",
+      "to": "SP-265"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-278",
+      "to": "SP-281"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "SQR-001",
       "to": "SQR-005"
     },
@@ -94623,7 +94659,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T20:49:27Z",
+  "generated_at_utc": "2026-09-11T20:58:22Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -192580,6 +192616,23 @@
       "unit_type": "storage_contract"
     },
     {
+      "context_scope": "event_authority_step08_generic_event_index_checkpoint",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-278",
+      "reasoning_tier": "high",
+      "risk_class": "false_generic_event_index_publication_or_source_coverage",
+      "source_location": {
+        "heading": "Generic EventRecord index checkpoint and publication",
+        "heading_level": 3,
+        "heading_line": 20431,
+        "line": 20477,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "goal_scheduled_exact_family_historical_contract",
       "gui_related": false,
       "owner_doc": "Plans/storage-plan.md",
@@ -205744,12 +205797,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 14967,
+    "depends_on_edge_count": 14972,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17616,
-    "node_count": 6536,
+    "edge_count": 17623,
+    "node_count": 6537,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2649,
+    "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

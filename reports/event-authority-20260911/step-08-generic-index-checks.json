@@ -1,0 +1,379 @@
+{
+  "base_commit": "76553452c8a41769c1a197f0871e38ade4117229",
+  "status": "PASS_STATIC_ONLY",
+  "cases": [
+    {
+      "case": "current_read_without_old_controls",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "same_source_distinct_rebuild",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "initial_mixed_scope",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "incremental_new_manifest_old_rows_unchanged",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "verified_empty",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "allocator_gap",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "degraded_survivors",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "staged_before_CURRENT",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "activated_after_CURRENT",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "semantic_translation",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "valid-generation-1000000",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "valid-sealed-degraded",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "valid-external-schema-dispatch",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "lawful-complete-removal-owner-witness",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "valid-append-after-translated-birth-prefix",
+      "expected": "accept",
+      "result": "PASS"
+    },
+    {
+      "case": "EIC-N-checkpoint-root-missing",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "'storage_instance_id'"
+    },
+    {
+      "case": "EIC-N-dangling-ref",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-point-to-retired-node",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-mutated-anchor-on-append",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "generation seed"
+    },
+    {
+      "case": "EIC-N-old-row-rebound-to-new-frontier",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-old-row-survivor-rebound",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-current-frontier-stale",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "CURRENT/manifest current frontier"
+    },
+    {
+      "case": "EIC-N-index-rows-only",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "CURRENT/manifest current frontier"
+    },
+    {
+      "case": "EIC-N-checkpoint-only",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "complete index cardinality"
+    },
+    {
+      "case": "EIC-N-foreign-source-generation",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-foreign-scope",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-wrong-payload-hash",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-bad-index-snapshot-digest",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "index snapshot row digest"
+    },
+    {
+      "case": "EIC-N-no-common-transaction",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "same committed index/checkpoint transaction"
+    },
+    {
+      "case": "EIC-N-watermark-before-frame-end",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "actual control byte digests"
+    },
+    {
+      "case": "EIC-N-source-bytes-changed",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "durable frame watermark"
+    },
+    {
+      "case": "EIC-N-unexplained-gap",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "source inventory"
+    },
+    {
+      "case": "EIC-N-healthy-launders-loss",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "complete actual source coverage"
+    },
+    {
+      "case": "EIC-N-guessed-empty-zero-cursor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "closed checkpoint schema"
+    },
+    {
+      "case": "EIC-N-staged-as-current-without-activation",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "unique actual current generation"
+    },
+    {
+      "case": "EIC-N-source-wins-after-CURRENT",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "CURRENT/manifest current frontier"
+    },
+    {
+      "case": "EIC-N-retired-without-anchor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "closed checkpoint schema"
+    },
+    {
+      "case": "EIC-N-retirement-before-activation",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "actual retirement anchor"
+    },
+    {
+      "case": "EIC-N-translation-guesses-old-offset",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    },
+    {
+      "case": "EIC-N-translation-unresolved",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "actual translation manifest"
+    },
+    {
+      "case": "EIC-N-translation-wrong-target",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation actual target selection"
+    },
+    {
+      "case": "EIC-N-translation-wrong-outcomes",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation outcomes digest"
+    },
+    {
+      "case": "translation-wrong-source_index_generation_id",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation actual source generation node"
+    },
+    {
+      "case": "translation-wrong-source_selection_sha256",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation actual source selection"
+    },
+    {
+      "case": "translation-wrong-preserved_event_count",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation exact counts"
+    },
+    {
+      "case": "translation-wrong-removed_event_count",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation exact counts"
+    },
+    {
+      "case": "translation-wrong-source-generation-isolated",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation source and target generations"
+    },
+    {
+      "case": "translation-invented-removed-isolated",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation exhaustive unique source outcomes"
+    },
+    {
+      "case": "missing-removal-owner-authority",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "translation actual removal authority"
+    },
+    {
+      "case": "duplicate-event_id",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "duplicate global event ID"
+    },
+    {
+      "case": "duplicate-idempotency_key",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "duplicate scoped idempotency identity"
+    },
+    {
+      "case": "wrong-app-only-project-scope",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "application-only family scope"
+    },
+    {
+      "case": "wrong-inherited-scope",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "inherited referenced-event scope"
+    },
+    {
+      "case": "append-after-translation-broken-birth-anchor",
+      "expected": "reject",
+      "result": "PASS",
+      "reason": "row/source/immutable generation-anchor join"
+    }
+  ],
+  "positive_cases": 15,
+  "negative_cases": 39,
+  "codec_vectors": 11,
+  "codec_rejections": 7,
+  "registry_schema": "PASS",
+  "physical_families_before": 94,
+  "physical_families_after": 95,
+  "all_93_other_prior_families_preserved": true,
+  "existing_index_change": "Two explicit reader-semantic/routing qualifications; key/value wire shape preserved.",
+  "retention_policy_objects_and_all_other_registry_metadata_preserved": true,
+  "event_families_unchanged": 41,
+  "index": {
+    "plan_units.jsonl": {
+      "prior": 6536,
+      "current": 6537,
+      "added": 1,
+      "all_prior_semantics_preserved": true
+    },
+    "acceptance_units.jsonl": {
+      "prior": 25095,
+      "current": 25102,
+      "added": 7,
+      "all_prior_semantics_preserved": true
+    }
+  },
+  "shard_groups": {
+    "Plans/_shards/storage-plan": 58,
+    "Plans/_shards/storage_value_registry": 162
+  },
+  "native_pairs": 22,
+  "native_cases": 44,
+  "native_execution": "NOT_RUN",
+  "filtered_adoption": "UNRESOLVED; versioned successor and original birth custody under separate review.",
+  "newly_completed_registered_families": 0,
+  "root_source_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-generic-index-root-20260911/source-review.json",
+    "sha256": "0fd998ef0896262c56b55fc4ffffef1a96c83b71b1d8003fca31fa2c2fc2a85a"
+  },
+  "root_validator": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-generic-index-root-20260911/verify.py",
+    "sha256": "af5f543f43f97cb0cbdce61ae591a25c3730a02b5f591216b175992899131150"
+  },
+  "independent_review": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-independent-review-20260911/v4-review/review-report.md",
+      "sha256": "d1dabe2af84a97b2a7832338c619327b36de0917a67b76c9759ae38e58c09ce1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-event-index-independent-review-20260911/v4-review/review-manifest.json",
+      "sha256": "e2651f5b32a50bc7b7e465dd9ee54d5266ad5020f8bc5eb30f181490d9049a40"
+    }
+  ],
+  "independent_scope": "Exact frozen function replay closes translation/append, identity, scope, row-anchor and removal counterexamples. Counts overlap root/author cases. One acknowledged self-consistent synthetic predecessor witness is not authenticated; native transaction/source authenticity remains unproven.",
+  "author_and_independent_lifecycle_predicates": {
+    "cases": 14,
+    "status": "PASS_STATIC_ONLY",
+    "native_actions": "NOT_RUN"
+  },
+  "shards": {
+    "status": "PASS",
+    "documents": 98,
+    "shards": 2241
+  },
+  "standard_governance": "Prior dated failing full governance result remains unresolved; this supplement does not rerun, alter or override it."
+}

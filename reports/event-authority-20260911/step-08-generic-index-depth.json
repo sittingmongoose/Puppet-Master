@@ -1,0 +1,56 @@
+{
+  "assessment_id": "EA-STEP08-GENERIC-EVENT-INDEX-PREREQUISITE",
+  "assessed_at_utc": "2026-09-11T21:02:04.196626+00:00",
+  "base_commit": "76553452c8a41769c1a197f0871e38ade4117229",
+  "plan_unit_id": "SP-278",
+  "physical_family_id": "event_record_index_checkpoint",
+  "normative_generic_contract_defined": true,
+  "existing_lookup_reader_semantics": "Explicit qualification: immutable birth anchor plus separately verified current source/frontier; same redb checkpoint root and generation table routing.",
+  "status": "SHARED_PREREQUISITE_DEFINED_FILTERED_ADOPTION_PARTIAL",
+  "new_event_families": 0,
+  "new_physical_families": 1,
+  "new_retention_policies": 0,
+  "newly_completed_registered_families": 0,
+  "original_39_row_denominator_unchanged": true,
+  "step9_dispositions_unchanged": true,
+  "pending_exact_adoptions": [
+    "run.started",
+    "restore_point.created",
+    "goal.child_status_changed",
+    "goal.degraded",
+    "goal.scheduled"
+  ],
+  "other_consumers": "Every independently admitted consumer needs its own exact source, scope, domain authority and freshness joins; no sibling reader inherits completion.",
+  "remaining_proof": [
+    "Native source/CRC/control codec/locks/sync/transaction and migration admission",
+    "Real hold/reference/retirement/concurrency and crash convergence",
+    "Multi-segment and global store-lifetime history",
+    "Versioned downstream bindings and actual domain/original-admission custody"
+  ],
+  "native_execution": "NOT_RUN",
+  "independent_validator_clearance": false,
+  "readiness_admission": false,
+  "governance_seal": false,
+  "canonical_evidence": [
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "c6e22d5a4dbbb28efa5882b91fcca2aaddd98fe96befbe77519174781fdbf97c"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "f4eaac74fb682666154e763e3ded43b452e72407e8de50901ad880eacf7198da"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint_contract_fixtures.json",
+      "sha256": "f50f1ecdc56a3617704fd3a5f30639b60ffd2c396716555caaebfe70a3e144cf"
+    },
+    {
+      "path": "Plans/event_record_index_binding_hash_vectors.json",
+      "sha256": "74ac7ba31b3da81f6c570fbfc52b7cc730ab703a046f017a3c6dc8d465f11d42"
+    }
+  ]
+}
