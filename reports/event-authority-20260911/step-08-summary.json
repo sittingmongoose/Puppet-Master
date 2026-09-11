@@ -1,0 +1,146 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_summary.v1",
+  "step": 8,
+  "status": "REVIEW_MATERIALIZED_DEPTH_INCOMPLETE",
+  "authority": "Plans/Decision_Log.md#DL-039",
+  "canonical_source_base": "4869b4cbaaa9e5452a1b16b68ce92b9f269df738",
+  "component_commits": {
+    "ambiguous": "8e8411d28062ec442a9bf645f505d36035b7b829",
+    "registered_depth": "2d8732c84afc128991e99a0cd32a1e9125895780",
+    "likely_contested": "07643d8ff190d35eb1056ce02297141b5d0eb8f4"
+  },
+  "queue_review": {
+    "exact_rows": 237,
+    "likely": 75,
+    "contested": 9,
+    "ambiguous": 153,
+    "ambiguous_classifications": {
+      "non_event": 115,
+      "unresolved": 13,
+      "persisted_candidate": 23,
+      "exact_alias": 2
+    },
+    "likely_contested_classifications": {
+      "artifact_timeline_event_not_admitted_eventrecord": 2,
+      "cancellation_signal_persistence_unproven": 1,
+      "dl039_holding": 9,
+      "emit_candidate_persistence_unproven": 11,
+      "event_identity_conflict": 2,
+      "example_only_unsupported_spelling": 1,
+      "explicit_forbidden_generic_candidate": 1,
+      "explicit_forbidden_non_event": 1,
+      "historical_nonemitting_candidate": 1,
+      "payload_outcome_not_event": 2,
+      "persisted_candidate": 31,
+      "persisted_candidate_identity_conflict": 1,
+      "persisted_intent_candidate": 1,
+      "semantic_name_requires_registration": 20
+    },
+    "row_reviews_complete": true,
+    "product_decisions_complete": false,
+    "registrations": 0,
+    "j248_overlap_rows_reviewed_without_step09_application": 56
+  },
+  "registered_depth": {
+    "families_assessed": 39,
+    "criteria_per_family": 12,
+    "cells": 468,
+    "evidence_status_counts": {
+      "PASS": 201,
+      "PARTIAL": 186,
+      "CONFLICT": 42,
+      "ABSENT": 39
+    },
+    "complete_families": 0,
+    "consumer_checkpoint_cells_unclosed": 39,
+    "binding_work_records": 6,
+    "binding_work_already_authorized": true,
+    "new_permission_cards_for_depth": 0,
+    "historical_185_of_444_preserved": true,
+    "counts_directly_comparable_to_historical": false,
+    "runtime_oracle_execution": "UNPROVEN"
+  },
+  "new_product_decision_cards": [
+    {
+      "id": "EA-S08C-ACCOUNT",
+      "packet": "reports/event-authority-20260911/step-08-ambiguous-cards.md",
+      "answer": null
+    },
+    {
+      "id": "EA-S08C-CONTINUE",
+      "packet": "reports/event-authority-20260911/step-08-ambiguous-cards.md",
+      "answer": null
+    },
+    {
+      "id": "EA-S08C-DOCTOR",
+      "packet": "reports/event-authority-20260911/step-08-ambiguous-cards.md",
+      "answer": null
+    },
+    {
+      "id": "LC-SETTINGS-IDENTITY",
+      "packet": "reports/event-authority-20260911/step-08-likely-contested-cards.md",
+      "answer": null
+    },
+    {
+      "id": "LC-CHAT-TODO-MIGRATION",
+      "packet": "reports/event-authority-20260911/step-08-likely-contested-cards.md",
+      "answer": null
+    }
+  ],
+  "boundaries": {
+    "canonical_contracts_changed": false,
+    "registry_changed": false,
+    "independent_validator_changed": false,
+    "freeze_or_closure_hash_restamped": false,
+    "readiness_or_seal_applied": false,
+    "step06_compaction_contract_complete": false,
+    "step09_applied": false,
+    "all_ten_steps_complete": false
+  },
+  "report_manifest": [
+    {
+      "path": "reports/event-authority-20260911/step-08-ambiguous.jsonl",
+      "sha256": "47f8e4720f1ddbf951331fdffb8282260244e1c2dff5df0a0405610df7b5e400"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-ambiguous-cards.md",
+      "sha256": "443b800c965edbc6dfae8316bb8f28909258c866e5508a2df3a9acefa76912c1"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-ambiguous-receipt.json",
+      "sha256": "1d4752dba7c6bef72f1c27250f55e8beae02d02aae0852e3ae22b184538e2c4c"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-depth-assessment.json",
+      "sha256": "34e9295cb93da5551ffb44156dd31607f0abae28cc9361d53c52a184482cd05e"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-depth-report.md",
+      "sha256": "8b11b779b2ffea9fe8db581bff01c1f2e578ef3b6a536f1f004a327f0f850202"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-depth-binding-work-records.md",
+      "sha256": "5953cffdba344cdb933f814bac6467ba849c239dc1c92ab631ba3b0a90e2d150"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-likely-contested.jsonl",
+      "sha256": "23b9fb7e48cdfe99436bd83e748397741890356dbb90568b59f2098081d05809"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-likely-contested-cards.md",
+      "sha256": "dde81634c2a658a7be621b7bce1eb8ee0b298850d96f74d72a7529ea9929c7b0"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-likely-contested-receipt.json",
+      "sha256": "577506cd860b4156a77d36f7ddeba3b4475504110037835e755bb1bfb15831c5"
+    },
+    {
+      "path": "reports/event-authority-20260911/step-08-root-adjudication.md",
+      "sha256": "eae5c64542f22cc71a7fde5766052dd3fc6be948c974f545c4f3e3e90880aebc"
+    }
+  ],
+  "cost": {
+    "agents": "three Astra medium research agents plus root adjudication",
+    "token_and_dollar_breakdown": "unavailable"
+  }
+}
