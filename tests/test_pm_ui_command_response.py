@@ -30,8 +30,8 @@ class UICommandResponseTests(unittest.TestCase):
     def test_all_exact_fixture_cases(self):
         report = GATE.validate()
         self.assertEqual(report["failures"], [])
-        self.assertEqual(report["positive_cases"], 17)
-        self.assertEqual(report["negative_cases"], 42)
+        self.assertEqual(report["positive_cases"], 24)
+        self.assertEqual(report["negative_cases"], 56)
         self.assertEqual(report["outcome_states"], 8)
         self.assertEqual(report["native_owner_adapters_proven"], 0)
 

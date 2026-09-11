@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/testing_session_commands/1.0.0/testing_session_command_contracts.schema.json",
+  "x-schema-id": "pm.testing_session_commands.schema.v1",
+  "description": "ATS-048 owns the four existing visible-session commands and existing run-scoped bundle export. Runtime Artifacts reuses the metadata-only evidence context by reference, without acquiring Testing or capture lifecycle authority. Static contracts, not native dispatch or storage admission.",
+  "oneOf": [
+    {"$ref":"#/$defs/TestingSessionCommandRequest"},
+    {"$ref":"#/$defs/TestingSessionCommandResult"},
+    {"$ref":"#/$defs/TestingSessionCommandError"},
+    {"$ref":"#/$defs/TestingSessionCommandAvailability"}
+  ],
+  "$defs": {
+    "id": {"type":"string","minLength":1,"maxLength":192,"pattern":"^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "ref": {"$ref":"https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/non_secret_ref"},
+    "sha256": {"type":"string","pattern":"^[0-9a-f]{64}$"},
+    "nullable_ref": {"oneOf":[{"$ref":"#/$defs/ref"},{"type":"null"}]},
+    "nullable_id": {"oneOf":[{"$ref":"#/$defs/id"},{"type":"null"}]},
+    "command_id": {"enum":["cmd.testing.session.open","cmd.testing.session.watch","cmd.testing.session.background","cmd.testing.session.redaction.inspect","cmd.testing.export_bundle"]},
+    "EvidenceCommandContext": {
+      "type":"object","additionalProperties":false,
+      "required":["project_id","home_server_id","execution_host_id","execution_environment_id","source_location_id","thread_id","run_id","attempt_id","topology_generation","actor_ref","permission_snapshot_ref","initiating_client_id","client_session_generation","expected_currentness_ref","expected_currentness_sha256","return_context_ref","return_context_sha256"],
+      "properties":{
+        "project_id":{"$ref":"#/$defs/id"},"home_server_id":{"$ref":"#/$defs/id"},
+        "execution_host_id":{"$ref":"#/$defs/id"},"execution_environment_id":{"$ref":"#/$defs/id"},
+        "source_location_id":{"$ref":"#/$defs/nullable_id"},"thread_id":{"$ref":"#/$defs/nullable_id"},
+        "run_id":{"$ref":"#/$defs/nullable_id"},"attempt_id":{"$ref":"#/$defs/nullable_id"},
+        "topology_generation":{"type":"integer","minimum":0},"actor_ref":{"$ref":"#/$defs/ref"},
+        "permission_snapshot_ref":{"$ref":"#/$defs/ref"},"initiating_client_id":{"$ref":"#/$defs/id"},
+        "client_session_generation":{"type":"integer","minimum":0},
+        "expected_currentness_ref":{"$ref":"#/$defs/ref"},"expected_currentness_sha256":{"$ref":"#/$defs/sha256"},
+        "return_context_ref":{"$ref":"#/$defs/ref"},"return_context_sha256":{"$ref":"#/$defs/sha256"}
+      },
+      "allOf":[{"if":{"properties":{"run_id":{"type":"null"}},"required":["run_id"]},"then":{"properties":{"attempt_id":{"type":"null"}}},"else":{"properties":{"attempt_id":{"$ref":"#/$defs/id"}}}}]
+    },
+    "EvidenceSelection": {
+      "type":"object","additionalProperties":false,"required":["artifact_id","artifact_version","content_sha256","security_class"],
+      "properties":{"artifact_id":{"$ref":"#/$defs/id"},"artifact_version":{"type":"integer","minimum":1},"content_sha256":{"$ref":"#/$defs/sha256"},"security_class":{"const":"ordinary"}}
+    },
+    "selection_list":{"type":"array","minItems":1,"maxItems":256,"uniqueItems":true,"items":{"$ref":"#/$defs/EvidenceSelection"}},
+    "session_subject":{
+      "type":"object","additionalProperties":false,"required":["kind","test_session_id","expected_session_revision","target_ref","target_generation","security_class"],
+      "properties":{"kind":{"const":"visible_test_session"},"test_session_id":{"$ref":"#/$defs/id"},"expected_session_revision":{"type":"integer","minimum":0},"target_ref":{"$ref":"#/$defs/ref"},"target_generation":{"type":"integer","minimum":0},"security_class":{"const":"ordinary"}}
+    },
+    "run_subject":{
+      "type":"object","additionalProperties":false,"required":["kind","test_run_id","expected_run_revision","selected_evidence","security_class"],
+      "properties":{"kind":{"const":"test_run"},"test_run_id":{"$ref":"#/$defs/id"},"expected_run_revision":{"type":"integer","minimum":0},"selected_evidence":{"$ref":"#/$defs/selection_list"},"security_class":{"const":"ordinary"}}
+    },
+    "session_open_args":{
+      "type":"object","additionalProperties":false,"required":["requested_surface","fallback_route_ref","effective_policy_ref","redaction_profile_ref"],
+      "properties":{"requested_surface":{"enum":["editor_target","detached_viewer","read_only_fallback"]},"fallback_route_ref":{"$ref":"#/$defs/ref"},"effective_policy_ref":{"$ref":"#/$defs/ref"},"redaction_profile_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "session_watch_args":{
+      "type":"object","additionalProperties":false,"required":["stream_ref","expected_stream_generation","fallback_route_ref","effective_policy_ref","redaction_profile_ref"],
+      "properties":{"stream_ref":{"$ref":"#/$defs/ref"},"expected_stream_generation":{"type":"integer","minimum":0},"fallback_route_ref":{"$ref":"#/$defs/ref"},"effective_policy_ref":{"$ref":"#/$defs/ref"},"redaction_profile_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "session_background_args":{
+      "type":"object","additionalProperties":false,"required":["reason_code","continuation_policy_ref"],
+      "properties":{"reason_code":{"enum":["user_requested","surface_unavailable"]},"continuation_policy_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "session_redaction_args":{
+      "type":"object","additionalProperties":false,"required":["selected_evidence","redaction_profile_ref","inspection_policy_ref"],
+      "properties":{"selected_evidence":{"$ref":"#/$defs/selection_list"},"redaction_profile_ref":{"$ref":"#/$defs/ref"},"inspection_policy_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "export_args":{
+      "type":"object","additionalProperties":false,"required":["file_safe_export_plan_ref","preview_sha256","approval_receipt_ref","bundle_policy_ref","redaction_review_ref"],
+      "properties":{"file_safe_export_plan_ref":{"$ref":"#/$defs/ref"},"preview_sha256":{"$ref":"#/$defs/sha256"},"approval_receipt_ref":{"$ref":"#/$defs/ref"},"bundle_policy_ref":{"$ref":"#/$defs/ref"},"redaction_review_ref":{"$ref":"#/$defs/ref"}}
+    },
+    "TestingSessionCommandRequest":{
+      "type":"object","additionalProperties":false,
+      "required":["schema_id","record_kind","command_id","command_instance_id","idempotency","context","subject","args"],
+      "properties":{
+        "schema_id":{"const":"pm.testing_session.command_request.v1"},"record_kind":{"const":"TestingSessionCommandRequest"},
+        "command_id":{"$ref":"#/$defs/command_id"},"command_instance_id":{"$ref":"#/$defs/id"},
+        "idempotency":{"$ref":"https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json#/$defs/command_idempotency"},
+        "context":{"$ref":"#/$defs/EvidenceCommandContext"},"subject":{"oneOf":[{"$ref":"#/$defs/session_subject"},{"$ref":"#/$defs/run_subject"}]},"args":{"type":"object"}
+      },
+      "allOf":[
+        {"if":{"properties":{"command_id":{"const":"cmd.testing.export_bundle"}}},"then":{"properties":{"subject":{"$ref":"#/$defs/run_subject"},"args":{"$ref":"#/$defs/export_args"},"context":{"properties":{"run_id":{"$ref":"#/$defs/id"},"attempt_id":{"$ref":"#/$defs/id"}}}}},"else":{"properties":{"subject":{"$ref":"#/$defs/session_subject"}}}},
+        {"if":{"properties":{"command_id":{"const":"cmd.testing.session.open"}}},"then":{"properties":{"args":{"$ref":"#/$defs/session_open_args"}}}},
+        {"if":{"properties":{"command_id":{"const":"cmd.testing.session.watch"}}},"then":{"properties":{"args":{"$ref":"#/$defs/session_watch_args"}}}},
+        {"if":{"properties":{"command_id":{"const":"cmd.testing.session.background"}}},"then":{"properties":{"args":{"$ref":"#/$defs/session_background_args"}}}},
+        {"if":{"properties":{"command_id":{"const":"cmd.testing.session.redaction.inspect"}}},"then":{"properties":{"args":{"$ref":"#/$defs/session_redaction_args"}}}}
+      ]
+    },
+    "result_status":{"enum":["accepted","completed","no_change","blocked","failed","cancelled","effect_unknown"]},
+    "disabled_reason":{"enum":["handler_unavailable","permission_denied","stale_currentness","wrong_client","topology_unavailable","subject_unavailable","protected_auth_forbidden","redaction_required","policy_denied","stream_unavailable","source_missing","source_changed","file_safe_unavailable","approval_required","effect_reconciliation_required"]},
+    "EvidenceCommandError":{
+      "type":"object","additionalProperties":false,"required":["reason","safe_message_code","detail_ref","retry_policy","effect_state"],
+      "properties":{"reason":{"$ref":"#/$defs/disabled_reason"},"safe_message_code":{"$ref":"#/$defs/id"},"detail_ref":{"$ref":"#/$defs/nullable_ref"},"retry_policy":{"enum":["never","after_state_change","same_operation_after_reconciliation"]},"effect_state":{"enum":["no_effect","settled","unknown"]}},
+      "allOf":[{"if":{"properties":{"effect_state":{"const":"unknown"}}},"then":{"properties":{"reason":{"const":"effect_reconciliation_required"},"retry_policy":{"const":"same_operation_after_reconciliation"}}}}]
+    },
+    "EvidenceResultFields":{
+      "type":"object",
+      "required":["command_instance_id","operation_id","request_binding_sha256","context","subject_ref","status","receipt_ref","projection_ref","artifact_refs","error","currentness_ref","currentness_sha256","observable_work_ref","replayed","original_result_ref","capture_lifecycle_changed","test_verdict_changed","protected_content_exposed"],
+      "properties":{
+        "command_instance_id":{"$ref":"#/$defs/id"},"operation_id":{"$ref":"#/$defs/id"},"request_binding_sha256":{"$ref":"#/$defs/sha256"},"context":{"$ref":"#/$defs/EvidenceCommandContext"},"subject_ref":{"$ref":"#/$defs/ref"},
+        "status":{"$ref":"#/$defs/result_status"},"receipt_ref":{"$ref":"#/$defs/nullable_ref"},"projection_ref":{"$ref":"#/$defs/nullable_ref"},"artifact_refs":{"type":"array","maxItems":256,"uniqueItems":true,"items":{"$ref":"#/$defs/ref"}},
+        "error":{"oneOf":[{"$ref":"#/$defs/EvidenceCommandError"},{"type":"null"}]},"currentness_ref":{"$ref":"#/$defs/nullable_ref"},"currentness_sha256":{"oneOf":[{"$ref":"#/$defs/sha256"},{"type":"null"}]},
+        "observable_work_ref":{"$ref":"#/$defs/nullable_ref"},"replayed":{"type":"boolean"},"original_result_ref":{"$ref":"#/$defs/nullable_ref"},
+        "capture_lifecycle_changed":{"const":false},"test_verdict_changed":{"const":false},"protected_content_exposed":{"const":false}
+      },
+      "allOf":[
+        {"if":{"properties":{"status":{"enum":["completed","no_change"]}}},"then":{"properties":{"receipt_ref":{"$ref":"#/$defs/ref"},"projection_ref":{"$ref":"#/$defs/ref"},"currentness_ref":{"$ref":"#/$defs/ref"},"currentness_sha256":{"$ref":"#/$defs/sha256"},"error":{"type":"null"}}}},
+        {"if":{"properties":{"status":{"const":"accepted"}}},"then":{"properties":{"receipt_ref":{"type":"null"},"artifact_refs":{"maxItems":0},"observable_work_ref":{"$ref":"#/$defs/ref"},"error":{"type":"null"}}}},
+        {"if":{"properties":{"status":{"enum":["blocked","failed","effect_unknown"]}}},"then":{"properties":{"error":{"$ref":"#/$defs/EvidenceCommandError"}}}},
+        {"if":{"properties":{"status":{"const":"effect_unknown"}}},"then":{"properties":{"error":{"properties":{"effect_state":{"const":"unknown"}}},"receipt_ref":{"type":"null"}}}},
+        {"if":{"properties":{"status":{"const":"blocked"}}},"then":{"properties":{"receipt_ref":{"type":"null"},"artifact_refs":{"maxItems":0},"error":{"properties":{"effect_state":{"const":"no_effect"}}}}}},
+        {"if":{"properties":{"status":{"enum":["failed","cancelled"]}}},"then":{"properties":{"receipt_ref":{"$ref":"#/$defs/ref"},"error":{"oneOf":[{"type":"null"},{"allOf":[{"$ref":"#/$defs/EvidenceCommandError"},{"properties":{"effect_state":{"enum":["no_effect","settled"]}}}]}]}}}},
+        {"if":{"properties":{"currentness_ref":{"type":"null"}}},"then":{"properties":{"currentness_sha256":{"type":"null"}}},"else":{"properties":{"currentness_sha256":{"$ref":"#/$defs/sha256"}}}},
+        {"if":{"properties":{"replayed":{"const":true}}},"then":{"properties":{"original_result_ref":{"$ref":"#/$defs/ref"}}},"else":{"properties":{"original_result_ref":{"type":"null"}}}}
+      ]
+    },
+    "TestingSessionCommandResult":{
+      "allOf":[{"$ref":"#/$defs/EvidenceResultFields"},{"if":{"properties":{"command_id":{"const":"cmd.testing.export_bundle"},"status":{"const":"completed"}}},"then":{"properties":{"artifact_refs":{"minItems":1}}}}],"type":"object","unevaluatedProperties":false,
+      "required":["schema_id","record_kind","command_id"],
+      "properties":{"schema_id":{"const":"pm.testing_session.command_result.v1"},"record_kind":{"const":"TestingSessionCommandResult"},"command_id":{"$ref":"#/$defs/command_id"}}
+    },
+    "TestingSessionCommandError":{
+      "type":"object","additionalProperties":false,"required":["schema_id","record_kind","command_id","command_instance_id","error"],
+      "properties":{"schema_id":{"const":"pm.testing_session.command_error.v1"},"record_kind":{"const":"TestingSessionCommandError"},"command_id":{"$ref":"#/$defs/command_id"},"command_instance_id":{"$ref":"#/$defs/id"},"error":{"$ref":"#/$defs/EvidenceCommandError"}}
+    },
+    "EvidenceAvailabilityFields":{
+      "type":"object","required":["subject_ref","context","native_handler_available","permission_allowed","subject_current","redaction_allowed","capability_available","available","disabled_reason","safe_next_action_ref"],
+      "properties":{"subject_ref":{"$ref":"#/$defs/ref"},"context":{"$ref":"#/$defs/EvidenceCommandContext"},"native_handler_available":{"type":"boolean"},"permission_allowed":{"type":"boolean"},"subject_current":{"type":"boolean"},"redaction_allowed":{"type":"boolean"},"capability_available":{"type":"boolean"},"available":{"type":"boolean"},"disabled_reason":{"oneOf":[{"$ref":"#/$defs/disabled_reason"},{"type":"null"}]},"safe_next_action_ref":{"$ref":"#/$defs/nullable_ref"}},
+      "allOf":[{"if":{"properties":{"available":{"const":true}}},"then":{"properties":{"native_handler_available":{"const":true},"permission_allowed":{"const":true},"subject_current":{"const":true},"redaction_allowed":{"const":true},"capability_available":{"const":true},"disabled_reason":{"type":"null"},"safe_next_action_ref":{"type":"null"}}},"else":{"properties":{"disabled_reason":{"$ref":"#/$defs/disabled_reason"},"safe_next_action_ref":{"$ref":"#/$defs/ref"}}}},{"if":{"properties":{"native_handler_available":{"const":false}}},"then":{"properties":{"available":{"const":false},"disabled_reason":{"const":"handler_unavailable"}}}}]
+    },
+    "TestingSessionCommandAvailability":{
+      "allOf":[{"$ref":"#/$defs/EvidenceAvailabilityFields"}],"type":"object","unevaluatedProperties":false,"required":["schema_id","record_kind","command_id"],
+      "properties":{"schema_id":{"const":"pm.testing_session.command_availability.v1"},"record_kind":{"const":"TestingSessionCommandAvailability"},"command_id":{"$ref":"#/$defs/command_id"}}
+    }
+  }
+}

@@ -441,7 +441,11 @@ def expected_inventory() -> tuple[dict[str, tuple[str, str, str]], list[str]]:
 
     capture_text = read("Plans/Test_Capture_and_Motion_Evidence.md")
     capture = tokens(between(capture_text, "Required command-catalog rows are:", "Browser recording aliases"))
-    add("TCP-CAPTURE", "command", {item for item in capture if item.startswith(("cmd.testing.", "cmd.artifacts."))})
+    testing_consumers = {"cmd.testing.session.open", "cmd.testing.session.watch", "cmd.testing.session.background", "cmd.testing.session.redaction.inspect", "cmd.testing.export_bundle"}
+    artifact_consumers = {"cmd.artifacts.play_recording", "cmd.artifacts.watch_recording"}
+    add("TCP-TESTING-EVIDENCE", "command", capture & testing_consumers)
+    add("TCP-ARTIFACT-RECORDING", "command", capture & artifact_consumers)
+    add("TCP-CAPTURE", "command", {item for item in capture if item.startswith(("cmd.testing.", "cmd.artifacts."))} - testing_consumers - artifact_consumers)
 
     scm_text = read("Plans/Source_Control_System.md")
     scm = tokens(between(scm_text, "The command owner must register the following exact primary identities:", "### 3.2 Canonical events"))
@@ -1489,7 +1493,9 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # production-intent row. No Touch row/profile, native proof or event is added.
     exact_resolved_denominators = {
         "row_count": 644,
-        "profile_count": 131,
+        # ATS-048 / RAP-056 split seven existing consumers out of capture's
+        # ten-ID schema. No row, command, handler or evidence promotion added.
+        "profile_count": 133,
         "excluded_token_count": 57,
         "alias_binding_count": 64,
         "production_wiring_entry_count": 1144,

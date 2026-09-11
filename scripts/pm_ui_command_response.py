@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 from pm_full_thread_semantics import command_outcome_binding_failures, full_thread_semantic_failures
+from pm_evidence_command_semantics import request_digest
 
 RESPONSE_SCHEMA = "Plans/ui_command_response.schema.json"
 OUTCOME_SCHEMA = "Plans/full_thread_runtime_contracts.schema.json"
@@ -156,6 +157,8 @@ def response_bundle_failures(bundle: dict[str, Any]) -> list[str]:
                 failures.extend(browser_owner_failures(response, outcome, owner_result))
             elif owner_result.get("record_type") in {"server.command.result.v1", "server.owner_command.result.v1"}:
                 failures.extend(server_owner_failures(response, outcome, owner_result))
+            elif owner_result.get("record_kind") in {"TestingSessionCommandResult", "ArtifactRecordingCommandResult"}:
+                failures.extend(evidence_owner_failures(response, outcome, owner_result, bundle.get("owner_request")))
             for field in ("command_id", "command_instance_id", "operation_id"):
                 if field in owner_result and owner_result[field] != response[field]:
                     failures.append("typed_owner_" + field + "_mismatch")
@@ -223,6 +226,39 @@ def server_owner_failures(response, outcome, owner_result):
         failures.append("server_owner_outcome_mismatch")
     if owner_result["status"] != "accepted" and owner_result["receipt_id"] != outcome["result_receipt_ref"]:
         failures.append("server_owner_result_receipt_mismatch")
+    return failures
+
+
+def evidence_owner_failures(response, outcome, owner_result, owner_request):
+    failures = []
+    family, prefix = ("testing_session", "TestingSession") if owner_result["record_kind"] == "TestingSessionCommandResult" else ("artifact_recording", "ArtifactRecording")
+    path = "Plans/" + family + "_command_contracts.schema.json"
+    if structural_failures(path, owner_request, "#/$defs/" + prefix + "CommandRequest"):
+        return ["evidence_owner_request_schema"]
+    failures.extend(contracts().contract_semantic_failures(path, prefix + "CommandRequest", owner_request))
+    if any(owner_request[field] != owner_result[field] for field in ("command_id", "command_instance_id", "context")):
+        failures.append("evidence_owner_request_result_mismatch")
+    if request_digest(owner_request) != outcome["payload_sha256"] or owner_request["idempotency"]["idempotency_key"] != outcome["idempotency_key"]:
+        failures.append("evidence_owner_request_outcome_binding_mismatch")
+    expected = {"accepted": {"accepted", "acknowledged", "executing"}, "completed": {"succeeded"},
+                "no_change": {"succeeded"}, "blocked": {"rejected"}, "failed": {"failed"},
+                "cancelled": {"cancelled"}, "effect_unknown": {"terminal_unknown"}}
+    if outcome["outcome"] not in expected[owner_result["status"]]:
+        failures.append("evidence_owner_outcome_mismatch")
+    if (owner_result["status"] == "no_change") != (response["result_status"] == "no_op"):
+        failures.append("evidence_owner_no_change_mismatch")
+    keys = {"project_id": "project_id", "home_server_id": "project_home_server_id",
+            "execution_host_id": "execution_host_id", "execution_environment_id": "execution_environment_id",
+            "source_location_id": "source_location_id", "thread_id": "thread_id",
+            "attempt_id": "attempt_id", "topology_generation": "topology_generation"}
+    if any(owner_result["context"][source] != outcome["identity"].get(target) for source, target in keys.items()):
+        failures.append("evidence_owner_scope_mismatch")
+    if owner_result["request_binding_sha256"] != outcome["payload_sha256"]:
+        failures.append("evidence_owner_payload_mismatch")
+    if owner_result["receipt_ref"] != outcome["result_receipt_ref"]:
+        failures.append("evidence_owner_receipt_mismatch")
+    if owner_result["replayed"] and not response["replayed"]:
+        failures.append("evidence_owner_replay_not_projected")
     return failures
 
 

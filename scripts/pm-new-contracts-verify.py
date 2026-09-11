@@ -29,6 +29,7 @@ from pm_full_thread_semantics import full_thread_semantic_failures
 from pm_restore_semantics import restore_semantic_failures
 from pm_browser_program_semantics import browser_program_semantic_failures
 from pm_onboarding_semantics import onboarding_semantic_failures, settings_draft_semantic_failures
+from pm_evidence_command_semantics import evidence_command_semantic_failures
 
 # Authored and intentionally closed.  Adding a contract pair is a reviewed gate
 # change, not an ambient glob that silently changes the validation denominator.
@@ -57,9 +58,11 @@ CONTRACT_PAIRS = (
     ("Plans/plugin_contracts.schema.json", "Plans/plugin_contract_fixtures.json"),
     ("Plans/shared_integration_runtime.schema.json", "Plans/shared_integration_runtime_fixtures.json"),
     ("Plans/multi_account_contracts.schema.json", "Plans/multi_account_contract_fixtures.json"),
+    ("Plans/testing_session_command_contracts.schema.json", "Plans/testing_session_command_contract_fixtures.json"),
+    ("Plans/artifact_recording_command_contracts.schema.json", "Plans/artifact_recording_command_contract_fixtures.json"),
 )
 
-EXPECTED_CONTRACT_PAIR_COUNT = 24
+EXPECTED_CONTRACT_PAIR_COUNT = 26
 
 EXPANSION_SCHEMA_REL = "Plans/shared_integration_runtime_expansion_contracts.schema.json"
 EXPANSION_FIXTURE_REL = "Plans/shared_integration_runtime_expansion_fixtures.json"
@@ -68,6 +71,16 @@ EGOLITE_SCHEMA_REL = "Plans/egolite_retained_requirement_contracts.schema.json"
 # These reviewed pairs use a command-oriented fixture protocol.  Support is
 # deliberately path-bound; another pack cannot opt in by imitating field names.
 AUTHORED_COMMAND_PAIR_CONTRACTS = {
+    "Plans/testing_session_command_contracts.schema.json": {
+        "fixture": "Plans/testing_session_command_contract_fixtures.json",
+        "request_mode": "template_patch",
+        "implicit_runtime_schema_id_policy": None,
+    },
+    "Plans/artifact_recording_command_contracts.schema.json": {
+        "fixture": "Plans/artifact_recording_command_contract_fixtures.json",
+        "request_mode": "template_patch",
+        "implicit_runtime_schema_id_policy": None,
+    },
     "Plans/plugin_contracts.schema.json": {
         "fixture": "Plans/plugin_contract_fixtures.json",
         "request_mode": "inline_instance",
@@ -984,6 +997,8 @@ def egolite_semantic_failures(definition_name: str, value: Any) -> list[str]:
 
 
 def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+    if schema_rel in {"Plans/testing_session_command_contracts.schema.json", "Plans/artifact_recording_command_contracts.schema.json"}:
+        return evidence_command_semantic_failures(definition_name, value)
     if schema_rel == "Plans/product_onboarding_contracts.schema.json":
         return onboarding_semantic_failures(definition_name, value)
     if schema_rel == "Plans/settings_system_contracts.schema.json":
