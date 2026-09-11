@@ -1061,6 +1061,111 @@ def validate_repository_ref(ref: str) -> str | None:
     return None
 
 
+def dry_guard_consumer_failures(
+    registry: dict[str, Any], settings_document: dict[str, Any], production_actions: set[str]
+) -> list[str]:
+    """Check DL-041's static consumer boundary, not native execution or admission."""
+
+    failures: list[str] = []
+    retired = "cmd.settings.agent_rules.dry_method_default_guard.set"
+    owner_key = "app.agent_rules.dry_method_default_guard"
+
+    def require(condition: bool, detail: str) -> None:
+        if not condition:
+            failures.append(f"DL-041 DRY guard: {detail}")
+
+    def object_value(container: Any, key: str) -> dict[str, Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, dict) else {}
+
+    def list_value(container: Any, key: str) -> list[Any]:
+        value = container.get(key) if isinstance(container, dict) else None
+        return value if isinstance(value, list) else []
+
+    rows = [row for row in list_value(registry, "rows") if isinstance(row, list) and len(row) == 6]
+    retained = [row for row in rows if row[0] == "TOUCH-SETPROJ-003"]
+    require(len(retained) == 1, "expected one retained Settings presentation obligation")
+    require(sum(row[3] == "settings.manager.dry-method" for row in rows) == 1,
+            "guard presentation must not be omitted or duplicated")
+    require(not any(row[0] == "TOUCH-DRY-001" or row[3] == retired for row in rows),
+            "retired dedicated command/row must not re-enter the actionable inventory")
+    for row in retained:
+        require(row[:5] == ["TOUCH-SETPROJ-003", "TCP-DRY-METHOD", "presentation",
+                            "settings.manager.dry-method", "partial"],
+                "retained obligation must use the partial DRY-specific presentation profile")
+        require(isinstance(row[5], str) and all(token in row[5] for token in (
+            owner_key, "owner_contract_missing", "zero mutation dispatch", "zero setting writes")),
+            "retained residual must preserve exact guard identity and the zero-mutation boundary")
+
+    profiles = [profile for profile in list_value(registry, "profiles")
+                if isinstance(profile, dict) and profile.get("profile_id") == "TCP-DRY-METHOD"]
+    require(len(profiles) == 1, "expected one DRY guard profile")
+    profile = profiles[0] if profiles else {}
+    schema_prefix = "Plans/settings_system_contracts.schema.json#/$defs/"
+    for field, expected in {
+        "owner_plan": "Plans/Settings_System.md",
+        "plan_unit": "SSYS-023",
+        "dry_contract_ref": "Plans/DRY_Rules.md#DR-040",
+        "payload_schema_ref": schema_prefix + "settings_owner_projection",
+        "result_schema_ref": schema_prefix + "settings_named_visible_state_projection",
+        "error_schema_ref": schema_prefix + "disabled_reason",
+        "handler_status": "absent",
+        "wiring_status": "absent",
+        "event_refs": [],
+    }.items():
+        require(profile.get(field) == expected, f"profile {field} must remain {expected!r}")
+    for ref in (
+        "Plans/Decision_Log.md#DL-041", "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040", "Plans/DRY_Rules.md#DR-040",
+        "Plans/Settings_System.md#SSYS-018", "Plans/Settings_System.md#SSYS-023",
+    ):
+        require(ref in list_value(profile, "requirement_refs"), f"missing owner requirement {ref}")
+    availability = profile.get("availability_rule")
+    require(isinstance(availability, str) and all(token in availability for token in (
+        owner_key, "enabled", "disabled_by_user", "default enabled", "owner_contract_missing",
+        "zero mutation dispatch", "zero setting writes")),
+        "availability must preserve exact identity, values/default and missing-writer boundary")
+
+    excluded = [item for item in list_value(registry, "excluded_tokens")
+                if isinstance(item, dict) and item.get("token") == retired]
+    require(len(excluded) == 1 and excluded[0].get("classification") == "forbidden"
+            and excluded[0].get("replacement") == "",
+            "retired command requires exactly one forbidden exclusion without a replacement")
+    aliases = object_value(registry, "alias_bindings")
+    require(retired not in aliases and not any(
+        isinstance(binding, dict) and binding.get("exact_target") == retired
+        for binding in aliases.values()), "retired command cannot be an alias source or target")
+    require(retired not in production_actions, "retired command cannot have production wiring")
+
+    descriptor = object_value(object_value(settings_document, "manager_registry"), "dry-method")
+    require(descriptor.get("owner_action_ids") == [
+        "cmd.settings.transaction.preview", "cmd.settings.transaction.apply"],
+        "only existing common transaction preview/apply may be intended future targets")
+    gap = descriptor.get("owner_gap_reason")
+    require(isinstance(gap, str) and all(token in gap for token in (
+        "owner_contract_missing", "no mutation dispatch", "setting write")),
+        "manager must retain the unresolved writer/key boundary, not authorize mutation")
+    projection = object_value(object_value(settings_document, "named_visible_state_projections"), "dry-method")
+    for field in (
+        "requested_default_guard", "effective_default_guard", "origin", "scope", "availability",
+        "disabled_reason", "owner_evidence", "exceptions", "consequence_disclosure",
+    ):
+        require(field in list_value(projection, "visible_state_fields"), f"missing visible guard field {field}")
+    require(projection.get("owner_action_policy") == "owner_admitted_command_or_typed_route_only",
+            "projection cannot grant independent mutation authority")
+    require(projection.get("settings_is_runtime_owner") is False,
+            "Settings projection must not become the runtime owner")
+    require(projection.get("raw_logs_included") is False, "projection must not expose raw logs")
+    for constraint in (
+        "do_not_weaken_instructions_or_safety",
+        "do_not_weaken_secrets_source_authority_governance_permissions_or_source_control",
+        "do_not_present_the_default_guard_as_a_universal_runtime_override",
+    ):
+        require(constraint in list_value(projection, "negative_constraints"),
+                f"missing safety boundary {constraint}")
+    return failures
+
+
 def verify() -> tuple[list[str], dict[str, Any]]:
     failures: list[str] = []
     try:
@@ -1224,6 +1329,12 @@ def verify() -> tuple[list[str], dict[str, Any]]:
                             production_handlers_by_action[command_id].add(handler)
             except (OSError, json.JSONDecodeError) as error:
                 failures.append(f"production wiring cross-check failed to load: {error}")
+    try:
+        settings_document = load_json(ROOT / "Plans/settings_system_contract_fixtures.json")
+    except (OSError, json.JSONDecodeError) as error:
+        failures.append(f"DRY guard Settings fixture failed to load: {error}")
+        settings_document = {}
+    failures.extend(dry_guard_consumer_failures(registry, settings_document, production_actions))
     alias_sources_with_peer_wiring = sorted(alias_row_actions & production_actions)
     if alias_sources_with_peer_wiring:
         failures.append(
@@ -1405,6 +1516,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "cmd.server",
         "cmd.installation.uninstall",
         "cmd.origin.review.create",
+        "cmd.settings.agent_rules.dry_method_default_guard.set",
         *RETIRED_PACKET_COMMANDS,
         *REJECTED_COMMAND_CANDIDATES,
         *REPOSITORY_LOCAL_PACKET_TOKENS,
@@ -1491,14 +1603,18 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # USER-PROJECT-UNARCHIVE-REGISTRY-20260911 changes one existing Touch UI row
     # to its Project-owner command, removes its command exclusion, and adds one
     # production-intent row. No Touch row/profile, native proof or event is added.
+    # DL-041 (September 11) forbids the dedicated guard command and its production
+    # row. Consolidate TOUCH-DRY-001 into the existing Settings presentation row:
+    # 644 -> 643 obligations, 57 -> 58 exclusions, 1144 -> 1143 production rows.
+    # Preserve the full guard obligation and its profile; do not invent an alias.
     exact_resolved_denominators = {
-        "row_count": 644,
+        "row_count": 643,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
         "profile_count": 133,
-        "excluded_token_count": 57,
+        "excluded_token_count": 58,
         "alias_binding_count": 64,
-        "production_wiring_entry_count": 1144,
+        "production_wiring_entry_count": 1143,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
