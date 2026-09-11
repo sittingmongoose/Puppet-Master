@@ -4507,50 +4507,52 @@
     {
       "profile_id": "TCP-GITHUB-PR",
       "requirement_refs": [
-        "Plans/GitHub_Integration.md#GI-032",
+        "Plans/Decision_Log.md#DL-044",
+        "Plans/UI_Command_Catalog.md#UCC-122",
+        "Plans/UI_Command_Catalog.md#UCC-132",
         "Plans/Forge_Integrations.md#FGI-008"
       ],
-      "owner_plan": "Plans/GitHub_Integration.md",
-      "plan_unit": "GI-032",
-      "dry_contract_ref": "Plans/GitHub_Integration.md#GitHub API-only PR creation",
-      "payload_schema_ref": "typed GitHub PR creation request",
-      "result_schema_ref": "typed GitHub PR result",
-      "error_schema_ref": "unauthorized, unreachable, not_configured and typed API errors",
-      "availability_rule": "Exact GitHub account, repository, source/target revision, auth, remote, and capability are required.",
-      "permission_gate": "GitHub API/auth owner and repository authority apply; no shell or generic Forge ownership substitution.",
-      "disabled_reason_rule": "Expose unauthorized, unreachable, not configured, stale revision, permission, or capability blocker.",
-      "handler_owner": "Direct GitHub API owner; this command is not an alias of Forge or panel-scoped source-control PR creation.",
+      "owner_plan": "Plans/Forge_Integrations.md",
+      "plan_unit": "FGI-008",
+      "dry_contract_ref": "Plans/Forge_Integrations.md#FGI-008",
+      "payload_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_request",
+      "result_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_receipt",
+      "error_schema_ref": "Plans/forge_integration_contracts.schema.json#/$defs/command_error_record",
+      "availability_rule": "Normalize cmd.github.pr.create to cmd.forge.review.create {provider: github} before availability, permission, telemetry, receipt, and dispatch. Consume the canonical target guard forge_capability_current && auth_valid && repository_current; no independent GitHub guard.",
+      "permission_gate": "Forge and Permissions owners gate the normalized target; the selected GitHub adapter retains provider API/auth behavior without granting the alias independent authority.",
+      "disabled_reason_rule": "Project the canonical Forge target's typed auth, permission, currentness, capability, and provider disabled reasons after normalization.",
+      "handler_owner": "Planned compatibility normalizer only; normalize to cmd.forge.review.create before permission and dispatch. handlers::forge::review_create remains the sole domain handler; no source registration, second handler, or independent wiring.",
       "handler_status": "specified",
       "wiring_status": "specified",
-      "production_or_simulation": "Existing central contract only; native/API runtime evidence is not admitted here.",
+      "production_or_simulation": "Static alias and canonical production-intent contract only; actual provider payload normalization, native normalizer, API execution, and runtime evidence are not proved or admitted here.",
       "gui_triggers": [
-        "GitHub-domain PR creation flow"
+        "Historical GitHub PR creation input normalizes through the Forge review route; cmd.chat.worktree.pr and cmd.chat.worktree.merge retain their separate thread-bound scopes."
       ],
       "return_route": "Exact repository/PR and caller focus.",
       "reverse_consumers": [
         "Plans/Forge_Integrations.md",
         "Plans/UI_Command_Catalog.md"
       ],
-      "event_refs": [
-        "GitHub owner only"
-      ],
+      "event_refs": [],
       "receipt_refs": [
-        "GitHub API operation result"
+        "Canonical Forge command_receipt; preserve invoked alias as compatibility source identity only, never an independent receipt or EventRecord."
       ],
       "observable_work": [
-        "GitHub API operation where asynchronous."
+        "Canonical Forge owner ObservableWork where asynchronous; no alias-owned work identity."
       ],
       "persistence_refs": [
         "non-secret account/repository/PR refs"
       ],
       "migration_refs": [
-        "git.create_pr -> cmd.github.pr.create"
+        "git.create_pr -> cmd.github.pr.create -> cmd.forge.review.create {provider: github}"
       ],
       "test_refs": [
-        "Plans/GitHub_Integration.md#GI-032 acceptance criteria"
+        "Plans/UI_Command_Catalog.md#UCC-122",
+        "Plans/UI_Command_Catalog.md#UCC-132",
+        "tests/test_pm_touch_closure_source.py#ForgeReviewAliasConsumerTests"
       ],
       "evidence_refs": [
-        "static_catalog_only"
+        "static_owner_contract_and_alias_binding_only; native normalization and execution evidence absent"
       ]
     },
     {
@@ -10641,10 +10643,10 @@
     [
       "TOUCH-GHPR-001",
       "TCP-GITHUB-PR",
-      "command",
+      "command_alias",
       "cmd.github.pr.create",
       "partial",
-      "Existing central identity is preserved; native GitHub API runtime evidence is absent."
+      "DL-044 retains this existing obligation as a compatibility alias of cmd.forge.review.create {provider: github}; native pre-dispatch normalization and Forge handler evidence are absent."
     ],
     [
       "TOUCH-FGIPR-001",
@@ -13336,6 +13338,18 @@
     }
   ],
   "alias_bindings": {
+    "cmd.github.pr.create": {
+      "availability_source": "cmd.forge.review.create",
+      "canonical_handler_id": "handlers::forge::review_create",
+      "domain_event_emitted_by_alias": false,
+      "exact_target": "cmd.forge.review.create",
+      "handler_dispatch_token": "cmd.forge.review.create",
+      "independent_handler_allowed": false,
+      "independent_wiring_allowed": false,
+      "normalization_phase": "before_permission_and_dispatch",
+      "source_receipt_identity": "preserve_invoked_alias_as_compatibility_source_only",
+      "source_registered": false
+    },
     "cmd.auth_session.cancel": {
       "availability_source": "cmd.authentication.cancel",
       "canonical_handler_id": "handlers::authentication::cancel",
