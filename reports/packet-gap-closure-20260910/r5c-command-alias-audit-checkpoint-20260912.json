@@ -1,0 +1,167 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5c-egolite-command-alias-176-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "e59bc0045ab2aa4e7474a92a1e1f582f575f9767",
+  "review_completion_comparison_commit": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+  "landing_base_commit": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+  "scope_and_authority": [
+    "Individual evidence-backed review of all 176 command/alias tokens in the frozen Egolite command register, DOC-0115; formal chunks 00028 and 00029.",
+    "The previously saved 53 judgments were retained byte-for-byte, supplemented by 123 individually authored judgments, and only then published as complete chunk results.",
+    "This landing changes this compact report only. Sources, snapshots, detailed judgments, collectors and formal result files remain outside the product repository.",
+    "No canonical product or visual-design edits, native implementation, catalog repairs, new command/event admission, generated governance refresh, seal or other agents' changes are included.",
+    "A partial verdict preserves a named missing-proof obligation; static declarations, schema references, planned handler names and green structural checks do not establish native dispatch or behavior."
+  ],
+  "new_batch": {
+    "cases": 176,
+    "chunks": [
+      {"chunk_id": "chunk-00028", "cases": 130, "status_counts": {"partial": 124, "fail": 6}},
+      {"chunk_id": "chunk-00029", "cases": 46, "status_counts": {"partial": 46}}
+    ],
+    "status_counts": {"partial": 170, "fail": 6},
+    "complete_for_review_scope": true,
+    "implementation_complete": false
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 613,
+    "not_reviewed_cases": 12803,
+    "expected_chunks": 151,
+    "valid_result_files": 11,
+    "missing_result_files": 140,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 402, "not_applicable": 3, "blocked": 39, "pass": 160, "fail": 9},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "confirmed_static_findings": {
+    "missing_primary_catalog_metadata": [
+      "cmd.auth_profile.open_official_page",
+      "cmd.integration.connection.add",
+      "cmd.integration.connection.open_details",
+      "cmd.integration.connection.remove",
+      "cmd.integration.connection.test",
+      "cmd.integration.connection.update"
+    ],
+    "evidence": "The canonical owners require these primaries and typed production-intent rows exist, but their exact catalog occurrences are alias targets, not their own primary metadata. Commands likewise lacks the exact primary rows. Token-occurrence coverage cannot distinguish this gap from registration.",
+    "disposition": "Recorded, not repaired. The official-page finding carries forward from the prior working checkpoint; the other five were identified in this continuation. Repairs require the applicable owner-approved scope and must not promote alias sources into peer commands.",
+    "native_boundary": "Closing static registration would not prove protected handoff, inactive-draft persistence, activation/currentness, provider effects, receipts, accessibility or exact return."
+  },
+  "important_non_failure_dispositions": [
+    "Forge review create/merge lack some row-local request/result fields, but Commands supplies the typed references and wiring rules make those row fields optional. That absence alone is not a confirmed registration failure.",
+    "cmd.github.pr.create and Source Control PR spellings consume DL-044's provider-github Forge aliases; GitHub Actions retains its separate namespace. No second primary alias handler is inferred.",
+    "Installation log viewing is a typed owner-local UI action; rescan normalizes to tool.discover. check_updates and update_policy.set remain retained, noncanonical candidates rather than newly minted commands.",
+    "Jujutsu reads, workspace open, workspace switch, native recovery, Git transport and import/export capability gates remain distinct. Accepted DL-043 planning does not admit additional command/schema/runtime behavior.",
+    "Testing visible-session commands, run-bundle export, generic capture lifecycle, stored-recording Play and live Watch remain separate owner contracts. The four session event obligations remain quarantined_not_admitted under ATS-049."
+  ],
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/command-176-root-review.json",
+      "sha256": "0fc844971e62e50da3ec38026220663cd922421723bfd3d999073a71ffba31c6"
+    },
+    "assembly_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/assembly-summary.json",
+      "sha256": "7e7237c7c0869cf931b95497f95841459bbfccd7be6083977d88a06a88d4debf"
+    },
+    "owner_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/reviewed-owner-custody.generated.json",
+      "sha256": "22d4c58a0fae53a8c30748aa0fc0706e994edd5cb30dd39b524ac9e8d41da746"
+    },
+    "current_mechanical_comparison": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/command-evidence-current.json",
+      "sha256": "3da96b32e3602e8e69efe734c71dbe83928d631068ed697a529106a87e0544ff"
+    },
+    "retained_original_53": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-review-20260911-My8iicF0/root-review-working.json",
+      "sha256": "84a2dd3b9685d974f96fddb2cc50f29d5fe6bce092c40ebd6aae36a3f695193c"
+    },
+    "authored_additional_123": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/root-review-continuation.json",
+      "sha256": "b5c136bab9d57fd27c423e57f28d6d2321580def1fb5a39a8db7d6e7b2c71096"
+    },
+    "chunk_results": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00028.result.json",
+        "sha256": "439f3fd01316873a02d8495ffb429ac4cd96ad2f8be6a753231cfd8e63c2b815"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00029.result.json",
+        "sha256": "788fbe0c2d04c2f510712f69f180c88d3e1485555d6e2e0cd9c2a8651e3590b7"
+      }
+    ]
+  },
+  "comparison_boundary": {
+    "snapshot_files": 30,
+    "owner_references": 86,
+    "byte_identical_selected_owner_reference_texts": 84,
+    "changed_selected_owner_passages": [
+      {"owner_ref": "Plans/Runtime_Artifacts_Panel.md#RAP-056", "change": "Two trailing blank lines before the appended restore-created reader; Play/Watch contract text is unchanged."},
+      {"owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#3.18A", "change": "Previously approved and landed SMPFS-169 result-byte/output-schema binding. This is recorded separately and does not upgrade frozen partial cases or prove native output handling."}
+    ],
+    "mechanically_selected_schema_change": "Only section15_browser_program_contracts.schema.json differs among the 16 mechanical command inputs; the repair is documented separately in browser-result-binding-20260912.md.",
+    "historical_verdicts_restamped": false
+  },
+  "verification": {
+    "review_integrity": {
+      "status": "pass",
+      "cases": 176,
+      "distinct_hashed_files": 70,
+      "owner_references": 86,
+      "case_identity_and_authored_verdict_match": true,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/review-integrity.receipt.json",
+      "sha256": "ffcc5a5a680844482bdc3d19654da707e63b8da5fedaa04ec4bacb612ce0f82d"
+    },
+    "packet_census_and_verdict_tests": {
+      "status": "pass",
+      "tests": 45,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/packet-tests.receipt.json",
+      "sha256": "ee7d0bdb9ae8fdf86576d4cca049291e84f340b9de987c8aa1ec6c2afb399026"
+    },
+    "formal_workbook_status": {
+      "status": "pass_structural_validation_audit_incomplete",
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/audit-status.receipt.json",
+      "sha256": "1e466e352dce87b0dd247e41873d9de49dde241e75b66d8a2a600b5e466f2f8d"
+    },
+    "own_worktree_shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2306,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/shards.receipt.json",
+      "sha256": "9d153d385bf07b5511b554f37f172516249231171a8b02055be4fa2c43751240"
+    },
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/gates.receipt.json",
+      "sha256": "800f75e83ee173568d6020d268fd767643190235820da785bb069b504c01cc76",
+      "report": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/verification/gates.json",
+      "report_sha256": "f556204050b07cc01464ec28ff00774e654ceb2d67f6f4fe2f879c6338cd0bb4",
+      "failed_subcheck_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1448,
+        "validate_implementation_readiness": 49,
+        "validate_plan_graph": 1448,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 72,
+        "verify_spec_lock": 27
+      },
+      "boundary": "Failures remain visible: missing fixtures/refs, stale audit/governance/readiness artifacts and embedded Home-schema reference errors. No failing file was repaired or resealed by this report-only work."
+    },
+    "capture_scope": "Completed captures pin HEAD and 440 selected repository/external inputs; no selected input changed. This is not every transitive input or a native-behavior audit."
+  },
+  "remaining_work": [
+    "12,803 frozen cases across 140 chunks still require evidence-backed review. No whole-audit metadata or completed merge was written.",
+    "The six static catalog failures and named partial-case residuals remain open; no runtime or readiness clearance follows from this report.",
+    "Deferred visual design, independent owner work, governance reseals and unapproved packet repairs remain outside this landing."
+  ]
+}
