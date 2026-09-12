@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5315-L5408
+Source lines: L5315-L5412
 
-Source SHA256: `311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf`
+Source SHA256: `6f29ead25514f1a2471ee6d5e737cc6bec09ff9771dd2000d8ccf7005df41faf`
 
 ---
 
@@ -33,10 +33,14 @@ pm.goal.origin_lineage.v1
 Origin is recorded, never inferred — a Goal has no title to infer from. Source context is
 referenced, never pasted into `objective_text`.
 
-Replay reconstructs the exact accepted objective revision and the admitted context after a
-crash, a context compaction, a model switch, or a host transfer. Reconstruction reads durable
-records, not chat-window retention, and the objective text is never silently summarised,
-re-worded, or "improved" on the way back.
+Replay reloads the exact accepted objective revision and its admitted source references after a
+crash, a context compaction, a model switch, or a host transfer through GRS-064/SP-287. It reads
+durable accepted records under DL-047's bound-thread lifetime, not transient chat-window context.
+Dereferencing the admitted source context additionally requires that source owner's current
+authority and retained bytes; a ref cannot recreate purged source content. The saved objective
+is never silently summarised, re-worded, or "improved" on the way back, and compaction alone
+does not purge it. Thread deletion hides and purges it under DL-047 rather than making replay
+a path to restore deleted text.
 
 ### GREPLAY-004..008 — The host owns `completed`
 

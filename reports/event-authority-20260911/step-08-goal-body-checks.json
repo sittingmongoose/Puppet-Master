@@ -1,0 +1,320 @@
+{
+  "base_head": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+  "verified_manifests": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-custody-20260911/v2/manifest.json",
+      "sha256": "a6f798b06ad773f63467d4bf6041dce109d6450d442e40371111195e2ee38c67",
+      "files_verified": 21,
+      "additional_evidence_verified": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-physical-envelope-20260912/v2/manifest.json",
+      "sha256": "3c8f0c0bf8a17d6846ad2c1a2401e2a142e7033f28893ce6d63f7b379d91b1a6",
+      "files_verified": 31,
+      "additional_evidence_verified": 0
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-physical-independent-review-20260912/v2/manifest.json",
+      "sha256": "fad3c01e3f3cc1ad8067afde9fd74ec81c48e07615adcb7a00685f87228a96ee",
+      "files_verified": 3,
+      "additional_evidence_verified": 6
+    }
+  ],
+  "physical_families_before": 103,
+  "physical_families_after": 108,
+  "policies_before": 24,
+  "policies_after": 25,
+  "prior_families_policies_and_other_fields_exact": true,
+  "seven_semantic_definitions_exact": true,
+  "five_wrapper_v1_v2_files_byte_exact": true,
+  "canonical_schema_relocation_only": true,
+  "whole_registry_shape": "PASS",
+  "shape_cases": 25,
+  "canonical_codec_vectors": 6,
+  "central_data_failures_before": 15,
+  "central_data_failures_after": 16,
+  "new_failure_class": "storage_value_registry_retention_policy_count_mismatch (expected 24, actual 25)",
+  "wrapper_review": "PASS_BOUNDED_ADAPTER",
+  "native_execution": "NOT_RUN",
+  "whole_physical_CAS": "REQUIRED_NOT_EXECUTED",
+  "status": "CANONICAL_SHARED_PREREQUISITE_DEFINED_BOUNDED_CHECKS_PASS_GOVERNANCE_UNSEALED",
+  "definition_units": [
+    "GRS-064",
+    "SP-287"
+  ],
+  "new_families": [
+    "goal_body_record",
+    "goal_objective_revision",
+    "goal_objective_origin",
+    "goal_body_control",
+    "goal_body_mutation_receipt"
+  ],
+  "new_policy": "RP-GOAL-THREAD-LIFETIME@1.0.0",
+  "approved_decision": "DL-047",
+  "unchanged_registered_event_count": 42,
+  "source_currentness": {
+    "base_head": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+    "frozen_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-custody-20260911/v2/manifest.json",
+      "sha256": "a6f798b06ad773f63467d4bf6041dce109d6450d442e40371111195e2ee38c67",
+      "file_count": 21
+    },
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf",
+        "current_sha256": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+        "current_sha256": "33645a522625c805c2e3b4ed813c788a3fdcf49db63504631b130792fbab1f8e",
+        "exact": false,
+        "adjudication": "Root-reviewed and landed shared first-AppendReceipt prerequisite SP-286/CV-339; unrelated Goal semantic/retention passages preserved. Goal body receipt remains independent."
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
+        "current_sha256": "6d486772faa4da6c8be09c014cc11505656ae03371bfacf4a85a5d59cc2f4f13",
+        "exact": false,
+        "adjudication": "Root-reviewed and landed shared first-AppendReceipt prerequisite SP-286/CV-339; unrelated Goal semantic/retention passages preserved. Goal body receipt remains independent."
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "exact": true
+      },
+      {
+        "path": "Plans/goal_runtime_lineage.schema.json",
+        "sha256": "eff4a9023f816a34fbeed545d5d9787e555dca8d1d74fd5c17c8313266f222b3",
+        "current_sha256": "eff4a9023f816a34fbeed545d5d9787e555dca8d1d74fd5c17c8313266f222b3",
+        "exact": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda",
+        "current_sha256": "a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda",
+        "exact": true
+      },
+      {
+        "path": "Plans/Shared_Integration_Runtime.md",
+        "sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+        "current_sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+        "exact": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+        "current_sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+        "exact": false,
+        "adjudication": "Root-reviewed and landed shared first-AppendReceipt prerequisite SP-286/CV-339; unrelated Goal semantic/retention passages preserved. Goal body receipt remains independent."
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "current_sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "exact": true
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
+        "current_sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
+        "exact": true
+      },
+      {
+        "path": "reports/event-authority-20260911/decision-responses.jsonl",
+        "sha256": "57771202ff602171e9485dae27cab306c0107a8a6efa445670ab775599ebd7e8",
+        "current_sha256": "57771202ff602171e9485dae27cab306c0107a8a6efa445670ab775599ebd7e8",
+        "exact": true
+      },
+      {
+        "path": "reports/event-authority-20260911/step-08-goal-objective-retention-card.md",
+        "sha256": "ab820b0bf9dc6436f74bf5a2f9e21845451cb48078af60b6affd2ab50ce89af0",
+        "current_sha256": "ab820b0bf9dc6436f74bf5a2f9e21845451cb48078af60b6affd2ab50ce89af0",
+        "exact": true
+      }
+    ],
+    "physical_version_conflict": "Resolved by reviewed v2 physical wrapper supplement; exact inner semantic fields and hashes preserved without validator or schema exception."
+  },
+  "static_checks": {
+    "original_semantic_cases": 122,
+    "root_semantic_probes": 23,
+    "physical_adapter_cases": 119,
+    "joint_fence_cases": 60,
+    "independent_physical_probes": 52,
+    "overlap": "Regression suites overlap; no native execution count is implied."
+  },
+  "frozen_validator_depth_pass": false,
+  "governance_seal": "NOT_RUN",
+  "canonical_compilation_checks": {
+    "base_head": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+    "old_units": 6546,
+    "new_total": 6548,
+    "new_units": [
+      "GRS-064",
+      "SP-287"
+    ],
+    "intentional_old_unit_fields": {
+      "GRS-048": [
+        "canonical_text"
+      ]
+    },
+    "all_other_old_unit_semantics_preserved": true,
+    "changed_shard_source_groups": [
+      "goal_runtime_system",
+      "storage-plan",
+      "storage_value_registry"
+    ],
+    "source_governance_locks_changed": false,
+    "validator_edits": false,
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2315,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index_validate": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T01:17:40Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25176,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6548
+      }
+    },
+    "goal_event_fixtures": {
+      "check": "validate-goal-runtime-event-fixtures",
+      "event_names_checked": 21,
+      "failures": [],
+      "fixture_event_count": 21,
+      "generated_at_utc": "2026-09-12T01:17:16Z",
+      "schema_id": "pm.plans_verify.report.v1",
+      "status": "pass"
+    },
+    "new_contracts": {
+      "status": "pass",
+      "counts": {
+        "contract_pairs": 30,
+        "expansion_alias_records_checked": 36,
+        "expansion_alias_records_valid": 36,
+        "expansion_command_records_checked": 264,
+        "expansion_command_records_valid": 264,
+        "expansion_fixture_packs": 1,
+        "expansion_local_records_checked": 28,
+        "expansion_local_records_valid": 28,
+        "expansion_metaschemas_valid": 1,
+        "expansion_negative_records_checked": 21,
+        "expansion_negative_records_rejected": 21,
+        "internal_self_tests": 12,
+        "internal_self_tests_passed": 12,
+        "metaschemas_valid": 30,
+        "negative_cases": 3338,
+        "negative_cases_rejected": 3338,
+        "onboarding_storage_contracts_checked": 1,
+        "onboarding_storage_contracts_valid": 1,
+        "owner_compat_command_records_checked": 240,
+        "owner_compat_command_records_valid": 240,
+        "owner_local_records_checked": 28,
+        "owner_local_records_valid": 28,
+        "positive_cases": 1028,
+        "positive_cases_valid": 1028
+      },
+      "failures": []
+    },
+    "all_42_events_byte_exact": true,
+    "diff_check": "pass"
+  },
+  "root_semantic_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-root-review-20260912/v2/report.json",
+    "sha256": "accadeb45783df3ca3801c1d63b60388aa48fd61bdfaa77f52e5087a78f1e499"
+  },
+  "standard_governance": {
+    "mode": "recent_standard_run_retained_with_new_targeted_checks",
+    "baseline_report": "reports/event-authority-20260911/step-08-append-receipt-checks.json",
+    "baseline_sha256": "f5ccaf32d553d3513207d609b229731c3215982108f4404bb2f018c2fc6a2593",
+    "baseline_result": {
+      "status": "FAIL_UNSEALED_GOVERNANCE_AND_EXISTING_REFERENCES_OR_SCANNER_LIMITATIONS",
+      "complete_run": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/run-gates.json",
+        "sha256": "ed32dcd1a40fe6d5f4dfc29afff00d162b5936b1f43fe83f8d28a75222e9ce1b",
+        "checks": 36,
+        "failed": 13
+      },
+      "targeted_rechecks_after_Concepts_materialization": {
+        "lint-path-refs": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/lint-path-refs.json",
+          "sha256": "05435a80140264c5763c880dd5956e51c05bbc5087347c0820355327a1eddcc2",
+          "status": "fail",
+          "failure_count": 10
+        },
+        "validate-prd-planning-runtime-contracts": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/validate-prd-planning-runtime-contracts.json",
+          "sha256": "72c2165c02b2b0d468ac972c15b03b6a7739c79cdaf04afa8475bdc6bb4ae2dd",
+          "status": "fail",
+          "failure_count": 72
+        },
+        "validate-touch-closure": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/validate-touch-closure.json",
+          "sha256": "66762783a6ea12b523a6be376abf8aeec085ba5d304953bbbd99c80ba0b0b81f",
+          "status": "pass",
+          "failure_count": 0
+        }
+      },
+      "combined_latest_subcheck_count": 36,
+      "remaining_failed_subchecks": [
+        "json_syntax",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_audit_closure",
+        "validate_audit_status_index",
+        "validate_evidence",
+        "validate_implementation_readiness",
+        "validate_plan_graph",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_prd_planning_runtime_contracts",
+        "verify_spec_lock"
+      ],
+      "not_a_second_aggregate_run": true,
+      "prd_ref_scan": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/prd-baseline-review.json",
+        "sha256": "ece789edec98f79e43bbc40d144ddaba1d36487764d7efa0cc85d7fbd0f1140c",
+        "all_72_findings_in_unchanged_Home_schema": true,
+        "new_receipt_schema_errors": 0
+      },
+      "registry_data_check": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/registry-check.json",
+        "sha256": "5da92ddbaa10676f0e293a625faa2c05d4d86a4277677f9e2e84288a05194708",
+        "before_failures": 15,
+        "after_failures": 15,
+        "same_classes": true,
+        "three_existing_count_diagnostics_track_102_to_103": "No waiver; frozen expected counts unchanged"
+      },
+      "new_contracts_gate": "pass",
+      "new_planunit_reference_errors": false,
+      "governance_mutations": false,
+      "aggregate_scope": "Before e59bc0045a Browser rebase; not rerun as full aggregate afterward"
+    },
+    "qualification": "The prior full 36-check standard run and targeted sparse/current-source reconciliation are historical baseline only, not reexecuted against this candidate. Current Goal/schema/registry/shard/index and new-contract checks are recorded separately. No seal or validator edit."
+  },
+  "registry_data_failure_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-root-20260912/compilation/registry-final.json",
+    "sha256": "7fb4609c021080a300480674b15acd41998e219e2a3967554588b8b0380b19f2"
+  },
+  "compilation_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-root-20260912/compilation/final-data-review.json",
+    "sha256": "db4b4f6db4cc95379f5b3c5d2a254b6600dfb63d9266f531e6f3ce20dd675387"
+  }
+}

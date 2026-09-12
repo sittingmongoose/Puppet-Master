@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15022,
+    "depends_on_edge_count": 15036,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17673,
-    "node_count": 6546,
+    "edge_count": 17687,
+    "node_count": 6548,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T00:45:12Z",
+  "generated_at_utc": "2026-09-12T01:16:45Z",
   "gui_related_units": {
-    "count": 3158,
+    "count": 3159,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -17952,8 +17952,8 @@
         "source_location": {
           "heading": "18. Goal Activity Detail Presentation and Bound Plan Synchronization (APR-059)",
           "heading_level": 3,
-          "heading_line": 5454,
-          "line": 5472,
+          "heading_line": 5458,
+          "line": 5476,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17963,8 +17963,8 @@
         "source_location": {
           "heading": "GRS-060 - Historical child-status event disposition",
           "heading_level": 3,
-          "heading_line": 5517,
-          "line": 5519,
+          "heading_line": 5521,
+          "line": 5523,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17974,8 +17974,8 @@
         "source_location": {
           "heading": "GRS-061 - Historical Goal degradation and current projection quality",
           "heading_level": 3,
-          "heading_line": 5593,
-          "line": 5595,
+          "heading_line": 5597,
+          "line": 5599,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -17985,8 +17985,19 @@
         "source_location": {
           "heading": "GRS-062 - Exact historical Goal scheduling contract",
           "heading_level": 3,
-          "heading_line": 5712,
-          "line": 5714,
+          "heading_line": 5716,
+          "line": 5718,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-064",
+        "source_location": {
+          "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
+          "heading_level": 3,
+          "heading_line": 5942,
+          "line": 5944,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -34762,10 +34773,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6546,
+  "plan_unit_count": 6548,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2002,
+      "high": 2004,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36146,6 +36157,8 @@
       "gitlab_stale_mr_evidence_or_publication": 1,
       "gitlab_variant_or_tool_identity_conflation": 1,
       "glossary_drift": 24,
+      "goal_body_currentness_accepted_history_or_receipt_authority_escape": 1,
+      "goal_body_physical_origin_cas_retention_or_restore_authority_escape": 1,
       "goal_body_retention_and_deletion": 1,
       "goal_command_owner_gap": 1,
       "goal_command_wiring_gap": 1,
@@ -38532,7 +38545,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6355,
+      "accepted": 6357,
       "retired": 182,
       "superseded": 9
     },
@@ -38604,7 +38617,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 65,
+      "schema_contract": 66,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38616,7 +38629,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 11,
+      "storage_contract": 12,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -38687,7 +38700,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "6d486772faa4da6c8be09c014cc11505656ae03371bfacf4a85a5d59cc2f4f13",
+        "expected": "f250e6791abf1d3e3d231628a87463763b7403b9285fbc27c52f49423625be1f",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38705,7 +38718,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf",
+        "expected": "6f29ead25514f1a2471ee6d5e737cc6bec09ff9771dd2000d8ccf7005df41faf",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {

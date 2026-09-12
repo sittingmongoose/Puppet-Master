@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L58-L121
 
-Source SHA256: `311736f0f7cbd3f4d5ba20605723e33bc1c1d65f75978dbdfc269fb6269171cf`
+Source SHA256: `6f29ead25514f1a2471ee6d5e737cc6bec09ff9771dd2000d8ccf7005df41faf`
 
 ---
 
@@ -43,7 +43,7 @@ negative_fields:
   - attachment_manifest
 ```
 
-`objective_text` is expected to remain concise. The product maximum stays consistent with the existing approximately 4,000-character Goal convention; a request that exceeds it is rejected with a typed error rather than silently truncated, and the user is shown the limit. `currentness_hash` is the compare-and-swap token for every mutation; a stale projection cannot write.
+`objective_text` is expected to remain concise. GRS-064 implements the existing approximately 4,000-character Goal convention as exactly 4,000 Unicode scalar values; a request that exceeds it is rejected with the existing typed error rather than silently truncated, and the user is shown the limit. `currentness_hash` is the compare-and-swap token for every mutation; a stale projection cannot write. Every body writer uses `owner.goal.body.mutation@1.0.0` under GRS-064/SP-287 shared canonical custody, including metadata, lifecycle and cancellation association; this adds no field to `GoalRecordV2`.
 
 The lifecycle enum is exactly `active | paused | blocked | completed`. `active` means the host may schedule the next turn when the thread is idle and eligible. `paused` means the user stopped continuation. `blocked` means an owner-supplied condition prevents safe progress and names it through `blocked_reason_ref`. `completed` means objective-completion evidence satisfied the continuation check.
 

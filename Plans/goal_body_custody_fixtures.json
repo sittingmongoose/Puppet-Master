@@ -1,0 +1,1032 @@
+{
+  "schema_id": "pm.goal.body_custody.fixtures.v1",
+  "schema_version": "1.0.0",
+  "purpose": "Curated closed physical-value shapes and canonical-byte vectors; native owner/CAS/retention proof is not asserted.",
+  "source_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-body-custody-20260911/v2/closed-examples.json",
+    "sha256": "a6d9f924d9c7ac133995dc53ae22efe5dffa846244369ac1581b11200192040a"
+  },
+  "cases": [
+    {
+      "case_id": "closed_goal_body_record",
+      "family_id": "goal_body_record",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+      "expected_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "objective_text": "Exact objective",
+          "revision": 1,
+          "state": "active",
+          "blocked_reason_ref": null,
+          "active_run_ref": null,
+          "created_at": "2026-09-11T20:00:00Z",
+          "updated_at": "2026-09-11T20:00:00Z",
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+        }
+      }
+    },
+    {
+      "case_id": "future_version_goal_body_record",
+      "family_id": "goal_body_record",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "9.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "objective_text": "Exact objective",
+          "revision": 1,
+          "state": "active",
+          "blocked_reason_ref": null,
+          "active_run_ref": null,
+          "created_at": "2026-09-11T20:00:00Z",
+          "updated_at": "2026-09-11T20:00:00Z",
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+        }
+      }
+    },
+    {
+      "case_id": "extra_outer_field_goal_body_record",
+      "family_id": "goal_body_record",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "objective_text": "Exact objective",
+          "revision": 1,
+          "state": "active",
+          "blocked_reason_ref": null,
+          "active_run_ref": null,
+          "created_at": "2026-09-11T20:00:00Z",
+          "updated_at": "2026-09-11T20:00:00Z",
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+        },
+        "unguarded_currentness": true
+      }
+    },
+    {
+      "case_id": "unwrapped_semantic_goal_body_record",
+      "family_id": "goal_body_record",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+      "expected_valid": false,
+      "value": {
+        "goal_id": "goal:α",
+        "project_id": "project/1",
+        "thread_id": "thr_1",
+        "objective_text": "Exact objective",
+        "revision": 1,
+        "state": "active",
+        "blocked_reason_ref": null,
+        "active_run_ref": null,
+        "created_at": "2026-09-11T20:00:00Z",
+        "updated_at": "2026-09-11T20:00:00Z",
+        "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+      }
+    },
+    {
+      "case_id": "double_wrapper_goal_body_record",
+      "family_id": "goal_body_record",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_body",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.storage_value.goal_body_record.v1",
+          "schema_version": "1.0.0",
+          "record": {
+            "goal_id": "goal:α",
+            "project_id": "project/1",
+            "thread_id": "thr_1",
+            "objective_text": "Exact objective",
+            "revision": 1,
+            "state": "active",
+            "blocked_reason_ref": null,
+            "active_run_ref": null,
+            "created_at": "2026-09-11T20:00:00Z",
+            "updated_at": "2026-09-11T20:00:00Z",
+            "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "closed_goal_objective_revision",
+      "family_id": "goal_objective_revision",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_revision",
+      "expected_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "revision": 1,
+          "objective_text": "Exact objective",
+          "change_source": "user_direct",
+          "source_message_id": "msg:1",
+          "approval_id": null,
+          "prior_revision_hash": null,
+          "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "created_at": "2026-09-11T20:00:00Z"
+        }
+      }
+    },
+    {
+      "case_id": "future_version_goal_objective_revision",
+      "family_id": "goal_objective_revision",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_revision",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "9.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "revision": 1,
+          "objective_text": "Exact objective",
+          "change_source": "user_direct",
+          "source_message_id": "msg:1",
+          "approval_id": null,
+          "prior_revision_hash": null,
+          "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "created_at": "2026-09-11T20:00:00Z"
+        }
+      }
+    },
+    {
+      "case_id": "extra_outer_field_goal_objective_revision",
+      "family_id": "goal_objective_revision",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_revision",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "revision": 1,
+          "objective_text": "Exact objective",
+          "change_source": "user_direct",
+          "source_message_id": "msg:1",
+          "approval_id": null,
+          "prior_revision_hash": null,
+          "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "created_at": "2026-09-11T20:00:00Z"
+        },
+        "unguarded_currentness": true
+      }
+    },
+    {
+      "case_id": "unwrapped_semantic_goal_objective_revision",
+      "family_id": "goal_objective_revision",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_revision",
+      "expected_valid": false,
+      "value": {
+        "goal_id": "goal:α",
+        "revision": 1,
+        "objective_text": "Exact objective",
+        "change_source": "user_direct",
+        "source_message_id": "msg:1",
+        "approval_id": null,
+        "prior_revision_hash": null,
+        "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+        "created_at": "2026-09-11T20:00:00Z"
+      }
+    },
+    {
+      "case_id": "double_wrapper_goal_objective_revision",
+      "family_id": "goal_objective_revision",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_revision",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.storage_value.goal_objective_revision.v1",
+          "schema_version": "1.0.0",
+          "record": {
+            "goal_id": "goal:α",
+            "revision": 1,
+            "objective_text": "Exact objective",
+            "change_source": "user_direct",
+            "source_message_id": "msg:1",
+            "approval_id": null,
+            "prior_revision_hash": null,
+            "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+            "created_at": "2026-09-11T20:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "closed_goal_objective_origin",
+      "family_id": "goal_objective_origin",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_origin",
+      "expected_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "goal_revision": 1,
+          "origin_kind": "user_request",
+          "source_message_refs": [
+            "msg:1"
+          ],
+          "source_context_manifest_ref": "context:1",
+          "bound_plan_ref": null,
+          "owning_workflow_ref": null
+        }
+      }
+    },
+    {
+      "case_id": "future_version_goal_objective_origin",
+      "family_id": "goal_objective_origin",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_origin",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "9.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "goal_revision": 1,
+          "origin_kind": "user_request",
+          "source_message_refs": [
+            "msg:1"
+          ],
+          "source_context_manifest_ref": "context:1",
+          "bound_plan_ref": null,
+          "owning_workflow_ref": null
+        }
+      }
+    },
+    {
+      "case_id": "extra_outer_field_goal_objective_origin",
+      "family_id": "goal_objective_origin",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_origin",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "goal_revision": 1,
+          "origin_kind": "user_request",
+          "source_message_refs": [
+            "msg:1"
+          ],
+          "source_context_manifest_ref": "context:1",
+          "bound_plan_ref": null,
+          "owning_workflow_ref": null
+        },
+        "unguarded_currentness": true
+      }
+    },
+    {
+      "case_id": "unwrapped_semantic_goal_objective_origin",
+      "family_id": "goal_objective_origin",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_origin",
+      "expected_valid": false,
+      "value": {
+        "goal_id": "goal:α",
+        "goal_revision": 1,
+        "origin_kind": "user_request",
+        "source_message_refs": [
+          "msg:1"
+        ],
+        "source_context_manifest_ref": "context:1",
+        "bound_plan_ref": null,
+        "owning_workflow_ref": null
+      }
+    },
+    {
+      "case_id": "double_wrapper_goal_objective_origin",
+      "family_id": "goal_objective_origin",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_origin",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.storage_value.goal_objective_origin.v1",
+          "schema_version": "1.0.0",
+          "record": {
+            "goal_id": "goal:α",
+            "goal_revision": 1,
+            "origin_kind": "user_request",
+            "source_message_refs": [
+              "msg:1"
+            ],
+            "source_context_manifest_ref": "context:1",
+            "bound_plan_ref": null,
+            "owning_workflow_ref": null
+          }
+        }
+      }
+    },
+    {
+      "case_id": "closed_goal_body_control",
+      "family_id": "goal_body_control",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "expected_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_control.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_control.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+          "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+          "current_revision": 1,
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "latest_objective_revision": 1,
+          "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+          "control_epoch": 1,
+          "cancellation_receipt_ref": null,
+          "pending": {
+            "operation_id": "edit",
+            "owner_ref": "goal-runtime:fixture",
+            "owner_epoch": 1,
+            "operation_kind": "objective_update",
+            "expected_revision": 1,
+            "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "expected_stop_epoch": 0,
+            "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+            "after_record": {
+              "goal_id": "goal:α",
+              "project_id": "project/1",
+              "thread_id": "thr_1",
+              "objective_text": "Pending text",
+              "revision": 2,
+              "state": "active",
+              "blocked_reason_ref": null,
+              "active_run_ref": null,
+              "created_at": "2026-09-11T20:00:00Z",
+              "updated_at": "2026-09-11T20:01:00Z",
+              "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+            },
+            "accepted_revision": {
+              "goal_id": "goal:α",
+              "revision": 2,
+              "objective_text": "Pending text",
+              "change_source": "user_direct",
+              "source_message_id": null,
+              "approval_id": null,
+              "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+              "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+              "created_at": "2026-09-11T20:01:00Z"
+            },
+            "origin": {
+              "goal_id": "goal:α",
+              "goal_revision": 2,
+              "origin_kind": "user_request",
+              "source_message_refs": [],
+              "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+              "bound_plan_ref": null,
+              "owning_workflow_ref": null
+            },
+            "original_change_authority_ref": "fixture-authority:accepted-change",
+            "external_authority_ref": null
+          }
+        }
+      }
+    },
+    {
+      "case_id": "future_version_goal_body_control",
+      "family_id": "goal_body_control",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_control.v1",
+        "schema_version": "9.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_control.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+          "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+          "current_revision": 1,
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "latest_objective_revision": 1,
+          "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+          "control_epoch": 1,
+          "cancellation_receipt_ref": null,
+          "pending": {
+            "operation_id": "edit",
+            "owner_ref": "goal-runtime:fixture",
+            "owner_epoch": 1,
+            "operation_kind": "objective_update",
+            "expected_revision": 1,
+            "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "expected_stop_epoch": 0,
+            "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+            "after_record": {
+              "goal_id": "goal:α",
+              "project_id": "project/1",
+              "thread_id": "thr_1",
+              "objective_text": "Pending text",
+              "revision": 2,
+              "state": "active",
+              "blocked_reason_ref": null,
+              "active_run_ref": null,
+              "created_at": "2026-09-11T20:00:00Z",
+              "updated_at": "2026-09-11T20:01:00Z",
+              "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+            },
+            "accepted_revision": {
+              "goal_id": "goal:α",
+              "revision": 2,
+              "objective_text": "Pending text",
+              "change_source": "user_direct",
+              "source_message_id": null,
+              "approval_id": null,
+              "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+              "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+              "created_at": "2026-09-11T20:01:00Z"
+            },
+            "origin": {
+              "goal_id": "goal:α",
+              "goal_revision": 2,
+              "origin_kind": "user_request",
+              "source_message_refs": [],
+              "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+              "bound_plan_ref": null,
+              "owning_workflow_ref": null
+            },
+            "original_change_authority_ref": "fixture-authority:accepted-change",
+            "external_authority_ref": null
+          }
+        }
+      }
+    },
+    {
+      "case_id": "extra_outer_field_goal_body_control",
+      "family_id": "goal_body_control",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_control.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_control.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+          "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+          "current_revision": 1,
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "latest_objective_revision": 1,
+          "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+          "control_epoch": 1,
+          "cancellation_receipt_ref": null,
+          "pending": {
+            "operation_id": "edit",
+            "owner_ref": "goal-runtime:fixture",
+            "owner_epoch": 1,
+            "operation_kind": "objective_update",
+            "expected_revision": 1,
+            "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "expected_stop_epoch": 0,
+            "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+            "after_record": {
+              "goal_id": "goal:α",
+              "project_id": "project/1",
+              "thread_id": "thr_1",
+              "objective_text": "Pending text",
+              "revision": 2,
+              "state": "active",
+              "blocked_reason_ref": null,
+              "active_run_ref": null,
+              "created_at": "2026-09-11T20:00:00Z",
+              "updated_at": "2026-09-11T20:01:00Z",
+              "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+            },
+            "accepted_revision": {
+              "goal_id": "goal:α",
+              "revision": 2,
+              "objective_text": "Pending text",
+              "change_source": "user_direct",
+              "source_message_id": null,
+              "approval_id": null,
+              "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+              "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+              "created_at": "2026-09-11T20:01:00Z"
+            },
+            "origin": {
+              "goal_id": "goal:α",
+              "goal_revision": 2,
+              "origin_kind": "user_request",
+              "source_message_refs": [],
+              "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+              "bound_plan_ref": null,
+              "owning_workflow_ref": null
+            },
+            "original_change_authority_ref": "fixture-authority:accepted-change",
+            "external_authority_ref": null
+          }
+        },
+        "unguarded_currentness": true
+      }
+    },
+    {
+      "case_id": "unwrapped_semantic_goal_body_control",
+      "family_id": "goal_body_control",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.goal.body_control.v1",
+        "storage_instance_id": "fixture-instance",
+        "project_id": "project/1",
+        "thread_id": "thr_1",
+        "goal_id": "goal:α",
+        "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+        "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+        "current_revision": 1,
+        "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+        "latest_objective_revision": 1,
+        "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+        "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+        "control_epoch": 1,
+        "cancellation_receipt_ref": null,
+        "pending": {
+          "operation_id": "edit",
+          "owner_ref": "goal-runtime:fixture",
+          "owner_epoch": 1,
+          "operation_kind": "objective_update",
+          "expected_revision": 1,
+          "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "expected_stop_epoch": 0,
+          "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+          "after_record": {
+            "goal_id": "goal:α",
+            "project_id": "project/1",
+            "thread_id": "thr_1",
+            "objective_text": "Pending text",
+            "revision": 2,
+            "state": "active",
+            "blocked_reason_ref": null,
+            "active_run_ref": null,
+            "created_at": "2026-09-11T20:00:00Z",
+            "updated_at": "2026-09-11T20:01:00Z",
+            "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+          },
+          "accepted_revision": {
+            "goal_id": "goal:α",
+            "revision": 2,
+            "objective_text": "Pending text",
+            "change_source": "user_direct",
+            "source_message_id": null,
+            "approval_id": null,
+            "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+            "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+            "created_at": "2026-09-11T20:01:00Z"
+          },
+          "origin": {
+            "goal_id": "goal:α",
+            "goal_revision": 2,
+            "origin_kind": "user_request",
+            "source_message_refs": [],
+            "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+            "bound_plan_ref": null,
+            "owning_workflow_ref": null
+          },
+          "original_change_authority_ref": "fixture-authority:accepted-change",
+          "external_authority_ref": null
+        }
+      }
+    },
+    {
+      "case_id": "double_wrapper_goal_body_control",
+      "family_id": "goal_body_control",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_control.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.storage_value.goal_body_control.v1",
+          "schema_version": "1.0.0",
+          "record": {
+            "schema_id": "pm.goal.body_control.v1",
+            "storage_instance_id": "fixture-instance",
+            "project_id": "project/1",
+            "thread_id": "thr_1",
+            "goal_id": "goal:α",
+            "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+            "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+            "current_revision": 1,
+            "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "latest_objective_revision": 1,
+            "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+            "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+            "control_epoch": 1,
+            "cancellation_receipt_ref": null,
+            "pending": {
+              "operation_id": "edit",
+              "owner_ref": "goal-runtime:fixture",
+              "owner_epoch": 1,
+              "operation_kind": "objective_update",
+              "expected_revision": 1,
+              "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+              "expected_stop_epoch": 0,
+              "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+              "after_record": {
+                "goal_id": "goal:α",
+                "project_id": "project/1",
+                "thread_id": "thr_1",
+                "objective_text": "Pending text",
+                "revision": 2,
+                "state": "active",
+                "blocked_reason_ref": null,
+                "active_run_ref": null,
+                "created_at": "2026-09-11T20:00:00Z",
+                "updated_at": "2026-09-11T20:01:00Z",
+                "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+              },
+              "accepted_revision": {
+                "goal_id": "goal:α",
+                "revision": 2,
+                "objective_text": "Pending text",
+                "change_source": "user_direct",
+                "source_message_id": null,
+                "approval_id": null,
+                "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+                "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+                "created_at": "2026-09-11T20:01:00Z"
+              },
+              "origin": {
+                "goal_id": "goal:α",
+                "goal_revision": 2,
+                "origin_kind": "user_request",
+                "source_message_refs": [],
+                "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+                "bound_plan_ref": null,
+                "owning_workflow_ref": null
+              },
+              "original_change_authority_ref": "fixture-authority:accepted-change",
+              "external_authority_ref": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "closed_goal_body_mutation_receipt",
+      "family_id": "goal_body_mutation_receipt",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_receipt",
+      "expected_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_mutation_receipt.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "operation_id": "m",
+          "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+          "owner_ref": "goal-runtime:fixture",
+          "authority_ref": "original-owner:fixture",
+          "before_revision": 1,
+          "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "after_revision": 2,
+          "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+          "accepted_objective_revision": null,
+          "accepted_revision_hash": null,
+          "committed_at": "2026-09-11T20:01:00Z"
+        }
+      }
+    },
+    {
+      "case_id": "future_version_goal_body_mutation_receipt",
+      "family_id": "goal_body_mutation_receipt",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_receipt",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "9.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_mutation_receipt.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "operation_id": "m",
+          "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+          "owner_ref": "goal-runtime:fixture",
+          "authority_ref": "original-owner:fixture",
+          "before_revision": 1,
+          "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "after_revision": 2,
+          "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+          "accepted_objective_revision": null,
+          "accepted_revision_hash": null,
+          "committed_at": "2026-09-11T20:01:00Z"
+        }
+      }
+    },
+    {
+      "case_id": "extra_outer_field_goal_body_mutation_receipt",
+      "family_id": "goal_body_mutation_receipt",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_receipt",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_mutation_receipt.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "operation_id": "m",
+          "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+          "owner_ref": "goal-runtime:fixture",
+          "authority_ref": "original-owner:fixture",
+          "before_revision": 1,
+          "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "after_revision": 2,
+          "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+          "accepted_objective_revision": null,
+          "accepted_revision_hash": null,
+          "committed_at": "2026-09-11T20:01:00Z"
+        },
+        "unguarded_currentness": true
+      }
+    },
+    {
+      "case_id": "unwrapped_semantic_goal_body_mutation_receipt",
+      "family_id": "goal_body_mutation_receipt",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_receipt",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.goal.body_mutation_receipt.v1",
+        "storage_instance_id": "fixture-instance",
+        "project_id": "project/1",
+        "thread_id": "thr_1",
+        "goal_id": "goal:α",
+        "operation_id": "m",
+        "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+        "owner_ref": "goal-runtime:fixture",
+        "authority_ref": "original-owner:fixture",
+        "before_revision": 1,
+        "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+        "after_revision": 2,
+        "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+        "accepted_objective_revision": null,
+        "accepted_revision_hash": null,
+        "committed_at": "2026-09-11T20:01:00Z"
+      }
+    },
+    {
+      "case_id": "double_wrapper_goal_body_mutation_receipt",
+      "family_id": "goal_body_mutation_receipt",
+      "schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_receipt",
+      "expected_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+          "schema_version": "1.0.0",
+          "record": {
+            "schema_id": "pm.goal.body_mutation_receipt.v1",
+            "storage_instance_id": "fixture-instance",
+            "project_id": "project/1",
+            "thread_id": "thr_1",
+            "goal_id": "goal:α",
+            "operation_id": "m",
+            "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+            "owner_ref": "goal-runtime:fixture",
+            "authority_ref": "original-owner:fixture",
+            "before_revision": 1,
+            "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "after_revision": 2,
+            "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+            "accepted_objective_revision": null,
+            "accepted_revision_hash": null,
+            "committed_at": "2026-09-11T20:01:00Z"
+          }
+        }
+      }
+    }
+  ],
+  "codec_vectors": [
+    {
+      "vector_id": "goal_body_record_canonical_bytes",
+      "family_id": "goal_body_record",
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "objective_text": "Exact objective",
+          "revision": 1,
+          "state": "active",
+          "blocked_reason_ref": null,
+          "active_run_ref": null,
+          "created_at": "2026-09-11T20:00:00Z",
+          "updated_at": "2026-09-11T20:00:00Z",
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70"
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"active_run_ref\":null,\"blocked_reason_ref\":null,\"created_at\":\"2026-09-11T20:00:00Z\",\"currentness_hash\":\"60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70\",\"goal_id\":\"goal:α\",\"objective_text\":\"Exact objective\",\"project_id\":\"project/1\",\"revision\":1,\"state\":\"active\",\"thread_id\":\"thr_1\",\"updated_at\":\"2026-09-11T20:00:00Z\"},\"schema_id\":\"pm.storage_value.goal_body_record.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "4ad4ae6b3a9d43ff1fb587b948e15a1ab33ead48a2d222fd7e1a45ed42ac565d",
+      "inner_record_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681"
+    },
+    {
+      "vector_id": "goal_objective_revision_canonical_bytes",
+      "family_id": "goal_objective_revision",
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_revision.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "revision": 1,
+          "objective_text": "Exact objective",
+          "change_source": "user_direct",
+          "source_message_id": "msg:1",
+          "approval_id": null,
+          "prior_revision_hash": null,
+          "revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "created_at": "2026-09-11T20:00:00Z"
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"approval_id\":null,\"change_source\":\"user_direct\",\"created_at\":\"2026-09-11T20:00:00Z\",\"goal_id\":\"goal:α\",\"objective_text\":\"Exact objective\",\"prior_revision_hash\":null,\"revision\":1,\"revision_hash\":\"7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a\",\"source_message_id\":\"msg:1\"},\"schema_id\":\"pm.storage_value.goal_objective_revision.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "d689d8f8da01e07ac9c78297088117b1490c60588bf899af1a45d8d7d081bb64",
+      "inner_record_sha256": "0da29b2bad317baa66967da9b5c8a014c7c6d6b1eadb3e70de25eaf97f69945a"
+    },
+    {
+      "vector_id": "goal_objective_origin_canonical_bytes",
+      "family_id": "goal_objective_origin",
+      "value": {
+        "schema_id": "pm.storage_value.goal_objective_origin.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "goal_revision": 1,
+          "origin_kind": "user_request",
+          "source_message_refs": [
+            "msg:1"
+          ],
+          "source_context_manifest_ref": "context:1",
+          "bound_plan_ref": null,
+          "owning_workflow_ref": null
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"bound_plan_ref\":null,\"goal_id\":\"goal:α\",\"goal_revision\":1,\"origin_kind\":\"user_request\",\"owning_workflow_ref\":null,\"source_context_manifest_ref\":\"context:1\",\"source_message_refs\":[\"msg:1\"]},\"schema_id\":\"pm.storage_value.goal_objective_origin.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "c4f1c9123d637b814cc8fcaf5bd501977a1526bd5c3cd4414ee1e152eb3249e2",
+      "inner_record_sha256": "7d097e01bbf81382f32fe466f0352d81ed98b91bb2aba847f18b7ad1f612d7f8"
+    },
+    {
+      "vector_id": "goal_body_control_canonical_bytes",
+      "family_id": "goal_body_control",
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_control.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_control.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "body_key": "goal_record.v2:70726f6a6563742f31:676f616c3aceb1",
+          "body_sha256": "fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681",
+          "current_revision": 1,
+          "currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "latest_objective_revision": 1,
+          "latest_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+          "origin_key": "goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1",
+          "control_epoch": 1,
+          "cancellation_receipt_ref": null,
+          "pending": {
+            "operation_id": "edit",
+            "owner_ref": "goal-runtime:fixture",
+            "owner_epoch": 1,
+            "operation_kind": "objective_update",
+            "expected_revision": 1,
+            "expected_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+            "expected_stop_epoch": 0,
+            "intent_sha256": "cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d",
+            "after_record": {
+              "goal_id": "goal:α",
+              "project_id": "project/1",
+              "thread_id": "thr_1",
+              "objective_text": "Pending text",
+              "revision": 2,
+              "state": "active",
+              "blocked_reason_ref": null,
+              "active_run_ref": null,
+              "created_at": "2026-09-11T20:00:00Z",
+              "updated_at": "2026-09-11T20:01:00Z",
+              "currentness_hash": "10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc"
+            },
+            "accepted_revision": {
+              "goal_id": "goal:α",
+              "revision": 2,
+              "objective_text": "Pending text",
+              "change_source": "user_direct",
+              "source_message_id": null,
+              "approval_id": null,
+              "prior_revision_hash": "7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a",
+              "revision_hash": "b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab",
+              "created_at": "2026-09-11T20:01:00Z"
+            },
+            "origin": {
+              "goal_id": "goal:α",
+              "goal_revision": 2,
+              "origin_kind": "user_request",
+              "source_message_refs": [],
+              "source_context_manifest_ref": "fixture-context:accepted-ui-save",
+              "bound_plan_ref": null,
+              "owning_workflow_ref": null
+            },
+            "original_change_authority_ref": "fixture-authority:accepted-change",
+            "external_authority_ref": null
+          }
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"body_key\":\"goal_record.v2:70726f6a6563742f31:676f616c3aceb1\",\"body_sha256\":\"fe5615c937ae01d0e26abd94614751f920f3f8ca47f7089f5944124d3f2c3681\",\"cancellation_receipt_ref\":null,\"control_epoch\":1,\"current_revision\":1,\"currentness_hash\":\"60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70\",\"goal_id\":\"goal:α\",\"latest_objective_revision\":1,\"latest_revision_hash\":\"7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a\",\"origin_key\":\"goal_origin.v1:70726f6a6563742f31:676f616c3aceb1:1\",\"pending\":{\"accepted_revision\":{\"approval_id\":null,\"change_source\":\"user_direct\",\"created_at\":\"2026-09-11T20:01:00Z\",\"goal_id\":\"goal:α\",\"objective_text\":\"Pending text\",\"prior_revision_hash\":\"7a1a3b6c63998db511a68b61e91bcc83a12cce2e8c03686c7b9529a3fe61922a\",\"revision\":2,\"revision_hash\":\"b9d75a77df48b2c105382c693954aa5dd4d4c6b63c79e9334db527d634b085ab\",\"source_message_id\":null},\"after_record\":{\"active_run_ref\":null,\"blocked_reason_ref\":null,\"created_at\":\"2026-09-11T20:00:00Z\",\"currentness_hash\":\"10f39cf937adff206fca139e688939cf82d88fc902fd9a56688b489f98cc31cc\",\"goal_id\":\"goal:α\",\"objective_text\":\"Pending text\",\"project_id\":\"project/1\",\"revision\":2,\"state\":\"active\",\"thread_id\":\"thr_1\",\"updated_at\":\"2026-09-11T20:01:00Z\"},\"expected_currentness_hash\":\"60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70\",\"expected_revision\":1,\"expected_stop_epoch\":0,\"external_authority_ref\":null,\"intent_sha256\":\"cd9453eb37262489904a0365fd7ba512ff161fcdaf96af4e35338d93ee62223d\",\"operation_id\":\"edit\",\"operation_kind\":\"objective_update\",\"origin\":{\"bound_plan_ref\":null,\"goal_id\":\"goal:α\",\"goal_revision\":2,\"origin_kind\":\"user_request\",\"owning_workflow_ref\":null,\"source_context_manifest_ref\":\"fixture-context:accepted-ui-save\",\"source_message_refs\":[]},\"original_change_authority_ref\":\"fixture-authority:accepted-change\",\"owner_epoch\":1,\"owner_ref\":\"goal-runtime:fixture\"},\"project_id\":\"project/1\",\"schema_id\":\"pm.goal.body_control.v1\",\"storage_instance_id\":\"fixture-instance\",\"thread_id\":\"thr_1\"},\"schema_id\":\"pm.storage_value.goal_body_control.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "9368871b5bb689f080c237bf98ca3f85fe9f646907827ac059fc0947a825293e",
+      "inner_record_sha256": "af93246b8e0fe69beb7c85009af4a87de185d3719eb2a49c172bbc7a2f1d6198"
+    },
+    {
+      "vector_id": "goal_body_mutation_receipt_canonical_bytes",
+      "family_id": "goal_body_mutation_receipt",
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_mutation_receipt.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "schema_id": "pm.goal.body_mutation_receipt.v1",
+          "storage_instance_id": "fixture-instance",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "goal_id": "goal:α",
+          "operation_id": "m",
+          "intent_sha256": "e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625",
+          "owner_ref": "goal-runtime:fixture",
+          "authority_ref": "original-owner:fixture",
+          "before_revision": 1,
+          "before_currentness_hash": "60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70",
+          "after_revision": 2,
+          "after_currentness_hash": "7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5",
+          "accepted_objective_revision": null,
+          "accepted_revision_hash": null,
+          "committed_at": "2026-09-11T20:01:00Z"
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"accepted_objective_revision\":null,\"accepted_revision_hash\":null,\"after_currentness_hash\":\"7fc8f1edd37086120db2cbed8ef3604bf01631db3a220aad17f837cde8218ab5\",\"after_revision\":2,\"authority_ref\":\"original-owner:fixture\",\"before_currentness_hash\":\"60cec739cf419687cd904c0e3d6d3755acca1dc50634d31a92a7f872f1432e70\",\"before_revision\":1,\"committed_at\":\"2026-09-11T20:01:00Z\",\"goal_id\":\"goal:α\",\"intent_sha256\":\"e36d4f3086a979921eb5e20733f311abe797ac1733805d087261bc4fbe420625\",\"operation_id\":\"m\",\"owner_ref\":\"goal-runtime:fixture\",\"project_id\":\"project/1\",\"schema_id\":\"pm.goal.body_mutation_receipt.v1\",\"storage_instance_id\":\"fixture-instance\",\"thread_id\":\"thr_1\"},\"schema_id\":\"pm.storage_value.goal_body_mutation_receipt.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "3d0941c842e35ba6e516b266b904154f71f4b125e3f0a31889b3f8f3108a359a",
+      "inner_record_sha256": "4ab3dd7df7da503bb5495c247feecd41fd2d17ad3ba2502190b798eac6cf2e6e"
+    },
+    {
+      "vector_id": "body_arbitrary_integer_preserved",
+      "family_id": "goal_body_record",
+      "value": {
+        "schema_id": "pm.storage_value.goal_body_record.v1",
+        "schema_version": "1.0.0",
+        "record": {
+          "goal_id": "goal:α",
+          "project_id": "project/1",
+          "thread_id": "thr_1",
+          "objective_text": "Exact objective",
+          "revision": 1180591620717411303424,
+          "state": "active",
+          "blocked_reason_ref": null,
+          "active_run_ref": null,
+          "created_at": "2026-09-11T20:00:00Z",
+          "updated_at": "2026-09-11T20:00:00Z",
+          "currentness_hash": "3dd5f81fff1c415dcdc76f5b2cd0bf233d78df0b0cc66eee68e88b8eeb253db9"
+        }
+      },
+      "canonical_utf8": "{\"record\":{\"active_run_ref\":null,\"blocked_reason_ref\":null,\"created_at\":\"2026-09-11T20:00:00Z\",\"currentness_hash\":\"3dd5f81fff1c415dcdc76f5b2cd0bf233d78df0b0cc66eee68e88b8eeb253db9\",\"goal_id\":\"goal:α\",\"objective_text\":\"Exact objective\",\"project_id\":\"project/1\",\"revision\":1180591620717411303424,\"state\":\"active\",\"thread_id\":\"thr_1\",\"updated_at\":\"2026-09-11T20:00:00Z\"},\"schema_id\":\"pm.storage_value.goal_body_record.v1\",\"schema_version\":\"1.0.0\"}",
+      "physical_value_sha256": "e59dc6c4a0dd71bb2e17537befe9ba9d90138a9c72b7aeaaa6e2db1de4966fbf",
+      "inner_record_sha256": "029036632c2d2924a5b71ccfc45826b3b8bc883770b29010536c0d3c86be5f23",
+      "inner_currentness_hash": "3dd5f81fff1c415dcdc76f5b2cd0bf233d78df0b0cc66eee68e88b8eeb253db9"
+    }
+  ]
+}
