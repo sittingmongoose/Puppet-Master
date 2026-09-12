@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,34 @@ canonical_text: Second test PlanUnit.
 
 
 class PmPlanIndexCacheTests(unittest.TestCase):
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_derived_diagnostics_are_repository_relative(self) -> None:
+        detail = f"[Errno 2] No such file or directory: '{ROOT}/Plans/missing.json'"
+        self.assertEqual(
+            "[Errno 2] No such file or directory: 'Plans/missing.json'",
+            pm_plan_index.portable_index_diagnostic(detail),
+        )
+        sibling = f"{ROOT}-other/Plans/missing.json"
+        self.assertEqual(sibling, pm_plan_index.portable_index_diagnostic(sibling))
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_portable_diagnostic_preserves_currentness_failure(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as tmp:
+            receipt = Path(tmp) / "receipt.json"
+            receipt.write_text("{}", encoding="utf-8")
+            source_failure = {
+                "error": "event_authority_currentness_audit_unavailable",
+                "detail": f"[Errno 2] No such file or directory: '{ROOT}/Plans/missing.json'",
+            }
+            with patch.object(pm_plan_index, "PNC019_CERTIFICATION_RECEIPT_PATH", receipt), \
+                 patch.object(pm_plan_index, "pnc019_source_hash_failures", return_value=[]), \
+                 patch.object(pm_plan_index, "pnc019_event_authority_clearance_failures", return_value=[source_failure]):
+                status = pm_plan_index.pnc019_certification_status()
+            self.assertFalse(status["complete"])
+            failure = next(row for row in status["failures"] if row["error"] == source_failure["error"])
+            self.assertEqual("[Errno 2] No such file or directory: 'Plans/missing.json'", failure["detail"])
+            self.assertIn(str(ROOT), source_failure["detail"])
+
     @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
     def test_extract_plan_units_uses_cached_document_metadata(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT) as tmp:

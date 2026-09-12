@@ -15089,10 +15089,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 68,
+        "False": 69,
         "True": 100
       },
-      "heading_count": 265,
+      "heading_count": 267,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Automated_Testing_System.md",
@@ -15126,11 +15126,13 @@
         "Plans/touch_closure.json",
         "future Browser Runtime",
         "future Testing evidence harness",
-        "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current"
+        "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current",
+        "scripts/pm-new-contracts-verify.py",
+        "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 11637,
+      "line_count": 11726,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-      "plan_unit_count": 168,
+      "plan_unit_count": 169,
       "plan_unit_ids": [
         "SMPFS-002",
         "SMPFS-003",
@@ -15299,7 +15301,8 @@
         "SMPFS-165",
         "SMPFS-166",
         "SMPFS-167",
-        "SMPFS-168"
+        "SMPFS-168",
+        "SMPFS-169"
       ],
       "reasoning_tiers": [
         "high",
@@ -15329,6 +15332,7 @@
         "browser_record_schema_identity_ambiguity_or_protected_auth_escape",
         "browser_reference_disposition_drift",
         "browser_reset_generation_replay_or_append_uncertainty",
+        "browser_result_budget_schema_or_provenance_escape",
         "browser_retargeting_drift",
         "browser_routing_routine_or_adapter_authority_drift",
         "browser_runtime_drift",
@@ -15437,10 +15441,10 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "972ea88a1cf7ad70dd85bdf827047c6222a1ee430176fbf39f5dc975a1beeb92",
+      "sha256": "e750a78018fc0ec74c2408635d69f122e1f9a59c26ba6d8a5c8508f534bdf091",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 166,
+        "accepted": 167,
         "retired": 2
       },
       "title": "Section 15 Promoted Features Spec",
@@ -15449,7 +15453,7 @@
         "compatibility_disposition": 2,
         "constraint": 3,
         "owner_boundary": 4,
-        "requirement": 157
+        "requirement": 158
       },
       "validation_surfaces": [
         "A fast-output fixture records byte counts and no silent loss.",
@@ -15544,9 +15548,11 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/runner.py",
         "scratchpad/pm-integration-20260831/audits/egolite-four-arm-benchmark-current/self_test.py",
+        "scripts/pm_browser_program_semantics.py",
         "scrollback is not model context",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_program_semantics.py",
+        "tests/test_pm_browser_result_binding.py",
         "tests/test_pm_browser_workspace_created.py",
         "tests/test_pm_browser_workspace_reset.py",
         "tmux passthrough marks command-block confidence degraded when unverified"
@@ -18886,7 +18892,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-11T23:49:18Z",
+  "generated_at_utc": "2026-09-12T00:28:29Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18894,13 +18900,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3385,
+      "False": 3386,
       "True": 3158
     },
-    "plan_unit_count": 6543,
+    "plan_unit_count": 6544,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6352,
+      "accepted": 6353,
       "retired": 182,
       "superseded": 9
     },
@@ -18967,7 +18973,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5195,
+      "requirement": 5196,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -797,6 +797,58 @@ The AST admits only named BrowserAction nodes, bounded representation queries, b
 
 One program may execute many local named actions without a model round trip for every action. Model-facing results remain compact, bounded, typed, and provenance-bearing. Continuous human progress is a separate `ObservableWork` projection and never bloats or substitutes for the program result.
 
+The result binding in SMPFS-169 makes this requirement checkable: the compiled
+program pins `result_schema_ref` and the SHA-256 of the resolved output schema's
+original UTF-8 bytes. Validation consumes that producing program, the resolved
+schema and its complete pinned nonlocal dependency closure, the exact terminal
+ordinary subject and ProgramWorkspace revision from
+owner custody, and the actual uncompressed UTF-8 JSON bytes of the complete
+`BrowserProgramResult`. `result_schema_dependencies` maps each nonlocal resource
+reference to the SHA-256 of its original UTF-8 schema bytes; the map is empty for
+a self-contained schema. The result cannot supply its own budget or substitute a
+different program/schema/currentness context. Schema-only validation of a result
+is insufficient; a missing binding fails closed. Earlier programs lacking these
+pins require recompile/preflight against an explicitly selected output schema;
+do not invent a permissive schema or implicit default for a stored program.
+
+`budgets.max_output_bytes` limits the complete result record, including JSON
+punctuation/escaping, envelope, nested `compact_result`, and every receipt,
+artifact and capture reference. Count actual bytes, not characters, property
+counts, estimates, compressed bytes or a reserialized smaller equivalent.
+Whitespace and a trailing newline count if present. This adds no default or new
+numeric limit and applies equally to all existing result modes and terminal
+states. Oversize output is rejected before publication; do not truncate a field,
+omit provenance, call it complete, or retry effects to make it fit. Large values
+use the existing typed-artifact spill path and return only an independently
+bounded summary/reference record. Artifact contents remain under the separate
+artifact budget; attachment or log channels cannot be used to evade their own
+owner budgets. This binding does not define a new token limit or certify those
+other channels.
+
+The exact schema bytes must match the producing program's pinned digest and
+resolved reference; validate `compact_result` against that schema using only
+explicitly supplied offline schema resources whose original bytes match the
+program's complete dependency map. Undeclared, missing, changed or colliding
+resources fail closed, including transitive imports; no caller retrieval callback
+is used. A resource's declared root identity, when present, matches its bound
+reference. Missing or invalid schemas, unresolved references encountered during
+validation and schema-mismatched output fail closed. No network
+lookup, handler inference, permissive fallback schema, or result-provided schema
+is allowed. JSON decoding must be unambiguous: reject invalid UTF-8, duplicate
+object keys, non-finite/unrepresentable numbers and malformed data without
+echoing result or schema bodies in failure diagnostics.
+
+The result's program, complete lineage and ProgramWorkspace identity match the
+producing program. Its subject matches the owner-resolved terminal subject,
+which retains the same ordinary session/workspace/page identities and a
+non-regressing PageGeneration. Its result revision matches the owner-resolved
+terminal ProgramWorkspace revision and cannot precede the program's expected
+revision. Navigation and workspace mutations may legitimately advance those
+values; neither is forced to equal the initial generation/revision. A claimed
+future value or a newest/focused-subject lookup is not currentness evidence.
+Static supplied-context fixtures prove these comparisons, not authenticity,
+native resolution, artifact custody, execution, event admission or readiness.
+
 #### ProgramWorkspace and segments
 
 `ProgramWorkspace` is revisioned typed durable local state, not a host directory and not a general database. It may contain bounded variables, tables, datasets, artifact refs, routine refs, checkpoint refs, schema refs, and spill refs. Allowed local operators are `append`, `select`, `filter`, `map`, `reduce`, `group`, `sort`, `dedupe`, `count`, `join`, `schema`, `preview`, and `spill`; operators remain deterministic and bounded.
@@ -11635,3 +11687,40 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-046, ContractName:Plans/Contracts_V0.md#CV-332, ContractName:Plans/storage-plan.md#SP-282, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/usage-feature.md#UF-103, ContractName:Plans/Prompt_Pipeline.md#PP-091
+
+## Browser Program Result Binding - 2026-09-11
+
+### SMPFS-169 - Browser Program Result Budget And Output-Schema Binding
+
+```yaml
+plan_unit_id: SMPFS-169
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: >-
+  Bind BrowserProgramResult to its producing program's existing max_output_bytes
+  and pinned output schema, using actual complete uncompressed UTF-8 JSON result
+  bytes plus owner-resolved terminal subject and ProgramWorkspace revision.
+  Standalone schema validity, self-reported size and result-supplied context are
+  insufficient; all modes and terminals retain the same fail-closed boundary.
+gui_related: false
+gui_classification_reason: Defines static result validation and provenance, not visual presentation.
+depends_on: [SMPFS-147, SMPFS-148, SMPFS-152, SMPFS-153]
+unblocks: []
+acceptance_criteria:
+  - Exact bytes at the existing budget pass and one byte over fails, including envelope/reference/escaping/Unicode/nested-value overhead.
+  - The pinned resolved output schema and complete nonlocal dependency byte hashes validate compact_result offline; missing, changed, invalid, colliding or unresolved schema bindings reject.
+  - Program, lineage, ordinary subject and workspace identity join exactly; terminal generation/revision may advance only through the independently resolved expected context and never regress.
+  - Every result mode and terminal state, including failure/cancellation/unknown-effect states, obeys the same byte and schema checks; standalone results fail without their binding.
+  - Oversize inline data is not silently truncated or retried; typed-artifact spill and a bounded summary preserve separate artifact custody and budgets.
+validation_surfaces: [Plans/section15_browser_program_contracts.schema.json, Plans/section15_browser_program_contract_fixtures.json, scripts/pm_browser_program_semantics.py, tests/test_pm_browser_result_binding.py, python3 scripts/pm-new-contracts-verify.py]
+risk_class: browser_result_budget_schema_or_provenance_escape
+reasoning_tier: high
+context_scope: browser_program_result_static_binding
+implementation_surfaces: [Plans/section15_browser_program_contracts.schema.json, scripts/pm_browser_program_semantics.py, scripts/pm-new-contracts-verify.py]
+node_compile_hint: {mode: static_result_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-147, Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-148, source_ref:user-approved-browser-result-technical-binding:2026-09-11]
+negative_constraints:
+  - Do not introduce new numerical output limits, token policy, runtime availability, event admission, governance sealing or visual design.
+  - Do not treat supplied static context, schema hashes, refs or fixtures as native authenticity, artifact custody, currentness resolution, provider execution or test-verdict proof.
+```

@@ -1008,6 +1008,15 @@ def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any
     if schema_rel == "Plans/settings_system_contracts.schema.json":
         return settings_draft_semantic_failures(definition_name, value)
     if schema_rel == "Plans/section15_browser_program_contracts.schema.json":
+        # The explicit non-runtime validation input binds actual serialized result
+        # bytes to a producing program/schema/context. A standalone result fails
+        # closed in the helper. No ambient schema or network resolution is used.
+        if definition_name == "browser_program_result_validation" or (
+            isinstance(value, dict) and value.get("record_kind") == "browser_program_result_validation"
+        ):
+            return browser_program_semantic_failures(
+                definition_name, value, owner_schema=load_json(ROOT / schema_rel),
+            )
         return browser_program_semantic_failures(definition_name, value)
     if schema_rel == "Plans/backup_restore_system_contracts.schema.json":
         return restore_semantic_failures(definition_name, value)

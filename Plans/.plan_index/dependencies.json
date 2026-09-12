@@ -5567,6 +5567,7 @@
     "JJI-016",
     "JJI-019",
     "SCS-021",
+    "SMPFS-169",
     "SMPFS-156",
     "OSI-193",
     "OSI-191",
@@ -60471,6 +60472,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-169",
+      "to": "SMPFS-147"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-169",
+      "to": "SMPFS-148"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-169",
+      "to": "SMPFS-152"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-169",
+      "to": "SMPFS-153"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -94845,7 +94866,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-11T23:49:18Z",
+  "generated_at_utc": "2026-09-12T00:28:29Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -185450,8 +185471,8 @@
       "source_location": {
         "heading": "SMPFS-001 - Section 15 Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 8372,
-        "line": 8374,
+        "heading_line": 8424,
+        "line": 8426,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "retired",
@@ -185467,8 +185488,8 @@
       "source_location": {
         "heading": "SMPFS-002 - Section 15 Authority And Owner Boundary",
         "heading_level": 3,
-        "heading_line": 980,
-        "line": 982,
+        "heading_line": 1032,
+        "line": 1034,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185484,8 +185505,8 @@
       "source_location": {
         "heading": "SMPFS-003 - Workspace-Tab Shell Ownership",
         "heading_level": 3,
-        "heading_line": 1042,
-        "line": 1044,
+        "heading_line": 1094,
+        "line": 1096,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185501,8 +185522,8 @@
       "source_location": {
         "heading": "SMPFS-004 - Persistent Shell Surface Inventory",
         "heading_level": 3,
-        "heading_line": 1096,
-        "line": 1098,
+        "heading_line": 1148,
+        "line": 1150,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185518,8 +185539,8 @@
       "source_location": {
         "heading": "SMPFS-005 - Shell Surface Hosting Constraints",
         "heading_level": 3,
-        "heading_line": 1155,
-        "line": 1157,
+        "heading_line": 1207,
+        "line": 1209,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185535,8 +185556,8 @@
       "source_location": {
         "heading": "SMPFS-006 - Research Session Runtime Class",
         "heading_level": 3,
-        "heading_line": 1211,
-        "line": 1213,
+        "heading_line": 1263,
+        "line": 1265,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185552,8 +185573,8 @@
       "source_location": {
         "heading": "SMPFS-007 - Research Browser Affordance Alignment",
         "heading_level": 3,
-        "heading_line": 1270,
-        "line": 1272,
+        "heading_line": 1322,
+        "line": 1324,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185569,8 +185590,8 @@
       "source_location": {
         "heading": "SMPFS-008 - Research Action Tiers And Evidence",
         "heading_level": 3,
-        "heading_line": 1329,
-        "line": 1331,
+        "heading_line": 1381,
+        "line": 1383,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185586,8 +185607,8 @@
       "source_location": {
         "heading": "SMPFS-009 - Research Lifecycle Boundaries",
         "heading_level": 3,
-        "heading_line": 1388,
-        "line": 1390,
+        "heading_line": 1440,
+        "line": 1442,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185603,8 +185624,8 @@
       "source_location": {
         "heading": "SMPFS-010 - Thread And Session Navigation Persistence",
         "heading_level": 3,
-        "heading_line": 1446,
-        "line": 1448,
+        "heading_line": 1498,
+        "line": 1500,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185620,8 +185641,8 @@
       "source_location": {
         "heading": "SMPFS-011 - Assistant Worktree Surface Points",
         "heading_level": 3,
-        "heading_line": 1505,
-        "line": 1507,
+        "heading_line": 1557,
+        "line": 1559,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185637,8 +185658,8 @@
       "source_location": {
         "heading": "SMPFS-012 - Worktree Cross-Owner Boundaries",
         "heading_level": 3,
-        "heading_line": 1562,
-        "line": 1564,
+        "heading_line": 1614,
+        "line": 1616,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185654,8 +185675,8 @@
       "source_location": {
         "heading": "SMPFS-013 - Thread Context Detail Usage Surface",
         "heading_level": 3,
-        "heading_line": 1620,
-        "line": 1622,
+        "heading_line": 1672,
+        "line": 1674,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185671,8 +185692,8 @@
       "source_location": {
         "heading": "SMPFS-014 - Terminal Surface Model",
         "heading_level": 3,
-        "heading_line": 1678,
-        "line": 1680,
+        "heading_line": 1730,
+        "line": 1732,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185688,8 +185709,8 @@
       "source_location": {
         "heading": "SMPFS-015 - Terminal Runtime Identity Contract",
         "heading_level": 3,
-        "heading_line": 1738,
-        "line": 1740,
+        "heading_line": 1790,
+        "line": 1792,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185705,8 +185726,8 @@
       "source_location": {
         "heading": "SMPFS-016 - Terminal Presentation Containers",
         "heading_level": 3,
-        "heading_line": 1795,
-        "line": 1797,
+        "heading_line": 1847,
+        "line": 1849,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185722,8 +185743,8 @@
       "source_location": {
         "heading": "SMPFS-017 - Terminal Reveal Ownership",
         "heading_level": 3,
-        "heading_line": 1858,
-        "line": 1860,
+        "heading_line": 1910,
+        "line": 1912,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185739,8 +185760,8 @@
       "source_location": {
         "heading": "SMPFS-018 - Dev-Session Linkback And Adoption",
         "heading_level": 3,
-        "heading_line": 1915,
-        "line": 1917,
+        "heading_line": 1967,
+        "line": 1969,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185756,8 +185777,8 @@
       "source_location": {
         "heading": "SMPFS-019 - Terminal Interaction Mode State Machine",
         "heading_level": 3,
-        "heading_line": 1970,
-        "line": 1972,
+        "heading_line": 2022,
+        "line": 2024,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185773,8 +185794,8 @@
       "source_location": {
         "heading": "SMPFS-020 - Terminal Selection Copy Search Semantics",
         "heading_level": 3,
-        "heading_line": 2031,
-        "line": 2033,
+        "heading_line": 2083,
+        "line": 2085,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185790,8 +185811,8 @@
       "source_location": {
         "heading": "SMPFS-021 - Shell Integration Confidence",
         "heading_level": 3,
-        "heading_line": 2089,
-        "line": 2091,
+        "heading_line": 2141,
+        "line": 2143,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185807,8 +185828,8 @@
       "source_location": {
         "heading": "SMPFS-022 - Command Block Identity Metadata",
         "heading_level": 3,
-        "heading_line": 2148,
-        "line": 2150,
+        "heading_line": 2200,
+        "line": 2202,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185824,8 +185845,8 @@
       "source_location": {
         "heading": "SMPFS-023 - Command Review Retention Degradation",
         "heading_level": 3,
-        "heading_line": 2209,
-        "line": 2211,
+        "heading_line": 2261,
+        "line": 2263,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185841,8 +185862,8 @@
       "source_location": {
         "heading": "SMPFS-024 - Terminal Session Lifecycle Actions",
         "heading_level": 3,
-        "heading_line": 2274,
-        "line": 2276,
+        "heading_line": 2326,
+        "line": 2328,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185858,8 +185879,8 @@
       "source_location": {
         "heading": "SMPFS-025 - Terminal Status Attention Close Ladder",
         "heading_level": 3,
-        "heading_line": 2331,
-        "line": 2333,
+        "heading_line": 2383,
+        "line": 2385,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185875,8 +185896,8 @@
       "source_location": {
         "heading": "SMPFS-026 - Terminal Empty State And Restore Language",
         "heading_level": 3,
-        "heading_line": 2393,
-        "line": 2395,
+        "heading_line": 2445,
+        "line": 2447,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185892,8 +185913,8 @@
       "source_location": {
         "heading": "SMPFS-027 - Requested Vs Effective Runtime Contract",
         "heading_level": 3,
-        "heading_line": 2449,
-        "line": 2451,
+        "heading_line": 2501,
+        "line": 2503,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185909,8 +185930,8 @@
       "source_location": {
         "heading": "SMPFS-028 - Requested Vs Effective Disclosure Freshness",
         "heading_level": 3,
-        "heading_line": 2515,
-        "line": 2517,
+        "heading_line": 2567,
+        "line": 2569,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185926,8 +185947,8 @@
       "source_location": {
         "heading": "SMPFS-029 - Stable Promoted Identity Catalog",
         "heading_level": 3,
-        "heading_line": 2579,
-        "line": 2581,
+        "heading_line": 2631,
+        "line": 2633,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185943,8 +185964,8 @@
       "source_location": {
         "heading": "SMPFS-030 - Identity-Aware Reveal And Runtime Boundaries",
         "heading_level": 3,
-        "heading_line": 2646,
-        "line": 2648,
+        "heading_line": 2698,
+        "line": 2700,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185960,8 +185981,8 @@
       "source_location": {
         "heading": "SMPFS-031 - Background And Blocked Attention Routing",
         "heading_level": 3,
-        "heading_line": 2718,
-        "line": 2720,
+        "heading_line": 2770,
+        "line": 2772,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185977,8 +185998,8 @@
       "source_location": {
         "heading": "SMPFS-032 - Attention Surfaces And Project Badges",
         "heading_level": 3,
-        "heading_line": 2777,
-        "line": 2779,
+        "heading_line": 2829,
+        "line": 2831,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -185994,8 +186015,8 @@
       "source_location": {
         "heading": "SMPFS-033 - FileSafe Blocked Outcome Semantics",
         "heading_level": 3,
-        "heading_line": 2837,
-        "line": 2839,
+        "heading_line": 2889,
+        "line": 2891,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186011,8 +186032,8 @@
       "source_location": {
         "heading": "SMPFS-034 - FileSafe Visible Blocked UI",
         "heading_level": 3,
-        "heading_line": 2944,
-        "line": 2946,
+        "heading_line": 2996,
+        "line": 2998,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186028,8 +186049,8 @@
       "source_location": {
         "heading": "SMPFS-035 - Branch Restore Boundary And Lineage",
         "heading_level": 3,
-        "heading_line": 3011,
-        "line": 3013,
+        "heading_line": 3063,
+        "line": 3065,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186045,8 +186066,8 @@
       "source_location": {
         "heading": "SMPFS-036 - Branch Navigation And Confirmation UI",
         "heading_level": 3,
-        "heading_line": 3107,
-        "line": 3109,
+        "heading_line": 3159,
+        "line": 3161,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186062,8 +186083,8 @@
       "source_location": {
         "heading": "SMPFS-037 - Project Instructions Runtime Source Boundary",
         "heading_level": 3,
-        "heading_line": 3198,
-        "line": 3200,
+        "heading_line": 3250,
+        "line": 3252,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186079,8 +186100,8 @@
       "source_location": {
         "heading": "SMPFS-038 - Project Instructions Editor UI",
         "heading_level": 3,
-        "heading_line": 3249,
-        "line": 3251,
+        "heading_line": 3301,
+        "line": 3303,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186096,8 +186117,8 @@
       "source_location": {
         "heading": "SMPFS-039 - Mention Picker Sources",
         "heading_level": 3,
-        "heading_line": 3298,
-        "line": 3300,
+        "heading_line": 3350,
+        "line": 3352,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186113,8 +186134,8 @@
       "source_location": {
         "heading": "SMPFS-040 - Mention Result Identity",
         "heading_level": 3,
-        "heading_line": 3353,
-        "line": 3355,
+        "heading_line": 3405,
+        "line": 3407,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186130,8 +186151,8 @@
       "source_location": {
         "heading": "SMPFS-041 - Stream Timing Identity",
         "heading_level": 3,
-        "heading_line": 3405,
-        "line": 3407,
+        "heading_line": 3457,
+        "line": 3459,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186147,8 +186168,8 @@
       "source_location": {
         "heading": "SMPFS-042 - Lightweight Timer UI",
         "heading_level": 3,
-        "heading_line": 3457,
-        "line": 3459,
+        "heading_line": 3509,
+        "line": 3511,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186164,8 +186185,8 @@
       "source_location": {
         "heading": "SMPFS-043 - Interleaved Thinking Toggle",
         "heading_level": 3,
-        "heading_line": 3509,
-        "line": 3511,
+        "heading_line": 3561,
+        "line": 3563,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186181,8 +186202,8 @@
       "source_location": {
         "heading": "SMPFS-044 - MCP Capability Resolution",
         "heading_level": 3,
-        "heading_line": 3563,
-        "line": 3565,
+        "heading_line": 3615,
+        "line": 3617,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186198,8 +186219,8 @@
       "source_location": {
         "heading": "SMPFS-045 - MCP Management UI",
         "heading_level": 3,
-        "heading_line": 3618,
-        "line": 3620,
+        "heading_line": 3670,
+        "line": 3672,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186215,8 +186236,8 @@
       "source_location": {
         "heading": "SMPFS-046 - Project Session Browser Data Scope",
         "heading_level": 3,
-        "heading_line": 3673,
-        "line": 3675,
+        "heading_line": 3725,
+        "line": 3727,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186232,8 +186253,8 @@
       "source_location": {
         "heading": "SMPFS-047 - Project Session Browser Surface",
         "heading_level": 3,
-        "heading_line": 3725,
-        "line": 3727,
+        "heading_line": 3777,
+        "line": 3779,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186249,8 +186270,8 @@
       "source_location": {
         "heading": "SMPFS-048 - Streaming Usage Payloads",
         "heading_level": 3,
-        "heading_line": 3778,
-        "line": 3780,
+        "heading_line": 3830,
+        "line": 3832,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186266,8 +186287,8 @@
       "source_location": {
         "heading": "SMPFS-049 - Streaming Context Usage UI",
         "heading_level": 3,
-        "heading_line": 3840,
-        "line": 3842,
+        "heading_line": 3892,
+        "line": 3894,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186283,8 +186304,8 @@
       "source_location": {
         "heading": "SMPFS-050 - Workspace Tab Window Identity",
         "heading_level": 3,
-        "heading_line": 3897,
-        "line": 3899,
+        "heading_line": 3949,
+        "line": 3951,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186300,8 +186321,8 @@
       "source_location": {
         "heading": "SMPFS-051 - Multi-Window Close Fallback Behavior",
         "heading_level": 3,
-        "heading_line": 3950,
-        "line": 3952,
+        "heading_line": 4002,
+        "line": 4004,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186317,8 +186338,8 @@
       "source_location": {
         "heading": "SMPFS-052 - Virtualized Conversation Log Lists",
         "heading_level": 3,
-        "heading_line": 4006,
-        "line": 4008,
+        "heading_line": 4058,
+        "line": 4060,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186334,8 +186355,8 @@
       "source_location": {
         "heading": "SMPFS-053 - Normalized Usage Contract",
         "heading_level": 3,
-        "heading_line": 4061,
-        "line": 4063,
+        "heading_line": 4113,
+        "line": 4115,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186351,8 +186372,8 @@
       "source_location": {
         "heading": "SMPFS-054 - Token Cost Attribution Framing",
         "heading_level": 3,
-        "heading_line": 4117,
-        "line": 4119,
+        "heading_line": 4169,
+        "line": 4171,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186368,8 +186389,8 @@
       "source_location": {
         "heading": "SMPFS-055 - Catalog Lifecycle Semantics",
         "heading_level": 3,
-        "heading_line": 4169,
-        "line": 4171,
+        "heading_line": 4221,
+        "line": 4223,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186385,8 +186406,8 @@
       "source_location": {
         "heading": "SMPFS-056 - Catalog Management UI",
         "heading_level": 3,
-        "heading_line": 4227,
-        "line": 4229,
+        "heading_line": 4279,
+        "line": 4281,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186402,8 +186423,8 @@
       "source_location": {
         "heading": "SMPFS-057 - Shell Adjacent Pane Family",
         "heading_level": 3,
-        "heading_line": 4281,
-        "line": 4283,
+        "heading_line": 4333,
+        "line": 4335,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186419,8 +186440,8 @@
       "source_location": {
         "heading": "SMPFS-058 - Pane Ownership Boundaries",
         "heading_level": 3,
-        "heading_line": 4341,
-        "line": 4343,
+        "heading_line": 4393,
+        "line": 4395,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186436,8 +186457,8 @@
       "source_location": {
         "heading": "SMPFS-059 - Origin Preserving Cross Surface Patterns",
         "heading_level": 3,
-        "heading_line": 4397,
-        "line": 4399,
+        "heading_line": 4449,
+        "line": 4451,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186453,8 +186474,8 @@
       "source_location": {
         "heading": "SMPFS-060 - Debug Run Workbench Boundary",
         "heading_level": 3,
-        "heading_line": 4458,
-        "line": 4460,
+        "heading_line": 4510,
+        "line": 4512,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186470,8 +186491,8 @@
       "source_location": {
         "heading": "SMPFS-061 - Terminal Persistence Tiers",
         "heading_level": 3,
-        "heading_line": 4515,
-        "line": 4517,
+        "heading_line": 4567,
+        "line": 4569,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186487,8 +186508,8 @@
       "source_location": {
         "heading": "SMPFS-062 - Transcript Disclosure And Restore UI",
         "heading_level": 3,
-        "heading_line": 4578,
-        "line": 4580,
+        "heading_line": 4630,
+        "line": 4632,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186504,8 +186525,8 @@
       "source_location": {
         "heading": "SMPFS-063 - Canonical Terminal Restore Outcomes",
         "heading_level": 3,
-        "heading_line": 4639,
-        "line": 4641,
+        "heading_line": 4691,
+        "line": 4693,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186521,8 +186542,8 @@
       "source_location": {
         "heading": "SMPFS-064 - Terminal Shortcut And Agent Control Boundary",
         "heading_level": 3,
-        "heading_line": 4694,
-        "line": 4696,
+        "heading_line": 4746,
+        "line": 4748,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186538,8 +186559,8 @@
       "source_location": {
         "heading": "SMPFS-065 - Same Session Reveal Commands",
         "heading_level": 3,
-        "heading_line": 4750,
-        "line": 4752,
+        "heading_line": 4802,
+        "line": 4804,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186555,8 +186576,8 @@
       "source_location": {
         "heading": "SMPFS-066 - Terminal Browser Anti Collapse Shape",
         "heading_level": 3,
-        "heading_line": 4806,
-        "line": 4808,
+        "heading_line": 4858,
+        "line": 4860,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186572,8 +186593,8 @@
       "source_location": {
         "heading": "SMPFS-067 - PTY Shell Remote Capability Matrix",
         "heading_level": 3,
-        "heading_line": 4862,
-        "line": 4864,
+        "heading_line": 4914,
+        "line": 4916,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186589,8 +186610,8 @@
       "source_location": {
         "heading": "SMPFS-068 - Renderer Accessibility Text Model Matrix",
         "heading_level": 3,
-        "heading_line": 4924,
-        "line": 4926,
+        "heading_line": 4976,
+        "line": 4978,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186606,8 +186627,8 @@
       "source_location": {
         "heading": "SMPFS-069 - Platform Acceptance And Legacy Routing",
         "heading_level": 3,
-        "heading_line": 4988,
-        "line": 4990,
+        "heading_line": 5040,
+        "line": 5042,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186623,8 +186644,8 @@
       "source_location": {
         "heading": "SMPFS-070 - Terminal Subsystem Layers And Gates",
         "heading_level": 3,
-        "heading_line": 5051,
-        "line": 5053,
+        "heading_line": 5103,
+        "line": 5105,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186640,8 +186661,8 @@
       "source_location": {
         "heading": "SMPFS-071 - Terminal Parser Replay Requirements",
         "heading_level": 3,
-        "heading_line": 5117,
-        "line": 5119,
+        "heading_line": 5169,
+        "line": 5171,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186657,8 +186678,8 @@
       "source_location": {
         "heading": "SMPFS-072 - Non Ship Terminal Rendering Constraints",
         "heading_level": 3,
-        "heading_line": 5179,
-        "line": 5181,
+        "heading_line": 5231,
+        "line": 5233,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186674,8 +186695,8 @@
       "source_location": {
         "heading": "SMPFS-073 - Native Buffer Render Performance Model",
         "heading_level": 3,
-        "heading_line": 5237,
-        "line": 5239,
+        "heading_line": 5289,
+        "line": 5291,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186691,8 +186712,8 @@
       "source_location": {
         "heading": "SMPFS-074 - Terminal Observability Events",
         "heading_level": 3,
-        "heading_line": 5295,
-        "line": 5297,
+        "heading_line": 5347,
+        "line": 5349,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186708,8 +186729,8 @@
       "source_location": {
         "heading": "SMPFS-075 - Terminal Diagnostics Visibility",
         "heading_level": 3,
-        "heading_line": 5360,
-        "line": 5362,
+        "heading_line": 5412,
+        "line": 5414,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186725,8 +186746,8 @@
       "source_location": {
         "heading": "SMPFS-076 - Terminal Diagnostic Privacy And Bundles",
         "heading_level": 3,
-        "heading_line": 5418,
-        "line": 5420,
+        "heading_line": 5470,
+        "line": 5472,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186742,8 +186763,8 @@
       "source_location": {
         "heading": "SMPFS-077 - Terminal Rollback Snapshot Boundary",
         "heading_level": 3,
-        "heading_line": 5480,
-        "line": 5482,
+        "heading_line": 5532,
+        "line": 5534,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186759,8 +186780,8 @@
       "source_location": {
         "heading": "SMPFS-078 - Terminal Noise And Queryable State",
         "heading_level": 3,
-        "heading_line": 5540,
-        "line": 5542,
+        "heading_line": 5592,
+        "line": 5594,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186776,8 +186797,8 @@
       "source_location": {
         "heading": "SMPFS-079 - Terminal Acceptance Criteria",
         "heading_level": 3,
-        "heading_line": 5600,
-        "line": 5602,
+        "heading_line": 5652,
+        "line": 5654,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "retired",
@@ -186793,8 +186814,8 @@
       "source_location": {
         "heading": "SMPFS-080 - Hot Live Reload Semantics",
         "heading_level": 3,
-        "heading_line": 5663,
-        "line": 5665,
+        "heading_line": 5715,
+        "line": 5717,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186810,8 +186831,8 @@
       "source_location": {
         "heading": "SMPFS-081 - Hot Live Reload UI",
         "heading_level": 3,
-        "heading_line": 5718,
-        "line": 5720,
+        "heading_line": 5770,
+        "line": 5772,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186827,8 +186848,8 @@
       "source_location": {
         "heading": "SMPFS-082 - Sound Effects Settings",
         "heading_level": 3,
-        "heading_line": 5772,
-        "line": 5774,
+        "heading_line": 5824,
+        "line": 5826,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186844,8 +186865,8 @@
       "source_location": {
         "heading": "SMPFS-083 - Instant Project Switch Command Semantics",
         "heading_level": 3,
-        "heading_line": 5826,
-        "line": 5828,
+        "heading_line": 5878,
+        "line": 5880,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186861,8 +186882,8 @@
       "source_location": {
         "heading": "SMPFS-084 - Instant Project Switch State And Edge UI",
         "heading_level": 3,
-        "heading_line": 5878,
-        "line": 5880,
+        "heading_line": 5930,
+        "line": 5932,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186878,8 +186899,8 @@
       "source_location": {
         "heading": "SMPFS-085 - Browser Site Reader Web Boundary",
         "heading_level": 3,
-        "heading_line": 5937,
-        "line": 5939,
+        "heading_line": 5989,
+        "line": 5991,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186895,8 +186916,8 @@
       "source_location": {
         "heading": "SMPFS-086 - Web Research Labels And Degradation UI",
         "heading_level": 3,
-        "heading_line": 6002,
-        "line": 6004,
+        "heading_line": 6054,
+        "line": 6056,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186912,8 +186933,8 @@
       "source_location": {
         "heading": "SMPFS-087 - PM Managed Browser Runtime",
         "heading_level": 3,
-        "heading_line": 6070,
-        "line": 6072,
+        "heading_line": 6122,
+        "line": 6124,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186929,8 +186950,8 @@
       "source_location": {
         "heading": "SMPFS-088 - Browser Requested Effective Disclosure",
         "heading_level": 3,
-        "heading_line": 6140,
-        "line": 6142,
+        "heading_line": 6192,
+        "line": 6194,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186946,8 +186967,8 @@
       "source_location": {
         "heading": "SMPFS-089 - Browser Chip Capture And Share Flow",
         "heading_level": 3,
-        "heading_line": 6204,
-        "line": 6206,
+        "heading_line": 6256,
+        "line": 6258,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186963,8 +186984,8 @@
       "source_location": {
         "heading": "SMPFS-090 - Browser Attachment And Prompt Limits",
         "heading_level": 3,
-        "heading_line": 6268,
-        "line": 6270,
+        "heading_line": 6320,
+        "line": 6322,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186980,8 +187001,8 @@
       "source_location": {
         "heading": "SMPFS-091 - Named Browser Action Taxonomy",
         "heading_level": 3,
-        "heading_line": 6334,
-        "line": 6336,
+        "heading_line": 6386,
+        "line": 6388,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -186997,8 +187018,8 @@
       "source_location": {
         "heading": "SMPFS-092 - DevTools And Test Debug Boundaries",
         "heading_level": 3,
-        "heading_line": 6408,
-        "line": 6410,
+        "heading_line": 6460,
+        "line": 6462,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187014,8 +187035,8 @@
       "source_location": {
         "heading": "SMPFS-093 - Browser Artifact Pipeline",
         "heading_level": 3,
-        "heading_line": 6477,
-        "line": 6479,
+        "heading_line": 6529,
+        "line": 6531,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187031,8 +187052,8 @@
       "source_location": {
         "heading": "SMPFS-094 - Browser Session Persistence And Profiles",
         "heading_level": 3,
-        "heading_line": 6545,
-        "line": 6547,
+        "heading_line": 6597,
+        "line": 6599,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187048,8 +187069,8 @@
       "source_location": {
         "heading": "SMPFS-095 - Browser Tab Cap And Retargeting",
         "heading_level": 3,
-        "heading_line": 6621,
-        "line": 6623,
+        "heading_line": 6673,
+        "line": 6675,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187065,8 +187086,8 @@
       "source_location": {
         "heading": "SMPFS-096 - Browser Lifecycle Distribution Platform Guarantees",
         "heading_level": 3,
-        "heading_line": 6684,
-        "line": 6686,
+        "heading_line": 6736,
+        "line": 6738,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187082,8 +187103,8 @@
       "source_location": {
         "heading": "SMPFS-097 - Browser Permissions And Safety",
         "heading_level": 3,
-        "heading_line": 6758,
-        "line": 6760,
+        "heading_line": 6810,
+        "line": 6812,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187099,8 +187120,8 @@
       "source_location": {
         "heading": "SMPFS-098 - Browser Chrome Controls And Test Plan",
         "heading_level": 3,
-        "heading_line": 6823,
-        "line": 6825,
+        "heading_line": 6875,
+        "line": 6877,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187116,8 +187137,8 @@
       "source_location": {
         "heading": "SMPFS-099 - Browser Reference Material Dispositions",
         "heading_level": 3,
-        "heading_line": 6892,
-        "line": 6894,
+        "heading_line": 6944,
+        "line": 6946,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187133,8 +187154,8 @@
       "source_location": {
         "heading": "SMPFS-100 - Browser Action Schema And Output Shape",
         "heading_level": 3,
-        "heading_line": 6960,
-        "line": 6962,
+        "heading_line": 7012,
+        "line": 7014,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187150,8 +187171,8 @@
       "source_location": {
         "heading": "SMPFS-101 - Promoted Command Families",
         "heading_level": 3,
-        "heading_line": 7042,
-        "line": 7044,
+        "heading_line": 7094,
+        "line": 7096,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187167,8 +187188,8 @@
       "source_location": {
         "heading": "SMPFS-102 - Command Category And Identity Reveal Rules",
         "heading_level": 3,
-        "heading_line": 7127,
-        "line": 7129,
+        "heading_line": 7179,
+        "line": 7181,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187184,8 +187205,8 @@
       "source_location": {
         "heading": "SMPFS-103 - Project Restore Identity",
         "heading_level": 3,
-        "heading_line": 7188,
-        "line": 7190,
+        "heading_line": 7240,
+        "line": 7242,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187201,8 +187222,8 @@
       "source_location": {
         "heading": "SMPFS-104 - Workspace And Detached Surface Restore",
         "heading_level": 3,
-        "heading_line": 7241,
-        "line": 7243,
+        "heading_line": 7293,
+        "line": 7295,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187218,8 +187239,8 @@
       "source_location": {
         "heading": "SMPFS-105 - Normal Browser Restore Scope",
         "heading_level": 3,
-        "heading_line": 7296,
-        "line": 7298,
+        "heading_line": 7348,
+        "line": 7350,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187235,8 +187256,8 @@
       "source_location": {
         "heading": "SMPFS-106 - Auth And Automation Restart Boundaries",
         "heading_level": 3,
-        "heading_line": 7353,
-        "line": 7355,
+        "heading_line": 7405,
+        "line": 7407,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187252,8 +187273,8 @@
       "source_location": {
         "heading": "SMPFS-107 - Terminal And Dev Restore Verification",
         "heading_level": 3,
-        "heading_line": 7417,
-        "line": 7419,
+        "heading_line": 7469,
+        "line": 7471,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187269,8 +187290,8 @@
       "source_location": {
         "heading": "SMPFS-108 - Terminal Durable Presentation Metadata",
         "heading_level": 3,
-        "heading_line": 7475,
-        "line": 7477,
+        "heading_line": 7527,
+        "line": 7529,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187286,8 +187307,8 @@
       "source_location": {
         "heading": "SMPFS-109 - Terminal Transcript And Runtime Persistence Tiers",
         "heading_level": 3,
-        "heading_line": 7535,
-        "line": 7537,
+        "heading_line": 7587,
+        "line": 7589,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187303,8 +187324,8 @@
       "source_location": {
         "heading": "SMPFS-110 - Canonical Restore Outcome Vocabulary",
         "heading_level": 3,
-        "heading_line": 7598,
-        "line": 7600,
+        "heading_line": 7650,
+        "line": 7652,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187320,8 +187341,8 @@
       "source_location": {
         "heading": "SMPFS-111 - Automation Promotion To Normal Browsing",
         "heading_level": 3,
-        "heading_line": 7653,
-        "line": 7655,
+        "heading_line": 7705,
+        "line": 7707,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187337,8 +187358,8 @@
       "source_location": {
         "heading": "SMPFS-112 - Frozen Browser Runtime History And Crash Evidence",
         "heading_level": 3,
-        "heading_line": 7713,
-        "line": 7715,
+        "heading_line": 7765,
+        "line": 7767,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187354,8 +187375,8 @@
       "source_location": {
         "heading": "SMPFS-113 - Profile Scope Isolation And SaveChanges",
         "heading_level": 3,
-        "heading_line": 7773,
-        "line": 7775,
+        "heading_line": 7825,
+        "line": 7827,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187371,8 +187392,8 @@
       "source_location": {
         "heading": "SMPFS-114 - Retired Shell Navigation And Usage Surfaces",
         "heading_level": 3,
-        "heading_line": 7842,
-        "line": 7844,
+        "heading_line": 7894,
+        "line": 7896,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187388,8 +187409,8 @@
       "source_location": {
         "heading": "SMPFS-115 - Browser Instance Reuse Non Goal",
         "heading_level": 3,
-        "heading_line": 7897,
-        "line": 7899,
+        "heading_line": 7949,
+        "line": 7951,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187405,8 +187426,8 @@
       "source_location": {
         "heading": "SMPFS-116 - Browser Host Placement Non Goal",
         "heading_level": 3,
-        "heading_line": 7950,
-        "line": 7952,
+        "heading_line": 8002,
+        "line": 8004,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187422,8 +187443,8 @@
       "source_location": {
         "heading": "SMPFS-117 - Silent Browser Context Injection Prohibition",
         "heading_level": 3,
-        "heading_line": 8002,
-        "line": 8004,
+        "heading_line": 8054,
+        "line": 8056,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187439,8 +187460,8 @@
       "source_location": {
         "heading": "SMPFS-118 - Storage Bleed Non Goal",
         "heading_level": 3,
-        "heading_line": 8055,
-        "line": 8057,
+        "heading_line": 8107,
+        "line": 8109,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187456,8 +187477,8 @@
       "source_location": {
         "heading": "SMPFS-119 - Low Level Browser Execution Non Goal",
         "heading_level": 3,
-        "heading_line": 8108,
-        "line": 8110,
+        "heading_line": 8160,
+        "line": 8162,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187473,8 +187494,8 @@
       "source_location": {
         "heading": "SMPFS-120 - Generic Watch Mode Non Goal",
         "heading_level": 3,
-        "heading_line": 8161,
-        "line": 8163,
+        "heading_line": 8213,
+        "line": 8215,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187490,8 +187511,8 @@
       "source_location": {
         "heading": "SMPFS-121 - MCP Config Passthrough Non Goal",
         "heading_level": 3,
-        "heading_line": 8213,
-        "line": 8215,
+        "heading_line": 8265,
+        "line": 8267,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187507,8 +187528,8 @@
       "source_location": {
         "heading": "SMPFS-122 - Tool Permission Scope Non Goal",
         "heading_level": 3,
-        "heading_line": 8263,
-        "line": 8265,
+        "heading_line": 8315,
+        "line": 8317,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187524,8 +187545,8 @@
       "source_location": {
         "heading": "SMPFS-123 - Persona Tier Selector Stale Disposition",
         "heading_level": 3,
-        "heading_line": 8317,
-        "line": 8319,
+        "heading_line": 8369,
+        "line": 8371,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187541,8 +187562,8 @@
       "source_location": {
         "heading": "SMPFS-124 - P0-TERMINAL-PROTOCOL-MATRIX",
         "heading_level": 3,
-        "heading_line": 8568,
-        "line": 8570,
+        "heading_line": 8620,
+        "line": 8622,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187558,8 +187579,8 @@
       "source_location": {
         "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
         "heading_level": 3,
-        "heading_line": 9519,
-        "line": 9521,
+        "heading_line": 9571,
+        "line": 9573,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187575,8 +187596,8 @@
       "source_location": {
         "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
         "heading_level": 3,
-        "heading_line": 9599,
-        "line": 9601,
+        "heading_line": 9651,
+        "line": 9653,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187592,8 +187613,8 @@
       "source_location": {
         "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
         "heading_level": 3,
-        "heading_line": 9670,
-        "line": 9672,
+        "heading_line": 9722,
+        "line": 9724,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187609,8 +187630,8 @@
       "source_location": {
         "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
         "heading_level": 3,
-        "heading_line": 9750,
-        "line": 9752,
+        "heading_line": 9802,
+        "line": 9804,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187626,8 +187647,8 @@
       "source_location": {
         "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
         "heading_level": 3,
-        "heading_line": 9828,
-        "line": 9830,
+        "heading_line": 9880,
+        "line": 9882,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187643,8 +187664,8 @@
       "source_location": {
         "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
         "heading_level": 3,
-        "heading_line": 9904,
-        "line": 9906,
+        "heading_line": 9956,
+        "line": 9958,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187660,8 +187681,8 @@
       "source_location": {
         "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
         "heading_level": 3,
-        "heading_line": 9976,
-        "line": 9978,
+        "heading_line": 10028,
+        "line": 10030,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187677,8 +187698,8 @@
       "source_location": {
         "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
         "heading_level": 3,
-        "heading_line": 10046,
-        "line": 10048,
+        "heading_line": 10098,
+        "line": 10100,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187694,8 +187715,8 @@
       "source_location": {
         "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
         "heading_level": 3,
-        "heading_line": 10124,
-        "line": 10126,
+        "heading_line": 10176,
+        "line": 10178,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187711,8 +187732,8 @@
       "source_location": {
         "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
         "heading_level": 3,
-        "heading_line": 10193,
-        "line": 10195,
+        "heading_line": 10245,
+        "line": 10247,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187728,8 +187749,8 @@
       "source_location": {
         "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
         "heading_level": 3,
-        "heading_line": 10275,
-        "line": 10277,
+        "heading_line": 10327,
+        "line": 10329,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187745,8 +187766,8 @@
       "source_location": {
         "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
         "heading_level": 3,
-        "heading_line": 10346,
-        "line": 10348,
+        "heading_line": 10398,
+        "line": 10400,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187762,8 +187783,8 @@
       "source_location": {
         "heading": "SMPFS-137 - SMPFS-137",
         "heading_level": 3,
-        "heading_line": 10413,
-        "line": 10415,
+        "heading_line": 10465,
+        "line": 10467,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187779,8 +187800,8 @@
       "source_location": {
         "heading": "SMPFS-138 - Home Terminal Sections Workgroups And Pane Limits",
         "heading_level": 3,
-        "heading_line": 9393,
-        "line": 9395,
+        "heading_line": 9445,
+        "line": 9447,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187796,8 +187817,8 @@
       "source_location": {
         "heading": "SMPFS-139 - Typed Classical DebugSession Boundary",
         "heading_level": 3,
-        "heading_line": 9074,
-        "line": 9076,
+        "heading_line": 9126,
+        "line": 9128,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187813,8 +187834,8 @@
       "source_location": {
         "heading": "SMPFS-140 - Persistent EvalSession Policy Boundary",
         "heading_level": 3,
-        "heading_line": 9115,
-        "line": 9117,
+        "heading_line": 9167,
+        "line": 9169,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187830,8 +187851,8 @@
       "source_location": {
         "heading": "SMPFS-141 - Test Debug Lease And Awareness Consumption",
         "heading_level": 3,
-        "heading_line": 9156,
-        "line": 9158,
+        "heading_line": 9208,
+        "line": 9210,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187847,8 +187868,8 @@
       "source_location": {
         "heading": "SMPFS-142 - PM-Native Browser Program Architecture",
         "heading_level": 3,
-        "heading_line": 9197,
-        "line": 9199,
+        "heading_line": 9249,
+        "line": 9251,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187864,8 +187885,8 @@
       "source_location": {
         "heading": "SMPFS-143 - Protected AuthBrowserSession Boundary",
         "heading_level": 3,
-        "heading_line": 9245,
-        "line": 9247,
+        "heading_line": 9297,
+        "line": 9299,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187881,8 +187902,8 @@
       "source_location": {
         "heading": "SMPFS-144 - Multi-Agent BrowserWorkspace Controller Fencing",
         "heading_level": 3,
-        "heading_line": 9286,
-        "line": 9288,
+        "heading_line": 9338,
+        "line": 9340,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187898,8 +187919,8 @@
       "source_location": {
         "heading": "SMPFS-145 - PM Browser Dependency Prohibition And External Project Exception",
         "heading_level": 3,
-        "heading_line": 9327,
-        "line": 9329,
+        "heading_line": 9379,
+        "line": 9381,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187915,8 +187936,8 @@
       "source_location": {
         "heading": "SMPFS-146 - Three Flow Onboarding And Doctor Handoff",
         "heading_level": 3,
-        "heading_line": 9026,
-        "line": 9028,
+        "heading_line": 9078,
+        "line": 9080,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187932,8 +187953,8 @@
       "source_location": {
         "heading": "SMPFS-147 - PM Browser Script Compiler And Typed BrowserProgram",
         "heading_level": 3,
-        "heading_line": 8810,
-        "line": 8812,
+        "heading_line": 8862,
+        "line": 8864,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187949,8 +187970,8 @@
       "source_location": {
         "heading": "SMPFS-148 - ProgramWorkspace Segments Effects And Reconstructive Handoff",
         "heading_level": 3,
-        "heading_line": 8840,
-        "line": 8842,
+        "heading_line": 8892,
+        "line": 8894,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187966,8 +187987,8 @@
       "source_location": {
         "heading": "SMPFS-149 - Exact-Generation PageRepresentation And RepresentationQuery",
         "heading_level": 3,
-        "heading_line": 8871,
-        "line": 8873,
+        "heading_line": 8923,
+        "line": 8925,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -187983,8 +188004,8 @@
       "source_location": {
         "heading": "SMPFS-150 - BrowserWorkspace Isolation Controller Takeover And Transfer",
         "heading_level": 3,
-        "heading_line": 8901,
-        "line": 8903,
+        "heading_line": 8953,
+        "line": 8955,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188000,8 +188021,8 @@
       "source_location": {
         "heading": "SMPFS-151 - Browser Routing Routines Screenshot Policy And External Adapters",
         "heading_level": 3,
-        "heading_line": 8930,
-        "line": 8932,
+        "heading_line": 8982,
+        "line": 8984,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188017,8 +188038,8 @@
       "source_location": {
         "heading": "SMPFS-152 - Browser Receipts ObservableWork Command GUI And Migration Projection",
         "heading_level": 3,
-        "heading_line": 8961,
-        "line": 8963,
+        "heading_line": 9013,
+        "line": 9015,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188034,8 +188055,8 @@
       "source_location": {
         "heading": "SMPFS-153 - Browser Program Record-Addressable Schema Identity",
         "heading_level": 3,
-        "heading_line": 8991,
-        "line": 8993,
+        "heading_line": 9043,
+        "line": 9045,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188051,8 +188072,8 @@
       "source_location": {
         "heading": "SMPFS-154 - Browser Capability Digest And Human Step Projection Closure",
         "heading_level": 3,
-        "heading_line": 8684,
-        "line": 8686,
+        "heading_line": 8736,
+        "line": 8738,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188068,8 +188089,8 @@
       "source_location": {
         "heading": "SMPFS-155 - Focus-Independent Continuation And Truthful Browser Fidelity Profiles",
         "heading_level": 3,
-        "heading_line": 8726,
-        "line": 8728,
+        "heading_line": 8778,
+        "line": 8780,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188085,8 +188106,8 @@
       "source_location": {
         "heading": "SMPFS-156 - Browser Program Inspect Sole Future Handler",
         "heading_level": 3,
-        "heading_line": 8656,
-        "line": 8658,
+        "heading_line": 8708,
+        "line": 8710,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188102,8 +188123,8 @@
       "source_location": {
         "heading": "SMPFS-157 - Central Sole Future Handler Bindings",
         "heading_level": 3,
-        "heading_line": 10491,
-        "line": 10493,
+        "heading_line": 10543,
+        "line": 10545,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188119,8 +188140,8 @@
       "source_location": {
         "heading": "SMPFS-158 - Enhanced Keyboard Protocol Capability Profile",
         "heading_level": 3,
-        "heading_line": 10641,
-        "line": 10643,
+        "heading_line": 10693,
+        "line": 10695,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188136,8 +188157,8 @@
       "source_location": {
         "heading": "SMPFS-159 - Richer Shell Context In The PM Parser",
         "heading_level": 3,
-        "heading_line": 10720,
-        "line": 10722,
+        "heading_line": 10772,
+        "line": 10774,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188153,8 +188174,8 @@
       "source_location": {
         "heading": "SMPFS-160 - Provider Output Snapshot Classification",
         "heading_level": 3,
-        "heading_line": 10794,
-        "line": 10796,
+        "heading_line": 10846,
+        "line": 10848,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188170,8 +188191,8 @@
       "source_location": {
         "heading": "SMPFS-161 - Per-Host Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 10868,
-        "line": 10870,
+        "heading_line": 10920,
+        "line": 10922,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188187,8 +188208,8 @@
       "source_location": {
         "heading": "SMPFS-162 - Pane Advisory OSC Progress And Collision Policy",
         "heading_level": 3,
-        "heading_line": 10944,
-        "line": 10946,
+        "heading_line": 10996,
+        "line": 10998,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188204,8 +188225,8 @@
       "source_location": {
         "heading": "SMPFS-163 - Insert Command And Open Retained Output",
         "heading_level": 3,
-        "heading_line": 11022,
-        "line": 11024,
+        "heading_line": 11074,
+        "line": 11076,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188221,8 +188242,8 @@
       "source_location": {
         "heading": "SMPFS-164 - Environment Provenance And Pending Launch Changes",
         "heading_level": 3,
-        "heading_line": 11103,
-        "line": 11105,
+        "heading_line": 11155,
+        "line": 11157,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188238,8 +188259,8 @@
       "source_location": {
         "heading": "SMPFS-165 - Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 11179,
-        "line": 11181,
+        "heading_line": 11231,
+        "line": 11233,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188255,8 +188276,8 @@
       "source_location": {
         "heading": "SMPFS-166 - Browser Event And Consumer Admission Boundary",
         "heading_level": 3,
-        "heading_line": 11307,
-        "line": 11309,
+        "heading_line": 11359,
+        "line": 11361,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188272,8 +188293,8 @@
       "source_location": {
         "heading": "SMPFS-167 - Workspace-created transition and historical inventory consumer",
         "heading_level": 3,
-        "heading_line": 11448,
-        "line": 11450,
+        "heading_line": 11500,
+        "line": 11502,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -188289,12 +188310,29 @@
       "source_location": {
         "heading": "SMPFS-168 - Workspace-reset transition and historical boundary consumer",
         "heading_level": 3,
-        "heading_line": 11602,
-        "line": 11604,
+        "heading_line": 11654,
+        "line": 11656,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
       "unit_type": "owner_boundary"
+    },
+    {
+      "context_scope": "browser_program_result_static_binding",
+      "gui_related": false,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-169",
+      "reasoning_tier": "high",
+      "risk_class": "browser_result_budget_schema_or_provenance_escape",
+      "source_location": {
+        "heading": "SMPFS-169 - Browser Program Result Budget And Output-Schema Binding",
+        "heading_level": 3,
+        "heading_line": 11693,
+        "line": 11695,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "storage_generated_residual_tail",
@@ -206085,10 +206123,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15008,
+    "depends_on_edge_count": 15012,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17659,
-    "node_count": 6543,
+    "edge_count": 17663,
+    "node_count": 6544,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

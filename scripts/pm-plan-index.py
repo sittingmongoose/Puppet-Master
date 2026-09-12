@@ -200,6 +200,11 @@ def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def portable_index_diagnostic(detail: str) -> str:
+    """Keep a failure's meaning without baking this checkout into derived canon."""
+    return detail.replace(f"{ROOT.as_posix()}/", "")
+
+
 def pnc019_certification_status() -> dict[str, Any]:
     if not PNC019_CERTIFICATION_RECEIPT_PATH.exists():
         return {
@@ -213,7 +218,7 @@ def pnc019_certification_status() -> dict[str, Any]:
         return {
             "complete": False,
             "receipt_ref": rel(PNC019_CERTIFICATION_RECEIPT_PATH),
-            "failures": [{"error": "pnc019_certification_receipt_parse_failed", "detail": str(exc)}],
+            "failures": [{"error": "pnc019_certification_receipt_parse_failed", "detail": portable_index_diagnostic(str(exc))}],
         }
 
     failures: list[dict[str, Any]] = []
@@ -265,6 +270,11 @@ def pnc019_certification_status() -> dict[str, Any]:
         )
     )
     failures.extend(pnc019_event_authority_clearance_failures(ROOT, path_label=None))
+    failures = [
+        {**failure, "detail": portable_index_diagnostic(failure["detail"])}
+        if isinstance(failure.get("detail"), str) else failure
+        for failure in failures
+    ]
 
     return {
         "complete": not failures,

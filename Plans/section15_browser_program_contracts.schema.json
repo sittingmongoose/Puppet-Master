@@ -423,7 +423,10 @@
         "program_workspace_id",
         "expected_workspace_revision",
         "budgets",
-        "result_mode"
+        "result_mode",
+        "result_schema_ref",
+        "result_schema_sha256",
+        "result_schema_dependencies"
       ],
       "properties": {
         "schema_id": {
@@ -501,6 +504,20 @@
             "summary_with_artifact_refs",
             "technical"
           ]
+        },
+        "result_schema_ref": {
+          "$ref": "#/$defs/non_secret_ref",
+          "description": "Owner-resolved output schema for compact_result; not a result-supplied permissive fallback."
+        },
+        "result_schema_sha256": {
+          "$ref": "#/$defs/sha256",
+          "description": "SHA-256 of the exact original resolved output-schema UTF-8 bytes."
+        },
+        "result_schema_dependencies": {
+          "type": "object",
+          "propertyNames": {"$ref": "#/$defs/non_secret_ref"},
+          "additionalProperties": {"$ref": "#/$defs/sha256"},
+          "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
         },
         "idempotency_key": {
           "$ref": "#/$defs/id"
@@ -1200,6 +1217,7 @@
     },
     "browser_program_result": {
       "type": "object",
+      "description": "Structural shape only. SMPFS-169 additionally requires actual-byte budget and output-schema validation against an independently resolved producing program and terminal owner context; standalone structural validity cannot admit this result.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -1294,6 +1312,26 @@
         "created_at_utc": {
           "$ref": "#/$defs/timestamp"
         }
+      }
+    },
+    "browser_program_result_validation": {
+      "description": "Static validation input only, deliberately excluded from the runtime record union. Context is supplied by the caller, never extracted as authority from result_utf8. Fixtures do not prove native owner custody or currentness resolution.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_kind", "program", "resolved_schema_ref", "result_schema_utf8", "result_schema_resources", "terminal_subject", "terminal_workspace_revision", "result_utf8"],
+      "properties": {
+        "record_kind": {"const": "browser_program_result_validation"},
+        "program": {"$ref": "#/$defs/browser_program"},
+        "resolved_schema_ref": {"$ref": "#/$defs/non_secret_ref"},
+        "result_schema_utf8": {"type": "string", "minLength": 1},
+        "result_schema_resources": {
+          "type": "object",
+          "propertyNames": {"$ref": "#/$defs/non_secret_ref"},
+          "additionalProperties": {"type": "string", "minLength": 1}
+        },
+        "terminal_subject": {"$ref": "#/$defs/ordinary_browser_subject"},
+        "terminal_workspace_revision": {"type": "integer", "minimum": 0},
+        "result_utf8": {"type": "string", "minLength": 1}
       }
     },
     "browser_command_id": {

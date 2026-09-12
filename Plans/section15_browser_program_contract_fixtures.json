@@ -4,6 +4,80 @@
   "proof_boundary": "Schema fixture validity is static contract evidence only, not Browser runtime, security, race, migration, visual, performance, or empirical proof.",
   "valid": [
     {
+      "name": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "definition": "browser_program_result_validation",
+      "value": {
+        "record_kind": "browser_program_result_validation",
+        "program": {
+          "schema_id": "pm.browser_program.program.v1",
+          "record_kind": "browser_program",
+          "program_id": "program-result-1",
+          "lineage": {
+            "project_id": "project-result-1",
+            "run_id": "run-result-1",
+            "attempt_id": "attempt-result-1",
+            "home_server_id": "server-result-1",
+            "execution_host_id": "host-result-1",
+            "execution_environment_id": "environment-result-1",
+            "source_location_id": "source-result-1"
+          },
+          "subject": {
+            "browser_session_id": "browser-result-1",
+            "browser_workspace_id": "workspace-result-1",
+            "browser_page_id": "page-result-1",
+            "page_generation": 4,
+            "session_security_class": "ordinary"
+          },
+          "source_form": "validated_ast",
+          "compiler": {
+            "compiler_id": "pm_browser_program_compiler",
+            "compiler_version": "1.0.0",
+            "compiler_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "browser_program_api_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "capability_profile_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          },
+          "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "ast": {
+            "ast_version": "1.0.0",
+            "actions": [],
+            "local_operators": [],
+            "checkpoints": [],
+            "ast_hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          },
+          "requested_execution_strategy": "automatic",
+          "effective_execution_strategy": "compiled_program",
+          "required_capabilities": [],
+          "program_workspace_id": "program-workspace-result-1",
+          "expected_workspace_revision": 2,
+          "budgets": {
+            "max_actions": 100,
+            "max_segments": 10,
+            "max_wall_ms": 300000,
+            "max_local_compute_ms": 30000,
+            "max_output_bytes": 1048576,
+            "max_artifact_bytes": 104857600,
+            "max_memory_bytes": 268435456
+          },
+          "result_mode": "compact",
+          "result_schema_ref": "schema:browser-result-summary:v1",
+          "result_schema_sha256": "f54ca3dac68cadb9af03a0e7304b52a2941be8110e39b06f3255b34ccbf9b1b6",
+          "result_schema_dependencies": {}
+        },
+        "resolved_schema_ref": "schema:browser-result-summary:v1",
+        "result_schema_utf8": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"integer\",\"minimum\":0},\"text\":{\"type\":\"string\"},\"rows\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"data_ref\":{\"type\":\"string\",\"pattern\":\"^artifact:\"}}}",
+        "result_schema_resources": {},
+        "terminal_subject": {
+          "browser_session_id": "browser-result-1",
+          "browser_workspace_id": "workspace-result-1",
+          "browser_page_id": "page-result-1",
+          "page_generation": 5,
+          "session_security_class": "ordinary"
+        },
+        "terminal_workspace_revision": 3,
+        "result_utf8": "{\"schema_id\":\"pm.browser_program.result.v1\",\"record_kind\":\"browser_program_result\",\"program_id\":\"program-result-1\",\"lineage\":{\"project_id\":\"project-result-1\",\"run_id\":\"run-result-1\",\"attempt_id\":\"attempt-result-1\",\"home_server_id\":\"server-result-1\",\"execution_host_id\":\"host-result-1\",\"execution_environment_id\":\"environment-result-1\",\"source_location_id\":\"source-result-1\"},\"subject\":{\"browser_session_id\":\"browser-result-1\",\"browser_workspace_id\":\"workspace-result-1\",\"browser_page_id\":\"page-result-1\",\"page_generation\":5,\"session_security_class\":\"ordinary\"},\"program_workspace_id\":\"program-workspace-result-1\",\"result_workspace_revision\":3,\"terminal_state\":\"completed\",\"compact_result\":{\"count\":3},\"segment_receipt_refs\":[],\"artifact_refs\":[],\"capture_refs\":[],\"test_verdict_claimed\":false,\"created_at_utc\":\"2026-09-11T23:30:00Z\"}"
+      }
+    },
+    {
       "name": "compile_failure_is_source_spanned_and_no_effect",
       "value": {
         "schema_id": "pm.browser_program.compile_error.v1",
@@ -102,6 +176,9 @@
           "max_representation_bytes": 10485760
         },
         "result_mode": "compact",
+        "result_schema_ref": "schema:browser-result-summary:v1",
+        "result_schema_sha256": "f54ca3dac68cadb9af03a0e7304b52a2941be8110e39b06f3255b34ccbf9b1b6",
+        "result_schema_dependencies": {},
         "idempotency_key": "program-1-attempt-1"
       }
     },
@@ -781,6 +858,176 @@
     }
   ],
   "invalid": [
+    {
+      "name": "program_output_schema_dependency_map_is_mandatory",
+      "base_valid": "typed_program_targets_only_ordinary_session",
+      "remove": [
+        "result_schema_dependencies"
+      ]
+    },
+    {
+      "name": "result_validation_requires_dependency_resource_snapshot",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "remove": [
+        "result_schema_resources"
+      ]
+    },
+    {
+      "name": "result_context_cannot_add_unpinned_schema_resource",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "result_schema_resources": {
+          "schema:unadmitted:v1": "true"
+        }
+      },
+      "semantic_rule": "browser_result_schema_dependency_set_mismatch"
+    },
+    {
+      "name": "result_context_cannot_omit_pinned_schema_resource",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.result_schema_dependencies": {
+          "schema:dependency:v1": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "semantic_rule": "browser_result_schema_dependency_set_mismatch"
+    },
+    {
+      "name": "result_dependency_cannot_change_behind_pinned_root",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.result_schema_dependencies": {
+          "schema:dependency:v1": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "result_schema_resources": {
+          "schema:dependency:v1": "true"
+        }
+      },
+      "semantic_rule": "browser_result_schema_dependency_hash_mismatch"
+    },
+    {
+      "name": "program_output_schema_ref_is_mandatory",
+      "base_valid": "typed_program_targets_only_ordinary_session",
+      "remove": [
+        "result_schema_ref"
+      ]
+    },
+    {
+      "name": "program_output_schema_digest_is_mandatory",
+      "base_valid": "typed_program_targets_only_ordinary_session",
+      "remove": [
+        "result_schema_sha256"
+      ]
+    },
+    {
+      "name": "result_cannot_choose_its_own_byte_budget",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.budgets.max_output_bytes": 1
+      },
+      "semantic_rule": "browser_result_output_budget_exceeded"
+    },
+    {
+      "name": "result_cannot_bind_another_program",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.program_id": "program-foreign"
+      },
+      "semantic_rule": "browser_result_program_mismatch"
+    },
+    {
+      "name": "result_cannot_bind_another_lineage",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.lineage.run_id": "run-foreign"
+      },
+      "semantic_rule": "browser_result_lineage_mismatch"
+    },
+    {
+      "name": "result_cannot_bind_another_workspace",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "program.program_workspace_id": "workspace-foreign"
+      },
+      "semantic_rule": "browser_result_workspace_mismatch"
+    },
+    {
+      "name": "result_terminal_subject_is_independently_resolved",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "terminal_subject.page_generation": 6
+      },
+      "semantic_rule": "browser_result_subject_mismatch"
+    },
+    {
+      "name": "result_terminal_revision_is_independently_resolved",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "terminal_workspace_revision": 4
+      },
+      "semantic_rule": "browser_result_revision_mismatch"
+    },
+    {
+      "name": "result_schema_ref_must_be_pinned",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "resolved_schema_ref": "schema:foreign:v1"
+      },
+      "semantic_rule": "browser_result_schema_ref_mismatch"
+    },
+    {
+      "name": "result_schema_bytes_must_match_pinned_digest",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "result_schema_utf8": "true"
+      },
+      "semantic_rule": "browser_result_schema_hash_mismatch"
+    },
+    {
+      "name": "result_compact_payload_must_satisfy_pinned_schema",
+      "base_valid": "result_bytes_bind_program_budget_schema_and_terminal_context",
+      "patch": {
+        "result_utf8": "{\"schema_id\":\"pm.browser_program.result.v1\",\"record_kind\":\"browser_program_result\",\"program_id\":\"program-result-1\",\"lineage\":{\"project_id\":\"project-result-1\",\"run_id\":\"run-result-1\",\"attempt_id\":\"attempt-result-1\",\"home_server_id\":\"server-result-1\",\"execution_host_id\":\"host-result-1\",\"execution_environment_id\":\"environment-result-1\",\"source_location_id\":\"source-result-1\"},\"subject\":{\"browser_session_id\":\"browser-result-1\",\"browser_workspace_id\":\"workspace-result-1\",\"browser_page_id\":\"page-result-1\",\"page_generation\":5,\"session_security_class\":\"ordinary\"},\"program_workspace_id\":\"program-workspace-result-1\",\"result_workspace_revision\":3,\"terminal_state\":\"completed\",\"compact_result\":{\"count\":\"three\"},\"segment_receipt_refs\":[],\"artifact_refs\":[],\"capture_refs\":[],\"test_verdict_claimed\":false,\"created_at_utc\":\"2026-09-11T23:30:00Z\"}"
+      },
+      "semantic_rule": "browser_result_output_schema_mismatch"
+    },
+    {
+      "name": "standalone_result_structure_is_not_bound_validation",
+      "definition": "browser_program_result",
+      "value": {
+        "schema_id": "pm.browser_program.result.v1",
+        "record_kind": "browser_program_result",
+        "program_id": "program-result-1",
+        "lineage": {
+          "project_id": "project-result-1",
+          "run_id": "run-result-1",
+          "attempt_id": "attempt-result-1",
+          "home_server_id": "server-result-1",
+          "execution_host_id": "host-result-1",
+          "execution_environment_id": "environment-result-1",
+          "source_location_id": "source-result-1"
+        },
+        "subject": {
+          "browser_session_id": "browser-result-1",
+          "browser_workspace_id": "workspace-result-1",
+          "browser_page_id": "page-result-1",
+          "page_generation": 5,
+          "session_security_class": "ordinary"
+        },
+        "program_workspace_id": "program-workspace-result-1",
+        "result_workspace_revision": 3,
+        "terminal_state": "completed",
+        "compact_result": {
+          "count": 3
+        },
+        "segment_receipt_refs": [],
+        "artifact_refs": [],
+        "capture_refs": [],
+        "test_verdict_claimed": false,
+        "created_at_utc": "2026-09-11T23:30:00Z"
+      },
+      "semantic_rule": "browser_result_binding_required"
+    },
     {
       "name": "legacy_aggregate_payload_schema_id_requires_explicit_migration",
       "value": {
