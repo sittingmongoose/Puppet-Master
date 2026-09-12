@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5m-forge-actions-preservation-567-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "62680f7d009b31f174e99ca12867d0b75919abdd",
+  "landing_base_commit": "666344900b4908e7a2ff451b4f43575521bcf8fe",
+  "scope_and_authority": [
+    "All 567 retained cases in fourteen selected September 1 chunks have individually root-authored statuses, findings and residuals in seventeen source-group tables. Original source order, source objects/lines and the 243 baseline rows' original preservation lineage are retained. Helpers serialize and check exact identities, hashes, pointers and explicit schema probes; no helper assigns judgments from implemented metadata, test counts or search matches.",
+    "Only this compact report changes in the product repository. Source/snapshot/observation/judgment/workbook evidence and experiment code remain external. No product Plans, schemas, concepts, commands, wiring, visual design, governance/readiness artifacts or other agents' work is edited. Findings do not authorize further product fixes, provider/account activity, native implementation or a governance seal."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00056", "chunk-00057", "chunk-00058", "chunk-00059", "chunk-00060", "chunk-00061", "chunk-00062", "chunk-00063", "chunk-00064", "chunk-00065", "chunk-00066", "chunk-00067", "chunk-00071", "chunk-00072"],
+    "cases": 567,
+    "separately_authored_cases": 567,
+    "status_counts": {"partial": 560, "fail": 7},
+    "source_group_counts": {
+      "sep01_forge_backup_actions": 168,
+      "sep01_baseline_preservation": 243,
+      "sep01_forge_provider_profiles": 13,
+      "sep01_backup_destinations": 11,
+      "sep01_auth_profiles": 10,
+      "sep01_dry_components": 5,
+      "sep01_gui_state_fixtures": 12,
+      "sep01_migrations": 14,
+      "sep01_panel_sections": 28,
+      "sep01_owner_consumer_matrix": 20,
+      "sep01_tsnet_command_tokens": 28,
+      "sep01_tsnet_owner_deltas": 15
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "failure_boundary": "Four action cases concern previously executed synthetic Backup concept contradictions; one auth profile concerns a previously executed static OAuth-gate contradiction; two preservation/owner cases concern the active Doctor fixture's retired private-Serve health model. Subject hashes were revalidated. These are seven case failures, not seven independent runtime defects or executed native E2E scenarios."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 2826,
+    "not_reviewed_cases": 10590,
+    "expected_chunks": 151,
+    "valid_result_files": 57,
+    "missing_result_files": 94,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 2510, "pass": 233, "blocked": 39, "fail": 41, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_case_groups": [
+    {"case_refs": ["sep01_forge_backup_actions/ACT-099", "sep01_forge_backup_actions/ACT-120"], "finding": "The unchanged selected concept stores backup/restore selection as a mutable history-array index. A synthetic prepend retargets the selected older BKP-2047 to BKP-2048, contradicting immutable repository/snapshot/capture selection before browse or restore preview."},
+    {"case_refs": ["sep01_forge_backup_actions/ACT-101"], "finding": "Verify ignores the selected older backup and opens Verify latest backup for BKP-2048. BRS-015 requires independent selected-snapshot verification; the common command request also lacks explicit snapshot-array and verification-level operands."},
+    {"case_refs": ["sep01_forge_backup_actions/ACT-116"], "finding": "Test Kit projects Saved copy found and a Checked unlock after Save wrote no file, with no protected saved-kit input/read-only unlock and tested still false. Acknowledgment and illustrative steps do not prove a real saved-kit recovery test."},
+    {"case_refs": ["sep01_auth_profiles/AUTH-DRIVE-WEB"], "finding": "The revalidated ReleaseOAuthRegistrationGate counterexample admits admitted_static_only with callback_mode=unavailable and disabled_reason=null. BRS-018/RSC-016 require registered supported callback or approved provider device flow. This is static admission inconsistency, not a live login or shipment."},
+    {"case_refs": ["sep01_baseline_preservation/OND-009", "sep01_tsnet_owner_deltas/Doctor System"], "finding": "The active DoctorScenarioProjection fixture still validates healthy/fresh Hosted Tailscale private Serve with RAS-003 lineage despite RAS-015/N2-156's separate connector/private/Funnel/PM health and retirement of the predecessor model. This is not a claim that the selected newer GUI renders a Serve control."}
+  ],
+  "other_findings_and_boundaries": [
+    "All 168 actions preserve their source required_payload and guard/capability relations. Selected wiring resolves 130 exact candidates to declared routes and twelve explicitly registered source aliases to existing canonical targets; 26 candidates have no direct selected row or explicit alias under this bounded resolution. This is not a claim of global absence or runtime handler availability. Canonical aliases normalize before gates and create no peer command, handler, event or wiring row.",
+    "The twelve explicit aliases cover six shared auth/credential actions and six persisted connection actions. Add persists an inactive draft; activate requires separate fresh capability/generation. Persisted open_details is not the local draft inspector. Similar stash/hunk/review-ready/cancel/log/test names are not treated as aliases without exact normalization and payload authority.",
+    "Source-control payload review records unclosed backend vocabulary, selected refs, preview/publication heads, diff/history operands and granular scope. Eighteen root-selected closed-schema probes on each snapshot reject added JJ description/parents/hunks/multichange/bookmark operands and Forge title/body/reply/strategy/inputs/retry/cursor operands, plus rejection for approve|reject, optional job and missing asset digest variants. Rejection demonstrates these selected request shapes cannot carry those source payloads; it does not prove no other canonical representation exists. Stronger canonical digest requirements are preserved, not weakened to source optionality.",
+    "The already-landed source effect/response fixes remain preserved. Full dispatch, mutation, Git/JJ lossless mapping, provider capability/accounts/forks/namespaces, pagination, token/OAuth exchange, protected secret handling, actual backup/restore/recovery, helper packaging/IPC/process isolation, WAN/performance and native Slint proof remain absent or unexecuted for the reviewed obligations. All 67 original integration scenarios remain NOT_RUN.",
+    "Baseline preservation is source lineage, not an instruction to restore obsolete product behavior. Root compared all 243 original baseline objects with their exact disposition rows and current owners, preserving current Settings review, provider-CLI acquisition, onboarding, Slint, Working Notebook, multi-account and Full Thread authority. Marked compatibility/retired tsnet sidecar/full-client/Serve/configuration mechanics do not become active built-in implementations.",
+    "Provider profiles, destinations, auth profiles, shared components, source fixture rows, migrations, panels, owner-consumer edges and tsnet tokens each retain separate case judgments. Static profiles and configured destination kinds do not prove provisioned providers, engines, transports, migrations or credentials. GUI-related content is audited without changing or accepting deferred visual design.",
+    "Historical Backup callbacks use synthetic data and mocked rendering/state, not browser DOM or native engine execution. OAuth and Doctor evidence is static schema/gate evidence. Exact subject hashes were revalidated before reuse. No real download, clipboard, credential, provider, key import, restore, native dispatch or visual acceptance is inferred."
+  ],
+  "current_comparison_boundaries": [
+    "Initial custody pins 694 selected repository paths on frozen/current snapshots, twelve primary source groups and all 66 source-package members. Eighty-eight cited passages, 55 selected artifacts and 48 evidence groups support bounded findings. Fourteen formal result files preserve all 43 preceding workbook results byte-for-byte. Every authored/source/result identity and evidence pointer validated before publication.",
+    "Main advanced to 666344900b during review. Rebase currentness captures 696 selected paths from Git and verifies worktree bytes. All 88 cited passages remain exact. Of 55 selected artifacts, 54 remain byte-identical; storage_value_registry appends only storage_recovery_action_custody while preserving all 118 prior families and every other top-level value. Current totals are 119 families, 26 retention policies and 31 contract-family dispositions. Nine selected whole files changed and the Recovery schema/fixtures were added.",
+    "Root read complete added SP-293 and DL-049 owner prose and the new Recovery family metadata. SP-293 requires original admitted-root/input/postcondition/actor/native-intent custody, six existing action owners, first durably captured physical observation, original append receipt and mandatory pending/terminal capsule plus journal-receipt backup. Genuine earlier effects survive later refusal; reads cannot backfill or redispatch restore. This adds backup-closure obligations, not execution proof. The complete new embedded schema and fixture corpus were not semantically certified.",
+    "DL-049's approved seven-day compaction-detail policy starts at first durable fully settled original success or failure after all physical attempts and original event/receipt/result settle. Reads and retries cannot reset it. Holds and live dependencies protect members beyond expiry; only exact eligible members may be disposed using existing scheduling. Compact authority, event and backup-copy policies remain independent. Concrete policy/codec/disposal and native proof remain separate.",
+    "Comparison already includes separately landed SMPFS-169 Browser output binding. Root read the complete added passage; cited baseline spans are split around it, not described as an unchanged whole Browser file. Compiled schema/reference closure, complete actual UTF-8 output budgets and ordinary page/workspace currentness preserve no-arbitrary-evaluation and original authority boundaries without proving native result authenticity."
+  ],
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/forge-actions-567-root-review.json", "sha256": "de8cc549e039d69ba992bac01e1ac5aade3694560fe9460b14ec97cce943f5a5"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/review-evidence-plan.json", "sha256": "908ae28a68b03f3fb2524841e5efa6797feef8cafbd1e3837e5cfb3ba8b43ef6"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/assembly-summary.json", "sha256": "d76cadf45a910056301ed8932df06f43e9d96aadd2e29ddcbbf722772d90154c"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/input-custody.generated.json", "sha256": "cb06733f491c95c3957b500b8da1ff0ced0e558e362f22f25a2501724899de1e"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/review-passage-custody.generated.json", "sha256": "104e0b5fa0dae37975e23995205324d378ccef2c1d410ae40bf98f0a5dac405d"},
+    "structural_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/structural-evidence/summary.json", "sha256": "83929e64a72c727709b187f29b9a128f7a20fd8222a6334bf3de2fd359f3b5c7"},
+    "action_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/action-evidence/summary.json", "sha256": "222168cdad61dae61c2de99bd77ddd11224682ad7317461b784e1574137d35bd"},
+    "landing_inputs": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/landing-inputs/666344900b4908e7a2ff451b4f43575521bcf8fe/receipt.json", "sha256": "1ff10c0be30e04d04e86cf21ae110d854148b25a7e691dcdbf7384e38d3febd4"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/publication-summary.json", "sha256": "5b4edd6e890f3a3e2499e6be8da7d2a01acbc071fd457182db3c52d1dff0f7ec"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/verification/packet-tests.receipt.json", "sha256": "d0c474679ae37b3de89810962d531ab0e329ef5965aae31160a84199409f2b40"},
+    "shards": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/verification/shards.receipt.json", "sha256": "87cb2e928442747598dbefab6ffd5be616b466ab7fc1488793156fb9a6097311"},
+    "governance": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/verification/gates.receipt.json", "sha256": "4cfa7b27ee70bf8af073240abbafed1d2bde2181501044fcaae71ae21c3e8350"},
+    "governance_report": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-forge-actions567-review-20260912-EAdspsNQ/verification/gates.json", "sha256": "277f055b61619afd270f021138fbc251edebb23679e390c9f094120f932fbb81"}
+  },
+  "verification": {
+    "base": "666344900b4908e7a2ff451b4f43575521bcf8fe",
+    "selected_inputs_per_repository_capture": 3069,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore and Concepts py/js/json/html/css/mjs; not full transitive closure.",
+    "review_integrity": {"status": "pass", "cases": 567, "owner_passages": 88, "validation_errors": 0},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "shards": {"status": "pass", "docs": 98, "shards": 2453},
+    "action_resolution_counts": {"direct_candidate_has_selected_wiring_rows": 130, "explicit_source_alias_to_existing_canonical_target": 12, "no_direct_selected_row_or_explicit_alias_in_this_resolution": 26},
+    "schema_probes": {"frozen": 18, "comparison": 18, "boundary": "Original positive fixtures validate and eighteen root-selected altered request shapes reject per snapshot using captured offline schema resources. Closed shape only; no native execution or proof of every alternate representation."},
+    "offline_checks": "Nine named checks per snapshot retain their exact receipts and input hashes. Frozen protected-auth rejects declared-valid local-action fixtures and the provider-specific test is absent/NOT_RUN; current counterparts pass. Auth handoff uses the actual test_pm_auth_handoff_contracts.py file. Static fixture/test success does not close the separately demonstrated OAuth/Doctor contradictions or execute integration scenarios.",
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete_43_prior_result_files_preserved",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {"json_syntax": 1, "lint_contractrefs": 1, "lint_path_refs": 10, "validate_audit_closure": 201, "validate_audit_status_index": 1, "validate_evidence": 1488, "validate_implementation_readiness": 56, "validate_plan_graph": 1488, "validate_plan_migration": 180, "validate_pm7_gui_fixtures": 1, "validate_prd_planning_runtime_contracts": 1240, "verify_spec_lock": 28},
+      "boundary": "Fresh 254.513-second run on clean landing base, with HEAD and all 3069 selected inputs unchanged. Twelve failing groups and counts match r5l: missing raw/PM7/audit/test paths, unresolved Home schema references and stale closure/evidence/readiness/graph/migration/lock state. Four sampled missing paths are absent from HEAD, not sparse omissions. No outside-owner repair, governance regeneration, seal or overall integration success is claimed."
+    }
+  }
+}
