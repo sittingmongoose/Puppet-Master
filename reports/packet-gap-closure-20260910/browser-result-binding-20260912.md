@@ -1,6 +1,6 @@
 # Browser Program result binding — bounded static repair
 
-Status: implemented and statically verified; full integration/audit and runtime acceptance remain open. This report records pre-rebase verification on base `2c1797be191735b8d39e3da787c3d9d94721703a` plus the authored changes. It does not claim those runs used a later main. Landing verification is recorded separately below when performed.
+Status: implemented and statically verified; full integration/audit and runtime acceptance remain open. This report records pre-rebase verification on base `2c1797be191735b8d39e3da787c3d9d94721703a` plus the authored changes, then separately captured post-rebase verification below. Earlier runs are not relabelled as current-main runs.
 
 ## Authority and repair
 
@@ -48,3 +48,25 @@ Authored source hashes: Section 15 `e750a78018fc0ec74c2408635d69f122e1f9a59c26ba
 This repair is not final packet-audit closure. The R5 frozen workbook remains 437 formally reviewed cases and 12,979 missing reviews. Another 53 explicitly authored command/alias reviews are saved as an unfinished working checkpoint, not validated chunk credit: `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-review-20260911-My8iicF0/root-review-working.json`, SHA-256 `84a2dd3b9685d974f96fddb2cc50f29d5fe6bce092c40ebd6aae36a3f695193c`. The command cohort has 176 cases; remaining source/owner adjudication and formal chunk receipts are still required. That checkpoint includes a primary-catalog gap for `cmd.auth_profile.open_official_page`; it is not repaired or declared closed by this Browser result change.
 
 No visual design, native implementation, Event Authority admission, production handler availability, artifact authenticity, transport enforcement, WorkNode/NodeSeed, executable queue, Spec Lock, generated evidence, governance seal or full goal completion is claimed. Other agents' changes remain outside this patch.
+
+## Post-rebase verification
+
+The implementation was rebased onto main `20ea55d303b328ddb581262819978a6d20cc37fd`, preserving the other agent's DL-047 Goal retention change, as commit `e39e42c2d53d6ac87449aef9426683b056fafe69`. Four generated index conflicts were resolved only by regeneration. No authored Browser source, schema, fixture, helper or test changed during the rebase. The combined generation has 95 documents, 6,544 PlanUnits and 25,153 acceptance units; runtime certification remains blocked and no WorkNodes or NodeSeeds were created.
+
+All seven checks were rerun at that exact commit, with unchanged HEAD and all 416 selected inputs unchanged throughout every run. Their captures are under `/mnt/Cursor/PuppetMaster-Evidence/packet-audits/browser-result-binding-land-20260912-ISBLnq0R/`:
+
+| Receipt | Result | Receipt SHA-256 |
+| --- | --- | --- |
+| `focused.receipt.json` | PASS, 54 tests | `bac80cc9b587f0816c718e2a396e278acbd03cf0b8bfed73d5d1817da9486d12` |
+| `existing-browser.receipt.json` | PASS, 10 tests | `1ff9e5d0cbfcc100d3c22375714b70c3d6697b70e691e9e9a34d1d5caa685fcc` |
+| `contracts.receipt.json` | PASS, 30 pairs, 1,028 positive / 3,338 negative fixtures | `11565eafe6a080de506455743acc75f4928ce140f4466b77be20cf77211059b5` |
+| `index.receipt.json` | PASS | `a04f780f9a0ca7a0dfd8e82fd8a813a9b1f2154d5fbb9ee78e4a002ae649a8eb` |
+| `shards.receipt.json` | PASS, 98 documents / 2,303 shards | `655c064aa550004e260ea35593d411e06e86bd13990c5b953d2a84769ecf95a9` |
+| `full-suite.receipt.json` | FAIL, 696 tests: 683 passed, 4 failures, 9 errors | `33d076b3c28cd3cab0b2c11e39b380bd132d8f7973f629d35e4865f49cf6a593` |
+| `gates.receipt.json` | FAIL, 24/36 checks pass | `b061ccfde7e8160785380b5b76421188f6bb5a8da965adb420c65c4448c68c1d` |
+
+The four failing test identities, nine error identities, and all governance subcheck failure counts match the preceding capture. Full-suite stderr SHA-256 is `3aba94870412b0f3ad771ea5a9c09ddf54ce98efc0bfec17cc5a70ce1963c207`. The report-only addendum does not change a tested source input.
+
+`scope.json` in the same capture directory, SHA-256 `69a840f13453c9420b4ecaab2b18f98f1f8091f5f37a3f1cfbba60ed61bff156`, pins the exact 44 changed paths at the implementation commit and verifies: no unrelated changed path; 6,375 non-Browser PlanUnits, 24,532 non-Browser acceptance units, 94 other owner document cards and 6,375 other owner dependency nodes remain unchanged versus the rebased main; existing numerical budgets, the runtime root union and unrelated Browser schema definitions remain unchanged; the sole new definition is the non-runtime validation input; and generated indexes contain no checkout-root path. This snapshot includes the earlier report bytes and is retained unchanged, not retroactively updated for this addendum.
+
+The formal audit status was also rechecked after the rebase: 13,416 expected cases, 437 reviewed, 12,979 missing, nine valid result files, 142 missing chunks, zero duplicates or validation errors, `complete: false`. Its frozen manifest remains `456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb`.
