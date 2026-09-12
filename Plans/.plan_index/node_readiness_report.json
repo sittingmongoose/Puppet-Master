@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15162,
+    "depends_on_edge_count": 15166,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17813,
-    "node_count": 6568,
+    "edge_count": 17817,
+    "node_count": 6569,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T07:52:24Z",
+  "generated_at_utc": "2026-09-12T08:35:26Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -34828,10 +34828,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6568,
+  "plan_unit_count": 6569,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2024,
+      "high": 2025,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36445,6 +36445,7 @@
       "import_guardrail_compile": 3,
       "import_snapshot_storage_drift": 1,
       "imported_handoff_state_drift": 1,
+      "incompatible_installed_target_or_stale_original_custody_publication": 1,
       "incomplete_jj_operation_recovery_or_restore_dual_writer": 1,
       "incomplete_or_overbroad_backup_boundary": 1,
       "incomplete_or_parallel_settings_manager_system": 1,
@@ -38611,7 +38612,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6377,
+      "accepted": 6378,
       "retired": 182,
       "superseded": 9
     },
@@ -38665,7 +38666,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 37,
+      "owner_boundary": 38,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,

@@ -10285,7 +10285,7 @@
         "future Doctor descriptor registry fixtures",
         "future Doctor report export native handler"
       ],
-      "line_count": 9064,
+      "line_count": 9075,
       "path": "Plans/newtools.md",
       "plan_unit_count": 157,
       "plan_unit_ids": [
@@ -10610,7 +10610,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "936a666d10339c5958b6ecc5d65cd1cf5818e5e1b4728daaba5b2f65cc184390",
+      "sha256": "2988c9a3676822dbf71608b17c126ec18000b21fc28cab1d41d017eedf626600",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -10632,6 +10632,7 @@
         "Plans/platform_capability_catalog.json",
         "Plans/platform_capability_catalog.schema.json",
         "Plans/platform_capability_decision_contracts.schema.json",
+        "Plans/platform_package_support_map.schema.json",
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_contracts.schema.json",
         "Plans/remote_access_system_contracts.schema.json",
@@ -10644,7 +10645,8 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "registry and scheduling negative fixtures",
         "remediation-return and protected-session fixtures",
-        "reports/event-authority-20260911/step-08-platform-custody-validation.md"
+        "reports/event-authority-20260911/step-08-platform-custody-validation.md",
+        "reports/event-authority-20260911/step-08-platform-withdrawal-validation.md"
       ]
     },
     {
@@ -14209,10 +14211,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 6,
+        "False": 7,
         "True": 10
       },
-      "heading_count": 42,
+      "heading_count": 44,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -14223,6 +14225,8 @@
         "Plans/Project_Output_Artifacts.md",
         "Plans/Provider_OpenCode.md",
         "Plans/Release_Supply_Chain.md",
+        "Plans/newtools.md",
+        "Plans/platform_package_support_map.schema.json",
         "Plans/plugin_contracts.schema.json",
         "Plans/plugin_package_contracts.schema.json",
         "Plans/release_update_contract_fixtures.json",
@@ -14233,9 +14237,9 @@
         "future ApplicationUpdateService handler",
         "future release/supply-chain receipt contracts"
       ],
-      "line_count": 1287,
+      "line_count": 1364,
       "path": "Plans/Release_Supply_Chain.md",
-      "plan_unit_count": 16,
+      "plan_unit_count": 17,
       "plan_unit_ids": [
         "RSC-001",
         "RSC-002",
@@ -14252,7 +14256,8 @@
         "RSC-013",
         "RSC-014",
         "RSC-015",
-        "RSC-016"
+        "RSC-016",
+        "RSC-017"
       ],
       "reasoning_tiers": [
         "high",
@@ -14264,6 +14269,7 @@
         "case_l_release_migration_recovery_false_admission",
         "fable_residual_release_supply_chain_contract_drift",
         "fabricated_oauth_readiness_or_distributed_confidential_client_secret",
+        "incompatible_installed_target_or_stale_original_custody_publication",
         "lifecycle_command_supply_chain_proof_bypass",
         "p0_security_release_supply_chain_hardening",
         "p1_security_release_supply_chain_hardening",
@@ -14274,15 +14280,16 @@
         "provider_cli_supply_chain_distribution_drift",
         "release_platform_or_performance_false_claim"
       ],
-      "sha256": "6417b4bebe91fcbe41b0c28abb0a9c47ba09faf1473b695a0722540548f69e61",
+      "sha256": "438392d6d05bbfef2bd845189f526a1d73a9d7bf4b2dc69bd23d750b85397357",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 16
+        "accepted": 17
       },
       "title": "Release Supply Chain",
       "unit_type_counts": {
         "acceptance": 1,
         "integration_contract": 1,
+        "owner_boundary": 1,
         "requirement": 9,
         "schema_contract": 3,
         "supply_chain_contract": 2
@@ -14307,6 +14314,8 @@
         "Package ownership/mode mismatches fail install validation",
         "Package/update artifacts require signed provenance/SBOM/hash/attestation checks and latest-tag drift detection.",
         "Plans/Automated_Testing_System.md#ATS-024",
+        "Plans/platform_package_support_map.schema.json",
+        "Plans/platform_package_support_map_contract_fixtures.json",
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_package_contract_fixtures.json",
         "Plans/protected_auth_browser_contracts.schema.json",
@@ -14342,6 +14351,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "reports/event-authority-20260911/step-08-platform-withdrawal-checks.json",
+        "reports/event-authority-20260911/step-08-platform-withdrawal-validation.md",
         "rollback",
         "selected renderer-order and fallback-path verification",
         "size-budget receipts",
@@ -16563,7 +16574,7 @@
         "False": 184,
         "True": 102
       },
-      "heading_count": 642,
+      "heading_count": 643,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16634,7 +16645,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23363,
+      "line_count": 23386,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 286,
       "plan_unit_ids": [
@@ -17003,7 +17014,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "761d9a33e9124f002905f2da62dacded98c3d9d6036153aa63c5743ea11d44a4",
+      "sha256": "c099b8061dd110d8001c6c28feb8d0dd7ece1b3d9eb0b3171b86ace8205ac5fb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 283,
@@ -17089,6 +17100,7 @@
         "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/platform_capability_decision_contracts.schema.json",
+        "Plans/platform_package_support_map.schema.json",
         "Plans/restore_point_create_result.schema.json",
         "Plans/restore_point_create_result_fixtures.json",
         "Plans/restore_point_create_result_join_fixtures.json",
@@ -17195,6 +17207,8 @@
         "reports/event-authority-20260911/step-08-integrity-wire-checks.json",
         "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
         "reports/event-authority-20260911/step-08-platform-custody-validation.md",
+        "reports/event-authority-20260911/step-08-platform-withdrawal-checks.json",
+        "reports/event-authority-20260911/step-08-platform-withdrawal-validation.md",
         "reports/event-authority-20260911/step-08-restore-full-value-checks.json",
         "reports/event-authority-20260911/step-08-restore-full-value-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
@@ -19080,7 +19094,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T07:52:23Z",
+  "generated_at_utc": "2026-09-12T08:35:26Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19088,13 +19102,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3404,
+      "False": 3405,
       "True": 3164
     },
-    "plan_unit_count": 6568,
+    "plan_unit_count": 6569,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6377,
+      "accepted": 6378,
       "retired": 182,
       "superseded": 9
     },
@@ -19148,7 +19162,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 37,
+      "owner_boundary": 38,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,

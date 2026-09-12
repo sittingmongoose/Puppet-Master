@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Platform embedded package support map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format_tag",
+    "bindings",
+    "roles"
+  ],
+  "properties": {
+    "format_tag": {
+      "const": "pm.platform.package_support_map.v1"
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_value_schema",
+        "decision_value_version",
+        "current_event_payload_schema",
+        "legacy_event_payload_schema",
+        "legacy_migration_support"
+      ],
+      "properties": {
+        "decision_value_schema": {
+          "const": "pm.storage_value.platform_capability_decision.v1"
+        },
+        "decision_value_version": {
+          "const": "1.0.0"
+        },
+        "current_event_payload_schema": {
+          "const": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0"
+        },
+        "legacy_event_payload_schema": {
+          "const": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0"
+        },
+        "legacy_migration_support": {
+          "const": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_pending_capture",
+        "retained_pending_completion",
+        "retained_committed_retry",
+        "retained_decision_event_read",
+        "backup_cleanup_custody"
+      ],
+      "properties": {
+        "new_pending_capture": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "retained_pending_completion": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "retained_committed_retry": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "retained_decision_event_read": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "backup_cleanup_custody": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        }
+      }
+    }
+  },
+  "$id": "pm.platform.package_support_map.schema.v1"
+}

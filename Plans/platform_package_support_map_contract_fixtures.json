@@ -1,0 +1,237 @@
+{
+  "fixture_set": "platform_package_support_map_v1",
+  "scope": "Closed map shape only; no package provenance, actual installed support, retained-obligation compatibility or native positive follows.",
+  "cases": [
+    {
+      "case_id": "all_roles_supported_shape",
+      "expected_valid": true,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "capture_closed_retained_supported_shape",
+      "expected_valid": true,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "unsupported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "all_roles_unsupported_shape_only",
+      "expected_valid": true,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "unsupported",
+          "retained_pending_completion": "unsupported",
+          "retained_committed_retry": "unsupported",
+          "retained_decision_event_read": "unsupported",
+          "backup_cleanup_custody": "unsupported"
+        }
+      }
+    },
+    {
+      "case_id": "proposal_tag_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "platform-package-support-map-proposal-a",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "missing_role_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "boolean_support_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": true,
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "unknown_support_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "retained",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "unadjudicated_binding_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "2.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "extra_field_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        },
+        "extra": "value"
+      }
+    },
+    {
+      "case_id": "missing_legacy_binding_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported"
+        }
+      }
+    },
+    {
+      "case_id": "extra_role_rejected",
+      "expected_valid": false,
+      "value": {
+        "format_tag": "pm.platform.package_support_map.v1",
+        "bindings": {
+          "decision_value_schema": "pm.storage_value.platform_capability_decision.v1",
+          "decision_value_version": "1.0.0",
+          "current_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "legacy_event_payload_schema": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+          "legacy_migration_support": "MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0"
+        },
+        "roles": {
+          "new_pending_capture": "supported",
+          "retained_pending_completion": "supported",
+          "retained_committed_retry": "supported",
+          "retained_decision_event_read": "supported",
+          "backup_cleanup_custody": "supported",
+          "unknown_role": "supported"
+        }
+      }
+    }
+  ]
+}

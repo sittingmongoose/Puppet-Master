@@ -5907,7 +5907,6 @@
     "SIR-046",
     "SP-279",
     "SP-288",
-    "SP-290",
     "SP-291",
     "CV-335",
     "SP-289",
@@ -6039,7 +6038,6 @@
     "OSI-422",
     "PSMERA-021",
     "UCC-124",
-    "N2-157",
     "SP-292",
     "SP-277",
     "SP-281",
@@ -6276,6 +6274,7 @@
     "PP-090",
     "UF-096",
     "WS-020",
+    "RSC-017",
     "MA-051",
     "ATS-041",
     "SIR-032",
@@ -6284,6 +6283,7 @@
     "F3-514",
     "SP-250",
     "UF-095",
+    "SP-290",
     "MA-052",
     "RTIM-010",
     "RSC-015",
@@ -6291,6 +6291,7 @@
     "APR-015",
     "ATS-036",
     "SP-249",
+    "N2-157",
     "MA-053",
     "RTIM-023",
     "FGI-015",
@@ -52506,6 +52507,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RSC-017",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-017",
+      "to": "DL-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-017",
+      "to": "RSC-014"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RTIM-001",
       "to": "RTIM-002"
     },
@@ -66748,6 +66764,11 @@
       "edge_type": "depends_on",
       "from": "SP-290",
       "to": "DL-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "RSC-017"
     },
     {
       "edge_type": "depends_on",
@@ -95640,7 +95661,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T07:52:23Z",
+  "generated_at_utc": "2026-09-12T08:35:26Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -160728,8 +160749,8 @@
       "source_location": {
         "heading": "N2-157 - Platform Original Evaluation Decision Authority",
         "heading_level": 3,
-        "heading_line": 9014,
-        "line": 9016,
+        "heading_line": 9019,
+        "line": 9021,
         "path": "Plans/newtools.md"
       },
       "status": "accepted",
@@ -184638,6 +184659,23 @@
       "unit_type": "supply_chain_contract"
     },
     {
+      "context_scope": "platform_package_support_and_original_selection_lease",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-017",
+      "reasoning_tier": "high",
+      "risk_class": "incompatible_installed_target_or_stale_original_custody_publication",
+      "source_location": {
+        "heading": "RSC-017 - Platform Embedded Support Map And Selection Lease",
+        "heading_level": 3,
+        "heading_line": 1312,
+        "line": 1314,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "rewrite_tie_in_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/rewrite-tie-in-memo.md",
@@ -194133,8 +194171,8 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 23115,
-        "line": 23117,
+        "heading_line": 23130,
+        "line": 23132,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194150,8 +194188,8 @@
       "source_location": {
         "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
         "heading_level": 3,
-        "heading_line": 23220,
-        "line": 23222,
+        "heading_line": 23243,
+        "line": 23245,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194167,8 +194205,8 @@
       "source_location": {
         "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
         "heading_level": 3,
-        "heading_line": 23318,
-        "line": 23320,
+        "heading_line": 23341,
+        "line": 23343,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -207305,10 +207343,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15162,
+    "depends_on_edge_count": 15166,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17813,
-    "node_count": 6568,
+    "edge_count": 17817,
+    "node_count": 6569,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

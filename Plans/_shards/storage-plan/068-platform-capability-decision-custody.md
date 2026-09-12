@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23067-L23172
+Source lines: L23067-L23195
 
-Source SHA256: `761d9a33e9124f002905f2da62dacded98c3d9d6036153aa63c5743ea11d44a4`
+Source SHA256: `c099b8061dd110d8001c6c28feb8d0dd7ece1b3d9eb0b3171b86ace8205ac5fb`
 
 ---
 
@@ -52,6 +52,21 @@ Backup capture and decision-only restore authenticate complete image bytes and o
 
 The NEW transient same-owner retirement adapter consumes an actual existing-policy release for the selected event, not a new TTL/hold decision. Actual issuing owner generates canonical evidence bytes binding storage/event identity, complete selected event and digest, complete source/manifest preimage hashes, exact first/last sequence, reason and policy. Preserve issuing owner, actual Store and original token identity; caller-created evidence/ref/hash or legacy token alone cannot authorize an interior gap. At admission, consumption and final deletion, authenticate actual evidence bytes/seal/reference/origin and still-current actual selected event/source/manifest. Preserve every old gap and its distinct evidence exactly; add only the selected one-point retention_compaction interval, without coalescing, enlargement or omitted old gaps. Late owner/evidence/source revocation refuses without publishing the unauthorized retirement effect; every genuine independent append publication or receipt issuance already completed remains preserved in its actual owner. This does not add a durable evidence family or prove native eligibility.
 
+### Installed operation support, withdrawal and complete obligations
+
+SP-290 adopts RSC-017's original selected/running executable lease and exact `pm.platform.package_support_map` resource. Platform owns its five operation meanings. New pending capture requires `new_pending_capture` plus every retained role needed by the resulting durable obligation. An actual retained pending original requires `retained_pending_completion` and its resulting retry/read/backup-cleanup support. Committed receipt retry requires `retained_committed_retry`; event-bearing passive read and its selector materialization require `retained_decision_event_read`; backup, restore, relocation, authorized retirement and cleanup require `backup_cleanup_custody` plus their original independent proofs. No role declaration substitutes for actual registration, codec, migration, permission, origin, quarantine, complete source, full-value receipt or restore authority.
+
+The existing admission method first resolves an authentic retained row at the exact scope-qualified key and compares its complete original request. An exact retained retry uses its current installed retained role without reacquiring disposed evaluation/catalog/probe/provider owners. A changed request conflicts. Absent or lawfully deleted custody cannot take this branch or be reconstructed from shared receipts. A fresh request, including `not_requested`, remains subject to current original evaluation authority and new-capture support. Closing capture preserves every original pending/committed row and independent effect, and starts no retention clock.
+
+Acquire the actual original selection lease inside each affected original Storage operation and hold it through final publication/disclosure, including the original pending-row setter and joint shared append install/issuance boundaries. Preserve the operation's original Store facts before lease helpers. Compare returned lease/map facts to independently obtained original owners and exact resource bytes; the caller or a resolver cannot downgrade the required operation role. The final pure predicate also compares actual registered Vault contents with complete immutable typed originals. An earlier capture grant cannot publish after target closure; if a real pending publication wins, that row becomes a retained obligation for the next switch. Independently lawful shared issuance or backup remains in the same original owner when a later Platform step refuses.
+
+Before a target may remove support, Storage supplies complete authenticated requirements across every enrolled scope, including inactive Projects, every active and registered-backup decision row and seal, pending originals and their downstream roles, current and legacy Platform event bodies, original append controls still holding such event bodies, active/registered backup event references, frozen snapshots, valid owner holds and exact shared receipt/read/restore bindings. Reference authorization and complete target resolution are required. Unknown backup event identities conservatively retain reader support; unresolved enumeration cannot establish absence. Every actual registered shared Vault artifact contributes its retained event obligations, including forensic custody without making it restore authority. A surviving shared-backup event prevents decision cleanup. Independently callable original Vault publishers/restore and reference mutations use RSC-017's same selection exclusion within their original owner bodies.
+
+A candidate may omit a role only when the actual complete owners prove no remaining obligation depends on it, or an explicitly verified compatible successor supplies it under existing owner rules. Pending work must resolve, all applicable references/holds must end, and due active/registered-backup decision deletion must actually complete under DL-048 before those decision obligations disappear. Selected-target preparation preserves the complete original contents through RSC-017's final pure comparison; a new genuine row or backup after the last returned inventory invalidates selection without undoing that effect. Empty decision rows alone do not remove independent shared receipt, legacy/current event-reader or whole-boundary restore duties. No grace period, additional hold, early deletion or historical-control reacquisition is introduced.
+
+Keep exact current v2 event writing and the original v1 payload compatibility reader/migration edge. Legacy conversion validates actual old bytes and owner-backed derivation, preserves original source/cardinality/lineage, and quarantines unprovable conversion without advancing a checkpoint. It neither creates a native decision nor remints an event. Decision schema `pm.storage_value.platform_capability_decision.v1@1.0.0`, strict shared v2 writes, retained v1/v2 readers and explicit shared legacy selectors remain unchanged. The selected package may close capture while preserving pending completion, committed retry, passive read and backup/cleanup; actual loss of any prerequisite fences its dependent operation with custody intact. Cold reopen reacquires current original installed/running agreement and complete obligations. Compatible rollback uses the same real target-admission checks, never an old receipt or withdrawal latch.
+
+
 ### Validation boundary
 
 The validation report `reports/event-authority-20260911/step-08-platform-custody-validation.md` pins the frozen v11 implementation model, completed independent binding review, direct/mandatory-backup fixture captures and exact static schema checks. These establish bounded contract/model evidence only. Native source/owner authentication, actual schema/family/policy/reader installation, locks/leases, redb CAS and physical atomicity, frame/CRC/fsync, complete backup/archive enumeration, whole-root restore, real concurrent crash execution, actual TTL/hold adjudication and production capability admission remain NOT_RUN. No cross-owner atomicity or native installation follows from in-process fixture identities. The active catalog remains empty; no runtime/depth/readiness/WorkNode/governance clearance follows.
@@ -71,9 +86,11 @@ canonical_text: >-
   Already committed retry discloses only the exact retained receipt under current guards,
   without fresh coverage or lifetime extension. Mandatory backup, coherent recovery and
   complete reference-aware cleanup preserve DL-048 and independent event/receipt policies.
+  RSC-017 original package leases separate fresh capture from retained service and preserve
+  complete actual obligations through target selection and every original publication.
 gui_related: false
 gui_classification_reason: Defines internal custody, codec, owner interfaces, recovery and cleanup without visual presentation.
-depends_on: [SP-026, SP-236, SP-237, SP-278, SP-286, CV-339, DL-045, DL-048]
+depends_on: [RSC-017, SP-026, SP-236, SP-237, SP-278, SP-286, CV-339, DL-045, DL-048]
 unblocks: []
 acceptance_criteria:
   - Exact scope-qualified physical key and canonical identity hash distinguish application/project evaluations while complete original identity remains authoritative.
@@ -91,7 +108,13 @@ acceptance_criteria:
   - Mandatory backup and decision-only restore preserve every currently held original row and unrelated survivor; cleanup cannot be undone by a stale decision backup or confused with full-root restore.
   - Same-owner selected retirement evidence preserves actual owner/token/source/manifest authority and all distinct old gaps, adding only the exact one-point interval after existing-policy release.
   - Existing event and receipt policies, catalog, payload and critical/MVP arrays remain unchanged; native execution and complete event depth are not inferred.
+  - Actual installed five-role support separates new capture from exact retained completion/retry/read/backup-cleanup without disposed source reevaluation.
+  - Original operation and independently callable Vault/reference mutation bodies enforce the same selection lease; genuine earlier effects survive later refusal.
+  - Complete actual active, inactive-project, source-control, reference and registered-backup obligations remain unchanged through the final pure target publication predicate.
 validation_surfaces:
+  - Plans/platform_package_support_map.schema.json
+  - reports/event-authority-20260911/step-08-platform-withdrawal-validation.md
+  - reports/event-authority-20260911/step-08-platform-withdrawal-checks.json
   - Plans/platform_capability_decision_contracts.schema.json
   - Plans/storage_value_registry.json
   - Plans/event_append_receipt_contracts.schema.json

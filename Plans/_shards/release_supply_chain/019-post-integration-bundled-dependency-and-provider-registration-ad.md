@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L1209-L1287
+Source lines: L1209-L1289
 
-Source SHA256: `6417b4bebe91fcbe41b0c28abb0a9c47ba09faf1473b695a0722540548f69e61`
+Source SHA256: `438392d6d05bbfef2bd845189f526a1d73a9d7bf4b2dc69bd23d750b85397357`
 
 ---
 
@@ -87,3 +87,5 @@ negative_constraints:
   - Do not embed confidential application credentials in distributed binaries or images.
   - Do not claim provider approval, callback operation, token exchange, refresh, or login from static release fixtures.
 ```
+
+<a id="platform-package-support-carrier"></a>

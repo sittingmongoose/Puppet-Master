@@ -1,0 +1,534 @@
+{
+  "status": "CANONICAL_CONTRACT_VERIFIED_NATIVE_NOT_RUN",
+  "source_commit": "d3c1179f78671c18b70d70ec2cdfa4ec92af0347",
+  "scope": "Platform installed operation support and original target-selection lease only",
+  "compiled_files": {
+    "Plans/Release_Supply_Chain.md": "438392d6d05bbfef2bd845189f526a1d73a9d7bf4b2dc69bd23d750b85397357",
+    "Plans/newtools.md": "2988c9a3676822dbf71608b17c126ec18000b21fc28cab1d41d017eedf626600",
+    "Plans/platform_package_support_map.schema.json": "f3f93539b5ecdc97cbfba82a83fd5b90946af736eb90e91a724e2607304d1fe5",
+    "Plans/platform_package_support_map_contract_fixtures.json": "d463156128f240aedd9f912a42dfc29b231a611a290e7b0bef0fdd479de06514",
+    "Plans/storage-plan.md": "c099b8061dd110d8001c6c28feb8d0dd7ece1b3d9eb0b3171b86ace8205ac5fb"
+  },
+  "new_plan_units": [
+    "RSC-017"
+  ],
+  "modified_existing_plan_units": [
+    "SP-290",
+    "N2-157"
+  ],
+  "preserved_census": {
+    "physical_families": 118,
+    "event_families": 42,
+    "retention_policies": 26,
+    "critical_families": 16,
+    "mvp_families": 46,
+    "all_objects_unchanged": true
+  },
+  "source_currentness": [
+    {
+      "path": "Plans/newtools.md",
+      "sha256": "936a666d10339c5958b6ecc5d65cd1cf5818e5e1b4728daaba5b2f65cc184390",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "sha256": "6417b4bebe91fcbe41b0c28abb0a9c47ba09faf1473b695a0722540548f69e61",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "sha256": "2dcd3d922db52105d6b12866bff3ff2f8bb4b7d960a749b0fdbe4428fe212f84",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/platform_capability_decision_contracts.schema.json",
+      "sha256": "f7d533d9770f88f7c0bce24aa2c0e94bb1cd519a41f9fcf8230d6be4f7075d03",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+      "sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/platform_capability_catalog.json",
+      "sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+      "relation": "byte_identical"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "section": "platform-capability-decision-custody through SP-290",
+      "sha256": "32a243749229b044e3600c51bf6f5382849d0e6b5469b20ef952ba275cbbc630",
+      "relation": "section_exact_unrelated_boot_additions_only"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "relation": "all_predecessor_family_objects_exact",
+      "count": 115
+    }
+  ],
+  "packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/platform-withdrawal-composition-20260912/v1/manifest.json",
+      "sha256": "f74c4fa1907ef93760b2bf38c731584c2177c4f863bf35ca3dc153d6c501a167",
+      "members": 3637,
+      "disposition": "predecessor_failed_review"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/platform-withdrawal-v1-independent-review-20260912/review-manifest.json",
+      "sha256": "3d8dc7de88544aa4a5093a5e5464a98e8f6e18f125b606761da880c12678ff4c",
+      "members": 3660,
+      "disposition": "independent_v1_failure"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/platform-withdrawal-composition-20260912/v2/manifest.json",
+      "sha256": "bd15b3c3a0fdb712ffb974bbb4f04aa99ac213e4607985cf358ce525ded37e7c",
+      "members": 3652,
+      "disposition": "corrected_subject_all_pins_verified"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-withdrawal-root-review-20260912/manifest.json",
+      "sha256": "c8f2fcd46a705f618d5db5633598baaefc77bb85e7ae26fc5c249f9acf92aa1b",
+      "members": 10,
+      "disposition": "root_independent_rerun"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-withdrawal-canonical-20260912/manifest.json",
+      "sha256": "1f0d61b6f56563f16462f4a6f454ed60c93211dde4c303ae92bf5eae9a6ef85f",
+      "members": 13,
+      "disposition": "canonical_identity_before_owner_birth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/platform-withdrawal-compilation-independent-review-20260912/v1/manifest.json",
+      "sha256": "94a9fa6156646bd4c52b8ec2d6aac01881c9bb37c8a04b5b7a32ff1c4f554983",
+      "members": 22,
+      "disposition": "independent_five_file_compilation_review_no_findings"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-withdrawal-repository-checks-20260912/manifest.json",
+      "sha256": "b5642a311ea8c50ee91eb66f247bd64db1aba9076660250f9336ada4b42fd184",
+      "members": 5,
+      "disposition": "focused_repository_checks"
+    }
+  ],
+  "counts": {
+    "unchanged_platform_v11": 455,
+    "unchanged_withdrawal_v1": 84,
+    "separate_unregistered_shared": 152,
+    "v2_paired_review_cases": 6,
+    "v2_supplementary_boundary_executions": 32,
+    "root_rerun_executions": 122,
+    "canonical_identity_rerun_executions": 38,
+    "schema_shape_cases": 11,
+    "canonical_supplied_capture_observations": 4,
+    "capture_additional_unique_cases": 0,
+    "production_catalog_positives": 0,
+    "native_cases": 0
+  },
+  "finding_and_correction": "V1 final obligation return could admit a genuine pending row and then select a package lacking its support. V2 captures complete original actual compatibility inputs inside switch before helpers and directly compares all current inputs immediately before selected assignment; the original row survives refusal and reopen succeeds. Only InstallerOwner.switch changes between v1 and v2.",
+  "explicit_shared_model_exception": "V1 integrated lease scopes inside three original shared BackupVault methods and four original References mutation methods. Original statements remain AST-exact after removing scopes/imports; this is disclosed, not shared-source byte preservation. V2 preserves that v1 shared code exactly.",
+  "canonical_identity_mapping": "New schema ID/title and format tag only; every structural/binding/role constraint unchanged from reviewed proposal. Canonical schema and validator installed in memory before actual fixture owner or package birth, then real original methods run. Proposal tags are not deployed predecessors.",
+  "independence": "Root authored compilation and independently reviewed/reran v2 implementation. Compilation reviewer did not author draft/withdrawal adapter but authored older Platform custody lineage. V1 reviewer authored earlier carrier proposal, not composition implementation. Scope is disclosed in frozen reports.",
+  "standard_full_gates": "NOT_RERUN; no full governance pass claimed",
+  "native_limitations": [
+    "actual signed executable creation and resource extraction",
+    "publisher/signature/provenance authentication",
+    "native install-source/current running-image discovery",
+    "complete all-root and external-backup enumeration",
+    "actual platform selection/restart journal and fsync/crash recovery",
+    "native concurrent original-owner serialization",
+    "physical backup/restore and original policy eligibility"
+  ],
+  "scope_limits": [
+    "No new event/payload, physical storage family, retention policy, migration edge, current-selector record or package archive.",
+    "No production catalog entry or native positive.",
+    "No overall event depth, Steps 8-9 completion, readiness, WorkNode or governance seal.",
+    "Reruns, imported legacy results and repeated captures are not added as unique discoveries."
+  ],
+  "repository_verification": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2438,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "plan_index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T08:36:29Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25408,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6569
+      }
+    },
+    "existing_named_contracts": {
+      "status": "pass",
+      "check": "validate-new-contracts",
+      "claim_boundary": "static_schema_and_fixture_consistency_only",
+      "command": "python3 scripts/pm-new-contracts-verify.py",
+      "captured_summary": true,
+      "counts": {
+        "contract_pairs": 30,
+        "metaschemas_valid": 30,
+        "negative_cases": 3338,
+        "negative_cases_rejected": 3338,
+        "positive_cases": 1028,
+        "positive_cases_valid": 1028,
+        "internal_self_tests": 12,
+        "internal_self_tests_passed": 12
+      },
+      "failures": [],
+      "findings": [],
+      "scope_note": "Existing named contract pairs. The new Platform support map's eleven fixtures were validated separately against its exact closed canonical schema."
+    },
+    "preservation": {
+      "status": "PASS",
+      "changed_old_units": [
+        {
+          "id": "SP-290",
+          "fields": [
+            "validation_surfaces",
+            "depends_on",
+            "acceptance_criteria",
+            "canonical_text"
+          ]
+        },
+        {
+          "id": "N2-157",
+          "fields": [
+            "validation_surfaces",
+            "acceptance_criteria",
+            "canonical_text"
+          ]
+        }
+      ],
+      "new_units": [
+        "RSC-017"
+      ],
+      "reviewed_draft_bytes_exact": true,
+      "registries_policies_payload_catalog_locks_unchanged": true,
+      "old_index_units": 6568,
+      "new_index_units": 6569,
+      "all_unrelated_index_unit_semantics_preserved": true
+    },
+    "central_registry_data": {
+      "before_count": 21,
+      "after_count": 21,
+      "diagnostics_unchanged": true,
+      "new_diagnostic_categories_or_locations": [],
+      "waiver": false,
+      "validator_unchanged": true,
+      "full_before_and_after": {
+        "before": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_retention_policy_count_mismatch",
+            "expected": 24,
+            "actual": 26
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_family_count_mismatch",
+            "expected": 88,
+            "actual": 118
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[50]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.read_token",
+            "field": "read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_field",
+            "field": "index_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_field",
+            "field": "index_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_field",
+            "field": "generic_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_field",
+            "field": "generic_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_status_counts_mismatch",
+            "expected": {
+              "materialized": 66,
+              "deferred_not_build_blocking": 21,
+              "compatibility_alias": 1
+            },
+            "actual": {
+              "materialized": 96,
+              "deferred_not_build_blocking": 21,
+              "compatibility_alias": 1
+            }
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_tier_counts_mismatch",
+            "expected": {
+              "tier_0_launch_critical": 16,
+              "later_gui_or_feature_projection": 71,
+              "migration_only": 1
+            },
+            "actual": {
+              "tier_0_launch_critical": 23,
+              "later_gui_or_feature_projection": 92,
+              "migration_only": 3
+            }
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+            "family_id": "runtime_resource_admission",
+            "expected": "later_gui_or_feature_projection",
+            "actual": "migration_only"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+            "family_id": "observable_work_projection",
+            "expected": "later_gui_or_feature_projection",
+            "actual": "migration_only"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+            "family_id": "retention_hold_record",
+            "expected": "canonical_dual_homed",
+            "actual": "canonical_non_rebuildable"
+          }
+        ],
+        "after": [
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_retention_policy_count_mismatch",
+            "expected": 24,
+            "actual": 26
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_family_count_mismatch",
+            "expected": 88,
+            "actual": 118
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[50]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.read_token",
+            "field": "read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_field",
+            "field": "index_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[96]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.$defs.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_field",
+            "field": "index_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[99]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+            "field": "index_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_field",
+            "field": "generic_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[102]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_field",
+            "field": "generic_read_token",
+            "field_list": "required_fields"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json:families[110]",
+            "error": "storage_value_secret_material_key",
+            "pointer": "$.properties.generic_read_token",
+            "field": "generic_read_token"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_status_counts_mismatch",
+            "expected": {
+              "materialized": 66,
+              "deferred_not_build_blocking": 21,
+              "compatibility_alias": 1
+            },
+            "actual": {
+              "materialized": 96,
+              "deferred_not_build_blocking": 21,
+              "compatibility_alias": 1
+            }
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_tier_counts_mismatch",
+            "expected": {
+              "tier_0_launch_critical": 16,
+              "later_gui_or_feature_projection": 71,
+              "migration_only": 1
+            },
+            "actual": {
+              "tier_0_launch_critical": 23,
+              "later_gui_or_feature_projection": 92,
+              "migration_only": 3
+            }
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+            "family_id": "runtime_resource_admission",
+            "expected": "later_gui_or_feature_projection",
+            "actual": "migration_only"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+            "family_id": "observable_work_projection",
+            "expected": "later_gui_or_feature_projection",
+            "actual": "migration_only"
+          },
+          {
+            "path": "Plans/storage_value_registry.json",
+            "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+            "family_id": "retention_hold_record",
+            "expected": "canonical_dual_homed",
+            "actual": "canonical_non_rebuildable"
+          }
+        ],
+        "before_count": 21,
+        "after_count": 21,
+        "new_diagnostic_categories_or_locations": [],
+        "changed_details": [],
+        "validator_unchanged": true,
+        "waiver": false
+      }
+    }
+  }
+}

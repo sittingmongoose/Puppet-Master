@@ -9011,6 +9011,11 @@ Freeze all producer-controlled EventRecord input before append. Sequence, observ
 
 Retained completion distinguishes an already committed original-receipt retry from pending-to-committed completion and event-bearing passive reads as specified by SP-290. Receipt-only retry has no action authority or fresh read-through coverage, never extends DL-048 retention, and cannot recover a deleted decision row from shared append custody.
 
+PlatformCapabilityManager also owns the five independent installed operation meanings in RSC-017's exact embedded package map: new pending capture, retained pending completion, retained committed retry, retained decision/event read and backup/cleanup custody. Release supplies actual selected/running package and original currentness authority; Storage supplies SP-290's authentic retained obligations and original publication guards. A support declaration grants no evaluation, permission, healthy-installation assertion or cleanup authority. Capture closure prevents a fresh durable evaluation, including `not_requested`, while authentic exact retained retries are classified before fresh evaluation and keep their original decision. Their disposed catalog/probe/provider owners are not reacquired. Missing/deleted custody is not a retained request.
+
+Catalog revision supersession and entry `active|deprecated|retired` state remain PlatformCapabilityManager's existing catalog lifecycle. They do not withdraw a codec, rewrite an admitted decision, start retention, authorize deletion or select a package. New capture still needs a current active revision/entry and actual original source admission. Retained work preserves its original accepted revision/entry and evidence. No deprecation schedule, replacement capability, evaluation trigger or inactive-entry exception is added. The catalog remains empty and admits no production event.
+
+
 ### N2-157 - Platform Original Evaluation Decision Authority
 
 ```yaml
@@ -9025,6 +9030,8 @@ canonical_text: >-
   frozen producer input and original retry meaning. SP-290 owns physical custody and original
   append/full-value adoption. Doctor remains a router; Models and concrete capability owners
   retain source truth. The empty active catalog admits no production evaluation or event.
+  Five installed operation roles separate fresh capture from authentic retained work;
+  catalog lifecycle cannot substitute for package withdrawal or Storage cleanup.
 gui_related: false
 gui_classification_reason: Defines original evaluation authority and immutable decision meaning without specifying visual presentation.
 depends_on: [N2-151, SP-290, DL-045, DL-048]
@@ -9039,7 +9046,11 @@ acceptance_criteria:
   - Lawful original source disposal leaves authentic minimal decision custody under DL-048, without retaining raw source bodies or extending their owner policies.
   - Empty active catalog keeps production admission closed; prospective-only fixture identities never enter the catalog or become new triggers.
   - Retained committed-receipt retry follows SP-290 without fresh coverage, action authority, retention extension or fallback after decision-row deletion.
+  - Five installed roles use RSC-017 original package currentness and SP-290 retained obligations; declaration alone grants no source, permission or cleanup authority.
+  - Catalog supersession/deprecation/retirement neither rewrites admitted decisions nor withdraws readers, starts retention or admits inactive entries.
 validation_surfaces:
+  - Plans/platform_package_support_map.schema.json
+  - reports/event-authority-20260911/step-08-platform-withdrawal-validation.md
   - Plans/platform_capability_catalog.json
   - Plans/platform_capability_catalog.schema.json
   - Plans/event_payload_platform_capability_evaluated.schema.json
