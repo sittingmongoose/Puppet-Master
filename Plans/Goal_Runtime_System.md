@@ -253,7 +253,7 @@ ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborativ
 | Command ID | Meaning | Required result boundary |
 |---|---|---|
 | `cmd.chat.goal.start` | Create one text-only Goal for the thread | Returns `goal_id`, revision 1, `currentness_hash`, and a creation receipt. Creates no phase, child Goal, budget, schedule, Plan, or To-Do. |
-| `cmd.chat.goal.update` | Write an approved objective revision | Requires the expected revision and currentness hash, and either a user-authored edit or a resolved `approval_id`. Returns revision `n+1`. Never partially applies. |
+| `cmd.chat.goal.update` | Write an approved objective revision | Requires the expected revision and currentness hash, and either a user-authored edit or a resolved `approval_id`. The body transaction returns revision `n+1` atomically under GRS-068/SP-299; later event/command settlement can remain unresolved while preserving that accepted body. |
 | `cmd.chat.goal.propose_update` | Agent requests an objective change | Returns an `ApprovalRequest` and writes nothing. A denied or expired proposal leaves revision and currentness untouched. |
 | `cmd.chat.goal.pause` | User pauses continuation | Sets `paused`, latches the stop epoch, and cancels no workflow-owned record. Nothing may auto-resume afterwards. |
 | `cmd.chat.goal.resume` | User resumes continuation | Refused while a manual stop is latched or while `blocked_reason_ref` has not cleared; the refusal names the reason. |
@@ -270,7 +270,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 
 ## Goal V2 events
 
-The required semantic event names are `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, and `goal.continuation_evaluated`. All eight require central EventRecord registration and payload schemas before any emission; until then the owning command records only its typed result, receipt, and projection.
+The required semantic event names are `goal.created`, `goal.updated`, `goal.paused`, `goal.resumed`, `goal.blocked`, `goal.completed`, `goal.cancelled`, and `goal.continuation_evaluated`. Each exact name requires its own central EventRecord registration and payload schema before emission. `goal.created` is admitted only through CV-341/SP-294 and `goal.updated` only through CV-342/SP-299; their current source/receipt/result obligations and native availability still apply. Other names retain their own individual admission state; no sibling registration grants emission.
 
 Envelopes carry Project, thread, and Goal identity, revision, `currentness_hash`, actor, correlation and causation, idempotency key, and redacted source refs. `goal.updated` carries `change_source` and, for the agent path, `approval_id`. `goal.continuation_evaluated` carries `result`, `user_stop_epoch`, and completion-evidence refs by reference rather than by value.
 
@@ -2635,7 +2635,7 @@ Event-specific minima:
 | `goal.scheduled` | `scheduler_reason`, `eligible_at_utc`, `queue_id?`, `priority`, `budget_snapshot_ref`, `next_action` |
 | `goal.progressed` | `progress_fingerprint`, `task_delta`, `status_before`, `status_after`, `artifact_hashes[]`, `repeat_count?`, `no_progress_marker?` |
 | `goal.tool_check_recorded` | `tool_call_id`, `tool_name`, `check_kind`, `check_result`, `policy_decision`, `output_ref?`, `log_ref?` |
-| `goal.updated` | `previous_revision`, `new_revision`, `objective_delta?`, `scope_delta?`, `constraint_delta?`, `budget_delta?`, `active_child_goal_ids[]`, `stale_child_goal_ids[]` |
+| `goal.updated` | Active v3: exact content-free before/after revision/currentness, accepted predecessor, original acceptance/body/source evidence under GRS-068/CV-342. The prior delta/child/budget minima remain whole-v2 historical interpretation only. |
 | `goal.replanned` | `interruption_class`, `impact_summary`, `affected_child_goal_ids[]`, `affected_worknode_refs[]`, `child_decisions[]`, `remaining_evidence_refs[]`, `new_revision`, `next_action` |
 | `goal.child_status_changed` | `child_goal_id`, `child_agent_lease_id?`, `previous_status`, `next_status`, `result_ref?`, `receipt_ref?`, `parent_action_required?` |
 | `goal.evidence_captured` | `evidence_ref`, `evidence_kind`, `source_spans[]`, `content_hash`, `snapshot_ref?`, `currentness_state`, `redaction_profile`, `retention_policy_ref?` |
@@ -3547,7 +3547,7 @@ The original v2 materialization below remains authoritative for the whole retain
 | `EA-UND-0011-GOAL` | `goal.scheduled` | `event-family-goal-scheduled` | `pm.goal_runtime_event.goal_scheduled.schema.v2` | `Plans/event_payloads/goal_runtime/goal_scheduled.schema.json` | `scheduler_reason,eligible_at_utc,queue_id-or-empty,next_action` |
 | `EA-UND-0012-GOAL` | `goal.stopped` | `event-family-goal-stopped` | `pm.goal_runtime_event.goal_stopped.schema.v2` | `Plans/event_payloads/goal_runtime/goal_stopped.schema.json` | `stop_reason_code,interruption_boundary,resumable` |
 | `EA-UND-0013-GOAL` | `goal.tool_check_recorded` | `event-family-goal-tool-check-recorded` | `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` | `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json` | `tool_call_id,check_kind,check_result,policy_decision` |
-| `EA-UND-0014-GOAL` | `goal.updated` | `event-family-goal-updated` | `pm.goal_runtime_event.goal_updated.schema.v2` | `Plans/event_payloads/goal_runtime/goal_updated.schema.json` | `previous_revision,new_revision` |
+| `EA-UND-0014-GOAL` | `goal.updated` | `event-family-goal-updated` | `pm.goal_runtime_event.goal_updated.schema.v3` | `Plans/event_payloads/goal_runtime/goal_updated.schema.json` | GRS-068/CV-342 active-v3 exact fields; complete v2 remains retained only |
 | `EA-UND-0015-GOAL` | `goal.verification_decided` | `event-family-goal-verification-decided` | `pm.goal_runtime_event.goal_verification_decided.schema.v2` | `Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json` | `verification_cycle_id-or-audit_cycle_id,decision,verifier_ref` |
 | `EA-UND-0016-GOAL` | `goal_run.blocked` | `event-family-goal-run-blocked` | `pm.goal_runtime_event.goal_run_blocked.schema.v2` | `Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json` | `goal_run_id,blocked_reason_code,block_receipt_ref` |
 | `EA-UND-0017-GOAL` | `goal_run.cancelled` | `event-family-goal-run-cancelled` | `pm.goal_runtime_event.goal_run_cancelled.schema.v2` | `Plans/event_payloads/goal_runtime/goal_run_cancelled.schema.json` | `goal_run_id,cancel_reason,mutation_started` |
@@ -3698,6 +3698,8 @@ Historical interpretation only under GRS-062: the exact following fields, branch
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-009..011`, `GRS-020`), `D-REDACT-01`, `D-R13`.
 
 ##### `EA-UND-0014-GOAL` — `goal.updated` (`D-R14`)
+
+The following D-R14 bullets retain whole-v2 historical validation only. Active writes use GRS-068/CV-342's exact v3 acceptance/body/event contract; no current delta, child, budget or retired lifecycle is admitted by these bullets.
 
 - Fields: `R{previous_revision:u32+,new_revision:u32+,active_child_goal_ids:ref[],stale_child_goal_ids:ref[]}`; `O{objective_delta:Delta,scope_delta:Delta,constraint_delta:Delta,budget_delta:Delta}`.
 - Branches: `previous_revision=expected_goal_revision`, `new_revision=goal_revision=previous_revision+1`; at least one delta is present; active and stale child sets are disjoint. A material scope/constraint/objective change requiring work invalidation must be followed by `goal.replanned`; this event alone does not steer child work.
@@ -6231,3 +6233,97 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-067, ContractName:Plans/Goal_Runtime_System.md#GRS-066, ContractName:Plans/storage-plan.md#SP-298, ContractName:Plans/storage-plan.md#SP-294
+
+<a id="original-goal-objective-update-acceptance-and-settlement"></a>
+## Original Goal objective update acceptance and settlement
+
+GRS-068 adopts active `goal.updated` v3 for the existing complete objective replacement command. It supersedes current-write interpretation of D-R14, the old delta/child/budget minima and their common-v2 envelope assumptions only for this exact family. Whole-v2 remains an exact historical reader resource under `legacy_v2_reader`; historical validation confers no current retired field or state. Other Goal/GoalRun families require their own adjudication.
+
+### Existing acceptance and independent authorities
+
+GRS-064, SP-287 and DL-047 remain controlling. Update replaces the complete exact objective string, including empty text and original whitespace, with at most 4,000 Unicode scalars and no surrogate code points. Direct Save is actual original user acceptance (`user_direct`, null source_message_id and approval_id), without another confirmation. Agent mutation requires the actual explicit user instruction plus the existing approval host's still-valid resolution bound to this Goal, expected ordinary revision/currentness and whole replacement text; its source_message_id and approval_id are genuine nonnull originals. Mere route/source_surface strings, caller refs or a matching text digest are never authority. Active/paused/blocked permit edit; completed rejects. The accepted active replacement affects the next continuation boundary; it neither changes a running turn nor resumes a paused/blocked Goal or defeats host Stop.
+
+The existing `owner.goal.body.mutation@1.0.0` remains the only body writer. SIR remains the original command identity/outcome owner. Goal Runtime authenticates original accepted-change/origin predicates. Storage authenticates original installed physical custody, CAS, retained origin, transaction and first publication evidence. No update-specific body issuer, cloned approval host, peer outcome producer or start source grant exists under this contract.
+
+`cmd.chat.goal.propose_update` is separately read-only and must use its existing approval route. Its already-referenced GoalUpdateProposalRequest / ApprovalRequest definitions, provider-specific actual instruction/approval-resolution capture and admission remain a distinct technical prerequisite. This contract deliberately does not define those missing contracts or fabricate their provider. It defines the mutation-side required acceptance facts and predicates. A direct Save adapter can be reviewed independently; the agent route stays handler_unavailable until the existing approval owner closes and authenticates its exact provider binding. No product question is needed to invent new approval behavior.
+
+
+SP-299 defines the complete original source → reservation → body commit → frozen event input → shared first publication → SIR terminal sequence. Only the body owner accepts revision n+1 and one matching accepted objective revision/origin, preserving exact identity and created_at. The previous accepted objective hash can predate ordinary metadata revisions; do not substitute the immediately preceding ordinary revision. Empty and unchanged text remain full accepted updates under existing revision rules. A complete body transaction can succeed before event/result settlement becomes unknown; this preserves the accepted body rather than rolling it back or representing a partial body write.
+
+The resulting `goal.updated` observation records only the actual original accepted change, before/after body facts, predecessor and original body/source evidence. It never grants continuation, edits a bound Plan, repairs approval, resumes a paused/blocked Goal or overrides Stop. Existing GoalPlanBinding epoch fencing and material-conflict safe-stop behavior remain independently required. A later current Goal edit cannot rewrite this operation's original event input. Final body admission rechecks actual current source/approval/owner/Stop/access/deletion/origin; later factual event/result settlement has no further body-write authority.
+
+The actual approval-owner provider and the already-referenced `GoalUpdateProposalRequest`/`ApprovalRequest` remain separately unmaterialized technical dependencies. The agent-proposed mutation route stays unavailable until that original provider supplies its exact capture and still-valid resolution. Direct user Save keeps its existing acceptance without another confirmation. No fallback provider or new approval policy is invented here.
+
+The two new update-only retained audit/input readers have SP-299's distinct final visibility predicates. They grant no current `goal.updated` traversal, projection, consumer effects or checkpoint adoption. Those event-reader facets and the remaining Goal families remain independent contract work. This prerequisite proves no native dispatcher, original source provider, transaction or runtime readiness.
+
+### GRS-068 - Original Objective Update Acceptance And Effect Settlement
+```yaml
+plan_unit_id: GRS-068
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: The existing complete Goal objective replacement accepts authentic direct Save or the
+  existing original approved agent source, uses only the shared Goal body writer and preserves each original
+  accepted effect through later event/result settlement without granting continuation or changing approved
+  Plan behavior.
+gui_related: false
+gui_classification_reason: Defines existing-command source, event, storage and result publication without
+  a new visual surface.
+depends_on:
+- GRS-064
+- GRS-066
+- SP-299
+- SIR-049
+- CV-342
+- DL-047
+unblocks: []
+acceptance_criteria:
+- Direct Save is acceptance without reconfirmation; agent replacement requires actual explicit instruction
+  and current original approval bound to exact Goal/revision/currentness/text.
+- The complete exact objective including empty/unchanged text uses the existing 4000-scalar rule; no trim,
+  partial patch, hidden rewrite or no-op shortcut is allowed.
+- Active/paused/blocked permit existing edit semantics and completed rejects; next-continuation, Stop
+  and bound-Plan conflict/epoch rules stay independently controlling.
+- Original source and independent producer preparedness precede pending reservation; future body/event
+  receipts cannot bootstrap source acceptance.
+- The sole shared body transaction writes n+1 and one accepted revision/origin with the actual latest
+  objective predecessor, preserving immutable identity and history.
+- A genuine body commit survives later refusal or unknown publication; event/result recovery cannot create
+  another revision, rerun acceptance or override immutable terminal history.
+- Active-v3 interpretation replaces only this family's retired delta/child/budget write assumptions while
+  preserving the entire historical v2 resource.
+- Audit/input readers remain distinct; actual approval provider, native implementation and current event-consumer/checkpoint
+  composition remain separate prerequisites.
+validation_surfaces:
+- Plans/goal_update_command_custody.schema.json
+- Plans/goal_update_schema_resources.json
+- reports/event-authority-20260911/step-08-goal-update-validation.md
+- reports/event-authority-20260911/step-08-goal-update-checks.json
+risk_class: false_original_update_or_lost_accepted_effect
+reasoning_tier: high
+context_scope: original_goal_objective_update_acceptance
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_update_command_custody.schema.json
+node_compile_hint:
+  mode: original_goal_update_prerequisite_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/Goal_Runtime_System.md#GRS-064
+negative_constraints:
+- Do not infer accepted source or native atomicity from a schema, copied owner map, result-shaped value
+  or fixture.
+- Do not reconstruct disposed input, change original terminal outcomes, borrow creation authority or claim
+  current event-consumer depth.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342

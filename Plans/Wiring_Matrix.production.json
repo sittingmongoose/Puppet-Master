@@ -3497,7 +3497,7 @@
         "Every named reverse consumer renders from the same owner projection: hover/detail/status.",
         "Negative path is enforced: blocks auto resume.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Correction v4 (PGOAL-007, GREPLAY-009..010): when the Goal is bound to a PlanRun, pause stops the bound run at a shared safe boundary, increments the continuation epoch and fences late schedule, quota and provider callbacks. The Plan's Build control stays Building\u2026 with the pause reason as secondary truth and never returns to Build. A manual pause survives restart, window and Usage-reset transitions."
+        "Correction v4 (PGOAL-007, GREPLAY-009..010): when the Goal is bound to a PlanRun, pause stops the bound run at a shared safe boundary, increments the continuation epoch and fences late schedule, quota and provider callbacks. The Plan's Build control stays Building… with the pause reason as secondary truth and never returns to Build. A manual pause survives restart, window and Usage-reset transitions."
       ],
       "evidence_required": "Future production evidence for cmd.chat.goal.pause: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Goal_Runtime_System.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-007. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-005) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_goal_pause.availability",
@@ -3545,7 +3545,7 @@
         {
           "test_id": "wiring.correction_v4.chat_goal_pause.goal_pause_binds_run",
           "evidence_kind": "state_projection",
-          "requirement": "Prove pause halts the bound PlanRun and that the Plan control stays Building\u2026 with a truthful secondary reason."
+          "requirement": "Prove pause halts the bound PlanRun and that the Plan control stays Building… with a truthful secondary reason."
         },
         {
           "test_id": "wiring.correction_v4.chat_goal_pause.goal_pause_survives_restart",
@@ -3706,25 +3706,32 @@
       "ui_location": "Puppet Master Assistant > goal.user_save",
       "ui_command_id": "cmd.chat.goal.update",
       "handler_location": "handlers::goal_runtime::goal_update",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "goal.updated"
+      ],
       "acceptance_checks": [
         "cmd.chat.goal.update names exactly one owner-adjudicated future target handlers::goal_runtime::goal_update in Plans/Goal_Runtime_System.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_goal_update.availability and state.assistant_redesign.chat_goal_update.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "The durable effect is exactly: GoalRevision. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
+        "The durable effect follows the exact original GRS-068/SP-299/CV-342/SIR-049 body/event/result sequence; body acceptance and later event/terminal settlement have distinct truthful outcomes.",
         "Every named reverse consumer renders from the same owner projection: Activity/continuation.",
         "Negative path is enforced: no second approval.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Correction v4 (PGOAL-010, GREPLAY-001..003, GREPLAY-009): the update changes the simple objective only and fences the old epoch. It never edits the bound approved Plan; a material Goal/Plan conflict stops new mutation admission and returns the Plan to Revise after a safe stop. Hidden origin lineage and the admitted context manifest are preserved, and the objective text is never silently summarised."
+        "Correction v4 (PGOAL-010, GREPLAY-001..003, GREPLAY-009): the update changes the simple objective only and fences the old epoch. It never edits the bound approved Plan; a material Goal/Plan conflict stops new mutation admission and returns the Plan to Revise after a safe stop. Hidden origin lineage and the admitted context manifest are preserved, and the objective text is never silently summarised.",
+        "Use exact complete GoalUpdateRequestV2/GoalUpdateResultV2 and current goal.updated v3; genuine Direct Save or original approved-agent acceptance is mandatory. Missing native source/roles remains handler_unavailable.",
+        "Prove complete original body/progress/first-receipt/result custody and immutable unknown replay; a late refusal preserves earlier accepted effects and cannot produce success or a second revision/event."
       ],
       "evidence_required": "Future production evidence for cmd.chat.goal.update: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Goal_Runtime_System.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-010. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-047) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.chat_goal_update.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_goal_update.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "GoalRevision under Plans/Goal_Runtime_System.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "effect_kind": "mixed",
+        "description": "Exactly the original accepted complete objective update under GRS-068/SP-299/CV-342/SIR-049: one admitted shared body revision, original goal.updated v3 EventRecord/first receipt and original immutable SIR/result settlement. Preserve genuine prior body/event effects when later settlement is unavailable; source/availability/Stop rules remain mandatory.",
         "receipt_or_event_refs": [
-          "Plans/Goal_Runtime_System.md",
-          "GoalRevision"
+          "goal.updated",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateResultV2",
+          "Plans/goal_update_command_custody.schema.json",
+          "Plans/storage-plan.md#SP-299"
         ]
       },
       "accessibility_contract": {
@@ -3747,7 +3754,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_goal_update.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly 'GoalRevision' with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove the exact original Goal update source/body/event/first-receipt/SIR result sequence and its distinct pre-effect refusal, admitted effect with unresolved settlement and immutable replay boundaries under SP-299/CV-342."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_goal_update.negative",
@@ -3768,11 +3775,16 @@
           "test_id": "wiring.correction_v4.chat_goal_update.goal_update_replay",
           "evidence_kind": "state_projection",
           "requirement": "Restart. Prove replay reconstructs the exact accepted objective revision and admitted context without relying on chat-window retention."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_goal_update.event",
+          "evidence_kind": "event_test",
+          "requirement": "Prove the actual original goal.updated v3 EventRecord matches its accepted complete objective update, body revision, frozen append input and first receipt under SP-299/CV-342; pre-body refusal emits none, later settlement failure preserves earlier effects, and exact replay emits no duplicate. This is a required production test, not a claim of native execution."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.goal.update records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
+        "Assert only the exact admitted original goal.updated v3 is appended once through its actual producer/Storage owner; current event schema and source/result contract are mandatory.",
+        "Assert genuine pre-body no-effect produces no update event/revision; a later body or event effect survives unavailable settlement with exact custody and no duplicate effect on replay."
       ]
     },
     "assistant.redesign.w_011.chat_goal_propose_update": {
@@ -15150,22 +15162,30 @@
       "ui_location": "Assistant Chat surface",
       "ui_command_id": "cmd.chat.goal.update",
       "handler_location": "handlers::goal_runtime::goal_update",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "goal.updated"
+      ],
       "acceptance_checks": [
         "cmd.chat.goal.update must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.chat.goal.update must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.goal.update dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.goal.update must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.goal.update must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.goal.update must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Use exact complete GoalUpdateRequestV2/GoalUpdateResultV2 and current goal.updated v3; genuine Direct Save or original approved-agent acceptance is mandatory. Missing native source/roles remains handler_unavailable.",
+        "Prove complete original body/progress/first-receipt/result custody and immutable unknown replay; a late refusal preserves earlier accepted effects and cannot produce success or a second revision/event."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.goal.update; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_goal_update.availability",
       "disabled_reason_projection": "state.commands.chat_goal_update.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.goal.update has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "mixed",
+        "description": "Exactly the original accepted complete objective update under GRS-068/SP-299/CV-342/SIR-049: one admitted shared body revision, original goal.updated v3 EventRecord/first receipt and original immutable SIR/result settlement. Preserve genuine prior body/event effects when later settlement is unavailable; source/availability/Stop rules remain mandatory.",
         "receipt_or_event_refs": [
-          "cmd.chat.goal.update.dispatch_receipt"
+          "goal.updated",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateRequestV2",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalUpdateResultV2",
+          "Plans/goal_update_command_custody.schema.json",
+          "Plans/storage-plan.md#SP-299"
         ]
       },
       "accessibility_contract": {
@@ -15188,16 +15208,22 @@
         {
           "test_id": "wiring.catalog.chat_goal_update.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.goal.update has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove the exact original Goal update source/body/event/first-receipt/SIR result sequence and its distinct pre-effect refusal, admitted effect with unresolved settlement and immutable replay boundaries under SP-299/CV-342."
         },
         {
           "test_id": "wiring.catalog.chat_goal_update.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.chat_goal_update.event",
+          "evidence_kind": "event_test",
+          "requirement": "Prove the actual original goal.updated v3 EventRecord matches its accepted complete objective update, body revision, frozen append input and first receipt under SP-299/CV-342; pre-body refusal emits none, later settlement failure preserves earlier effects, and exact replay emits no duplicate. This is a required production test, not a claim of native execution."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.goal.update records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert only the exact admitted original goal.updated v3 is appended once through its actual producer/Storage owner; current event schema and source/result contract are mandatory.",
+        "Assert genuine pre-body no-effect produces no update event/revision; a later body or event effect survives unavailable settlement with exact custody and no duplicate effect on replay."
       ]
     },
     "catalog.chat_insert_code_block": {
@@ -19696,7 +19722,7 @@
         "cmd.debug.add_breakpoint dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.add_breakpoint must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.add_breakpoint must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.add_breakpoint; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_add_breakpoint.availability",
@@ -19752,7 +19778,7 @@
         "cmd.debug.clear_breakpoints dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.clear_breakpoints must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.clear_breakpoints must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.clear_breakpoints; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_clear_breakpoints.availability",
@@ -19808,7 +19834,7 @@
         "cmd.debug.collect_snapshot dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.collect_snapshot must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.collect_snapshot must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.collect_snapshot; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_collect_snapshot.availability",
@@ -19864,7 +19890,7 @@
         "cmd.debug.pause dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.pause must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.pause must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.pause; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_pause.availability",
@@ -19919,7 +19945,7 @@
         "cmd.debug.record_verification must expose projected state selector and disabled reason before dispatch",
         "cmd.debug.record_verification dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.record_verification must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.debug.record_verification availability class is selection (investigation_active && at_verification_phase) with confirmation class none; disabled reasons come only from the closed set: stale_projection, phase_not_reached (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27, Commands_System \u00a77.4)"
+        "cmd.debug.record_verification availability class is selection (investigation_active && at_verification_phase) with confirmation class none; disabled reasons come only from the closed set: stale_projection, phase_not_reached (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27, Commands_System §7.4)"
       ],
       "evidence_required": "Production wiring contract for cmd.debug.record_verification; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_record_verification.availability",
@@ -19975,7 +20001,7 @@
         "cmd.debug.remove_breakpoint dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.remove_breakpoint must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.remove_breakpoint must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.remove_breakpoint; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_remove_breakpoint.availability",
@@ -20031,7 +20057,7 @@
         "cmd.debug.resume dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.resume must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.resume must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.resume; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_resume.availability",
@@ -20086,7 +20112,7 @@
         "cmd.debug.run_cleanup must expose projected state selector and disabled reason before dispatch",
         "cmd.debug.run_cleanup dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.run_cleanup must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.debug.run_cleanup availability class is selection (investigation_active && verification_recorded) with confirmation class two_step; disabled reasons come only from the closed set: stale_projection, phase_not_reached, preservation_hold_active (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27, Commands_System \u00a77.4)"
+        "cmd.debug.run_cleanup availability class is selection (investigation_active && verification_recorded) with confirmation class two_step; disabled reasons come only from the closed set: stale_projection, phase_not_reached, preservation_hold_active (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27, Commands_System §7.4)"
       ],
       "evidence_required": "Production wiring contract for cmd.debug.run_cleanup; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_run_cleanup.availability",
@@ -20142,7 +20168,7 @@
         "cmd.debug.start dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.start must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.start must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.start; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_start.availability",
@@ -20198,7 +20224,7 @@
         "cmd.debug.step dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.step must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.step must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.step; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_step.availability",
@@ -20254,7 +20280,7 @@
         "cmd.debug.stop dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.stop must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.stop must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.stop; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_stop.availability",
@@ -20310,7 +20336,7 @@
         "cmd.debug.view_evidence dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.debug.view_evidence must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.debug.view_evidence must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System \u00a77.1)."
+        "ui_location re-homed to the assistant Debug Mode investigation surface per UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27 (UCC-141); cmd.debug.* semantics unchanged (Commands_System §7.1)."
       ],
       "evidence_required": "Production wiring contract for cmd.debug.view_evidence; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.debug_view_evidence.availability",
@@ -48679,7 +48705,7 @@
       "acceptance_checks": [
         "cmd.run_debug.attach must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.attach availability class is session_state (adapter_available) with confirmation class none; disabled reasons come only from the closed set: adapter_unavailable, session_state_mismatch, stale_projection, permission_required (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.attach opens the attach flow and attaches the debugger to the chosen process per Commands_System \u00a77.2."
+        "cmd.run_debug.attach opens the attach flow and attaches the debugger to the chosen process per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_attach.enabled",
@@ -48742,7 +48768,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.add_function must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.add_function availability class is always with confirmation class none; disabled reasons come only from the closed set: unsupported (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.breakpoint.add_function adds a function breakpoint via inline name input per Commands_System \u00a77.2."
+        "cmd.run_debug.breakpoint.add_function adds a function breakpoint via inline name input per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_add_function.enabled",
@@ -48805,7 +48831,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.edit must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.edit availability class is selection (breakpoint_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Edit Breakpoint opens the inline edit strip (Expression / Hit Count / Log Message) per Commands_System \u00a77.2."
+        "Edit Breakpoint opens the inline edit strip (Expression / Hit Count / Log Message) per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_edit.enabled",
@@ -48868,7 +48894,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.goto_source must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.goto_source availability class is selection (breakpoint_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.breakpoint.goto_source opens the breakpoint's file:line in the editor per Commands_System \u00a77.2."
+        "cmd.run_debug.breakpoint.goto_source opens the breakpoint's file:line in the editor per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_goto_source.enabled",
@@ -48931,7 +48957,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.remove_all must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.remove_all availability class is selection (has_breakpoints) with confirmation class strong; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.breakpoint.remove_all routes the shared confirm surface with confirmation class strong per Commands_System \u00a77.2."
+        "cmd.run_debug.breakpoint.remove_all routes the shared confirm surface with confirmation class strong per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_remove_all.enabled",
@@ -48994,7 +49020,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.set_exception_filters must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.set_exception_filters availability class is selection (adapter_supports_exception_filters) with confirmation class none; disabled reasons come only from the closed set: capability_absent, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Exception filter updates are capability-gated per Commands_System \u00a77.2 (FinalGUISpec F3-494, referenced)."
+        "Exception filter updates are capability-gated per Commands_System §7.2 (FinalGUISpec F3-494, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_set_exception_filters.enabled",
@@ -49057,7 +49083,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.toggle must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.toggle availability class is selection (breakpoint_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.breakpoint.toggle toggles activation of a breakpoint record per Commands_System \u00a77.2."
+        "cmd.run_debug.breakpoint.toggle toggles activation of a breakpoint record per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_toggle.enabled",
@@ -49120,7 +49146,7 @@
       "acceptance_checks": [
         "cmd.run_debug.breakpoint.toggle_activation must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.breakpoint.toggle_activation availability class is selection (has_breakpoints) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.breakpoint.toggle_activation enables or disables all breakpoints at once per Commands_System \u00a77.2."
+        "cmd.run_debug.breakpoint.toggle_activation enables or disables all breakpoints at once per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_breakpoint_toggle_activation.enabled",
@@ -49183,7 +49209,7 @@
       "acceptance_checks": [
         "cmd.run_debug.callstack.restart_frame must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.callstack.restart_frame availability class is session_state (session_paused && adapter_supports_restart_frame) with confirmation class none; disabled reasons come only from the closed set: capability_absent, session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Restart Frame is capability-gated per Commands_System \u00a77.2."
+        "Restart Frame is capability-gated per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_callstack_restart_frame.enabled",
@@ -49309,7 +49335,7 @@
       "acceptance_checks": [
         "cmd.run_debug.callstack.show_execution_point must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.callstack.show_execution_point availability class is session_state (session_paused) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.callstack.show_execution_point returns the editor to the pause location per Commands_System \u00a77.2."
+        "cmd.run_debug.callstack.show_execution_point returns the editor to the pause location per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_callstack_show_execution_point.enabled",
@@ -49372,7 +49398,7 @@
       "acceptance_checks": [
         "cmd.run_debug.config.add must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.config.add availability class is selection (panel_visible) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.config.add opens the inline add-configuration form per Commands_System \u00a77.2."
+        "cmd.run_debug.config.add opens the inline add-configuration form per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_config_add.enabled",
@@ -49435,7 +49461,7 @@
       "acceptance_checks": [
         "cmd.run_debug.config.delete must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.config.delete availability class is selection (config_selected && !config_in_use_by_active_session) with confirmation class strong; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.config.delete routes the shared confirm surface with confirmation class strong per Commands_System \u00a77.2."
+        "cmd.run_debug.config.delete routes the shared confirm surface with confirmation class strong per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_config_delete.enabled",
@@ -49498,7 +49524,7 @@
       "acceptance_checks": [
         "cmd.run_debug.config.edit must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.config.edit availability class is selection (config_selected) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.config.edit opens the inline edit form for a launch profile per Commands_System \u00a77.2."
+        "cmd.run_debug.config.edit opens the inline edit form for a launch profile per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_config_edit.enabled",
@@ -49561,7 +49587,7 @@
       "acceptance_checks": [
         "cmd.run_debug.config.open_file must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.config.open_file availability class is always with confirmation class none; disabled reasons come only from the closed set: unsupported (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.config.open_file opens the project's launch config file in the editor surface per Commands_System \u00a77.2."
+        "cmd.run_debug.config.open_file opens the project's launch config file in the editor surface per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_config_open_file.enabled",
@@ -49624,7 +49650,7 @@
       "acceptance_checks": [
         "cmd.run_debug.config.select must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.config.select availability class is selection (config_count > 0) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.config.select chooses the active launch profile per Commands_System \u00a77.2."
+        "cmd.run_debug.config.select chooses the active launch profile per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_config_select.enabled",
@@ -49687,7 +49713,7 @@
       "acceptance_checks": [
         "cmd.run_debug.console.clear must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.console.clear availability class is always with confirmation class none; disabled reasons come only from the closed set: unsupported (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.console.clear clears the Debug Console pane scrollback per Commands_System \u00a77.2."
+        "cmd.run_debug.console.clear clears the Debug Console pane scrollback per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_console_clear.enabled",
@@ -49750,7 +49776,7 @@
       "acceptance_checks": [
         "cmd.run_debug.console.evaluate must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.console.evaluate availability class is session_state (session_active) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Evaluate Expression runs the REPL input against the selected frame with context 'repl' per Commands_System \u00a77.2."
+        "Evaluate Expression runs the REPL input against the selected frame with context 'repl' per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_console_evaluate.enabled",
@@ -49939,7 +49965,7 @@
       "acceptance_checks": [
         "cmd.run_debug.disconnect must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.disconnect availability class is session_state (session_active && session_is_attach) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Disconnect replaces Stop for attach sessions per Commands_System \u00a77.2."
+        "Disconnect replaces Stop for attach sessions per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_disconnect.enabled",
@@ -50065,7 +50091,7 @@
       "acceptance_checks": [
         "cmd.run_debug.restart must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.restart availability class is session_state (session_active or session_terminated) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.restart restarts the focused session with the same launch profile per Commands_System \u00a77.2."
+        "cmd.run_debug.restart restarts the focused session with the same launch profile per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_restart.enabled",
@@ -50191,7 +50217,7 @@
       "acceptance_checks": [
         "cmd.run_debug.start must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.start availability class is session_state (config_selected && !session_initializing) with confirmation class none; disabled reasons come only from the closed set: not_configured, adapter_unavailable, session_state_mismatch, stale_projection, permission_required (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.start launches the selected launch profile with the debugger per Commands_System \u00a77.2; transport enablement derives from the debug session state machine (FinalGUISpec F3-483)."
+        "cmd.run_debug.start launches the selected launch profile with the debugger per Commands_System §7.2; transport enablement derives from the debug session state machine (FinalGUISpec F3-483)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_start.enabled",
@@ -50254,7 +50280,7 @@
       "acceptance_checks": [
         "cmd.run_debug.start_no_debug must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.start_no_debug availability class is session_state (config_selected) with confirmation class none; disabled reasons come only from the closed set: not_configured, session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.start_no_debug launches the selected profile without attaching the debugger per Commands_System \u00a77.2."
+        "cmd.run_debug.start_no_debug launches the selected profile without attaching the debugger per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_start_no_debug.enabled",
@@ -50317,7 +50343,7 @@
       "acceptance_checks": [
         "cmd.run_debug.step_into must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.step_into availability class is session_state (session_paused) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Stepping is enabled only while the focused session is paused per Commands_System \u00a77.2 (FinalGUISpec F3-483, referenced)."
+        "Stepping is enabled only while the focused session is paused per Commands_System §7.2 (FinalGUISpec F3-483, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_step_into.enabled",
@@ -50380,7 +50406,7 @@
       "acceptance_checks": [
         "cmd.run_debug.step_out must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.step_out availability class is session_state (session_paused) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Stepping is enabled only while the focused session is paused per Commands_System \u00a77.2 (FinalGUISpec F3-483, referenced)."
+        "Stepping is enabled only while the focused session is paused per Commands_System §7.2 (FinalGUISpec F3-483, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_step_out.enabled",
@@ -50443,7 +50469,7 @@
       "acceptance_checks": [
         "cmd.run_debug.step_over must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.step_over availability class is session_state (session_paused) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Stepping is enabled only while the focused session is paused per Commands_System \u00a77.2 (FinalGUISpec F3-483, referenced)."
+        "Stepping is enabled only while the focused session is paused per Commands_System §7.2 (FinalGUISpec F3-483, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_step_over.enabled",
@@ -50506,7 +50532,7 @@
       "acceptance_checks": [
         "cmd.run_debug.stop must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.stop availability class is session_state (session_active) with confirmation class none; disabled reasons come only from the closed set: session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Disconnect replaces Stop for attach sessions per Commands_System \u00a77.2."
+        "Disconnect replaces Stop for attach sessions per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_stop.enabled",
@@ -50569,7 +50595,7 @@
       "acceptance_checks": [
         "cmd.run_debug.terminal.reveal must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.terminal.reveal availability class is session_state (session_active && console_routing == integrated_terminal) with confirmation class none; disabled reasons come only from the closed set: unsupported, session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Process pane reveal applies only when console_routing == integrated_terminal per Commands_System \u00a77.2 (FinalGUISpec F3-490, referenced)."
+        "Process pane reveal applies only when console_routing == integrated_terminal per Commands_System §7.2 (FinalGUISpec F3-490, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_terminal_reveal.enabled",
@@ -50632,7 +50658,7 @@
       "acceptance_checks": [
         "cmd.run_debug.variables.add_to_watch must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.variables.add_to_watch availability class is selection (variable_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.variables.add_to_watch adds the variable's evaluate path to watches per Commands_System \u00a77.2."
+        "cmd.run_debug.variables.add_to_watch adds the variable's evaluate path to watches per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_variables_add_to_watch.enabled",
@@ -50695,7 +50721,7 @@
       "acceptance_checks": [
         "cmd.run_debug.variables.copy_expression must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.variables.copy_expression availability class is selection (variable_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.variables.copy_expression copies the variable's evaluate path for watch paste per Commands_System \u00a77.2."
+        "cmd.run_debug.variables.copy_expression copies the variable's evaluate path for watch paste per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_variables_copy_expression.enabled",
@@ -50758,7 +50784,7 @@
       "acceptance_checks": [
         "cmd.run_debug.variables.copy_value must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.variables.copy_value availability class is selection (variable_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.variables.copy_value copies the variable's display value per Commands_System \u00a77.2."
+        "cmd.run_debug.variables.copy_value copies the variable's display value per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_variables_copy_value.enabled",
@@ -50821,7 +50847,7 @@
       "acceptance_checks": [
         "cmd.run_debug.variables.set_value must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.variables.set_value availability class is session_paused (session_paused && variable_writable) with confirmation class none; disabled reasons come only from the closed set: capability_absent, session_state_mismatch, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Set Variable Value is capability-gated per Commands_System \u00a77.2 (FinalGUISpec F3-494, referenced)."
+        "Set Variable Value is capability-gated per Commands_System §7.2 (FinalGUISpec F3-494, referenced)."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_variables_set_value.enabled",
@@ -50884,7 +50910,7 @@
       "acceptance_checks": [
         "cmd.run_debug.watch.add must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.watch.add availability class is selection (session_exists_or_panel_visible) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "Add Watch is allowed pre-session; the expression evaluates on next pause per Commands_System \u00a77.2."
+        "Add Watch is allowed pre-session; the expression evaluates on next pause per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_watch_add.enabled",
@@ -50947,7 +50973,7 @@
       "acceptance_checks": [
         "cmd.run_debug.watch.edit must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.watch.edit availability class is selection (watch_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.watch.edit edits a watch expression inline per Commands_System \u00a77.2."
+        "cmd.run_debug.watch.edit edits a watch expression inline per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_watch_edit.enabled",
@@ -51010,7 +51036,7 @@
       "acceptance_checks": [
         "cmd.run_debug.watch.remove must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.watch.remove availability class is selection (watch_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.watch.remove removes one watch expression per Commands_System \u00a77.2."
+        "cmd.run_debug.watch.remove removes one watch expression per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_watch_remove.enabled",
@@ -51073,7 +51099,7 @@
       "acceptance_checks": [
         "cmd.run_debug.watch.remove_all must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run_debug.watch.remove_all availability class is selection (has_watches) with confirmation class none; disabled reasons come only from the closed set: not_configured, stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run_debug.watch.remove_all clears all watch expressions per Commands_System \u00a77.2."
+        "cmd.run_debug.watch.remove_all clears all watch expressions per Commands_System §7.2."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Commands_System.md; Plans/FinalGUISpec.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_debug_watch_remove_all.enabled",
@@ -51694,7 +51720,7 @@
       "acceptance_checks": [
         "cmd.run.stop must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run.stop availability class is selection (run_active) with confirmation class two_step; disabled reasons come only from the closed set: stale_projection, permission_required, unreachable (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run.stop requests run stop through the existing stop/lifecycle path with confirmation class two_step per Commands_System \u00a77.3."
+        "cmd.run.stop requests run stop through the existing stop/lifecycle path with confirmation class two_step per Commands_System §7.3."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Orchestrator_Page.md; Plans/Run_Graph_View.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_stop.enabled",
@@ -51757,7 +51783,7 @@
       "acceptance_checks": [
         "cmd.run.view_log must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.run.view_log availability class is selection (run_selected) with confirmation class none; disabled reasons come only from the closed set: stale_projection (UI_Command_Catalog Run & Debug Revival Addendum - 2026-07-27)",
-        "cmd.run.view_log reveals the run's log surface without mutating run state per Commands_System \u00a77.3."
+        "cmd.run.view_log reveals the run's log surface without mutating run state per Commands_System §7.3."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/Orchestrator_Page.md; Plans/Run_Graph_View.md. Registration: Plans/UI_Command_Catalog.md Run & Debug Revival Addendum - 2026-07-27 (UCC-139..UCC-141). Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.cmd_run_view_log.enabled",
@@ -62860,7 +62886,7 @@
     },
     "home.chat.grab": {
       "ui_element_id": "home.chat.grab",
-      "ui_location": "Home > Chat > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Chat > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -62998,7 +63024,7 @@
     },
     "home.dashboard.grab": {
       "ui_element_id": "home.dashboard.grab",
-      "ui_location": "Home > Dashboard > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Dashboard > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -63148,7 +63174,7 @@
         "home.drop_target.bottom dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.bottom returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.bottom is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.bottom shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination \u2014 fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock \u2014 and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
+        "home.drop_target.bottom shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
         "PMConcept7 pointer/keyboard preview and target animation are local; no workspace command or workspace.layout_changed effect exists before a changed semantic commit.",
         "Exactly one revision-checked command is dispatched for a changed release/activation and the committed pm.home_workspace_layout.v1 projection is persisted once after owner acceptance.",
         "Escape, pointercancel, invalid_target, stale revision, and no-change paths restore or retain the prior layout and emit no command/effect/persistence write."
@@ -63294,7 +63320,7 @@
         "home.drop_target.left dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.left returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.left is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.left shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination \u2014 fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock \u2014 and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
+        "home.drop_target.left shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
         "PMConcept7 pointer/keyboard preview and target animation are local; no workspace command or workspace.layout_changed effect exists before a changed semantic commit.",
         "Exactly one revision-checked command is dispatched for a changed release/activation and the committed pm.home_workspace_layout.v1 projection is persisted once after owner acceptance.",
         "Escape, pointercancel, invalid_target, stale revision, and no-change paths restore or retain the prior layout and emit no command/effect/persistence write."
@@ -63367,7 +63393,7 @@
         "home.drop_target.main dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.main returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.main is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.main shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination \u2014 fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock \u2014 and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
+        "home.drop_target.main shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
         "PMConcept7 pointer/keyboard preview and target animation are local; no workspace command or workspace.layout_changed effect exists before a changed semantic commit.",
         "Exactly one revision-checked command is dispatched for a changed release/activation and the committed pm.home_workspace_layout.v1 projection is persisted once after owner acceptance.",
         "Escape, pointercancel, invalid_target, stale revision, and no-change paths restore or retain the prior layout and emit no command/effect/persistence write."
@@ -63440,7 +63466,7 @@
         "home.drop_target.right dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.right returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.right is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.right shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination \u2014 fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock \u2014 and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
+        "home.drop_target.right shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
         "PMConcept7 pointer/keyboard preview and target animation are local; no workspace command or workspace.layout_changed effect exists before a changed semantic commit.",
         "Exactly one revision-checked command is dispatched for a changed release/activation and the committed pm.home_workspace_layout.v1 projection is persisted once after owner acceptance.",
         "Escape, pointercancel, invalid_target, stale revision, and no-change paths restore or retain the prior layout and emit no command/effect/persistence write."
@@ -63513,7 +63539,7 @@
         "home.drop_target.top dispatches once from the visible production control and preserves command_id, correlation_id, and effect receipt",
         "home.drop_target.top returns focus deterministically and emits only its declared event/receipt set",
         "home.drop_target.top is reachable by dragging over the live layout without any target-picker overlay, and an empty dock remains reachable through its outer edge band.",
-        "home.drop_target.top shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination \u2014 fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock \u2014 and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
+        "home.drop_target.top shows a target-geometry change-gated hover preview (tweak wave 2026-08-13): the placeholder projects the geometry the surface would receive at the destination — fair share of the destination host, or full width plus the dock's track thickness in a row-axis dock — and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a preview-expanded host never captures the hit-test for its preview growth, and a full host refuses with an announced host_full disposition.",
         "PMConcept7 pointer/keyboard preview and target animation are local; no workspace command or workspace.layout_changed effect exists before a changed semantic commit.",
         "Exactly one revision-checked command is dispatched for a changed release/activation and the committed pm.home_workspace_layout.v1 projection is persisted once after owner acceptance.",
         "Escape, pointercancel, invalid_target, stale revision, and no-change paths restore or retain the prior layout and emit no command/effect/persistence write."
@@ -63636,7 +63662,7 @@
     },
     "home.editor_panel_1.grab": {
       "ui_element_id": "home.editor_panel_1.grab",
-      "ui_location": "Home > Editor Panel 1 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 1 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -63903,7 +63929,7 @@
     },
     "home.editor_panel_2.grab": {
       "ui_element_id": "home.editor_panel_2.grab",
-      "ui_location": "Home > Editor Panel 2 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 2 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -64170,7 +64196,7 @@
     },
     "home.editor_panel_3.grab": {
       "ui_element_id": "home.editor_panel_3.grab",
-      "ui_location": "Home > Editor Panel 3 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 3 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -64437,7 +64463,7 @@
     },
     "home.editor_panel_4.grab": {
       "ui_element_id": "home.editor_panel_4.grab",
-      "ui_location": "Home > Editor Panel 4 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Editor Panel 4 > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [
@@ -64890,7 +64916,7 @@
     },
     "home.more_options.collapse_bottom": {
       "ui_element_id": "home.more_options.collapse_bottom",
-      "ui_location": "Home title bar > More options > Collapse Bottom Terminal (toggle; tweak wave 2026-08-13 \u2014 runtime relabel to Expand Bottom Terminal while the terminal is collapsed; authored markup label unchanged)",
+      "ui_location": "Home title bar > More options > Collapse Bottom Terminal (toggle; tweak wave 2026-08-13 — runtime relabel to Expand Bottom Terminal while the terminal is collapsed; authored markup label unchanged)",
       "ui_command_id": "cmd.workspace_layout.set_collapsed",
       "handler_location": "handlers::workspace_layout::set_collapsed",
       "expected_event_types": [
@@ -66352,7 +66378,7 @@
     },
     "home.terminal_section.grab": {
       "ui_element_id": "home.terminal_section.grab",
-      "ui_location": "Home > Terminal section > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 \u2014 the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
+      "ui_location": "Home > Terminal section > top-right lines-only grip (two diagonal strokes over an 18px corner hit triangle; tweak wave 2026-08-13 — the top-left corner triangle is retired; pointer drag and keyboard pick-up/move/drop; the per-host Move or dock menu rows are retired)",
       "ui_command_id": "cmd.workspace_layout.move_surface",
       "handler_location": "handlers::workspace_layout::move_surface",
       "expected_event_types": [

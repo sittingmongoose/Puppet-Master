@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6162-L6233
+Source lines: L6164-L6237
 
-Source SHA256: `902b737eab1ab5a1695f23fd4c39d43bf8d377fc07ca618cf654dd7ab3cd09df`
+Source SHA256: `efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a`
 
 ---
 
@@ -80,3 +80,5 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-067, ContractName:Plans/Goal_Runtime_System.md#GRS-066, ContractName:Plans/storage-plan.md#SP-298, ContractName:Plans/storage-plan.md#SP-294
+
+<a id="original-goal-objective-update-acceptance-and-settlement"></a>

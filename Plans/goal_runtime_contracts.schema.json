@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json",
-  "title": "Goal start command request and result contracts",
-  "description": "Exactly the two existing central GoalStartRequestV2 and GoalStartResultV2 definitions. Other Goal command contracts remain separately owned.",
+  "title": "Goal start and objective update command request and result contracts",
+  "description": "The existing central GoalStartRequestV2, GoalStartResultV2, GoalUpdateRequestV2 and GoalUpdateResultV2 definitions. Other Goal command and approval-provider contracts remain separately owned.",
   "$defs": {
     "GoalStartRequestV2": {
       "type": "object",
@@ -111,6 +111,162 @@
           "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/RecoveryRequiredResult"
         }
       ]
+    },
+    "GoalUpdateRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route_ref",
+        "objective_text",
+        "change_source",
+        "source_message_id",
+        "approval_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.update.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.update"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000,
+          "pattern": "^[^\\ud800-\\udfff]*$"
+        },
+        "change_source": {
+          "enum": [
+            "user_direct",
+            "agent_proposed_user_approved"
+          ]
+        },
+        "source_message_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approval_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "$comment": "Complete exact replacement. Existing source_surface is routing lineage only, not a new route grant. Direct Save and actual approved proposal are independently authenticated by owner. No caller authority object admitted.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "change_source": {
+                "const": "user_direct"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approval_id": {
+                "type": "null"
+              },
+              "source_message_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "approval_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_message_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GoalUpdateResultV2": {
+      "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Result"
     }
   }
 }

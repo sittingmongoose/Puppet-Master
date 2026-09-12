@@ -1930,7 +1930,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "13721b5c89f245d91a8d8750ef34855a6d6992a0fe19cc12bb83ae935c933ece",
+      "sha256": "0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -3381,7 +3381,7 @@
         "False": 34,
         "True": 46
       },
-      "heading_count": 189,
+      "heading_count": 190,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3432,7 +3432,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 6319,
+      "line_count": 6325,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 80,
       "plan_unit_ids": [
@@ -3604,7 +3604,7 @@
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+      "sha256": "7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 80
@@ -3977,10 +3977,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 266,
+        "False": 267,
         "True": 73
       },
-      "heading_count": 523,
+      "heading_count": 525,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4040,6 +4040,7 @@
         "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
         "Plans/human-in-the-loop.md",
         "Plans/newtools.md",
         "Plans/orchestrator-subagent-integration.md",
@@ -4072,9 +4073,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22424,
+      "line_count": 22502,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 339,
+      "plan_unit_count": 340,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4414,7 +4415,8 @@
         "CV-336",
         "CV-339",
         "CV-340",
-        "CV-341"
+        "CV-341",
+        "CV-342"
       ],
       "reasoning_tiers": [
         "high",
@@ -4538,6 +4540,7 @@
         "fallback_divergence_authority_and_custody_drift",
         "false_certification_or_lost_original_decision_authority",
         "false_original_goal_creation_or_lost_command_custody",
+        "false_original_update_or_lost_accepted_effect",
         "filesafe_event_payload_drift",
         "filesafe_safe_point_owner_split",
         "firecrawl_event_family_fork",
@@ -4759,10 +4762,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7",
+      "sha256": "608ece16e6396cd72f2580da53e4bd3b3e1e0532025a74f21b027ffb52b61ff6",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 339
+        "accepted": 340
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4771,6 +4774,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 3,
+        "owner_boundary": 1,
         "requirement": 224,
         "schema_contract": 23,
         "source_lineage_residual_disposition": 1
@@ -4810,6 +4814,8 @@
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/goal_start_command_contract_fixtures.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_update_schema_resources.json",
         "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
         "Plans/shared_integration_runtime_expansion_fixtures.json",
@@ -4871,6 +4877,8 @@
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
+        "reports/event-authority-20260911/step-08-goal-update-checks.json",
+        "reports/event-authority-20260911/step-08-goal-update-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
@@ -8064,10 +8072,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 38,
+        "False": 39,
         "True": 27
       },
-      "heading_count": 163,
+      "heading_count": 166,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8106,6 +8114,7 @@
         "Plans/goal_created_reader_contracts/command-members.json",
         "Plans/goal_handoff_contracts.schema.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
         "Plans/human-in-the-loop.md",
         "Plans/ledgers/v2",
         "Plans/plans_to_code_handoff.schema.json",
@@ -8127,9 +8136,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 6233,
+      "line_count": 6329,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 65,
+      "plan_unit_count": 66,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8195,7 +8204,8 @@
         "GRS-064",
         "GRS-065",
         "GRS-066",
-        "GRS-067"
+        "GRS-067",
+        "GRS-068"
       ],
       "reasoning_tiers": [
         "high",
@@ -8220,6 +8230,7 @@
         "false_certification_or_lost_original_decision_authority",
         "false_completion",
         "false_original_goal_creation_or_lost_command_custody",
+        "false_original_update_or_lost_accepted_effect",
         "goal_body_currentness_accepted_history_or_receipt_authority_escape",
         "goal_completes_on_one_model_response",
         "goal_handoff_false_migration_or_duplicate_continuation",
@@ -8263,17 +8274,17 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "902b737eab1ab5a1695f23fd4c39d43bf8d377fc07ca618cf654dd7ab3cd09df",
+      "sha256": "efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 56,
+        "accepted": 57,
         "superseded": 9
       },
       "title": "Goal Runtime System",
       "unit_type_counts": {
         "compatibility_disposition": 2,
         "constraint": 9,
-        "owner_boundary": 1,
+        "owner_boundary": 2,
         "requirement": 47,
         "risk": 1,
         "schema_contract": 3,
@@ -8323,6 +8334,8 @@
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/goal_start_command_contract_fixtures.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_update_schema_resources.json",
         "Plans/storage_value_registry.json",
         "Spend/quota caps terminate even when model output appears syntactically successful.",
         "Stop active MCP call leaves partial/cancelled result",
@@ -8382,7 +8395,9 @@
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-goal-reader-validation.md",
-        "reports/event-authority-20260911/step-08-goal-start-validation.md"
+        "reports/event-authority-20260911/step-08-goal-start-validation.md",
+        "reports/event-authority-20260911/step-08-goal-update-checks.json",
+        "reports/event-authority-20260911/step-08-goal-update-validation.md"
       ]
     },
     {
@@ -14312,7 +14327,7 @@
         "release_platform_or_performance_false_claim",
         "unproved_or_incompatible_reader_installation"
       ],
-      "sha256": "57eaaf2fdc147aef8fcc276b418e86d641f9f54bfd5a85b8ebc7507875029d1a",
+      "sha256": "12a0786d3c9f3afa7b43b24796ffc62366c3a7e9548dffa599237635b281145c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -16033,10 +16048,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 23,
+        "False": 24,
         "True": 24
       },
-      "heading_count": 111,
+      "heading_count": 113,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -16059,6 +16074,7 @@
         "Plans/assistant-chat-design.md",
         "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
         "Plans/home_layout_event_contracts.schema.json",
         "Plans/home_layout_pending_receipt.schema.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
@@ -16090,9 +16106,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2651,
+      "line_count": 2729,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 47,
+      "plan_unit_count": 48,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -16140,7 +16156,8 @@
         "SIR-046",
         "SIR-045",
         "SIR-047",
-        "SIR-048"
+        "SIR-048",
+        "SIR-049"
       ],
       "reasoning_tiers": [
         "high",
@@ -16162,6 +16179,7 @@
         "execution_topology_drift",
         "false_completion_claim",
         "false_original_goal_creation_or_lost_command_custody",
+        "false_original_update_or_lost_accepted_effect",
         "full_thread_axis_or_identity_conflation",
         "home_layout_readback_event_receipt_crash_or_replay_authority_escape",
         "human_step_projection_divergence",
@@ -16195,10 +16213,10 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "132f96351ef1b10bcad020d1fab0f8038d9eb6254d4a927ade06b059cc88531f",
+      "sha256": "2b65f01d132470fa8ff9bb2c748a69d2454964c49bf1641414f95fb395a5d362",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 47
+        "accepted": 48
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -16209,7 +16227,7 @@
         "compatibility_contract": 1,
         "consumer_contract": 1,
         "integration_contract": 2,
-        "owner_boundary": 1,
+        "owner_boundary": 2,
         "platform_requirement": 1,
         "requirement": 26,
         "schema_contract": 4,
@@ -16233,6 +16251,8 @@
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_start_command_contract_fixtures.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_update_schema_resources.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
         "Plans/home_layout_full_value_contract_fixtures.json",
@@ -16329,6 +16349,8 @@
         "replay/live races",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
+        "reports/event-authority-20260911/step-08-goal-update-checks.json",
+        "reports/event-authority-20260911/step-08-goal-update-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
         "reports/event-authority-20260911/step-08-home-full-value-checks.json",
         "reports/event-authority-20260911/step-08-home-full-value-validation.md",
@@ -16615,10 +16637,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 190,
+        "False": 191,
         "True": 102
       },
-      "heading_count": 664,
+      "heading_count": 671,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16656,6 +16678,7 @@
         "Plans/goal_created_reader_contracts/resource-bindings.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
         "Plans/home_layout_event_contracts.schema.json",
         "Plans/home_layout_pending_receipt.schema.json",
         "Plans/home_layout_value_readers.schema.json",
@@ -16695,9 +16718,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23916,
+      "line_count": 24058,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 292,
+      "plan_unit_count": 293,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16990,7 +17013,8 @@
         "SP-295",
         "SP-296",
         "SP-297",
-        "SP-298"
+        "SP-298",
+        "SP-299"
       ],
       "reasoning_tiers": [
         "high",
@@ -17019,6 +17043,7 @@
         "false_native_source_selection_or_receipt_rebinding",
         "false_original_goal_creation_or_lost_command_custody",
         "false_original_recovery_effect_or_receipt_publication",
+        "false_original_update_or_lost_accepted_effect",
         "goal_body_physical_origin_cas_retention_or_restore_authority_escape",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
@@ -17076,17 +17101,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "6ab46ef95ecc859b6ad97847bd6790722b7f29104e7e44ee60eeb3f49d51b534",
+      "sha256": "91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 289,
+        "accepted": 290,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "owner_boundary": 1,
+        "owner_boundary": 2,
         "requirement": 252,
         "schema_contract": 11,
         "security_contract": 1,
@@ -17163,6 +17188,8 @@
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/goal_start_command_contract_fixtures.json",
         "Plans/goal_start_command_custody.schema.json",
+        "Plans/goal_update_command_custody.schema.json",
+        "Plans/goal_update_schema_resources.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
         "Plans/home_layout_full_value_contract_fixtures.json",
@@ -17279,6 +17306,8 @@
         "reports/event-authority-20260911/step-08-goal-reader-checks.json",
         "reports/event-authority-20260911/step-08-goal-reader-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
+        "reports/event-authority-20260911/step-08-goal-update-checks.json",
+        "reports/event-authority-20260911/step-08-goal-update-validation.md",
         "reports/event-authority-20260911/step-08-hold-full-value-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
         "reports/event-authority-20260911/step-08-home-full-value-checks.json",
@@ -17824,7 +17853,7 @@
         "False": 20,
         "True": 144
       },
-      "heading_count": 321,
+      "heading_count": 322,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/onboarding_cinematic_source.py",
@@ -17876,7 +17905,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 13245,
+      "line_count": 13251,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 164,
       "plan_unit_ids": [
@@ -18111,7 +18140,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "3fddb30a33cf6cec72274a1b4bae94bb5274cc905d03b4adcf8e245254c39a3a",
+      "sha256": "6f89175f288ee598848a4a4d3b98f1d47bdaddab4223bb09d5bae6dbc23131de",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 163,
@@ -19177,7 +19206,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T13:38:06Z",
+  "generated_at_utc": "2026-09-12T14:37:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19185,13 +19214,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3417,
+      "False": 3421,
       "True": 3164
     },
-    "plan_unit_count": 6581,
+    "plan_unit_count": 6585,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6390,
+      "accepted": 6394,
       "retired": 182,
       "superseded": 9
     },
@@ -19245,7 +19274,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 41,
+      "owner_boundary": 45,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,

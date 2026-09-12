@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23787-L23916
+Source lines: L23787-L23918
 
-Source SHA256: `6ab46ef95ecc859b6ad97847bd6790722b7f29104e7e44ee60eeb3f49d51b534`
+Source SHA256: `91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa`
 
 ---
 
@@ -138,3 +138,5 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-298, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-294, ContractName:Plans/Release_Supply_Chain.md#RSC-018, ContractName:Plans/goal_created_reader_contracts.schema.json
+
+<a id="goal-update-original-command-custody-and-publication"></a>

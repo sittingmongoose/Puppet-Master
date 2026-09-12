@@ -1,0 +1,161 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-update-canonical-20260912/v1/manifest.json",
+    "sha256": "992de4bd42144c964d738f943397254392e77ae9934c97ae5872da2974cf10d8",
+    "members": 9
+  },
+  "canonical_draft_sha256": "598c3a7ea50b3ee9e8424683d6c90c2dc0ec07ce03e55d8def5a8d7ffee12138",
+  "plan_units": {
+    "old_plan_units": 6581,
+    "new_plan_units": 6585,
+    "old_acceptance_criteria": 25483,
+    "new_acceptance_criteria": 25511,
+    "all_old_plan_unit_objects_preserved": true
+  },
+  "registry_changes": {
+    "event_family_registry": {
+      "before": 42,
+      "after": 42,
+      "added": [],
+      "changed": [
+        "event-family-goal-updated"
+      ],
+      "all_other_root_data_unchanged": true
+    },
+    "storage_value_registry": {
+      "before": 136,
+      "after": 140,
+      "added": [
+        "goal_update_input_content",
+        "goal_update_progress",
+        "goal_update_source_audit",
+        "goal_update_terminal_audit"
+      ],
+      "changed": [],
+      "all_other_root_data_unchanged": true
+    }
+  },
+  "changed_wiring_rows": [
+    "assistant.redesign.w_010.chat_goal_update",
+    "catalog.chat_goal_update"
+  ],
+  "update_resource_bindings": 11,
+  "created_reader_selected_refs_unchanged": 90,
+  "ordinary_assertions": 20,
+  "independent_capture_schema_and_join_checks": 43,
+  "raw_wrappers": 17,
+  "prior_ordinary_failure_preserved": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v1/manifest.json",
+    "sha256": "aa761514f9d4cea30ee8c65331dd1b007db88caf208762eae29efadaf7ba3dc2",
+    "members": 2
+  },
+  "native": "NOT_RUN",
+  "complete_family_depth": false,
+  "governance_seal": false,
+  "repository_checks": {
+    "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_reader": true,
+      "new_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "corrected_wiring_failure": {
+      "prior_full_gate_fail_count": 16,
+      "two_update_rows_lacked_required_event_test": true,
+      "only_one_requirement_appended_per_row": true,
+      "no_runtime_evidence_claimed": true
+    },
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "complete_family_depth": false
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-update-repository-checks-20260912/manifest.json",
+    "sha256": "3660706254cce415a5def372090a8348dfd77e2dc7cded81d44921ae17b3dea0"
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "bytes": 396446,
+      "sha256": "0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1"
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "bytes": 567766,
+      "sha256": "7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "bytes": 1208034,
+      "sha256": "608ece16e6396cd72f2580da53e4bd3b3e1e0532025a74f21b027ffb52b61ff6"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "bytes": 424271,
+      "sha256": "efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a"
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "bytes": 131190,
+      "sha256": "12a0786d3c9f3afa7b43b24796ffc62366c3a7e9548dffa599237635b281145c"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "bytes": 279501,
+      "sha256": "2b65f01d132470fa8ff9bb2c748a69d2454964c49bf1641414f95fb395a5d362"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "bytes": 997313,
+      "sha256": "6f89175f288ee598848a4a4d3b98f1d47bdaddab4223bb09d5bae6dbc23131de"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "bytes": 5264751,
+      "sha256": "beb0b83a9157c44e0d5b064f736a32cb7b3f95a732a33422c76b80be994755ba"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "bytes": 88193,
+      "sha256": "d46a8b095069e179fc17fd2ef0ea2a110cd3ec951749523aa2b00220a7c051ac"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "bytes": 27560,
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/schema-dependencies.json",
+      "bytes": 2649,
+      "sha256": "becfbf315462bef92e67bc9be876bd0ae817bdccd22f555a940aa8215297c45b"
+    },
+    {
+      "path": "Plans/goal_runtime_contracts.schema.json",
+      "bytes": 7670,
+      "sha256": "d900496598a32833195e61fc0340d922b6d52504b0107cb5c19bd44e00bb6f38"
+    },
+    {
+      "path": "Plans/goal_update_command_custody.schema.json",
+      "bytes": 72154,
+      "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988"
+    },
+    {
+      "path": "Plans/goal_update_schema_resources.json",
+      "bytes": 4517,
+      "sha256": "39d62b4de406ba20a061409b4f39c718a63104257389a2e285731047438d8ab1"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "bytes": 1873612,
+      "sha256": "91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "bytes": 3298592,
+      "sha256": "09553e8644b5696206ea022489a33c10b014546b3cc6d9521a1f4c26db411df7"
+    }
+  ]
+}

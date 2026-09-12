@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6180-L6319
+Source lines: L6180-L6325
 
-Source SHA256: `6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52`
+Source SHA256: `7b049569c0eb5a055014ab53fdd15a2bc7d3a74cb2b2200d480b7aae164d7f04`
 
 ---
 
@@ -148,3 +148,9 @@ owner schemas, static fixtures and planned handler names confer no execution,
 capture, test-verdict, protected-auth, storage or Event Authority permission.
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-056, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/UI_Command_Catalog.md
+
+### Existing Goal update publication qualification
+
+The existing `cmd.chat.goal.update` / `handlers::goal_runtime::goal_update` consumes CV-342's exact central GoalUpdateRequestV2 and GoalUpdateResultV2. Its existing `goal.updated` family selects active-v3 only through GRS-068/SP-299/SIR-049 original acceptance/body/event/terminal custody; the older blanket proposed-event/no-emission wording is superseded for this exact update route. Actual native availability remains handler_unavailable until the complete original roles and production evidence exist. `/goal again` and other routing tokens do not themselves accept text or bypass original approval. The separate read-only propose-update provider remains unavailable and writes no Goal/event. All other command/event admission states remain individually owned.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049

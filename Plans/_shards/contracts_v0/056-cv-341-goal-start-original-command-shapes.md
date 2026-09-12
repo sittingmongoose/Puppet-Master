@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22369-L22424
+Source lines: L22369-L22426
 
-Source SHA256: `6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7`
+Source SHA256: `608ece16e6396cd72f2580da53e4bd3b3e1e0532025a74f21b027ffb52b61ff6`
 
 ---
 
@@ -64,3 +64,5 @@ negative_constraints:
 - Do not claim native installation/dispatch/restore, current event traversal/checkpoint coverage, complete event
   depth, readiness or governance clearance.
 ```
+
+<a id="goal-update-original-command-shapes"></a>

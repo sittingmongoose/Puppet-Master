@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3564-L17488
 
-Source SHA256: `6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7`
+Source SHA256: `608ece16e6396cd72f2580da53e4bd3b3e1e0532025a74f21b027ffb52b61ff6`
 
 ---
 
@@ -33,7 +33,7 @@ The following 21 project-scoped payload roots are authoritative Goal/GoalRun val
 | `goal.scheduled` | `Plans/event_payloads/goal_runtime/goal_scheduled.schema.json#` | `pm.goal_runtime_event.goal_scheduled.schema.v2` |
 | `goal.stopped` | `Plans/event_payloads/goal_runtime/goal_stopped.schema.json#` | `pm.goal_runtime_event.goal_stopped.schema.v2` |
 | `goal.tool_check_recorded` | `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#` | `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` |
-| `goal.updated` | `Plans/event_payloads/goal_runtime/goal_updated.schema.json#` | `pm.goal_runtime_event.goal_updated.schema.v2` |
+| `goal.updated` | `Plans/event_payloads/goal_runtime/goal_updated.schema.json#` | `pm.goal_runtime_event.goal_updated.schema.v3` (CV-342 active; entire v2 retained) |
 | `goal.verification_decided` | `Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json#` | `pm.goal_runtime_event.goal_verification_decided.schema.v2` |
 
 Unknown schema/event/version, an unresolved ref, a raw secret, an outer/inner identity conflict, stale revision, illegal transition, idempotency conflict, or unavailable dedupe authority appends nothing and advances no projection checkpoint. Receipt, verification, certification, completion, and transition authority remain with the exact Goal owner contract; schema validation or event delivery does not create those outcomes.

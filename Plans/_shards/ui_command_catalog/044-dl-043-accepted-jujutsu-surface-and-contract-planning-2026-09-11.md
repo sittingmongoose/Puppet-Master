@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13113-L13245
+Source lines: L13113-L13251
 
-Source SHA256: `3fddb30a33cf6cec72274a1b4bae94bb5274cc905d03b4adcf8e245254c39a3a`
+Source SHA256: `6f89175f288ee598848a4a4d3b98f1d47bdaddab4223bb09d5bae6dbc23131de`
 
 ---
 
@@ -141,3 +141,9 @@ negative_constraints: ["Planning only: no new admitted command ID, native handle
 owner_boundary_notes: ["Jujutsu and Source Control own native semantics and admitted command contracts; Final GUI owns presentation, Backup owns restore/completion/maintenance policy, FileManager owns newline behavior, Permissions and FileSafe independently own safety, and Forge owns hosted workflows."]
 owner_hints: ["Plans/Jujutsu_Integration.md", "Plans/Source_Control_System.md", "Plans/FinalGUISpec.md", "Plans/Backup_Restore_System.md", "Plans/FileManager.md", "Plans/Forge_Integrations.md", "Plans/FileSafe.md"]
 ```
+
+### Existing Goal objective update route qualification
+
+For exactly `cmd.chat.goal.update`, CV-342/GRS-068/SP-299/SIR-049 supersede the older update_text/source request spelling and no-declared-event interpretation. The sole existing handler uses the exact central V2 request/result and actual accepted-change source. Direct user Save needs no reconfirmation; natural-language or agent proposal routing never bypasses the existing original approval rule. `cmd.chat.goal.propose_update` remains read-only and unavailable until its actual approval provider and separate schemas exist. Availability remains handler_unavailable until complete native registration/source/storage/wiring evidence is supplied. No control, confirmation, command ID or handler is added.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049

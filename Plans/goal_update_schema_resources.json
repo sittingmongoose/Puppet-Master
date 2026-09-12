@@ -1,0 +1,80 @@
+{
+  "status": "EXACT_CANONICAL_SOURCE_GRAPH_BINDING_ONLY_NOT_INSTALLATION",
+  "resources": [
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "pm.goal_runtime_event.goal_updated.schema.v3",
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json",
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json",
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json",
+      "path": "Plans/goal_runtime_contracts.schema.json",
+      "sha256": "d900496598a32833195e61fc0340d922b6d52504b0107cb5c19bd44e00bb6f38",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json",
+      "path": "Plans/goal_start_command_custody.schema.json",
+      "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json",
+      "path": "Plans/goal_update_command_custody.schema.json",
+      "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime_commands/1.0.0/shared_runtime_command_contracts.schema.json",
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json",
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "binding": "exact selected local document ID; registration alone is not source authority"
+    },
+    {
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v3",
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+      "binding": "explicit absolute retrieval mapping to exact same active-v3 bytes; no rewrite, guessed alias or network fallback"
+    }
+  ],
+  "remote_fallback": false,
+  "selected_roots": [
+    "all Goal update custody definitions",
+    "GoalUpdateRequestV2",
+    "GoalUpdateResultV2",
+    "active updated-v3",
+    "whole retained updated-v2"
+  ],
+  "unselected_start_definitions": "preserved only; not selected authority or dependencies"
+}
