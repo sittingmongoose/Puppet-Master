@@ -1,0 +1,169 @@
+{
+  "status": "PASS_CANONICAL_WIRE_INTEGRATION",
+  "base_head": "2080658ff8d93a0d73d6da552df77d8f3d10bd25",
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-v2-wire-proposal-20260912/manifest.json",
+      "sha256": "6a5bfc08ad63ea2ac8592bdec0a63b6b0beb0f87de3792978293749a058c009c",
+      "files_verified": 16
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-canonical-draft-20260912/manifest.json",
+      "sha256": "b8c719571e453c13f2793971df6867d17554e52711b424c259aa7e68fb0a9c79",
+      "files_verified": 11
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-root-review-20260912/manifest.json",
+      "sha256": "b8bc05528ce59829b9c68d8da4669bce1e258f69cc57531c690fb3b57be247d1",
+      "files_verified": 8
+    }
+  ],
+  "source_currentness": [
+    {
+      "path": "Plans/storage-plan.md",
+      "draft_before_sha256": "7a40af5f4e9fab1f6c631f2afe135a1ff8f49df835ffe45a1e9c5a78a38de705",
+      "integration_base_sha256": "e654e04d8d37f891b23625996ee5aa0f5769f7039b89833b07c0b01083fa80c6",
+      "exact": false,
+      "adjudication": "Root re-read original full Hold diff and exact wire patch: intervening SP-288, strict hold-family route and L3 legal-hold routing only. Wire hunks remain exact; five Hold/SIR wire qualifications explicitly applied."
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "draft_before_sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+      "integration_base_sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+      "exact": true,
+      "adjudication": "Exact"
+    }
+  ],
+  "mapping_count": 20,
+  "post_hold_qualifications": [
+    {
+      "owner": "root wire adoption integration",
+      "path": "Plans/storage-plan.md",
+      "target": "SP-288 opening owner paragraph",
+      "old": "The separately unresolved shared exact frame/header/payload codec remains an OPEN prerequisite; this adoption does not declare complete event depth or native implementation.",
+      "proposed": "The shared exact frame/header/payload byte contract is defined in Case L-2 / SP-026 / SP-236; its normative adoption does not declare complete event depth or native implementation."
+    },
+    {
+      "owner": "root wire adoption integration",
+      "path": "Plans/storage-plan.md",
+      "target": "SP-288 verification paragraph",
+      "old": "The shared exact frame/header/payload wire contract remains OPEN until separately adopted; its absence is more than an unrun native test.",
+      "proposed": "Case L-2 / SP-026 / SP-236 closes the shared exact frame/header/payload wire definition; this is normative byte closure, with native execution separately unproven."
+    },
+    {
+      "owner": "root wire adoption integration",
+      "path": "Plans/storage-plan.md",
+      "target": "SP-288 acceptance criterion",
+      "old": "Shared exact frame/header/payload codec remains OPEN; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.",
+      "proposed": "Shared exact frame/header/payload codec follows Case L-2 / SP-026 / SP-236; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim."
+    },
+    {
+      "owner": "root; third file is outside this draft scope",
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "target": "SIR-047 owner paragraph",
+      "old": "Shared exact frame/header/payload codec remains OPEN until separately adopted.",
+      "proposed": "The shared exact frame/header/payload byte contract is defined in Storage Case L-2 / SP-026 / SP-236; normative byte closure supplies no native execution proof."
+    },
+    {
+      "owner": "root; third file is outside this draft scope",
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "target": "SIR-047 acceptance criterion",
+      "old": "Old restored pending cannot first-mint; shared exact wire codec remains OPEN and native authentication, exclusion, durability and recovery remain NOT_RUN.",
+      "proposed": "Old restored pending cannot first-mint; shared exact wire codec follows Storage Case L-2 / SP-026 / SP-236 and native authentication, exclusion, durability and recovery remain NOT_RUN."
+    }
+  ],
+  "fixture_cases": 20,
+  "fixture_sha256": "ea82f2a7f491a8eccffa14348befe1d65decd4c5697e0ab0f3df6b0ab526c653",
+  "author_cases": 126,
+  "root_independent_cases": 367,
+  "new_planunits": [],
+  "expected_changed_planunits": [
+    "SP-026",
+    "SP-236",
+    "CV-309",
+    "SP-288",
+    "SIR-047"
+  ],
+  "native": "NOT_RUN",
+  "integrity_family_adoption": "NOT_GRANTED",
+  "frozen_validator_depth_pass": false,
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2376,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T02:44:40Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25291,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6560
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "planunit_count": 6560,
+      "changed_prior_units": {
+        "CV-309": [
+          "acceptance_criteria",
+          "canonical_text",
+          "validation_surfaces"
+        ],
+        "SIR-047": [
+          "acceptance_criteria"
+        ],
+        "SP-026": [
+          "acceptance_criteria",
+          "canonical_text",
+          "compatibility_only_notes",
+          "stale_retired_dispositions",
+          "validation_surfaces"
+        ],
+        "SP-236": [
+          "acceptance_criteria",
+          "canonical_text",
+          "validation_surfaces"
+        ],
+        "SP-288": [
+          "acceptance_criteria"
+        ]
+      },
+      "all_other_prior_semantics_exact": true,
+      "new_units": [],
+      "SP026_exact_tokens_preserved": true,
+      "event_storage_registry_envelope_exact": true,
+      "derived_shard_groups": [
+        "contracts_v0",
+        "shared_integration_runtime",
+        "storage-plan"
+      ]
+    }
+  },
+  "integration_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-integration-20260912/integration.json",
+    "sha256": "184768c7971a3792a90c3a5a517d3bfb3d772d9b0d6834b23e2e6652de676f64"
+  },
+  "checks_qualification": "Bounded codec/schema/source and derived checks; existing full governance failures remain recorded at the prior restore-pair landing. No validator change, repeat full-suite pass, or waiver claimed.",
+  "derived_check_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-integration-20260912/shard-check.json",
+      "sha256": "33c19c083b6831844b26bd626ec9db1065f618bf633c7db2a8a56dbc9bc671e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-integration-20260912/index-validate.json",
+      "sha256": "0e07239dd1d2b89ce54ea97d49b3778c1ba97af6c098b59adc1bda23b3231e0e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-wire-integration-20260912/compilation-preservation.json",
+      "sha256": "2c885bfda14452524165dd086bec52c96f158fa9ebdd4220aa2043de4142d732"
+    }
+  ]
+}

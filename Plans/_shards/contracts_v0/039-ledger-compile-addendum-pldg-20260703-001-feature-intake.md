@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19717-L20291
+Source lines: L19718-L20299
 
-Source SHA256: `8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b`
+Source SHA256: `6452c533d694ae75071b524c3baf829cd049105b05247a06ae3ed68fbeb71cd2`
 
 ---
 
@@ -254,11 +254,16 @@ canonical_text: >-
   EventRecord persistence. Event identity is app-root-global for the store
   lifetime, scoped idempotency is lifetime-bound to scope partition and event
   type, and projector_replay_only is non-appendable and side-effect-free.
+  The first native persisted byte representation consumes Storage Case L-2's
+  exact SeglogFrameV2 profile with the complete required-null envelope; wire
+  closure does not change schema domains or digest recipes and is not native
+  durability or integrity-producer admission.
 gui_related: false
 gui_classification_reason: This unit defines a persisted event schema envelope and storage contract boundary, not GUI presentation.
 depends_on: [CV-002, CV-087, CV-088]
 unblocks: []
 acceptance_criteria:
+  - The full-envelope byte representation routes to Storage Case L-2, SP-026 and SP-236 while schema, semantic and digest authority remain unchanged.
   - Contracts_V0 contains canonical section 1.2 EventRecord for pm.event.v0.
   - Plans/event_record.schema.json is Draft 2020-12, top-level closed, requires schema_version and scope_kind, and enforces application-null/project-nonempty project_id.
   - EventRecord uses event_type as the persisted field name; type remains compatibility-only.
@@ -266,6 +271,8 @@ acceptance_criteria:
   - Global event identity, scoped lifetime idempotency, fail-closed dedupe currentness, and replay-only side-effect constraints are explicit.
   - This unit closes only the EventRecord envelope slice and does not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral, or broad storage blockers.
 validation_surfaces:
+- Plans/seglog_frame_v2_wire_fixtures.json
+- reports/event-authority-20260911/step-08-wire-validation.md
   - python3 scripts/pm-implementation-readiness.py validate
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120

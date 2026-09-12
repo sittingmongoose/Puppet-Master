@@ -1022,6 +1022,7 @@ Field contract:
 Rules:
 - `Plans/Contracts_V0.md` owns the EventRecord envelope and cross-cutting event identity, causality, idempotency, redaction, replay, and versioning rules.
 - `Plans/storage-plan.md` owns seglog/redb persistence mechanics, replay ordering, retention/compaction, migration execution, and the concrete persisted event-type payload schema registry.
+- The first native seglog writer encodes the complete EventRecord using Storage Case L-2 / SP-026 / SP-236: its exact SeglogFrameV2 profile, eight-element header, uncompressed canonical MessagePack payload, and three CRCs. Required-present nulls and every envelope field survive. Wire representation does not change schema numeric domains, payload meaning, producer-semantic/legacy/receipt digest recipes, or grant native durability or integrity-producer admission.
 - Producer docs own event semantics and payload meaning, but they MUST reference `Contracts_V0.md#EventRecord` and MUST NOT define local EventRecord field lists.
 - Payload schemas MAY close event-specific fields independently; the top-level EventRecord envelope stays closed while `payload` remains the dispatch region for the selected schema.
 - `event_id` is globally unique across application and project scopes for the lifetime of the app data root. For policies that select the idempotency key, its identity is `(scope_partition, event_type, idempotency_key)` for that same lifetime, where `scope_partition` is `app` or the storage-owned reversible project partition. Same identity plus the same producer semantic digest returns the original result; the same identity plus a different digest is `idempotency_conflict` and never appends.
@@ -19960,11 +19961,16 @@ canonical_text: >-
   EventRecord persistence. Event identity is app-root-global for the store
   lifetime, scoped idempotency is lifetime-bound to scope partition and event
   type, and projector_replay_only is non-appendable and side-effect-free.
+  The first native persisted byte representation consumes Storage Case L-2's
+  exact SeglogFrameV2 profile with the complete required-null envelope; wire
+  closure does not change schema domains or digest recipes and is not native
+  durability or integrity-producer admission.
 gui_related: false
 gui_classification_reason: This unit defines a persisted event schema envelope and storage contract boundary, not GUI presentation.
 depends_on: [CV-002, CV-087, CV-088]
 unblocks: []
 acceptance_criteria:
+  - The full-envelope byte representation routes to Storage Case L-2, SP-026 and SP-236 while schema, semantic and digest authority remain unchanged.
   - Contracts_V0 contains canonical section 1.2 EventRecord for pm.event.v0.
   - Plans/event_record.schema.json is Draft 2020-12, top-level closed, requires schema_version and scope_kind, and enforces application-null/project-nonempty project_id.
   - EventRecord uses event_type as the persisted field name; type remains compatibility-only.
@@ -19972,6 +19978,8 @@ acceptance_criteria:
   - Global event identity, scoped lifetime idempotency, fail-closed dedupe currentness, and replay-only side-effect constraints are explicit.
   - This unit closes only the EventRecord envelope slice and does not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral, or broad storage blockers.
 validation_surfaces:
+- Plans/seglog_frame_v2_wire_fixtures.json
+- reports/event-authority-20260911/step-08-wire-validation.md
   - python3 scripts/pm-implementation-readiness.py validate
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120

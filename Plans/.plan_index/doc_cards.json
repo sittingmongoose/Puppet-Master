@@ -4071,7 +4071,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22231,
+      "line_count": 22239,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 337,
       "plan_unit_ids": [
@@ -4754,7 +4754,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+      "sha256": "6452c533d694ae75071b524c3baf829cd049105b05247a06ae3ed68fbeb71cd2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337
@@ -4797,6 +4797,7 @@
         "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_scheduled_history_contract_fixtures.json",
+        "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
         "Plans/shared_integration_runtime_expansion_fixtures.json",
         "Plans/storage_value_registry.json",
@@ -4840,7 +4841,6 @@
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
-        "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-browser-event-admission",
         "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
@@ -4855,6 +4855,7 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
+        "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
         "seglog replay tests",
@@ -16117,7 +16118,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "86dbaee473cbe795f3f4650f0862a466d74adbefb72882bb9ef6bacf34c414ed",
+      "sha256": "aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 46
@@ -16529,7 +16530,7 @@
         "False": 180,
         "True": 101
       },
-      "heading_count": 594,
+      "heading_count": 597,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16592,7 +16593,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 22497,
+      "line_count": 22570,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 281,
       "plan_unit_ids": [
@@ -16951,7 +16952,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "e654e04d8d37f891b23625996ee5aa0f5769f7039b89833b07c0b01083fa80c6",
+      "sha256": "a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 278,
@@ -17049,6 +17050,7 @@
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/seglog_append_observability_contract_fixtures.json",
         "Plans/seglog_append_observability_contracts.schema.json",
+        "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
         "Plans/storage_retention_hold_contracts.schema.json",
         "Plans/storage_retention_hold_evidence.schema.json",
@@ -17074,7 +17076,6 @@
         "future Case L restore safe-point fixture suite",
         "future Case L retention compaction quarantine fixture suite",
         "future Case L root continuity fallback fixture suite",
-        "future Case L seglog durability recovery fixture suite",
         "future Case L storage I/O fault fixture suite",
         "future Case L storage lock viewer fixture suite",
         "future cleanup/orphan reconciliation fixtures",
@@ -17115,6 +17116,8 @@
         "reports/event-authority-20260911/step-08-home-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "reports/event-authority-20260911/step-08-seglog-validation.md",
+        "reports/event-authority-20260911/step-08-wire-validation.md",
+        "reports/event-authority-20260911/step-08-wire-validation.md - future Case L seglog durability recovery fixture suite - python3 scripts/pm-plan-index.py validate",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
         "tests/test_pm_browser_workspace_created.py",
@@ -18994,7 +18997,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T02:32:18Z",
+  "generated_at_utc": "2026-09-12T02:41:58Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

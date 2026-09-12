@@ -2,15 +2,15 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22305-L22497
+Source lines: L22378-L22570
 
-Source SHA256: `e654e04d8d37f891b23625996ee5aa0f5769f7039b89833b07c0b01083fa80c6`
+Source SHA256: `a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd`
 
 ---
 
 ## Legal-hold transition custody and passive history
 
-SP-288 owns the exact command-specific producer, canonical transition custody, recovery and passive history binding for the existing `storage.retention_hold_changed` event. Case L-3 remains the owner of retention policy, dependency eligibility, union protection, FileSafe request/release duties and cleanup. SIR-047 owns original SIR production and delegated pending/terminal custody; CV-333 owns the single UI response projection. This contract adopts the shared SP-286/CV-339 first-receipt interfaces for this exact barrier producer. The separately unresolved shared exact frame/header/payload codec remains an OPEN prerequisite; this adoption does not declare complete event depth or native implementation.
+SP-288 owns the exact command-specific producer, canonical transition custody, recovery and passive history binding for the existing `storage.retention_hold_changed` event. Case L-3 remains the owner of retention policy, dependency eligibility, union protection, FileSafe request/release duties and cleanup. SIR-047 owns original SIR production and delegated pending/terminal custody; CV-333 owns the single UI response projection. This contract adopts the shared SP-286/CV-339 first-receipt interfaces for this exact barrier producer. The shared exact frame/header/payload byte contract is defined in Case L-2 / SP-026 / SP-236; its normative adoption does not declare complete event depth or native implementation.
 
 ### Protected command, scope and lifetime
 
@@ -121,7 +121,7 @@ History has no durable checkpoint, hidden projection, cleanup, hold mutation, di
 
 `reports/event-authority-20260911/step-08-hold-validation.md` records bounded schema, actual-owner-adapter and independent regression evidence. `Plans/storage_retention_hold_evidence.schema.json` defines closed transaction, complete owner fence, actual SIR source and terminal-witness test evidence; it creates no durable family or indefinite runtime transaction-history requirement. Product authority remains actual canonical rows and independently authenticated owners, not a successful schema check or supplied witness.
 
-The shared exact frame/header/payload wire contract remains OPEN until separately adopted; its absence is more than an unrun native test. Full native frame/MessagePack interoperability, authenticated SIR/target/permissions and complete hold/dependency enumeration, original transaction identities, actual owner/domain exclusion, redb/fsync/barriers, backup/restore/migration/withdrawal and crash cuts remain `NOT_RUN`. Static set/clear/legacy/retry/relocation/final-fence evidence is not `DEPTH_PASS`, broad Case L closure, event-family admission, readiness, WorkNode/NodeSeed creation or governance seal.
+Case L-2 / SP-026 / SP-236 closes the shared exact frame/header/payload wire definition; this is normative byte closure, with native execution separately unproven. Full native frame/MessagePack interoperability, authenticated SIR/target/permissions and complete hold/dependency enumeration, original transaction identities, actual owner/domain exclusion, redb/fsync/barriers, backup/restore/migration/withdrawal and crash cuts remain `NOT_RUN`. Static set/clear/legacy/retry/relocation/final-fence evidence is not `DEPTH_PASS`, broad Case L closure, event-family admission, readiness, WorkNode/NodeSeed creation or governance seal.
 
 ### SP-288 - Legal Hold Transition And Original SIR Custody
 
@@ -161,7 +161,7 @@ acceptance_criteria:
 - Explicit repeated/multiple pending resume preserves real owner bindings and unchanged source/clock/fence state with no redispatch, transaction history or second semantic effect.
 - Complete v2 backup is non-rebuildable; old restored pending work cannot first-mint; explicit v1 legacy admission preserves protection with null original set receipt.
 - History resolves actual immutable slots/current SP-278 source plus final disclosure authority, reports current protection separately and has no checkpoint, cleanup or mutation effect.
-- Shared exact frame/header/payload codec remains OPEN; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.
+- Shared exact frame/header/payload codec follows Case L-2 / SP-026 / SP-236; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.
 validation_surfaces:
 - Plans/storage_retention_hold_value.schema.json
 - Plans/storage_retention_hold_contracts.schema.json

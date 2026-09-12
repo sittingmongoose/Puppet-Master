@@ -1,0 +1,507 @@
+{
+  "schema_id": "pm.seglog.frame_v2_wire_fixtures.v1",
+  "fixture_only": true,
+  "qualification": "Curated bounded byte-format oracles. The registered integrity-event body is schema input only, not admitted producer/source/receipt authority or native execution evidence. Mutations truncate the base to length then replace bytes at zero-based offsets.",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-seglog-v2-wire-proposal-20260912/byte-vectors.json",
+    "sha256": "48961b8bc95504e20395d168ed9e704b9c3b7ca36b06ad3deb0a3261917fe1c9"
+  },
+  "base_event": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "application",
+    "event_id": "evt_storage_integrity_88e46701fac1860e9c667ce50d05c0b625d029f32e349cfaea34f3baebb1524e",
+    "event_type": "storage.integrity_detected",
+    "project_id": null,
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "storage.coordinator:fixture",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+    "observed_at_utc": "2026-09-11T20:00:01.000Z",
+    "persisted_at_utc": "2026-09-11T20:00:02.000Z",
+    "sequence_id": 99,
+    "producer_sequence_id": null,
+    "correlation_id": "storage.integrity_capture:88e46701fac1860e9c667ce50d05c0b625d029f32e349cfaea34f3baebb1524e",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "storage.integrity_detected:88e46701fac1860e9c667ce50d05c0b625d029f32e349cfaea34f3baebb1524e",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0",
+    "payload": {
+      "storage_root_ref": "pm.storage_root:fixture",
+      "storage_root_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+      "segment_generation": 4,
+      "segment_name": "segment-4",
+      "segment_hash": "62b900fe610c5491452a4c8d273065c26d5cc0fa2cceb79cb558e0e6e6153854",
+      "segment_state": "closed",
+      "frame_version": 2,
+      "failure_class": "header_integrity",
+      "detection_offset": 4096,
+      "last_good_offset": 4096,
+      "next_good_offset": 4608,
+      "expected_crc": 0,
+      "observed_crc": 2831663349,
+      "impact_precision": "exact_byte_range",
+      "affected_byte_range": [
+        4096,
+        4608
+      ],
+      "durable_watermark_relation": "at_or_below_durable_watermark",
+      "schema_version": "2.0.0",
+      "integrity_id": "pm.storage.integrity.v1:88e46701fac1860e9c667ce50d05c0b625d029f32e349cfaea34f3baebb1524e",
+      "report_ref": "pm.storage.integrity_report.v1:3e0fb39af7935c88fd8c939a3eaf822df589f2f91633d633070a925badc88d99"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null,
+      "compatibility_event_type": null
+    }
+  },
+  "segment_generation": 4,
+  "base_frame_hex": "504d53454752320002e800110700000004000000000000006300000000000000065df9baad4e0f3f646a9537000000009801d9566576745f73746f726167655f696e746567726974795f38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465ba73746f726167652e696e746567726974795f6465746563746564ab706d2e6576656e742e7630a5322e302e30d95268747470733a2f2f7075707065746d61737465722e6c6f63616c2f736368656d61732f6576656e745f7061796c6f6164732f73746f726167655f696e746567726974795f64657465637465642f322e302e30ab6170706c69636174696f6ec0de001ca96163746f725f726566bb73746f726167652e636f6f7264696e61746f723a66697874757265aa617474656d70745f6964c0b2636175736174696f6e5f6576656e745f6964c0ae636f7272656c6174696f6e5f6964d95a73746f726167652e696e746567726974795f636170747572653a38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465b56566666563746976655f6163636f756e745f726566c0a86576656e745f6964d9566576745f73746f726167655f696e746567726974795f38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465aa6576656e745f74797065ba73746f726167652e696e746567726974795f6465746563746564af6964656d706f74656e63795f6b6579d95b73746f726167652e696e746567726974795f64657465637465643a38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465a96d6967726174696f6e84b8636f6d7061746962696c6974795f6576656e745f74797065c0b76d696772617465645f66726f6d5f736368656d615f6964c0bc6d696772617465645f66726f6d5f736368656d615f76657273696f6ec0ac6d6967726174696f6e5f6964c0a76e6f64655f6964c0af6f627365727665645f61745f757463b8323032362d30392d31315432303a30303a30312e3030305aaf6f636375727265645f61745f757463b8323032362d30392d31315432303a30303a30302e3030305aaf706172656e745f6576656e745f6964c0a77061796c6f6164de0013b361666665637465645f627974655f72616e676592cd1000cd1200b0646574656374696f6e5f6f6666736574cd1000ba64757261626c655f77617465726d61726b5f72656c6174696f6ebd61745f6f725f62656c6f775f64757261626c655f77617465726d61726bac65787065637465645f63726300ad6661696c7572655f636c617373b06865616465725f696e74656772697479ad6672616d655f76657273696f6e02b0696d706163745f707265636973696f6eb065786163745f627974655f72616e6765ac696e746567726974795f6964d958706d2e73746f726167652e696e746567726974792e76313a38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465b06c6173745f676f6f645f6f6666736574cd1000b06e6578745f676f6f645f6f6666736574cd1200ac6f627365727665645f637263cea8c7c0f5aa7265706f72745f726566d95f706d2e73746f726167652e696e746567726974795f7265706f72742e76313a33653066623339616637393335633838666438633933396133656166383232646635383966326639313633336436333330373061393235626164633838643939ae736368656d615f76657273696f6ea5322e302e30b27365676d656e745f67656e65726174696f6e04ac7365676d656e745f68617368d94036326239303066653631306335343931343532613463386432373330363563323664356363306661326363656237396362353538653065366536313533383534ac7365676d656e745f6e616d65a97365676d656e742d34ad7365676d656e745f7374617465a6636c6f736564b173746f726167655f726f6f745f68617368d94031313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131b073746f726167655f726f6f745f726566b7706d2e73746f726167655f726f6f743a66697874757265ab7061796c6f61645f726566c0b17061796c6f61645f736368656d615f6964d95268747470733a2f2f7075707065746d61737465722e6c6f63616c2f736368656d61732f6576656e745f7061796c6f6164732f73746f726167655f696e746567726974795f64657465637465642f322e302e30b07065727369737465645f61745f757463b8323032362d30392d31315432303a30303a30322e3030305ab470726f64756365725f73657175656e63655f6964c0aa70726f6a6563745f6964c0b1726564616374696f6e5f70726f66696c65aa6e6f5f73656372657473ad7265706c61795f706f6c696379b96465647570655f62795f6964656d706f74656e63795f6b6579b57265717565737465645f6163636f756e745f726566c0a672756e5f6964c0a9736368656d615f6964ab706d2e6576656e742e7630ae736368656d615f76657273696f6ea5322e302e30aa73636f70655f6b696e64ab6170706c69636174696f6eab73657175656e63655f696463a97468726561645f6964c0",
+  "base_frame_sha256": "b1e6b266ff862f34128b7862f3ea5ec4cf5946ab2542f2beeb3059faa4b5948a",
+  "prefix_hex": "504d53454752320002e800110700000004000000000000006300000000000000065df9baad4e0f3f646a953700000000",
+  "header_hex": "9801d9566576745f73746f726167655f696e746567726974795f38386534363730316661633138363065396336363763653530643035633062363235643032396633326533343963666165613334663362616562623135323465ba73746f726167652e696e746567726974795f6465746563746564ab706d2e6576656e742e7630a5322e302e30d95268747470733a2f2f7075707065746d61737465722e6c6f63616c2f736368656d61732f6576656e745f7061796c6f6164732f73746f726167655f696e746567726974795f64657465637465642f322e302e30ab6170706c69636174696f6ec0",
+  "cases": [
+    {
+      "id": "magic",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          0,
+          81
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "magic"
+    },
+    {
+      "id": "prefix_version_bit_without_reseal",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          8,
+          3
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "prefix_crc"
+    },
+    {
+      "id": "stored_prefix_crc",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          40,
+          101
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "prefix_crc"
+    },
+    {
+      "id": "header_bytes",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          49,
+          0
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "header_crc"
+    },
+    {
+      "id": "payload_bytes",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          2088,
+          193
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "payload_crc"
+    },
+    {
+      "id": "header_crc_field",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          32,
+          0
+        ],
+        [
+          33,
+          0
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          35,
+          0
+        ],
+        [
+          40,
+          71
+        ],
+        [
+          41,
+          152
+        ],
+        [
+          43,
+          76
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "header_crc"
+    },
+    {
+      "id": "payload_crc_field",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          36,
+          0
+        ],
+        [
+          37,
+          0
+        ],
+        [
+          38,
+          0
+        ],
+        [
+          39,
+          0
+        ],
+        [
+          40,
+          245
+        ],
+        [
+          41,
+          185
+        ],
+        [
+          42,
+          113
+        ],
+        [
+          43,
+          85
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "payload_crc"
+    },
+    {
+      "id": "reserved",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          40,
+          1
+        ],
+        [
+          41,
+          13
+        ],
+        [
+          42,
+          41
+        ],
+        [
+          43,
+          143
+        ],
+        [
+          44,
+          1
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "reserved_nonzero"
+    },
+    {
+      "id": "future_frame",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          8,
+          3
+        ],
+        [
+          40,
+          35
+        ],
+        [
+          41,
+          248
+        ],
+        [
+          42,
+          209
+        ],
+        [
+          43,
+          152
+        ]
+      ],
+      "expected_class": "Unsupported",
+      "expected_code": "unsupported_frame_version"
+    },
+    {
+      "id": "old_frame_not_v2_fallback",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          8,
+          1
+        ],
+        [
+          40,
+          236
+        ],
+        [
+          41,
+          218
+        ],
+        [
+          42,
+          41
+        ],
+        [
+          43,
+          29
+        ]
+      ],
+      "expected_class": "Unsupported",
+      "expected_code": "unsupported_frame_version"
+    },
+    {
+      "id": "flags",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          15,
+          1
+        ],
+        [
+          40,
+          151
+        ],
+        [
+          41,
+          250
+        ],
+        [
+          42,
+          103
+        ],
+        [
+          43,
+          1
+        ]
+      ],
+      "expected_class": "Unsupported",
+      "expected_code": "unsupported_flags"
+    },
+    {
+      "id": "oversized_header",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          16
+        ],
+        [
+          40,
+          174
+        ],
+        [
+          41,
+          89
+        ],
+        [
+          42,
+          6
+        ],
+        [
+          43,
+          58
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "frame_caps"
+    },
+    {
+      "id": "oversized_payload",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          11,
+          1
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          40,
+          134
+        ],
+        [
+          41,
+          68
+        ],
+        [
+          42,
+          155
+        ],
+        [
+          43,
+          45
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "frame_caps"
+    },
+    {
+      "id": "huge_declared_payload",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          11,
+          255
+        ],
+        [
+          12,
+          255
+        ],
+        [
+          13,
+          255
+        ],
+        [
+          14,
+          255
+        ],
+        [
+          40,
+          52
+        ],
+        [
+          41,
+          130
+        ],
+        [
+          42,
+          199
+        ],
+        [
+          43,
+          82
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "frame_caps"
+    },
+    {
+      "id": "truncated_prefix",
+      "length": 47,
+      "replace_bytes": [],
+      "expected_class": "Corrupt",
+      "expected_code": "prefix_truncated"
+    },
+    {
+      "id": "truncated_header",
+      "length": 49,
+      "replace_bytes": [],
+      "expected_class": "Corrupt",
+      "expected_code": "frame_truncated"
+    },
+    {
+      "id": "truncated_payload",
+      "length": 2088,
+      "replace_bytes": [],
+      "expected_class": "Corrupt",
+      "expected_code": "frame_truncated"
+    },
+    {
+      "id": "wrong_generation",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          16,
+          5
+        ],
+        [
+          40,
+          206
+        ],
+        [
+          41,
+          111
+        ],
+        [
+          42,
+          79
+        ],
+        [
+          43,
+          198
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "generation_mismatch"
+    },
+    {
+      "id": "sequence_identity_mismatch",
+      "length": 2089,
+      "replace_bytes": [
+        [
+          24,
+          100
+        ],
+        [
+          40,
+          19
+        ],
+        [
+          41,
+          93
+        ],
+        [
+          42,
+          141
+        ],
+        [
+          43,
+          6
+        ]
+      ],
+      "expected_class": "Corrupt",
+      "expected_code": "duplicate_header_envelope_identity"
+    }
+  ]
+}

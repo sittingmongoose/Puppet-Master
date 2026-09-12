@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2360-L15016
+Source lines: L2360-L15021
 
-Source SHA256: `e654e04d8d37f891b23625996ee5aa0f5769f7039b89833b07c0b01083fa80c6`
+Source SHA256: `a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd`
 
 ---
 
@@ -1552,7 +1552,7 @@ plan_unit_id: SP-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Seglog uses a length-prefixed binary MessagePack record stream with canonical header fields, payload-only compression, checksum validation, and JSON diagnostics as non-authoritative mirrors."
+canonical_text: "The first writer uses the exact SeglogFrameV2 profile in Case L-2: a packed 48-byte prefix, eight-element MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors."
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false
@@ -1564,10 +1564,13 @@ depends_on:
 - "CV-001"
 unblocks: []
 acceptance_criteria:
+- "Case L-2 defines exact packed offsets, header tuple, canonical MessagePack, CRC coverage, validation/scan stops and separate generation-1 reader admission without claiming native durability."
 - "SP-026 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
+- Plans/seglog_frame_v2_wire_fixtures.json
+- reports/event-authority-20260911/step-08-wire-validation.md
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
 risk_class: storage_plan_drift
@@ -1598,8 +1601,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "JSON is not the on-disk authority."
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The source-span length-prefixed binary record stream, SeglogRecord/SeglogHeader, segment_generation: u32, and compression: none | lz4 are generation-1 reader/source-lineage terms; existing admitted compatibility readers retain their own definitions."
+stale_retired_dispositions:
+- "The prior SP-026 payload-only compression promise is retained as generation-1 compatibility lineage and is superseded for first-native writes by Case L-2 flags=0 uncompressed SeglogFrameV2; generation-1 bytes are never mixed into a V2 segment."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/Contracts_V0.md"

@@ -409,7 +409,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Arti
 
 The following `SeglogRecord` / `SeglogHeader` layout is design-generation-1 source-lineage only. The canonical first writer uses the later `SeglogFrameV2` owner contract in this document and never mixes frame generations in one segment. The canonical payload codec remains MessagePack; mirrors and diagnostics may expose the same envelope in JSON, but JSON is not the on-disk authority.
 
-Canonical record structure:
+Generation-1 source-lineage record structure:
 ```text
 SeglogRecord {
   header: SeglogHeader,
@@ -417,7 +417,7 @@ SeglogRecord {
 }
 ```
 
-Canonical header fields:
+Generation-1 source-lineage header fields:
 ```text
 SeglogHeader {
   version: u8,
@@ -434,7 +434,7 @@ SeglogHeader {
 }
 ```
 
-Wire-format rules:
+Generation-1 source-lineage wire-format rules:
 - `payload` is the encoded event payload after any payload-only compression step.
 - `checksum_crc32` is computed over the stored payload bytes.
 - readers validate `payload_length`, then checksum, then decode.
@@ -3901,7 +3901,7 @@ plan_unit_id: SP-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Seglog uses a length-prefixed binary MessagePack record stream with canonical header fields, payload-only compression, checksum validation, and JSON diagnostics as non-authoritative mirrors."
+canonical_text: "The first writer uses the exact SeglogFrameV2 profile in Case L-2: a packed 48-byte prefix, eight-element MessagePack header, canonical full EventRecord payload, flags zero and no compression, with independently validated prefix/header/payload CRCs. Generation-1 SeglogRecord/SeglogHeader and payload-only compression remain separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors."
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false
@@ -3913,10 +3913,13 @@ depends_on:
 - "CV-001"
 unblocks: []
 acceptance_criteria:
+- "Case L-2 defines exact packed offsets, header tuple, canonical MessagePack, CRC coverage, validation/scan stops and separate generation-1 reader admission without claiming native durability."
 - "SP-026 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
+- Plans/seglog_frame_v2_wire_fixtures.json
+- reports/event-authority-20260911/step-08-wire-validation.md
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
 risk_class: storage_plan_drift
@@ -3947,8 +3950,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "JSON is not the on-disk authority."
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The source-span length-prefixed binary record stream, SeglogRecord/SeglogHeader, segment_generation: u32, and compression: none | lz4 are generation-1 reader/source-lineage terms; existing admitted compatibility readers retain their own definitions."
+stale_retired_dispositions:
+- "The prior SP-026 payload-only compression promise is retained as generation-1 compatibility lineage and is superseded for first-native writes by Case L-2 flags=0 uncompressed SeglogFrameV2; generation-1 bytes are never mixed into a V2 segment."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/Contracts_V0.md"
@@ -17035,9 +17040,73 @@ SourceRef: `PD-L-04`, `PD-L-05`, `PD-L-06`, `CL-L-009`, `CL-L-010`, `CL-L-011`, 
 
 #### Frame generation and validation
 
-The first implementation writes `SeglogFrameV2`; generation 1 is read-only compatibility and is never mixed with V2 in one segment. Every V2 frame starts with a fixed 48-byte little-endian prefix containing magic `PMSEGR2\0`, frame version, bounded header/payload lengths, flags, segment generation, sequence ID, header CRC, payload CRC, prefix CRC, and zero reserved field. CRC uses CRC32/ISO-HDLC; `prefix_crc32` covers the prefix with its own field zeroed. Header metadata is canonical fixed-order MessagePack, at most 4 KiB; inline payload is at most 16 MiB, with larger content using `payload_ref`.
+This exact byte profile is the new technical definition under DL-045 for the first `SeglogFrameV2` writer. It closes the wire layout and canonical codec definition. Native codec, file I/O, synchronization, locks, schema/registry dispatch, authenticated survivor ownership, and recovery execution remain separately required and NOT_RUN by the bounded byte validation. The profile does not adopt `storage.integrity_detected`, issue an `AppendReceipt`, or prove a current-source or recovery barrier.
 
-Validation order is fixed: magic; prefix CRC; supported frame version/reserved zero; caps/file bounds; generation/strict sequence; header CRC/decode; payload CRC; decompression bounds; EventRecord schema; duplicate identity cross-check. Resynchronization scans bytewise to the first candidate passing every check. A trustworthy frame length permits one-frame skip only when the computed next boundary validates. Otherwise loss is the exact byte range to the next valid candidate or segment remainder.
+The prefix is exactly 48 bytes, packed without host alignment. Offsets are zero-based from frame start; all prefix integers are unsigned little-endian. Explicit field reads/writes are required; a native struct cast is not the format.
+
+| Offset | Width in bytes | Field | First-profile rule |
+|---:|---:|---|---|
+| 0 | 8 | `magic` | `50 4d 53 45 47 52 32 00` (`PMSEGR2\0`) |
+| 8 | 1 | `frame_version` | `2` |
+| 9 | 2 | `header_length` | Encoded header bytes; at most `4096` before semantic validation |
+| 11 | 4 | `payload_length` | Stored full EventRecord bytes; at most `16777216` before semantic validation |
+| 15 | 1 | `flags` | `0`; uncompressed, no other bits admitted |
+| 16 | 8 | `segment_generation` | Exact uint64 matching selected segment authority |
+| 24 | 8 | `sequence_id` | Exact uint64, strictly greater than the prior verified sequence when present |
+| 32 | 4 | `header_crc32` | CRC of exact stored header bytes |
+| 36 | 4 | `payload_crc32` | CRC of exact stored payload bytes |
+| 40 | 4 | `prefix_crc32` | CRC of all 48 prefix bytes with bytes 40 through 43 zeroed |
+| 44 | 4 | `reserved` | `0` |
+
+Sequence zero is representable; absence of a prior verified record is separate state and MUST NOT be represented by a fabricated sequence-zero cursor. Generation and sequence MUST NOT narrow to u32, signed i64, or binary64. Length admission uses checked remaining-file bounds. Frame end is `start + 48 + header_length + payload_length` only after those bounds pass.
+
+The header is one canonical MessagePack array with exactly eight elements, beginning with bytes `98 01`:
+
+`[1, event_id, event_type, schema_id, schema_version, payload_schema_id, scope_kind, project_id]`
+
+Element zero is header version `1`; elements one through six are nonempty UTF-8 strings; element seven is required-present null or a nonempty UTF-8 project ID. Current schema/version are `pm.event.v0` / `2.0.0`. Current `scope_kind` is `application | project`; complete EventRecord validation enforces application-null and project-nonempty project identity. Every duplicated field MUST equal its envelope field exactly, and prefix sequence MUST equal the envelope integer exactly. Segment generation is metadata, not an added EventRecord field. This header has no source/observed/persisted timestamp duplicates; those required values remain in the full envelope.
+
+The payload is one canonical MessagePack map of the complete closed EventRecord `2.0.0`, including every required-present null, not merely the event-specific `payload`, the header tuple, JSON text, or a digest. Existing payload and `payload_ref` semantics remain producer/schema-owned; the codec does not spill values automatically or invent an overflow envelope. Over-cap representations refuse before append for the existing producer/storage owner to handle.
+
+##### Canonical MessagePack representation
+
+MessagePack multi-byte integer, length, and float encodings are big-endian independently of the little-endian prefix. Objects have only string keys, recursively sorted by exact UTF-8 bytes without Unicode normalization. Arrays preserve order. Reject duplicate or unordered map keys, invalid UTF-8, non-string keys, binary/extension/timestamp tags, and trailing values. Strings and container lengths use the shortest encoding. Null and booleans retain type; a boolean is never an integer. Integers use fixint or the smallest unsigned/negative-signed representation appropriate to the value; a nonnegative value with a signed integer tag is noncanonical. Integer conversion never passes through binary64.
+
+Finite floats retain float type even when integral. Encode float32 only when the exact binary64 input is representable with identical value and zero sign; otherwise encode float64. Preserve negative zero. Reject NaN/infinity and nonminimal float64 encodings of exact float32 values. These rules cover recursively nested JSON-shaped values, not only a selected fixture's payload.
+
+The representation supports MessagePack integers from `-2^63` through `2^64-1`. An input integer outside that range or an unsupported exact decimal is an admission/representation refusal before encoding, never rounded/coerced, never a new owner-schema numeric limit, and never evidence that an otherwise valid owner source is corrupt. There is no numeric extension tag or implicit migration. This profile leaves all producer-semantic, legacy, receipt, and SP-278 digest recipes unchanged.
+
+The parser is iterative and introduces no schema nesting limit. Declared counts cannot allocate beyond actual remaining input merely because a count claims that size; transport blocks retain the header/payload caps. Resource exhaustion returns `ResourceUnavailable` and stops admission, never `Corrupt` or a resynchronization hole. Native resource budgeting remains a separate implementation requirement.
+
+##### Exact checksums and admission order
+
+CRC32/ISO-HDLC uses width `32`, polynomial `0x04c11db7`, initial value `0xffffffff`, reflected input/output, and xorout `0xffffffff`; the reflected bit-loop polynomial is `0xedb88320`. ASCII `123456789` yields `0xcbf43926`. CRC fields themselves are little-endian. Header and payload checksums cover their exact stored bytes without an added length prefix, domain string, seed continuation, or decode/re-encode. Prefix CRC covers all 48 raw prefix bytes, including the other CRC values and reserved zeros, with only its own four bytes zeroed.
+
+Validation order is mandatory:
+
+1. Check magic.
+2. Require all 48 prefix bytes and validate prefix CRC before trusting lengths.
+3. Admit frame version, require reserved zero, and admit `flags=0`; unsupported frame or flags stops compatibility admission.
+4. Enforce header/payload caps and checked remaining-file bounds.
+5. Match selected segment generation and strict sequence progression.
+6. Validate header CRC, canonical MessagePack, header-version dispatch, and tuple arity/types.
+7. Validate payload CRC over exact stored bytes.
+8. Apply decompression bounds; the first profile's transform is identity. Nonzero flags are never guessed as LZ4 or treated as uncompressed.
+9. Decode the complete canonical MessagePack EventRecord; dispatch exact envelope and payload readers and enforce complete schema, scope, and family admission.
+10. Cross-check every duplicate header/envelope identity and prefix sequence; reject duplicate persisted event identity against the authenticated prior survivor set.
+
+Missing required schema identity/version is malformed, not a future-version escape. Unsupported registered versions, unknown family mapping, and unavailable validation authority halt admission as `Unsupported` or `ResourceUnavailable`, not corruption. Semantic, no-secret, registry, scope-policy, and idempotency admission remain mandatory owner obligations. A caller-supplied validator, generation, previous sequence, or seen-ID set does not prove native custody of that authority.
+
+##### Recovery and compatibility limits
+
+A pure decoder changes no cursor, checkpoint, file, row, owner state, or watermark. A loss scan MUST first prove corruption at the failed offset; a valid frame cannot be designated loss. Trust a current-profile frame length only after prefix CRC, version/flags/reserved, caps/file bounds, and generation/sequence checks. It yields a one-frame hole only when the computed next boundary passes every validation check. Otherwise scan bytewise to the first fully validated candidate or return the exact range to EOF. Corrupt magic lookalikes and incomplete candidates are not survivors. An unsupported frame/header/envelope/family or resource failure halts scanning without cursor advancement; it cannot be skipped to reach later supported data.
+
+The first-profile reader set is frame `2`, header `1`, EventRecord `2.0.0`, and explicitly registered current payload readers. Future frame/header/flags/compression support requires explicit version/profile admission. Old/new storage incompatibility follows Case L-1 registered version metadata, never lexical semantic-version comparison or try-anyway. Generation-1 compatibility readers, including their supported `none | lz4` payload compression, remain separate; a first native writer never emits generation 1 or mixes it into a V2 segment. Normal append still refuses `projector_replay_only`.
+
+Byte loss ranges do not decide acknowledged-data loss, active/closed status, truncation permission, survivor mutation admission, or receipt custody. The manifest, watermark, journal, lease, backup, projection, and SP-286/CV-339 receipt owners retain those decisions. Existing loss disposition and physical durability requirements below apply without relaxation. Wire validation alone grants no integrity producer admission or depth/readiness result.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, ContractName:Plans/Decision_Log.md#DL-045
+
 
 Loss disposition is closed:
 
@@ -17463,19 +17532,23 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  SeglogFrameV2 independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  The exact Case L-2 SeglogFrameV2 first-writer profile defines a packed 48-byte prefix, eight-element header, uncompressed full EventRecord payload and canonical MessagePack; it independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false
 depends_on: [SP-025, SP-026, SP-027, SP-028, SP-131, SP-139, SP-179, SP-180, SP-200, SP-230]
 unblocks: []
 acceptance_criteria:
+  - Exact prefix offsets and independent CRC vectors, shortest type-preserving MessagePack, full required-null envelope, numeric/cap refusal, strict identity checks, and unsupported/resource scan stops satisfy the Case L-2 first profile.
+  - Normative byte closure grants no native codec, I/O, lock, fsync, recovery, integrity-producer adoption or depth/readiness pass.
   - Payload/framing bit flips in active and closed segments yield the exact documented loss unit and identical survivors on rerun.
   - No append reports success before both durable barriers, required parent-directory synchronization, and SP-286 durable first-receipt custody.
   - Safe-point/checkpoint/approval barrier fault injection proves no downstream mutation without a surviving synced receipt.
   - Rotation, truncation, janitor, and compaction crash cuts converge with one semantic recovery episode and unchanged closed-source hashes.
   - Checkpoints never use timestamps and rebuilt projections with a hole remain health degraded with exact provenance.
 validation_surfaces:
+- Plans/seglog_frame_v2_wire_fixtures.json
+- reports/event-authority-20260911/step-08-wire-validation.md
   - future Case L seglog durability recovery fixture suite
   - python3 scripts/pm-plan-index.py validate
 risk_class: seglog_durability_recovery_drift
@@ -22304,7 +22377,7 @@ owner_hints:
 
 ## Legal-hold transition custody and passive history
 
-SP-288 owns the exact command-specific producer, canonical transition custody, recovery and passive history binding for the existing `storage.retention_hold_changed` event. Case L-3 remains the owner of retention policy, dependency eligibility, union protection, FileSafe request/release duties and cleanup. SIR-047 owns original SIR production and delegated pending/terminal custody; CV-333 owns the single UI response projection. This contract adopts the shared SP-286/CV-339 first-receipt interfaces for this exact barrier producer. The separately unresolved shared exact frame/header/payload codec remains an OPEN prerequisite; this adoption does not declare complete event depth or native implementation.
+SP-288 owns the exact command-specific producer, canonical transition custody, recovery and passive history binding for the existing `storage.retention_hold_changed` event. Case L-3 remains the owner of retention policy, dependency eligibility, union protection, FileSafe request/release duties and cleanup. SIR-047 owns original SIR production and delegated pending/terminal custody; CV-333 owns the single UI response projection. This contract adopts the shared SP-286/CV-339 first-receipt interfaces for this exact barrier producer. The shared exact frame/header/payload byte contract is defined in Case L-2 / SP-026 / SP-236; its normative adoption does not declare complete event depth or native implementation.
 
 ### Protected command, scope and lifetime
 
@@ -22415,7 +22488,7 @@ History has no durable checkpoint, hidden projection, cleanup, hold mutation, di
 
 `reports/event-authority-20260911/step-08-hold-validation.md` records bounded schema, actual-owner-adapter and independent regression evidence. `Plans/storage_retention_hold_evidence.schema.json` defines closed transaction, complete owner fence, actual SIR source and terminal-witness test evidence; it creates no durable family or indefinite runtime transaction-history requirement. Product authority remains actual canonical rows and independently authenticated owners, not a successful schema check or supplied witness.
 
-The shared exact frame/header/payload wire contract remains OPEN until separately adopted; its absence is more than an unrun native test. Full native frame/MessagePack interoperability, authenticated SIR/target/permissions and complete hold/dependency enumeration, original transaction identities, actual owner/domain exclusion, redb/fsync/barriers, backup/restore/migration/withdrawal and crash cuts remain `NOT_RUN`. Static set/clear/legacy/retry/relocation/final-fence evidence is not `DEPTH_PASS`, broad Case L closure, event-family admission, readiness, WorkNode/NodeSeed creation or governance seal.
+Case L-2 / SP-026 / SP-236 closes the shared exact frame/header/payload wire definition; this is normative byte closure, with native execution separately unproven. Full native frame/MessagePack interoperability, authenticated SIR/target/permissions and complete hold/dependency enumeration, original transaction identities, actual owner/domain exclusion, redb/fsync/barriers, backup/restore/migration/withdrawal and crash cuts remain `NOT_RUN`. Static set/clear/legacy/retry/relocation/final-fence evidence is not `DEPTH_PASS`, broad Case L closure, event-family admission, readiness, WorkNode/NodeSeed creation or governance seal.
 
 ### SP-288 - Legal Hold Transition And Original SIR Custody
 
@@ -22455,7 +22528,7 @@ acceptance_criteria:
 - Explicit repeated/multiple pending resume preserves real owner bindings and unchanged source/clock/fence state with no redispatch, transaction history or second semantic effect.
 - Complete v2 backup is non-rebuildable; old restored pending work cannot first-mint; explicit v1 legacy admission preserves protection with null original set receipt.
 - History resolves actual immutable slots/current SP-278 source plus final disclosure authority, reports current protection separately and has no checkpoint, cleanup or mutation effect.
-- Shared exact frame/header/payload codec remains OPEN; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.
+- Shared exact frame/header/payload codec follows Case L-2 / SP-026 / SP-236; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.
 validation_surfaces:
 - Plans/storage_retention_hold_value.schema.json
 - Plans/storage_retention_hold_contracts.schema.json

@@ -4,7 +4,7 @@ Source: `Plans/Shared_Integration_Runtime.md`
 
 Source lines: L2451-L2546
 
-Source SHA256: `86dbaee473cbe795f3f4650f0862a466d74adbefb72882bb9ef6bacf34c414ed`
+Source SHA256: `aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08`
 
 ---
 
@@ -36,7 +36,7 @@ After all receipt/custody/current-source/target validators return, revalidate se
 
 Original terminal request/outcome/result/response and first receipt remain immutable and mandatory-backup. The delegated receipt/outcome resolver returns those authentic retained values under current disclosure authority without reacquiring disposed original dispatch/staging or transaction/group controls. A replay projection may identify its current transport dispatch and original_dispatch_id, while preserving original topology/time/command/operation/result/outcome/error/receipt/event identities. Passive replay/history writes no outcome, repeats no hold action, releases no protection and performs no cleanup. Current source/event inspection and current protection status remain SP-288/SP-278 duties, distinct from original receipt replay.
 
-SP-288's old-restored-pending restriction remains exact: surviving original receipt replay is allowed; absence cannot authorize a replacement first receipt or classify old work as a fresh operation. This delegation supplies no Hold-specific fresh post-restore owner-acceptance capability. Shared exact frame/header/payload codec remains OPEN until separately adopted. Native authentication, owner/domain exclusion, dispatcher delivery, redb/fsync and restore remain `NOT_RUN`; schema validity and bounded adapters are not native proof or complete event depth.
+SP-288's old-restored-pending restriction remains exact: surviving original receipt replay is allowed; absence cannot authorize a replacement first receipt or classify old work as a fresh operation. This delegation supplies no Hold-specific fresh post-restore owner-acceptance capability. The shared exact frame/header/payload byte contract is defined in Storage Case L-2 / SP-026 / SP-236; normative byte closure supplies no native execution proof. Native authentication, owner/domain exclusion, dispatcher delivery, redb/fsync and restore remain `NOT_RUN`; schema validity and bounded adapters are not native proof or complete event depth.
 
 ### SIR-047 - Original Legal Hold Pending And Terminal Delegated Custody
 
@@ -70,7 +70,7 @@ acceptance_criteria:
 - SIR alone stages actual terminal outcome and CV-333 after authentic typed Hold result and original receipt proof; all source/stage/current owner helpers precede final guard and complete commit/readback before public success.
 - Typed result ref/schema/hash and full original command/operation/topology/generation/frame/receipt/event joins remain exact; original set and truthful legacy absence are preserved.
 - Passive original replay retains immutable values and current disclosure authority without disposed original controls, new acknowledgement or repeated hold effect.
-- Old restored pending cannot first-mint; shared exact wire codec remains OPEN and native authentication, exclusion, durability and recovery remain NOT_RUN.
+- Old restored pending cannot first-mint; shared exact wire codec follows Storage Case L-2 / SP-026 / SP-236 and native authentication, exclusion, durability and recovery remain NOT_RUN.
 validation_surfaces:
 - Plans/storage_retention_hold_contracts.schema.json
 - Plans/storage_retention_hold_evidence.schema.json
