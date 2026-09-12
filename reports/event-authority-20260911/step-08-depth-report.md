@@ -141,3 +141,9 @@ The [historical reader validation report](step-08-historical-reader-adoption-val
 ## Active Goal update consumer composition — 2026-09-12
 
 The [Goal update consumer validation report](step-08-goal-updated-consumer-validation.md) records actual current body/control/history views, independently bound selected-v3 event inspection, distinct audit/input reads and terminal-selected original SIR replay. The independent precision finding is corrected with exact private witness byte commitments. Six existing units gain six criteria; seventeen transient definitions and thirteen resource entries introduce no writer/event/body schema, registry, wiring, projector or checkpoint change. Targeted source checks, index and four-owner shard verification pass. Full gates remain 21 PASS / 15 FAIL with no new reported categories/locations within the fifty-diagnostic cap. Original content/audit lifetime and effects remain unchanged; native evidence and remaining Step 8 families stay separate.
+
+## Four exact historical Goal contracts — 2026-09-12
+
+The [four historical Goal validation report](step-08-four-historical-goal-validation.md) records individual current-writer prohibitions and complete zero-effect historical readers for goal.progressed, goal.replanned, goal.stopped and goal.verification_decided. Twelve new PlanUnits, SP-214 projection qualifications and the preserved actual historical oracles add fifty-three criteria without changing any schema, registry or wiring. Independent review and targeted source/index/shard checks pass; full gates remain 21 PASS / 15 FAIL with no new reported category/location within the fifty-diagnostic cap. Original provenance, historical semantic uncertainty and current disclosure remain explicit, with no native or family-depth claim. Remaining Step 8 work stays open.
+
+Cost: source review and repository checks only; monetary attribution unavailable.

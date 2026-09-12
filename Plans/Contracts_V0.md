@@ -3563,7 +3563,7 @@ owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-
 
 ## Known-37 Goal Runtime v2 schema registration
 
-The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Except for active `goal.created` v3 under CV-341/GRS-066, each family revision remains `2.0.0`. The entire prior `goal.created` v2 resource remains authoritative retained decoding at `#/$defs/legacy_v2_reader`; its old payload minima and joins apply to that resource only. The active `goal.created` row uses family revision `3.0.0`. The registry selects each active root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
+The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The independent exact-family rulings for `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345), and `goal.verification_decided` (GRS-072/CV-346) likewise prohibit their current writes and preserve original historical interpretation. Except for active `goal.created` v3 under CV-341/GRS-066 and active `goal.updated` v3 under CV-342/GRS-068, each family revision remains `2.0.0`. Each entire prior v2 resource remains authoritative retained decoding at `#/$defs/legacy_v2_reader` in its own event schema; its old payload minima and joins apply to that resource only. Both active rows use family revision `3.0.0`. The registry selects each active root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
 
 | Event type | Current root | Exact schema ID |
 |---|---|---|
@@ -22518,3 +22518,303 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/goal_update_schema_resources.json
+
+### CV-343 - Exact historical goal.progressed writer exclusion
+
+```yaml
+plan_unit_id: CV-343
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: The exact registered goal.progressed whole v2 root remains unchanged authoritative historical validation.
+  GRS-069 independently prohibits every current writer; reject before dedupe, CAS, outbox or append. SP-300 supplies
+  only the original historical observation with complete current generic source authority and truthful original
+  validation. No alias, event admission, new lifecycle or durable effect follows.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-069
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.progressed` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A current blocked/active/paused Goal, a To-Do transition, an unchanged
+  fingerprint, or a schema-valid old running pair cannot authorize a current append. Historical task IDs do not
+  become active To-Dos, Goal children or percentages.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_progressed.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_progressed_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_progressed_historical_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.progressed
+- pm.goal_runtime_event.goal_progressed.schema.v2
+- storage.goal_progressed_history_read.v1@1.0.0
+- D-R08
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+For exactly `goal.progressed`, qualify CV-287, the 21-root schema roster and D-R08 under GRS-069: the whole `Plans/event_payloads/goal_runtime/goal_progressed.schema.json#` (`pm.goal_runtime_event.goal_progressed.schema.v2`) and family revision `2.0.0` remain registered historical validation authority. Current emission is prohibited before dedupe success, CAS, outbox or append, including a retry whose original idempotency key matches historical custody. Preserve the exact original header n -> n+1/current-CAS predicates, event identity, all outer/inner joins, original runtime/actor/account/correlation/causation/thread evidence, whole row fields, references and original acceptance oracle as historical semantics. No present-state alias, Goal-specific role cast, inferred original source or receipt may replace missing original evidence. EventRecord 2.0.0 and the exact original supported envelope/legacy route retain their own contracts; no alias or new compatibility conversion is introduced.
+
+SP-300 expressly adopts actual SP-278 root/current generation/dataset, immutable row birth anchor, complete advancing global frontier/source token and the final after-helper source/admission/access boundary for `storage.goal_progressed_history_read.v1@1.0.0`. Its family checkpoint is individually `none_required` because this exact owner assigns zero durable effect. Full original validation is mandatory for verified history; unresolved or unavailable results confer no current authority. Reader withdrawal preserves original source and registry/retention membership, admits no new writer and settles no other event.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-069, ContractName:Plans/storage-plan.md#SP-300, SchemaID:pm.goal_runtime_event.goal_progressed.schema.v2
+
+### CV-344 - Exact historical goal.replanned writer exclusion
+
+```yaml
+plan_unit_id: CV-344
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: The exact registered goal.replanned whole v2 root remains unchanged authoritative historical validation.
+  GRS-070 independently prohibits every current writer; reject before dedupe, CAS, outbox or append. SP-301 supplies
+  only the original historical observation with complete current generic source authority and truthful original
+  validation. No alias, event admission, new lifecycle or durable effect follows.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-070
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.replanned` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. Current material objective change or workflow replan cannot append
+  this exact old Goal event, and missing original child/evidence/currentness facts cannot be backfilled with present
+  workflow state.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_replanned.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_replanned_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_replanned_historical_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.replanned
+- pm.goal_runtime_event.goal_replanned.schema.v2
+- storage.goal_replanned_history_read.v1@1.0.0
+- D-R10
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+For exactly `goal.replanned`, qualify CV-287, the 21-root schema roster and D-R10 under GRS-070: the whole `Plans/event_payloads/goal_runtime/goal_replanned.schema.json#` (`pm.goal_runtime_event.goal_replanned.schema.v2`) and family revision `2.0.0` remain registered historical validation authority. Current emission is prohibited before dedupe success, CAS, outbox or append, including a retry whose original idempotency key matches historical custody. Preserve the exact original header n -> n+1/current-CAS predicates, event identity, all outer/inner joins, original runtime/actor/account/correlation/causation/thread evidence, whole row fields, references and original acceptance oracle as historical semantics. No present-state alias, Goal-specific role cast, inferred original source or receipt may replace missing original evidence. EventRecord 2.0.0 and the exact original supported envelope/legacy route retain their own contracts; no alias or new compatibility conversion is introduced.
+
+SP-301 expressly adopts actual SP-278 root/current generation/dataset, immutable row birth anchor, complete advancing global frontier/source token and the final after-helper source/admission/access boundary for `storage.goal_replanned_history_read.v1@1.0.0`. Its family checkpoint is individually `none_required` because this exact owner assigns zero durable effect. Full original validation is mandatory for verified history; unresolved or unavailable results confer no current authority. Reader withdrawal preserves original source and registry/retention membership, admits no new writer and settles no other event.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-070, ContractName:Plans/storage-plan.md#SP-301, SchemaID:pm.goal_runtime_event.goal_replanned.schema.v2
+
+### CV-345 - Exact historical goal.stopped writer exclusion
+
+```yaml
+plan_unit_id: CV-345
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: The exact registered goal.stopped whole v2 root remains unchanged authoritative historical validation.
+  GRS-071 independently prohibits every current writer; reject before dedupe, CAS, outbox or append. SP-302 supplies
+  only the original historical observation with complete current generic source authority and truthful original
+  validation. No alias, event admission, new lifecycle or durable effect follows.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-071
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.stopped` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A user Stop, cleared dependency, quota reset, execution window, recovery
+  receipt or retained resumable=true never authorizes current stopped Goal state, resume/stop-epoch clearing or
+  a new settlement/receipt.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_stopped.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_stopped_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_stopped_historical_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.stopped
+- pm.goal_runtime_event.goal_stopped.schema.v2
+- storage.goal_stopped_history_read.v1@1.0.0
+- D-R12
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+For exactly `goal.stopped`, qualify CV-287, the 21-root schema roster and D-R12 under GRS-071: the whole `Plans/event_payloads/goal_runtime/goal_stopped.schema.json#` (`pm.goal_runtime_event.goal_stopped.schema.v2`) and family revision `2.0.0` remain registered historical validation authority. Current emission is prohibited before dedupe success, CAS, outbox or append, including a retry whose original idempotency key matches historical custody. Preserve the exact original header n -> n+1/current-CAS predicates, event identity, all outer/inner joins, original runtime/actor/account/correlation/causation/thread evidence, whole row fields, references and original acceptance oracle as historical semantics. No present-state alias, Goal-specific role cast, inferred original source or receipt may replace missing original evidence. EventRecord 2.0.0 and the exact original supported envelope/legacy route retain their own contracts; no alias or new compatibility conversion is introduced.
+
+SP-302 expressly adopts actual SP-278 root/current generation/dataset, immutable row birth anchor, complete advancing global frontier/source token and the final after-helper source/admission/access boundary for `storage.goal_stopped_history_read.v1@1.0.0`. Its family checkpoint is individually `none_required` because this exact owner assigns zero durable effect. Full original validation is mandatory for verified history; unresolved or unavailable results confer no current authority. Reader withdrawal preserves original source and registry/retention membership, admits no new writer and settles no other event.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-071, ContractName:Plans/storage-plan.md#SP-302, SchemaID:pm.goal_runtime_event.goal_stopped.schema.v2
+
+### CV-346 - Exact historical goal.verification_decided writer exclusion
+
+```yaml
+plan_unit_id: CV-346
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: The exact registered goal.verification_decided whole v2 root remains unchanged authoritative historical
+  validation. GRS-072 independently prohibits every current writer; reject before dedupe, CAS, outbox or append.
+  SP-303 supplies only the original historical observation with complete current generic source authority and truthful
+  original validation. No alias, event admission, new lifecycle or durable effect follows.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-072
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.verification_decided` append is refused before dedupe/CAS/append with no state, receipt,
+  provider, Usage, scheduling, Goal or workflow effect. A current reviewer result, VerificationCycle.status, valid
+  Workflow receipt, or old passed payload cannot append this Goal event, mutate Goal state, create a required Goal
+  verifier/adjudicator role, or claim completion.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_verification_decided_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_verification_decided_historical_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.verification_decided
+- pm.goal_runtime_event.goal_verification_decided.schema.v2
+- storage.goal_verification_decided_history_read.v1@1.0.0
+- D-R15
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+For exactly `goal.verification_decided`, qualify CV-287, the 21-root schema roster and D-R15 under GRS-072: the whole `Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json#` (`pm.goal_runtime_event.goal_verification_decided.schema.v2`) and family revision `2.0.0` remain registered historical validation authority. Current emission is prohibited before dedupe success, CAS, outbox or append, including a retry whose original idempotency key matches historical custody. Preserve the exact original header n -> n+1/current-CAS predicates, event identity, all outer/inner joins, original runtime/actor/account/correlation/causation/thread evidence, whole row fields, references and original acceptance oracle as historical semantics. No present-state alias, Goal-specific role cast, inferred original source or receipt may replace missing original evidence. EventRecord 2.0.0 and the exact original supported envelope/legacy route retain their own contracts; no alias or new compatibility conversion is introduced.
+
+SP-303 expressly adopts actual SP-278 root/current generation/dataset, immutable row birth anchor, complete advancing global frontier/source token and the final after-helper source/admission/access boundary for `storage.goal_verification_decided_history_read.v1@1.0.0`. Its family checkpoint is individually `none_required` because this exact owner assigns zero durable effect. Full original validation is mandatory for verified history; unresolved or unavailable results confer no current authority. Reader withdrawal preserves original source and registry/retention membership, admits no new writer and settles no other event.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/storage-plan.md#SP-303, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2

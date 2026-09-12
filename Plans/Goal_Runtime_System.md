@@ -2617,7 +2617,7 @@ owner_hints:
 Goal Runtime requires these data-shape families:
 
 - Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `acceptance_criteria`, `non_goals`, `allowed_scope`, constraints, budget, `work_queue`, task list, `model_policy`, attachment manifest, child goals, `evidence_index`, evidence references, completion receipt, `goal_revision`, and recovery state.
-- Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Historical records preserve original custody and cannot rebuild retired current Goal states or child topology.
+- Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`. `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. The independent exact-family rulings for `goal.progressed` (GRS-069/CV-343), `goal.replanned` (GRS-070/CV-344), `goal.stopped` (GRS-071/CV-345), and `goal.verification_decided` (GRS-072/CV-346) likewise prohibit their current writes and preserve original historical interpretation. Historical records preserve original custody and cannot rebuild retired current Goal states or child topology.
 - Goal update event fields: `goal_revision`, `previous_revision`, `objective_update`, `constraint_added`, `active_subgoals_notified`, and stale child goals.
 - Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
 - Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
@@ -3656,6 +3656,8 @@ Historical interpretation only under GRS-061: the following exact fields, branch
 
 ##### `EA-UND-0008-GOAL` — `goal.progressed` (`D-R08`)
 
+Historical interpretation only under GRS-069/CV-343: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority. This exact event admits no current writer or event-derived Goal state; SP-300 owns its bounded original historical inspection.
+
 - Fields: `R{progress_fingerprint:sha256,task_delta:TaskDelta,status_before:GoalStatus,status_after:GoalStatus,artifact_hashes:ArtifactHash[]}`; `O{repeat_count:u32+,no_progress_marker:NoProgressMarker}`.
 - Branches: allowed pairs are `scheduled->running`, `running->running`, `repairing->repairing`, and `repairing->verifying`. `status_before` must equal current state and `status_after` the committed successor. `repeat_count` absent means first observation; value `>=2` requires `no_progress_marker` with matching continuation count. Presence of `no_progress_marker` requires `repeat_count>=2`. A repeated fingerprint cannot hide unchanged artifacts.
 - Transition: exactly the declared allowed pair. A blocked, stopped, failed, cancelled, or completed result requires its named event, not `goal.progressed`.
@@ -3669,6 +3671,8 @@ Historical interpretation only under GRS-061: the following exact fields, branch
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-012..014`, `GRS-026..027`, `GRS-042`), `D-R09`.
 
 ##### `EA-UND-0010-GOAL` — `goal.replanned` (`D-R10`)
+
+Historical interpretation only under GRS-070/CV-344: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority. This exact event admits no current writer or event-derived Goal state; SP-301 owns its bounded original historical inspection.
 
 - Fields: `R{interruption_class:InterruptionClass,impact_summary:text,affected_child_goal_ids:ref[],affected_worknode_refs:ref[],child_decisions:ChildDecision[],remaining_evidence_refs:ref[],new_revision:u32+,next_action:NextAction}`.
 - Branches: `new_revision=goal_revision`; each affected child appears exactly once in `child_decisions`, and no unlisted child decision is present. Remaining evidence must be revalidated current. Allowed `next_action` is `continue_running|remain_paused|remain_blocked|stop|cancel|begin_verification|repair`; other `NextAction` values are forbidden for this row.
@@ -3685,6 +3689,8 @@ Historical interpretation only under GRS-062: the exact following fields, branch
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-006`, `GRS-015`, `GRS-043`), `D-R11`.
 
 ##### `EA-UND-0012-GOAL` — `goal.stopped` (`D-R12`)
+
+Historical interpretation only under GRS-071/CV-345: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority. This exact event admits no current writer or event-derived Goal state; SP-302 owns its bounded original historical inspection.
 
 - Fields: `R{stop_reason_code:StopReasonCode,interruption_boundary:before_mutation|at_safe_point|after_mutation_before_settlement|after_settlement,child_settlement_refs:ref[],tool_settlement_refs:ref[],resumable:boolean}`; `O{safe_point_ref:ref}`.
 - Branches: `resumable=true` requires `safe_point_ref`, settled child/tool refs, and current recovery/authority evidence. `before_mutation` requires empty settlement arrays and forbids `safe_point_ref`. `after_mutation_before_settlement` requires `resumable=false` and non-empty settlement evidence describing the incomplete boundary. `at_safe_point|after_settlement` may be resumable only after owner validation.
@@ -3708,6 +3714,8 @@ The following D-R14 bullets retain whole-v2 historical validation only. Active w
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-006..007`, `GRS-016`), `D-R14`.
 
 ##### `EA-UND-0015-GOAL` — `goal.verification_decided` (`D-R15`)
+
+Historical interpretation only under GRS-072/CV-346: preserve the complete following original fields, branches, state/revision/reference predicates and schema authority. This exact event admits no current writer or event-derived Goal state; SP-303 owns its bounded original historical inspection.
 
 - Fields: `R{decision:VerificationDecision,verifier_ref:ref,finding_refs:ref[],closure_refs:ref[],unresolved_risk_refs:ref[]}`; `O{audit_cycle_id:ref,verification_cycle_id:ref,adjudicator_ref:ref}`.
 - Branches: at least one cycle ID is present. `passed` requires empty findings and unresolved risks plus non-empty closure/evidence proof; `failed` requires non-empty findings; `blocked` requires non-empty unresolved risks and block refs. Strong-tier third repeated failure requires `adjudicator_ref`; a VerificationCycle status never creates this decision implicitly.
@@ -3771,14 +3779,14 @@ Each positive oracle describes validation of the outer EventRecord, exact row sc
 | `EA-UND-0005-GOAL` | Create previously absent Goal at revision 1 with verified control-envelope hash, non-empty criteria, exact scope/budget/model policy; projection is `created`. | Reject expected revision, revision other than 1, duplicate Goal ID, hash mismatch, null optional, unknown enum, or write scope without authority evidence. |
 | `EA-UND-0006-GOAL` | Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success. | Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim. |
 | `EA-UND-0007-GOAL` | Capture current source evidence with valid span/hash and matching outer/inner redaction; evidence index advances while state is preserved. | Reject wrong hash syntax, invalid locator branch, artifact snapshot without snapshot ref, raw secret, redaction mismatch, unknown currentness used as proof, or any retention value invented by fallback. |
-| `EA-UND-0008-GOAL` | Append `scheduled->running` with a non-empty task delta and artifact hashes; second identical fingerprint includes repeat count/marker and remains visible. | Reject disallowed state pair, empty task delta, repeat>=2 without marker, marker with repeat<2, stale status_before, or use of progressed to claim blocked/completed. |
+| `EA-UND-0008-GOAL` | Historical conditional oracle only under GRS-069; no current writer: Append `scheduled->running` with a non-empty task delta and artifact hashes; second identical fingerprint includes repeat count/marker and remains visible. | Reject disallowed state pair, empty task delta, repeat>=2 without marker, marker with repeat<2, stale status_before, or use of progressed to claim blocked/completed. |
 | `EA-UND-0009-GOAL` | Record a validated verification or completion receipt with complete child/WorkNode refs and passing outputs; state remains unchanged. | Reject missing receipt, invalid certifier enum, certified decision with failed output, exception without approval, incomplete declared dependency receipts, or treating receipt-recorded as Goal completion. |
-| `EA-UND-0010-GOAL` | Replan running Goal for scope reduction, decide every affected child, preserve only revalidated evidence, and commit `running` at the new revision. | Reject new revision mismatch, missing/extra child decision, unknown interruption/action, stale evidence, terminal/limit source, or child steering without referenced disposition. |
+| `EA-UND-0010-GOAL` | Historical conditional oracle only under GRS-070; no current writer: Replan running Goal for scope reduction, decide every affected child, preserve only revalidated evidence, and commit `running` at the new revision. | Reject new revision mismatch, missing/extra child decision, unknown interruption/action, stale evidence, terminal/limit source, or child steering without referenced disposition. |
 | `EA-UND-0011-GOAL` | Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth. | Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal. |
-| `EA-UND-0012-GOAL` | Stop a running Goal at a validated safe point after durable child/tool settlement, with `resumable=true`; projection is fenced `stopped`. | Reject resumable without safe point, before-mutation with settlements, unsettled after-mutation as resumable, unknown stop reason/boundary, or treating stop as cancellation/completion. |
+| `EA-UND-0012-GOAL` | Historical conditional oracle only under GRS-071; no current writer: Stop a running Goal at a validated safe point after durable child/tool settlement, with `resumable=true`; projection is fenced `stopped`. | Reject resumable without safe point, before-mutation with settlements, unsettled after-mutation as resumable, unknown stop reason/boundary, or treating stop as cancellation/completion. |
 | `EA-UND-0013-GOAL` | Record a permission check `blocked/approval_required` by output/log refs and block evidence; state is preserved pending named block event. | Reject embedded tool output/secret, failed/unknown without log, approval-required without evidence, deny+passed, unknown check enum, or direct state mutation. |
 | `EA-UND-0014-GOAL` | Apply one exact scope delta with previous/new revision relation, mark affected child stale, and fence dispatch pending replan. | Reject zero deltas, revision mismatch, child in active and stale sets, malformed delta branch, update during verifying/terminal, or implicit child re-steer. |
-| `EA-UND-0015-GOAL` | Record passed verification with cycle ID, verifier, closures, no findings/risks; projection is `verifying` and still awaits completion event. | Reject no cycle ID, passed with findings/risks, failed without finding, blocked without risk/block evidence, third repeated strong failure without adjudicator, or implicit completion. |
+| `EA-UND-0015-GOAL` | Historical conditional oracle only under GRS-072; no current writer: Record passed verification with cycle ID, verifier, closures, no findings/risks; projection is `verifying` and still awaits completion event. | Reject no cycle ID, passed with findings/risks, failed without finding, blocked without risk/block evidence, third repeated strong failure without adjudicator, or implicit completion. |
 | `EA-UND-0016-GOAL` | Block a running GoalRun with validated block receipt, preserved work, exact scope and owner-valid action set; projection becomes `blocked`. | Reject missing receipt, empty actions, invalid recovery action, preserved mutation omitted, blocked update with no new evidence, or block from terminal/stopped run. |
 | `EA-UND-0017-GOAL` | Cancel a running mutated GoalRun after durable settlement/rollback evidence; projection becomes terminal `cancelled`. | Reject activation-aborted with mutation, false mutation with refs, true mutation without settlement, terminal source, or settlement self-report without referenced record. |
 | `EA-UND-0018-GOAL` | From `verifying`, validate certification receipt, complete WorkNode receipts, passing/waived validators, empty risks, and commit `certified`. | Reject worker/projection claim, missing receipt, incomplete WorkNode refs, certified with risks, exception without risk+approval, failed validator, or wrong source state. |
@@ -6374,3 +6382,370 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342
+
+### GRS-069 - Exact historical goal.progressed contract
+
+```yaml
+plan_unit_id: GRS-069
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: For exactly goal.progressed, Every D-R08 allowed state pair requires scheduled/running/repairing/verifying,
+  absent from the exclusive current Goal lifecycle. Its mandatory TaskDelta is Goal-owned task progress, while the
+  current Goal Activity owner explicitly assigns progress to To-Dos and transcript and forbids a Goal task tracker.
+  This individual semantic conflict establishes this exact-family current-writer prohibition; omission from the
+  required-name list is not the reason. The unchanged registered v2 resource is historical validation only, and
+  every current writer is refused before dedupe/CAS/outbox/append. SP-300 owns the sole newly specified ephemeral
+  historical reader with complete SP-278 source authority and independently preserved original semantics; no current
+  Goal state or durable effect is derived.
+gui_related: true
+gui_classification_reason: This exact historical event cannot populate current Goal lifecycle or task/child controls.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-055
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.progressed` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A current blocked/active/paused Goal, a To-Do transition, an unchanged
+  fingerprint, or a schema-valid old running pair cannot authorize a current append. Historical task IDs do not
+  become active To-Dos, Goal children or percentages.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_progressed.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_progressed_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_progressed_historical_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.progressed
+- pm.goal_runtime_event.goal_progressed.schema.v2
+- storage.goal_progressed_history_read.v1@1.0.0
+- D-R08
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+Every D-R08 allowed state pair requires scheduled/running/repairing/verifying, absent from the exclusive current Goal lifecycle. Its mandatory TaskDelta is Goal-owned task progress, while the current Goal Activity owner explicitly assigns progress to To-Dos and transcript and forbids a Goal task tracker. This individual semantic conflict establishes this exact-family current-writer prohibition; omission from the required-name list is not the reason.
+
+For exactly `goal.progressed`, retain the registered `event-family-goal-progressed@2.0.0` and whole unchanged `Plans/event_payloads/goal_runtime/goal_progressed.schema.json#` (`pm.goal_runtime_event.goal_progressed.schema.v2`) for exact historical interpretation only. The current Goal owner admits no producer, command, host callback, retry, recovery callback, upgrader or timer that appends this exact event. Reject before dedupe success, CAS, outbox or append even when the historical schema validates, an original idempotency key matches or a current workflow has superficially similar behavior. A retained historical lookup is a separate read path and cannot become current-write replay.
+
+Current work status remains with ToDoController and ordinary transcript; loop/no-progress taxonomy remains Run_Modes. No payload or alias is translated to todo.updated, todo.status_changed or any workflow event by this exact owner contract.
+
+Preserve exact progress_fingerprint, disjoint nonempty TaskDelta union, status_before/status_after, complete artifact_hashes, optional repeat_count and no_progress_marker. Preserve the four old pairs; repeated count >=2 requires matching continuation count and unchanged-artifact evidence. A repeated fingerprint never disguises no progress. Original current-state and source/CAS proof may be unresolved; do not manufacture it.
+
+This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
+
+The exact reader is `storage.goal_progressed_history_read.v1@1.0.0` under SP-300. CV-343 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-300, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/Decision_Log.md#DL-039
+
+### GRS-070 - Exact historical goal.replanned contract
+
+```yaml
+plan_unit_id: GRS-070
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: For exactly goal.replanned, D-R10 requires affected_child_goal_ids and child_decisions and commits
+  through replanning. Current Goal prohibits child topology and stages; its approved text replacement is the separate
+  goal.updated owner path. Workflow workgraph/replanning stays with the workflow, not Goal. Each prohibition directly
+  addresses this row rather than relying on another retired event. The unchanged registered v2 resource is historical
+  validation only, and every current writer is refused before dedupe/CAS/outbox/append. SP-301 owns the sole newly
+  specified ephemeral historical reader with complete SP-278 source authority and independently preserved original
+  semantics; no current Goal state or durable effect is derived.
+gui_related: true
+gui_classification_reason: This exact historical event cannot populate current Goal lifecycle or task/child controls.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-052
+- GRS-068
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.replanned` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. Current material objective change or workflow replan cannot append
+  this exact old Goal event, and missing original child/evidence/currentness facts cannot be backfilled with present
+  workflow state.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_replanned.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_replanned_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_replanned_historical_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.replanned
+- pm.goal_runtime_event.goal_replanned.schema.v2
+- storage.goal_replanned_history_read.v1@1.0.0
+- D-R10
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+D-R10 requires affected_child_goal_ids and child_decisions and commits through replanning. Current Goal prohibits child topology and stages; its approved text replacement is the separate goal.updated owner path. Workflow workgraph/replanning stays with the workflow, not Goal. Each prohibition directly addresses this row rather than relying on another retired event.
+
+For exactly `goal.replanned`, retain the registered `event-family-goal-replanned@2.0.0` and whole unchanged `Plans/event_payloads/goal_runtime/goal_replanned.schema.json#` (`pm.goal_runtime_event.goal_replanned.schema.v2`) for exact historical interpretation only. The current Goal owner admits no producer, command, host callback, retry, recovery callback, upgrader or timer that appends this exact event. Reject before dedupe success, CAS, outbox or append even when the historical schema validates, an original idempotency key matches or a current workflow has superficially similar behavior. A retained historical lookup is a separate read path and cannot become current-write replay.
+
+Current objective replacement remains GRS-068/CV-342/SP-299; workflow WorkGraph generation and affected WorkNode disposition remain with the actual workflow and separately governed goal_run.replanned. This exact owner contract creates no alias, conversion or requirement to emit that sibling.
+
+Preserve all original interruption classes, impact_summary, exact affected-child/decision correspondence, affected_worknode_refs, remaining-evidence currentness, new_revision equality and seven admitted next_action branches. Original transient replanning and committed successor are historical interpretation only. Preserve historical child scope/decision objects without rebuilding topology or commandeering real WorkNodes.
+
+This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
+
+The exact reader is `storage.goal_replanned_history_read.v1@1.0.0` under SP-301. CV-344 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-301, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/Decision_Log.md#DL-039
+
+### GRS-071 - Exact historical goal.stopped contract
+
+```yaml
+plan_unit_id: GRS-071
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: For exactly goal.stopped, D-R12 necessarily commits stopped Goal state, and may carry child settlements.
+  Current Goal state has no stopped; manual Stop/Pause latches the host stop epoch and pauses continuation while
+  workflow-owned records retain their own owners. The state contradiction alone is sufficient even in the before_mutation
+  branch with empty settlement arrays. The unchanged registered v2 resource is historical validation only, and every
+  current writer is refused before dedupe/CAS/outbox/append. SP-302 owns the sole newly specified ephemeral historical
+  reader with complete SP-278 source authority and independently preserved original semantics; no current Goal state
+  or durable effect is derived.
+gui_related: true
+gui_classification_reason: This exact historical event cannot populate current Goal lifecycle or task/child controls.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-051
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.stopped` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A user Stop, cleared dependency, quota reset, execution window, recovery
+  receipt or retained resumable=true never authorizes current stopped Goal state, resume/stop-epoch clearing or
+  a new settlement/receipt.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_stopped.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_stopped_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_stopped_historical_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.stopped
+- pm.goal_runtime_event.goal_stopped.schema.v2
+- storage.goal_stopped_history_read.v1@1.0.0
+- D-R12
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+D-R12 necessarily commits stopped Goal state, and may carry child settlements. Current Goal state has no stopped; manual Stop/Pause latches the host stop epoch and pauses continuation while workflow-owned records retain their own owners. The state contradiction alone is sufficient even in the before_mutation branch with empty settlement arrays.
+
+For exactly `goal.stopped`, retain the registered `event-family-goal-stopped@2.0.0` and whole unchanged `Plans/event_payloads/goal_runtime/goal_stopped.schema.json#` (`pm.goal_runtime_event.goal_stopped.schema.v2`) for exact historical interpretation only. The current Goal owner admits no producer, command, host callback, retry, recovery callback, upgrader or timer that appends this exact event. Reject before dedupe success, CAS, outbox or append even when the historical schema validates, an original idempotency key matches or a current workflow has superficially similar behavior. A retained historical lookup is a separate read path and cannot become current-write replay.
+
+Current Goal Stop/Pause follows GRS-051 and cmd.chat.goal.pause; required goal.paused remains under its own central registration/admission. Actual Workflow stopping, safe points, tool settlement and goal_run.stopped remain separately owned. No automatic alias from goal.stopped to goal.paused or goal.cancelled.
+
+Preserve original stop_reason_code, four interruption_boundary values, child_settlement_refs, tool_settlement_refs, resumable and conditional safe_point_ref. before_mutation has empty settlement arrays and no safe point; after_mutation_before_settlement has nonempty incomplete-settlement evidence and resumable=false; true resume requires actual original safe-point/recovery/authority evidence. Preserve materially-new repeated-stop boundary.
+
+This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
+
+The exact reader is `storage.goal_stopped_history_read.v1@1.0.0` under SP-302. CV-345 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-302, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/Decision_Log.md#DL-039
+
+### GRS-072 - Exact historical goal.verification_decided contract
+
+```yaml
+plan_unit_id: GRS-072
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: For exactly goal.verification_decided, All D-R15 source edges require running/verifying/repairing
+  Goal states and prescribe Goal verifier/cycle authority. Current Goal has none of those states or mandatory role
+  cast; Review and workflow certification own their actual reviewer/evidence/decision. Even the blocked destination
+  branch has an illegal current source, so no valid four-state v2 subset is available. The unchanged registered
+  v2 resource is historical validation only, and every current writer is refused before dedupe/CAS/outbox/append.
+  SP-303 owns the sole newly specified ephemeral historical reader with complete SP-278 source authority and independently
+  preserved original semantics; no current Goal state or durable effect is derived.
+gui_related: true
+gui_classification_reason: This exact historical event cannot populate current Goal lifecycle or task/child controls.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-050
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.verification_decided` append is refused before dedupe/CAS/append with no state, receipt,
+  provider, Usage, scheduling, Goal or workflow effect. A current reviewer result, VerificationCycle.status, valid
+  Workflow receipt, or old passed payload cannot append this Goal event, mutate Goal state, create a required Goal
+  verifier/adjudicator role, or claim completion.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_verification_decided_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_verification_decided_historical_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.verification_decided
+- pm.goal_runtime_event.goal_verification_decided.schema.v2
+- storage.goal_verification_decided_history_read.v1@1.0.0
+- D-R15
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+All D-R15 source edges require running/verifying/repairing Goal states and prescribe Goal verifier/cycle authority. Current Goal has none of those states or mandatory role cast; Review and workflow certification own their actual reviewer/evidence/decision. Even the blocked destination branch has an illegal current source, so no valid four-state v2 subset is available.
+
+For exactly `goal.verification_decided`, retain the registered `event-family-goal-verification-decided@2.0.0` and whole unchanged `Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json#` (`pm.goal_runtime_event.goal_verification_decided.schema.v2`) for exact historical interpretation only. The current Goal owner admits no producer, command, host callback, retry, recovery callback, upgrader or timer that appends this exact event. Reject before dedupe success, CAS, outbox or append even when the historical schema validates, an original idempotency key matches or a current workflow has superficially similar behavior. A retained historical lookup is a separate read path and cannot become current-write replay.
+
+Reviews use their own frozen ReviewTargetPack/Review records; workflow VerificationCycle/certification keep their original owners. No conversion to a collaborative event, goal_run.certified or generic VerificationCycle status is granted.
+
+Preserve decision, verifier_ref, finding_refs, closure_refs, unresolved_risk_refs and optional audit_cycle_id/verification_cycle_id/adjudicator_ref. At least one cycle ID remains required; passed requires empty findings/risks and closure/evidence proof, failed requires findings, blocked requires risk/block refs. Original Strong third-repeat adjudicator rule and original source edges remain historical diagnostics. Passed never establishes completion.
+
+This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
+
+The exact reader is `storage.goal_verification_decided_history_read.v1@1.0.0` under SP-303. CV-346 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-303, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/Decision_Log.md#DL-039
