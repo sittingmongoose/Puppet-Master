@@ -1,0 +1,170 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5i-dependency-correction-63-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+  "landing_base_commit": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+  "scope_and_authority": [
+    "Individual root-authored review of all 63 extracted cases in settings_correction_goal, settings_correction_manifest, settings_correction_provider_policy and settings_correction_checks, chunks 00040 through 00043. The four complete primary sources and correction README provide context; the preceding 399-case register audit remains separately cited. Helpers pin source/case/Git bytes and serialize or validate judgments, never infer semantic verdicts.",
+    "Preserve 62 retained cases and the adapted_selected_implementation goal case at source line 16. Current selected Settings geometry/content and later owner decisions qualify historical bakeoff obligations; an abandoned candidate, supersession or static check is not an automatic whole-case exclusion or implementation pass.",
+    "This landing changes this compact report only. Raw sources, captures, authored judgments, formal workbook results and experiment code remain outside the product repository. No Plans, schema, concepts, deferred visual design, commands, wiring, governance, readiness artifacts or other agents' files are edited. Historical packet /goal and approval instructions are source context, not a new Goal or expanded repair authority."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00040", "chunk-00041", "chunk-00042", "chunk-00043"],
+    "cases": 63,
+    "status_counts": {"partial": 34, "pass": 29},
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundary": "Twenty-three passes establish specific package metadata/member/size/hash facts or the presence of the stated reinspection requirement, not its completion. Six provider-policy passes at source lines 75, 76, 77, 79, 81 and 82 establish explicit current canonical supersession of the source-identified permissive baseline clauses. No pass certifies native acquisition, authentication, resource scheduling, progress, performance, GUI, packaging contents or the entire older return-handoff bundle."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 1358,
+    "not_reviewed_cases": 12058,
+    "expected_chunks": 151,
+    "valid_result_files": 25,
+    "missing_result_files": 126,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 1099, "pass": 200, "blocked": 39, "fail": 17, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "important_findings_and_boundaries": [
+    "The original Settings package's 33 manifest entries and the correction package's five entries all match actual bytes and SHA-256. The correction contains five declared members plus its manifest. The original lacks the full Performance register at root and has provider adjudication under reference/; the correction supplies both at root, with adjudication bytes identical to the original reference copy. This proves package repair, not historical reading or semantic adoption.",
+    "The prompt metadata's 2552 characters matches the body excluding one terminating LF; the stored prompt is 2553 Unicode characters and 2553 bytes. The manifest states no counting convention. That one metadata case stays partial without falsely reporting a 2552-character full file or alleging damaged custody.",
+    "The K3 reference-review report lists opened references, acknowledges material prior Performance omissions and claims repaired gaps. It is historical self-report, not independent proof of every earlier file open, every concept's repaired behavior or complete visual/motion testing. This audit does not equate its empty unresolved list with acceptance.",
+    "Current Provider, BinaryLocator, Release and SIR owners preserve explicit official-source first acquisition for the exact Host/Environment, no core/default-baseline/pre-seeded or demand-triggered provider CLI, and post-consent lifecycle management. Discovery does not grant consent. Only a later named user-approved exact provider/platform/source exception can authorize otherwise forbidden distribution; catalog/adapter classifications cannot create it.",
+    "Installation, executable health, authentication, account, entitlement, model catalog, adapter, required capability, generation verification and Usage remain independent. CLI-owned profiles stay host-local and non-secret in PM references. These owner contracts and static tests do not execute discovery, download, provenance/license verification, installation, profile isolation, update, rollback or platform-specific persistence.",
+    "Current SIR update preferences distinguish check-only, automatic update, disabled and notification choice with exact target/authority. Twelve static tests cover their schema/value relationships; neither those tests nor the shared-runtime self-test proves an actual update scheduler, revoked native authority, package-manager mutation or consent enforcement.",
+    "One RuntimeResourceGovernor and ObservableWork remain the resource/admission and truthful work-projection owners. Startup/probe bounds, selected-manager hydration, inactive-detail release, virtualized lists, byte-bounded residency and narrow prompt context remain required. Historical index phases run on a 1100 ms simulation timer and operation displays contain fixture counts. Labelled demonstrations are not measured indexing or native progress, and static checkpoint parity is not a low-resource/disk/network or large-catalog benchmark.",
+    "Human installation labels, method, Host/Environment and confidence appear in historical concept source, alongside executable/package detail. That source inspection does not establish current normal-GUI raw-identity absence, correct diagnostic disclosure or full manager/theme/reduced-motion/width/loading/error/offline/managed and native Slint portability acceptance. Deferred visual work is untouched.",
+    "Protected AuthBrowserSession remains human-only, ephemeral and inaccessible to inspect/capture/automation consumers. The frozen checker fails six valid local-action fixtures. The already-landed current checker selects their declared definitions via an offline SIR registry and passes 19 valid/27 invalid fixtures plus three ordinary-positive/security-discriminator rejection pairs. Nine auth-handoff tests cover their specific route policies; neither check is native security certification.",
+    "The source's no offline Tool Bundle product clause remains retained. A bounded exact-spelling search over 95 tracked root Markdown owners finds no independent occurrence of that broader exclusion; provider pre-distribution prohibitions and bundled CEF core are not equivalent to it. The case stays partial, without claiming global semantic absence. No-Playwright product-runtime/facade/namespace/package/port/command/MCP/capture-dependency policy is explicit, but this audit is not a built native dependency inventory.",
+    "The separately named older provider return-handoff bundle was not independently located/read. Six policy passes concern the clauses explicitly identified by the retained final adjudication and resolved by current canon. The compound user-copy and baseline-benchmark cases remain partial because source policy alone does not verify every current copy/fixture or recalculated baseline measurement."
+  ],
+  "current_comparison_boundaries": [
+    "Initial custody pins 758 selected repository paths at frozen/comparison commits, both package layouts and manifests, complete Git path inventories, all 63 case identities, 20 selected owner/source passages and bounded checks. Selected passages are byte-identical; whole-document equality is not assumed. Current-only preceding audit reports are not retroactively frozen implementation evidence.",
+    "The initial rebase's 762-path snapshot records nine changed previously selected whole files and four added Home reader/fixture files. Root inspected the complete intervening SIR Home3 pending/outcome-custody diff; it preserves original authority, activation/value pins and actual shared-v2/current-event evidence, with native ingress/auth/dispatch/activation/lease/redb/fsync/recovery/UI still NOT_RUN. Those Home-specific changes start after the cited SIR ranges.",
+    "Main then advanced with SP-279 integrity finding/passive-reader custody. Root read the complete ATS and Runtime Artifacts changes and the 17-line compilation report; those distinguish bounded actual-byte/static evidence from native IN oracles, full-u64 downstream semantic admission, Integrity-specific full-value completion and native source/durability/recovery/UI proof. The final 764-path snapshot records twelve changed previously selected whole files and six added files relative to the original comparison. All 20 cited passages and 11 cited artifacts still match exactly. The new storage/registry/index work is preserved without independent certification or use as correction-packet implementation proof."
+  ],
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/dependency-correction-63-root-review.json",
+      "sha256": "f101b6a1257ba58d3f2f28e56879f5518736d882c9b82715049a3bd42ad7e459"
+    },
+    "evidence_plan": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/review-evidence-plan.json",
+      "sha256": "d0ae1ab70de97ee889dff3d5abde2c647b94f60ddfe309cd6afe0b839f70a967"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/assembly-summary.json",
+      "sha256": "37c5fd59c4c175da6a6d98218b51910352bc6e647f148ab889ceb674a3fdef80"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/input-custody.generated.json",
+      "sha256": "22279941cd711d06d6a3f0534462a1e40862aa85f4e0674b4ef7eb1b1b2765ca"
+    },
+    "passage_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/review-passage-custody.generated.json",
+      "sha256": "5360d7c904a49851ccf3d84958e239795f85e1e7a7c4ffbd18aa1e89b1f802ca"
+    },
+    "initial_landing_inputs": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/landing-inputs/4f984f0f8447c93afe688ea2df2a7678f916f9bd/receipt.json",
+      "sha256": "220314e984737a2f0e46713028a2962e7866a79c888c2313250f214d86c4d258"
+    },
+    "landing_inputs": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/landing-inputs/38e37d11a05e6946102cc7fe205b3f12b9474586/receipt.json",
+      "sha256": "66434a914e008a7db62ea5305bca9b5eedd50efbf4eea60a6c4cb26e413317e1"
+    },
+    "evidence_pin_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/evidence-verification/receipt.json",
+      "sha256": "eaf21ed3e2bd9c2403bf064e5bc2a32c49fdfdf817f99a3cc472f132dda7d591"
+    },
+    "publication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/publication-summary.json",
+      "sha256": "521e2573c04758160c3b199270bf11da73d2529c3e9f78ee63aa2515e689ecdb"
+    },
+    "workbook_status": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/after-publication-status.receipt.json",
+      "sha256": "b8cb90887c8ec20f728e6db6cd72a8575396abe9fc85f5b3875e4e86f0464ff7"
+    },
+    "packet_tests": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/final-verification/packet-tests.receipt.json",
+      "sha256": "18c45245b1c09c1b845d60d9f09bab08f8c441d1da130cdd268a627a0a239625"
+    },
+    "shards": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/final-verification/shards.receipt.json",
+      "sha256": "43f69045d65f2708c8c2f59848e9d88d61476512c7b4e09921cec8c076331562"
+    },
+    "governance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/final-verification/gates.receipt.json",
+      "sha256": "4f98bf19bec269629a9b5fbabb4a6b6ddf35104a7f005c9b31e54ba8a7b00267"
+    },
+    "governance_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-dependency-correction63-review-20260912-JUnSLakU/final-verification/gates.json",
+      "sha256": "40467d4cf4c373673e521569ef1118ad098586e24e1e16e1101dbecccef0607c"
+    },
+    "formal_00040": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00040.result.json",
+      "sha256": "3c6b6d10e18daa4ae65ca44b745fe8bb6dc1be2d483150926f3c36ce9661df38"
+    },
+    "formal_00041": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00041.result.json",
+      "sha256": "e7531ed9937bf3fa0ff5323583137f8906cbcdfbb3a26b464c7458be5259efd4"
+    },
+    "formal_00042": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00042.result.json",
+      "sha256": "6f6b700e7b1f58a96d7758f0a65faa862435420cb16d86a99e8c94922d18e5c1"
+    },
+    "formal_00043": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00043.result.json",
+      "sha256": "4b06d181a3faa899179d58b6d3c9aec210c6d4eb9aee48636d83707d1b284121"
+    }
+  },
+  "verification": {
+    "base": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+    "selected_inputs_per_repository_capture": 3058,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore and Concepts py/js/json/html/css/mjs; not full transitive closure.",
+    "review_integrity": {"status": "pass", "cases": 63, "selected_owner_passages": 20, "validation_errors": 0},
+    "evidence_pin_check": {"status": "pass", "selected_receipts": 39, "distinct_hashed_files": 2394, "boundary": "Exact explicit path/SHA-256 pins, not recursive prior evidence graphs, input_hashes-map certification, semantic or native closure."},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "shards": {"status": "pass", "docs": 98, "shards": 2411},
+    "frozen_and_comparison_checks": {
+      "shared_runtime_boolean_checks_per_snapshot": 41,
+      "update_preference_tests_per_snapshot": 12,
+      "auth_handoff_tests_per_snapshot": 9,
+      "full_thread_tests_per_snapshot": 15,
+      "settings_checkpoint": "pass_source_parity_29_scripts_26_syntax_checked_per_snapshot",
+      "protected_auth_frozen": "fail_six_valid_local_action_fixtures",
+      "protected_auth_comparison": "pass_19_valid_27_invalid_three_ordinary_positive_and_security_rejection_pairs",
+      "changed_snapshot_inputs": 0,
+      "boundary": "Static contracts and source-generation checks only. No browser, provider install/auth, performance run or native security/GUI certification."
+    },
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1454,
+        "validate_implementation_readiness": 56,
+        "validate_plan_graph": 1454,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 1208,
+        "verify_spec_lock": 28
+      },
+      "boundary": "Fresh checks on the final rebased landing base retain the same 12 failing check groups as the preceding checkpoint. PRD contract validation reports 1208 failures versus 900 previously; retained samples include unresolved Home schema local refs. Final evidence/graph counts are 1454 each versus 1448, readiness 56 versus 55 and Spec Lock 28 versus 27; remaining counts match that checkpoint. Named raw-capture/PM7 fixtures, audit reference and implementation-surface paths are absent from the tracked tree checked during this turn. This report neither repairs other owners' work nor refreshes stale locks/evidence/readiness/migration artifacts. No reseal or full-integration success is claimed."
+    }
+  }
+}
