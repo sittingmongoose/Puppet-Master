@@ -1,0 +1,101 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5e-egolite-validation-security-164-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "6d949c1a533fa1a67a19fccd570c284d37b7a0ca",
+  "landing_base_commit": "94e97e49433e3783883fba79f2dba7a35cfb7ec2",
+  "scope_and_authority": [
+    "Individual evidence-backed review of all 164 extracted cases in DOC-0110, 07_VALIDATION_AND_ACCEPTANCE.md, group egolite_validation_security_negatives; complete formal chunks 00031 and 00032. The source contains 251 lines; this group is not a claim to extract every prose, benchmark or suggested-gate obligation in that source.",
+    "All judgments, findings and residuals were root-authored. Helpers only collect evidence, execute bounded static checks, serialize judgments and verify identities, source lines, ranges and hashes; no helper infers semantic verdicts.",
+    "The two adapted_selected_implementation cases and one superseded case retain their exact frozen applicability. They are not silently excluded or promoted to successor-closure passes.",
+    "This landing changes this compact report only. Detailed review, raw scans, snapshots, generated experiment outputs, helpers and formal workbook results remain outside the product repository.",
+    "No canonical Plans, published concept, deferred visual design, native implementation, event/family admission, WorkNode, readiness clearance, governance seal or other agents' edits are included. Frozen verdicts remain distinct from current repairs."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00031", "chunk-00032"],
+    "cases": 164,
+    "status_counts": {"partial": 157, "fail": 5, "pass": 2},
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundaries": [
+      "L000006: exact frozen index coverage and unique IDs for 6,521 PlanUnits and 25,014 acceptance rows across 95 top-level owner documents; not full governance or readiness validation.",
+      "L000011: all 887 frozen Settings inventory rows validate and every emitted label was directly read for human-readable descriptions; not rendering, placement, permissions, persistence or visual acceptance."
+    ]
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 846,
+    "not_reviewed_cases": 12570,
+    "expected_chunks": 151,
+    "valid_result_files": 14,
+    "missing_result_files": 137,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 624, "pass": 163, "blocked": 39, "fail": 17, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failing_cases": [
+    {"case_id": "L000005", "finding": "Carries forward the capture owner's missing New Plan Authoring Profile marker/exemption and required base-section order. Substantive capture contracts and unique PlanUnits do not cure profile noncompliance.", "disposition": "Recorded, not an authorized plan restructure."},
+    {"case_id": "L000007", "finding": "The Plans index assigns governed audit authority to Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json, absent from the frozen and reviewed current tracked trees. Current ContractRef validation independently reports the same missing reference.", "disposition": "Recorded; no fabricated evidence or historical custody rewrite."},
+    {"case_id": "L000047", "finding": "A fresh probe using the actual frozen schema and semantic dispatcher accepts an 8,389,451-byte result under a producing-program limit of 1,048,576 bytes; its 850-byte positive control also passes. Current binding rejects the identical oversized bytes with browser_result_output_budget_exceeded.", "disposition": "Previously repaired current static defect, still a frozen failure. Not an observed native leak or proof of all independent execution/channel budgets."},
+    {"case_id": "L000048", "finding": "The same frozen result-budget defect admits a multi-megabyte nested compact_result without spill. This is a second acceptance case for one underlying defect, not another unique bug.", "disposition": "Current static rejection does not prove actual typed spill, artifact custody or compact native output."},
+    {"case_id": "L000218", "finding": "Complete-input source assembly passes all 21 transforms and five gates at both pins, but the separate PM7 GUI-fixture validator fails because its required tests/fixtures/pm7_shared/motion_frame_matrix.json is absent from both complete tracked trees.", "disposition": "Owner fixture disposition remains open. Initial assembly failures from five omitted runner dependencies were corrected in a separate preserved capture; those were experiment-input omissions, not product defects."}
+  ],
+  "important_partial_boundaries": [
+    "Whole tracked-tree scans retain all candidates for PM Playwright, Browser host authority, implicit provider first acquisition, Origin silo vocabulary and implicit execution/capture. Every candidate is not yet context-classified. Legitimate external Project tooling, browser-concept capture, non-provider Auto and historical prohibitions cannot be treated as active forbidden authority solely from token matches.",
+    "Browser concurrency, parser/compiler behavior, effects, ProgramWorkspace, representations, routing, progress, protected-auth isolation and capture retain native execution/security/recovery obligations. Owner prose and schema-valid fixtures are not that proof.",
+    "SCM transport/backend, Forge hosting, repository automation, Origin review authority, provider AI service and integration lifecycle remain separate. Static route/effect/response checks do not execute Git/JJ, credentials, provider APIs or installation/update lifecycle.",
+    "The frozen Touch Closure checker covers 643 rows and 133 profiles, with 643 open residuals. It is not a reverse census of every concept control or native handler implementation.",
+    "Static shape review parses 254 frozen JSON files, checks 174 schema shapes, validates 887 Settings rows and resolves the 41 registered payload-family targets, including inline schemas and nested event_payloads. This is not full semantic/artifact/retention/transitive-reference closure.",
+    "Complete-input frozen/current concept assemblies produce identical 7,407,722-byte output with SHA-256 36661a9968c1c4b9d6a9090fccaa0e7674e2e1dce5dcd9da4ab3261fd0878829. This is not published-artifact equality, rendered interaction, native Slint or motion acceptance. No published concept file was changed."
+  ],
+  "current_repair_and_comparison_boundaries": [
+    "Nine changed selected passages between the freeze and comparison pin were explicitly read/adjudicated: seven overlapping SMPFS-169 output-binding insertions, the expanded Forge fixture-pair list and the browser result semantic validator. The other 177 selected passages match. Current changes do not upgrade frozen findings.",
+    "Focused tests at both pins pass browser semantics (10), screenshot wiring (5), SCM effects (7), SCM response (12), Origin routes (6) and installation preferences (12). These are static tests only.",
+    "Frozen aggregate contract checking passes 26 pairs (1,016 positive and 3,314 negative fixtures); current passes 30 (1,028 positive and 3,338 negative). The four added provider-specific fixture packs are not part of the frozen 26-pair result. The provider-gate test file is absent at the freeze (zero tests, exit 5); current runs nine tests successfully.",
+    "The frozen protected-auth checker rejects six valid shared-runtime UI-action fixtures by selecting the aggregate schema instead of their declared definitions. Current definition-aware validation passes. This is a checker defect, not native capture leakage. Current result-byte tests separately pass all 54 static tests.",
+    "After rebase onto the landing baseline, all 186 selected current passages remain byte-identical. Eleven selected full files changed elsewhere, including four owner documents, the storage value registry and six plan-index artifacts. Those changes are preserved, not certified by passage equality. The earlier comparison receipts are not restamped as latest-main tests.",
+    "Current-only Home/PRD schema failures are not backported into the frozen event-shape verdict. Standard governance below is a fresh landing-baseline observation."
+  ],
+  "evidence": {
+    "source": {"path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-04-pm-egolite-hermes-origin-browser-scm-implementation-package-2026-08-17/PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17/07_VALIDATION_AND_ACCEPTANCE.md", "sha256": "944a62e98f78168196d565f3d46b3c9e94ff14603d7247b9508db2c8f3c2a082"},
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/security-164-root-review.json", "sha256": "311767f5c111bd96ea23f3248237cea9ba483c59acd1299bf5ef605379b05eb1"},
+    "assembly_summary": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/assembly-summary.json", "sha256": "7cabefd7552505d4fac7423073aa21cb125bfc2a2a0be8af758e883071565406"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/review-passage-custody.generated.json", "sha256": "c247ea9f3ec31536a1586dd32823dd27edfbe81ce925fc40fc62b9f263c3eeef"},
+    "currentness_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/currentness-review.json", "sha256": "fa73bb3920411a4235c7f563f7813b75d604f6b40ab940f69d337fe64a902f32"},
+    "landing_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/landing-inputs/94e97e49433e3783883fba79f2dba7a35cfb7ec2/receipt.json", "sha256": "cffa3461b30486d6c2445d9fbd5e76a0a15809ce311e009acbdc17a4a285dbd2"},
+    "frozen_output_probe": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/result-limit-probe-frozen.json", "sha256": "15cda7041a58762d4d064bd60d8c654b0a5384f7450f98b6d3b79d1e8c7bf102"},
+    "current_output_probe": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/result-limit-probe-current.json", "sha256": "8dcdf131e937437d8e9ebf0741e0d0b6847f6dc31ba2c91ee6ea78dfc7e2381c"},
+    "explicit_pin_verification": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/evidence-verification/receipt.json", "sha256": "78b93f8aaea25b1dfe766c552c306ea26e1897ad68a965fa38ab0b87e300d10c"},
+    "probe_input_verification": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/evidence-verification/probe-inputs.receipt.json", "sha256": "8ffce10e94136dad272c1036e3df889ed566917eab41bfd46cfc2cb53f035547"},
+    "formal_chunk_results": [
+      {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00031.result.json", "sha256": "3e5d80400060a2fb3e4089618a0955f8410c727eab5ec7a97edda3cdec10e3d0"},
+      {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00032.result.json", "sha256": "a954bff3a2883cd6bfb04eb76364b05c904692efbd04a93af1e4c782bd003bed"}
+    ]
+  },
+  "verification": {
+    "base": "94e97e49433e3783883fba79f2dba7a35cfb7ec2",
+    "selected_inputs_per_prepublication_capture": 2475,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore, Concepts py/js/json/html, cohort root Python/JSON, frozen manifest and formal results. Not full transitive closure. Postpublication status captures 2,477 selected inputs.",
+    "review_integrity": {"status": "pass", "cases": 164, "owner_passages": 186, "receipt": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/review-integrity.receipt.json", "sha256": "6a8ea1b1557a40780807b3cbb36a000c3aae9de48d463867e81270a4f3303faf"}},
+    "evidence_pin_check": {"status": "pass", "distinct_hashed_files": 2075, "boundary": "Explicit selected receipt pins, not all transitive semantic evidence. The two probe input maps are additionally checked in their separate receipt."},
+    "packet_tests": {"status": "pass", "tests": 45, "receipt": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/packet-tests.receipt.json", "sha256": "607ecaa63e03199f8bb6c0a78450aef79c1b459b523c77c820da4b37e6404678"}},
+    "shards": {"status": "pass", "docs": 98, "shards": 2376, "receipt": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/shards.receipt.json", "sha256": "566535f88919d4d8f5b03a3bb3db9051a29e6bd49f3a986f2b58a95b5d5c613a"}},
+    "formal_workbook_status": {"status": "pass_structural_validation_audit_incomplete", "receipt": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/audit-status.receipt.json", "sha256": "7a0903dbb668b94ec3f82b41747791822e842a83dc5fc3a087345e7ff697a179"}},
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {"json_syntax": 1, "lint_contractrefs": 1, "lint_path_refs": 10, "validate_audit_closure": 201, "validate_audit_status_index": 1, "validate_evidence": 1448, "validate_implementation_readiness": 55, "validate_plan_graph": 1448, "validate_plan_migration": 180, "validate_pm7_gui_fixtures": 1, "validate_prd_planning_runtime_contracts": 900, "verify_spec_lock": 27},
+      "receipt": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/gates.receipt.json", "sha256": "dcd953f76742a48af0f4210cc88c1819122de45741d00222fc0a601c45ffb938"},
+      "report": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-security164-review-20260912-TpT0KCtb/verification/gates.json", "sha256": "853d367e92451244de35027c87e66f834f825cd7415ebbb5e677db943ca055cf"},
+      "boundary": "Fresh read-only check on the landing baseline with required Concepts materialized. Missing raw-evidence schema, PM7 motion fixture and governed index reference are absent from committed HEAD. Readiness is now 55, not the earlier 53; PRD/planning reports 900 errors. No blanket equivalence to earlier failure sets, governance regeneration, other-owner fix or full integration success is claimed."
+    }
+  },
+  "remaining_work": "12,570 frozen cases remain unreviewed. Recorded contract/reference/fixture gaps, context-classified negative scans, native/runtime/security/capture/provider obligations and governance failures remain open. This checkpoint advances the full non-design integration Goal; it does not complete or narrow it."
+}
