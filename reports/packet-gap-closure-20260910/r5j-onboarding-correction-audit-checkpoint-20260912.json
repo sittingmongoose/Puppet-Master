@@ -1,0 +1,107 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5j-onboarding-correction-462-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "33b8572f238672fab0047d4d9cb8ffbd3d0f9747",
+  "landing_base_commit": "74c5485e3b1e945f9dcb968cd2f37a71d29966d4",
+  "scope_and_authority": [
+    "All 462 extracted Onboarding/Doctor correction cases in chunks 00044 through 00052: README 4, complete Performance register 399, goal 7, manifest 24, provider adjudication 26 and checks 2. Preserve 459 retained and three adapted_selected_implementation cases; no automatic exclusion follows from supersession or deferred visual work.",
+    "The 399 Performance cases explicitly reuse the same root's prior individual judgments only after source SHA-256, all six case-identity/content fields, selected implementation and supporting currentness checks. An immutable one-to-one mapping retains each prior finding, residual and status. This is documented prior direct review, not a claim of rereading all 399 cases anew. The other 63 cases are separately root-authored; helpers serialize and validate, never derive semantic statuses.",
+    "This landing changes this compact report only. Raw sources, authored judgments, captures, workbook results and experiment helpers remain outside the product repository. No Plans, schemas, concepts, deferred visual design, commands, wiring, governance locks, readiness artifacts or other agents' files are edited. Historical source prompts do not create a new Goal or expand current repair authority."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00044", "chunk-00045", "chunk-00046", "chunk-00047", "chunk-00048", "chunk-00049", "chunk-00050", "chunk-00051", "chunk-00052"],
+    "cases": 462,
+    "separately_authored_cases": 63,
+    "explicitly_reused_individual_cases": 399,
+    "status_counts": {"partial": 434, "pass": 28},
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundary": "Twenty manifest passes establish specific correction-package declarations/member/size/hash facts, not historical omission causality or completed repairs. One README pass establishes canonical owner separation, six provider passes establish explicit policy supersession, and one register pass resolves Plan/NamedPlan/named_plan_id naming only. No pass certifies native runtime, installation, auth security, durable recovery, WAN/hardware performance or rendered GUI/motion."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 1820,
+    "not_reviewed_cases": 11596,
+    "expected_chunks": 151,
+    "valid_result_files": 34,
+    "missing_result_files": 117,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 1533, "pass": 228, "blocked": 39, "fail": 17, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "important_findings_and_boundaries": [
+    "All five declared correction members, six Combined_Handoff members and 22 later Concept_Bakeoff members match their manifest sizes/hashes. The exact named companion is Combined_Final_2026-08-08, however, and the two supplied related manifests name different packages. No exact original-target component/archive name was found within the bounded supplied source inventory. This is not global absence proof, and neither package is silently substituted for the unverified original. Original omission/mispath causality remains partial.",
+    "The complete register and provider adjudication are byte-identical to previously reviewed sources. The later bakeoff's provider reference copy also matches the correction root copy. The prompt's 2484 character declaration matches the body without its final LF; the stored text has 2485 Unicode characters and 2487 UTF-8 bytes. The unspecified counting convention stays partial.",
+    "Current PWIZ and SSYS-014 preserve separate Installation/Deployment, Server Claim/Bootstrap and Product Onboarding flows; Doctor retains its own read-only registry/router and normalized owner projections. Current Onboarding is the v2 draft/copy/late-commit flow with one actual Project owner commit, postcommit provider/Free Models phases and exact resumable owner context. Local actions, cached state and acceptance receipts cannot imply owner completion.",
+    "N2-152/153 require cached-first bounded Doctor routing, owner/currentness fences, freshness/confidence, optional-Off handling and no green stale/unknown/security-critical findings. All 30 positive and 38 negative supplied Doctor fixtures validate as expected. Those values do not execute a domain router, freshness clock, durable store or native check.",
+    "The actual selected Doctor manager is embedded in TestPMConcept. Its group recheck restores prior fixture status after a 700 ms timer and sets checked to just now without a domain result. A bounded Node callback observer reproduces this both as authored and with a synthetic old timestamp, then captures Ready/ready panel arguments and the Home TrueNAS signature label. Run All Checks has an example-data disclaimer. This is a concept-source freshness/receipt limitation, not a witnessed live false-green event, complete page-labeling check or rendered visual verdict. Initial observer runs failed a harness-only nested JSON assertion; preserved corrected v2 runs pass without product edits.",
+    "Provider policy and current Onboarding forbid core/default-baseline/preseed or silent demand first acquisition; explicit official-source Install targets the selected Host/Environment, while later lifecycle maintenance is post-consent. Discovery does not grant consent. Installation, executable, auth, account, entitlement, models, adapter, capability, generation and Usage remain independent. Doctor detects/routes and cannot install or repair. Actual packaging, consent enforcement, lifecycle, profile isolation and the full platform/remote-Client matrix remain unverified.",
+    "The 398 unresolved reused register cases stay partial: profile-first optimization, seven governed lanes, physical-parent budgets, startup/hydration bounds, logical-thread scaling, truthful ObservableWork, byte residency, cancellation, WAN and older-hardware obligations still need implementation and measured evidence. Both concept self-checks reject a missing historical binding and four source/verifier digest mismatches; their 105-action static census is not browser/native acceptance.",
+    "Frozen Onboarding passes 42 phase/commit/storage tests. At comparison main, 41 pass and one whole-registry assertion expects 90 families but sees 114; rebased main sees 115. The standalone existing Onboarding storage-bundle check passes throughout, and the entire Onboarding family remains byte-equivalent across all three snapshots. The count failure is preserved as stale broad test coverage, not repaired or misrepresented as Onboarding schema corruption or native recovery proof.",
+    "Protected auth's frozen checker rejects six valid local-action fixtures; the already-landed current declared-definition/offline-registry checker passes. Auth-handoff and selected-source binding tests remain static evidence, not human-only browser isolation or remote security certification. The broader no offline Tool Bundle clause still lacks independently located exact root-owner wording in the bounded search; it is not conflated with bundled CEF core. Policy text does not close the complete current copy or recalculated baseline-benchmark obligations."
+  ],
+  "current_comparison_boundaries": [
+    "Initial custody pins 847 selected repository paths and all six correction sources. Prior evidence revalidation checks 63 Performance passages/seven artifacts/three bounded searches and 20 dependency-correction passages/11 artifacts/one bounded search. Every selected passage and artifact is unchanged against comparison main; prior runtime receipts remain historical runs on their own pinned snapshots.",
+    "After rebase, 849 selected paths are pinned. Root read both complete appended N2-157/SP-290 owner diffs. Platform decision custody retains Doctor routing only and explicitly forbids historical custody from implying current health or production capability admission. All 93 cited passages remain exact; 30 of 31 selected artifact entries are identical. The only changed selected artifact is the storage registry: one Platform family is added, no prior family is removed or changed, and the Onboarding family remains identical. The associated registry totals are 90/24 frozen, 114/25 comparison and 115/26 landing families/retention policies. New owner work is preserved, not independently certified."
+  ],
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/onboarding-correction-462-root-review.json", "sha256": "ea9032761a7422259d16cba03bae24e6aa47eeb2f05c24a5ba7ceadce8598564"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/review-evidence-plan.json", "sha256": "7981821e6917bc79d9d512aa781ffa8a0056c4e62026f89b06cef4ccf269af85"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/assembly-summary.json", "sha256": "551202f187a612bad7a855aaa9ede06ed5de8e30751c172e7e7c995a6284c0af"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/input-custody.generated.json", "sha256": "ce4f38f44a5d1d3bddec3ac47c04471062ac49902d3b95789fd893f5d183d67c"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/review-passage-custody.generated.json", "sha256": "3fbac065649fc55930fa4f00cd2cac85f341128482caaa9bb4dd98d1553b03cd"},
+    "prior_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/prior-currentness.generated.json", "sha256": "b2e07f11d294c9e8ae4a357bb1cc37f2369e091af36b4fc85e8d9a3b87b76bb2"},
+    "reuse_authorization": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/root-review-reuse-authorization.json", "sha256": "5c8364c24371ff848624bd4985bb2d1d58d69a46f478568d9b7a4071a7de0f93"},
+    "individual_reuse_map": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/explicit-individual-reuse-map.generated.json", "sha256": "7b49005406a46923746c8cd4c6eeb497853c435651a6f94764a396b7cfa3ba04"},
+    "bounded_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/runtime-checks/summary.json", "sha256": "096b7730de4c5dce4f1051a2520f51493b25ca94418ad6e6f92f69dcbe682847"},
+    "doctor_source_observation": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/doctor-source-v2/summary.json", "sha256": "c6f44b1872d4306c15b853ae5788c95c8c2df88f3af679217d96887f19efa803"},
+    "landing_inputs": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/landing-inputs/74c5485e3b1e945f9dcb968cd2f37a71d29966d4/receipt.json", "sha256": "16a027192e7f1d6254c98504672d798fbe7950eff403b4f70993782a63e7e161"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/publication-summary.json", "sha256": "d53ab6959100a6d47f6f1a0f48230c4dd61faeb459b90782c1322c35a18967bd"},
+    "workbook_status": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/after-publication-status.receipt.json", "sha256": "c48413c383a8b1549cdab67b2a858eb4cdf40038fb4cecc8ef4ec4133b063c5a"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/packet-tests.receipt.json", "sha256": "4564f3a6a5293ca505e7aa6b3c6e651dbf9af2cf218d418b215cf9cdaaf19853"},
+    "shards": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/shards.receipt.json", "sha256": "8e28b3240d3834ff6ab46e0807642b8f406d9c0f89a6b9b7b482afc6c55d25d0"},
+    "governance": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/gates.receipt.json", "sha256": "56cc061a8150b96ef50db180482a85beeb6400775b4fa55e5f667abc8c0fe982"},
+    "governance_report": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/gates.json", "sha256": "8cd050b2975182798cff205b14b24dc499bc1c2b6458102eb73cfa6697ea9935"},
+    "landing_onboarding_phases": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/onboarding-phases.receipt.json", "sha256": "66fb5fd2f7d10eb52dda09723368c70142443da9b155aea883fccee76eb6ecb4"},
+    "landing_onboarding_storage": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-correction462-review-20260912-l4ssdbew/verification/onboarding-storage.receipt.json", "sha256": "fd0870fcc24008c7efbc8744b41bca9614b9535150cd3457692550d51f63b1f3"}
+  },
+  "verification": {
+    "base": "74c5485e3b1e945f9dcb968cd2f37a71d29966d4",
+    "selected_inputs_per_repository_capture": 3060,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore and Concepts py/js/json/html/css/mjs; not full transitive closure.",
+    "review_integrity": {"status": "pass", "cases": 462, "resolved_evidence_refs": 1937, "validation_errors": 0},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "shards": {"status": "pass", "docs": 98, "shards": 2424},
+    "doctor_fixtures": {"status": "pass_static_values_only", "positive": 30, "negative": 38},
+    "onboarding_phase_suite": {"frozen_passed": 42, "comparison_passed": 41, "comparison_failed": 1, "landing_passed": 41, "landing_failed": 1, "failure": "whole_registry_count_expected_90_actual_114_then_115"},
+    "onboarding_storage_bundle": "pass_all_three_snapshots_same_existing_family",
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1488,
+        "validate_implementation_readiness": 56,
+        "validate_plan_graph": 1488,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 1208,
+        "verify_spec_lock": 28
+      },
+      "boundary": "Fresh run on clean landing base before this report preserves the same twelve failing groups as the preceding checkpoint. Evidence/graph failures are 1488 each versus 1454; other group counts are unchanged. Named missing raw-capture/PM7 fixtures, audit reference and implementation-surface paths were also absent from the tracked tree, not merely the sparse checkout. Home schema unresolved local refs, stale locks/evidence/readiness and migration discrepancies remain visible. No other-owner repair, governance regeneration, seal or overall integration success is claimed."
+    }
+  }
+}
