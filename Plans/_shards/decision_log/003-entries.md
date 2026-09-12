@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L671
+Source lines: L13-L685
 
-Source SHA256: `d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d`
+Source SHA256: `898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a`
 
 ---
 
@@ -667,3 +667,17 @@ PlatformCapabilityManager/newtools own evaluation meaning and original decision 
 This explicit product choice resolves the lifetime prerequisite excluded from DL-045's technical authority. Concrete closed record/schema/codec, writer/read/recovery, original-source admission, reference/hold enumeration and final cleanup contracts remain required before use. The frozen card is `/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-prerequisite-20260912/v1/lifetime-owner-card.md`, SHA-256 `38dc858c42126a6b12a4f10e15a0bc1d23dd2a9b4bdfc1903f40ee9792cc9d33`. No event obtains depth, readiness or governance clearance from this decision.
 
 ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+### DL-049: Keep completed compaction detail for seven days
+
+On 2026-09-12, Jared answered exactly **“Keep for 7 days”** to `EA-S8-COMPACTION-DETAIL-CLEANUP` (`call_gIlL1Kp5idZm1DuOMhSjrLat`, item 0). The answer was recorded at 09:58:07 UTC as `EA-S8-COMPACTION-DETAIL-CLEANUP-RESPONSE-001` in `reports/event-authority-20260911/decision-responses.jsonl`. The acknowledged interpretation is seven days after the operation fully settles, with holds and live references delaying deletion and registered backup copies retaining their existing rules.
+
+Retain completed frozen-input survivor/removal/translation details, obsolete historical candidate/carrier/publication proof snapshots, and resolved detailed compaction journal/attempt/phase records for **seven days (604800 seconds)** after the first durable fully settled original terminal result. Settlement requires every physical attempt and every required event, original receipt and terminal-result obligation to be resolved. This applies to a fully settled successful or failed compaction; unresolved operations have no expiry anchor. Inclusive expiry is at that immutable first settlement time plus 604800 seconds. Reads, retries, re-observation, duplicate terminal replies and later reference release never restart that clock.
+
+Expiry is necessary but insufficient for deletion. Current-source/control membership, valid holds and live, backup, rollback, recovery or maintenance dependencies protect required detail beyond seven days. Cleanup must authenticate the complete original settled result, actual policy, exact eligible artifact members and all current protections through the deletion boundary. Missing or conflicting evidence refuses deletion. A mutable journal containing any required member cannot be removed as a whole. The existing janitor schedule applies after eligibility; this decision creates no independent timer, count cap or pressure-eviction bypass.
+
+Current selected source segments and controls, original append receipts/dedupe identities, the minimum content-free original compaction-ID terminal-result mapping, and independently required owner records keep their separate policies. Registered backup copies keep their existing retention and hold rules; active-detail removal neither deletes a backup copy nor bypasses a backup dependency. This decision adds no backup deadline or retention extension. After lawful detail disposal, historical detail inspection may be unavailable; translation or rebuilding still requires actual current source and its existing owner proof. An event or retained receipt cannot reconstruct disposed detail or restart the original operation.
+
+Storage owns the exact policy registration, immutable settlement anchor, native artifact/member custody, holds/reference enumeration and crash-safe disposal. This bounded product answer resolves the completed-detail lifetime prerequisite excluded from DL-045's technical authority. The frozen question/card is `/home/sittingmongoose/PM-Experiments/compaction-detail-owner-card-root-20260912/manifest.json`, SHA-256 `8d6769266be30c7bfd4cab814d2ad04de30881223f397d2afe6521973e992a0e`; the separate answer preserves the seven-day choice rather than selecting the card's immediate-removal recommendation. Concrete schemas, original writer/read/recovery bindings and semantic checks remain required. Quarantine policy, event admission, native execution, overall depth, readiness and governance sealing are not decided here.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-045

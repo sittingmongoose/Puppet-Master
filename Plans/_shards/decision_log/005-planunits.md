@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L679-L3361
+Source lines: L693-L3435
 
-Source SHA256: `d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d`
+Source SHA256: `898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a`
 
 ---
 
@@ -2566,6 +2566,66 @@ owner_hints:
   - Plans/newtools.md
   - Plans/orchestrator-subagent-integration.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
+```
+
+### DL-049 - Completed Compaction Detail Seven-Day Retention
+
+```yaml
+plan_unit_id: DL-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Retain completed compaction survivor/removal/translation detail, obsolete historical
+  candidate/carrier/publication snapshots and resolved detailed journal/attempt/phase
+  records for 604800 seconds after the first durable fully settled original terminal
+  result. Unresolved obligations have no expiry anchor. Inclusive expiry never resets
+  on read, retry, duplicate result or reference release, and all current source, hold,
+  live, backup, rollback, recovery and maintenance protections still block deletion.
+  Preserve independent current controls, original receipts/dedupe and minimal terminal
+  replay custody. Registered backup copies retain their existing rules. Exact original
+  member retirement and policy bindings remain required before use.
+gui_related: false
+gui_classification_reason: Defines compaction artifact retention and original custody, not visual presentation.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Preserve Jared's exact Keep for 7 days answer, original question identity and frozen card SHA-256 separately from the earlier recommendation.
+  - The first fully settled successful or failed original terminal result anchors inclusive expiry at 604800 seconds; unresolved attempts or event/receipt/result obligations have no expiry anchor.
+  - Reads, retries, duplicate results and later reference release never reset the anchor; current membership and all valid holds/references override age eligibility.
+  - Only exact eligible completed-detail members may be removed after complete current proof; a journal containing needed members cannot be deleted as a whole.
+  - Current source/controls, original receipt/dedupe and compact terminal-result custody preserve their policies; backup copies keep existing retention and hold rules.
+  - Concrete policy/schema/codec and original custody/disposal contracts remain required; no quarantine answer, event admission, native proof, depth/readiness or governance clearance follows.
+validation_surfaces:
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: compaction_detail_retention_and_original_custody
+reasoning_tier: high
+context_scope: completed_compaction_detail_seven_day_retention
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: bounded_retention_policy_approval
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - EA-S8-COMPACTION-DETAIL-CLEANUP-RESPONSE-001
+  - call_gIlL1Kp5idZm1DuOMhSjrLat
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-card.md
+preserved_exact_tokens:
+  - Keep for 7 days
+  - '604800'
+  - EA-S8-COMPACTION-DETAIL-CLEANUP
+negative_constraints:
+  - Do not expire unresolved obligations or reset the first settlement anchor on retry, read or reference release.
+  - Do not shorten independent source/receipt/result or backup policies or infer a quarantine answer.
+  - Do not infer event admission, native runtime proof, depth/readiness clearance or governance sealing.
+owner_hints:
   - Plans/storage-plan.md
 ```
 

@@ -1,0 +1,17 @@
+{
+  "card_id": "EA-S8-COMPACTION-DETAIL-CLEANUP",
+  "response_id": "EA-S8-COMPACTION-DETAIL-CLEANUP-RESPONSE-001",
+  "responded_by": "Jared",
+  "recorded_at_utc": "2026-09-12T09:58:07Z",
+  "source": "jared_chat_2026-09-12",
+  "source_question_id": "call_gIlL1Kp5idZm1DuOMhSjrLat",
+  "source_question_item_id": "[\"request_user_input_async\",\"call_gIlL1Kp5idZm1DuOMhSjrLat\",0]",
+  "response": "Keep for 7 days",
+  "decision": "RETAIN_COMPLETED_COMPACTION_DETAIL_SEVEN_DAYS_AFTER_FULL_SETTLEMENT",
+  "card_status": "approved_recorded_owner_contract_pending",
+  "authority_ref": "Plans/Decision_Log.md#DL-049",
+  "card_ref": "reports/event-authority-20260911/step-08-compaction-detail-cleanup-card.md",
+  "frozen_card_sha256": "3b38fe908bcb031a1a84386efa91705931d0fead5292d6c66a41a8ae9bb1a6a0",
+  "effect": "Keep completed survivor/removal/translation detail, obsolete historical candidate/carrier/publication snapshots and resolved detailed journal/attempt/phase records for seven days (604800 seconds) after first durable fully settled original terminal result. Existing holds and live/backup/rollback/recovery/maintenance dependencies override expiry; no timer reset on retry/read/reference release. Backup copies keep existing retention and hold rules. Current source/controls, original receipt/dedupe and compact terminal-result authority retain independent policies. Exact owner codec/custody/member retirement and policy registration remain required; no native/event-depth/readiness/seal clearance.",
+  "interpretation_disclosed_to_user": "I\u2019ll keep those completed compaction details for seven days after the operation fully settles. Holds and live references can delay deletion beyond that; backup copies keep their existing retention rules."
+}

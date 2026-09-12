@@ -670,6 +670,20 @@ This explicit product choice resolves the lifetime prerequisite excluded from DL
 
 ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
 
+### DL-049: Keep completed compaction detail for seven days
+
+On 2026-09-12, Jared answered exactly **“Keep for 7 days”** to `EA-S8-COMPACTION-DETAIL-CLEANUP` (`call_gIlL1Kp5idZm1DuOMhSjrLat`, item 0). The answer was recorded at 09:58:07 UTC as `EA-S8-COMPACTION-DETAIL-CLEANUP-RESPONSE-001` in `reports/event-authority-20260911/decision-responses.jsonl`. The acknowledged interpretation is seven days after the operation fully settles, with holds and live references delaying deletion and registered backup copies retaining their existing rules.
+
+Retain completed frozen-input survivor/removal/translation details, obsolete historical candidate/carrier/publication proof snapshots, and resolved detailed compaction journal/attempt/phase records for **seven days (604800 seconds)** after the first durable fully settled original terminal result. Settlement requires every physical attempt and every required event, original receipt and terminal-result obligation to be resolved. This applies to a fully settled successful or failed compaction; unresolved operations have no expiry anchor. Inclusive expiry is at that immutable first settlement time plus 604800 seconds. Reads, retries, re-observation, duplicate terminal replies and later reference release never restart that clock.
+
+Expiry is necessary but insufficient for deletion. Current-source/control membership, valid holds and live, backup, rollback, recovery or maintenance dependencies protect required detail beyond seven days. Cleanup must authenticate the complete original settled result, actual policy, exact eligible artifact members and all current protections through the deletion boundary. Missing or conflicting evidence refuses deletion. A mutable journal containing any required member cannot be removed as a whole. The existing janitor schedule applies after eligibility; this decision creates no independent timer, count cap or pressure-eviction bypass.
+
+Current selected source segments and controls, original append receipts/dedupe identities, the minimum content-free original compaction-ID terminal-result mapping, and independently required owner records keep their separate policies. Registered backup copies keep their existing retention and hold rules; active-detail removal neither deletes a backup copy nor bypasses a backup dependency. This decision adds no backup deadline or retention extension. After lawful detail disposal, historical detail inspection may be unavailable; translation or rebuilding still requires actual current source and its existing owner proof. An event or retained receipt cannot reconstruct disposed detail or restart the original operation.
+
+Storage owns the exact policy registration, immutable settlement anchor, native artifact/member custody, holds/reference enumeration and crash-safe disposal. This bounded product answer resolves the completed-detail lifetime prerequisite excluded from DL-045's technical authority. The frozen question/card is `/home/sittingmongoose/PM-Experiments/compaction-detail-owner-card-root-20260912/manifest.json`, SHA-256 `8d6769266be30c7bfd4cab814d2ad04de30881223f397d2afe6521973e992a0e`; the separate answer preserves the seven-day choice rather than selecting the card's immediate-removal recommendation. Concrete schemas, original writer/read/recovery bindings and semantic checks remain required. Quarantine policy, event admission, native execution, overall depth, readiness and governance sealing are not decided here.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/Decision_Log.md#DL-045
+
 ## Owner / Consumer Map
 
 This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Log.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
@@ -3234,6 +3248,66 @@ owner_hints:
   - Plans/newtools.md
   - Plans/orchestrator-subagent-integration.md
   - Plans/Models_System.md
+  - Plans/storage-plan.md
+```
+
+### DL-049 - Completed Compaction Detail Seven-Day Retention
+
+```yaml
+plan_unit_id: DL-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Retain completed compaction survivor/removal/translation detail, obsolete historical
+  candidate/carrier/publication snapshots and resolved detailed journal/attempt/phase
+  records for 604800 seconds after the first durable fully settled original terminal
+  result. Unresolved obligations have no expiry anchor. Inclusive expiry never resets
+  on read, retry, duplicate result or reference release, and all current source, hold,
+  live, backup, rollback, recovery and maintenance protections still block deletion.
+  Preserve independent current controls, original receipts/dedupe and minimal terminal
+  replay custody. Registered backup copies retain their existing rules. Exact original
+  member retirement and policy bindings remain required before use.
+gui_related: false
+gui_classification_reason: Defines compaction artifact retention and original custody, not visual presentation.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Preserve Jared's exact Keep for 7 days answer, original question identity and frozen card SHA-256 separately from the earlier recommendation.
+  - The first fully settled successful or failed original terminal result anchors inclusive expiry at 604800 seconds; unresolved attempts or event/receipt/result obligations have no expiry anchor.
+  - Reads, retries, duplicate results and later reference release never reset the anchor; current membership and all valid holds/references override age eligibility.
+  - Only exact eligible completed-detail members may be removed after complete current proof; a journal containing needed members cannot be deleted as a whole.
+  - Current source/controls, original receipt/dedupe and compact terminal-result custody preserve their policies; backup copies keep existing retention and hold rules.
+  - Concrete policy/schema/codec and original custody/disposal contracts remain required; no quarantine answer, event admission, native proof, depth/readiness or governance clearance follows.
+validation_surfaces:
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: compaction_detail_retention_and_original_custody
+reasoning_tier: high
+context_scope: completed_compaction_detail_seven_day_retention
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: bounded_retention_policy_approval
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - EA-S8-COMPACTION-DETAIL-CLEANUP-RESPONSE-001
+  - call_gIlL1Kp5idZm1DuOMhSjrLat
+  - reports/event-authority-20260911/step-08-compaction-detail-cleanup-card.md
+preserved_exact_tokens:
+  - Keep for 7 days
+  - '604800'
+  - EA-S8-COMPACTION-DETAIL-CLEANUP
+negative_constraints:
+  - Do not expire unresolved obligations or reset the first settlement anchor on retry, read or reference release.
+  - Do not shorten independent source/receipt/result or backup policies or infer a quarantine answer.
+  - Do not infer event admission, native runtime proof, depth/readiness clearance or governance sealing.
+owner_hints:
   - Plans/storage-plan.md
 ```
 

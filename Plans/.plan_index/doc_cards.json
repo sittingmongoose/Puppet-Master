@@ -5176,10 +5176,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 22,
+        "False": 23,
         "True": 23
       },
-      "heading_count": 96,
+      "heading_count": 98,
       "implementation_surfaces": [
         ".gitignore",
         "Plans/Architecture_Invariants.md",
@@ -5239,9 +5239,9 @@
         "scripts/pm-plans-verify.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 3389,
+      "line_count": 3463,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 45,
+      "plan_unit_count": 46,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5287,6 +5287,7 @@
         "DL-046",
         "DL-047",
         "DL-048",
+        "DL-049",
         "DL-001"
       ],
       "reasoning_tiers": [
@@ -5306,6 +5307,7 @@
         "case_l_storage_root_lock_fallback_decision_drift",
         "case_l_supplemental_kernel_depth_decision_drift",
         "case_l_supplemental_probe_decision_drift",
+        "compaction_detail_retention_and_original_custody",
         "completion_state_conflation",
         "corroboration_disagreement_outcome_drift",
         "corroboration_threshold_drift",
@@ -5340,16 +5342,16 @@
         "terminal_research_decision_drift",
         "weak_integration_underclassification"
       ],
-      "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+      "sha256": "898ace91bc0c822600f2ce4c50304a009bec6edc2b3114acac1fb68487625b6a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 45
+        "accepted": 46
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "decision": 2,
-        "requirement": 42
+        "requirement": 43
       },
       "validation_surfaces": [
         "Decision Log PlanUnit YAML and pre-existing PlanUnit semantic preservation",
@@ -5370,6 +5372,8 @@
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "reports/event-authority-20260911/decision-responses.jsonl",
+        "reports/event-authority-20260911/step-08-compaction-detail-cleanup-answer.json",
+        "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
         "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json"
       ]
     },
@@ -19101,7 +19105,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T09:32:42Z",
+  "generated_at_utc": "2026-09-12T10:02:03Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19109,13 +19113,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3406,
+      "False": 3407,
       "True": 3164
     },
-    "plan_unit_count": 6570,
+    "plan_unit_count": 6571,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6379,
+      "accepted": 6380,
       "retired": 182,
       "superseded": 9
     },
@@ -19182,7 +19186,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5207,
+      "requirement": 5208,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

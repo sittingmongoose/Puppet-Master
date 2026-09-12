@@ -1,0 +1,61 @@
+{
+  "status": "DECISION_RECORDED_TECHNICAL_BINDING_PENDING",
+  "decision": "DL-049",
+  "answer": "Keep for 7 days",
+  "retention_seconds": 604800,
+  "scope": "Completed compaction detail only; frozen card and separate answer preserve exact choice",
+  "verification": {
+    "status": "PASS",
+    "checks": {
+      "shards": {
+        "docs_checked": 98,
+        "failures": [],
+        "shards_checked": 2453,
+        "source_count": 98,
+        "status": "pass"
+      },
+      "index": {
+        "failures": [],
+        "generated_at_utc": "2026-09-12T10:03:36Z",
+        "schema_id": "pm.plan_index.validation_report.v1",
+        "status": "pass",
+        "summary": {
+          "acceptance_unit_count": 25421,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_runtime_certification_incomplete",
+          "plan_unit_count": 6571
+        }
+      }
+    },
+    "preserved_old_plan_unit_semantics": 6570,
+    "new_plan_units": [
+      "DL-049"
+    ],
+    "plan_units": 6571,
+    "old_responses_byte_prefix_exact": true,
+    "answer_exact": true,
+    "standard_full_gates": "NOT_RERUN_FOR_DECISION_ONLY; preceding Recovery full suite reported 24 pass / 12 fail without waiver",
+    "native": "NOT_RUN"
+  },
+  "packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/compaction-retention-decision-root-20260912/manifest.json",
+      "sha256": "ead5d1542c7fc5f3cf392a539c72ed48d2c4e090cfdb05c88f2f61149e8ae1a7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/compaction-retention-decision-independent-review-20260912/manifest.json",
+      "sha256": "799ef8a83ce0fbb1fbc6b804499fc368847cd6f2e260ee0a947c7c3570331ea3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/compaction-detail-owner-card-root-20260912/manifest.json",
+      "sha256": "8d6769266be30c7bfd4cab814d2ad04de30881223f397d2afe6521973e992a0e"
+    }
+  ],
+  "native": "NOT_RUN",
+  "scope_limits": [
+    "No policy schema or storage binding installed by this decision.",
+    "Quarantine question remains unanswered.",
+    "No event admission, depth/readiness clearance or governance seal."
+  ],
+  "cost": "Astra medium independent review plus root decision recording; billing data unavailable."
+}

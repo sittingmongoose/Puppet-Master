@@ -1,0 +1,22 @@
+{
+  "decision_id": "EA-S8-COMPACTION-DETAIL-CLEANUP",
+  "state": "PRESENTED_UNANSWERED",
+  "recorded_at_utc": "2026-09-12T09:53:16Z",
+  "presentation_tool_accepted": true,
+  "question": {
+    "title": "After compaction finishes and nothing still depends on its detailed records, should Puppet Master delete obsolete maps, snapshots and detailed journals while keeping original receipts and the compact final result? Backup copies keep their existing retention and hold rules. Current plans do not specify this cleanup policy.",
+    "options": [
+      "Delete released detail (Recommended)",
+      "Leave detail cleanup disabled"
+    ]
+  },
+  "card_sha256": "3b38fe908bcb031a1a84386efa91705931d0fead5292d6c66a41a8ae9bb1a6a0",
+  "subject_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/compaction-lifecycle-source-proposal-20260912/v2/manifest.json",
+    "sha256": "72094d6227e0240ae6d73f44a6f3380747fba6d8e60a03f41276c32f9d8a6cf1"
+  },
+  "answer": null,
+  "authorization": false,
+  "elapsed_time_is_not_answer": true,
+  "unrelated_quarantine_answer_inferred": false
+}
