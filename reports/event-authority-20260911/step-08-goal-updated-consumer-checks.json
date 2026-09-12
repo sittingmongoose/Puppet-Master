@@ -1,0 +1,110 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "canonical_files": 6,
+  "source_proposal_members_verified": 69,
+  "exact_preimages": 22,
+  "plan_units_before": 6585,
+  "plan_units_after": 6585,
+  "acceptance_criteria_before": 25521,
+  "acceptance_criteria_after": 25527,
+  "changed_unit_fields": {
+    "CV-342": [
+      "acceptance_criteria",
+      "canonical_text",
+      "validation_surfaces"
+    ],
+    "SIR-049": [
+      "acceptance_criteria",
+      "canonical_text",
+      "validation_surfaces"
+    ],
+    "SP-299": [
+      "acceptance_criteria",
+      "canonical_text",
+      "validation_surfaces"
+    ],
+    "GRS-055": [
+      "acceptance_criteria"
+    ],
+    "GRS-064": [
+      "acceptance_criteria",
+      "canonical_text",
+      "validation_surfaces"
+    ],
+    "GRS-068": [
+      "acceptance_criteria",
+      "canonical_text"
+    ]
+  },
+  "all_other_plan_units_exact": true,
+  "source_schema_and_resource_bytes_exact": true,
+  "resource_entries": 13,
+  "reference_scope": "All 17 new consumer definitions and their complete recursively selected targets; unrelated legacy/start/created roots remain unselected as declared by the graph",
+  "resolved_reference_sites": 98,
+  "native_execution": false,
+  "runtime_imports": 0,
+  "draft_manifest_sha256": "09158fff9eef63e6894d191550d21afb315a58a916a7ace64b552c84363685e5",
+  "repository_checks": {
+    "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_historical_reader_landing": true,
+      "added_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2599,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "complete_step8": false
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-updated-consumer-repository-checks-20260912/manifest.json",
+    "sha256": "5eb3a8e3620a7e7ba4384c26be6da17f47fe90cd4004211295e8d229e1509986"
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "base_sha256": "083dc7844e67d48919a9d0f5b6b9cd37f013bb40f35ad2da6ee465e68e3466f9",
+      "sha256": "28dd60a4c3db0d01a42799aeb95bf30b35200fd8bc578aa8a58bfaf9c6991fca",
+      "bytes": 1212308
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "base_sha256": "9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984",
+      "sha256": "d47d2c6751e64a671b5d4d6e5545b86dfd30f91ab7159eea2d13c79e4530cdca",
+      "bytes": 437185
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "base_sha256": "2b65f01d132470fa8ff9bb2c748a69d2454964c49bf1641414f95fb395a5d362",
+      "sha256": "df688fdfe1afa18b87902bf090df9aa6311c43f52aa5004ff4f1dcbfe0c555cc",
+      "bytes": 282108
+    },
+    {
+      "path": "Plans/goal_updated_consumer_contracts.schema.json",
+      "base_sha256": null,
+      "sha256": "504e2c4a1f0b7b9750dbbce8f36b3356b5e82d184239637b0e52486fd47cef40",
+      "bytes": 20465
+    },
+    {
+      "path": "Plans/goal_updated_consumer_resources.json",
+      "base_sha256": null,
+      "sha256": "2e1805f94f2df0ed85da67a7e9cdf46826eb5e81b5b6a03e1b4fb9169e48473f",
+      "bytes": 5806
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "base_sha256": "716ae8fd1126a7b7ff901d65dfc0730c645783b3471f938df5c2191b9deefa21",
+      "sha256": "f4a54c0577233839b1bb0fa2acf61a2e2c7bb8da6dff865acc1cbce9bff92cca",
+      "bytes": 1915652
+    }
+  ],
+  "registry_wiring_and_original_writer_graph_bytes_unchanged": true
+}

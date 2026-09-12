@@ -1,0 +1,680 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json",
+  "$comment": "New active updated-v3 read composition only. All shapes are transient projections, never native source capability, installation or executed effect proof. Original request/result/event/storage/hash contracts are imported unchanged. Full SP-278 token imported directly, no Goal-created profile dependency. Semantic equalities and final original owner guards are mandatory in SP-299/GRS-064/GRS-068/CV-342/SIR-049.",
+  "oneOf": [
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventObservation"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/InputReadRequest"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditedProgress"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditedTerminal"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/InputReadResult"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ReadFailure"
+    },
+    {
+      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/PrivateEventReadWitness"
+    }
+  ],
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OperationScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "EventReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "event_id",
+        "sequence_id",
+        "selected_index_key"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "storage.goal_updated.inspect_current.v1@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_index_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "EventObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "event_id",
+        "sequence_id",
+        "occurred_at_utc",
+        "payload_schema_id",
+        "payload",
+        "action_authority",
+        "checkpoint_effect"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "storage.goal_updated.inspect_current.v1@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_updated.schema.v3"
+        },
+        "payload": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v3"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_effect": {
+          "const": "none_required"
+        }
+      }
+    },
+    "CurrentProgressSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "current_progress"
+        }
+      }
+    },
+    "ImmutableProgressSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "selector"
+      ],
+      "properties": {
+        "kind": {
+          "const": "immutable_progress"
+        },
+        "selector": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector"
+        }
+      }
+    },
+    "TerminalMembersSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "terminal_members"
+        }
+      }
+    },
+    "AuditReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "selection"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.update_command_audit@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selection": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection"
+            }
+          ]
+        }
+      }
+    },
+    "InputReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.update_input@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ProgressSnapshotWrapper": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "properties": {
+            "record": {
+              "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Progress"
+            }
+          }
+        }
+      ]
+    },
+    "ProgressHeadWrapper": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "properties": {
+            "record": {
+              "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressHead"
+            }
+          }
+        }
+      ]
+    },
+    "AuditedProgress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "request",
+        "source_audit",
+        "progress_selector",
+        "progress",
+        "action_authority",
+        "checkpoint_effect"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.update_command_audit@1.0.0"
+        },
+        "request": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest"
+            },
+            {
+              "properties": {
+                "selection": {
+                  "oneOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/CurrentProgressSelection"
+                    },
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ImmutableProgressSelection"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit"
+        },
+        "progress_selector": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector"
+        },
+        "progress": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ProgressSnapshotWrapper"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_effect": {
+          "const": "none_required"
+        }
+      }
+    },
+    "AuditedTerminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "request",
+        "source_audit",
+        "progress_selector",
+        "progress",
+        "terminal",
+        "action_authority",
+        "checkpoint_effect"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.update_command_audit@1.0.0"
+        },
+        "request": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest"
+            },
+            {
+              "properties": {
+                "selection": {
+                  "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/TerminalMembersSelection"
+                }
+              }
+            }
+          ]
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit"
+        },
+        "progress_selector": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector"
+        },
+        "progress": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ProgressSnapshotWrapper"
+        },
+        "terminal": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageTerminal"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_effect": {
+          "const": "none_required"
+        }
+      }
+    },
+    "InputReadResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "request",
+        "input",
+        "action_authority",
+        "checkpoint_effect"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.update_input@1.0.0"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/InputReadRequest"
+        },
+        "input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageInputContent"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_effect": {
+          "const": "none_required"
+        }
+      }
+    },
+    "SelectedActiveEvent": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "goal.updated"
+            },
+            "scope_kind": {
+              "const": "project"
+            },
+            "payload_schema_id": {
+              "const": "pm.goal_runtime_event.goal_updated.schema.v3"
+            },
+            "payload": {
+              "$ref": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v3"
+            }
+          }
+        }
+      ]
+    },
+    "PrivateEventReadWitness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "source_read_token",
+        "current_index_value_sha256",
+        "current_event",
+        "source_audit",
+        "progress_head",
+        "progress_selector",
+        "progress",
+        "body_receipt",
+        "original_publication",
+        "installed_resource_graph_sha256"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest"
+        },
+        "source_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        },
+        "current_index_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_event": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/SelectedActiveEvent"
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/StorageSourceAudit"
+        },
+        "progress_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ProgressHeadWrapper"
+        },
+        "progress_selector": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/ProgressSnapshotSelector"
+        },
+        "progress": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/ProgressSnapshotWrapper"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "phase": {
+                      "enum": [
+                        "event_ready",
+                        "event_unknown",
+                        "event_issued"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "body_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt"
+        },
+        "original_publication": {
+          "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/OriginalPublication"
+        },
+        "installed_resource_graph_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ReadFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "request",
+        "status",
+        "reason",
+        "action_authority",
+        "checkpoint_effect"
+      ],
+      "properties": {
+        "reader_binding": {
+          "enum": [
+            "storage.goal_updated.inspect_current.v1@1.0.0",
+            "reader.goal.update_command_audit@1.0.0",
+            "reader.goal.update_input@1.0.0"
+          ]
+        },
+        "request": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/EventReadRequest"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/AuditReadRequest"
+            },
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_updated_consumer_contracts/1.0.0/schema.json#/$defs/InputReadRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "invalid_request",
+            "event_unavailable",
+            "source_unavailable",
+            "original_custody_unavailable",
+            "unsupported_payload",
+            "permission_denied",
+            "installation_unavailable",
+            "content_unavailable",
+            "terminal_pending",
+            "numeric_representation_unavailable",
+            "resource_unavailable"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_effect": {
+          "const": "none_required"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reason": {
+                "const": "invalid_request"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "request": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "request": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

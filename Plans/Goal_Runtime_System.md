@@ -696,6 +696,7 @@ acceptance_criteria:
   - The Goal hover menu offers Pause, Resume, Cancel, and edit-to-panel.
   - The detail view exposes none of the retired fields.
   - Every control dispatches a registered command and renders disabled with command_not_registered until registration closes.
+  - Active updated-v3 refresh uses GRS-064/SP-299 current body/control and accepted history readers with final visibility/owner guards; event observation never supplies current text, pending afterimages or action authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/activity-detail-verify.mjs
@@ -5957,6 +5958,23 @@ For this active creation route, no additional event-derived Goal-state, child, c
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/Goal_Runtime_System.md#GRS-064, ContractName:Plans/Goal_Runtime_System.md#GRS-066, ContractName:Plans/Goal_Runtime_System.md#GRS-067, ContractName:Plans/storage-plan.md#SP-214, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-294, ContractName:Plans/storage-plan.md#SP-298
 
+## Current update consumers and accepted Goal state
+
+For exactly active `goal.updated` v3, GRS-064/GRS-068 explicitly adopt SP-299's update-only consumer composition. GRS-055's Activity item, preview, objective detail/editor and objective History consume the already admitted SP-287 canonical body/control and accepted revision/origin chain through `reader.goal.body@1.0.0` and `reader.goal.objective_history@1.0.0`. The actual update's accepted body can be visible while its factual event or command result is unresolved. Current state, ordinary revision/currentness, accepted history head and hidden pending/cancellation posture come from current canonical custody; the latest event is neither a body nor action authority. Control remains private to its existing readers/action owners; only their existing permitted pending/unavailable/control disposition is displayed. No pending afterimage becomes current text, no different thread's selection supplies identity, and no history row is reconstructed from an update's hashes or audit.
+
+The entire existing eleven-field body, nine-field accepted revision and seven-field origin remain unchanged. Empty and unchanged accepted replacements still advance ordinary revision and append one accepted objective revision under GRS-068. Earlier metadata revisions do not imply a corresponding accepted objective revision. A history view discloses accepted text only from its admitted retained rows under current thread-content visibility, without rerunning old approval/command/source evidence. An update event's exact earlier before/after facts remain true after subsequent edits or lifecycle changes; it does not replace the current view with that older body.
+
+The new `storage.goal_updated.inspect_current.v1@1.0.0` exposes one exact selected current-source, content-free v3 observation under complete SP-278, original SP-299 source/frozen input, SP-287 body receipt and SP-286 full-value/first-receipt predicates. The whole imported read token/frontier is current while original publication coordinates remain historical. Original event_issued progress is not mandatory when the genuine shared first receipt proves an append whose acknowledgement remains unknown; the reader writes no acknowledgement/progress/result. An issued event proves that original accepted change and publication only. It does not prove command terminal success, current body availability, current text, completion, permission to continue, or an active handler for any sibling lifecycle event. Whole-v2 interpretation stays separately preserved; this new active-only route rejects its payload version and never fabricates current receipts for it.
+
+SP-299's exact audit and input readers remain distinct. Content-free source/progress/terminal/body-receipt audit can remain readable under current app/Project/audit authority after lawful body/input disposal. Input disclosure requires genuine surviving original input and current bound-thread content authority. SIR-049 replay resolves the original immutable terminal's exact original progress epoch/result/outcome/response even if later owner recovery advanced the head; it is not event inspection, acceptance, command re-dispatch or recovery. A missing selected old epoch is unavailable, not a reason to replay from the current head. Audit does not grant ordinary content access, and no returned ref creates a content hold.
+
+Activity/control/history publication and every audit/input/event disclosure apply SP-299's independently derived full output and joint semantic/physical/current-owner checks after the last nested resolver/formatter/copy/codec. There is no helper or callback gap before the same-boundary release. Current owner/Stop/cancellation, Project/thread visibility and deletion/holds, actual selected source/root/installation/codec/migration/backup facts and their covering native leases remain owner-specific. Opening the editor is navigation. Save and lifecycle controls still dispatch only their existing registered available handlers and pass their independent original command/body/approval/Stop/CAS checks; a view/receipt/event is no action grant. A changed source or permission during formatting refuses the candidate rather than releasing a stale view.
+
+These current views use original body/control/history and SP-299 durable source/progress/terminal publications; they assign no additional event-derived Goal state, child, evidence, certification or lineage projector, and no durable checkpoint. The disposition is justified for these actual consumers and does not borrow the creation/passive profile or close other Goal/GoalRun events. DL-047 thread-lifetime content rules, original indefinite content-free update audit/event custody, mandatory coherent backup and current tombstone filtering remain unchanged. Recovery reopens only genuinely admitted surviving original canonical values; no EventRecord, old `goal_state.v1`, lineage row, audit, response or digest reconstructs missing/deleted objective or input. Native installation and complete event-depth execution remain separate evidence obligations.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/Goal_Runtime_System.md#GRS-064, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/goal_updated_consumer_contracts.schema.json
+
+
 ### Lifetime, recovery and activation
 
 DL-047 retains current body, all accepted objective revisions, minimal origin and control/pending text while their exact bound thread remains retained, including archived threads. Compaction, restart and model changes do not purge them. Deleting the thread immediately hides body content and purges active and backup copies under SP-287's exact 24-hour/30-day limits and valid-hold exceptions. A hold delays physical purge without restoring ordinary visibility. Cancellation alone does not delete the thread. Source-message/context/attachment/Plan/To-Do/workflow refs retain their independent lifetimes and cannot reconstruct purged content.
@@ -5983,6 +6001,9 @@ canonical_text: >-
   terminal writes. Independent current body/history and content-free receipt readers use
   actual canonical origin; original receipt audit survives lawful body purge without
   recreating text. SP-287 supplies separate physical wrappers/custody and DL-047 lifetime.
+  The explicitly adopted active updated-v3 Activity/body/control/history views use those current
+  canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve
+  accepted effects and original terminal meaning without event-built Goal state.
   No sibling Goal event or Workflow certification closure follows from this prerequisite.
 gui_related: true
 gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.
@@ -5996,9 +6017,12 @@ acceptance_criteria:
   - Stop defeats continuation immediately despite reservation; pure body receipt grants no event, SIR or completion success.
   - Current and audit readers authenticate canonical origin and final current facts; deleted text is never recreated from receipt/reference evidence.
   - Active goal.created Activity/body/history consumption uses the existing canonical readers and original durable body/command custody, not a deferred event-built Goal projection or invented checkpoint; passive creation inspection retains its separate complete source checks.
+  - Active goal.updated Activity/control/history uses current SP-287 custody and SP-299 complete original event/audit/input composition; no event reconstructs content, supplies action authority or substitutes for a terminal-selected original SIR replay epoch.
 validation_surfaces:
   - Plans/goal_body_custody.schema.json
   - Plans/goal_body_custody_fixtures.json
+  - Plans/goal_updated_consumer_contracts.schema.json
+  - Plans/goal_updated_consumer_resources.json
   - reports/event-authority-20260911/step-08-goal-body-validation.md
 risk_class: goal_body_currentness_accepted_history_or_receipt_authority_escape
 reasoning_tier: high
@@ -6274,7 +6298,7 @@ The resulting `goal.updated` observation records only the actual original accept
 
 The actual approval-owner provider and the already-referenced `GoalUpdateProposalRequest`/`ApprovalRequest` remain separately unmaterialized technical dependencies. The agent-proposed mutation route stays unavailable until that original provider supplies its exact capture and still-valid resolution. Direct user Save keeps its existing acceptance without another confirmation. No fallback provider or new approval policy is invented here.
 
-The two new update-only retained audit/input readers have SP-299's distinct final visibility predicates. They grant no current `goal.updated` traversal, projection, consumer effects or checkpoint adoption. Those event-reader facets and the remaining Goal families remain independent contract work. This prerequisite proves no native dispatcher, original source provider, transaction or runtime readiness.
+The two update-only retained audit/input readers have SP-299's distinct precise selectors and final visibility predicates. GRS-064/SP-299 independently adopt the named current Activity/body/control/history consumers and selected active-v3 event inspection; audit/input declarations and Goal-created profiles do not supply that authority. These actual consumers have no additional event-derived Goal state or durable checkpoint. The remaining Goal families, actual agent approval provider and native dispatcher/source/transaction/read-release/runtime evidence remain independent obligations.
 
 ### GRS-068 - Original Objective Update Acceptance And Effect Settlement
 ```yaml
@@ -6285,7 +6309,8 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: The existing complete Goal objective replacement accepts authentic direct Save or the
   existing original approved agent source, uses only the shared Goal body writer and preserves each original
   accepted effect through later event/result settlement without granting continuation or changing approved
-  Plan behavior.
+  Plan behavior. Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
+  selected-event/audit/input and immutable original replay owners without deriving state from an event.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -6312,8 +6337,10 @@ acceptance_criteria:
   another revision, rerun acceptance or override immutable terminal history.
 - Active-v3 interpretation replaces only this family's retired delta/child/budget write assumptions while
   preserving the entire historical v2 resource.
-- Audit/input readers remain distinct; actual approval provider, native implementation and current event-consumer/checkpoint
-  composition remain separate prerequisites.
+- Audit/input readers remain distinct from current canonical body/control/history, selected active-v3 event inspection
+  and original immutable command replay; all use their own complete source and after-helper final release.
+- Actual approval provider and native installation/implementation/evidence remain separate prerequisites; this composition
+  creates no additional durable projector/checkpoint.
 validation_surfaces:
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json

@@ -22441,7 +22441,12 @@ The update result's Goal identity is the actual requested existing Goal even on 
 
 The exact selected local schema graph in `Plans/goal_update_schema_resources.json` includes the original shared-runtime dependency and explicit absolute retrieval of the unchanged relative updated-v3 resource ID. No schema alias is guessed and no remote fallback is allowed. Goal-created reader dependency metadata simultaneously pins the actual expanded central file; its existing start definitions and every selected reader validation object are unchanged. This metadata update does not rerun or enlarge the prior reader capture.
 
-Current updated-event consumers/projectors/checkpoints, actual agent approval provider, native source/transaction/backup implementation and complete event-depth remain separate obligations. Central request/result definitions and a production-intent row do not establish runtime availability.
+Named current updated-v3 consumer composition is explicitly adopted below and in GRS-064/GRS-068/SP-299/SIR-049; it assigns no additional event-built Goal projector or durable checkpoint. Actual agent approval provider, native source/read-release/transaction/backup implementation and complete event-depth remain separate obligations. Central request/result definitions and a production-intent row do not establish runtime availability.
+
+`Plans/goal_updated_consumer_contracts.schema.json` supplies the independently adopted SP-299 update-only selected-event observation, precise existing audit/input selectors and their transient result/private-witness shapes. Its `EventObservation.payload` imports the entire unchanged active-v3 payload; `PrivateEventReadWitness.source_read_token` imports the entire original SP-278 `read_token` with its nested source_selection, not a Goal-created or shortened mirror. Original SourceAudit/Progress/ProgressHead/Terminal/InputContent/body-receipt/EventRecord/first-publication definitions remain exact imports. The new `Plans/goal_updated_consumer_resources.json` pins the complete local graph; the original writer graph and every original schema byte/ID/variant remain unchanged. No alias or remote fallback issues source authority.
+
+The transient envelopes adopt the exact arbitrary-precision `pm.goal.canonical_json.v1` API representation specified by SP-299. They introduce no stored family, producer/event/result digest, new current Goal writer, command request variant or numerical revision cap. Original Goal semantic/physical, SP-278 binding, SP-286 full-event and CV-333 result hashes stay separate. Every primitive/unknown-key/encoding check and complete semantic cross-record identity/value/epoch/ref comparison remains mandatory beyond JSON Schema, with the actual owner source preserved after all helpers through joint final release. Unsupported transport cannot round or omit admitted facts; it returns unavailable without changing any original accepted effect or immutable result. Whole-v2 is preserved without admitting it through this new active-only observation. Named consumer normative composition is supplied by GRS-064/GRS-068/SP-299/SIR-049; it is not native installation or complete event-depth evidence.
+
 
 ### CV-342 - Original Goal Update Request Result And Event Contract
 ```yaml
@@ -22452,6 +22457,8 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: The existing Goal update command uses exact central request/result definitions and original
   update custody; only its existing event family selects active-v3 content-free accepted-change facts
   while preserving the entire historical-v2 resource and exact original CV-333 result/effect meaning.
+  Exact transient updated-consumer shapes import original source/receipt/epoch contracts and the complete
+  shared source token without widening writer schemas or adding an event-derived Goal projector.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -22472,11 +22479,15 @@ acceptance_criteria:
   immutable unknown meanings under CV-333, including nonnull requested Goal identity.
 - Exact physical and typed-result hash domains stay separate; unsupported numeric terminals preserve actual
   effects without rounding, caps or fabricated committed-body recovery results.
-- The complete local resource/retrieval graph pins actual bytes and preserves selected Goal-created/start
-  validation; schema or wiring adoption grants no native provider, event reader or runtime readiness.
+- The original writer graph and schema bytes remain unchanged; the separate exact updated-consumer graph directly imports
+  complete shared source/receipt and update custody definitions with no created-profile inheritance or remote fallback.
+- Named read composition preserves arbitrary-precision Goal API values and every separate original hash domain;
+  schema or wiring adoption grants no native provider/read-release or runtime readiness.
 validation_surfaces:
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json
+- Plans/goal_updated_consumer_contracts.schema.json
+- Plans/goal_updated_consumer_resources.json
 - reports/event-authority-20260911/step-08-goal-update-validation.md
 - reports/event-authority-20260911/step-08-goal-update-checks.json
 risk_class: false_original_update_or_lost_accepted_effect

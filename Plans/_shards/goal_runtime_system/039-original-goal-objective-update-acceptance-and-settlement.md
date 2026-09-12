@@ -1,10 +1,10 @@
-# Shard 038: Original Goal objective update acceptance and settlement
+# Shard 039: Original Goal objective update acceptance and settlement
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6258-L6349
+Source lines: L6282-L6376
 
-Source SHA256: `9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984`
+Source SHA256: `d47d2c6751e64a671b5d4d6e5545b86dfd30f91ab7159eea2d13c79e4530cdca`
 
 ---
 
@@ -27,7 +27,7 @@ The resulting `goal.updated` observation records only the actual original accept
 
 The actual approval-owner provider and the already-referenced `GoalUpdateProposalRequest`/`ApprovalRequest` remain separately unmaterialized technical dependencies. The agent-proposed mutation route stays unavailable until that original provider supplies its exact capture and still-valid resolution. Direct user Save keeps its existing acceptance without another confirmation. No fallback provider or new approval policy is invented here.
 
-The two new update-only retained audit/input readers have SP-299's distinct final visibility predicates. They grant no current `goal.updated` traversal, projection, consumer effects or checkpoint adoption. Those event-reader facets and the remaining Goal families remain independent contract work. This prerequisite proves no native dispatcher, original source provider, transaction or runtime readiness.
+The two update-only retained audit/input readers have SP-299's distinct precise selectors and final visibility predicates. GRS-064/SP-299 independently adopt the named current Activity/body/control/history consumers and selected active-v3 event inspection; audit/input declarations and Goal-created profiles do not supply that authority. These actual consumers have no additional event-derived Goal state or durable checkpoint. The remaining Goal families, actual agent approval provider and native dispatcher/source/transaction/read-release/runtime evidence remain independent obligations.
 
 ### GRS-068 - Original Objective Update Acceptance And Effect Settlement
 ```yaml
@@ -38,7 +38,8 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: The existing complete Goal objective replacement accepts authentic direct Save or the
   existing original approved agent source, uses only the shared Goal body writer and preserves each original
   accepted effect through later event/result settlement without granting continuation or changing approved
-  Plan behavior.
+  Plan behavior. Current updated-v3 consumer composition follows the separately adopted canonical body/control/history,
+  selected-event/audit/input and immutable original replay owners without deriving state from an event.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -65,8 +66,10 @@ acceptance_criteria:
   another revision, rerun acceptance or override immutable terminal history.
 - Active-v3 interpretation replaces only this family's retired delta/child/budget write assumptions while
   preserving the entire historical v2 resource.
-- Audit/input readers remain distinct; actual approval provider, native implementation and current event-consumer/checkpoint
-  composition remain separate prerequisites.
+- Audit/input readers remain distinct from current canonical body/control/history, selected active-v3 event inspection
+  and original immutable command replay; all use their own complete source and after-helper final release.
+- Actual approval provider and native installation/implementation/evidence remain separate prerequisites; this composition
+  creates no additional durable projector/checkpoint.
 validation_surfaces:
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json

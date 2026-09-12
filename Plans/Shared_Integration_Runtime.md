@@ -2663,6 +2663,11 @@ Success requires independently authenticated original body receipt and shared ev
 
 Terminal result/outcome/response and selected progress epoch are immutable. Duplicate identity with different original bytes/source refuses; genuine replay returns exact original members with only CV-333 replay decoration and performs no body/event/source reissue. Later original-owner effect recovery may advance progress/head without changing the old terminal selector/hash/snapshot or turning its unknown command into success. Missing original old epoch/result custody makes replay unavailable, not a lookup against the current head. Audit is content-free and does not reconstruct purged input. Actual current installation and audit checks apply after all returning helpers at final staging, publication and disclosure.
 
+SIR-049 explicitly consumes SP-299's terminal-members audit selection only through the existing original command replay authority. The actual normalized original identity selects exactly the SourceAudit/StorageTerminal and Terminal.terminal_progress_selector/terminal_progress_sha256; compare its complete key/scope/operation/epoch and original snapshot outer hash, source/member origin and unchanged typed result/outcome/CV-333 response joins. No event-to-command reverse lookup, Goal-created member mapping, new command variant or current-head substitution supplies identity. This retained route does not require an ordinarily visible Goal, disposed input/approval controls or the old SP-278 source generation. It still requires original admitted terminal/result/shared-publication custody and current app/Project/audit/root/installation/migration/backup/deletion/hold authority. Actual later owner recovery can advance progress without changing the original unknown terminal, selected epoch, result or response.
+
+Capture the independently authentic original complete terminal response and permitted CV-333 replay decoration before any returned-value resolver/copy/codec; after the last helper compare the full candidate and all exact original members/current authority at the held SIR disclosure boundary, with no helper or callback gap before release. If the exact old epoch/member or original issuer custody is missing, replay is unavailable. A nonterminal operation remains pending/unresolved; neither a genuine event observation nor a later succeeded owner effect invents a terminal response or upgrades an already issued unknown. This is original read/replay composition only: no source/body/progress/event/result reissue, acceptance replay, pending release, checkpoint or runtime continuation occurs. SP-299's separately guarded input reader cannot be called implicitly to bypass current content deletion, and an audit result cannot reconstruct input or become an original dispatch object.
+
+
 ### SIR-049 - Original Goal Update Capture And Immutable Terminal Join
 ```yaml
 plan_unit_id: SIR-049
@@ -2672,6 +2677,8 @@ owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: The existing Goal update command retains its genuine original source and publishes authentic
   typed result, SIR outcome, central response and terminal audit in one original atomic member boundary,
   preserving immutable unknown and replay semantics while original effect recovery remains separate.
+  Retained replay resolves the exact original terminal-selected epoch and members under current audit
+  authority through one complete after-helper disclosure boundary, independently of current body/event visibility.
 gui_related: false
 gui_classification_reason: Defines existing-command source, event, storage and result publication without
   a new visual surface.
@@ -2691,12 +2698,16 @@ acceptance_criteria:
 - Success, proved no-effect and admitted unknown retain exact effect meanings; unsupported exact RFC-8785
   numeric terminal routes preserve effects with terminal unavailable.
 - Immutable terminal-selected epoch/source/result custody survives later original progress recovery; duplicate
-  replay cannot re-execute or rewrite a terminal.
+  replay cannot re-execute or rewrite a terminal, substitute the current head, or reconstruct disposed input.
+- Replay captures exact original members and compares its complete decorated response after the final helper
+  under current owner/audit/source custody through release; event inspection and audit read do not issue replay authority.
 - Actual current original installation/audit and final after-helper member checks are mandatory; copied
   wrappers, old creation enrollment and unavailable providers grant no source or terminal authority.
 validation_surfaces:
 - Plans/goal_update_command_custody.schema.json
 - Plans/goal_update_schema_resources.json
+- Plans/goal_updated_consumer_contracts.schema.json
+- Plans/goal_updated_consumer_resources.json
 - reports/event-authority-20260911/step-08-goal-update-validation.md
 - reports/event-authority-20260911/step-08-goal-update-checks.json
 risk_class: false_original_update_or_lost_accepted_effect
