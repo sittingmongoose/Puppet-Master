@@ -246,5 +246,30 @@
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/compilation-preservation.json",
       "sha256": "f9f443755a52684e903b3020dd22bff40474f631f96f29ba94ac3783a6ba8145"
     }
-  ]
+  ],
+  "post_rebase": {
+    "base_head": "a955657362a0778b286b36fef7f5d1cec9cb3ede",
+    "upstream_changed_paths": [
+      "reports/packet-gap-closure-20260910/r5f-retention-audit-checkpoint-20260912.json"
+    ],
+    "all_sixteen_cited_source_preimages_exact": true,
+    "source_paths": [
+      "Plans/00-plans-index.md",
+      "Plans/Decision_Log.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/storage-plan.md",
+      "Plans/Automated_Testing_System.md",
+      "Plans/Planning_Wizard.md",
+      "Plans/Progression_Gates.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/plans_to_code_handoff.schema.json",
+      "Plans/prd_planning_runtime_contracts.json",
+      "Plans/storage_value_registry.json",
+      "Plans/event_family_registry.json",
+      "Plans/event_payloads/goal_runtime/goal_run_certified.schema.json",
+      "Plans/goal_body_custody.schema.json"
+    ]
+  }
 }
