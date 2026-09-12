@@ -290,6 +290,11 @@
         "node_readiness_status": "blocked_runtime_certification_incomplete",
         "plan_unit_count": 6546
       }
+    },
+    "new_contracts_gate": {
+      "status": "pass",
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/rebase-new-contracts.json",
+      "sha256": "ea84d3b0677d9ae3f457a8610f2269cbdd76f30f51e4ed7b3342653582a413ee"
     }
   }
 }
