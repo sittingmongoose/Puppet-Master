@@ -16001,6 +16001,7 @@
         "Plans/assistant-chat-design.md",
         "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/home_layout_event_contracts.schema.json",
+        "Plans/home_layout_pending_receipt.schema.json",
         "Plans/protected_auth_browser_contract_fixtures.json",
         "Plans/protected_auth_browser_contracts.schema.json",
         "Plans/remote_access_system_contract_fixtures.json",
@@ -16029,7 +16030,7 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2546,
+      "line_count": 2574,
       "path": "Plans/Shared_Integration_Runtime.md",
       "plan_unit_count": 46,
       "plan_unit_ids": [
@@ -16132,7 +16133,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08",
+      "sha256": "2dcd3d922db52105d6b12866bff3ff2f8bb4b7d960a749b0fdbe4428fe212f84",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 46
@@ -16168,6 +16169,10 @@
         "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
+        "Plans/home_layout_full_value_contract_fixtures.json",
+        "Plans/home_layout_pending_receipt.schema.json",
+        "Plans/home_layout_pending_receipt_v2_reader.schema.json",
+        "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/restore_point_create_result.schema.json",
         "Plans/restore_point_create_result_fixtures.json",
@@ -16258,6 +16263,8 @@
         "replay/live races",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
+        "reports/event-authority-20260911/step-08-home-full-value-checks.json",
+        "reports/event-authority-20260911/step-08-home-full-value-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "resource and security tests",
@@ -16544,7 +16551,7 @@
         "False": 181,
         "True": 101
       },
-      "heading_count": 605,
+      "heading_count": 606,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16580,6 +16587,8 @@
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/home_layout_event_contracts.schema.json",
+        "Plans/home_layout_pending_receipt.schema.json",
+        "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/path_reference_registry.json",
@@ -16607,7 +16616,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 22727,
+      "line_count": 22784,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 282,
       "plan_unit_ids": [
@@ -16968,7 +16977,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "a825526fffc96c404feb9f7ff0b0b93fb89ad0dff4f3390fd21b72b2596e2126",
+      "sha256": "9a109bba6b73202fa30ce4f35f342b8ea09f10642b8560b79854208b113c285d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 279,
@@ -17044,6 +17053,10 @@
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
+        "Plans/home_layout_full_value_contract_fixtures.json",
+        "Plans/home_layout_pending_receipt.schema.json",
+        "Plans/home_layout_pending_receipt_v2_reader.schema.json",
+        "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
         "Plans/restore_point_create_result.schema.json",
         "Plans/restore_point_create_result_fixtures.json",
@@ -17136,6 +17149,8 @@
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-hold-full-value-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
+        "reports/event-authority-20260911/step-08-home-full-value-checks.json",
+        "reports/event-authority-20260911/step-08-home-full-value-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
         "reports/event-authority-20260911/step-08-restore-full-value-checks.json",
         "reports/event-authority-20260911/step-08-restore-full-value-validation.md",
@@ -19022,7 +19037,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T05:22:53Z",
+  "generated_at_utc": "2026-09-12T05:58:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

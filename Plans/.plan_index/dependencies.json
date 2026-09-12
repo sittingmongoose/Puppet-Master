@@ -5798,7 +5798,6 @@
     "ACD-440",
     "ACD-442",
     "SP-233",
-    "SIR-046",
     "SIR-047",
     "EP-103",
     "F2-201",
@@ -5905,6 +5904,7 @@
     "OSI-276",
     "OSI-419",
     "CRAU-083",
+    "SIR-046",
     "SP-288",
     "CV-335",
     "SP-289",
@@ -55467,12 +55467,22 @@
     {
       "edge_type": "depends_on",
       "from": "SIR-046",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-046",
       "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
       "from": "SIR-046",
       "to": "SIR-042"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-046",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -66262,6 +66272,11 @@
     {
       "edge_type": "depends_on",
       "from": "SP-273",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
       "to": "DL-045"
     },
     {
@@ -66283,6 +66298,11 @@
       "edge_type": "depends_on",
       "from": "SP-273",
       "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-273",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -95425,7 +95445,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T05:22:53Z",
+  "generated_at_utc": "2026-09-12T05:58:30Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -186166,8 +186186,8 @@
       "source_location": {
         "heading": "SIR-045 — Original delete-command delegated custody",
         "heading_level": 3,
-        "heading_line": 2393,
-        "line": 2395,
+        "heading_line": 2421,
+        "line": 2423,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -186184,7 +186204,7 @@
         "heading": "Original Home command outcome custody",
         "heading_level": 3,
         "heading_line": 2317,
-        "line": 2323,
+        "line": 2334,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -186200,8 +186220,8 @@
       "source_location": {
         "heading": "SIR-047 - Original Legal Hold Pending And Terminal Delegated Custody",
         "heading_level": 3,
-        "heading_line": 2481,
-        "line": 2483,
+        "heading_line": 2509,
+        "line": 2511,
         "path": "Plans/Shared_Integration_Runtime.md"
       },
       "status": "accepted",
@@ -193578,8 +193598,8 @@
       "source_location": {
         "heading": "SP-268 — Restore-point deletion custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 21883,
-        "line": 21885,
+        "heading_line": 21940,
+        "line": 21942,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193646,8 +193666,8 @@
       "source_location": {
         "heading": "SP-272 — Restore-point delete original-result custody",
         "heading_level": 3,
-        "heading_line": 21979,
-        "line": 21981,
+        "heading_line": 22036,
+        "line": 22038,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193663,8 +193683,8 @@
       "source_location": {
         "heading": "Slot migration-generation custody and activation",
         "heading_level": 3,
-        "heading_line": 21404,
-        "line": 21426,
+        "heading_line": 21440,
+        "line": 21462,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193697,8 +193717,8 @@
       "source_location": {
         "heading": "SP-275 — Restore-point expiry custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22177,
-        "line": 22179,
+        "heading_line": 22234,
+        "line": 22236,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193799,8 +193819,8 @@
       "source_location": {
         "heading": "SP-285 — Restore-point admission and retained-read phases",
         "heading_level": 3,
-        "heading_line": 22332,
-        "line": 22334,
+        "heading_line": 22389,
+        "line": 22391,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193816,8 +193836,8 @@
       "source_location": {
         "heading": "SP-286 - First AppendReceipt Custody And Restore Admission",
         "heading_level": 3,
-        "heading_line": 21627,
-        "line": 21629,
+        "heading_line": 21684,
+        "line": 21686,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193833,8 +193853,8 @@
       "source_location": {
         "heading": "SP-287 - Goal Body Physical Custody And Thread Lifetime",
         "heading_level": 3,
-        "heading_line": 21746,
-        "line": 21748,
+        "heading_line": 21803,
+        "line": 21805,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193850,8 +193870,8 @@
       "source_location": {
         "heading": "SP-288 - Legal Hold Transition And Original SIR Custody",
         "heading_level": 3,
-        "heading_line": 22553,
-        "line": 22555,
+        "heading_line": 22610,
+        "line": 22612,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193867,8 +193887,8 @@
       "source_location": {
         "heading": "SP-289 - Original Standard Certification Custody",
         "heading_level": 3,
-        "heading_line": 22680,
-        "line": 22682,
+        "heading_line": 22737,
+        "line": 22739,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -207005,9 +207025,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15120,
+    "depends_on_edge_count": 15124,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17771,
+    "edge_count": 17775,
     "node_count": 6563,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,

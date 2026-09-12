@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15120,
+    "depends_on_edge_count": 15124,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17771,
+    "edge_count": 17775,
     "node_count": 6563,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T05:22:53Z",
+  "generated_at_utc": "2026-09-12T05:58:30Z",
   "gui_related_units": {
     "count": 3163,
     "units": [
@@ -29535,8 +29535,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21404,
-          "line": 21426,
+          "heading_line": 21440,
+          "line": 21462,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -38750,7 +38750,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+        "expected": "d7d4c60325a51536a94f128bb4297aa4487e577ae6a52e8b2a070a0565cc7b54",
         "source_path": "Plans/storage_value_registry.json"
       },
       {

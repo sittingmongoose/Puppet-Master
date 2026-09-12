@@ -2316,9 +2316,20 @@ For exactly `cmd.chat.create_restore_point`, Storage SP-274 retains the ORIGINAL
 
 ### Original Home command outcome custody
 
-Shared Integration Runtime delegates custody of the authenticated original Home CommandOutcomeRecord, content-free normalized identity and original CV-333 response to the same canonical Home operation receipt defined by SP-273. SIR retains sole semantic production and authentication authority. The receipt resolves exact original command/operation/instance/topology/target/dispatch identities and the separately typed Home result; copied refs or mutually repaired hashes do not authenticate those records. Pending custody remains with the original owner until the real outcome is resolved.
+Shared Integration Runtime delegates custody of the authenticated original Home CommandOutcomeRecord, content-free normalized identity and original CV-333 response to the same canonical Home operation receipt defined by SP-273. SIR retains sole semantic production and authentication authority. The receipt resolves exact original command/operation/instance/topology/target/dispatch identities and the separately typed Home result; copied refs or mutually repaired hashes do not authenticate those records. Pending semantic authority remains with the original SIR owner until the real outcome is resolved; Home3 durably retains the exact delegated nonterminal capsule in its existing slot under the protocol below.
 
 The new Home capture bytes are explicitly serialized from authenticated original typed values under SP-273, not claimed original SIR wire bytes. Existing SIR/CV source schemas and hash meanings remain unchanged. Original terminal values and typed AppendReceipt/publication custody are immutable, content-free and coherently backed up; layout bodies stay in their distinct configuration/temporary operation custody. A read-only retry returns the same original values without synthesizing an outcome or repeating layout mutation. This narrow Home delegation does not reuse the create-only SIR-044 result family or introduce a global result producer. SP-273 owns the physical bytes, exact joins, retention, migration and withdrawal rules.
+
+
+For current Home3, `owner.sir.home_layout_pending_custody@1.0.0` authenticates the immutable original and current nonterminal source, original Home admission transaction and target-identity binding in `pending_sir_custody`. Capture the actual original request/binding/full identity/clock before candidate copies or validators; exact source/request bytes, distinct Home and original SIR digests, dispatch/outcome/frame and target/topology duplicates must join. A Home event ref or typed owner result cannot create acknowledgement. Actual acknowledged/executing progression uses the real available frame and receipt, preserves existing acknowledgement, and never regresses phase or time. The original source is immutable. Derive the full expected acknowledgement from actual entry source/frame/revision/clock before copying; compare working, installed and returned values, including exact frame types, after all helpers.
+
+Explicit resume after lawful original control disposal rebinds only the same actual Home owner, canonical slot key, operation digest, original admission transaction and original source digest. It does not deep-copy an owner, synthesize original ingress, acquire a fresh restored-operation capability or create another acknowledgement. Current SIR identity/binding/frame/availability/clock and Home permission/target remain required. Carry Home's previously validated actual activation owner/records/enabled/revision pin through SIR rebinding to both Home pending capture publications and their final guards; a withdrawn resolver or replacement handle cannot become a new baseline. Exact returned SIR source and Home candidate values must still equal their independent actual sources.
+
+SIR privately stages the genuine original terminal outcome and CV-333 response only after the actual Home readback and original append proof. Home3 requires SP-286/CV-339's explicit full-value resolver, exact retained shared v2 witness and independently authenticated complete current event/SP-278 token at staging and final terminal publication. Old shared semantic readers or legacy selectors cannot replace that authority. Pending raw-source and retained-witness variants, terminal publication version 2, and unchanged original receipt/hash/result meanings are owned by SP-273. SIR creates no parallel durable outcome store or new Home field. The same terminal Home transaction captures authentic outcome/response/result and clears temporary pending custody before public success.
+
+Final owner, activation, source, staged-value, candidate and transaction comparisons run after dependent helpers and before publication under actual exclusion. After commit, response disclosure separately compares the exact original retained projection and current permission/owner facts after its final copy. A late refusal conserves an already valid Home transaction and independently completed shared source/receipt/backup effects; authorized retry returns the same originals without another layout/event/acknowledgement. Generic Store/BackupVault issuance remains independently authorized while Home's local pending capability is withdrawn.
+
+Exact retained Home1 and frozen external Home2 readers preserve their original authority; external Home2 is not a deployed predecessor and supplies no pending conversion. Fresh Home3 admission requires the installed writer/readers/resolver and original SIR binding in SP-273. Native ingress/source authentication, dispatcher/frame ownership, real activation/leases/redb/fsync, recovery/backup enumeration and UI delivery remain `NOT_RUN`; the bounded move/succeeded model and regression chain do not close other Home command or terminal paths.
 
 ```yaml
 plan_unit_id: SIR-046
@@ -2333,12 +2344,18 @@ canonical_text: For actually admitted Home commands producing workspace.layout_c
   create-only SIR-044 and its physical family are not reused. Original terminal typed values, NEW Home
   capture bytes, schema/topology and refs are immutable and mandatory-backup; pending advances require
   original SIR authority; passive retry resolution cannot synthesize outcomes or create a global writer.
+  Home3 retains exact original/current nonterminal custody in the existing slot, resumes only the original
+  admitted owner tuple, and carries validated activation and independent original-value pins through SIR
+  rebinding and final Home publication. Current full event/token plus actual shared v2 custody authenticate
+  terminal capture; exact original response disclosure preserves prior lawful effects on late refusal.
 gui_related: false
 gui_classification_reason: Exact original SIR custody only.
 depends_on:
 - SIR-042
 - CV-333
 - DL-045
+- SP-286
+- CV-339
 unblocks: []
 acceptance_criteria:
 - Shared Integration Runtime remains the sole semantic producer and authenticator of the exact original
@@ -2351,18 +2368,29 @@ acceptance_criteria:
   original Home readback and append durability.
 - Authentic original terminal values remain immutable and backed up; read-only retry cannot create a second
   outcome, repeat Home mutation or become a global result store.
+- Home3 original/current nonterminal custody binds actual initial request, frame/acknowledgement and admission transaction; original source remains immutable and repeated resume preserves the actual owner tuple.
+- Original validated activation handle/records/revision survive dependent SIR rebind and final Home capture; exact returned source, candidate, staged values and output cannot redefine their original expectations.
+- Terminal Home3 custody requires complete current event/token and actual shared v2 full-value witness with exact original receipt/result/commitment joins; no semantic fallback or old-source fabrication.
+- Valid Home/shared publications survive later local refusal; current authorized disclosure returns original values without another outcome or effect.
 validation_surfaces:
 - Plans/home_layout_event_contracts.schema.json
+- Plans/home_layout_pending_receipt.schema.json
+- Plans/home_layout_pending_receipt_v2_reader.schema.json
+- Plans/home_layout_value_readers.schema.json
+- Plans/home_layout_full_value_contract_fixtures.json
 - Plans/event_payloads/workspace_layout_changed.schema.json
 - Plans/home_workspace_layout.schema.json
 - Plans/home_layout_event_contract_fixtures.json
 - reports/event-authority-20260911/step-08-home-validation.md
+- reports/event-authority-20260911/step-08-home-full-value-validation.md
+- reports/event-authority-20260911/step-08-home-full-value-checks.json
 risk_class: home_layout_readback_event_receipt_crash_or_replay_authority_escape
 reasoning_tier: high
 context_scope: workspace_layout_changed_original_sir_custody
 implementation_surfaces:
 - Plans/Shared_Integration_Runtime.md
 - Plans/home_layout_event_contracts.schema.json
+- Plans/home_layout_pending_receipt.schema.json
 node_compile_hint:
   mode: owner_contract_only
   create_worknodes: false

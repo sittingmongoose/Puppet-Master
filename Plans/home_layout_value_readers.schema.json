@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/home_layout_value_readers/1.0.0",
+  "title": "Exact Home value readers",
+  "description": "SP-273 dispatches retained canonical Home1, frozen external Home2 compatibility and current Home3 slot/receipt values. Checkpoint remains exact Home1. This reader union grants no writer or pending-conversion authority.",
+  "$comment": "Original assertion-bearing reader definitions are referenced unchanged; external Home2 provenance is not deployment evidence. Native reader installation remains NOT_RUN.",
+  "$defs": {
+    "transaction_slot_v1": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_event_contracts/1.0.0#/$defs/transaction_slot"
+    },
+    "transaction_slot_v2": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_pending_receipt/2.0.0#/$defs/transaction_slot"
+    },
+    "transaction_slot_v3": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/transaction_slot"
+    },
+    "transaction_slot": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/transaction_slot_v1"
+        },
+        {
+          "$ref": "#/$defs/transaction_slot_v2"
+        },
+        {
+          "$ref": "#/$defs/transaction_slot_v3"
+        }
+      ]
+    },
+    "operation_receipt_v1": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_event_contracts/1.0.0#/$defs/operation_receipt"
+    },
+    "operation_receipt_v2": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_pending_receipt/2.0.0#/$defs/operation_receipt"
+    },
+    "operation_receipt_v3": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_full_value_receipt/3.0.0#/$defs/operation_receipt"
+    },
+    "operation_receipt": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/operation_receipt_v1"
+        },
+        {
+          "$ref": "#/$defs/operation_receipt_v2"
+        },
+        {
+          "$ref": "#/$defs/operation_receipt_v3"
+        }
+      ]
+    },
+    "reader_checkpoint": {
+      "$ref": "https://puppetmaster.local/schemas/home_layout_event_contracts/1.0.0#/$defs/reader_checkpoint"
+    },
+    "home_value": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/transaction_slot"
+        },
+        {
+          "$ref": "#/$defs/operation_receipt"
+        },
+        {
+          "$ref": "#/$defs/reader_checkpoint"
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/home_value"
+}

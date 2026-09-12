@@ -85,3 +85,7 @@ The three SP-285 creation/deletion/expiry pending routes now explicitly adopt or
 ## Hold pending full-value adoption — 2026-09-12
 
 SP-288 now explicitly adopts original full-value v2 custody for pending legal-hold completion, exact original intent through shared publication, and complete pending/terminal/replay output guards. The [adoption record](step-08-hold-full-value-validation.md) reports 558 rerun cases, 24 new independent cases and four current-schema value traces. Stored Hold shapes and seven other-kind routes remain unchanged; only transient evidence gains exact shared v1/v2 dispatch. Initial provenance, settled-history and native execution retain their qualifications. Home, Platform and integrity remain separately reviewed work; no event inherits depth.
+
+## Home original pending and full-value adoption — 2026-09-12
+
+SP-273/SIR-046 now compile Home3 original pending SIR custody, activation continuity, explicit shared full-value completion and complete final-value guards. The [adoption report](step-08-home-full-value-validation.md) records 279 scoped cases in independent review, two current-schema source/receipt captures and 13 value examples. Three existing Home rows adopt exact versioned readers; families, event/policy counts and lifetimes remain unchanged. Source/native, other-command and retained-history qualifications remain. Platform, integrity and boot recovery are separate work; no event inherits a depth pass.
