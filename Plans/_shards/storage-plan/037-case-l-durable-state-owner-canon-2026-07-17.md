@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16892-L17845
+Source lines: L16892-L17846
 
-Source SHA256: `fda644f3612bd7bdb1c86224f67900c91ef38227f7c63461bb96e3feb171d492`
+Source SHA256: `799c12082800fcfc0906e79e51d64d0a09e13479586919d3d81b2d73508bbe0f`
 
 ---
 
@@ -326,13 +326,14 @@ Closed phases are:
 
 `preparing | building | verified | commit_pending | committed | finalized | recovery_required | failed`
 
-The builder copies the exact retained EventRecord set in original semantic order to `segment_generation = source + 1`, preserving `sequence_id`, `event_id`, idempotency, causality, timestamps, payload bytes/hash, and gaps. It builds complete target index/checkpoints/shadow projections and a content-free removal/translation manifest. The active segment is excluded.
+The builder copies the exact retained closed-input EventRecord set in original semantic order to `segment_generation = source + 1`, preserving `sequence_id`, `event_id`, idempotency, causality, timestamps, payload bytes/hash, and gaps. It builds complete target index/checkpoints/shadow projections and a content-free removal/translation manifest. The active segment is excluded from this frozen removal/policy input set; SP-295 separately authenticates and carries its whole bytes and required later lifecycle appends unchanged.
 
 Publication order is:
 
-1. persist redb `pending_generation` plus target refs/manifest hash;
-2. atomically replace same-directory `storage/seglog/CURRENT` and synchronize its parent; this is visibility authority;
-3. activate target redb generation, clear pending, finalize, then create the next target active segment.
+1. persist redb `pending_generation` plus complete target refs/manifest hash, retaining source visibility;
+2. under SP-295, seal the unchanged carrier, replace pending with the complete final candidate, then publish and synchronize the single native manifest containing exact source and sealed-target entries; source CURRENT still selects source;
+3. atomically replace same-directory `storage/seglog/CURRENT` and synchronize its parent; this alone changes visibility to target;
+4. activate target redb generation/index and clear pending in one original transaction, then finalize and create the next target active segment. SP-296 governs required observation receipts and its narrow internal post-CURRENT continuation.
 
 Before `CURRENT`, source wins. After `CURRENT`, target wins and startup finalizes or blocks; it never chooses newest by mtime. Old source deletion waits for target verification and cleared refs. Checkpoints translate by semantic identity or rebuild; index rows never retain retired physical refs.
 
@@ -378,7 +379,7 @@ Authority order is fixed: verified immutable source/target bytes plus the frozen
 
 Restart of a nonterminal ordinary phase resumes the same `compaction_id` and `storage_maintenance_operation` only at the next legal edge whose predecessor postcondition is proven; missing or conflicting proof enters `recovery_required`. Restart in `recovery_required` retains the same identities, lineage, refs, policy revision/hash, and action tokens and stays fenced until one proof-gated exit is established. Restart after `finalized | failed` returns the original terminal result. Explicit retry after `failed` is a new attempt with a new `compaction_id`, after revalidating current `CURRENT`, frozen source generation, policy revision/hash, retention/hold/live-ref/backup/rollback eligibility, aggregate lock, maintenance lease, and target allocation. Reusing a terminal identity with the same semantic digest returns the original result; a different digest returns `idempotency_conflict`. A later compaction after `finalized` is likewise a new operation.
 
-Global `event_id` and scoped `(scope_partition, event_type, idempotency_key)` identities remain authoritative for app-root lifetime. Same identity and semantic digest returns the original durable result; different digest returns `idempotency_conflict`; unavailable dedupe proof returns `dedupe_unavailable`. Re-observation without a new postcondition is replay, not a new append. `projector_replay_only` rebuilds only owned disposable projections/checkpoints and cannot append, dispatch, notify, charge, mutate canonical values, or select Storage authority. Unknown or unregistered action, phase, schema, owner, alias, transition, retention, identity, or secret authority quarantines without checkpoint advance; raw credentials, secrets, local paths, and machine-local state are rejected before append. Every refusal/rejection has zero append, zero projection effect, zero checkpoint advance, zero command/tool/provider/network dispatch, and zero source/target namespace mutation.
+Global `event_id` and scoped `(scope_partition, event_type, idempotency_key)` identities remain authoritative for app-root lifetime. Same identity and semantic digest returns the original durable result; different digest returns `idempotency_conflict`; unavailable dedupe proof returns `dedupe_unavailable`. Re-observation without a new postcondition is replay, not a new append. `projector_replay_only` rebuilds only owned disposable projections/checkpoints and cannot append, dispatch, notify, charge, mutate canonical values, or select Storage authority. Unknown or unregistered action, phase, schema, owner, alias, transition, retention, identity, or secret authority quarantines without checkpoint advance; raw credentials, secrets, local paths, and machine-local state are rejected before append. Every refusal/rejection has zero new unadmitted append, projection effect, checkpoint advance, command/tool/provider/network dispatch or source/target namespace mutation. Genuine earlier admitted physical, source, receipt and recovery effects and their original custody remain preserved; a later refusal neither rolls them back nor supplies missing admission. SP-296 requires this distinction inside each actual original publisher.
 
 SourceRef: `PD-L015-01` through `PD-L015-03`, `SEG-D-021`, `Case-L:L-015`, `Case-L:L-030`
 

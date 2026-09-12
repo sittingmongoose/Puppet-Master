@@ -1,0 +1,103 @@
+{
+  "schema_id": "pm.storage.compaction.identity_contract.v1",
+  "schema_version": "1.0.0",
+  "native_codec": "unchanged Case L-2 canonical MessagePack",
+  "native_hash": "lowercase SHA256 of exact bytes",
+  "original_operation": [
+    "pm.storage.compaction.identity.v1",
+    "1.0.0",
+    "storage_instance_id",
+    "operation_nonce"
+  ],
+  "transition": [
+    "pm.storage.compaction.transition.v1",
+    "1.0.0",
+    "compaction_id",
+    "ordinal",
+    "predecessor_transition_id",
+    "from_phase",
+    "to_phase"
+  ],
+  "effect": [
+    "pm.storage.compaction.effect.v1",
+    "1.0.0",
+    "compaction_id",
+    "attempt_ordinal",
+    "effect_ordinal",
+    "effect_kind"
+  ],
+  "artifact": [
+    "pm.storage.compaction.artifact.v1",
+    "1.0.0",
+    "compaction_id",
+    "artifact_kind",
+    "artifact_ordinal"
+  ],
+  "target_selection": [
+    "pm.storage.selection.v1",
+    "1.0.0",
+    "storage_instance_id",
+    "compaction",
+    "compaction_id",
+    "target_generation"
+  ],
+  "initial_selection": [
+    "pm.storage.selection.v1",
+    "1.0.0",
+    "storage_instance_id",
+    "initial",
+    "original_storage_birth_operation_id",
+    "generation"
+  ],
+  "physical_segment": [
+    "pm.storage.segment_object.v1",
+    "1.0.0",
+    "storage_instance_id",
+    "original_namespace_birth_operation_id",
+    "creation_ordinal",
+    "segment_generation"
+  ],
+  "index_seed": {
+    "owner": "original IndexOwner under unchanged SP-278",
+    "allocation": "once from fresh 256-bit entropy for each genuinely new prepared generation",
+    "representation": "64 lowercase hexadecimal digits in original generation.anchor.generation_seed_sha256",
+    "durability": "preserve with original prepared generation; crash continuation reuses it",
+    "later_generation": "fresh seed, including identical source bytes",
+    "not_derived_from": [
+      "compaction_id",
+      "candidate_ordinal",
+      "caller",
+      "timestamp",
+      "fixture deterministic recipe"
+    ],
+    "generation_id": "unchanged SP-278 binding digest over original seed and exact birth source_selection"
+  },
+  "detail_retirement": [
+    "pm.storage.compaction.detail_retirement.v1",
+    "1.0.0",
+    "storage_instance_id",
+    "compaction_id",
+    "original_settlement_transaction_id",
+    "detail_catalog_sha256"
+  ],
+  "manual_correlation": "exact original admitted command correlation",
+  "automatic_correlation": "storage.compaction:{operation_digest}",
+  "operation_semantic_digest": [
+    "pm.storage.compaction.admission.v1",
+    "1.0.0",
+    "exact_header_without_operation_semantic_digest"
+  ],
+  "unchanged_hashes": [
+    "EventRecord producer semantic digest",
+    "CV-339 complete original EventRecord commitment",
+    "SP-286 commit group tuple/digest",
+    "SP-278 source/rowset/survivor/translation binding digests"
+  ],
+  "no_future_hashes": [
+    "journal self hash",
+    "future event/receipt",
+    "candidate self hash",
+    "future terminal settlement time"
+  ],
+  "contract_status": "SPECIFIED_CONTRACT_NATIVE_EXECUTION_UNPROVED"
+}

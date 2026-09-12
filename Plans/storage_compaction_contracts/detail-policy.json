@@ -1,0 +1,16 @@
+{
+  "policy_id": "RP-COMPACTION-DETAIL-7D",
+  "retention_mode": "anchored_then_ttl",
+  "anchor_kind": "resolution",
+  "retain_indefinitely": false,
+  "ttl_seconds": 604800,
+  "source_policy_ref": null,
+  "max_cardinality": null,
+  "cardinality_scope": null,
+  "additional_cardinality_limits": [],
+  "max_bytes": null,
+  "overflow_action": "fail_closed",
+  "hold_eligible": true,
+  "expiry_action": "delete_sidecar",
+  "policy_version": "1.0.0"
+}

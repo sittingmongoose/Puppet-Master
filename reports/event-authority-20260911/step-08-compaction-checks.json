@@ -1,0 +1,113 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "full_gates": {
+    "pass": 21,
+    "fail": 15,
+    "same_failure_groups_as_previous_goal_start": true,
+    "new_reported_categories_or_locations": 0,
+    "comparison_limit": "Each failure list is capped at 50; equal category/location summaries do not establish equality of unseen diagnostics. Recorded hashes and counts naturally change with current canonical source."
+  },
+  "full_gate_source_limit": "Full gates ran before one extra EOF LF was removed. No semantic/contract/registry/runtime byte changed afterward; derived files and shard/index/diff checks were refreshed after that formatting correction.",
+  "independent_source_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/compaction-canonical-independent-source-review-20260912/v1/manifest.json",
+    "sha256": "a815d4c0bb8d52f99a3303dbd6ee3dccd9de80a171619998cb9c3ddcc64483fa"
+  },
+  "independent_report_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/compaction-canonical-independent-source-review-20260912/report-review-v1/manifest.json",
+    "sha256": "5ed50fb91e20646e57baca6ece6a96bb33624eb481a9f28dc6636bedb7474837"
+  },
+  "canonical_ordinary_capture": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compaction-canonical-20260912/v2/manifest.json",
+    "sha256": "796e29f994d0f052e9f51027d5374f4dcf0ea725fc71311a1079bb20b499f5a1"
+  },
+  "plan_unit_preservation": {
+    "status": "PASS",
+    "old_plan_units": 6575,
+    "new_plan_units_total": 6578,
+    "added": [
+      "SP-295",
+      "SP-296",
+      "SP-297"
+    ],
+    "modified": [
+      "SP-182"
+    ],
+    "old_acceptance_criteria": 25445,
+    "new_acceptance_criteria": 25463,
+    "all_other_old_plan_units_preserved": true,
+    "central_data_diagnostics": {
+      "before": 21,
+      "after": 21,
+      "new_categories_or_locations": 0
+    },
+    "event_registry_unchanged": true
+  },
+  "no_validator_or_governance_artifacts_changed": true,
+  "native_execution": false,
+  "complete_event_depth": false,
+  "schema_id": "pm.event_authority.compaction_prerequisite_checks.v1",
+  "base_commit": "3890d86c7038c917de8d21db204a8fddc34c1a18",
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compaction-repository-checks-20260912/manifest.json",
+    "sha256": "5dffd22188f2101608a1b8b8d729456f5ae09ceedee9651020d4207b0031cfd3"
+  },
+  "family_counts": {
+    "before": 120,
+    "added": 16,
+    "after": 136
+  },
+  "policy_counts": {
+    "before": 26,
+    "added": 1,
+    "after": 27
+  },
+  "ordinary_scope": {
+    "runs": 1,
+    "scheduled_observations": 18,
+    "lifecycle_events": 6,
+    "stages": 3,
+    "activation": 1,
+    "fresh_seeds": 5,
+    "detail_removals": 14,
+    "row_observations": 261,
+    "distinct_physical_roles": 16
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "799c12082800fcfc0906e79e51d64d0a09e13479586919d3d81b2d73508bbe0f"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "de6ae958a133be014765388ce5fc87196004ec70315e9084fbe9a12662b78d32"
+    },
+    {
+      "path": "Plans/storage_compaction_native_contracts.schema.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/detail-policy.json",
+      "sha256": "e8830549c2e23768260fc7efbe17443f5639180187bbb96b51c5cafb1bb00c7e"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/effect-methods.json",
+      "sha256": "49c2472615bbeebc6f4f67126dcc50ed2d14e8a79655e016f5c5a5185e142c2b"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/guards.json",
+      "sha256": "4a0965e75ab27a1d2b0ab520548148e4117353489875d6361ad0f1e17b125d8d"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/identity.json",
+      "sha256": "9e3eadb507d450417598c5ab9755070f4c46cef31d01faed471c39402da02cc0"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/methods.json",
+      "sha256": "b09c12e46140bf97e3d7d6d23e8e5275f2e9018e3c11ae8514f8e6c650c5249c"
+    },
+    {
+      "path": "Plans/storage_compaction_contracts/phases.json",
+      "sha256": "d5f0d54fff070e41ce20e159a906d9fe1fc6815d214592d5ca307254d59d30c2"
+    }
+  ]
+}

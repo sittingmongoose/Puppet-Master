@@ -1,0 +1,168 @@
+{
+  "schema_id": "pm.storage.compaction.guard_contract.v1",
+  "schema_version": "1.0.0",
+  "guards": [
+    {
+      "id": "G01",
+      "name": "Original role/root.",
+      "required_predicate": "The actual selected Store, app-root, instance, namespace/database/index/maintenance owners, installed role and installation receipt are captured by identity and complete current content before the first replaceable resolver/validator/copy. The old single-segment role remains exact. Only the installed new native role may parse this new CURRENT/manifest or admit multi-segment compaction. A copied role record or `source_adapter_kind` string grants nothing. Current permission, supported schema/registry, integrity, writer posture, aggregate lock and the one maintenance lease all participate."
+    },
+    {
+      "id": "G02",
+      "name": "Original retry lookup.",
+      "required_predicate": "Before nonce/target allocation, resolve actual command/evaluation identity and digest against complete original live journals and minimal terminal mappings. Same identity/digest reuses original result/operation; changed digest conflicts; unavailable lookup authority is unavailable. An explicit new command after failed may create a new compaction only after current full gates, not by mutating the old header. The command still requests owner evaluation only. No new compaction permission token or public force/retry service is introduced."
+    },
+    {
+      "id": "G03",
+      "name": "Header.",
+      "required_predicate": "Recompute compaction ID from the original durably allocated nonce and instance, target selection identity and admitted-header semantic digest exactly. Freeze actual closed-only source boundary, policy ID/version/revision/hash, original eligibility/hold/ref/backup facts, target generation (exact selected source generation + 1), actual starting index node and the two existing action tokens. Overflow refuses. Initial active carrier is separately authenticated and excluded from frozen inputs, removal eligibility and this attempt's policy reclassification. Inputs are unique complete native segment boundaries in canonical global order. Header source generation refs are the actual distinct input generation identities in first-occurrence order; no display/path-derived identity."
+    },
+    {
+      "id": "G04",
+      "name": "Attempts.",
+      "required_predicate": "Attempt zero is null -> preparing. Every later reservation's predecessor/from is the actual last proved edge/phase and desired successor is graph-valid. Ordinals increase, never wrap/reuse, and IDs/digests/initiator fields are immutable. At most one unresolved attempted successor exists at a time. Adding effect plans or resolving a reserved attempt must preserve all previously admitted/resolved entries, original event/receipt bytes and native effects. A reservation does not advance last-proven phase or create an emit-ready event."
+    },
+    {
+      "id": "G05",
+      "name": "Effects before effects.",
+      "required_predicate": "Each actual phase effect has its exact original method and native object set, captured preimages and permitted afterimages before mutation. The plan is durable in original journal before that physical effect. No plan writes its own future journal hash: predecessor_journal_sha256 names the already durable preceding image. Candidate construction may be expensive but exact publication candidates are fixed before returning helpers. Original native effect results record actual synchronized/readback states, not a caller success flag. Atomic redb effects must be actual one-transaction facts, never a list of separately committed writes declared atomic later."
+    },
+    {
+      "id": "G06",
+      "name": "Producer.",
+      "required_predicate": "Proved edge's ordinal/transition/predecessor/from/to, phase-proof discriminator, frozen producer event ID/idempotency/phase, instance/compaction/source/target/policy/artifact refs and selected action modes all exactly join original header. Manual actor/correlation stay original; automatic correlation is storage.compaction:operation_digest. occurred time is original first durably captured proof time. Application scope and all prescribed nulls are exact, including migration. Only required exceptional phases contain nonempty failure_reason. Unknown phase/action/payload version/producer refuses before append. No transition ordinal/proof/receipt is added to the existing payload."
+    },
+    {
+      "id": "G07",
+      "name": "Artifact slots.",
+      "required_predicate": "Every ref recomputes from original compaction/kind/ordinal; it resolves only the original allocated path and admitted schema. Planned early refs cannot claim completed bytes. Once published, actual canonical bytes/length/hash/schema and compaction/root identity are immutable. Candidate ordinal increases independently of attempted transition ordinal. Survivor/removal refs in events never change. A candidate record and its target-manifest file have distinct kinds/paths; no self-hash or future-receipt dependency is allowed."
+    },
+    {
+      "id": "G08",
+      "name": "Shared admission.",
+      "required_predicate": "Finish every existing protected group's complete original first-receipt issuance before maintenance changes, carrier seal or source selection. New compaction lifecycle groups are one-event barrier groups and preserve both actual source barriers plus the one original all-member receipt transaction. New receipt/full-value adoption is explicitly installed on the same actual Store. Legacy v1 retained semantic replay remains supported only in its existing role; v1 cannot be backfilled or used as full-value proof."
+    },
+    {
+      "id": "G09",
+      "name": "Native selection.",
+      "required_predicate": "Exact native CURRENT bytes/root/instance/selection/generation resolve exactly one manifest entry. Entries have unique IDs and no ambiguity by order/time. A staged_prefix entry is never CURRENT-admissible. Actual selected entry membership, namespace mapping, byte boundaries, global sequence gaps and indexes are checked together. Missing required CURRENT or manifest, missing pending where the authentic phase/effect requires it, or any third state inconsistent with the original intended transition fences both sides. An original complete read proving pending absent is valid in ordinary pre-pending state and after the atomic activation/clear, including finalized state; absence alone never proves an expected activation, earlier nonpublication or a completed operation. An obsolete retained entry cannot choose source after target visibility."
+    },
+    {
+      "id": "G10",
+      "name": "Per-segment bytes.",
+      "required_predicate": "Enumerate every selected segment once, from native namespace handles under the same fence. Scan from zero to exact durable end with pinned Case L-2 prefix/header/CRC/MessagePack/envelope/payload/registry checks. Match each frame's generation to its authenticated inventory member, not an arbitrary caller generation; target compacted output additionally equals target selected generation. The unchanged carrier has its original physical generation, raw bytes and original namespace identity. All global event/sequence/scoped-idempotency identities are unique; exact closed-reason gaps cover missing intervals without enumerating a uint64-sized range. Unsupported source stops rather than becoming corruption or a skipped gap."
+    },
+    {
+      "id": "G11",
+      "name": "Core and removal.",
+      "required_predicate": "The core is built solely from frozen closed inputs. Every original input event has exactly one exhaustive survivor or removal outcome. Surviving complete EventRecord bytes, sequence/event IDs, timestamps, causality, payload, semantic digest and full-value commitment are unchanged; new V2 frame generation/header/CRC/offset may differ as required for target output. Removed events have actual original registered policy/deletion evidence plus exact matching retention_compaction exclusion, and no current row. No source ref/prefix/path/time is destructive policy. Carrier events never enter that outcome set."
+    },
+    {
+      "id": "G12",
+      "name": "Complete prefixes.",
+      "required_predicate": "Verified candidate includes fixed core + complete durable carrier prefix through original building receipt; pending candidate includes through original verified receipt; final candidate includes whole sealed carrier through original commit_pending receipt. Each prefix length/hash/count/range is truthful for its captured native bytes, not a hash of a future whole file. Extend only after proving old prefix unchanged and all added complete frames/groups/receipts. Every candidate target index/checkpoint/shadow covers its entire captured target set. Source CURRENT remains unchanged for verified/commit_pending. Core digest never occupies pending target_manifest_sha256."
+    },
+    {
+      "id": "G13",
+      "name": "Pending CAS and two-write cut.",
+      "required_predicate": "Initial pending commits the actual through_verified candidate/manifest. Preserve original commit_pending proof exactly after its event append. Final candidate CAS requires exact original pending key/value/hash/revision and original source CURRENT, and advances to sealed_final candidate. Its full manifest has exact source and target entries, matches the final target shadow, and uses the next actual live manifest revision. The actual manifest replacement must match that candidate byte-for-byte before CURRENT replacement. A candidate ordinal/revision/hash mismatch is not repaired by recomputing expectations from a helper return. No ordinary reader/mutation is released during the dual-entry cut."
+    },
+    {
+      "id": "G14",
+      "name": "Original translation source.",
+      "required_predicate": "Before carrier seal, the original index owner catches the existing source node's frontier up through the actual commit_pending receipt while CURRENT remains source. This is verified same-prefix source catch-up, not target activation. The complete original source snapshot/index frontier is captured durably for translation; then seal/rename may make that old node stale under the held maintenance fence. No reader can claim it as fresh current coverage in that interval. Target translation source_set = frozen closed inputs + this exact whole carrier. All preexisting and newly appended carrier events are actually present at that captured cut; they are not fabricated into the earlier freeze. Native outcomes are compacted, carried_unchanged, expired or deleted; their existing semantic counts and distinct hashes join the entire target birth set. After activation, missing required translation detail makes the dependent read unavailable or requires an original governed rebuild; an opaque ref/hash alone never supplies it."
+    },
+    {
+      "id": "G15",
+      "name": "Current versus historical locators.",
+      "required_predicate": "Actual EventRecordIndex rows use current target/core or unchanged carrier's current registered locator. Original receipt, group ID/name/generation/offset/end/manifest generation, acknowledgment time and opaque original segment ref remain exactly original. Carrier rename is authenticated by original namespace effect and current mapping; it does not rewrite those historical coordinates. Dedupe identities/original_append_result are conserved app-root-wide; relocated surviving rows may update only current locator fields under original transaction. Removed-event dedupe historical locator never grants current source. No reconstruction from current coordinates is accepted as original receipt."
+    },
+    {
+      "id": "G16",
+      "name": "Atomic activation.",
+      "required_predicate": "After actual synchronized target CURRENT, ONE original redb transaction requires the exact final pending value and complete target rows/frontier/shadow; activates the target actual generation, updates current_generation_id, retires the old node with first retirement time/successor, and clears pending. Before/after checkpoint roots preserve unrelated existing nodes and all protected slot/history/hold facts. Original transaction ID/readback and exact selected aftermath proofs bind committed. A CURRENT effect without proven activation is not committed. No target projection/checkpoint publication is permitted before CURRENT, and no redb pointer can roll CURRENT back."
+    },
+    {
+      "id": "G17",
+      "name": "Exact graph.",
+      "required_predicate": "Ordinary chain is preparing -> building -> verified -> commit_pending -> committed -> finalized. Additional edges are preparing/building/verified/commit_pending -> failed or recovery_required; committed -> recovery_required; recovery_required -> committed or failed. No same-state-as-new, skipped/reversed/alternate ordinary edge, recovery_required -> finalized, committed -> failed or terminal outgoing edge is legal. Schema-valid proof variants do not themselves prove graph adjacency."
+    },
+    {
+      "id": "G18",
+      "name": "Phase predicates.",
+      "required_predicate": "preparing requires actual admitted lease/header/freeze/modes; building requires actual target build admission while source wins; verified requires complete captured target bytes/artifacts while source wins; commit_pending requires exact durable complete pending candidate and proven unchanged CURRENT. committed requires target CURRENT plus complete original activation and applied selected aftermath; finalized additionally requires pending already cleared, actual finalization complete and a genuine next target active. Old source deletion remains separate. All phase proof records contain original native state/guard evidence captured at that phase, not synthesized from later repair."
+    },
+    {
+      "id": "G19",
+      "name": "Unproved reservation disposition.",
+      "required_predicate": "Reconcile actual pending attempt before any different successor. If its exact complete legal postcondition is provable, record that original edge, never a second identity. Otherwise the original publisher records actual attempted-effect result (including every known/unresolved genuine effect), closes the conditional observation with no proved event, and admits/proves the true exceptional edge from last-proven predecessor at a fresh ordinal. Publish this disposition/successor join in one original journal replacement or exact recoverable pre/post intent. Preserve the intended old identity, effect results/dependencies and ordinal permanently within the retained detail; never reuse/resurrect it after an exceptional successor. An open/malformed disposition cannot be skipped."
+    },
+    {
+      "id": "G20",
+      "name": "Mandatory recovery_required cut.",
+      "required_predicate": "If commit_pending's committed reservation changed CURRENT to target but activation is incomplete/unproven, close the unproved attempt with original target-visible custody and prove commit_pending -> recovery_required. Later prove recovery_required -> committed -> finalized, rejoining actual already-completed effects without repeating them. After committed, incomplete/ambiguous finalization requires recovery_required while preserving target. Unknown controls preserve both sides. failure requires exact valid unchanged source and proof of no target visibility/activation; a latest filename or absent local activation row is insufficient."
+    },
+    {
+      "id": "G21",
+      "name": "Narrow internal continuation.",
+      "required_predicate": "Source-selected phases must settle their own required original receipt before the next physical stage. After target CURRENT, only the same original maintenance owner may use proved committed + durable original observation obligation to perform remaining finalization/next-active effects before committed's own unavailable receipt. This is the explicit T3 dependency exception. Ordinary runtime writes, other maintenance, unrelated projector publication, checkpoint advance and successful terminal result remain fenced. Target activation/index work required by G16 and exact internal convergence are the only allowed owner effects. A generic `advance_allowed` result is not this permit."
+    },
+    {
+      "id": "G22",
+      "name": "Historical delivery order.",
+      "required_predicate": "Once a genuine safe sink is available, drain proved original edges in legal predecessor order. Authenticate every skipped closed-unproved attempt disposition and retained effects. No later actual group advances until original previous group's first receipt settles. Frozen original actor/time/input remain historical observations; a delayed recovery_required event does not assert that repaired current native state is still ambiguous. Current authority is read independently. An unissued proved terminal finalized/failed event stays terminal with pending delivery/result custody; it cannot create an outgoing phase or an invented success receipt."
+    },
+    {
+      "id": "G23",
+      "name": "Source-side sealed-carrier exception.",
+      "required_predicate": "If failure/recovery resolves to proven never-published source after carrier seal, original recovery/rotation owner may create an exact successor source active under existing native intent/namespace rules, preserving sealed carrier/issued groups. It may not reopen the carrier or select source after target visibility. This adapter must be explicitly installed for the native role; otherwise observation remains pending/unavailable. Creating a safe sink is not a new public retry/force action."
+    },
+    {
+      "id": "G24",
+      "name": "Publication final fences.",
+      "required_predicate": "At every actual native namespace/control/DB publisher and original source/receipt/output publisher, derive the complete expected permitted afterimage from actual original before-state before returning helpers. After all helpers/copies, compare actual owner/root identity, whole selected Store/coordinator/native/index/database/Vault state, current selected backup token, complete source/target/carrier bytes/membership, journal/pending/attempt/phase/producer, all receipt groups/full-value rows and exact candidate under the same held fence. No helper runs after the final pure check and before the publication it guards. Legitimate earlier effects survive a later refusal; there is no rollback or posthoc blessing. A wrapper-only check after original publication does not satisfy this guard."
+    },
+    {
+      "id": "G25",
+      "name": "Terminal publication.",
+      "required_predicate": "The original native terminal publisher requires original terminal phase proof, every attempted effect reconciled/disposed, every proved observation issued with actual complete original v2/full-value/first receipt joins, selected aftermath applied where successful, and all required result obligations ready. It produces the closed terminal_result itself from original header/terminal edge/actual receipt. The original journal is frozen with settlement_ready and an exact detail catalogue before the result transaction. The catalogue excludes its own journal image to avoid self-hash; terminal_map separately binds that exact closed journal image. The one original terminal-map transaction authenticates absence or exact same original result, writes immutable first_fully_settled_at_utc at first successful durable publication, and reserves no new lifecycle edge. Result candidates and current complete owner facts are checked inside this original transaction/publication. Retry returns original bytes/time; conflict refuses."
+    },
+    {
+      "id": "G26",
+      "name": "Accepted DL-049 policy.",
+      "required_predicate": "RP-COMPACTION-DETAIL-7D@1.0.0 is the proposed exact registry materialization of canonical DL-049 at 666344900b4908e7a2ff451b4f43575521bcf8fe. Anchor kind resolution means exactly G25 first durable fully settled original terminal result, successful or failed; TTL=604800 seconds, inclusive eligibility at anchor+TTL. No unresolved anchor, reference-release clock, retry/read timer reset, count/bytes cap or new janitor schedule. Integer timestamp arithmetic does not wrap. Current source/control membership and complete original hold/live/backup/rollback/recovery/maintenance protections override age. The policy object is fixed and all actual member registrations must resolve it; no unknown-policy substitution."
+    },
+    {
+      "id": "G27",
+      "name": "Exact eligible members.",
+      "required_predicate": "Only original C10 survivor/removal/translation detail, C11 obsolete candidate/carrier/publication snapshots, and C12 fully resolved detailed journal/attempt/phase bytes are eligible. Core descriptor files are metadata detail only if obsolete and free of actual dependencies; physical core target segments remain independent source, never deleted by detail retirement. Current CURRENT/manifest, actual selected carrier/target/active, original receipts/dedupe, minimum terminal map and independently required owner rows are forbidden targets. Typed refs alone neither authorize deletion nor automatically create retention; enumerate actual live dependencies through original owners. A translation/index or current namespace reader that still needs detailed proof protects it until a valid original handoff/rebuild releases that dependency. Missing proof of release fences deletion."
+    },
+    {
+      "id": "G28",
+      "name": "Whole journal safety and exact catalogue.",
+      "required_predicate": "A journal is removable only if every physical attempt, actual event/receipt/result obligation and dependent control member is settled and none is independently required; never unlink a mutable journal containing one needed member. The proposed layout freezes a closed per-operation journal at G25, separates minimum indefinite terminal/receipt custody, and records exact immutable detail members. If an implementation mixes later live members into that file, whole-file purge is unavailable; it needs a separately reviewed exact member-preserving rewrite contract. There is no broad prune by filename/prefix/age. Each original member's current exact bytes/length/kind/path/instance/operation/ordinal and actual policy match the authenticated catalogue; the closed journal itself comes from terminal_map's separate original hash. Catalogue omissions, extra proposed targets, renamed substitutes or a path resolving another object refuse."
+    },
+    {
+      "id": "G29",
+      "name": "Crash-safe retirement.",
+      "required_predicate": "At an eligible frozen janitor cutoff under original writer/hold/reference exclusion, create a deterministic original retirement intent before unlink. retirement_id is `pm.storage.compaction.detail_retirement.v1:` + HMP([domain,\"1.0.0\",instance,compaction_id,original_settlement_transaction_id,detail_catalog_sha256]); it does not include cutoff/retry time. The intent lists exact permitted members and preserves first anchor. Before each individual unlink and its destination parent sync, recheck actual entire terminal/result/policy/remaining-member/current-protection state and exact native preimage under the original owner. Every successful unlink has its original readback/effect identity; a crash resumes matching pre/post or fences a third state. Preserve remaining intent and actual completed removals on a later blocker/refusal. New references cannot race the same owner exclusion."
+    },
+    {
+      "id": "G30",
+      "name": "Retirement completion.",
+      "required_predicate": "After all exact listed members are proven removed, atomically fill the terminal_map's previously null detail_retirement_receipt with original member-set digest/count and first retirement time/transaction. Immutable original terminal result/settlement fields remain byte-identical. Remove the exact original retirement intent only after this durable compact receipt and full native absence readback, under existing intent cleanup. A crash after member removal but before receipt keeps the intent; after receipt but before intent removal returns/rejoins that original result. No lifecycle event/phase is reopened. This compact content-free retirement receipt is source-lineage custody under the same existing indefinite map, not a raw detail archive."
+    },
+    {
+      "id": "G31",
+      "name": "Backup/restore.",
+      "required_predicate": "Existing supported backup-boundary capture is mutually exclusive with compaction and captures a coherent settled source/receipt/control/terminal state. Retained detail is captured or protected according to its actual existing backup registration. Active-detail removal does not delete registered backup copies, change their clock or bypass an actual backup reference. Restore preserves original settlement/retirement times and original terminal/receipt custody; no seven-day reset. Original StorageRecoveryCoordinator must bind current chosen backup/root and exact complete native inventory/canonical receipt state. New post-restore compaction/transition append requires an actual newly admitted original operation/transition in the existing transient accepted-operation protocol; stale pending identity or absent old receipt cannot be relabelled new. Existing old-role restore behavior remains unchanged; arbitrary copied multi-segment state is not native restore admission."
+    },
+    {
+      "id": "G32",
+      "name": "Passive reads.",
+      "required_predicate": "current_operation reports original last-proven/delivered phases/modes separately from actual current native state; unsettled historical events never select authority. original_terminal_result resolves the actual minimal map and original canonical receipt row through the same native owner, preserving original result bytes/time without reconstructing expired EventRecord bodies or detailed proofs. This is retained receipt/result custody, not a `resolve_full_value` assertion over a missing event. Full-value source/event reads still require actual complete surviving event and existing resolver. retained_detail resolves original exact member only while bytes and original authority/protections are available; after lawful retirement it is unavailable. No read appends, dispatches, advances a checkpoint, reacquires erased detail or restarts a terminal operation. Recheck current access/root/owner/whole-output after all helpers before disclosure."
+    }
+  ],
+  "execution": "NATIVE_EXECUTION_UNPROVED",
+  "contract_status": "SPECIFIED_CONTRACT_NATIVE_EXECUTION_UNPROVED"
+}

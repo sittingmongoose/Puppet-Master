@@ -1,0 +1,21 @@
+{
+  "status": "SPECIFIED_ORIGINAL_METHOD_BINDINGS_NATIVE_EXECUTION_UNPROVED",
+  "bindings": {
+    "assign_event_sequence": "SequenceOwner.assign_to_original_append_intent",
+    "create_compacted_output": "SeglogOwner.create_compacted_output",
+    "replace_staged_candidate": "IndexOwner.replace_staged_candidate",
+    "publish_detail_artifact": "MaintenanceOwner.publish_detail_artifact",
+    "write_initial_pending": "IndexOwner.replace_staged_candidate_and_pending",
+    "replace_pending_candidate": "IndexOwner.replace_staged_candidate_and_pending",
+    "seal_carrier": "SeglogOwner.seal_carrier_without_source_replacement",
+    "publish_final_manifest": "SeglogOwner.publish_final_manifest",
+    "replace_current": "SeglogOwner.publish_current",
+    "activate_target_atomic": "IndexOwner.activate_compaction_transaction",
+    "finalize_namespace": "SeglogOwner.finalize_namespace",
+    "create_target_active": "SeglogOwner.create_target_active",
+    "create_source_successor": "SeglogOwner.create_source_successor_after_proven_nonpublication",
+    "append_event_source": "Store.append_proved_compaction_observation",
+    "issue_event_receipt": "Store.issue"
+  },
+  "contract_status": "SPECIFIED_CONTRACT_NATIVE_EXECUTION_UNPROVED"
+}

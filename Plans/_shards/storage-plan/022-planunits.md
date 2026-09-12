@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L2362-L15023
 
-Source SHA256: `fda644f3612bd7bdb1c86224f67900c91ef38227f7c63461bb96e3feb171d492`
+Source SHA256: `799c12082800fcfc0906e79e51d64d0a09e13479586919d3d81b2d73508bbe0f`
 
 ---
 
@@ -10719,7 +10719,7 @@ plan_unit_id: SP-182
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Compaction and backup/restore enhancements preserve sequence order, exclude the active segment, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild JSONL/Tantivy disposable projections instead of treating them as authoritative.
+canonical_text: Compaction and backup/restore enhancements preserve sequence order, exclude the active segment from frozen removal and policy inputs while carrying its authenticated bytes unchanged under SP-295, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild JSONL/Tantivy disposable projections instead of treating them as authoritative.
 gui_related: false
 gui_classification_reason: This unit preserves backend compaction and backup/restore authority rules.
 split_recommended: false

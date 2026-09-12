@@ -1,0 +1,44 @@
+{
+  "initial": {
+    "from": null,
+    "to": "preparing",
+    "ordinal": 0
+  },
+  "adjacency": {
+    "preparing": [
+      "building",
+      "failed",
+      "recovery_required"
+    ],
+    "building": [
+      "verified",
+      "failed",
+      "recovery_required"
+    ],
+    "verified": [
+      "commit_pending",
+      "failed",
+      "recovery_required"
+    ],
+    "commit_pending": [
+      "committed",
+      "failed",
+      "recovery_required"
+    ],
+    "committed": [
+      "finalized",
+      "recovery_required"
+    ],
+    "recovery_required": [
+      "committed",
+      "failed"
+    ],
+    "finalized": [],
+    "failed": []
+  },
+  "last_proven_is_not_last_reserved_or_delivered": true,
+  "unproved_attempt": "original effect disposition and actual exceptional successor atomically joined; no event/receipt/ordinal reuse",
+  "post_current_continuation": "G21 only",
+  "native_execution": "NATIVE_EXECUTION_UNPROVED",
+  "contract_status": "SPECIFIED_CONTRACT_NATIVE_EXECUTION_UNPROVED"
+}

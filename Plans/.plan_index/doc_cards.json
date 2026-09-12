@@ -16600,10 +16600,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 186,
+        "False": 189,
         "True": 102
       },
-      "heading_count": 648,
+      "heading_count": 657,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16657,6 +16657,8 @@
         "Plans/storage_boot_history_pending.schema.json",
         "Plans/storage_boot_original_source_contracts.schema.json",
         "Plans/storage_boot_recovery_control.schema.json",
+        "Plans/storage_compaction_contracts/methods.json",
+        "Plans/storage_compaction_native_contracts.schema.json",
         "Plans/storage_integrity_finding_contracts.schema.json",
         "Plans/storage_recovery_action_custody.schema.json",
         "Plans/storage_recovery_contracts.schema.json",
@@ -16676,9 +16678,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23576,
+      "line_count": 23784,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 288,
+      "plan_unit_count": 291,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16967,7 +16969,10 @@
         "SP-291",
         "SP-292",
         "SP-293",
-        "SP-294"
+        "SP-294",
+        "SP-295",
+        "SP-296",
+        "SP-297"
       ],
       "reasoning_tiers": [
         "high",
@@ -16988,10 +16993,12 @@
         "execution_boundary",
         "false_boot_occurrence_or_non_original_receipt_publication",
         "false_certification_or_lost_original_decision_authority",
+        "false_compaction_phase_or_repeated_original_effect",
         "false_durability",
         "false_earliest_boot_history_or_lost_original_activation_continuity",
         "false_generic_event_index_publication_or_source_coverage",
         "false_native_append_settlement_or_source_retirement",
+        "false_native_source_selection_or_receipt_rebinding",
         "false_original_goal_creation_or_lost_command_custody",
         "false_original_recovery_effect_or_receipt_publication",
         "goal_body_physical_origin_cas_retention_or_restore_authority_escape",
@@ -17014,6 +17021,7 @@
         "p0_memory_history_logging_hardening",
         "p1_provider_capability_and_metadata_hardening",
         "persistence_identity_drift",
+        "premature_detail_deletion_or_false_original_terminal_result",
         "remote_identity_drift",
         "required_mvp_storage_registry_omission",
         "research_decision_review_authority_or_resume_drift",
@@ -17049,10 +17057,10 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "fda644f3612bd7bdb1c86224f67900c91ef38227f7c63461bb96e3feb171d492",
+      "sha256": "799c12082800fcfc0906e79e51d64d0a09e13479586919d3d81b2d73508bbe0f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 285,
+        "accepted": 288,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17062,7 +17070,7 @@
         "requirement": 252,
         "schema_contract": 11,
         "security_contract": 1,
-        "storage_contract": 18,
+        "storage_contract": 21,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -17096,6 +17104,7 @@
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
+        "Plans/Decision_Log.md#DL-049",
         "Plans/browser_event_admission_fixtures.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
@@ -17172,6 +17181,11 @@
         "Plans/storage_boot_history_pending.schema.json",
         "Plans/storage_boot_original_source_contracts.schema.json",
         "Plans/storage_boot_recovery_control.schema.json",
+        "Plans/storage_compaction_contracts/effect-methods.json",
+        "Plans/storage_compaction_contracts/guards.json",
+        "Plans/storage_compaction_contracts/identity.json",
+        "Plans/storage_compaction_contracts/phases.json",
+        "Plans/storage_compaction_native_contracts.schema.json",
         "Plans/storage_integrity_finding_contract_fixtures.json",
         "Plans/storage_integrity_finding_contracts.schema.json",
         "Plans/storage_recovery_action_custody.schema.json",
@@ -17237,6 +17251,7 @@
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
+        "reports/event-authority-20260911/step-08-compaction-validation.md",
         "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
@@ -19138,7 +19153,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T11:38:30Z",
+  "generated_at_utc": "2026-09-12T12:42:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19146,13 +19161,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3411,
+      "False": 3414,
       "True": 3164
     },
-    "plan_unit_count": 6575,
+    "plan_unit_count": 6578,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6384,
+      "accepted": 6387,
       "retired": 182,
       "superseded": 9
     },
@@ -19236,7 +19251,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 18,
+      "storage_contract": 21,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
