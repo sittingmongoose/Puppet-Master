@@ -6037,6 +6037,7 @@
     "OSI-421",
     "OSI-422",
     "PSMERA-021",
+    "SP-293",
     "UCC-124",
     "SP-292",
     "SP-277",
@@ -66867,6 +66868,46 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-279"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-293",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -95661,7 +95702,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T08:35:26Z",
+  "generated_at_utc": "2026-09-12T09:32:42Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -194213,6 +194254,23 @@
       "unit_type": "storage_contract"
     },
     {
+      "context_scope": "original_recovery_action_and_complete_physical_publication",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-293",
+      "reasoning_tier": "high",
+      "risk_class": "false_original_recovery_effect_or_receipt_publication",
+      "source_location": {
+        "heading": "SP-293 - Recovery Original Action Custody and Publication",
+        "heading_level": 3,
+        "heading_line": 23437,
+        "line": 23439,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -207343,10 +207401,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15166,
+    "depends_on_edge_count": 15174,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17817,
-    "node_count": 6569,
+    "edge_count": 17825,
+    "node_count": 6570,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

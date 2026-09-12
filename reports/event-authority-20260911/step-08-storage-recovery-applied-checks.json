@@ -1,0 +1,516 @@
+{
+  "status": "CANONICAL_CONTRACT_VERIFIED_NATIVE_NOT_RUN",
+  "source_commit": "c881c8c62e9894b183866f5b1400d7b1ef81eb17",
+  "scope": "Original six-action Recovery custody, publication, first-receipt completion and passive lookup",
+  "compiled_files": {
+    "Plans/storage-plan.md": "71a2cfe2d19dcd08d42d316b467fd788cf31b1fa9ac2267143b815f6bfa0e61e",
+    "Plans/storage_recovery_action_custody.schema.json": "0bf2721e455405b9451a6c2ab8f0534961684ec3220e999048d5cb965d8ab2d6",
+    "Plans/storage_recovery_action_custody_contract_fixtures.json": "8b98e2de5ee8f0b05b3f6cde730a059edf3a48958a010fda7188d906c15867e3",
+    "Plans/storage_value_registry.json": "646bf396402ef07b2acb08ecf641a233fc93fa9073d1c9ba343c42194b65cc9d"
+  },
+  "new_plan_units": [
+    "SP-293"
+  ],
+  "modified_existing_plan_units": [],
+  "preservation": {
+    "status": "PASS",
+    "before_plan_units": 6569,
+    "after_plan_units": 6570,
+    "preserved_semantic_plan_units": 6569,
+    "excluded_generated_location_fields": [
+      "source_doc_sha256",
+      "source_location"
+    ],
+    "new_plan_units": [
+      "SP-293"
+    ],
+    "new_gui_related": false,
+    "new_acceptance_criteria": 7,
+    "before_families": 118,
+    "after_families": 119,
+    "all_prior_family_objects_exact": true,
+    "all_other_registry_fields_exact": true,
+    "original_storage_owner_byte_prefix_exact": true,
+    "events": 42,
+    "retention_policies": 26,
+    "critical": 16,
+    "mvp": 46,
+    "changed_shard_owners": [
+      "storage-plan",
+      "storage_value_registry"
+    ]
+  },
+  "packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-recovery-applied-adoption-20260912/v1/manifest.json",
+      "sha256": "132190001654f84f746b4703fa15396d8d35afb61162993a8be6fbcab2d9dbb2",
+      "members": 416,
+      "disposition": "initial_subject_failed_independent_review"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/recovery-applied-v1-independent-review-20260912/review-manifest.json",
+      "sha256": "708b2736688cb6e3a4ab1497fc7f9d26b76d5de58f5c3214b99737f923b8cb0c",
+      "members": 433,
+      "disposition": "independent_v1_whole_plan_and_selection_failures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-recovery-applied-adoption-20260912/v2/manifest.json",
+      "sha256": "ca564760192e23ea590c53d3fb72664b8108fdf79346ca9242dccd6927a388cd",
+      "members": 428,
+      "disposition": "second_subject_failed_independent_review"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/recovery-applied-v2-independent-review-20260912/review-manifest.json",
+      "sha256": "01aded59049d18463354cb8b98612c4638d40fe1bbf0eebad84dad297be9592c",
+      "members": 478,
+      "disposition": "independent_v2_late_candidate_publication_failure"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-recovery-applied-adoption-20260912/v3/manifest.json",
+      "sha256": "1e83744d2bb57fb1c4b161ed45d9e71226b4b43d35674b1ae9514ef810afd67e",
+      "members": 434,
+      "disposition": "third_subject_failed_independent_review"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/recovery-applied-v3-independent-review-20260912/review-manifest.json",
+      "sha256": "f7e8285444bb6f2d75ed41c3d1fa15cb7a5f9b78c25e606a54fb2e2079d54d02",
+      "members": 491,
+      "disposition": "independent_v3_selected_backup_and_retired_control_failures"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-recovery-applied-adoption-20260912/v4/manifest.json",
+      "sha256": "eb83a15cf155b40c9b1039b44e3d8abfa7e4dbb1a0e85c653e196433a7295ca6",
+      "members": 440,
+      "disposition": "corrected_original_owner_v4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/recovery-applied-v4-independent-review-20260912/review-manifest.json",
+      "sha256": "0171e214dfb43cb73d0fd95049398c369410d05a0572edf660a3b25b9eb54fcf",
+      "members": 489,
+      "disposition": "independent_984_case_v4_review_pass"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/storage-recovery-applied-canonical-20260912/manifest.json",
+      "sha256": "2a0af5b0ab0e69df1634aa64117b3f2ead94f471fbb643ee3d09da189d11d060",
+      "members": 73,
+      "disposition": "canonical_schema_bound_before_original_owner_birth"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/recovery-applied-root-20260912/compiled-review-manifest.json",
+      "sha256": "fb2024bf6eb7c1f91ecf023ebe71df90e05bbeb4b2eb84e5b225d095c02f3be0",
+      "members": 8,
+      "disposition": "frozen_four_file_compilation"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/recovery-applied-compilation-independent-review-20260912/review-manifest.json",
+      "sha256": "75b93dc346d2d863322b47a7c6d239367b40a366d86670aeb47b430649337daa",
+      "members": 535,
+      "disposition": "independent_compilation_and_exact_capture_reproduction_pass"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/storage-recovery-applied-repository-checks-20260912/manifest.json",
+      "sha256": "02419852bd1eb073eb5fe424575e0d51fc617b4e4ce8ec10c798ae6558200888",
+      "members": 17,
+      "disposition": "repository_verification_actual_results"
+    }
+  ],
+  "counts": {
+    "v4_scoped_cases": 984,
+    "included_prior_cases": 873,
+    "included_exact_reviewer_cases": 8,
+    "included_new_author_cases": 103,
+    "independent_v4_rerun_same_scope": 984,
+    "canonical_actual_phase_values": 24,
+    "canonical_shape_negative_variants": 12,
+    "canonical_shape_cases": 36,
+    "same_examples_registry_root_recheck": 36,
+    "canonical_six_action_completion_and_passive_read_traces": 6,
+    "byte_exact_independent_capture_files": 73,
+    "native_cases": 0
+  },
+  "finding_and_correction": "Initial review found whole-plan and selected-input substitutions. Later reviews found last-return candidate mutation and omitted selected-backup/retired-control facts. Corrected original apply_physical captures complete original coordinator/Store/root facts at entry before helpers, independently derives permitted genuine intermediate transitions and performs a pure complete comparison after the last returning helper before physical publication. Genuine earlier receipt, backup or restore-occurrence effects survive later refusal.",
+  "canonical_identity_mapping": "Only proposal sidecar root ID/title become canonical; all definitions, record tags, domains and codecs remain exact. Registry materializes the same capsule as an explicit object root with all local definitions. Canonical schema is installed before original owner construction; captured values are not repaired after publication. The 984-case suite remains its frozen proposal binding; canonical-bound captures are a separate finite scope.",
+  "retention": "One new content-free original action/result audit-custody family under existing RP-AUTHORITY-INDEFINITE. Operational event/history and raw source/control/backup lifetimes remain separate. All previous family and policy objects are exact.",
+  "repository_verification": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2453,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "plan_index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T09:33:46Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25415,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6570
+      }
+    },
+    "standard_full_gates_status": "fail",
+    "standard_full_gate_summary": {
+      "json_syntax": {
+        "status": "fail",
+        "elapsed_ms": 3471,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "raw_capture_manifest_schema_unavailable": 1
+        }
+      },
+      "verify_spec_lock": {
+        "status": "fail",
+        "elapsed_ms": 337,
+        "reported_failure_count": 28,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "stale_hash": 28
+        }
+      },
+      "validate_plan_graph": {
+        "status": "fail",
+        "elapsed_ms": 8046,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "artifact_hash_stale": 50
+        }
+      },
+      "validate_auto_decisions": {
+        "status": "pass",
+        "elapsed_ms": 202,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_evidence": {
+        "status": "fail",
+        "elapsed_ms": 7749,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "artifact_hash_stale": 50
+        }
+      },
+      "lint_contractrefs": {
+        "status": "fail",
+        "elapsed_ms": 37199,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "missing_ref": 1
+        }
+      },
+      "lint_banned_phrases": {
+        "status": "pass",
+        "elapsed_ms": 212,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "lint_path_refs": {
+        "status": "fail",
+        "elapsed_ms": 1780,
+        "reported_failure_count": 10,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "implementation_surface_missing_or_untyped": 10
+        }
+      },
+      "check_project_artifact_requirements": {
+        "status": "pass",
+        "elapsed_ms": 166,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "status": "pass",
+        "elapsed_ms": 181,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "status": "fail",
+        "elapsed_ms": 605,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "unresolved_local_ref": 50
+        }
+      },
+      "validate_new_contracts": {
+        "status": "pass",
+        "elapsed_ms": 112087,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_forge_backup_acceptance": {
+        "status": "pass",
+        "elapsed_ms": 648,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_browser_event_admission": {
+        "status": "pass",
+        "elapsed_ms": 6653,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_testing_session_event_admission": {
+        "status": "pass",
+        "elapsed_ms": 2610,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_github_project_integration": {
+        "status": "pass",
+        "elapsed_ms": 1092,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_ui_command_response": {
+        "status": "pass",
+        "elapsed_ms": 1297,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_working_notebook_contracts": {
+        "status": "pass",
+        "elapsed_ms": 669,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_server_command_gap": {
+        "status": "pass",
+        "elapsed_ms": 6275,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_case_l_non_event_materialization": {
+        "status": "pass",
+        "elapsed_ms": 727,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_implementation_readiness": {
+        "status": "fail",
+        "elapsed_ms": 10533,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "buildability_gate_report_stale_or_not_canonical": 1,
+          "pnc019_source_hash_stale": 15,
+          "pnc019_source_hash_path_missing": 1,
+          "event_authority_currentness_audit_unavailable": 1,
+          "event_authority_checkpoint_changed_requires_fresh_approval": 2,
+          "event_denominator_unresolved": 2,
+          "event_family_contract_depth_unresolved": 2,
+          "event_family_registry_kernel_row_count_mismatch": 1,
+          "event_legacy_fixture_root_mismatch": 1,
+          "event_record_spec_lock_hash_stale": 1,
+          "storage_value_registry_retention_policy_count_mismatch": 1,
+          "storage_value_registry_family_count_mismatch": 1,
+          "storage_value_secret_material_key": 10,
+          "storage_value_secret_material_field": 4,
+          "storage_value_registry_status_counts_mismatch": 1,
+          "storage_value_registry_tier_counts_mismatch": 1,
+          "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+          "storage_value_registry_semantic_recovery_authority_mismatch": 1,
+          "storage_value_registry_spec_lock_hash_stale": 2
+        }
+      },
+      "validate_plan_migration": {
+        "status": "fail",
+        "elapsed_ms": 23914,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "doc_count_mismatch": 1,
+          "inventory_doc_set_mismatch": 1,
+          "stale_batch_report_sha256_after": 48
+        }
+      },
+      "validate_runtime_artifact_schemas": {
+        "status": "pass",
+        "elapsed_ms": 213,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 199,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_project_output_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 173,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_usage_gui_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 185,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_pm7_gui_fixtures": {
+        "status": "fail",
+        "elapsed_ms": 448,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "invalid_validator_output": 1
+        }
+      },
+      "validate_usage_contract_drift": {
+        "status": "pass",
+        "elapsed_ms": 2875,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_gui_asset_policy": {
+        "status": "pass",
+        "elapsed_ms": 332,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_web_capability_contracts": {
+        "status": "pass",
+        "elapsed_ms": 2677,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_filesafe_security_policy": {
+        "status": "pass",
+        "elapsed_ms": 230,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_wiring_matrix": {
+        "status": "pass",
+        "elapsed_ms": 484,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_touch_closure": {
+        "status": "pass",
+        "elapsed_ms": 1548,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_audit_closure": {
+        "status": "fail",
+        "elapsed_ms": 13819,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "audit_closure_validator_error": 50
+        }
+      },
+      "validate_audit_status_index": {
+        "status": "fail",
+        "elapsed_ms": 322,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "stale_audit_status_index": 1
+        }
+      },
+      "check_shards": {
+        "status": "pass",
+        "elapsed_ms": 8286,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      }
+    },
+    "standard_full_gate_assessment": {
+      "passed": 24,
+      "failed": 12,
+      "interpretation": "Stale/unsealed governance and migration/audit evidence, absent baseline fixtures/references, existing Home local-ref validator diagnostics, and current incomplete event/readiness census remain visible. The full suite is not green. Focused Recovery schema, original-owner and preservation checks are separate evidence. No full before/after gate equivalence is claimed; full-suite failure lists can be capped at 50."
+    },
+    "central_registry_data": {
+      "before_count": 21,
+      "after_count": 21,
+      "new_diagnostic_categories_or_locations": [],
+      "changed_details": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 119
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 97,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 24,
+            "later_gui_or_feature_projection": 92,
+            "migration_only": 3
+          }
+        }
+      ],
+      "validator_unchanged": true,
+      "waiver": false
+    }
+  },
+  "native_limitations": [
+    "actual original source/permission/installation authenticity",
+    "native codec and exact-number routes",
+    "fsync/rename and concurrent exclusion",
+    "cold reopen and physical backup/restore",
+    "Boot ingestion and projector/checkpoint aftermath"
+  ],
+  "scope_limits": [
+    "Saved issued-response recovery does not permit old pending completion, fresh mint or source reconstruction.",
+    "Consumed restore occurrence cannot execute again; unsupported nonempty-gap and two uint64 semantic routes refuse.",
+    "Repeated reruns/captures are not additive unique discoveries.",
+    "No overall event-depth or Step 8/9 completion, readiness admission, WorkNode, validator edit or governance reseal."
+  ],
+  "cost": "Astra medium author/reviewer plus root review; billing data unavailable."
+}

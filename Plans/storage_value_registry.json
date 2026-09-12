@@ -65448,6 +65448,2923 @@
           }
         }
       }
+    },
+    {
+      "family_id": "storage_recovery_action_custody",
+      "storage_kind": "canonical_file",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "storage/migrations/recovery-actions/v1/{sha256_utf8(storage_instance_id)}/{input_sha256}.msgpack",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.storage_recovery_action_custody.v1",
+      "value_schema_ref": "Plans/storage_recovery_action_custody.schema.json#/$defs/capsule",
+      "owner_doc": "Plans/storage-plan.md#recovery-original-action-custody-and-publication",
+      "producer": [
+        "storage.recovery_applied.capture.v1",
+        "storage.recovery_applied.publish.v1"
+      ],
+      "consumers": [
+        "storage.recovery_applied.publish.v1",
+        "storage.recovery_applied.read.v1",
+        "StorageRecoveryCoordinator",
+        "original mandatory backup owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "recovery_id",
+        "input",
+        "input_sha256",
+        "original_actor_ref",
+        "admitted_at_utc",
+        "original_native_intent",
+        "prepared_postcondition",
+        "revision",
+        "phase",
+        "last_proven_phase",
+        "physical_receipt",
+        "frozen_producer_input",
+        "first_append_receipt",
+        "original_restore_reservation"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "original_native_intent",
+        "physical_receipt",
+        "frozen_producer_input",
+        "first_append_receipt",
+        "original_restore_reservation"
+      ],
+      "replay_behavior": "Original immutable input and prepared complete postcondition precede native intent. Reconcile original physical effect once, preserve first durably captured physical receipt, freeze one event and replay original eleven-field AppendReceipt. Missing original/current proof is unavailable; no legacy backfill or consumed restore redispatch.",
+      "migration": "StorageMigrationCoordinator installs actual canonical decoder, six action-owner bindings, capture/publish/read and shared full-value/receipt/group/backup roles before admission under existing graph/ceilings. No production migration edge or proposal-metadata admission is allocated.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#recovery-original-action-custody-and-publication"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#recovery-original-action-custody-and-publication",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#recovery-original-action-custody-and-publication"
+        ]
+      },
+      "retention_compaction": "Only compact content-free original action/receipt authority uses existing RP-AUTHORITY-INDEFINITE@1.0.0 audit-authority/source-lineage class. Pending dependencies remain protected. Event, five-kind maintenance history and raw controls retain independent unchanged policies; no new TTL/count/byte ceiling or automatic hold clearance.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Closed non-secret original identities, hashes, exact UInt64 ranges, typed action proof and receipt references only. No source bodies, raw controls, credentials, machine paths or error/log text.",
+      "legacy_canonical_crosswalk_status": "NEW first-native compact Recovery authority under SP-293. Existing event v2 and read-only v1 migration remain unchanged; prior payload/report refs cannot reconstruct original action or receipt. No runtime/native admission follows from schema registration.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#recovery-original-action-custody-and-publication"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "recovery_id",
+          "input",
+          "input_sha256",
+          "original_actor_ref",
+          "admitted_at_utc",
+          "original_native_intent",
+          "prepared_postcondition",
+          "revision",
+          "phase",
+          "last_proven_phase",
+          "physical_receipt",
+          "frozen_producer_input",
+          "first_append_receipt",
+          "original_restore_reservation"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.storage_recovery_action_custody.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "recovery_id": {
+            "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "input": {
+            "$ref": "#/$defs/input"
+          },
+          "input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "original_actor_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "admitted_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "original_native_intent": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/receipt_ref"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "prepared_postcondition": {
+            "$ref": "#/$defs/prepared_postcondition"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "phase": {
+            "enum": [
+              "prepared",
+              "effect_started",
+              "effect_durable",
+              "append_pending",
+              "committed",
+              "recovery_required"
+            ]
+          },
+          "last_proven_phase": {
+            "enum": [
+              "prepared",
+              "effect_started",
+              "effect_durable",
+              "append_pending",
+              "committed"
+            ]
+          },
+          "physical_receipt": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/physical_receipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "frozen_producer_input": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/frozen_producer_input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "first_append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_restore_reservation": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/restore_reservation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "physical_receipt": {
+                  "type": "null"
+                },
+                "frozen_producer_input": {
+                  "type": "null"
+                },
+                "first_append_receipt": {
+                  "type": "null"
+                },
+                "original_native_intent": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "prepared"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "prepared"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "effect_started"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "physical_receipt": {
+                  "type": "null"
+                },
+                "frozen_producer_input": {
+                  "type": "null"
+                },
+                "first_append_receipt": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "effect_started"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "effect_started"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "effect_durable"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "physical_receipt": {
+                  "$ref": "#/$defs/physical_receipt"
+                },
+                "frozen_producer_input": {
+                  "type": "null"
+                },
+                "first_append_receipt": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "effect_durable"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "effect_durable"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "append_pending"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "physical_receipt": {
+                  "$ref": "#/$defs/physical_receipt"
+                },
+                "frozen_producer_input": {
+                  "$ref": "#/$defs/frozen_producer_input"
+                },
+                "first_append_receipt": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "append_pending"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "append_pending"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "physical_receipt": {
+                  "$ref": "#/$defs/physical_receipt"
+                },
+                "frozen_producer_input": {
+                  "$ref": "#/$defs/frozen_producer_input"
+                },
+                "first_append_receipt": {
+                  "$ref": "#/$defs/AppendReceipt"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "last_proven_phase": {
+                  "const": "committed"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "anyOf": [
+                {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "input": {
+                      "properties": {
+                        "choice": {
+                          "properties": {
+                            "action": {
+                              "const": "block_mutation"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "then": {},
+            "else": {
+              "properties": {
+                "original_native_intent": {
+                  "$ref": "#/$defs/receipt_ref"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "input": {
+                  "properties": {
+                    "choice": {
+                      "properties": {
+                        "action": {
+                          "const": "restore_verified_backup"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_restore_reservation": {
+                  "$ref": "#/$defs/restore_reservation"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "original_restore_reservation": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ],
+        "$defs": {
+          "byte_range": {
+            "items": false,
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              }
+            ],
+            "type": "array"
+          },
+          "sequence_gap": {
+            "additionalProperties": false,
+            "properties": {
+              "first_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "last_sequence_id": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "reason": {
+                "enum": [
+                  "allocator_lease_abandoned",
+                  "corruption_loss"
+                ]
+              }
+            },
+            "required": [
+              "first_sequence_id",
+              "last_sequence_id",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "non_secret_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "uint64": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "receipt_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "segment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "segment_generation",
+              "segment_name",
+              "segment_state",
+              "sha256",
+              "length"
+            ],
+            "properties": {
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "segment_state": {
+                "enum": [
+                  "opening",
+                  "active",
+                  "closed",
+                  "sealed_degraded"
+                ]
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "length": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              }
+            }
+          },
+          "manifest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sha256",
+              "generation"
+            ],
+            "properties": {
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "generation": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "root": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "root_generation",
+              "logical_root_fingerprint"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "root_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "logical_root_fingerprint": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "integrity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "integrity_id",
+              "report_ref",
+              "report_sha256"
+            ],
+            "properties": {
+              "integrity_id": {
+                "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "report_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "report_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "backup_selection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "backup_ref",
+              "backup_manifest_sha256",
+              "restore_occurrence_id"
+            ],
+            "properties": {
+              "backup_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "backup_manifest_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "restore_occurrence_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "original_control": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "owner_ref",
+              "object_kind",
+              "object_ref",
+              "object_sha256"
+            ],
+            "properties": {
+              "owner_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "object_kind": {
+                "enum": [
+                  "CURRENT",
+                  "manifest",
+                  "segment",
+                  "source_inventory",
+                  "durable_watermark",
+                  "sequence_lease",
+                  "integrity_finding",
+                  "native_action_intent",
+                  "verified_backup_manifest",
+                  "restore_journal",
+                  "quarantine",
+                  "pre_restore_backup",
+                  "mutation_gate",
+                  "survivor_checkpoint"
+                ]
+              },
+              "object_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "object_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "effect_payload": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "integrity_id"
+                      ]
+                    }
+                  ]
+                },
+                "properties": {
+                  "action": {
+                    "const": "adopt_valid_tail"
+                  },
+                  "checkpoint_action": {
+                    "const": "advance_to_verified_survivor"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "resume_from_verified_checkpoint"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "const": "allocator_lease_abandoned"
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "user_disclosure_required": {
+                    "const": false
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "seal_degraded"
+                  },
+                  "checkpoint_action": {
+                    "const": "hold_without_advance"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "remain_stopped"
+                  },
+                  "sequence_gaps": {
+                    "maxItems": 0
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "truncate_unacknowledged_tail"
+                  },
+                  "checkpoint_action": {
+                    "const": "preserve_verified_checkpoint"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 1,
+                    "minItems": 1
+                  },
+                  "projection_action": {
+                    "const": "resume_from_verified_checkpoint"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "enum": [
+                            "allocator_lease_abandoned",
+                            "corruption_loss"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "exclude_proven_range"
+                  },
+                  "checkpoint_action": {
+                    "const": "invalidate_and_rebuild"
+                  },
+                  "excluded_ranges": {
+                    "minItems": 1
+                  },
+                  "projection_action": {
+                    "const": "rebuild_from_verified_survivor"
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "restore_verified_backup"
+                  },
+                  "checkpoint_action": {
+                    "const": "restore_verified_checkpoint"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "rebuild_from_verified_survivor"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "const": "corruption_loss"
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "block_mutation"
+                  },
+                  "checkpoint_action": {
+                    "const": "hold_without_advance"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "remain_stopped"
+                  },
+                  "sequence_gaps": {
+                    "maxItems": 0
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              }
+            ],
+            "properties": {
+              "action": {
+                "enum": [
+                  "adopt_valid_tail",
+                  "seal_degraded",
+                  "truncate_unacknowledged_tail",
+                  "exclude_proven_range",
+                  "restore_verified_backup",
+                  "block_mutation"
+                ]
+              },
+              "checkpoint_action": {
+                "enum": [
+                  "advance_to_verified_survivor",
+                  "preserve_verified_checkpoint",
+                  "invalidate_and_rebuild",
+                  "restore_verified_checkpoint",
+                  "hold_without_advance"
+                ]
+              },
+              "excluded_ranges": {
+                "items": {
+                  "$ref": "#/$defs/byte_range"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "integrity_id": {
+                "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "post_length": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "post_manifest_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "post_segment_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "pre_length": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "pre_manifest_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "pre_segment_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "projection_action": {
+                "enum": [
+                  "resume_from_verified_checkpoint",
+                  "rebuild_from_verified_survivor",
+                  "remain_stopped"
+                ]
+              },
+              "recovery_id": {
+                "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "sequence_gaps": {
+                "items": {
+                  "$ref": "#/$defs/sequence_gap"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "survivor_digest": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "user_disclosure_required": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "schema_version",
+              "recovery_id",
+              "action",
+              "pre_segment_hash",
+              "post_segment_hash",
+              "pre_manifest_hash",
+              "post_manifest_hash",
+              "pre_length",
+              "post_length",
+              "excluded_ranges",
+              "sequence_gaps",
+              "survivor_digest",
+              "checkpoint_action",
+              "projection_action",
+              "user_disclosure_required"
+            ],
+            "type": "object"
+          },
+          "AppendReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              }
+            }
+          },
+          "choice": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "verified_tail_start",
+                  "verified_tail_end",
+                  "tail_bytes_sha256",
+                  "prior_watermark_ref",
+                  "prior_watermark_sha256"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "adopt_valid_tail"
+                  },
+                  "verified_tail_start": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "verified_tail_end": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "tail_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "prior_watermark_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "prior_watermark_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "original_active_ref",
+                  "selected_degraded_ref"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "seal_degraded"
+                  },
+                  "original_active_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "selected_degraded_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "target_length",
+                  "retained_prefix_sha256",
+                  "removed_tail_sha256",
+                  "prior_watermark_ref",
+                  "prior_watermark_sha256"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "truncate_unacknowledged_tail"
+                  },
+                  "target_length": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "retained_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "removed_tail_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "prior_watermark_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "prior_watermark_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "excluded_ranges",
+                  "sequence_gaps"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "exclude_proven_range"
+                  },
+                  "excluded_ranges": {
+                    "items": {
+                      "$ref": "#/$defs/byte_range"
+                    },
+                    "maxItems": 4096,
+                    "minItems": 0,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "$ref": "#/$defs/sequence_gap"
+                    },
+                    "maxItems": 4096,
+                    "minItems": 0,
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "backup_selection",
+                  "risk_class",
+                  "confirmation_ref"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "restore_verified_backup"
+                  },
+                  "backup_selection": {
+                    "$ref": "#/$defs/backup_selection"
+                  },
+                  "risk_class": {
+                    "enum": [
+                      "none",
+                      "post_backup_writes_will_be_lost",
+                      "unknown_due_corruption"
+                    ]
+                  },
+                  "confirmation_ref": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "mutation_gate_ref",
+                  "reason_ref"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "block_mutation"
+                  },
+                  "mutation_gate_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "root",
+              "target_before",
+              "manifest_before",
+              "integrity",
+              "choice"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.recovery.action_input.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "root": {
+                "$ref": "#/$defs/root"
+              },
+              "target_before": {
+                "$ref": "#/$defs/segment"
+              },
+              "manifest_before": {
+                "$ref": "#/$defs/manifest"
+              },
+              "integrity": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integrity"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "choice": {
+                "$ref": "#/$defs/choice"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "choice": {
+                      "properties": {
+                        "action": {
+                          "const": "adopt_valid_tail"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "integrity": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "integrity": {
+                      "$ref": "#/$defs/integrity"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "prepared_postcondition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target_after",
+              "manifest_after",
+              "survivor_digest",
+              "checkpoint_action",
+              "projection_action",
+              "user_disclosure_required",
+              "original_controls"
+            ],
+            "properties": {
+              "target_after": {
+                "$ref": "#/$defs/segment"
+              },
+              "manifest_after": {
+                "$ref": "#/$defs/manifest"
+              },
+              "survivor_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "checkpoint_action": {
+                "enum": [
+                  "advance_to_verified_survivor",
+                  "preserve_verified_checkpoint",
+                  "invalidate_and_rebuild",
+                  "restore_verified_checkpoint",
+                  "hold_without_advance"
+                ]
+              },
+              "projection_action": {
+                "enum": [
+                  "resume_from_verified_checkpoint",
+                  "rebuild_from_verified_survivor",
+                  "remain_stopped"
+                ]
+              },
+              "user_disclosure_required": {
+                "type": "boolean"
+              },
+              "original_controls": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/original_control"
+                },
+                "minItems": 1
+              }
+            }
+          },
+          "action_proof": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "adopted_frames",
+                  "settled_original_group_receipt_refs"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "adopt_valid_tail"
+                  },
+                  "adopted_frames": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "event_id",
+                        "sequence_id",
+                        "byte_offset",
+                        "frame_length",
+                        "frame_sha256"
+                      ],
+                      "properties": {
+                        "event_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "sequence_id": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "byte_offset": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "frame_length": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709551615
+                        },
+                        "frame_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "minItems": 1
+                  },
+                  "settled_original_group_receipt_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "original_active_ref",
+                  "sealed_degraded_ref",
+                  "original_namespace_intent"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "seal_degraded"
+                  },
+                  "original_active_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sealed_degraded_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "original_namespace_intent": {
+                    "$ref": "#/$defs/receipt_ref"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "target_length",
+                  "verified_prefix_sha256",
+                  "original_tail_sha256",
+                  "authenticated_watermark",
+                  "original_truncation_intent"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "truncate_unacknowledged_tail"
+                  },
+                  "target_length": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "verified_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "original_tail_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "authenticated_watermark": {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  "original_truncation_intent": {
+                    "$ref": "#/$defs/receipt_ref"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "original_exclusion_intent",
+                  "original_exclusion_evidence",
+                  "before_complete_source_set_sha256",
+                  "after_complete_survivor_set_sha256",
+                  "preserved_prior_gap_evidence_sha256"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "exclude_proven_range"
+                  },
+                  "original_exclusion_intent": {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  "original_exclusion_evidence": {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  "before_complete_source_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "after_complete_survivor_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "preserved_prior_gap_evidence_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "backup_selection",
+                  "completed_original_restore_journal",
+                  "protected_pre_restore_or_quarantine",
+                  "verified_restored_boundary",
+                  "risk_class",
+                  "original_confirmation_ref"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "restore_verified_backup"
+                  },
+                  "backup_selection": {
+                    "$ref": "#/$defs/backup_selection"
+                  },
+                  "completed_original_restore_journal": {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  "protected_pre_restore_or_quarantine": {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  "verified_restored_boundary": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "segment_generation",
+                      "segment_name",
+                      "byte_offset",
+                      "sequence_id"
+                    ],
+                    "properties": {
+                      "segment_generation": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "segment_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "byte_offset": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      },
+                      "sequence_id": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 18446744073709551615
+                      }
+                    }
+                  },
+                  "risk_class": {
+                    "enum": [
+                      "none",
+                      "post_backup_writes_will_be_lost",
+                      "unknown_due_corruption"
+                    ]
+                  },
+                  "original_confirmation_ref": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "action",
+                  "mutation_gate_ref",
+                  "original_gate_before_sha256",
+                  "verified_gate_after_sha256",
+                  "original_reason_ref"
+                ],
+                "properties": {
+                  "action": {
+                    "const": "block_mutation"
+                  },
+                  "mutation_gate_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "original_gate_before_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "verified_gate_after_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "original_reason_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "physical_receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "recovery_id",
+              "input_sha256",
+              "prepared_postcondition_sha256",
+              "first_effect_observed_at_utc",
+              "actual_target_after",
+              "actual_manifest_after",
+              "effect_payload",
+              "action_proof",
+              "original_controls"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.recovery.action_receipt.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "recovery_id": {
+                "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "input_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "prepared_postcondition_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "first_effect_observed_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "description": "First successfully durably captured verification/receipt observation of the original physical postcondition; not unknowable earliest execution time. Retry may observe later before first durable receipt; immutable thereafter."
+              },
+              "actual_target_after": {
+                "$ref": "#/$defs/segment"
+              },
+              "actual_manifest_after": {
+                "$ref": "#/$defs/manifest"
+              },
+              "effect_payload": {
+                "$ref": "#/$defs/effect_payload"
+              },
+              "action_proof": {
+                "$ref": "#/$defs/action_proof"
+              },
+              "original_controls": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/original_control"
+                },
+                "minItems": 1
+              }
+            }
+          },
+          "event_non_empty_string": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_nullable_non_empty_string": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_nullable_non_negative_integer": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "event_date_time_string": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          },
+          "event_migration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "migrated_from_schema_id",
+              "migrated_from_schema_version",
+              "migration_id",
+              "compatibility_event_type"
+            ],
+            "properties": {
+              "migrated_from_schema_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "migrated_from_schema_version": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "migration_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "compatibility_event_type": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              }
+            }
+          },
+          "event_event_record_1_0_0_compatibility_reader": {
+            "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "observed_at_utc",
+              "persisted_at_utc",
+              "sequence_id",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "type": "string",
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "type": "string",
+                "const": "1.0.0"
+              },
+              "event_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "event_type": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+              },
+              "project_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "thread_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "run_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "node_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "attempt_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "requested_account_ref": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "effective_account_ref": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/event_date_time_string"
+              },
+              "observed_at_utc": {
+                "$ref": "#/$defs/event_date_time_string"
+              },
+              "persisted_at_utc": {
+                "$ref": "#/$defs/event_date_time_string"
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "producer_sequence_id": {
+                "$ref": "#/$defs/event_nullable_non_negative_integer"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "causation_event_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "parent_event_id": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "payload_schema_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "payload": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "payload_ref": {
+                "$ref": "#/$defs/event_nullable_non_empty_string"
+              },
+              "redaction_profile": {
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
+              },
+              "replay_policy": {
+                "type": "string",
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key",
+                  "projector_replay_only"
+                ]
+              },
+              "migration": {
+                "$ref": "#/$defs/event_migration"
+              }
+            }
+          },
+          "frozen_producer_input": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "type": "string",
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "type": "string",
+                "const": "2.0.0"
+              },
+              "scope_kind": {
+                "const": "application"
+              },
+              "event_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "event_type": {
+                "const": "storage.recovery_applied"
+              },
+              "project_id": {
+                "type": "null"
+              },
+              "thread_id": {
+                "type": "null"
+              },
+              "run_id": {
+                "type": "null"
+              },
+              "node_id": {
+                "type": "null"
+              },
+              "attempt_id": {
+                "type": "null"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "requested_account_ref": {
+                "type": "null"
+              },
+              "effective_account_ref": {
+                "type": "null"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/event_date_time_string"
+              },
+              "producer_sequence_id": {
+                "type": "null"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "causation_event_id": {
+                "type": "null"
+              },
+              "parent_event_id": {
+                "type": "null"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/event_non_empty_string"
+              },
+              "payload_schema_id": {
+                "const": "https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0"
+              },
+              "payload": {
+                "$ref": "#/$defs/event_payload"
+              },
+              "payload_ref": {
+                "type": "null"
+              },
+              "redaction_profile": {
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
+              },
+              "replay_policy": {
+                "const": "dedupe_by_idempotency_key"
+              },
+              "migration": {
+                "$ref": "#/$defs/event_migration"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/event_non_empty_string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "event_payload": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "integrity_id"
+                      ]
+                    }
+                  ]
+                },
+                "properties": {
+                  "action": {
+                    "const": "adopt_valid_tail"
+                  },
+                  "checkpoint_action": {
+                    "const": "advance_to_verified_survivor"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "resume_from_verified_checkpoint"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "const": "allocator_lease_abandoned"
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "user_disclosure_required": {
+                    "const": false
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "seal_degraded"
+                  },
+                  "checkpoint_action": {
+                    "const": "hold_without_advance"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "remain_stopped"
+                  },
+                  "sequence_gaps": {
+                    "maxItems": 0
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "truncate_unacknowledged_tail"
+                  },
+                  "checkpoint_action": {
+                    "const": "preserve_verified_checkpoint"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 1,
+                    "minItems": 1
+                  },
+                  "projection_action": {
+                    "const": "resume_from_verified_checkpoint"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "enum": [
+                            "allocator_lease_abandoned",
+                            "corruption_loss"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "exclude_proven_range"
+                  },
+                  "checkpoint_action": {
+                    "const": "invalidate_and_rebuild"
+                  },
+                  "excluded_ranges": {
+                    "minItems": 1
+                  },
+                  "projection_action": {
+                    "const": "rebuild_from_verified_survivor"
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "restore_verified_backup"
+                  },
+                  "checkpoint_action": {
+                    "const": "restore_verified_checkpoint"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "rebuild_from_verified_survivor"
+                  },
+                  "sequence_gaps": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "last_sequence_id": {
+                          "maximum": 18446744073709551615,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "reason": {
+                          "const": "corruption_loss"
+                        }
+                      },
+                      "required": [
+                        "first_sequence_id",
+                        "last_sequence_id",
+                        "reason"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              },
+              {
+                "properties": {
+                  "action": {
+                    "const": "block_mutation"
+                  },
+                  "checkpoint_action": {
+                    "const": "hold_without_advance"
+                  },
+                  "excluded_ranges": {
+                    "maxItems": 0
+                  },
+                  "projection_action": {
+                    "const": "remain_stopped"
+                  },
+                  "sequence_gaps": {
+                    "maxItems": 0
+                  },
+                  "user_disclosure_required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "integrity_id"
+                ]
+              }
+            ],
+            "properties": {
+              "action": {
+                "enum": [
+                  "adopt_valid_tail",
+                  "seal_degraded",
+                  "truncate_unacknowledged_tail",
+                  "exclude_proven_range",
+                  "restore_verified_backup",
+                  "block_mutation"
+                ]
+              },
+              "checkpoint_action": {
+                "enum": [
+                  "advance_to_verified_survivor",
+                  "preserve_verified_checkpoint",
+                  "invalidate_and_rebuild",
+                  "restore_verified_checkpoint",
+                  "hold_without_advance"
+                ]
+              },
+              "durability_receipt_ref": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "excluded_ranges": {
+                "items": {
+                  "$ref": "#/$defs/byte_range"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "integrity_id": {
+                "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "post_length": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "post_manifest_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "post_segment_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "pre_length": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "pre_manifest_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "pre_segment_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "projection_action": {
+                "enum": [
+                  "resume_from_verified_checkpoint",
+                  "rebuild_from_verified_survivor",
+                  "remain_stopped"
+                ]
+              },
+              "recovery_id": {
+                "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "sequence_gaps": {
+                "items": {
+                  "$ref": "#/$defs/sequence_gap"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "survivor_digest": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "user_disclosure_required": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "schema_version",
+              "recovery_id",
+              "action",
+              "pre_segment_hash",
+              "post_segment_hash",
+              "pre_manifest_hash",
+              "post_manifest_hash",
+              "pre_length",
+              "post_length",
+              "excluded_ranges",
+              "sequence_gaps",
+              "survivor_digest",
+              "checkpoint_action",
+              "projection_action",
+              "durability_receipt_ref",
+              "user_disclosure_required"
+            ],
+            "type": "object"
+          },
+          "capsule": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "recovery_id",
+              "input",
+              "input_sha256",
+              "original_actor_ref",
+              "admitted_at_utc",
+              "original_native_intent",
+              "prepared_postcondition",
+              "revision",
+              "phase",
+              "last_proven_phase",
+              "physical_receipt",
+              "frozen_producer_input",
+              "first_append_receipt",
+              "original_restore_reservation"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.storage_recovery_action_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "recovery_id": {
+                "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "input": {
+                "$ref": "#/$defs/input"
+              },
+              "input_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "admitted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "original_native_intent": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/receipt_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "prepared_postcondition": {
+                "$ref": "#/$defs/prepared_postcondition"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "phase": {
+                "enum": [
+                  "prepared",
+                  "effect_started",
+                  "effect_durable",
+                  "append_pending",
+                  "committed",
+                  "recovery_required"
+                ]
+              },
+              "last_proven_phase": {
+                "enum": [
+                  "prepared",
+                  "effect_started",
+                  "effect_durable",
+                  "append_pending",
+                  "committed"
+                ]
+              },
+              "physical_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/physical_receipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "frozen_producer_input": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/frozen_producer_input"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_restore_reservation": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/restore_reservation"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "physical_receipt": {
+                      "type": "null"
+                    },
+                    "frozen_producer_input": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "original_native_intent": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "prepared"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "effect_started"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "physical_receipt": {
+                      "type": "null"
+                    },
+                    "frozen_producer_input": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "effect_started"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "effect_started"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "effect_durable"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "physical_receipt": {
+                      "$ref": "#/$defs/physical_receipt"
+                    },
+                    "frozen_producer_input": {
+                      "type": "null"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "effect_durable"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "effect_durable"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "append_pending"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "physical_receipt": {
+                      "$ref": "#/$defs/physical_receipt"
+                    },
+                    "frozen_producer_input": {
+                      "$ref": "#/$defs/frozen_producer_input"
+                    },
+                    "first_append_receipt": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "append_pending"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "append_pending"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "committed"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "physical_receipt": {
+                      "$ref": "#/$defs/physical_receipt"
+                    },
+                    "frozen_producer_input": {
+                      "$ref": "#/$defs/frozen_producer_input"
+                    },
+                    "first_append_receipt": {
+                      "$ref": "#/$defs/AppendReceipt"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "phase": {
+                      "const": "committed"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "last_proven_phase": {
+                      "const": "committed"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "anyOf": [
+                    {
+                      "properties": {
+                        "last_proven_phase": {
+                          "const": "prepared"
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "input": {
+                          "properties": {
+                            "choice": {
+                              "properties": {
+                                "action": {
+                                  "const": "block_mutation"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "then": {},
+                "else": {
+                  "properties": {
+                    "original_native_intent": {
+                      "$ref": "#/$defs/receipt_ref"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "input": {
+                      "properties": {
+                        "choice": {
+                          "properties": {
+                            "action": {
+                              "const": "restore_verified_backup"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "original_restore_reservation": {
+                      "$ref": "#/$defs/restore_reservation"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "original_restore_reservation": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "read_selector": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "recovery_id",
+              "event_id"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "recovery_id": {
+                "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "restore_reservation": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "owner_ref",
+              "coordinator_operation_id",
+              "restore_occurrence_id",
+              "reservation_revision",
+              "root",
+              "selected_backup_ref",
+              "selected_backup_manifest_sha256"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.recovery.restore_reservation.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "owner_ref": {
+                "const": "StorageRecoveryCoordinator"
+              },
+              "coordinator_operation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "restore_occurrence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reservation_revision": {
+                "$ref": "#/$defs/uint64"
+              },
+              "root": {
+                "$ref": "#/$defs/root"
+              },
+              "selected_backup_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "selected_backup_manifest_sha256": {
+                "$ref": "#/$defs/hash"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

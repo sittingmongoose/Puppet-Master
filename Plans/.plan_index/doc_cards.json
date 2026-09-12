@@ -16571,10 +16571,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 184,
+        "False": 185,
         "True": 102
       },
-      "heading_count": 643,
+      "heading_count": 646,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16628,6 +16628,7 @@
         "Plans/storage_boot_original_source_contracts.schema.json",
         "Plans/storage_boot_recovery_control.schema.json",
         "Plans/storage_integrity_finding_contracts.schema.json",
+        "Plans/storage_recovery_action_custody.schema.json",
         "Plans/storage_recovery_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
@@ -16645,9 +16646,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23386,
+      "line_count": 23477,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 286,
+      "plan_unit_count": 287,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16934,7 +16935,8 @@
         "SP-279",
         "SP-290",
         "SP-291",
-        "SP-292"
+        "SP-292",
+        "SP-293"
       ],
       "reasoning_tiers": [
         "high",
@@ -16959,6 +16961,7 @@
         "false_earliest_boot_history_or_lost_original_activation_continuity",
         "false_generic_event_index_publication_or_source_coverage",
         "false_native_append_settlement_or_source_retirement",
+        "false_original_recovery_effect_or_receipt_publication",
         "goal_body_physical_origin_cas_retention_or_restore_authority_escape",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
@@ -17014,10 +17017,10 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "c099b8061dd110d8001c6c28feb8d0dd7ece1b3d9eb0b3171b86ace8205ac5fb",
+      "sha256": "71a2cfe2d19dcd08d42d316b467fd788cf31b1fa9ac2267143b815f6bfa0e61e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 283,
+        "accepted": 284,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17027,7 +17030,7 @@
         "requirement": 252,
         "schema_contract": 11,
         "security_contract": 1,
-        "storage_contract": 16,
+        "storage_contract": 17,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -17075,6 +17078,7 @@
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/event_payload_storage_boot_recovery.schema.json",
         "Plans/event_payload_storage_integrity_detected.schema.json",
+        "Plans/event_payload_storage_recovery_applied.schema.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
@@ -17134,6 +17138,8 @@
         "Plans/storage_boot_recovery_control.schema.json",
         "Plans/storage_integrity_finding_contract_fixtures.json",
         "Plans/storage_integrity_finding_contracts.schema.json",
+        "Plans/storage_recovery_action_custody.schema.json",
+        "Plans/storage_recovery_action_custody_contract_fixtures.json",
         "Plans/storage_retention_hold_contracts.schema.json",
         "Plans/storage_retention_hold_evidence.schema.json",
         "Plans/storage_retention_hold_value.schema.json",
@@ -17213,6 +17219,7 @@
         "reports/event-authority-20260911/step-08-restore-full-value-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "reports/event-authority-20260911/step-08-seglog-validation.md",
+        "reports/event-authority-20260911/step-08-storage-recovery-applied-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - future Case L seglog durability recovery fixture suite - python3 scripts/pm-plan-index.py validate",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
@@ -19094,7 +19101,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T08:35:26Z",
+  "generated_at_utc": "2026-09-12T09:32:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19102,13 +19109,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3405,
+      "False": 3406,
       "True": 3164
     },
-    "plan_unit_count": 6569,
+    "plan_unit_count": 6570,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6378,
+      "accepted": 6379,
       "retired": 182,
       "superseded": 9
     },
@@ -19192,7 +19199,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 16,
+      "storage_contract": 17,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

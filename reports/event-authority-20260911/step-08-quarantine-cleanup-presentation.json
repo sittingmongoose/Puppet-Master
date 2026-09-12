@@ -1,0 +1,34 @@
+{
+  "card_id": "EA-S08-QUARANTINE-CLEANUP-RESIDUE",
+  "status": "presented_awaiting_owner_answer",
+  "recorded_at_utc": "2026-09-12T09:23:56Z",
+  "source_commit": "c881c8c62e9894b183866f5b1400d7b1ef81eb17",
+  "card": {
+    "path": "/home/sittingmongoose/PM-Experiments/storage-quarantine-cleanup-owner-card-20260912/owner-decision-card.md",
+    "sha256": "e644cd64a6a02dfb580f2d1761694732e97341d44c236ba8c331bb7b8c823abd"
+  },
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/storage-quarantine-cleanup-owner-card-20260912/manifest.json",
+    "sha256": "0de40907a76c0657b9d83f0a1e95e069e3e5c4baece5d47235600f3ab0c9a2b1"
+  },
+  "channel": "in-task asynchronous user question",
+  "question": "The Storage Plans leave quarantine metadata cleanup undefined. After resolved data is eligible for cleanup and its purge audit is safely recorded, what should remain? Both options preserve existing cleanup timing and holds.",
+  "options": [
+    {
+      "id": "A_audit_only",
+      "label": "Keep permanent audit events and receipts only; retire quarantine records and show source evidence unavailable.",
+      "recommended": true
+    },
+    {
+      "id": "B_minimal_residue",
+      "label": "Also keep a minimal permanent quarantine audit record; raw content still expires on the existing schedule.",
+      "recommended": false
+    }
+  ],
+  "answer": null,
+  "answer_source": null,
+  "permission_inferred": false,
+  "dependent_purge_work": "not_authorized_by_this_unanswered_card",
+  "independent_work_continues": true,
+  "native_cases": 0
+}
