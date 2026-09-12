@@ -1,0 +1,21 @@
+# Historical Goal reader adoption and restore-point refusal oracle
+
+The three historical Goal readers now explicitly adopt SP-278's materialized shared-index authority: SP-271/277/280 and their GRS-060/061/062 and CV-334/335/336 counterparts. Each resolves the actual same-redb checkpoint root, generation node and dataset; distinguishes immutable generation birth from the advancing current frontier; validates complete read-token/source-selection authority and global coverage; and requires independent original lawful historical admission. Final disclosure compares the complete current owner, source, candidate and access fence after all returning helpers. A nonmatching append can invalidate an old token. The existing valid-lease rule remains applicable without a latest-source claim.
+
+This change preserves exact historical payloads, original frame/cursor/receipt/predecessor and digest rules, current-writer prohibitions and D-R03/D-R06/D-R11 behavior. Each family checkpoint remains none_required for its ephemeral historical answer; the independent shared checkpoint stays mandatory. Historical rows grant no current Goal mutation, dispatch, scheduling, charge or topology reconstruction. The three fixture successors update only their adoption status and explanatory claim. All cases, native oracles and original source manifests remain byte-identical as values, with operating_positive_read_path=false. Normative contract adoption does not establish an authentic historical positive instance or native execution.
+
+RSD-N02 now preserves the actual prior restore-point state on refusal: available stays available, and already-terminal/non-available stays in its original state. The correction resolves the contradiction identified in the separately frozen nine-family assessment. That assessment remains an honest 107 PASS / 1 CONFLICT snapshot of its original source commit; it is not restamped as a new assessment.
+
+Root replayed all 23 unique, exact historical replacements against current main and applied one exact oracle correction. The intervening consumer changes in three owner documents were preserved. All 6,585 PlanUnits remain; exactly nine changed and three acceptance criteria were added (25,518 to 25,521). Both registries, all event payloads, policy definitions and wiring are unchanged. The source proposal's 54 existing schema-shape cases and 190 internal-reference inspections remain static checks of their original pinned resources; no model/native test was rerun or relabelled.
+
+Shard generation changes only the four edited owner directories. Index generation/validation, the shard check and git diff check pass. Full standard gates remain 21 PASS / 15 FAIL with the same failing groups and no new reported diagnostic category/location relative to the consumer landing. Per-group diagnostic lists are capped at fifty; unseen failures are not compared. Existing governance/readiness/audit, reference/fixture and frozen whole-registry findings remain open without waiver. No validator, Spec Lock, readiness or generated governance evidence was edited; Step 8 remains open.
+
+Cost: source review, deterministic regeneration and repository verification only; no native execution or attributable monetary measurement is claimed.
+
+Source evidence: `/home/sittingmongoose/PM-Experiments/historical-goal-reader-adoption-proposal-20260912/v1/manifest.json`, SHA-256 `d656450ae0993cdece03b1d9ce5bfef564e2020de423346203f4cb58018403ca`.
+
+Source evidence: `/home/sittingmongoose/PM-Experiments/step08-nine-family-normative-assessment-20260912/v1/manifest.json`, SHA-256 `87bab2b234ecf6a3af03be8fa0cdf56169ad76aff36f8f3f063d486111d242e3`.
+
+Source evidence: `/home/sittingmongoose/PM-Experiments/historical-readers-canonical-root-20260912/draft-v1/manifest.json`, SHA-256 `819f604176295583c8c544a4b5b25decdf4511eeb9d3e4ee10c71a0d4994eb5c`.
+
+Frozen repository verification: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/historical-reader-repository-checks-20260912/manifest.json`, SHA-256 `86e455ab725e75142d04fe47b5654c2383ac01e71389d3a0e9cee0b15ebcba46`. Machine summary: [step-08-historical-reader-adoption-checks.json](step-08-historical-reader-adoption-checks.json).

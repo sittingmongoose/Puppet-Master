@@ -21828,6 +21828,7 @@ canonical_text: The authoritative goal.child_status_changed v2 schema remains re
   authority while the retired current Goal-child structure admits zero new writes. Reject this exact family
   before producer dedupe, CAS, outbox or append; preserve genuine original source inspection and existing
   reader-only normalization without a new alias or payload change.
+  SP-271 explicitly adopts current SP-278 for storage.goal_child_status_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family's ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R03 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.
 gui_related: false
 gui_classification_reason: This exact-row contract defines historical validation and read-only storage
   interpretation without a new GUI or active child projection.
@@ -21963,7 +21964,10 @@ canonical_text: 'For exactly `goal.degraded`, GRS-061 qualifies the earlier twen
   The existing app-root event identity and dedupe policies remain unchanged for retained historical custody
   and for other independently admitted families. SP-277''s direct historical lookup has no family projection/checkpoint/idempotency
   write. No Goal state, receipt, command, provider call, notification, Usage charge, hold change or certification
-  follows from reading this event.'
+  follows from reading this event.
+
+
+  SP-277 explicitly adopts current SP-278 for storage.goal_degraded_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family''s ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R06 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.'
 acceptance_criteria:
 - Current append gate rejects exact goal.degraded before idempotency success, CAS or outbox even for schema-valid
   identical historical keys.
@@ -22063,7 +22067,10 @@ canonical_text: 'For exactly goal.scheduled, GRS-062 qualifies every earlier ass
   independently owned generic index checkpoint is not replaced by none_required. Historical next_action
   never dispatches or creates a schedule, and original budget evidence grants no current Goal budget or
   quota. Preserve existing recovery, canonical-receipt, permission, retention and manual-stop fences;
-  do not convert this event to current scheduling truth.'
+  do not convert this event to current scheduling truth.
+
+
+  SP-280 explicitly adopts current SP-278 for storage.goal_scheduled_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family''s ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R11 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.'
 acceptance_criteria:
 - Exact-name append refusal precedes idempotency success/CAS/outbox even for schema-valid eligible input
   and identical old keys.

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "event_type": "goal.scheduled",
-  "claim": "Static synthetic schema and supplied historical facts only. No original admission/custody, operating reader, native durability or runtime effect is proven.",
-  "shared_checkpoint_adoption": "UNRESOLVED",
+  "claim": "Static synthetic schema and supplied historical facts only. No original admission/custody, operating reader, native durability or runtime effect is proven. This successor records explicit current SP-278 reader-contract adoption only; original lawful historical source and native positive-read proof remain unproven.",
+  "shared_checkpoint_adoption": "NORMATIVE_SP278_ADOPTED",
   "operating_positive_read_path": false,
   "payload_schema": "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
   "schema_cases": [

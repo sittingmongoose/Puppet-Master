@@ -1930,7 +1930,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1",
+      "sha256": "47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -4073,7 +4073,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22502,
+      "line_count": 22509,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 340,
       "plan_unit_ids": [
@@ -4762,7 +4762,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "33d18d3e3568f5053b68adb6d1a86fbc694b0a10abbed235156b1224cb127f83",
+      "sha256": "083dc7844e67d48919a9d0f5b6b9cd37f013bb40f35ad2da6ee465e68e3466f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 340
@@ -8136,7 +8136,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 6342,
+      "line_count": 6349,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -8274,7 +8274,7 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797",
+      "sha256": "9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -16720,7 +16720,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 24081,
+      "line_count": 24072,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 293,
       "plan_unit_ids": [
@@ -17103,7 +17103,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c",
+      "sha256": "716ae8fd1126a7b7ff901d65dfc0730c645783b3471f938df5c2191b9deefa21",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 290,
@@ -19208,7 +19208,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T15:49:39Z",
+  "generated_at_utc": "2026-09-12T16:19:41Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5462-L5850
+Source lines: L5462-L5857
 
-Source SHA256: `3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797`
+Source SHA256: `9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984`
 
 ---
 
@@ -87,6 +87,7 @@ canonical_text: Current Goal Runtime admits no goal.child_status_changed produce
   and child topology are retired. Existing authoritative schema and D-R03 rules validate genuine historical
   observations only; the exact Storage adapter cannot supply current GoalRecordV2 state, parent completion,
   child projection, continuation or work allocation.
+  SP-271 explicitly adopts current SP-278 for storage.goal_child_status_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family's ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R03 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.
 gui_related: true
 gui_classification_reason: 'Historical data and active Goal presentation must remain distinct: these rules
   constrain visible lifecycle states, child topology, recovery quality and actionable controls.'
@@ -247,7 +248,10 @@ canonical_text: 'The exact registered family `goal.degraded` is historical-only.
   with its validation/provenance disposition. Historical allowed_actions are displayed as original data
   only and never wired as live controls. The lookup cannot mutate GoalRecordV2, receipt, evidence/goal-state
   projection, continuation, approval, budget or recovery state. Withdrawal disables interpretation while
-  preserving original source/receipt custody; it admits no replacement writer.'
+  preserving original source/receipt custody; it admits no replacement writer.
+
+
+  SP-277 explicitly adopts current SP-278 for storage.goal_degraded_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family''s ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R06 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.'
 acceptance_criteria:
 - Exact GRS048 plus D-R06 transition and explicit GRS014/049 retirement establish this one historical-only
   event; omission from the eight-name list is not the proof.
@@ -372,7 +376,10 @@ canonical_text: 'The exact existing `goal.scheduled` EventRecord has historical-
   Current canonical receipt non-rebuildability, degraded survivor-view quality/provenance and recovery/false-completion
   fences under GRS-042/043 remain in force; this disposition does not undo the separate child-status or
   degraded qualifications. Missing canonical authority stays fenced under the real owner. Withdrawal disables
-  interpretation, preserves original custody, and grants no replacement producer.'
+  interpretation, preserves original custody, and grants no replacement producer.
+
+
+  SP-280 explicitly adopts current SP-278 for storage.goal_scheduled_history_read.v1@1.0.0 only. Its actual root/generation dataset, immutable row birth anchor, complete advancing frontier/source token and final post-helper original-admission/source/access fence precede this family''s ephemeral historical answer. Family checkpoint remains none_required; this adoption changes no historical D-R11 payload, legacy format or original receipt predicate, grants no current writer/action and claims no historical positive instance or native proof.'
 acceptance_criteria:
 - Exact D-R11 destination conflicts with exclusive GRS048 current lifecycle; no omission or sibling inference
   establishes disposition.

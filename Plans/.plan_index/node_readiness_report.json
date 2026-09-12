@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15240,
+    "depends_on_edge_count": 15243,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17891,
+    "edge_count": 17894,
     "node_count": 6585,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T15:49:39Z",
+  "generated_at_utc": "2026-09-12T16:19:41Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -17996,8 +17996,8 @@
         "source_location": {
           "heading": "GRS-061 - Historical Goal degradation and current projection quality",
           "heading_level": 3,
-          "heading_line": 5606,
-          "line": 5608,
+          "heading_line": 5607,
+          "line": 5609,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18007,8 +18007,8 @@
         "source_location": {
           "heading": "GRS-062 - Exact historical Goal scheduling contract",
           "heading_level": 3,
-          "heading_line": 5725,
-          "line": 5727,
+          "heading_line": 5729,
+          "line": 5731,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18018,8 +18018,8 @@
         "source_location": {
           "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
           "heading_level": 3,
-          "heading_line": 5963,
-          "line": 5965,
+          "heading_line": 5970,
+          "line": 5972,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -29535,8 +29535,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21464,
-          "line": 21486,
+          "heading_line": 21455,
+          "line": 21477,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29546,8 +29546,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 22951,
-          "line": 22953,
+          "heading_line": 22942,
+          "line": 22944,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -38795,7 +38795,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797",
+        "expected": "9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38807,7 +38807,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1",
+        "expected": "47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

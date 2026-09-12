@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19910-L20779
+Source lines: L19910-L20770
 
-Source SHA256: `3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c`
+Source SHA256: `716ae8fd1126a7b7ff901d65dfc0730c645783b3471f938df5c2191b9deefa21`
 
 ---
 
@@ -302,17 +302,22 @@ owner_doc: Plans/storage-plan.md
 canonical_text: Storage defines an exact read-only historical goal.child_status_changed adapter over the
   existing current EventRecord index and verified retained source. It owns no projection, durable state,
   checkpoint, append or recovery write. The generic index checkpoint and source publication proof remain
-  independently required; unresolved shared custody makes interpretation unavailable.
+  independently required through actual SP-278 root, immutable birth anchor, complete advancing frontier
+  and full same-snapshot read token. Final post-helper original-source and owner-fence comparison precedes
+  the ephemeral answer; unresolved shared or historical admission custody makes interpretation unavailable.
 gui_related: false
 gui_classification_reason: This exact-row contract defines historical validation and read-only storage
   interpretation without a new GUI or active child projection.
 split_recommended: false
 depends_on:
+- SP-278
 - GRS-052
 - CV-334
 - DL-045
 unblocks: []
 acceptance_criteria:
+- Final disclosure compares the complete original record/disposition and actual full SP-278 token plus
+  original source/admission/access fence after every helper; same-generation nonmatching append invalidates it.
 - The sole adapter storage.goal_child_status_history_read.v1@1.0.0 accepts exact authorized project/event/original-sequence
   identity and validates key, partition, index, source frame and payload joins.
 - A consistent CURRENT-selected index generation, its actual admitted generic checkpoint, complete declared
@@ -369,7 +374,11 @@ owner_hints:
 
 **Key, value, cursor and shared proof.** Resolve `event_record_index` by family ID, using existing key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` and value `pm.storage_value.event_record_index.v2@2.0.0`. Partition is `project~{base64url_no_pad(UTF8(project_id))}`; sequence uses exact nonnegative integer arithmetic and 20-digit zero padding within the EventRecord owner's admitted domain. Validate the existing closed value schema. Index key/value/project/event/sequence/type must match the request, exact family name and source EventRecord. The physical cursor is the value's full `(segment_generation, segment_name, byte_offset, sequence_id)`, never an offset alone.
 
-The generic index projector remains independently owned. Read a consistent CURRENT-selected committed generation and require publication_locator's manifest_generation, recovery_epoch and survivor_prefix_sha256 to match that authority. Resolve its checkpoint_ref to the independently published generic index checkpoint and prove the requested sequence belongs to its complete validated coverage and surviving source set, with the index and checkpoint published together under the existing generic contract. A nonempty ref alone proves nothing. Do not substitute application dedupe, `run.started`'s filtered checkpoint or another family checkpoint. If generic checkpoint proof cannot be resolved, this read is unavailable; this contract does not invent its shape or infer proof from max sequence. Validate any compaction translation through the committed translation manifest and exact source identity. Read and validate the complete source frame within the durable watermark; verify payload hash and producer digest by the existing Contracts formulas and immutable frame identity. Index metadata is never payload authority. Revalidate the selected publication before releasing the in-memory answer; a changed/recovered generation discards the answer and requires a fresh bounded read. No cross-generation patched offset is permitted.
+Adopt actual SP-278 `reader.storage.event_record_index@1.0.0` through `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one actual redb snapshot, resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, `current_generation_id`, exact `#/generations/{generation_id}` node and same-database dataset `event_record_index.v2@{generation_id}`. Require the uniquely current admitted node and complete actual root/dataset authority; no flat-table, foreign-database, sibling checkpoint or reference-only fallback. The row key remains `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. Its `publication_locator.checkpoint_ref` resolves that exact node, while manifest_generation, recovery_epoch and survivor_prefix_sha256 bind the immutable generation birth anchor, not the latest append manifest. The current advancing frontier independently matches the actual synchronized CURRENT/manifest/source selection and complete global coverage, including nonmatching application and other-project records. Verify the trusted original anchor and unchanged anchored source prefix against current retained source; do not require permanently retained overwritten birth control files or infer anchor admission from self-consistent hashes. The full read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Every source_selection member binds actual owner controls, including exact CURRENT/manifest bytes, selected segment generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. An ordinary same-generation append invalidates the old full token even when the requested historical row is unchanged. No matching-row maximum, generation-only comparison or filtered checkpoint proves complete coverage.
+
+Resolve the selected row and complete source frame using the exact (segment_generation, segment_name, byte_offset, sequence_id) cursor, frame bounds/CRC, synchronized durable watermark, supported original envelope/payload and existing exact payload/source/producer digest recipes. Preserve all current key/scope/project/event/sequence and represented owner identity joins. Use exact integer arithmetic within the existing admitted owner domain; no floating-point round-trip or invented 53-bit cap. Compaction requires actual committed translation authority for exact preserved source/target identities, original value/digest and exhaustive original outcomes. Translation binds the immutable target birth prefix; a later ordinary append suffix separately joins the current frontier. Current selected locators may differ from original historical publication coordinates, and neither rewrites the other. Missing required translation custody is unavailable or handled by the independent generic rebuild owner; this reader performs no rebuild or recovery write. A removed source has no current row and yields truthful unavailable, never a synthesized historical record. Complete global source gaps and degraded survivor provenance remain exactly SP-278; unsupported future source prevents a falsely complete current boundary.
+
+At the original reader entry, before the first returning decoder, resolver, validator, copy or response helper, independently capture the immutable exact selector and actual original Storage instance, root/node/dataset, whole read-token/source/maintenance fence and current project/access/deletion/hold authority. Original lawful historical admission is a separate mandatory source fact: validate actual applicable-contract source-generation/compatibility custody, or the authenticated identity-preserving backup restoration and its original recovery custody. Retained bytes, a timestamp, current schema validity or current absence of a writer cannot establish it; an invalid current append never becomes lawful history. Independently derive the complete permitted original record and validation/provenance disposition from those actual originals before the corresponding output builders. After all helpers, including referenced predecessor/receipt checks and the last currentness/permission helper, a final pure typed predicate compares the entire candidate answer, immutable selector, actual original source/admission facts and complete current owner/token/fence against those independent expectations. No replaceable helper may run between that predicate and releasing the one in-memory answer. A changed frontier, root, anchor, source, access/deletion/hold authority or candidate discards the answer and requires a fresh bounded read; an old coherent snapshot may finish only under its actual still-valid owner lease/fence, without claiming a newer boundary. Missing original canonical receipts or predecessor facts remain explicitly unresolved historical validation, never reconstructed evidence or current lifecycle truth.
 
 **Checkpoint and owned effect.** Family checkpoint disposition is explicitly `none_required`: there is no family projection, durable progress, acknowledge token, replay position, idempotency ledger or owned write. Repeated lookups recompute an ephemeral answer; interruption leaves no family state. The requested exact event tuple is a lookup selector, not a durable cursor. The source index's independently owned checkpoint proof above remains required. Zero durable owned effect means no atomic family write transaction and no checkpoint advance; returning the complete validated answer is the only success boundary. A missing index does not trigger a rebuild or write in this adapter; the existing independent generic recovery owner may rebuild it through its own contract.
 
@@ -424,6 +433,7 @@ owner_hints:
 plan_unit_id: SP-277
 owner_doc: Plans/storage-plan.md
 depends_on:
+- SP-278
 - GRS-061
 - CV-335
 - SP-235
@@ -455,25 +465,13 @@ canonical_text: 'Define NEW read-adapter binding `storage.goal_degraded_history_
   goal_id against the selector.
 
 
-  Read a consistent CURRENT-selected committed index/source publication. Resolve the index publication_locator''s
-  manifest_generation, recovery_epoch, survivor_prefix_sha256 and checkpoint_ref to the independently
-  owned generic index publication and actual checkpoint. Prove complete generic index coverage includes
-  the exact requested sequence in the surviving source set; a nonempty reference, maximum sequence, family-filtered
-  checkpoint, application dedupe checkpoint or another event''s cursor is not coverage proof. If the actual
-  generic checkpoint cannot be resolved, return unavailable instead of inventing a checkpoint contract.
-  This family owns no full-range scan or catch-up. It relies on verified generic full-range publication
-  and validates this exact complete source frame.
+  Adopt actual SP-278 `reader.storage.event_record_index@1.0.0` through `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one actual redb snapshot, resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, `current_generation_id`, exact `#/generations/{generation_id}` node and same-database dataset `event_record_index.v2@{generation_id}`. Require the uniquely current admitted node and complete actual root/dataset authority; no flat-table, foreign-database, sibling checkpoint or reference-only fallback. The row key remains `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. Its `publication_locator.checkpoint_ref` resolves that exact node, while manifest_generation, recovery_epoch and survivor_prefix_sha256 bind the immutable generation birth anchor, not the latest append manifest. The current advancing frontier independently matches the actual synchronized CURRENT/manifest/source selection and complete global coverage, including nonmatching application and other-project records. Verify the trusted original anchor and unchanged anchored source prefix against current retained source; do not require permanently retained overwritten birth control files or infer anchor admission from self-consistent hashes. The full read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Every source_selection member binds actual owner controls, including exact CURRENT/manifest bytes, selected segment generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. An ordinary same-generation append invalidates the old full token even when the requested historical row is unchanged. No matching-row maximum, generation-only comparison or filtered checkpoint proves complete coverage.
 
 
-  The source cursor is the full tuple segment_generation, segment_name, byte_offset and sequence_id from
-  the validated row. Check current generation, complete frame bounds/CRC, durable watermark, original
-  event identity, payload hash and existing producer-semantic digest with their actual owner algorithms.
-  The index contains lookup metadata, not event or receipt authority. Compaction translations must resolve
-  an actual committed translation manifest and preserve exact source identity; a guessed retired offset
-  is forbidden. Revalidate CURRENT/publication selection before releasing the complete in-memory answer.
-  If recovery/generation changed, discard the answer and perform a fresh bounded read. A missing index
-  does not cause this adapter to write/rebuild; only the independent generic recovery owner may do so
-  under its contract.
+  Resolve the selected row and complete source frame using the exact (segment_generation, segment_name, byte_offset, sequence_id) cursor, frame bounds/CRC, synchronized durable watermark, supported original envelope/payload and existing exact payload/source/producer digest recipes. Preserve all current key/scope/project/event/sequence and represented owner identity joins. Use exact integer arithmetic within the existing admitted owner domain; no floating-point round-trip or invented 53-bit cap. Compaction requires actual committed translation authority for exact preserved source/target identities, original value/digest and exhaustive original outcomes. Translation binds the immutable target birth prefix; a later ordinary append suffix separately joins the current frontier. Current selected locators may differ from original historical publication coordinates, and neither rewrites the other. Missing required translation custody is unavailable or handled by the independent generic rebuild owner; this reader performs no rebuild or recovery write. A removed source has no current row and yields truthful unavailable, never a synthesized historical record. Complete global source gaps and degraded survivor provenance remain exactly SP-278; unsupported future source prevents a falsely complete current boundary.
+
+
+  At the original reader entry, before the first returning decoder, resolver, validator, copy or response helper, independently capture the immutable exact selector and actual original Storage instance, root/node/dataset, whole read-token/source/maintenance fence and current project/access/deletion/hold authority. Original lawful historical admission is a separate mandatory source fact: validate actual applicable-contract source-generation/compatibility custody, or the authenticated identity-preserving backup restoration and its original recovery custody. Retained bytes, a timestamp, current schema validity or current absence of a writer cannot establish it; an invalid current append never becomes lawful history. Independently derive the complete permitted original record and validation/provenance disposition from those actual originals before the corresponding output builders. After all helpers, including referenced predecessor/receipt checks and the last currentness/permission helper, a final pure typed predicate compares the entire candidate answer, immutable selector, actual original source/admission facts and complete current owner/token/fence against those independent expectations. No replaceable helper may run between that predicate and releasing the one in-memory answer. A changed frontier, root, anchor, source, access/deletion/hold authority or candidate discards the answer and requires a fresh bounded read; an old coherent snapshot may finish only under its actual still-valid owner lease/fence, without claiming a newer boundary. Missing original canonical receipts or predecessor facts remain explicitly unresolved historical validation, never reconstructed evidence or current lifecycle truth.
 
 
   Family checkpoint disposition is explicitly `none_required`. The adapter owns zero durable state: no
@@ -532,12 +530,14 @@ canonical_text: 'Define NEW read-adapter binding `storage.goal_degraded_history_
   or the current schema promotion cannot supply the missing original admission proof.
 
 
-  At this source snapshot, no concrete generic EventRecord-index checkpoint family/schema is materialized:
-  checkpoint_ref is only a reference. The positive lookup path therefore remains blocked on the separately
-  owned shared checkpoint/publication prerequisite. Fail-closed text is not an operating positive path
-  or completed reader-depth evidence. This unit does not define that missing shared checkpoint; root must
-  integrate the independently reviewed exact shared authority before admitting the reader.'
+  SP-278 now supplies the concrete independently owned generic root/schema/publication contract, and
+  this exact existing adapter explicitly adopts it above. The former shared-checkpoint-not-materialized
+  prerequisite is discharged at the normative contract level. Actual lookup success still requires every
+  current generic, original lawful historical admission, source, receipt and permission predicate; this
+  amendment claims no historical positive instance, native reader proof or completed family-depth gate.'
 acceptance_criteria:
+- Final disclosure compares the complete original record/disposition and actual full SP-278 token plus
+  original source/admission/access fence after every helper; same-generation nonmatching append invalidates it.
 - Exact four-field project/goal/event/sequence lookup validates existing generic index key/value and complete
   canonical source frame, payload/hash and goal joins.
 - Actual generic checkpoint/coverage, CURRENT, generation/recovery/survivor and committed translation
@@ -556,8 +556,8 @@ acceptance_criteria:
   cannot create a fifth Goal state, recover a receipt or certify success.
 - Deletion/permission/secret/unsupported-version/withdrawal cases preserve original bytes and return truthful
   unavailable without action, hold, notification or writer effects.
-- Positive reader admission remains blocked until the actual generic EventRecord-index checkpoint/publication
-  contract is separately materialized and bound; a required reference alone is not operating-path proof.
+- This exact reader adopts materialized SP-278 root/anchor/frontier/source/read-token authority; original
+  lawful historical admission and final post-helper owner-fence checks remain mandatory for each lookup.
 preserved_exact_tokens:
 - storage.goal_degraded_history_read.v1
 - none_required
@@ -615,6 +615,7 @@ owner_hints:
 plan_unit_id: SP-280
 owner_doc: Plans/storage-plan.md
 depends_on:
+- SP-278
 - GRS-062
 - CV-336
 - SP-235
@@ -645,25 +646,13 @@ canonical_text: 'Define NEW read-adapter binding `storage.goal_scheduled_history
   goal_id against the selector.
 
 
-  Read a consistent CURRENT-selected committed index/source publication. Resolve the index publication_locator''s
-  manifest_generation, recovery_epoch, survivor_prefix_sha256 and checkpoint_ref to the independently
-  owned generic index publication and actual checkpoint. Prove complete generic index coverage includes
-  the exact requested sequence in the surviving source set; a nonempty reference, maximum sequence, family-filtered
-  checkpoint, application dedupe checkpoint or another event''s cursor is not coverage proof. If the actual
-  generic checkpoint cannot be resolved, return unavailable instead of inventing a checkpoint contract.
-  This family owns no full-range scan or catch-up. It relies on verified generic full-range publication
-  and validates this exact complete source frame.
+  Adopt actual SP-278 `reader.storage.event_record_index@1.0.0` through `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one actual redb snapshot, resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, `current_generation_id`, exact `#/generations/{generation_id}` node and same-database dataset `event_record_index.v2@{generation_id}`. Require the uniquely current admitted node and complete actual root/dataset authority; no flat-table, foreign-database, sibling checkpoint or reference-only fallback. The row key remains `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}`. Its `publication_locator.checkpoint_ref` resolves that exact node, while manifest_generation, recovery_epoch and survivor_prefix_sha256 bind the immutable generation birth anchor, not the latest append manifest. The current advancing frontier independently matches the actual synchronized CURRENT/manifest/source selection and complete global coverage, including nonmatching application and other-project records. Verify the trusted original anchor and unchanged anchored source prefix against current retained source; do not require permanently retained overwritten birth control files or infer anchor admission from self-consistent hashes. The full read token contains storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Every source_selection member binds actual owner controls, including exact CURRENT/manifest bytes, selected segment generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. An ordinary same-generation append invalidates the old full token even when the requested historical row is unchanged. No matching-row maximum, generation-only comparison or filtered checkpoint proves complete coverage.
 
 
-  The source cursor is the full tuple segment_generation, segment_name, byte_offset and sequence_id from
-  the validated row. Check current generation, complete frame bounds/CRC, durable watermark, original
-  event identity, payload hash and existing producer-semantic digest with their actual owner algorithms.
-  The index contains lookup metadata, not event or receipt authority. Compaction translations must resolve
-  an actual committed translation manifest and preserve exact source identity; a guessed retired offset
-  is forbidden. Revalidate CURRENT/publication selection before releasing the complete in-memory answer.
-  If recovery/generation changed, discard the answer and perform a fresh bounded read. A missing index
-  does not cause this adapter to write/rebuild; only the independent generic recovery owner may do so
-  under its contract.
+  Resolve the selected row and complete source frame using the exact (segment_generation, segment_name, byte_offset, sequence_id) cursor, frame bounds/CRC, synchronized durable watermark, supported original envelope/payload and existing exact payload/source/producer digest recipes. Preserve all current key/scope/project/event/sequence and represented owner identity joins. Use exact integer arithmetic within the existing admitted owner domain; no floating-point round-trip or invented 53-bit cap. Compaction requires actual committed translation authority for exact preserved source/target identities, original value/digest and exhaustive original outcomes. Translation binds the immutable target birth prefix; a later ordinary append suffix separately joins the current frontier. Current selected locators may differ from original historical publication coordinates, and neither rewrites the other. Missing required translation custody is unavailable or handled by the independent generic rebuild owner; this reader performs no rebuild or recovery write. A removed source has no current row and yields truthful unavailable, never a synthesized historical record. Complete global source gaps and degraded survivor provenance remain exactly SP-278; unsupported future source prevents a falsely complete current boundary.
+
+
+  At the original reader entry, before the first returning decoder, resolver, validator, copy or response helper, independently capture the immutable exact selector and actual original Storage instance, root/node/dataset, whole read-token/source/maintenance fence and current project/access/deletion/hold authority. Original lawful historical admission is a separate mandatory source fact: validate actual applicable-contract source-generation/compatibility custody, or the authenticated identity-preserving backup restoration and its original recovery custody. Retained bytes, a timestamp, current schema validity or current absence of a writer cannot establish it; an invalid current append never becomes lawful history. Independently derive the complete permitted original record and validation/provenance disposition from those actual originals before the corresponding output builders. After all helpers, including referenced predecessor/receipt checks and the last currentness/permission helper, a final pure typed predicate compares the entire candidate answer, immutable selector, actual original source/admission facts and complete current owner/token/fence against those independent expectations. No replaceable helper may run between that predicate and releasing the one in-memory answer. A changed frontier, root, anchor, source, access/deletion/hold authority or candidate discards the answer and requires a fresh bounded read; an old coherent snapshot may finish only under its actual still-valid owner lease/fence, without claiming a newer boundary. Missing original canonical receipts or predecessor facts remain explicitly unresolved historical validation, never reconstructed evidence or current lifecycle truth.
 
 
   Family checkpoint disposition is explicitly `none_required`. The adapter owns zero durable state: no
@@ -723,18 +712,20 @@ canonical_text: 'Define NEW read-adapter binding `storage.goal_scheduled_history
   or the current schema promotion cannot supply the missing original admission proof.
 
 
-  The positive lookup path remains blocked on the independently owned generic EventRecord-index checkpoint/publication
-  contract and its concrete schema, key, complete source coverage and currentness joins. A nonempty checkpoint_ref
-  or refusal path does not establish an operating reader. Until that shared authority and this exact family
-  adoption are materialized and reviewed, consumer/checkpoint/replay depth remains partial and historical
-  read success is unavailable. This unit defines no substitute shared checkpoint. Historical dispatch/await
-  values remain data only: the adapter owns no timer, queue enqueue, provider/tool call, quota charge,
-  stop-epoch clearing, schedule or Goal mutation.'
+  SP-278 now supplies the concrete independently owned generic root/schema/publication contract, and
+  this exact existing adapter explicitly adopts it above. The former shared-checkpoint-not-materialized
+  prerequisite is discharged at the normative contract level. Actual lookup success still requires every
+  current generic, original lawful historical admission, source, receipt and permission predicate; no
+  historical positive instance or native reader proof is asserted. Historical dispatch/await values remain
+  data only: the adapter owns no timer, queue enqueue, provider/tool call, quota charge, stop-epoch clearing,
+  schedule or Goal mutation.'
 acceptance_criteria:
+- Final disclosure compares the complete original record/disposition and actual full SP-278 token plus
+  original source/admission/access fence after every helper; same-generation nonmatching append invalidates it.
 - Four-field project/goal/event/sequence selector joins actual generic index key/value, canonical source
   frame and payload identity.
-- Actual generic checkpoint/coverage and CURRENT/survivor/manifest/translation joins are required; unresolved
-  SP278 leaves operating path blocked.
+- Actual SP-278 root/anchor/frontier/coverage and complete current token/source/translation joins are
+  explicitly adopted; unresolved actual custody makes this lookup unavailable.
 - Family none_required checkpoint follows zero durable effects, not waiver of shared proof; stale publication
   discards complete answer before release.
 - Original supported source/backup custody establishes history; timestamp/schema-valid JSON and fabricated

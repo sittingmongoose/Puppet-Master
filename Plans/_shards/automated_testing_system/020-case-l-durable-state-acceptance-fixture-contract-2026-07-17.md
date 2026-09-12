@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L2045-L2407
 
-Source SHA256: `0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1`
+Source SHA256: `47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609`
 
 ---
 
@@ -119,7 +119,7 @@ Every oracle in this subsection is `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`. It i
 - `RSD-P01` — One exact-hash unprotected `available` record with permission/writer/hold/ref authority transitions once to `deleted`; `prior_hash` identifies the pre-transition record.
 - `RSD-P02` — Replay returns the recorded terminal result with no duplicate append.
 - `RSD-N01` — Malformed payload, wrong version/status, empty ID/ref/hash/reason, invalid time, project/actor conflict, unresolved ref, unknown policy, or secret rejects/quarantines with record and checkpoint unchanged.
-- `RSD-N02` — Protected, held, stale-hash, already-terminal/non-available, permission-denied, viewer/blocked, in-flight, source-lineage-required, or storage-preflight failure remains `available`, clears no hold, and appends nothing.
+- `RSD-N02` — Protected, held, stale-hash, already-terminal/non-available, permission-denied, viewer/blocked, in-flight, source-lineage-required, or storage-preflight failure preserves the actual prior record and lifecycle state: an `available` record remains `available`, and an already-terminal/non-available record keeps its prior state. It clears no hold and appends nothing.
 - `RSD-N03` — Replay produces no second append; same identity/different digest conflicts without mutation.
 
 `restore_point.expired` planned/static oracle set:

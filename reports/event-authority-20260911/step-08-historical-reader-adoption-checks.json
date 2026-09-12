@@ -1,0 +1,122 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "draft_manifest_sha256": "819f604176295583c8c544a4b5b25decdf4511eeb9d3e4ee10c71a0d4994eb5c",
+  "predecessor_members_verified": 34,
+  "historical_exact_replacements": 23,
+  "oracle_corrections": 1,
+  "canonical_files": 7,
+  "plan_units_before": 6585,
+  "plan_units_after": 6585,
+  "acceptance_criteria_before": 25518,
+  "acceptance_criteria_after": 25521,
+  "changed_unit_fields": {
+    "CV-334": [
+      "canonical_text"
+    ],
+    "CV-335": [
+      "canonical_text"
+    ],
+    "CV-336": [
+      "canonical_text"
+    ],
+    "SP-271": [
+      "acceptance_criteria",
+      "canonical_text",
+      "depends_on"
+    ],
+    "SP-277": [
+      "acceptance_criteria",
+      "canonical_text",
+      "depends_on"
+    ],
+    "SP-280": [
+      "acceptance_criteria",
+      "canonical_text",
+      "depends_on"
+    ],
+    "GRS-060": [
+      "canonical_text"
+    ],
+    "GRS-061": [
+      "canonical_text"
+    ],
+    "GRS-062": [
+      "canonical_text"
+    ]
+  },
+  "all_other_units_unchanged": true,
+  "registry_and_wiring_bytes_unchanged": true,
+  "fixture_case_native_oracle_source_manifest_bytes_unchanged": true,
+  "historical_positive_instance_claim": false,
+  "actual_runtime_imports": 0,
+  "native_execution": false,
+  "repository_checks": {
+    "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_consumer_landing": true,
+      "added_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2598,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "historical_positive_instance_claim": false,
+    "complete_step8": false
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/historical-reader-repository-checks-20260912/manifest.json",
+    "sha256": "86e455ab725e75142d04fe47b5654c2383ac01e71389d3a0e9cee0b15ebcba46"
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "base_sha256": "0f6c1784433e6eca3af547550e6d28d791f320adf63a750a3c70d7117a2f68d1",
+      "sha256": "47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609",
+      "bytes": 396593
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "base_sha256": "33d18d3e3568f5053b68adb6d1a86fbc694b0a10abbed235156b1224cb127f83",
+      "sha256": "083dc7844e67d48919a9d0f5b6b9cd37f013bb40f35ad2da6ee465e68e3466f9",
+      "bytes": 1209797
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "base_sha256": "3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797",
+      "sha256": "9f8c49299453abd893e62f18c22ddbed101869eeeeda878eb1ede2b8ec87d984",
+      "bytes": 430089
+    },
+    {
+      "path": "Plans/goal_child_status_history_contract_fixtures.json",
+      "base_sha256": "48cb5fb2e470c58519a633ddc11ee6135a7b496de0024383d75cb307fcf06362",
+      "sha256": "096f65f9b27c26ff90ccfd8642967e710c9df64ab38bddffb6df742cf4457abe",
+      "bytes": 12430
+    },
+    {
+      "path": "Plans/goal_degraded_history_contract_fixtures.json",
+      "base_sha256": "3d190655d03ee8f539931cfa18998fba0497dbc431585c3ac24bbf8b874a24f1",
+      "sha256": "cf92ca8192a3e735e95d612926237cd8eca704341a0a9a8e7f98171bf6111700",
+      "bytes": 27910
+    },
+    {
+      "path": "Plans/goal_scheduled_history_contract_fixtures.json",
+      "base_sha256": "3eda34c2ad1ec7057d5e969f99cc5f02ae8441b6333195037228f4a6f9cd8ce4",
+      "sha256": "a7c81f67618b09dff73baf79bd994e84d11b147505f1b9bfdb05fd3e42b986df",
+      "bytes": 79444
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "base_sha256": "3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c",
+      "sha256": "716ae8fd1126a7b7ff901d65dfc0730c645783b3471f938df5c2191b9deefa21",
+      "bytes": 1891916
+    }
+  ]
+}
