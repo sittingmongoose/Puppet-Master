@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15136,
+    "depends_on_edge_count": 15148,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17787,
-    "node_count": 6564,
+    "edge_count": 17799,
+    "node_count": 6566,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T06:15:29Z",
+  "generated_at_utc": "2026-09-12T06:45:25Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -34828,10 +34828,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6564,
+  "plan_unit_count": 6566,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2020,
+      "high": 2022,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36031,6 +36031,7 @@
       "fabricated_collaborative_history_on_migration": 1,
       "fabricated_command_or_event_registration": 1,
       "fabricated_oauth_readiness_or_distributed_confidential_client_secret": 1,
+      "fabricated_original_platform_decision_or_scope_authority": 1,
       "fabricated_participant_output_or_lost_transcript": 1,
       "fabricated_recovery_or_unscoped_destructive_consent": 1,
       "fabricated_registration": 1,
@@ -36572,6 +36573,7 @@
       "log_audit_gui_drift_blocking": 1,
       "log_payload_exposure": 1,
       "loop_or_validator_false_completion": 1,
+      "lost_original_platform_decision_or_false_append_and_retention_authority": 1,
       "low_context_resume_failure": 1,
       "lsp_alias_drift": 1,
       "lsp_context_compiler_drift": 1,
@@ -38607,7 +38609,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6373,
+      "accepted": 6375,
       "retired": 182,
       "superseded": 9
     },
@@ -38661,7 +38663,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 36,
+      "owner_boundary": 37,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -38691,7 +38693,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 13,
+      "storage_contract": 14,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -38762,7 +38764,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "9e7f3b24c871598e4e3c3f83e14c19dcfa4e77fee0024fddb44a35bd1c7e1984",
+        "expected": "5134582a14ee656b2e344a14e1ce743ec6b196e39d7d6d3f32007a9691817fb2",
         "source_path": "Plans/storage_value_registry.json"
       },
       {

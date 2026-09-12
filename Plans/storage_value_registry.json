@@ -520,6 +520,22 @@
       "hold_eligible": true,
       "expiry_action": "tombstone_then_compact",
       "policy_version": "1.0.0"
+    },
+    {
+      "policy_id": "RP-PLATFORM-DECISION-REFERENCED",
+      "retention_mode": "anchored_then_ttl",
+      "anchor_kind": "reference_release",
+      "retain_indefinitely": false,
+      "ttl_seconds": 0,
+      "source_policy_ref": null,
+      "max_cardinality": null,
+      "cardinality_scope": null,
+      "additional_cardinality_limits": [],
+      "max_bytes": null,
+      "overflow_action": "fail_closed",
+      "hold_eligible": true,
+      "expiry_action": "compact",
+      "policy_version": "1.0.0"
     }
   ],
   "redaction_transform_registry_ref": "Plans/redaction_transform_registry.json",
@@ -61178,6 +61194,2083 @@
               "actor_ref",
               "redaction_profile"
             ]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "platform_capability_decision",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "platform_capability_decision.v1:{storage_instance_id}:{scope_partition}:{evaluation_id_sha256}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.platform_capability_decision.v1",
+      "value_schema_ref": "Plans/platform_capability_decision_contracts.schema.json#/$defs/decision",
+      "owner_doc": "Plans/storage-plan.md#platform-capability-decision-custody",
+      "producer": [
+        "storage.platform_capability_decision.capture.v1"
+      ],
+      "consumers": [
+        "platform.capability_evaluation.v1",
+        "storage.platform_capability_decision.read.v1"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "state",
+        "request",
+        "request_sha256",
+        "catalog_selection",
+        "source_decisions",
+        "frozen_producer_input",
+        "frozen_input_sha256",
+        "original_storage_fields",
+        "append_receipt",
+        "committed_at_utc"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "original_storage_fields",
+        "append_receipt",
+        "committed_at_utc"
+      ],
+      "replay_behavior": "Original authenticated pending/committed decision custody. Same scoped original evaluation and exact request joins the same frozen input and original eleven-field receipt. Pending-to-committed completion and event-bearing passive reads require the exact complete current event and SP-286/CV-339 original full-value authority. An already committed retry may return only its exact original receipt from the authentic retained decision row under current Store and final disclosure guards; it grants no action authority or fresh read-through coverage, does not extend DL-048 retention, and is unavailable after row deletion. Passive reads never reevaluate or advance a checkpoint.",
+      "migration": "First canonical family, table platform_capability_decision.v1 and exact closed 1.0.0 writer/reader. External proposal tags/keys were never deployed and are refused, not migrated. Actual StorageMigrationCoordinator installation, codec, source/target graph and writer/read/backup routes are prerequisites; do not infer a store version or permit lazy reconstruction.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#platform-capability-decision-custody"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#platform-capability-decision-custody",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#platform-capability-decision-custody"
+        ]
+      },
+      "retention_compaction": "DL-048: pending custody and complete current retained active/backup event references, frozen run snapshots and valid owner holds protect the row. Only resolved original evaluation with all references/holds released supplies reference_release. Zero TTL adds no grace or historical timestamp shortcut. Authorized deletion preserves complete actual current facts through active and registered backup cleanup. Independent event/receipt/source policies remain unchanged.",
+      "retention_policy_ref": "RP-PLATFORM-DECISION-REFERENCED",
+      "redaction_no_secret_rule": "Minimal original request/context/identity, admitted catalog revision and selected entry, nonsecret source decision/provenance facts, frozen reference-only producer input and exact original receipt. No raw probe logs/provider responses/credentials/account content/source history or old transaction controls.",
+      "legacy_canonical_crosswalk_status": "NEW technical custody under DL-045 and explicit DL-048 lifetime. Independent from mutable Models caches and Doctor projections. No catalog entry, trigger, account-derived scope, native installation, event admission or readiness claim.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#platform-capability-decision-custody"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "state",
+          "request",
+          "request_sha256",
+          "catalog_selection",
+          "source_decisions",
+          "frozen_producer_input",
+          "frozen_input_sha256",
+          "original_storage_fields",
+          "append_receipt",
+          "committed_at_utc"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.platform_capability_decision.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "state": {
+            "enum": [
+              "pending_append",
+              "committed"
+            ]
+          },
+          "request": {
+            "$ref": "#/$defs/evaluation_request"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "catalog_selection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "catalog_id",
+              "catalog_schema_version",
+              "catalog_revision",
+              "catalog_revision_sha256",
+              "selected_entry"
+            ],
+            "properties": {
+              "catalog_id": {
+                "const": "pm.platform_capability_catalog"
+              },
+              "catalog_schema_version": {
+                "const": "1.0.0"
+              },
+              "catalog_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "catalog_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "selected_entry": {
+                "additionalProperties": false,
+                "properties": {
+                  "allowed_evidence_sources": {
+                    "items": {
+                      "enum": [
+                        "live_runtime_discovery",
+                        "provider_policy_snapshot",
+                        "static_platform_baseline"
+                      ]
+                    },
+                    "maxItems": 3,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "capability_id": {
+                    "pattern": "^platform\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+                    "type": "string"
+                  },
+                  "display_name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "entry_state": {
+                    "enum": [
+                      "active",
+                      "deprecated",
+                      "retired"
+                    ]
+                  },
+                  "execution_classes": {
+                    "items": {
+                      "enum": [
+                        "direct_provider",
+                        "cli_bridged_provider",
+                        "server_bridged_provider"
+                      ]
+                    },
+                    "maxItems": 3,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "legacy_capability_key_aliases": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "owner_doc_ref": {
+                    "pattern": "^Plans/.+#[^#]+$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "capability_id",
+                  "display_name",
+                  "owner_doc_ref",
+                  "entry_state",
+                  "execution_classes",
+                  "allowed_evidence_sources",
+                  "legacy_capability_key_aliases"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "source_decisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "evidence",
+                "subject",
+                "source_owner_ref",
+                "source_record_sha256",
+                "original_verification_ref",
+                "original_freshness_ref",
+                "redaction_profile"
+              ],
+              "properties": {
+                "evidence": {
+                  "$ref": "#/$defs/p_platform_capability_evidence_ref"
+                },
+                "subject": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "scope",
+                    "platform_id",
+                    "provider_id",
+                    "capability_ref",
+                    "execution_class"
+                  ],
+                  "properties": {
+                    "scope": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "project_id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "application"
+                            },
+                            "project_id": {
+                              "type": "null"
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "project_id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "project"
+                            },
+                            "project_id": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "platform_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "provider_id": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "capability_ref": {
+                      "$ref": "#/$defs/p_platform_capability_ref"
+                    },
+                    "execution_class": {
+                      "enum": [
+                        "direct_provider",
+                        "cli_bridged_provider",
+                        "server_bridged_provider"
+                      ]
+                    }
+                  }
+                },
+                "source_owner_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_record_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_verification_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_freshness_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "redaction_profile": {
+                  "const": "no_secrets"
+                }
+              }
+            },
+            "minItems": 0,
+            "maxItems": 3
+          },
+          "frozen_producer_input": {
+            "$ref": "#/$defs/frozen_input"
+          },
+          "frozen_input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "original_storage_fields": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "sequence_id",
+                  "observed_at_utc",
+                  "persisted_at_utc"
+                ],
+                "properties": {
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "observed_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  },
+                  "persisted_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "append_receipt": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/a_AppendReceipt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "committed_at_utc": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "pending_append"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "append_receipt": {
+                  "type": "null"
+                },
+                "committed_at_utc": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "committed"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "original_storage_fields": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "sequence_id",
+                    "observed_at_utc",
+                    "persisted_at_utc"
+                  ],
+                  "properties": {
+                    "sequence_id": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "observed_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    },
+                    "persisted_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    }
+                  }
+                },
+                "append_receipt": {
+                  "$ref": "#/$defs/a_AppendReceipt"
+                },
+                "committed_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "Z$"
+                }
+              }
+            }
+          }
+        ],
+        "$defs": {
+          "p_platform_capability_evaluated_1_0_0_compatibility_reader": {
+            "$id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/1.0.0",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "additionalProperties": false,
+            "properties": {
+              "capability_key": {
+                "type": "string"
+              },
+              "degraded_reason": {
+                "type": "string"
+              },
+              "effective_capability": {
+                "type": "string"
+              },
+              "evidence_ref": {
+                "type": "string"
+              },
+              "platform_id": {
+                "type": "string"
+              },
+              "project_id": {
+                "type": "string"
+              },
+              "provider_id": {
+                "type": "string"
+              },
+              "requested_capability": {
+                "type": "string"
+              },
+              "ts": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "platform_id",
+              "capability_key",
+              "effective_capability",
+              "ts"
+            ],
+            "type": "object"
+          },
+          "p_platform_capability_evidence_ref": {
+            "additionalProperties": false,
+            "oneOf": [
+              {
+                "properties": {
+                  "evidence_ref_type": {
+                    "const": "runtime_probe_receipt"
+                  },
+                  "source_kind": {
+                    "const": "live_runtime_discovery"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "evidence_ref_type": {
+                    "const": "provider_policy_snapshot"
+                  },
+                  "source_kind": {
+                    "const": "provider_policy_snapshot"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "evidence_ref_type": {
+                    "const": "platform_baseline_revision"
+                  },
+                  "source_kind": {
+                    "const": "static_platform_baseline"
+                  }
+                }
+              }
+            ],
+            "properties": {
+              "evidence_ref": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "evidence_ref_type": {
+                "enum": [
+                  "runtime_probe_receipt",
+                  "provider_policy_snapshot",
+                  "platform_baseline_revision"
+                ]
+              },
+              "finding": {
+                "enum": [
+                  "supports_available",
+                  "supports_degraded",
+                  "supports_unavailable"
+                ]
+              },
+              "observed_at_utc": {
+                "format": "date-time",
+                "pattern": "Z$",
+                "type": "string"
+              },
+              "source_kind": {
+                "enum": [
+                  "live_runtime_discovery",
+                  "provider_policy_snapshot",
+                  "static_platform_baseline"
+                ]
+              },
+              "source_revision_ref": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_kind",
+              "evidence_ref_type",
+              "evidence_ref",
+              "finding",
+              "observed_at_utc",
+              "source_revision_ref"
+            ],
+            "type": "object"
+          },
+          "p_platform_capability_ref": {
+            "additionalProperties": false,
+            "properties": {
+              "capability_id": {
+                "pattern": "^platform\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+                "type": "string"
+              },
+              "catalog_id": {
+                "const": "pm.platform_capability_catalog"
+              },
+              "catalog_revision": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "catalog_schema_version": {
+                "const": "1.0.0"
+              },
+              "ref_type": {
+                "const": "platform_capability_catalog_entry"
+              }
+            },
+            "required": [
+              "ref_type",
+              "catalog_id",
+              "catalog_schema_version",
+              "catalog_revision",
+              "capability_id"
+            ],
+            "type": "object"
+          },
+          "e_non_empty_string": {
+            "type": "string",
+            "minLength": 1
+          },
+          "e_nullable_non_empty_string": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "e_nullable_non_negative_integer": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "e_date_time_string": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          },
+          "e_migration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "migrated_from_schema_id",
+              "migrated_from_schema_version",
+              "migration_id",
+              "compatibility_event_type"
+            ],
+            "properties": {
+              "migrated_from_schema_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "migrated_from_schema_version": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "migration_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "compatibility_event_type": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              }
+            }
+          },
+          "e_event_record_1_0_0_compatibility_reader": {
+            "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "observed_at_utc",
+              "persisted_at_utc",
+              "sequence_id",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "type": "string",
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "type": "string",
+                "const": "1.0.0"
+              },
+              "event_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "event_type": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+              },
+              "project_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "thread_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "run_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "node_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "attempt_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "requested_account_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "effective_account_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/e_date_time_string"
+              },
+              "observed_at_utc": {
+                "$ref": "#/$defs/e_date_time_string"
+              },
+              "persisted_at_utc": {
+                "$ref": "#/$defs/e_date_time_string"
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "producer_sequence_id": {
+                "$ref": "#/$defs/e_nullable_non_negative_integer"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "causation_event_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "parent_event_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "payload_schema_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "payload": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "payload_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "redaction_profile": {
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
+              },
+              "replay_policy": {
+                "type": "string",
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key",
+                  "projector_replay_only"
+                ]
+              },
+              "migration": {
+                "$ref": "#/$defs/e_migration"
+              }
+            }
+          },
+          "a_AppendReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              }
+            }
+          },
+          "a_member": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "byte_offset",
+              "frame_length",
+              "frame_sha256"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frame_length": {
+                "type": "integer",
+                "minimum": 48,
+                "maximum": 18446744073709551615
+              },
+              "frame_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "a_active_durable_group": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "storage_instance_id",
+              "commit_group_id",
+              "durability_class",
+              "segment_generation",
+              "segment_name",
+              "durable_start_offset",
+              "durable_end_offset",
+              "manifest_generation",
+              "members",
+              "group_digest",
+              "restore_admission"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durable_start_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "members": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/a_member"
+                }
+              },
+              "group_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "restore_admission": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "$ref": "#/$defs/a_restore_admission"
+                  }
+                ]
+              }
+            }
+          },
+          "a_custody": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "event_id",
+              "scope_partition",
+              "event_type",
+              "idempotency_key",
+              "producer_semantic_digest",
+              "group_digest",
+              "first_append_receipt",
+              "redaction_profile",
+              "original_segment_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.event_append_receipt_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "producer_semantic_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "group_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "first_append_receipt": {
+                "$ref": "#/$defs/a_AppendReceipt"
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "original_segment_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "a_restore_admitted_member": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "scope_partition",
+              "event_type",
+              "idempotency_key",
+              "producer_semantic_digest",
+              "owner_id",
+              "owner_operation_id",
+              "owner_operation_sha256"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope_partition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "producer_semantic_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "owner_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner_operation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner_operation_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "a_restore_admission": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "storage_instance_id",
+              "restore_occurrence_id",
+              "restore_journal_ref",
+              "restore_journal_sha256",
+              "recovery_epoch",
+              "restored_boundary_sha256",
+              "publication_id",
+              "members"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "restore_occurrence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "restore_journal_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "restore_journal_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "restored_boundary_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "publication_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "members": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/a_restore_admitted_member"
+                }
+              }
+            }
+          },
+          "a_active_durable_group_v1_reader": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_version",
+              "storage_instance_id",
+              "commit_group_id",
+              "durability_class",
+              "segment_generation",
+              "segment_name",
+              "durable_start_offset",
+              "durable_end_offset",
+              "manifest_generation",
+              "members",
+              "group_digest"
+            ],
+            "properties": {
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durable_start_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "members": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/a_member"
+                }
+              },
+              "group_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "frozen_input": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "Puppet Master EventRecord Envelope",
+            "description": "Canonical persisted EventRecord envelope for schema_id pm.event.v0. The envelope is closed and carries identity, sequence, causality, redaction, replay, idempotency, and migration fields. Event-specific payload content is dispatched through payload_schema_id and remains owned by the registered payload schema. No raw secret, token, password, credential, API key, OAuth value, or local machine secret may be stored in this envelope or payload.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "type": "string",
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "type": "string",
+                "const": "2.0.0"
+              },
+              "scope_kind": {
+                "type": "string",
+                "enum": [
+                  "application",
+                  "project"
+                ]
+              },
+              "event_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "event_type": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+              },
+              "project_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "thread_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "run_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "node_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "attempt_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "requested_account_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "effective_account_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/e_date_time_string"
+              },
+              "producer_sequence_id": {
+                "$ref": "#/$defs/e_nullable_non_negative_integer"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "causation_event_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "parent_event_id": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "payload_schema_id": {
+                "$ref": "#/$defs/e_non_empty_string"
+              },
+              "payload": {
+                "type": "object",
+                "additionalProperties": true
+              },
+              "payload_ref": {
+                "$ref": "#/$defs/e_nullable_non_empty_string"
+              },
+              "redaction_profile": {
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
+              },
+              "replay_policy": {
+                "type": "string",
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key",
+                  "projector_replay_only"
+                ]
+              },
+              "migration": {
+                "$ref": "#/$defs/e_migration"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/e_non_empty_string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "evaluation_request": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "evaluation_id",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "actor_ref",
+              "correlation_id",
+              "context",
+              "subject",
+              "requested_state"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.platform_capability_evaluation_request.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evaluation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              "producer_sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "correlation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "context_ref",
+                  "context_owner_ref",
+                  "original_request_id",
+                  "run_ref",
+                  "tier_ref",
+                  "thread_id",
+                  "scope"
+                ],
+                "properties": {
+                  "context_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "context_owner_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "original_request_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "run_ref": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "tier_ref": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "thread_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "scope": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "project_id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "application"
+                          },
+                          "project_id": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "project_id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "project"
+                          },
+                          "project_id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "subject": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "scope",
+                  "platform_id",
+                  "provider_id",
+                  "capability_ref",
+                  "execution_class"
+                ],
+                "properties": {
+                  "scope": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "project_id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "application"
+                          },
+                          "project_id": {
+                            "type": "null"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "project_id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "project"
+                          },
+                          "project_id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "platform_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "provider_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "capability_ref": {
+                    "$ref": "#/$defs/p_platform_capability_ref"
+                  },
+                  "execution_class": {
+                    "enum": [
+                      "direct_provider",
+                      "cli_bridged_provider",
+                      "server_bridged_provider"
+                    ]
+                  }
+                }
+              },
+              "requested_state": {
+                "enum": [
+                  "required",
+                  "preferred",
+                  "not_requested"
+                ]
+              }
+            }
+          },
+          "decision": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "physical_key",
+              "state",
+              "request",
+              "request_sha256",
+              "catalog_selection",
+              "source_decisions",
+              "frozen_producer_input",
+              "frozen_input_sha256",
+              "original_storage_fields",
+              "append_receipt",
+              "committed_at_utc"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.platform_capability_decision.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "physical_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "enum": [
+                  "pending_append",
+                  "committed"
+                ]
+              },
+              "request": {
+                "$ref": "#/$defs/evaluation_request"
+              },
+              "request_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "catalog_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "catalog_id",
+                  "catalog_schema_version",
+                  "catalog_revision",
+                  "catalog_revision_sha256",
+                  "selected_entry"
+                ],
+                "properties": {
+                  "catalog_id": {
+                    "const": "pm.platform_capability_catalog"
+                  },
+                  "catalog_schema_version": {
+                    "const": "1.0.0"
+                  },
+                  "catalog_revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "catalog_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_entry": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "allowed_evidence_sources": {
+                        "items": {
+                          "enum": [
+                            "live_runtime_discovery",
+                            "provider_policy_snapshot",
+                            "static_platform_baseline"
+                          ]
+                        },
+                        "maxItems": 3,
+                        "minItems": 1,
+                        "type": "array",
+                        "uniqueItems": true
+                      },
+                      "capability_id": {
+                        "pattern": "^platform\\.[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+                        "type": "string"
+                      },
+                      "display_name": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "entry_state": {
+                        "enum": [
+                          "active",
+                          "deprecated",
+                          "retired"
+                        ]
+                      },
+                      "execution_classes": {
+                        "items": {
+                          "enum": [
+                            "direct_provider",
+                            "cli_bridged_provider",
+                            "server_bridged_provider"
+                          ]
+                        },
+                        "maxItems": 3,
+                        "minItems": 1,
+                        "type": "array",
+                        "uniqueItems": true
+                      },
+                      "legacy_capability_key_aliases": {
+                        "items": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "type": "array",
+                        "uniqueItems": true
+                      },
+                      "owner_doc_ref": {
+                        "pattern": "^Plans/.+#[^#]+$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "capability_id",
+                      "display_name",
+                      "owner_doc_ref",
+                      "entry_state",
+                      "execution_classes",
+                      "allowed_evidence_sources",
+                      "legacy_capability_key_aliases"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              "source_decisions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "evidence",
+                    "subject",
+                    "source_owner_ref",
+                    "source_record_sha256",
+                    "original_verification_ref",
+                    "original_freshness_ref",
+                    "redaction_profile"
+                  ],
+                  "properties": {
+                    "evidence": {
+                      "$ref": "#/$defs/p_platform_capability_evidence_ref"
+                    },
+                    "subject": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "scope",
+                        "platform_id",
+                        "provider_id",
+                        "capability_ref",
+                        "execution_class"
+                      ],
+                      "properties": {
+                        "scope": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "project_id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "application"
+                                },
+                                "project_id": {
+                                  "type": "null"
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "project_id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "project"
+                                },
+                                "project_id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "platform_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "provider_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "capability_ref": {
+                          "$ref": "#/$defs/p_platform_capability_ref"
+                        },
+                        "execution_class": {
+                          "enum": [
+                            "direct_provider",
+                            "cli_bridged_provider",
+                            "server_bridged_provider"
+                          ]
+                        }
+                      }
+                    },
+                    "source_owner_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "source_record_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "original_verification_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "original_freshness_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "redaction_profile": {
+                      "const": "no_secrets"
+                    }
+                  }
+                },
+                "minItems": 0,
+                "maxItems": 3
+              },
+              "frozen_producer_input": {
+                "$ref": "#/$defs/frozen_input"
+              },
+              "frozen_input_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_storage_fields": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "sequence_id",
+                      "observed_at_utc",
+                      "persisted_at_utc"
+                    ],
+                    "properties": {
+                      "sequence_id": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "observed_at_utc": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "Z$"
+                      },
+                      "persisted_at_utc": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "Z$"
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/a_AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "committed_at_utc": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "pending_append"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "append_receipt": {
+                      "type": "null"
+                    },
+                    "committed_at_utc": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "const": "committed"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "original_storage_fields": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "sequence_id",
+                        "observed_at_utc",
+                        "persisted_at_utc"
+                      ],
+                      "properties": {
+                        "sequence_id": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "observed_at_utc": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "Z$"
+                        },
+                        "persisted_at_utc": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "Z$"
+                        }
+                      }
+                    },
+                    "append_receipt": {
+                      "$ref": "#/$defs/a_AppendReceipt"
+                    },
+                    "committed_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "Z$"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "read_request": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "scope",
+              "evaluation_id",
+              "event_id"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "project_id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "application"
+                      },
+                      "project_id": {
+                        "type": "null"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "project_id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "project"
+                      },
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              "evaluation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
           }
         }
       }

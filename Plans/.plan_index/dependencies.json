@@ -5907,6 +5907,7 @@
     "SIR-046",
     "SP-279",
     "SP-288",
+    "SP-290",
     "CV-335",
     "SP-289",
     "SP-282",
@@ -6037,6 +6038,7 @@
     "OSI-422",
     "PSMERA-021",
     "UCC-124",
+    "N2-157",
     "SP-277",
     "SP-281",
     "SMPFS-036",
@@ -33789,6 +33791,26 @@
       "edge_type": "depends_on",
       "from": "N2-156",
       "to": "SRV-013"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-157",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-157",
+      "to": "DL-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-157",
+      "to": "N2-151"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "N2-157",
+      "to": "SP-290"
     },
     {
       "edge_type": "depends_on",
@@ -66712,6 +66734,46 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "DL-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-290",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -95506,7 +95568,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T06:15:29Z",
+  "generated_at_utc": "2026-09-12T06:45:25Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -160585,6 +160647,23 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "original_platform_capability_evaluation",
+      "gui_related": false,
+      "owner_doc": "Plans/newtools.md",
+      "plan_unit_id": "N2-157",
+      "reasoning_tier": "high",
+      "risk_class": "fabricated_original_platform_decision_or_scope_authority",
+      "source_location": {
+        "heading": "N2-157 - Platform Original Evaluation Decision Authority",
+        "heading_level": 3,
+        "heading_line": 9014,
+        "line": 9016,
+        "path": "Plans/newtools.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "named_plan_aggregate",
       "gui_related": true,
       "owner_doc": "Plans/Named_Plan_System.md",
@@ -193973,6 +194052,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "original_platform_decision_physical_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-290",
+      "reasoning_tier": "high",
+      "risk_class": "lost_original_platform_decision_or_false_append_and_retention_authority",
+      "source_location": {
+        "heading": "SP-290 - Platform Capability Decision Custody",
+        "heading_level": 3,
+        "heading_line": 23086,
+        "line": 23088,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -207103,10 +207199,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15136,
+    "depends_on_edge_count": 15148,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17787,
-    "node_count": 6564,
+    "edge_count": 17799,
+    "node_count": 6566,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

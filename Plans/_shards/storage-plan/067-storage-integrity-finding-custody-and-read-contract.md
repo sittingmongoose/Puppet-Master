@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22788-L23034
+Source lines: L22788-L23037
 
-Source SHA256: `b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd`
+Source SHA256: `e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907`
 
 ---
 
@@ -255,3 +255,6 @@ owner_hints:
 - Plans/Contracts_V0.md
 - Plans/Runtime_Artifacts_Panel.md
 ```
+
+
+<a id="platform-capability-decision-custody"></a>

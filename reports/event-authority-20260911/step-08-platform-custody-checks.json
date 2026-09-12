@@ -1,0 +1,1120 @@
+{
+  "status": "PLATFORM_ORIGINAL_DECISION_CANONICAL_STATIC_COMPILATION_PASS",
+  "base_head": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+  "new_units": [
+    "N2-157",
+    "SP-290"
+  ],
+  "original_owner_bytes_and_all_prior_units_preserved": true,
+  "source_bundles": [
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-proposal-20260912/manifest.json",
+        "sha256": "9d929078353547f586adcd8ae1bcb69132a23584c8928442f445bc1bb716ae6b"
+      },
+      "members": 12
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v11/manifest.json",
+        "sha256": "345efa22c2f40faec040b8e7e6dc95ecc667ca47ff37f053c01d3b8263e428c8"
+      },
+      "members": 3554
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/platform-v11-canonical-binding-independent-review-20260912/manifest.json",
+        "sha256": "eafc7719bbf46f943d68da96e507fe5797697777a9356fe68aaa7331498a4108"
+      },
+      "members": 3568
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-v11-committed-retry-semantics-review-20260912/manifest.json",
+        "sha256": "d3c992abae565001c8bd3b43e511dc74092e024b1f0e4498415a2663b6d1854d"
+      },
+      "members": 6
+    }
+  ],
+  "verified_source_member_and_manifest_pins": 7144,
+  "doc_compilation_handoff": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-owner-doc-compilation-20260912/manifest.json",
+    "sha256": "906aad40166a4bb65245db32a1be2ddc3dd2cbbded1136235b7309d197eba651"
+  },
+  "doc_compilation_members_verified": 15,
+  "doc_compilation_normalizations": {
+    "append_only": "All prior document bytes, PlanUnits and acceptance criteria preserved exactly.",
+    "accepted_new_units": [
+      "N2-157",
+      "SP-290"
+    ],
+    "normalizations": [
+      "Removed Proposed status/headings and external pending-review claims; new sections state accepted/static materialization with no native/depth/production positive clearance.",
+      "Scoped full-value obligation to pending-to-committed completion and event-bearing passive reads; added exact retained committed-retry guards and no lifetime, coverage or deleted-row fallback.",
+      "Replaced model-specific conflicting-revision cardinality note with original owner conflicting-revision refusal obligation; model limitation belongs in report.",
+      "Removed late-owner KeyError and model error API language from normative contract; retained refusal and genuine independent effect preservation.",
+      "Added live sidecar schema reference, semantic/writer/passive-reader bindings, technical authority and static validation/report metadata using existing accepted PlanUnit conventions.",
+      "Kept evidence arithmetic out of normative contract; report owns corrected 455 author-scope and 87 selected independent review counts."
+    ]
+  },
+  "doc_compilation_preservation": [
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/event-authority-platform-custody-20260912/Plans/newtools.md",
+      "preimage_sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+      "postimage_sha256": "936a666d10339c5958b6ecc5d65cd1cf5818e5e1b4728daaba5b2f65cc184390",
+      "original_bytes": 455387,
+      "added_bytes": 8058,
+      "old_yaml_blocks_preserved": 156,
+      "new_plan_unit": "N2-157",
+      "acceptance_criteria": 9,
+      "append_only": true,
+      "yaml_valid": true
+    },
+    {
+      "path": "/home/sittingmongoose/pm-worktrees/event-authority-platform-custody-20260912/Plans/storage-plan.md",
+      "preimage_sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
+      "postimage_sha256": "e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907",
+      "original_bytes": 1680906,
+      "added_bytes": 18855,
+      "old_yaml_blocks_preserved": 283,
+      "new_plan_unit": "SP-290",
+      "acceptance_criteria": 15,
+      "append_only": true,
+      "yaml_valid": true
+    }
+  ],
+  "current_source_re_adjudication": {
+    "status": "PASS_RE_ADJUDICATED",
+    "base": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true
+      },
+      {
+        "path": "Plans/newtools.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+        "current_sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "a825526fffc96c404feb9f7ff0b0b93fb89ad0dff4f3390fd21b72b2596e2126",
+        "current_sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
+        "exact": false
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "current_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "exact": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "current_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "exact": true
+      },
+      {
+        "path": "Plans/Models_System.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+        "current_sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+        "exact": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+        "current_sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+        "exact": true
+      },
+      {
+        "path": "Plans/platform_capability_catalog.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+        "current_sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+        "exact": true
+      },
+      {
+        "path": "Plans/platform_capability_catalog.schema.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "a0398428f17d51811604bbdd52c24d56327dc68b2580ea616bb4d20dc229f91f",
+        "current_sha256": "a0398428f17d51811604bbdd52c24d56327dc68b2580ea616bb4d20dc229f91f",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+        "current_sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+        "current_sha256": "9e7f3b24c871598e4e3c3f83e14c19dcfa4e77fee0024fddb44a35bd1c7e1984",
+        "exact": false
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+        "exact": false
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+        "source_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "current_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "exact": true
+      }
+    ],
+    "adjudication": "Home SP-273/full-value and Integrity SP-279/file contract are the intervening changes. Shared Case L-2, SP-278/SP-286/CV-339, Platform owners and DL-048 remain exact. Existing Home rows remain exact; Integrity adds one family and canonical_file enum only. Append to current 114-family/25-policy registry; preserve all current rows, arrays and schema constraints."
+  },
+  "schema_value_checks": {
+    "status": "PASS",
+    "base": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+    "bundles": [
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-proposal-20260912/manifest.json",
+          "sha256": "9d929078353547f586adcd8ae1bcb69132a23584c8928442f445bc1bb716ae6b"
+        },
+        "members": 12
+      },
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v11/manifest.json",
+          "sha256": "345efa22c2f40faec040b8e7e6dc95ecc667ca47ff37f053c01d3b8263e428c8"
+        },
+        "members": 3554
+      },
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/platform-v11-canonical-binding-independent-review-20260912/manifest.json",
+          "sha256": "eafc7719bbf46f943d68da96e507fe5797697777a9356fe68aaa7331498a4108"
+        },
+        "members": 3568
+      },
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-v11-committed-retry-semantics-review-20260912/manifest.json",
+          "sha256": "d3c992abae565001c8bd3b43e511dc74092e024b1f0e4498415a2663b6d1854d"
+        },
+        "members": 6
+      }
+    ],
+    "verified_member_and_manifest_pins": 7144,
+    "currentness": {
+      "status": "PASS_RE_ADJUDICATED",
+      "base": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+      "sources": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+          "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+          "exact": true
+        },
+        {
+          "path": "Plans/newtools.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "current_sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+          "exact": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "a825526fffc96c404feb9f7ff0b0b93fb89ad0dff4f3390fd21b72b2596e2126",
+          "current_sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
+          "exact": false
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+          "current_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+          "exact": true
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+          "current_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+          "exact": true
+        },
+        {
+          "path": "Plans/Models_System.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+          "current_sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+          "exact": true
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "current_sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+          "exact": true
+        },
+        {
+          "path": "Plans/platform_capability_catalog.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+          "current_sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+          "exact": true
+        },
+        {
+          "path": "Plans/platform_capability_catalog.schema.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "a0398428f17d51811604bbdd52c24d56327dc68b2580ea616bb4d20dc229f91f",
+          "current_sha256": "a0398428f17d51811604bbdd52c24d56327dc68b2580ea616bb4d20dc229f91f",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+          "current_sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+          "exact": true
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+          "current_sha256": "9e7f3b24c871598e4e3c3f83e14c19dcfa4e77fee0024fddb44a35bd1c7e1984",
+          "exact": false
+        },
+        {
+          "path": "Plans/storage_value_registry.schema.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "current_sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+          "exact": false
+        },
+        {
+          "path": "Plans/event_append_receipt_contracts.schema.json",
+          "source_commit": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+          "source_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+          "current_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+          "exact": true
+        }
+      ],
+      "adjudication": "Home SP-273/full-value and Integrity SP-279/file contract are the intervening changes. Shared Case L-2, SP-278/SP-286/CV-339, Platform owners and DL-048 remain exact. Existing Home rows remain exact; Integrity adds one family and canonical_file enum only. Append to current 114-family/25-policy registry; preserve all current rows, arrays and schema constraints."
+    },
+    "all_original_114_families_and_25_policies_exact": true,
+    "other_registry_fields_exact": true,
+    "physical_families": 115,
+    "retention_policies": 26,
+    "event_families": 42,
+    "production_catalog_entries": 0,
+    "sidecar_exact": {
+      "path": "/home/sittingmongoose/pm-worktrees/event-authority-platform-custody-20260912/Plans/platform_capability_decision_contracts.schema.json",
+      "sha256": "f7d533d9770f88f7c0bce24aa2c0e94bb1cd519a41f9fcf8230d6be4f7075d03"
+    },
+    "inline_decision_schema_equal": true,
+    "new_family_replay_normalization": {
+      "before": "Original authenticated pending/committed decision custody. Same scoped original evaluation and exact request joins the same frozen input, complete current event and exact original eleven-field receipt. Completion and passive reads explicitly require SP-286/CV-339 original full-value authority. Passive reads return no action authority and never reevaluate or advance a checkpoint.",
+      "after": "Original authenticated pending/committed decision custody. Same scoped original evaluation and exact request joins the same frozen input and original eleven-field receipt. Pending-to-committed completion and event-bearing passive reads require the exact complete current event and SP-286/CV-339 original full-value authority. An already committed retry may return only its exact original receipt from the authentic retained decision row under current Store and final disclosure guards; it grants no action authority or fresh read-through coverage, does not extend DL-048 retention, and is unavailable after row deletion. Passive reads never reevaluate or advance a checkpoint.",
+      "authority": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-v11-committed-retry-semantics-review-20260912/review.md",
+        "sha256": "dc03501372796433315c0a4ef68fbe5bf8a042d6a69f00fdcc4f9384ec321394"
+      }
+    },
+    "current_capture_checks": [
+      {
+        "scope": "application",
+        "route": "direct",
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-direct.json",
+          "sha256": "7a4970b40ea0266d254c942ebd78ab36fe80e94e007441aab9868edb9dc2260a"
+        },
+        "status": "PASS_SCHEMA_CURRENT_SOURCE_ORIGINAL_COMMITMENT_JOIN",
+        "assignment_commitment_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ],
+        "actual_complete_read_through_equal": true,
+        "same_actual_owner_execution_evidence": "capture_values.py and capture-manifest.json",
+        "prospective_fixture_only": true
+      },
+      {
+        "scope": "application",
+        "route": "actual_backup_vault",
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-actual_backup_vault.json",
+          "sha256": "d8c6645dd8405f8d03903a13f9fc29eef7ef8e52b7c5ea45d532bfa2561654c4"
+        },
+        "status": "PASS_SCHEMA_CURRENT_SOURCE_ORIGINAL_COMMITMENT_JOIN",
+        "assignment_commitment_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ],
+        "actual_complete_read_through_equal": true,
+        "same_actual_owner_execution_evidence": "capture_values.py and capture-manifest.json",
+        "prospective_fixture_only": true
+      },
+      {
+        "scope": "project",
+        "route": "direct",
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-direct.json",
+          "sha256": "694aa22b3f4a36f028c53e8d6cb6051f1258eb9f08b432fcace22dd1c35b12bb"
+        },
+        "status": "PASS_SCHEMA_CURRENT_SOURCE_ORIGINAL_COMMITMENT_JOIN",
+        "assignment_commitment_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ],
+        "actual_complete_read_through_equal": true,
+        "same_actual_owner_execution_evidence": "capture_values.py and capture-manifest.json",
+        "prospective_fixture_only": true
+      },
+      {
+        "scope": "project",
+        "route": "actual_backup_vault",
+        "source": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-actual_backup_vault.json",
+          "sha256": "7a757b418e32e8ba771a5c69f4c914bb69f4d0ac064b6ff284cefc6d4bbda493"
+        },
+        "status": "PASS_SCHEMA_CURRENT_SOURCE_ORIGINAL_COMMITMENT_JOIN",
+        "assignment_commitment_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ],
+        "actual_complete_read_through_equal": true,
+        "same_actual_owner_execution_evidence": "capture_values.py and capture-manifest.json",
+        "prospective_fixture_only": true
+      }
+    ],
+    "fixture_cases": 24,
+    "positive_fixture_values": 16,
+    "schema_negative_cases": 8,
+    "native": "NOT_RUN"
+  },
+  "fixture_source_mapping": [
+    {
+      "case": "application_direct_pending_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-direct.json",
+        "sha256": "7a4970b40ea0266d254c942ebd78ab36fe80e94e007441aab9868edb9dc2260a"
+      },
+      "source_pointer": "/pending_row"
+    },
+    {
+      "case": "application_direct_terminal_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-direct.json",
+        "sha256": "7a4970b40ea0266d254c942ebd78ab36fe80e94e007441aab9868edb9dc2260a"
+      },
+      "source_pointer": "/terminal_row"
+    },
+    {
+      "case": "application_direct_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-direct.json",
+        "sha256": "7a4970b40ea0266d254c942ebd78ab36fe80e94e007441aab9868edb9dc2260a"
+      },
+      "source_pointer": "/request"
+    },
+    {
+      "case": "application_direct_passive_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-direct.json",
+        "sha256": "7a4970b40ea0266d254c942ebd78ab36fe80e94e007441aab9868edb9dc2260a"
+      },
+      "source_pointer": "/passive_request"
+    },
+    {
+      "case": "application_actual_backup_vault_pending_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-actual_backup_vault.json",
+        "sha256": "d8c6645dd8405f8d03903a13f9fc29eef7ef8e52b7c5ea45d532bfa2561654c4"
+      },
+      "source_pointer": "/pending_row"
+    },
+    {
+      "case": "application_actual_backup_vault_terminal_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-actual_backup_vault.json",
+        "sha256": "d8c6645dd8405f8d03903a13f9fc29eef7ef8e52b7c5ea45d532bfa2561654c4"
+      },
+      "source_pointer": "/terminal_row"
+    },
+    {
+      "case": "application_actual_backup_vault_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-actual_backup_vault.json",
+        "sha256": "d8c6645dd8405f8d03903a13f9fc29eef7ef8e52b7c5ea45d532bfa2561654c4"
+      },
+      "source_pointer": "/request"
+    },
+    {
+      "case": "application_actual_backup_vault_passive_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/application-actual_backup_vault.json",
+        "sha256": "d8c6645dd8405f8d03903a13f9fc29eef7ef8e52b7c5ea45d532bfa2561654c4"
+      },
+      "source_pointer": "/passive_request"
+    },
+    {
+      "case": "project_direct_pending_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-direct.json",
+        "sha256": "694aa22b3f4a36f028c53e8d6cb6051f1258eb9f08b432fcace22dd1c35b12bb"
+      },
+      "source_pointer": "/pending_row"
+    },
+    {
+      "case": "project_direct_terminal_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-direct.json",
+        "sha256": "694aa22b3f4a36f028c53e8d6cb6051f1258eb9f08b432fcace22dd1c35b12bb"
+      },
+      "source_pointer": "/terminal_row"
+    },
+    {
+      "case": "project_direct_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-direct.json",
+        "sha256": "694aa22b3f4a36f028c53e8d6cb6051f1258eb9f08b432fcace22dd1c35b12bb"
+      },
+      "source_pointer": "/request"
+    },
+    {
+      "case": "project_direct_passive_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-direct.json",
+        "sha256": "694aa22b3f4a36f028c53e8d6cb6051f1258eb9f08b432fcace22dd1c35b12bb"
+      },
+      "source_pointer": "/passive_request"
+    },
+    {
+      "case": "project_actual_backup_vault_pending_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-actual_backup_vault.json",
+        "sha256": "7a757b418e32e8ba771a5c69f4c914bb69f4d0ac064b6ff284cefc6d4bbda493"
+      },
+      "source_pointer": "/pending_row"
+    },
+    {
+      "case": "project_actual_backup_vault_terminal_row",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-actual_backup_vault.json",
+        "sha256": "7a757b418e32e8ba771a5c69f4c914bb69f4d0ac064b6ff284cefc6d4bbda493"
+      },
+      "source_pointer": "/terminal_row"
+    },
+    {
+      "case": "project_actual_backup_vault_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-actual_backup_vault.json",
+        "sha256": "7a757b418e32e8ba771a5c69f4c914bb69f4d0ac064b6ff284cefc6d4bbda493"
+      },
+      "source_pointer": "/request"
+    },
+    {
+      "case": "project_actual_backup_vault_passive_request",
+      "source": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/platform-canonical-captures-20260912/project-actual_backup_vault.json",
+        "sha256": "7a757b418e32e8ba771a5c69f4c914bb69f4d0ac064b6ff284cefc6d4bbda493"
+      },
+      "source_pointer": "/passive_request"
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/integrate_data.py",
+      "sha256": "69982a302c4dc682fe668370e16de19d141b798c651633fd2fc0d282c9e534e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/verified-pins.json",
+      "sha256": "5139c064fdc3ebfa0a8b8a8a40e16eab1bccf686a8ddfe225c7f958c0a9a65fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/schema-value-checks.json",
+      "sha256": "2b0ab959a365e17ca5377e7f1e368dc9f36a3c741c5f60320b86357ad1406061"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/current-source-check.json",
+      "sha256": "b9c4f8ea68c07275b21d0956deecb3bf17de4c6ddb3dfda93b29147b962079e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/fixture-source-mapping.json",
+      "sha256": "621b842e34dc9e6eb7f175e35d51d4455bd3994e9d3896215591b8def2f883fa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/capture_values.py",
+      "sha256": "14e13b2f433ffca842240557207b2173b996d70fff78d95511faa64f7a32b1ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/capture-manifest.json",
+      "sha256": "a725731c7b12d76f669dc55fa727c8651f1e1deec7bd9b2e96cf56544c78d18d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/central_check.py",
+      "sha256": "fae846bd6259e3b731bd2074547bcef770734c639b6f16e60afcc80847efb7d5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/central-data-check.json",
+      "sha256": "20aa9657e2f6bdfddf181d899486ab7bd81159d6021d4028abf8737036688603"
+    }
+  ],
+  "scoped_frozen_inventory": {
+    "corrected_total": 455,
+    "author_scope": 375,
+    "prior_independent": 29,
+    "focused_independent": 24,
+    "canonical_binding": 27,
+    "correction": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-proposal-20260912/count-correction.json",
+      "sha256": "ca543d71dfb8aa454c5773e05c3387aaee1969b5d8787caea36e457730f0ed7d"
+    },
+    "not_all_new_or_independent": true
+  },
+  "separate_v11_independent_review": {
+    "total_executed": 87,
+    "inherited_selected": 79,
+    "new_independent_selected_copy_controls": 8,
+    "inherited_breakdown": {
+      "binding": 27,
+      "full_value": 21,
+      "input_source_fences": 25,
+      "selected_retirement": 6
+    },
+    "full_v10_428_baseline_rerun": false,
+    "independence": "Reviewer independent of v10/v11 adaptation authors; previously authored v8 and reviewed v9, not a new reconstruction of the complete historical baseline."
+  },
+  "root_current_capture_verification": {
+    "routes": 4,
+    "matrix": "application/project x direct original issuer/actual shared BackupVault",
+    "same_actual_original_owner": true,
+    "genuine_after_publication_null_assignment_cut": true,
+    "lawful_old_append_source_retirement_and_current_relocation_and_original_evaluation_disposal": true,
+    "first_receipt_and_three_field_witness_exact": true,
+    "current_complete_source_and_read_through_exact": true,
+    "original_storage_value_commitment_substitution_checks": 12,
+    "schema_examples": 24,
+    "positive_values_from_actual_captures": 16,
+    "negative_shape_examples": 8,
+    "fixture_clock_configuration": "Actual fixture occurrence and Store clocks were configured before original request/source/admission. Same unchanged BackupVault fixed fixture receipt clock is 2026-09-11T22:00:00Z; actual occurrence/observed/persisted/receipt share that instant and committed_at is 22:00:01. No source-code or afterimage repair."
+  },
+  "registry_delta": {
+    "physical_families_before": 114,
+    "physical_families_after": 115,
+    "new_family": "platform_capability_decision",
+    "retention_policies_before": 25,
+    "retention_policies_after": 26,
+    "new_policy": "RP-PLATFORM-DECISION-REFERENCED@1.0.0",
+    "policy_authority": "Plans/Decision_Log.md#DL-048",
+    "all_prior_family_and_policy_objects_exact": true,
+    "event_families_unchanged": 42,
+    "event_policy_unchanged": "RP-OPERATIONAL-2555D@1.0.0",
+    "catalog_entries_unchanged": 0,
+    "critical_mvp_and_governance_arrays_unchanged": true
+  },
+  "central_data_check": {
+    "before": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 25
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 114
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 92,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 91,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "after": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 26
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 115
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 93,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 92,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "before_count": 21,
+    "after_count": 21,
+    "new_diagnostic_categories_or_locations": [],
+    "changed_details": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 26
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 115
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 93,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 92,
+          "migration_only": 3
+        }
+      }
+    ],
+    "validator_unchanged": true,
+    "waiver": false
+  },
+  "remaining_limits": [
+    "Native original source/root/owner authentication and installed production schema/family/codec/reader routes",
+    "Actual redb/filesystem barriers, locks/leases, concurrent CAS/crash and source frame-byte execution",
+    "Complete native active/archive/backup reference enumeration, TTL/hold eligibility, and full-root restore",
+    "Full production positive admission remains zero because active catalog is empty",
+    "Bounded original source model supplies at most one actual record per kind; conflicting native original revisions remain an owner refusal obligation",
+    "A late retired-owner reference may raise the inherited unnormalized KeyError while preserving no-publication effects; no product error API is specified by that model exception",
+    "Exact producer/retained-reader withdrawal handoff is not fully specified by this compilation; absent installed bindings fail closed but that alone is not a complete withdrawal protocol",
+    "Per-family integration with native wire and original source owner controls remains separate"
+  ],
+  "native": "NOT_RUN",
+  "event_depth_complete": false,
+  "frozen_validator_depth_pass": false,
+  "readiness_clearance": false,
+  "governance_seal": false,
+  "cost": "Astra medium author, independent review and owner compilation; root source/fidelity review, current captures and integration. Billing data unavailable.",
+  "compilation": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2424,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T06:46:14Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25371,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6566
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "new_units": [
+        "N2-157",
+        "SP-290"
+      ],
+      "changed_prior_units": {},
+      "all_6564_prior_units_semantically_exact": true,
+      "all_prior_acceptance_criteria_preserved": true,
+      "new_acceptance_criteria": 24,
+      "total_units": 6566,
+      "total_acceptance_criteria": 25371,
+      "derived_shard_groups": [
+        "newtools",
+        "storage-plan",
+        "storage_value_registry"
+      ]
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/shard-check.json",
+      "sha256": "da8370818c1f74b606a1a9e4a8744f177f9641e40b64087dbd5a3ad447498154"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/index-validate.json",
+      "sha256": "9dcadfacf55c7fae1022c94433d879307e13e28ab9ebbde12dd517cd0e3424fe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-canonical-root-20260912/compilation-preservation.json",
+      "sha256": "2a244af7200f341f65b3be69974288dd3a1765c207ca24533f8628a21be93b23"
+    }
+  ],
+  "root_final_fidelity_review": "Full original proposal, committed-retry review and both complete compiled owner additions read. All14row/11request/4selector fields and actual11fieldreceipt/3fieldfullvalue joins checked. Current schema and all7144source/review/proposal pins verified. All prior owner document bytes and6564PlanUnit semantics remain exact.",
+  "landing_source_currentness": {
+    "status": "PASS",
+    "checked_base": "38e37d11a05e6946102cc7fe205b3f12b9474586",
+    "landing_upstream": "33b8572f238672fab0047d4d9cb8ffbd3d0f9747",
+    "intervening_paths": [
+      "reports/packet-gap-closure-20260910/r5i-dependency-correction-audit-checkpoint-20260912.json"
+    ],
+    "all_13_canonical_sources_exact": true,
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true
+      },
+      {
+        "path": "Plans/newtools.md",
+        "sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
+        "exact": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "exact": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "exact": true
+      },
+      {
+        "path": "Plans/Models_System.md",
+        "sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+        "exact": true
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3",
+        "exact": true
+      },
+      {
+        "path": "Plans/platform_capability_catalog.json",
+        "sha256": "8130dcd213f6c71ee3486147dc831f8f8b7a801d0c2fb836d7c3988e016908b6",
+        "exact": true
+      },
+      {
+        "path": "Plans/platform_capability_catalog.schema.json",
+        "sha256": "a0398428f17d51811604bbdd52c24d56327dc68b2580ea616bb4d20dc229f91f",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+        "sha256": "17cc0376d2fdc816c190136342d6f8165429f1f61f001bf186fbbcbcba05379c",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "9e7f3b24c871598e4e3c3f83e14c19dcfa4e77fee0024fddb44a35bd1c7e1984",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "exact": true
+      }
+    ]
+  }
+}

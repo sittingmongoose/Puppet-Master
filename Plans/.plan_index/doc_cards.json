@@ -10267,25 +10267,27 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 72,
+        "False": 73,
         "True": 84
       },
-      "heading_count": 257,
+      "heading_count": 259,
       "implementation_surfaces": [
         "Concepts/pm7-tools/systems_integration_source.py",
+        "Plans/Models_System.md",
         "Plans/Plugins_System.md",
         "Plans/Project_Sync_and_Backbone.md",
         "Plans/Settings_System.md",
         "Plans/Shared_Integration_Runtime.md",
         "Plans/doctor_contracts.schema.json",
         "Plans/newtools.md",
+        "Plans/orchestrator-subagent-integration.md",
         "future Doctor descriptor registry and bounded projections",
         "future Doctor descriptor registry fixtures",
         "future Doctor report export native handler"
       ],
-      "line_count": 8994,
+      "line_count": 9064,
       "path": "Plans/newtools.md",
-      "plan_unit_count": 156,
+      "plan_unit_count": 157,
       "plan_unit_ids": [
         "N2-002",
         "N2-003",
@@ -10442,7 +10444,8 @@
         "N2-153",
         "N2-154",
         "N2-155",
-        "N2-156"
+        "N2-156",
+        "N2-157"
       ],
       "reasoning_tiers": [
         "high",
@@ -10512,6 +10515,7 @@
         "existing_test_strategy_backward_compatibility",
         "expanded_dockerhub_auth_creation_flow",
         "expo_react_native_generated_plan_commands",
+        "fabricated_original_platform_decision_or_scope_authority",
         "fallback_e2e_snippets",
         "firecrawl_status_vocabulary",
         "full_evidence_output",
@@ -10606,16 +10610,16 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec",
+      "sha256": "936a666d10339c5958b6ecc5d65cd1cf5818e5e1b4728daaba5b2f65cc184390",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 156
+        "accepted": 157
       },
       "title": "GUI Testing Tools & Framework Options -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "integration_contract": 2,
-        "owner_boundary": 2,
+        "owner_boundary": 3,
         "requirement": 151
       },
       "validation_surfaces": [
@@ -10624,6 +10628,10 @@
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/doctor_contract_fixtures.json",
         "Plans/doctor_contracts.schema.json",
+        "Plans/event_payload_platform_capability_evaluated.schema.json",
+        "Plans/platform_capability_catalog.json",
+        "Plans/platform_capability_catalog.schema.json",
+        "Plans/platform_capability_decision_contracts.schema.json",
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_contracts.schema.json",
         "Plans/remote_access_system_contracts.schema.json",
@@ -10635,7 +10643,8 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "registry and scheduling negative fixtures",
-        "remediation-return and protected-session fixtures"
+        "remediation-return and protected-session fixtures",
+        "reports/event-authority-20260911/step-08-platform-custody-validation.md"
       ]
     },
     {
@@ -16551,10 +16560,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 181,
+        "False": 182,
         "True": 102
       },
-      "heading_count": 619,
+      "heading_count": 626,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16595,6 +16604,7 @@
         "Plans/home_workspace_layout.schema.json",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/path_reference_registry.json",
+        "Plans/platform_capability_decision_contracts.schema.json",
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/redaction_transform_registry.json",
         "Plans/redaction_transform_registry.schema.json",
@@ -16620,9 +16630,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23034,
+      "line_count": 23143,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 283,
+      "plan_unit_count": 284,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16906,7 +16916,8 @@
         "SP-285",
         "SP-288",
         "SP-289",
-        "SP-279"
+        "SP-279",
+        "SP-290"
       ],
       "reasoning_tiers": [
         "high",
@@ -16943,6 +16954,7 @@
         "inline_visualizer_replay_storage_gap",
         "integrity_evidence_authority_or_crash_duplicate_or_false_recovery",
         "legal_hold_false_clear_original_custody_loss_or_stale_owner_publication",
+        "lost_original_platform_decision_or_false_append_and_retention_authority",
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
         "p0_memory_history_logging_hardening",
@@ -16983,10 +16995,10 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
+      "sha256": "e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 280,
+        "accepted": 281,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -16996,7 +17008,7 @@
         "requirement": 252,
         "schema_contract": 11,
         "security_contract": 1,
-        "storage_contract": 13,
+        "storage_contract": 14,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -17067,6 +17079,7 @@
         "Plans/home_layout_pending_receipt_v2_reader.schema.json",
         "Plans/home_layout_value_readers.schema.json",
         "Plans/home_workspace_layout.schema.json",
+        "Plans/platform_capability_decision_contracts.schema.json",
         "Plans/restore_point_create_result.schema.json",
         "Plans/restore_point_create_result_fixtures.json",
         "Plans/restore_point_create_result_join_fixtures.json",
@@ -17166,6 +17179,7 @@
         "reports/event-authority-20260911/step-08-home-validation.md",
         "reports/event-authority-20260911/step-08-integrity-wire-checks.json",
         "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
+        "reports/event-authority-20260911/step-08-platform-custody-validation.md",
         "reports/event-authority-20260911/step-08-restore-full-value-checks.json",
         "reports/event-authority-20260911/step-08-restore-full-value-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
@@ -19051,7 +19065,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T06:15:29Z",
+  "generated_at_utc": "2026-09-12T06:45:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19059,13 +19073,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3400,
+      "False": 3402,
       "True": 3164
     },
-    "plan_unit_count": 6564,
+    "plan_unit_count": 6566,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6373,
+      "accepted": 6375,
       "retired": 182,
       "superseded": 9
     },
@@ -19119,7 +19133,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 36,
+      "owner_boundary": 37,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -19149,7 +19163,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 13,
+      "storage_contract": 14,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

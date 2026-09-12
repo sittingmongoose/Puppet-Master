@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L8925-L8994
+Source lines: L8925-L8997
 
-Source SHA256: `ab70dbc2e26cad60cd86bb6344f3244b1b7a901e6a04e3b937ede665d1c3e7ec`
+Source SHA256: `936a666d10339c5958b6ecc5d65cd1cf5818e5e1b4728daaba5b2f65cc184390`
 
 ---
 
@@ -78,3 +78,6 @@ owner_boundary_notes:
   - Doctor owns descriptor identity, bounded scheduling, normalized findings, and remediation return; Backup_Restore_System and Remote_Access_System own probes, state, mutations, commands, and receipts.
 owner_hints: [Plans/newtools.md, Plans/Backup_Restore_System.md, Plans/Remote_Access_System.md, Plans/Server_System.md, Plans/Settings_System.md]
 ```
+
+
+<a id="platform-capability-original-decision-authority"></a>

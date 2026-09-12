@@ -1,0 +1,3433 @@
+{
+  "schema_id": "pm.fixture.platform_capability_decision_contract.v1",
+  "status": "BOUNDED_TYPED_VALUE_EXAMPLES",
+  "source_report": "reports/event-authority-20260911/step-08-platform-custody-validation.md",
+  "production_catalog_entries": 0,
+  "prospective_fixture_only": true,
+  "native_execution": "NOT_RUN",
+  "value_shape_cases": [
+    {
+      "id": "application_direct_pending_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "pending_append",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": null,
+        "append_receipt": null,
+        "committed_at_utc": null
+      }
+    },
+    {
+      "id": "application_direct_terminal_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3437,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "application_direct_request",
+      "definition": "evaluation_request",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.platform_capability_evaluation_request.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:existing-application-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": null,
+          "tier_ref": null,
+          "thread_id": null,
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required"
+      }
+    },
+    {
+      "id": "application_direct_passive_request",
+      "definition": "read_request",
+      "valid": true,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "application",
+          "project_id": null
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9"
+      }
+    },
+    {
+      "id": "application_actual_backup_vault_pending_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "pending_append",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": null,
+        "append_receipt": null,
+        "committed_at_utc": null
+      }
+    },
+    {
+      "id": "application_actual_backup_vault_terminal_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3437,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "application_actual_backup_vault_request",
+      "definition": "evaluation_request",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.platform_capability_evaluation_request.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:existing-application-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": null,
+          "tier_ref": null,
+          "thread_id": null,
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required"
+      }
+    },
+    {
+      "id": "application_actual_backup_vault_passive_request",
+      "definition": "read_request",
+      "valid": true,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "application",
+          "project_id": null
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9"
+      }
+    },
+    {
+      "id": "project_direct_pending_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:project~Zml4dHVyZTpwcm9qZWN0:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "pending_append",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:run-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": "fixture:run",
+            "tier_ref": "fixture:tier",
+            "thread_id": "fixture:thread",
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "dbd5fc62feea56270e559971e14b6cf59fcc85737aea78d892b8ea23069a1ae1",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "46e8518d17df71db16769000a9ef282c3b32f51194abe2db44dcc061ef124cd5",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "bc322ef863fb1c9dffe9935ab670a3029a8b205aeb9454f60bdea9621be9b8f8",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "af477e2495c9c3c9df7d6de9cb968d88af294290449e1e242c95fb32b89aa324",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "event_type": "platform.capability_evaluated",
+          "project_id": "fixture:project",
+          "thread_id": "fixture:thread",
+          "run_id": "fixture:run",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "a3c51eb4460dff1b2d8f505e3ee834fa115f4a9a2572feaf5474bdf4d188fdbf",
+        "original_storage_fields": null,
+        "append_receipt": null,
+        "committed_at_utc": null
+      }
+    },
+    {
+      "id": "project_direct_terminal_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:project~Zml4dHVyZTpwcm9qZWN0:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:run-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": "fixture:run",
+            "tier_ref": "fixture:tier",
+            "thread_id": "fixture:thread",
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "dbd5fc62feea56270e559971e14b6cf59fcc85737aea78d892b8ea23069a1ae1",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "46e8518d17df71db16769000a9ef282c3b32f51194abe2db44dcc061ef124cd5",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "bc322ef863fb1c9dffe9935ab670a3029a8b205aeb9454f60bdea9621be9b8f8",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "af477e2495c9c3c9df7d6de9cb968d88af294290449e1e242c95fb32b89aa324",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "event_type": "platform.capability_evaluated",
+          "project_id": "fixture:project",
+          "thread_id": "fixture:thread",
+          "run_id": "fixture:run",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "a3c51eb4460dff1b2d8f505e3ee834fa115f4a9a2572feaf5474bdf4d188fdbf",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3473,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "project_direct_request",
+      "definition": "evaluation_request",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.platform_capability_evaluation_request.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:run-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": "fixture:run",
+          "tier_ref": "fixture:tier",
+          "thread_id": "fixture:thread",
+          "scope": {
+            "kind": "project",
+            "project_id": "fixture:project"
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "project",
+            "project_id": "fixture:project"
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required"
+      }
+    },
+    {
+      "id": "project_direct_passive_request",
+      "definition": "read_request",
+      "valid": true,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "project",
+          "project_id": "fixture:project"
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf"
+      }
+    },
+    {
+      "id": "project_actual_backup_vault_pending_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:project~Zml4dHVyZTpwcm9qZWN0:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "pending_append",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:run-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": "fixture:run",
+            "tier_ref": "fixture:tier",
+            "thread_id": "fixture:thread",
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "dbd5fc62feea56270e559971e14b6cf59fcc85737aea78d892b8ea23069a1ae1",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "46e8518d17df71db16769000a9ef282c3b32f51194abe2db44dcc061ef124cd5",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "bc322ef863fb1c9dffe9935ab670a3029a8b205aeb9454f60bdea9621be9b8f8",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "af477e2495c9c3c9df7d6de9cb968d88af294290449e1e242c95fb32b89aa324",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "event_type": "platform.capability_evaluated",
+          "project_id": "fixture:project",
+          "thread_id": "fixture:thread",
+          "run_id": "fixture:run",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "a3c51eb4460dff1b2d8f505e3ee834fa115f4a9a2572feaf5474bdf4d188fdbf",
+        "original_storage_fields": null,
+        "append_receipt": null,
+        "committed_at_utc": null
+      }
+    },
+    {
+      "id": "project_actual_backup_vault_terminal_row",
+      "definition": "decision",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:project~Zml4dHVyZTpwcm9qZWN0:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:run-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": "fixture:run",
+            "tier_ref": "fixture:tier",
+            "thread_id": "fixture:thread",
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "project",
+              "project_id": "fixture:project"
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "dbd5fc62feea56270e559971e14b6cf59fcc85737aea78d892b8ea23069a1ae1",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "46e8518d17df71db16769000a9ef282c3b32f51194abe2db44dcc061ef124cd5",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "bc322ef863fb1c9dffe9935ab670a3029a8b205aeb9454f60bdea9621be9b8f8",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "project",
+                "project_id": "fixture:project"
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "af477e2495c9c3c9df7d6de9cb968d88af294290449e1e242c95fb32b89aa324",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "event_type": "platform.capability_evaluated",
+          "project_id": "fixture:project",
+          "thread_id": "fixture:thread",
+          "run_id": "fixture:run",
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "a3c51eb4460dff1b2d8f505e3ee834fa115f4a9a2572feaf5474bdf4d188fdbf",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3473,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "project_actual_backup_vault_request",
+      "definition": "evaluation_request",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.platform_capability_evaluation_request.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:run-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": "fixture:run",
+          "tier_ref": "fixture:tier",
+          "thread_id": "fixture:thread",
+          "scope": {
+            "kind": "project",
+            "project_id": "fixture:project"
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "project",
+            "project_id": "fixture:project"
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required"
+      }
+    },
+    {
+      "id": "project_actual_backup_vault_passive_request",
+      "definition": "read_request",
+      "valid": true,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "project",
+          "project_id": "fixture:project"
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:0bb1571ae737dd9402c8064ce773ee8ea8a4ba79748db3a229ab1cafbbe98ecf"
+      }
+    },
+    {
+      "id": "unknown_row_field",
+      "definition": "decision",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3437,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z",
+        "raw_probe_body": "forbidden"
+      }
+    },
+    {
+      "id": "old_row_tag",
+      "definition": "decision",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.platform.decision.fixture.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3437,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "boolean_sequence",
+      "definition": "decision",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": true,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "append_receipt": {
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "sequence_id": 52,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 1240,
+          "commit_group_id": "fixture-group-12",
+          "durability_class": "barrier",
+          "durable_end_offset": 3437,
+          "durability_state": "synced",
+          "manifest_generation": 12,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "missing_original_receipt",
+      "definition": "decision",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.platform_capability_decision.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "physical_key": "platform_capability_decision.v1:11111111-1111-4111-8111-111111111111:app:9c690c55031c0ff413df3954b1cbbd01a6956c5e0797bef0905140b83a6c5080",
+        "state": "committed",
+        "request": {
+          "schema_id": "pm.platform_capability_evaluation_request.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "evaluation_id": "fixture:evaluation-1",
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "actor_ref": "fixture:actual-evaluator",
+          "correlation_id": "fixture:original-correlation",
+          "context": {
+            "context_ref": "fixture:original-context",
+            "context_owner_ref": "fixture:existing-application-owner",
+            "original_request_id": "fixture:request-fixture:evaluation-1",
+            "run_ref": null,
+            "tier_ref": null,
+            "thread_id": null,
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            }
+          },
+          "subject": {
+            "scope": {
+              "kind": "application",
+              "project_id": null
+            },
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "execution_class": "direct_provider"
+          },
+          "requested_state": "required"
+        },
+        "request_sha256": "0ed751e2a8e120243cbf51dc32fd84dba5de1f37a3531c36d15583c24a1779bf",
+        "catalog_selection": {
+          "catalog_id": "pm.platform_capability_catalog",
+          "catalog_schema_version": "1.0.0",
+          "catalog_revision": 1,
+          "catalog_revision_sha256": "88b109813110e886ba2b31ab8cd85dc2091e30ad1e3228b77d63d1be9d01e7ab",
+          "selected_entry": {
+            "capability_id": "platform.fixture_prospective_only",
+            "display_name": "Prospective fixture only",
+            "owner_doc_ref": "Plans/newtools.md#platform-capability-catalog-and-evaluation-contract",
+            "entry_state": "active",
+            "execution_classes": [
+              "direct_provider"
+            ],
+            "allowed_evidence_sources": [
+              "live_runtime_discovery",
+              "provider_policy_snapshot",
+              "static_platform_baseline"
+            ],
+            "legacy_capability_key_aliases": []
+          }
+        },
+        "source_decisions": [
+          {
+            "evidence": {
+              "source_kind": "live_runtime_discovery",
+              "evidence_ref_type": "runtime_probe_receipt",
+              "evidence_ref": "fixture:runtime_probe_receipt",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:concrete-runtime-domain-owner",
+            "source_record_sha256": "875144f67b1bfe08e14f8553eb27d5f00b674ccda1b2267043e6e4ca01fd1755",
+            "original_verification_ref": "fixture:original-owner-verification:live_runtime_discovery",
+            "original_freshness_ref": "fixture:original-owner-currentness:live_runtime_discovery",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "provider_policy_snapshot",
+              "evidence_ref_type": "provider_policy_snapshot",
+              "evidence_ref": "fixture:provider_policy_snapshot",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:Models-policy-owner",
+            "source_record_sha256": "ea380a720a2baf9844150f44cdf4c751a4f70a7cc7a4266371aaade5fe5aa124",
+            "original_verification_ref": "fixture:original-owner-verification:provider_policy_snapshot",
+            "original_freshness_ref": "fixture:original-owner-currentness:provider_policy_snapshot",
+            "redaction_profile": "no_secrets"
+          },
+          {
+            "evidence": {
+              "source_kind": "static_platform_baseline",
+              "evidence_ref_type": "platform_baseline_revision",
+              "evidence_ref": "fixture:platform_baseline_revision",
+              "finding": "supports_available",
+              "observed_at_utc": "2026-09-11T22:00:00Z",
+              "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+            },
+            "subject": {
+              "scope": {
+                "kind": "application",
+                "project_id": null
+              },
+              "platform_id": "fixture:prospective-platform",
+              "provider_id": null,
+              "capability_ref": {
+                "ref_type": "platform_capability_catalog_entry",
+                "catalog_id": "pm.platform_capability_catalog",
+                "catalog_schema_version": "1.0.0",
+                "catalog_revision": 1,
+                "capability_id": "platform.fixture_prospective_only"
+              },
+              "execution_class": "direct_provider"
+            },
+            "source_owner_ref": "fixture:PlatformCapabilityManager-baseline-owner",
+            "source_record_sha256": "e99e3840e4f4246e073ce7dd20fe181790fb2063319a126b6429e48cfa53edf4",
+            "original_verification_ref": "fixture:original-owner-verification:static_platform_baseline",
+            "original_freshness_ref": "fixture:original-owner-currentness:static_platform_baseline",
+            "redaction_profile": "no_secrets"
+          }
+        ],
+        "frozen_producer_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "event_type": "platform.capability_evaluated",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "fixture:actual-evaluator",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T22:00:00Z",
+          "producer_sequence_id": 1,
+          "correlation_id": "fixture:original-correlation",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "platform_id": "fixture:prospective-platform",
+            "provider_id": null,
+            "capability_ref": {
+              "ref_type": "platform_capability_catalog_entry",
+              "catalog_id": "pm.platform_capability_catalog",
+              "catalog_schema_version": "1.0.0",
+              "catalog_revision": 1,
+              "capability_id": "platform.fixture_prospective_only"
+            },
+            "requested_state": "required",
+            "effective_state": "available",
+            "degradation_reason": "none",
+            "resolution_source": "live_runtime_discovery",
+            "selected_evidence_ref": "fixture:runtime_probe_receipt",
+            "evidence_refs": [
+              {
+                "source_kind": "live_runtime_discovery",
+                "evidence_ref_type": "runtime_probe_receipt",
+                "evidence_ref": "fixture:runtime_probe_receipt",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:runtime_probe_receipt:revision-1"
+              },
+              {
+                "source_kind": "provider_policy_snapshot",
+                "evidence_ref_type": "provider_policy_snapshot",
+                "evidence_ref": "fixture:provider_policy_snapshot",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:provider_policy_snapshot:revision-1"
+              },
+              {
+                "source_kind": "static_platform_baseline",
+                "evidence_ref_type": "platform_baseline_revision",
+                "evidence_ref": "fixture:platform_baseline_revision",
+                "finding": "supports_available",
+                "observed_at_utc": "2026-09-11T22:00:00Z",
+                "source_revision_ref": "fixture:platform_baseline_revision:revision-1"
+              }
+            ]
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_input_sha256": "fc0bc4bb975610ba0a63887fae9053d43d71a587bb7eba70625dd31a5f824e5c",
+        "original_storage_fields": {
+          "sequence_id": 52,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "committed_at_utc": "2026-09-11T22:00:01Z"
+      }
+    },
+    {
+      "id": "unknown_request_field",
+      "definition": "evaluation_request",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.platform_capability_evaluation_request.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:existing-application-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": null,
+          "tier_ref": null,
+          "thread_id": null,
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required",
+        "source_control": "forbidden"
+      }
+    },
+    {
+      "id": "old_request_tag",
+      "definition": "evaluation_request",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.platform.request.fixture.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "evaluation_id": "fixture:evaluation-1",
+        "occurred_at_utc": "2026-09-11T22:00:00Z",
+        "producer_sequence_id": 1,
+        "actor_ref": "fixture:actual-evaluator",
+        "correlation_id": "fixture:original-correlation",
+        "context": {
+          "context_ref": "fixture:original-context",
+          "context_owner_ref": "fixture:existing-application-owner",
+          "original_request_id": "fixture:request-fixture:evaluation-1",
+          "run_ref": null,
+          "tier_ref": null,
+          "thread_id": null,
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          }
+        },
+        "subject": {
+          "scope": {
+            "kind": "application",
+            "project_id": null
+          },
+          "platform_id": "fixture:prospective-platform",
+          "provider_id": null,
+          "capability_ref": {
+            "ref_type": "platform_capability_catalog_entry",
+            "catalog_id": "pm.platform_capability_catalog",
+            "catalog_schema_version": "1.0.0",
+            "catalog_revision": 1,
+            "capability_id": "platform.fixture_prospective_only"
+          },
+          "execution_class": "direct_provider"
+        },
+        "requested_state": "required"
+      }
+    },
+    {
+      "id": "unknown_read_field",
+      "definition": "read_request",
+      "valid": false,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "application",
+          "project_id": null
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9",
+        "action_authority": "grant"
+      }
+    },
+    {
+      "id": "wrong_read_scope",
+      "definition": "read_request",
+      "valid": false,
+      "value": {
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "scope": {
+          "kind": "account",
+          "project_id": null
+        },
+        "evaluation_id": "fixture:evaluation-1",
+        "event_id": "platform-evaluation:v1:cf3637e257e5318736b65810356e812344a2bc2d7510d482467ad94f692653f9"
+      }
+    }
+  ],
+  "limits": [
+    "Prospective fixture capability is isolated and is not admitted to the production catalog.",
+    "Shape examples do not prove original owner authentication, installation or durable publication.",
+    "Same actual issuer/BackupVault execution is bounded in-process model evidence; physical/native concurrency and full-root restore remain NOT_RUN."
+  ]
+}
