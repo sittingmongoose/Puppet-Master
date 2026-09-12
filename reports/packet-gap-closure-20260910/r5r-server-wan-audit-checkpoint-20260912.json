@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "4735ffc4c5433d5d68a641fd8097feed6726989b",
+  "published_review_comparison_commit": "9bd40d79077073d3867f792aaceb02c67c76d29e",
+  "landing_base_commit": "9bd40d79077073d3867f792aaceb02c67c76d29e",
+  "new_batch": {
+    "case_count": 251,
+    "status_counts": {"pass": 2, "partial": 245, "fail": 4},
+    "applicability_counts": {"retained": 251},
+    "source_group": "server_wan_contract",
+    "chunks": ["chunk-00022", "chunk-00023"],
+    "authored_judgment_files": 4,
+    "evidence_groups": 251,
+    "selected_owner_passages": 19,
+    "complete_container_values": 38,
+    "explicit_clerical_amendments": 2,
+    "method": "Every original case has an individually root-authored status, finding and residual, exact JSON pointer to the full original value, original source-line context, current owner evidence and resolved path-plus-SHA-256 references. Thirty-eight object/array opening-line cases retain their entire values. Helpers validate identities, hashes, structure and explicit evidence mappings; they do not generate semantic judgments. Two separately retained prepublication amendments correct only a Server section reference from 4.2 to 4.3, preserving the original drafts and every status/residual. The two passes cover only historical schema identity and date, not WAN implementation."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 4352,
+    "remaining_cases": 9064,
+    "result_files": 73,
+    "remaining_result_files": 78,
+    "status_counts": {"pass": 238, "partial": 3955, "blocked": 39, "fail": 117, "not_applicable": 3},
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "complete": false,
+    "remaining_scope": {
+      "touch_closure_dimensions": 8359,
+      "september_3_onboarding_doctor_tour_detail_groups": 492,
+      "onboarding_doctor_requirements": 128,
+      "full_thread_topics": 85
+    },
+    "prior_result_files_preserved_byte_for_byte": 71
+  },
+  "failed_case_families": [
+    {
+      "finding": "Active Doctor route-coverage fixture retains retired private Serve semantics",
+      "failed_occurrences": 4,
+      "case_refs": ["server_wan_contract/L000275", "server_wan_contract/L000276", "server_wan_contract/L000279", "server_wan_contract/L000280"],
+      "detail": "RAS-015 and N2-156 replace component/Serve framing with the Server-owned connector, automatic private endpoint, independently authorized Funnel and PM health axes. The active valid remote_access_control_planes_routes_and_resumption DoctorScenarioProjection still requires a healthy/fresh Hosted Tailscale private Serve row and a required-missing Headscale Serve row with RAS-003 lineage. Fresh schema and semantic validation accept this fixture with zero errors. These four source occurrences reference the previously documented Doctor contradiction, not four new defects or an observed running Doctor failure.",
+      "repair_authorized_by_this_audit": false
+    }
+  ],
+  "retained_interpretation_boundaries": [
+    "RAS-015 supersedes full-Tailscale installation, external system-extension/host-state adoption, operator-facing sidecar and private Serve requirements. One PM-owned Go tsnet connector belongs to each stable Server identity; approved enrollment starts private access automatically. A durable Server-owned hosted sign-in still needs a new current authorized Client/session handoff for each protected open after Client loss. No retired installation or Client-lifetime cancellation behavior is restored.",
+    "Headscale remains independently configured private access, with no automatic Headscale deployment or Funnel capability. Hosted Funnel remains off by default and separately consented/current-preflight-bound; disabling it preserves private access. Public exposure remains limited to authenticated PM UI/API/WebSocket surfaces, never internal helpers.",
+    "Setup's co-primary Tailscale/reverse-proxy options and the eight-entry runtime route order are different contracts. Source Builtin PuppetMaster copy is interpreted through current Built into Puppet Master terminology, not an extra backend. Existing aliases are normalization only, not permission to revive legacy command payloads.",
+    "Eight lexical searches cover six named owner documents and two schemas only. They do not prove repository-wide absence. Exact initial Cloudflare web/STUN/TURN adapter, stream/upload override selectors, relay credential lifetime, multi-region detail, public-reachability disclosure and several named Advanced diagnostics remain unclosed by the selected evidence. ClientRecord client_kind is not proof of a selector; unrelated provider-permit/stream-coalescing hits are not relay-TTL or upload controls. Nginx Proxy Manager has current new-Server placement evidence, but its actual setup guidance is unproved.",
+    "Current canonical status/copy variants are not claimed to reproduce all source labels exactly, and normal status does not regain Synced. Optional disabled routes remain distinct from required-task failure.",
+    "The 171 Remote Access fixtures comprise 94 positive and 77 negative static cases with zero runtime scenarios. No connector binary, enrollment, credential handling, WAN failover, proxy effectiveness, E2E relay, recovery, native UI, rendered visual, motion, performance or provider acceptance is established by this review. Every partial row keeps its explicit unproved obligations."
+  ],
+  "currentness": {
+    "initial_selected_paths": 911,
+    "published_review_selected_paths": 913,
+    "prior_passages_text_identical": 150,
+    "additional_passages": 6,
+    "current_passages_in_custody": 156,
+    "changed_or_added_paths_reconciled": 16,
+    "detail": "The current-main 9bd40d7 changes to historical Goal reader adoptions and actual-prior-state restore refusal were read against all four changed owner diffs and three fixture metadata deltas. SP-271/277/280 adopt SP-278 concrete historical authority with original lawful admission, complete current token/frontier and the final post-helper source/access fence. They grant no current writer, dispatch or native positive proof. All 150 previous selected passages relocate with identical text; six additional spans are pinned. Every selected WAN/Server/connector/Doctor/security/GUI subject is unchanged. The unrelated normative history adoption does not upgrade a WAN judgment."
+  },
+  "verification": {
+    "packet_audit_tests": {"status": "pass", "tests": 45},
+    "result_structure_identity_and_evidence_refs": {"status": "pass", "cases": 251, "errors": 0},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases": 1028, "negative_cases": 3338, "internal_self_tests": 12, "boundary": "Static schema/fixture consistency only."},
+    "server_command_gap_adjudication": {"status": "pass", "rows_resolved": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11, "boundary": "Schema-reference/adjudication coverage does not prove primary catalog registration or native handlers."},
+    "shards": {"status": "pass", "documents": 98, "shards": 2598},
+    "browser_event_admission": {"status": "fail", "error": "preexisting_family_rows_changed", "positive_cases": 53, "negative_cases": 576, "command_bindings": 15, "registry_families": 42, "admitted_scoped_families": 2, "prepared_scoped_families": 51, "created_and_reset_static_subchecks": "pass", "boundary": "No historical baseline pin refresh or native/whole-Browser admission is claimed."},
+    "governance": {
+      "status": "fail",
+      "passing_checks": 21,
+      "failing_checks": 15,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "Fresh initial and current-main checks retain the same 15 failing group names. Missing fixtures/references, stale governance/evidence/readiness/audits, unresolved home-layout surface and whole-registry guards remain recorded, not repaired or waived. Diagnostic arrays are capped, so this report makes no claim about unseen diagnostics."
+    }
+  },
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/server-wan-251-root-review.json", "sha256": "27c4b397074f7183fe7b3d4ee9f79b5e4bae419dd24bf21a0b5a3d1247825a59"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/review-evidence-plan.json", "sha256": "fc49b1ea019a78f85baca0fb1cee3e980a8382c227094c395edc252999f52a3b"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/assembly-summary.json", "sha256": "130af0506b98989e2edd213913be8169a37610019692ca393668a02659843090"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/review-passage-custody.generated.json", "sha256": "85add57fe1c4a1367a97b91183cabcea0407d429a4bc6e81930f16204684c911"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/input-custody.generated.json", "sha256": "2ea5a7946792c907d14d3f30b6b9410b8aec02be7d65b3ad62c43d7377d61b12"},
+    "selected_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/selected-review-evidence.generated.json", "sha256": "718cf7b4687dd720e8cc4d1d5903aafd0ddf2dd521b1e5536ce180e53f1c99c4"},
+    "explicit_clerical_amendments": {"path": "/mnt/Cursor/PM-Experiments/r5-server-wan251-review-20260912-XfLcI0m3/review-amendments.json", "sha256": "5b0e71672e6c8aa7a5b3e397f913b717a6ec60c2bf263ecb90cd191d59476d7c"},
+    "initial_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/checks/summary.json", "sha256": "890d8303dfcb1991397e6847f61b5f06634dc25827d30f71a1d27e99ea3f8bc1"},
+    "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/landing-checks/summary.json", "sha256": "077490d07e61f98e68101964f68cde13799aecc7bf7a3e1773d5c28dfc88ced5"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-summary.json", "sha256": "39831a25efb54fef20d18beb365ba332166ad2b73136dfcb43b1a2522ca37e5c"},
+    "publication_before": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-before-results.json", "sha256": "5543cd0906ae05a0833ea205032d946e752bf656516415b5fd33733c0f6e8a45"},
+    "publication_after": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-after-results.json", "sha256": "34d726e4c2a706e5fe47236c68e6029ad7d4a2c34bff79753ae24a22c2888cf3"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-checks/packet-tests.receipt.json", "sha256": "6b3d1e4c920f45d265d11faa57cae4f67f9764754a21d87d9cb75225d6f4d3b7"}
+  },
+  "boundary": "Report-only landing. Raw evidence and helper code remain outside the repository. No canonical product edit, new command, design change, live authentication/provider/network operation, historical review rewrite, governance refresh, Spec Lock change, Event Authority closure, native-readiness claim or whole-packet completion. The remaining 9,064 original cases stay open."
+}
