@@ -1,0 +1,189 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5d-egolite-document-map-69-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "4e2fd29307ba6e09cfa4cc69b0b0d9463ab58c27",
+  "review_completion_comparison_commit": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+  "landing_base_commit": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+  "scope_and_authority": [
+    "Individual evidence-backed review of all 69 document-map cases in DOC-0109, the Egolite/Browser/SCM/Origin implementation package's 05_PLAN_DOC_PLANUNIT_MAP.md; complete formal chunk-00030.",
+    "Every case has a root-authored finding, residual risk and bounded owner disposition. Helpers serialize and validate identities, hashes, source lines and selected passages; they do not infer semantic verdicts.",
+    "This landing changes this compact report only. Detailed judgments, snapshots, source captures, helpers and formal results remain outside the product repository.",
+    "No canonical Plans or visual-design edits, native implementation, catalog repairs, new event or physical-family admission, WorkNodes, readiness clearance, governance reseal or other agents' edits are included.",
+    "A located canonical owner and a partial verdict do not establish complete integration or executable behavior. The full Goal and packet audit remain open."
+  ],
+  "new_batch": {
+    "chunk_id": "chunk-00030",
+    "cases": 69,
+    "status_counts": {"partial": 65, "fail": 3, "pass": 1},
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "sole_pass_boundary": "The Plan_Document_System policy-reference obligation only, not every new owner's profile compliance or runtime/readiness.",
+    "owner_disposition_boundary": "Four cases retain not_applicable_with_evidence as a bounded no-owner-edit disposition, but remain partial retained audit cases rather than whole-case exclusions. Two are retired Chain owners; two do not require provider-specific expansion of generic schemas."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 682,
+    "not_reviewed_cases": 12734,
+    "expected_chunks": 151,
+    "valid_result_files": 12,
+    "missing_result_files": 139,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 467, "pass": 161, "blocked": 39, "fail": 12, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failing_document_cases": [
+    {
+      "case_id": "Plans/Test_Capture_and_Motion_Evidence.md",
+      "finding": "Newly identified static authoring-profile gap: the packet requires the New Plan Authoring Profile for this new owner, but the file lacks its marker or a recorded exemption and does not use the required base-section order. Substantive capture contracts remain present.",
+      "disposition": "Recorded, not repaired. Lossless correction or owner disposition requires the applicable authorized scope; this audit does not restructure the capture plan. Native capture, recovery, targeting, provenance and redaction remain independently unproved."
+    },
+    {
+      "case_id": "Plans/Commands_System.md",
+      "finding": "Carries forward the six exact-primary registration gaps from the preceding command audit: auth_profile.open_official_page and integration.connection.add/open_details/remove/test/update. Family mentions, alias targets and typed wiring do not supply missing primary metadata.",
+      "disposition": "Existing finding, not six newly discovered defects or a newly authorized repair."
+    },
+    {
+      "case_id": "Plans/UI_Command_Catalog.md",
+      "finding": "The second consumer of the same six missing primary records. The referenced claim that the connection target primaries already have catalog rows is not supported by the exact-row evidence.",
+      "disposition": "Existing finding counted as a separately reviewed document case, not a second set of unique command defects."
+    }
+  ],
+  "important_partial_dispositions": [
+    "Absent Browser_Runtime, Integration_Runtime, Agent_Plugins_Compatibility and Usage_Concepts_Rebuild_Plan filenames route to evidenced live consolidated owners; absence does not authorize competing new owner files.",
+    "Neutral local-backend, Forge hosting, repository automation, provider AI service and lifecycle authority remain separate. Older GitHub-centred summaries and an empty platform-capability baseline are not complete Origin discovery proof.",
+    "Generic ProjectContract, EventRecord, capability-reference and settings shapes are not domain runtime implementations or permission to admit every packet field/event.",
+    "Browser execution, protected authentication, generic capture, Testing, durable artifacts and model attachment retain separate owner boundaries. Actual effects, native accessibility, crash/recovery and security proof remain missing.",
+    "Usage operational attribution never fabricates model tokens or provider charges; schema-valid references do not establish measured savings or billable-session settlement.",
+    "Document authoring, command/event registries, storage materialization and readiness are different obligations. None is inferred from a located PlanUnit or green structural check."
+  ],
+  "evidence": {
+    "source": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-04-pm-egolite-hermes-origin-browser-scm-implementation-package-2026-08-17/PM_Egolite_Hermes_Origin_Browser_SCM_Implementation_Package_2026-08-17/05_PLAN_DOC_PLANUNIT_MAP.md",
+      "sha256": "486f601ff98f7f8b3ddfe4be1ad381c4a2369853b6c392520c9a66b64a92740a"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/docmap-69-root-review.json",
+      "sha256": "c6d5f7ce7461868e5d19da4398d7a1524f1b3e40970b610d06b1f6b313dd5acc"
+    },
+    "authored_judgments": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/root-review-working.json",
+      "sha256": "5a56e8c3152b45f0e4bed842fddb9c4a9ec6ebb627457a8f77010263be3eed86"
+    },
+    "assembly_summary": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/assembly-summary.json",
+      "sha256": "80637fe87e6296db0131d311067649d1cb9f7ae41ac6a6d39df3aac847c1b602"
+    },
+    "owner_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/reviewed-owner-custody.generated.json",
+      "sha256": "fffbd5b83db69d32cd7543dcf57b04ddde1d9a5984bcd9013857dc4a9456d012"
+    },
+    "currentness_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/currentness-review.json",
+      "sha256": "acc4fe0d1c3f9241eb53590ed4bbdf6362feb49e21936e5fc966a3e5efe9cdf0"
+    },
+    "formal_chunk_result": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00030.result.json",
+      "sha256": "1a50067ee94381f4aad8b39477a87c7bd16bae179029a89749f0bcd0c5bb85f2"
+    }
+  },
+  "comparison_boundary": {
+    "named_input_paths": 78,
+    "selected_owner_passages": 108,
+    "byte_identical_selected_passages": 106,
+    "selected_json_records": 8,
+    "identical_selected_json_records": 8,
+    "changed_selected_passages": [
+      "Section15 source/compiler/ProgramWorkspace section gains the separately approved SMPFS-169 result byte/schema/custody binding; the full selected diff was read.",
+      "The event-registry range includes the array terminator, so the current mapped range also includes the separately landed workspace.reset row. The original workspace.created row is unchanged; the full selected diff was read."
+    ],
+    "boundary": "Full-file custody is not full-file or transitive behavioral certification. Neither current addition retroactively upgrades the frozen audit verdicts."
+  },
+  "verification": {
+    "initial_captures_base": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+    "selected_inputs_per_initial_capture": 445,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore, cohort helpers/top-level JSON, frozen manifest and formal results; not all transitive inputs.",
+    "post_rebase_landing": {
+      "status": "pass_bounded_currentness_and_static_checks",
+      "base": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+      "unchanged_selected_current_review_passages": 108,
+      "unchanged_audit_helpers_and_tests": 5,
+      "changed_full_owner_paths": ["Plans/Runtime_Artifacts_Panel.md", "Plans/Shared_Integration_Runtime.md", "Plans/assistant-chat-design.md", "Plans/storage-plan.md"],
+      "packet_tests": 45,
+      "shard_check": {"status": "pass", "docs": 98, "shards": 2368},
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/landing-verification/receipt.json",
+      "sha256": "f8a0b914b2259b5698c5e6ba9e3dd4fec595e17b509adfc1fb2f742ba02fce82",
+      "boundary": "Current main's restore-point landing changes four full owner files outside the cited passages. Those changes and their transitive contracts are preserved, not certified. The frozen review and initial verification captures are not restamped."
+    },
+    "initial_sparse_governance_observation": {
+      "status": "fail_with_sparse_checkout_limitations",
+      "base": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+      "passed_checks": 23,
+      "total_checks": 36,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/gates.receipt.json",
+      "sha256": "ac69412fd6a9c22b80bf776c1c6397849a4888224542762961cba4dad5436ebb",
+      "report": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/gates.json",
+      "report_sha256": "c17ef939e71c9a0156b8ae8da9b039caa06cc210d84090790471249b11bb264f",
+      "boundary": "Concepts was initially outside the sparse checkout, inflating path errors and preventing Touch Closure inventory extraction. This observation is preserved, not presented as an equivalent fully populated checkout result. Concepts was then materialized read-only for a separate rerun. The only worktree status change during this capture was creation of this untracked report; selected inputs and HEAD were unchanged."
+    },
+    "governance_with_required_checkout_inputs": {
+      "status": "fail",
+      "base": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "selected_inputs": 2431,
+      "changed_selected_inputs": 0,
+      "failed_check_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1448,
+        "validate_implementation_readiness": 53,
+        "validate_plan_graph": 1448,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 900,
+        "verify_spec_lock": 27
+      },
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification-complete-checkout/receipt.json",
+      "sha256": "d6cfa8c154ff05d991d067cc6f334629358746f9c4fea1742b8613df7054532c",
+      "report": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification-complete-checkout/gates.json",
+      "report_sha256": "3eeb32d47d6726471813a53104dc0115478b48a73eaaa97337a212021a0a98c5",
+      "boundary": "Touch Closure now passes and path errors fall to ten after Concepts input materialization. This is a fresh current-main observation, not a claim that all failures match the earlier base: readiness reports 53 and PRD/planning contract validation reports 900 errors. Missing fixtures/refs, stale governance and contract-reference problems remain uncorrected. The named raw-evidence and PM7 motion fixtures are absent from committed HEAD. No governance reseal or other-owner repair is performed."
+    },
+    "review_integrity": {
+      "status": "pass",
+      "cases": 69,
+      "distinct_hashed_files": 160,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/review-integrity.receipt.json",
+      "sha256": "d1267129e15a38622f3472d2b4ccbdadbdb010e1d4efd2348468134459b28cef"
+    },
+    "packet_tests": {
+      "status": "pass",
+      "tests": 45,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/packet-tests.receipt.json",
+      "sha256": "30bfef1b239b7b0b0b103c1c2415002d41d51a4d24045edb6b86ef62610572f5"
+    },
+    "formal_workbook_status": {
+      "status": "pass_structural_validation_audit_incomplete",
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/audit-status.receipt.json",
+      "sha256": "48a8042a3a781a03d5a3d2f706e38e9e9d279a23e2a3b83dbaeb832ad26e6d41"
+    },
+    "shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2315,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-docmap69-review-20260912-90AM3Hke/verification/shards.receipt.json",
+      "sha256": "2c2f38fa0d2b7d8fe6f79cbbfe405ddb8e849c520934b18d8ccfde3bd0ddf878"
+    }
+  },
+  "remaining_work": "12,734 frozen cases remain unreviewed. Recorded static gaps, native/runtime/security/capture/provider obligations and governance failures remain open. This checkpoint is concrete audit progress, not completion of the full non-design integration Goal."
+}
