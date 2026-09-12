@@ -81,3 +81,7 @@ SP-289/GRS-065/CV-340 now define the original Standard certification receipt pre
 ## Restore pending full-value adoption — 2026-09-12
 
 The three SP-285 creation/deletion/expiry pending routes now explicitly adopt original full-value v2 custody, actual source/token authentication and complete independently derived terminal afterimages. The [pending adoption record](step-08-restore-full-value-validation.md) reports 244 author, 199 underlying and 24 independent controls plus current-schema/value checks. This closes the specified pending full-value dependency only; initial observation provenance, settled-reader/summary contracts, per-family exact-wire integration and native execution remain qualified. Hold, Home and Platform still need their own completed successor adoption; no event inherits depth.
+
+## Hold pending full-value adoption — 2026-09-12
+
+SP-288 now explicitly adopts original full-value v2 custody for pending legal-hold completion, exact original intent through shared publication, and complete pending/terminal/replay output guards. The [adoption record](step-08-hold-full-value-validation.md) reports 558 rerun cases, 24 new independent cases and four current-schema value traces. Stored Hold shapes and seven other-kind routes remain unchanged; only transient evidence gains exact shared v1/v2 dispatch. Initial provenance, settled-history and native execution retain their qualifications. Home, Platform and integrity remain separately reviewed work; no event inherits depth.

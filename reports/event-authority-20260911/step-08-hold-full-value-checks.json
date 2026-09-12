@@ -1,0 +1,296 @@
+{
+  "status": "HOLD_PENDING_FULL_VALUE_CANONICAL_ADOPTION_STATIC_CHECKS_PASS",
+  "base_head": "92821ae521899785bb98530b268230c6db0268dc",
+  "scope": "SP-288 exact legal-hold pending completion and pending/terminal/original replay output chain",
+  "source_packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/manifest.json",
+    "sha256": "b075788477120eb8b0160f1244ac738608b9637a4ac1f0ff05eb074ca89b1221"
+  },
+  "source_members_verified": 1049,
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-v4-root-review-20260912/manifest.json",
+    "sha256": "c6d4058863f6a688e0553f005f9e6f439e4d3340692fa990b9d61deae1f8eb6a"
+  },
+  "independent_review_files_verified": 24,
+  "inherited_and_author_cases_rerun": 558,
+  "additional_root_independent_cases": 24,
+  "root_schema_value_checks": {
+    "status": "PASS",
+    "cases": [
+      {
+        "kind": "application_set",
+        "issuance_route": "direct",
+        "initial_and_terminal_hold_schema": "PASS",
+        "current_full_value_witness": "PASS",
+        "all_eleven_original_receipt_fields": "PASS",
+        "same_owner_and_no_new_receipt": "PASS",
+        "immutable_pending_capsule_and_prior_set": "PASS",
+        "three_storage_field_changes_detected": true,
+        "unknown_custody_field_rejected": true,
+        "exact_legacy_reader_preserved_without_v2_admission": true
+      },
+      {
+        "kind": "project_set",
+        "issuance_route": "backup",
+        "initial_and_terminal_hold_schema": "PASS",
+        "current_full_value_witness": "PASS",
+        "all_eleven_original_receipt_fields": "PASS",
+        "same_owner_and_no_new_receipt": "PASS",
+        "immutable_pending_capsule_and_prior_set": "PASS",
+        "three_storage_field_changes_detected": true,
+        "unknown_custody_field_rejected": true,
+        "exact_legacy_reader_preserved_without_v2_admission": true
+      },
+      {
+        "kind": "application_clear",
+        "issuance_route": "direct",
+        "initial_and_terminal_hold_schema": "PASS",
+        "current_full_value_witness": "PASS",
+        "all_eleven_original_receipt_fields": "PASS",
+        "same_owner_and_no_new_receipt": "PASS",
+        "immutable_pending_capsule_and_prior_set": "PASS",
+        "three_storage_field_changes_detected": true,
+        "unknown_custody_field_rejected": true,
+        "exact_legacy_reader_preserved_without_v2_admission": true
+      },
+      {
+        "kind": "legacy_clear",
+        "issuance_route": "backup",
+        "initial_and_terminal_hold_schema": "PASS",
+        "current_full_value_witness": "PASS",
+        "all_eleven_original_receipt_fields": "PASS",
+        "same_owner_and_no_new_receipt": "PASS",
+        "immutable_pending_capsule_and_prior_set": "PASS",
+        "three_storage_field_changes_detected": true,
+        "unknown_custody_field_rejected": true,
+        "exact_legacy_reader_preserved_without_v2_admission": true
+      }
+    ],
+    "transient_schema_reuses_exact_shared_definitions": true,
+    "native": "NOT_RUN"
+  },
+  "current_source_preimages": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "5f1e07ec677040a72e2c5644ba8b017f433f4ca92339ccabca4fb182fa7b126d"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "sha256": "aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "sha256": "3fddb30a33cf6cec72274a1b4bae94bb5274cc905d03b4adcf8e245254c39a3a"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/storage_retention_hold_contracts.schema.json",
+      "sha256": "3ebf5fad84f074898057be3ad5db4366fafa54fc407c51c42ecf1593e111ec1d"
+    },
+    {
+      "path": "Plans/storage_retention_hold_value.schema.json",
+      "sha256": "8db634a5ce7e73be4e8a6a3e7fe2128b86580eb04bd648ca6b765eecd2a0f8c6"
+    },
+    {
+      "path": "Plans/storage_retention_hold_evidence.schema.json",
+      "sha256": "c6347c64a27bfa4b1398ede0050545abcead0d8f8cfc1cf3e6494badae065f12"
+    },
+    {
+      "path": "Plans/storage_retention_hold_version_routes.json",
+      "sha256": "abfd12bc4276d22615fd463c99dd57b67c4ff2aeaffbf65c89723dab56f701a4"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80"
+    }
+  ],
+  "transient_evidence_changed_definitions": [
+    "CandidateFirstReceiptCustody",
+    "CandidateFirstReceiptCustodyV1",
+    "CandidateFirstReceiptCustodyV2",
+    "original_event_value_commitment"
+  ],
+  "transient_evidence_exact_shared_definitions": true,
+  "durable_hold_schema_changed": false,
+  "terminal_metadata_variant_added": false,
+  "shared_source_changed": false,
+  "unchanged_physical_families": 113,
+  "unchanged_registered_events": 42,
+  "unchanged_retention_policies": 25,
+  "unchanged_other_kind_writer_routes": 7,
+  "new_plan_units": 0,
+  "updated_unit": "SP-288",
+  "full_value_dependency": "storage.first_append_receipt.resolve_full_value.v1",
+  "definition_mapping": [
+    {
+      "source": "pending-full-value-protocol.md; ReceiptOwner.receipt/issue",
+      "canonical": "SP-288 first-receipt adoption and crash cuts",
+      "claim": "Exact installed v2/writer/readers/full-value resolver, actual current whole value and canonical three-field witness, unchanged terminal hashes and stored shapes"
+    },
+    {
+      "source": "pending-full-value-v2-protocol.md; pending-full-value-v3-protocol.md; model.py ReceiptOwner/HoldStore.finish",
+      "canonical": "SP-288 original canonical pending intent and actual shared publication guard",
+      "claim": "Exact original working/actual intent and target, same actual shared owner; joint source/issuance guard; independent effects conserved"
+    },
+    {
+      "source": "pending-full-value-v4-protocol.md; model.py advance_pending_sir/finish/replay/SIROwner.publish",
+      "canonical": "SP-288 pending/terminal publication and original command replay",
+      "claim": "Complete original expectations before copies, exact candidates/transactions/output, current owner/permission and late valid-effect conservation"
+    },
+    {
+      "source": "hold-evidence.schema.proposed.json; event_append_receipt_contracts.schema.json",
+      "canonical": "storage_retention_hold_evidence.schema.json four definitions",
+      "claim": "Exact retained v1/v2 transient evidence dispatch only; unchanged durable Hold/receipt contracts"
+    },
+    {
+      "source": "authorship-report.json limitations; root review.md; protocol qualification",
+      "canonical": "SP-288 verification boundary retained and new validation report",
+      "claim": "Supplied original observation/source and model wire limitation; native NOT_RUN; no new settled-history qualification or event-depth pass"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/model.py",
+      "sha256": "005b39591909eab2860a7d0255d8dbf19cfba24cfdeb98a2afcb4ce53de1765b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/pending-full-value-protocol.md",
+      "sha256": "5e588d12dcb9802f143c31601fb1e9ab6c2288d46858a1f283d8217a7b76aac7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/pending-full-value-v2-protocol.md",
+      "sha256": "aa8d8f76fb66472b6d0260fc1af6081b5c2bb0fc9556273af23550183902f4a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/pending-full-value-v3-protocol.md",
+      "sha256": "06dced02c31f380b7dd25262f43a6c1cc8325f19d70817b9f749f912bba521f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/pending-full-value-v4-protocol.md",
+      "sha256": "d7ba70f8cba14b7526350f0110daeb9c574466bcd939117df25674c8921d5c7a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/authorship-report.json",
+      "sha256": "087d71f8e91916b203bafbc683d5ccbacc53dcfbed22f80ad33f53acf5543e2d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-pending-full-value-20260912/v4/correction-map.json",
+      "sha256": "685f330fe74b5819b929f132178e7b447d3c4f4727a4a30a56f09acb9076bcda"
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/capture_and_check.py",
+      "sha256": "e0095a97621024a90a933db5594af528ad03fa416e5362a921b65c693fa4974f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/schema-value-checks.json",
+      "sha256": "1ae0e8fd3f81f322ba3ed2e8ac80380642faa6a04cfc0fe24ff481c1e1ae342e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/verified-pins.json",
+      "sha256": "32cf07fe5d837909d29f58293b29c8dad52dcb31a29f3660b577dc2b7b91c5aa"
+    }
+  ],
+  "external_trace_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/hold-pending-full-value-v4/application_set.json",
+      "sha256": "dbf6f4ff55158567e51efff2a7c994447fa7cd83031c455a3ffa3818a7df2e66"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/hold-pending-full-value-v4/project_set.json",
+      "sha256": "aa70631a35f0352ec8aaed5131c81e4c0d248039ea9cba65231825c2343895d3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/hold-pending-full-value-v4/application_clear.json",
+      "sha256": "6fc38cd5253825f9a9b7aa9639942ead3a50bbff7b5eeac1585570841baa65fc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/hold-pending-full-value-v4/legacy_clear.json",
+      "sha256": "d618aaec9f732f18ad8bf5076c5f6318abe432ac91d17c571669582c6c0316f3"
+    }
+  ],
+  "compilation_fidelity_review": "Astra medium reviewer read the two scoped canonical diffs and four protocols, verified both frozen manifests and all members, confirmed exact shared transient definitions; no concrete fidelity issue. Root separately read the full diff and schemas.",
+  "native": "NOT_RUN",
+  "initial_observation_provenance": "UNCHANGED_SUPPLIED_FIXTURE_LIMITATION_NOT_RUN",
+  "settled_history_expansion": false,
+  "event_depth_completion": false,
+  "frozen_validator_depth_pass": false,
+  "governance_seal": false,
+  "standard_governance": "Registry data is byte-unchanged; prior 21 central registry diagnostics and earlier full-suite failures remain documented. No validator edit, waiver, restamp or seal.",
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2385,
+      "source_count": 98,
+      "status": "pass",
+      "evidence_origin": "Exact observed own-worktree tool result: pm-shard-plans.py --check --config Plans/sharding_config.json after Hold compilation"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T05:24:10Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25321,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6563
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "planunits": 6563,
+      "acceptance_units": 25321,
+      "new_units": [],
+      "changed_prior_units": {
+        "SP-288": [
+          "acceptance_criteria",
+          "canonical_text",
+          "preserved_exact_tokens",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_prior_semantics_exact": true,
+      "derived_shard_groups": [
+        "storage-plan"
+      ],
+      "all_durable_schema_and_family_policy_files_unchanged": true
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/shard-check.json",
+      "sha256": "c7827b28230610acf82272ef89a3c0d75efdbc27476abdb6a87cd2999f24c9e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/index-validate.json",
+      "sha256": "5f2377cf667d0b33c90b47ce2492c2424b4b70ee155791d6c1205c8b03b8bb6b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-full-value-canonical-root-20260912/compilation-preservation.json",
+      "sha256": "1ca9779cbba19bf8b7a898acde160bd8a144773619b7f4dc7dd92bd6c0fe71c3"
+    }
+  ]
+}

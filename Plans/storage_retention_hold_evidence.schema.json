@@ -1265,68 +1265,14 @@
       }
     },
     "CandidateFirstReceiptCustody": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "schema_id",
-        "schema_version",
-        "storage_instance_id",
-        "event_id",
-        "scope_partition",
-        "event_type",
-        "idempotency_key",
-        "producer_semantic_digest",
-        "group_digest",
-        "first_append_receipt",
-        "redaction_profile",
-        "original_segment_ref"
-      ],
-      "properties": {
-        "schema_id": {
-          "const": "pm.storage_value.event_append_receipt_custody.v1"
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CandidateFirstReceiptCustodyV1"
         },
-        "schema_version": {
-          "const": "1.0.0"
-        },
-        "storage_instance_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "scope_partition": {
-          "type": "string",
-          "minLength": 1
-        },
-        "event_type": {
-          "type": "string",
-          "minLength": 1
-        },
-        "idempotency_key": {
-          "type": "string",
-          "minLength": 1
-        },
-        "producer_semantic_digest": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "group_digest": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "first_append_receipt": {
-          "$ref": "#/$defs/AppendReceipt"
-        },
-        "redaction_profile": {
-          "const": "no_secrets"
-        },
-        "original_segment_ref": {
-          "type": "string",
-          "minLength": 1
+        {
+          "$ref": "#/$defs/CandidateFirstReceiptCustodyV2"
         }
-      }
+      ]
     },
     "TerminalOwnerWitness": {
       "type": "object",
@@ -1587,6 +1533,175 @@
         "original_source_sha256",
         "current_source_sha256"
       ]
+    },
+    "CandidateFirstReceiptCustodyV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "event_id",
+        "scope_partition",
+        "event_type",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "group_digest",
+        "first_append_receipt",
+        "redaction_profile",
+        "original_segment_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_append_receipt_custody.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "group_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_append_receipt": {
+          "$ref": "#/$defs/AppendReceipt"
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "original_segment_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "CandidateFirstReceiptCustodyV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "event_id",
+        "scope_partition",
+        "event_type",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "group_digest",
+        "first_append_receipt",
+        "redaction_profile",
+        "original_segment_ref",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_append_receipt_custody.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "group_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_append_receipt": {
+          "$ref": "#/$defs/AppendReceipt"
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "original_segment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_event_value_commitment": {
+          "$ref": "#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "original_event_value_commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "codec",
+        "domain",
+        "event_schema_id",
+        "event_schema_version",
+        "sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.original_event_value_commitment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "codec": {
+          "const": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1"
+        },
+        "domain": {
+          "const": "pm.storage.original_event_value_commitment.v1"
+        },
+        "event_schema_id": {
+          "const": "pm.event.v0"
+        },
+        "event_schema_version": {
+          "const": "2.0.0"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
     }
   },
   "$comment": "V7 explicit pending SIR custody and nonterminal progress evidence; reviewed receipt-v3 composition remains conditional on Hold adoption. Native proof NOT_RUN."
