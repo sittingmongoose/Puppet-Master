@@ -1,0 +1,582 @@
+{
+  "schema_id": "pm.storage.first_append_receipt_full_value_fixtures.v1",
+  "fixture_only": true,
+  "qualification": "Closed writer/retained-reader shape and exact original-value commitment examples. The supplied source/issuance and hashes establish no native source/owner/transaction authority. Old fixture values remain retained-v1 examples, not current v2 writer values.",
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-20260912/v3/manifest.json",
+    "sha256": "c3f6f7354c81ad87bbae6b2f8df2771ead5b3ec5176157987e3cdb2db2f3c4e1"
+  },
+  "schema_routes": {
+    "current_writer": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_v2",
+    "retained_reader": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_reader"
+  },
+  "base_original_event": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "application",
+    "event_id": "fixture-event-51",
+    "event_type": "storage.boot_recovery",
+    "project_id": null,
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "actor:fixture",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-09-11T21:00:00Z",
+    "observed_at_utc": "2026-09-11T21:00:01Z",
+    "persisted_at_utc": "2026-09-11T21:00:01Z",
+    "sequence_id": 51,
+    "producer_sequence_id": 51,
+    "correlation_id": "correlation-51",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "delivery-51",
+    "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+    "payload": {
+      "schema_version": "2.0.0",
+      "recovery_set_id": "pm.storage.recovery_set.v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "integrity_ids": [],
+      "recovery_ids": [
+        "pm.storage.recovery.v1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "interrupted_transaction_kinds": [
+        "rotation_truncation"
+      ],
+      "manifest_generation": 10,
+      "recovery_epoch": 0,
+      "active_segment_ref": "pm.storage.segment.v1:1:1:active:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "payload_ref": null,
+    "redaction_profile": "no_secrets",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null,
+      "compatibility_event_type": null
+    }
+  },
+  "commitment_preimage_hex": "96d92d706d2e73746f726167652e6f726967696e616c5f6576656e745f76616c75655f636f6d6d69746d656e742e7631a5312e302e30d933706d2e7365676c6f675f6672616d655f76322e6576656e745f76616c75652e63616e6f6e6963616c5f6d73677061636b2e7631ab706d2e6576656e742e7630a5322e302e30de001ca96163746f725f726566ad6163746f723a66697874757265aa617474656d70745f6964c0b2636175736174696f6e5f6576656e745f6964c0ae636f7272656c6174696f6e5f6964ae636f7272656c6174696f6e2d3531b56566666563746976655f6163636f756e745f726566c0a86576656e745f6964b0666978747572652d6576656e742d3531aa6576656e745f74797065b573746f726167652e626f6f745f7265636f76657279af6964656d706f74656e63795f6b6579ab64656c69766572792d3531a96d6967726174696f6e84b8636f6d7061746962696c6974795f6576656e745f74797065c0b76d696772617465645f66726f6d5f736368656d615f6964c0bc6d696772617465645f66726f6d5f736368656d615f76657273696f6ec0ac6d6967726174696f6e5f6964c0a76e6f64655f6964c0af6f627365727665645f61745f757463b4323032362d30392d31315432313a30303a30315aaf6f636375727265645f61745f757463b4323032362d30392d31315432313a30303a30305aaf706172656e745f6576656e745f6964c0a77061796c6f616488b26163746976655f7365676d656e745f726566d961706d2e73746f726167652e7365676d656e742e76313a313a313a6163746976653a63636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363ad696e746567726974795f69647390bd696e7465727275707465645f7472616e73616374696f6e5f6b696e647391b3726f746174696f6e5f7472756e636174696f6eb36d616e69666573745f67656e65726174696f6e0aae7265636f766572795f65706f636800ac7265636f766572795f69647391d957706d2e73746f726167652e7265636f766572792e76313a62626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262af7265636f766572795f7365745f6964d95b706d2e73746f726167652e7265636f766572795f7365742e76313a61616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161ae736368656d615f76657273696f6ea5322e302e30ab7061796c6f61645f726566c0b17061796c6f61645f736368656d615f6964d94d68747470733a2f2f7075707065746d61737465722e6c6f63616c2f736368656d61732f6576656e745f7061796c6f6164732f73746f726167655f626f6f745f7265636f766572792f322e302e30b07065727369737465645f61745f757463b4323032362d30392d31315432313a30303a30315ab470726f64756365725f73657175656e63655f696433aa70726f6a6563745f6964c0b1726564616374696f6e5f70726f66696c65aa6e6f5f73656372657473ad7265706c61795f706f6c696379b96465647570655f62795f6964656d706f74656e63795f6b6579b57265717565737465645f6163636f756e745f726566c0a672756e5f6964c0a9736368656d615f6964ab706d2e6576656e742e7630ae736368656d615f76657273696f6ea5322e302e30aa73636f70655f6b696e64ab6170706c69636174696f6eab73657175656e63655f696433a97468726561645f6964c0",
+  "commitment_sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33",
+  "cases": [
+    {
+      "id": "new_original_full_value",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": true,
+      "expected_retained_reader_schema_valid": true
+    },
+    {
+      "id": "retained_exact_v1",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": true
+    },
+    {
+      "id": "missing_full_value",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "wrong_codec",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "fixture_json",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "unknown_version",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "3.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "raw_event_extra",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1",
+        "raw_event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "fixture-event-51",
+          "event_type": "storage.boot_recovery",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:fixture",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-11T21:00:00Z",
+          "observed_at_utc": "2026-09-11T21:00:01Z",
+          "persisted_at_utc": "2026-09-11T21:00:01Z",
+          "sequence_id": 51,
+          "producer_sequence_id": 51,
+          "correlation_id": "correlation-51",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "delivery-51",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+          "payload": {
+            "schema_version": "2.0.0",
+            "recovery_set_id": "pm.storage.recovery_set.v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ],
+            "interrupted_transaction_kinds": [
+              "rotation_truncation"
+            ],
+            "manifest_generation": 10,
+            "recovery_epoch": 0,
+            "active_segment_ref": "pm.storage.segment.v1:1:1:active:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        }
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "boolean_receipt_generation",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": true,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "missing_original_segment",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "nullable_original_receipt",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": null,
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "malformed_commitment_hash",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "XYZ"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "foreign_event_schema",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v2",
+        "schema_version": "2.0.0",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "1.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    },
+    {
+      "id": "v1_with_unversioned_witness",
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1",
+        "original_event_value_commitment": {
+          "schema_id": "pm.storage.original_event_value_commitment.v1",
+          "schema_version": "1.0.0",
+          "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+          "domain": "pm.storage.original_event_value_commitment.v1",
+          "event_schema_id": "pm.event.v0",
+          "event_schema_version": "2.0.0",
+          "sha256": "8d63522b12bcf9d32e7eec9b4723ed442f9beed498e60d8655d2cfb6021d6b33"
+        }
+      },
+      "expected_current_writer_schema_valid": false,
+      "expected_retained_reader_schema_valid": false
+    }
+  ],
+  "full_value_cases": [
+    {
+      "id": "changed_sequence_id",
+      "changed_field": "sequence_id",
+      "changed_value": 52,
+      "expected_original_full_value_match": false
+    },
+    {
+      "id": "changed_observed_at_utc",
+      "changed_field": "observed_at_utc",
+      "changed_value": "2026-09-11T21:00:02Z",
+      "expected_original_full_value_match": false
+    },
+    {
+      "id": "changed_persisted_at_utc",
+      "changed_field": "persisted_at_utc",
+      "changed_value": "2026-09-11T21:00:02Z",
+      "expected_original_full_value_match": false
+    }
+  ]
+}

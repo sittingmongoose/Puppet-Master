@@ -1,0 +1,177 @@
+{
+  "status": "CANONICAL_SHARED_FULL_VALUE_DEFINITION_COMPILED_STATIC_CHECKS_PASS",
+  "head": "94e97e49433e3783883fba79f2dba7a35cfb7ec2",
+  "manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-20260912/v3/manifest.json",
+    "sha256": "c3f6f7354c81ad87bbae6b2f8df2771ead5b3ec5176157987e3cdb2db2f3c4e1"
+  },
+  "frozen_files_verified": 103,
+  "current_sources": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "6452c533d694ae75071b524c3baf829cd049105b05247a06ae3ed68fbeb71cd2"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "abc9231a7a6f545e9a011b646f4e0aac96c701178a732032dfccfa3e123787ba"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "6eb290946e06632af8c16522b5e66c2e9d10b3a3a324213cbb7612f2e12add62"
+    }
+  ],
+  "all_old_schema_definitions_exact": 7,
+  "new_definitions": 6,
+  "old_v1_inline_schema_exact": true,
+  "other_112_families_exact": true,
+  "all25_policies_and_nonfamily_metadata_exact": true,
+  "physical_families": 113,
+  "current_writer_version": "2.0.0",
+  "original_shapes_unchanged": true,
+  "schema_cases": 12,
+  "full_value_assignment_cases": 3,
+  "request_cases": 2,
+  "independent_msgpack_preimage": "PASS",
+  "central_data_failures_before": 21,
+  "central_data_failures_after": 21,
+  "new_failures": [],
+  "native": "NOT_RUN",
+  "scope": "DL-045 technical prerequisite; exact event-specific adoption remains separate",
+  "definition_units": [
+    "SP-286",
+    "CV-339"
+  ],
+  "unchanged_registered_events": 42,
+  "unchanged_physical_families": 113,
+  "unchanged_retention_policies": 25,
+  "independent_review": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-v3-independent-review-20260912/manifest.json",
+      "sha256": "b0a5890ae49c9dbe573ab4900634c217e7b082b14d2c34a94541d2ad22660cbb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-v3-independent-review-20260912/review.md",
+      "sha256": "87ae0e61c5e9ea58a383f5a0cdd116ed915c6b0ae4003b79c2871c7531b08d90"
+    }
+  ],
+  "author_cases": 189,
+  "independent_cases": 48,
+  "independent_standalone_type_repro": "PASS",
+  "source_mapping": [
+    {
+      "source": "full-value-protocol.md; full_value.py; contracts.schema.json; full-value-request.schema.json",
+      "canon": "Contracts_V0.md CV-339; event_append_receipt_contracts.schema.json six successor definitions",
+      "claim": "exact domain/version/codec commitment, original whole-value request and closed three-field result"
+    },
+    {
+      "source": "joint_append_owner.py; model.py; check_full_value.py",
+      "canon": "storage-plan.md SP-286 original value and final issuance; CV-339 writer boundary",
+      "claim": "actual original source joins; independently expected rows; schema and typed final source/candidate/output guards"
+    },
+    {
+      "source": "binding_dispatch.py; full-value-bindings.json; check_full_value.py",
+      "canon": "storage-plan.md SP-286 explicit activation; Contracts_V0.md CV-339 selector map",
+      "claim": "four explicitly installed same-owner legacy call selectors; all new issuance strict v2; static post-activation test only"
+    },
+    {
+      "source": "contracts.schema.json #/$defs/custody_v2 and #/$defs/custody; full-value-family-proposal.json",
+      "canon": "storage_value_registry.json event_append_receipt_custody; external custody_v2/custody_v1_reader/custody_reader",
+      "claim": "same table/key/lifetime, strict v2 writer, exact immutable v1/v2 readers; no backfill"
+    },
+    {
+      "source": "check_full_value.py; full_value.py; independent review matrix",
+      "canon": "event_append_receipt_full_value_fixtures.json; SP-286/CV-339 validation surfaces",
+      "claim": "bounded schema/assignment/codec fixtures and direct/generic/backup issuance conservation; native proof separate"
+    }
+  ],
+  "activation_execution": "NOT_RUN; static dispatcher assumes installed v2 owner",
+  "event_specific_adoption": "NOT_GRANTED",
+  "frozen_validator_depth_pass": false,
+  "governance_seal": false,
+  "standard_governance": "Existing full-suite failures remain documented. The focused storage data helper remains 21 before and 21 after, no new diagnostics. No validator change or waiver.",
+  "integration_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/full-value-data-integration.json",
+      "sha256": "93231be4357d11106c4cbe71c72a83bdb6ee22047ded89dcba65e90ed0eb9775"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/registry-diagnostics-full-value.json",
+      "sha256": "17d124d8fcdb7da025fc3645e71c4960e3b3f4799fd06f7b41b90548279e6f46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/verified-full-value-pins.json",
+      "sha256": "59d0a6a44b6f5b4e6dafcb092489201fa5624b899d7d7f89443626d30884d697"
+    }
+  ],
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2379,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T03:35:39Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25295,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6560
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "planunit_count": 6560,
+      "changed_prior_units": {
+        "CV-339": [
+          "acceptance_criteria",
+          "canonical_text",
+          "validation_surfaces"
+        ],
+        "SP-286": [
+          "acceptance_criteria",
+          "canonical_text",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_prior_semantics_exact": true,
+      "new_units": [],
+      "derived_shard_groups": [
+        "contracts_v0",
+        "storage-plan",
+        "storage_value_registry"
+      ]
+    }
+  },
+  "derived_check_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/shard-check.json",
+      "sha256": "61c29ee1436fe157b943a120055b45c68026b0070457234a169ef3d76f2bc197"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/index-validate.json",
+      "sha256": "99a0071d9aaf84952036f2459fa7713d1d3c2f27ed9266001125f579200bfbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/compilation-preservation.json",
+      "sha256": "25e5d2f7a6c45bb5ada0933571dd524225bca427dd1cb7ed37e8c4d3573b80ac"
+    }
+  ]
+}

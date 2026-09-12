@@ -424,6 +424,218 @@
           "pattern": "^[0-9a-f]{64}$"
         }
       }
+    },
+    "custody_v1_reader": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "event_id",
+        "scope_partition",
+        "event_type",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "group_digest",
+        "first_append_receipt",
+        "redaction_profile",
+        "original_segment_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_append_receipt_custody.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "group_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_append_receipt": {
+          "$ref": "#/$defs/AppendReceipt"
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "original_segment_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "custody_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "event_id",
+        "scope_partition",
+        "event_type",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "group_digest",
+        "first_append_receipt",
+        "redaction_profile",
+        "original_segment_ref",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.event_append_receipt_custody.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "group_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "first_append_receipt": {
+          "$ref": "#/$defs/AppendReceipt"
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "original_segment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_event_value_commitment": {
+          "$ref": "#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "custody_reader": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/custody_v1_reader"
+        },
+        {
+          "$ref": "#/$defs/custody_v2"
+        }
+      ]
+    },
+    "original_event_value_commitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "codec",
+        "domain",
+        "event_schema_id",
+        "event_schema_version",
+        "sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.original_event_value_commitment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "codec": {
+          "const": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1"
+        },
+        "domain": {
+          "const": "pm.storage.original_event_value_commitment.v1"
+        },
+        "event_schema_id": {
+          "const": "pm.event.v0"
+        },
+        "event_schema_version": {
+          "const": "2.0.0"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "full_value_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_append_receipt",
+        "original_segment_ref",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "first_append_receipt": {
+          "$ref": "#/$defs/AppendReceipt"
+        },
+        "original_segment_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_event_value_commitment": {
+          "$ref": "#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "full_value_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        }
+      }
     }
   }
 }

@@ -3980,7 +3980,7 @@
         "False": 264,
         "True": 73
       },
-      "heading_count": 516,
+      "heading_count": 517,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4071,7 +4071,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22239,
+      "line_count": 22269,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 337,
       "plan_unit_ids": [
@@ -4754,7 +4754,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "6452c533d694ae75071b524c3baf829cd049105b05247a06ae3ed68fbeb71cd2",
+      "sha256": "5e74f320e452ae42384cd6e7dfad4832d94ee1f995648499775a4188280bd3d4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 337
@@ -4789,6 +4789,7 @@
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
+        "Plans/event_append_receipt_full_value_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
@@ -4855,6 +4856,7 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
+        "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "secret-bearing receipt rejection fixtures",
         "security receipts are visible and redacted.",
@@ -16530,7 +16532,7 @@
         "False": 180,
         "True": 101
       },
-      "heading_count": 597,
+      "heading_count": 600,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16593,7 +16595,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 22570,
+      "line_count": 22600,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 281,
       "plan_unit_ids": [
@@ -16952,7 +16954,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd",
+      "sha256": "ee3c1a43de5ad3e2a1d53e730aff9a3ce9eb009b4325251decaad63b36fc3e15",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 278,
@@ -17006,6 +17008,7 @@
         "Plans/context_compaction_completion_contract_fixtures.json",
         "Plans/event_append_receipt_contract_fixtures.json",
         "Plans/event_append_receipt_contracts.schema.json",
+        "Plans/event_append_receipt_full_value_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
@@ -17111,6 +17114,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
+        "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
@@ -18997,7 +19001,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T02:41:58Z",
+  "generated_at_utc": "2026-09-12T03:35:09Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
