@@ -1,0 +1,5089 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "representation",
+    "storage_instance_id",
+    "project_id",
+    "scope_partition",
+    "restore_point_id",
+    "record_ref",
+    "original_record_hash",
+    "terminal_status",
+    "hash_verification",
+    "creation_event",
+    "terminal_event",
+    "retention_policy",
+    "selection",
+    "hold_evaluations",
+    "creation_companion_required",
+    "deletion_companion_required",
+    "terminal_source_admission_receipt_sha256",
+    "retired_custody",
+    "retirement_operation_id",
+    "retirement_actor_ref",
+    "owner_gate_revision_sha256",
+    "summary_transaction_id",
+    "summary_committed_at_utc",
+    "source_manifest_generation_at_commit",
+    "source_recovery_epoch_at_commit",
+    "redaction_profile",
+    "expiry_companion_required",
+    "original_expiry_append_receipt",
+    "original_expiry_result"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.restore_point_retention_summary.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "representation": {
+      "const": "retained_hash_summary"
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_partition": {
+      "type": "string",
+      "pattern": "^project~[A-Za-z0-9_-]+$"
+    },
+    "restore_point_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "original_record_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "terminal_status": {
+      "enum": [
+        "expired",
+        "deleted",
+        "corrupt"
+      ]
+    },
+    "hash_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "native_recipe_id",
+        "owner_verification_id",
+        "verified_capture_relation_sha256",
+        "source_store_generation_id",
+        "source_admission_receipt_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "verified_native_immutable_capture",
+            "verified_supported_historical"
+          ]
+        },
+        "native_recipe_id": {
+          "anyOf": [
+            {
+              "const": "pm.restore_point.immutable_capture_sha256.v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_verification_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verified_capture_relation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_store_generation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_admission_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_native_immutable_capture"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "native_recipe_id": {
+                "const": "pm.restore_point.immutable_capture_sha256.v1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "verified_supported_historical"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "native_recipe_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "creation_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "event_type",
+        "payload_schema_id",
+        "payload_sha256",
+        "producer_semantic_sha256",
+        "original_record_hash",
+        "original_frame_sha256",
+        "original_sequence_id",
+        "original_manifest_generation",
+        "original_recovery_epoch",
+        "original_segment_generation",
+        "original_segment_name",
+        "original_byte_offset",
+        "original_durable_end_offset"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "const": "restore_point.created"
+        },
+        "payload_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "producer_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_record_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_frame_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_manifest_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_recovery_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_segment_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_segment_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_byte_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_durable_end_offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "terminal_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "event_type",
+        "payload_schema_id",
+        "payload_sha256",
+        "producer_semantic_sha256",
+        "original_record_hash",
+        "original_frame_sha256",
+        "original_sequence_id",
+        "original_manifest_generation",
+        "original_recovery_epoch",
+        "original_segment_generation",
+        "original_segment_name",
+        "original_byte_offset",
+        "original_durable_end_offset"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "enum": [
+            "restore_point.expired",
+            "restore_point.deleted",
+            "restore_point.corrupt"
+          ]
+        },
+        "payload_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "producer_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_record_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_frame_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_manifest_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_recovery_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_segment_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_segment_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_byte_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_durable_end_offset": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "retention_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_id",
+        "policy_version",
+        "expiry_action"
+      ],
+      "properties": {
+        "policy_id": {
+          "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+        },
+        "policy_version": {
+          "const": "1.0.0"
+        },
+        "expiry_action": {
+          "const": "retain_hash_summary"
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection_kind",
+        "reference_release",
+        "evaluated_at_utc",
+        "logical_point_count_before",
+        "eligible_point_set_sha256",
+        "selected_oldest_eligible_rank"
+      ],
+      "properties": {
+        "selection_kind": {
+          "enum": [
+            "reference_release_ttl",
+            "oldest_eligible_count_pressure"
+          ]
+        },
+        "reference_release": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "closure_kind",
+            "owner_authority_id",
+            "release_id",
+            "released_at_utc",
+            "closed_ref_set_sha256",
+            "release_fact_sha256"
+          ],
+          "properties": {
+            "closure_kind": {
+              "const": "owner_verified_reference_release"
+            },
+            "owner_authority_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "release_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "released_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "closed_ref_set_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "release_fact_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "evaluated_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "logical_point_count_before": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_point_set_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "selected_oldest_eligible_rank": {
+          "anyOf": [
+            {
+              "const": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "selection_kind": {
+                "const": "oldest_eligible_count_pressure"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "logical_point_count_before": {
+                "type": "integer",
+                "minimum": 2049
+              },
+              "selected_oldest_eligible_rank": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "selection_kind": {
+                "const": "reference_release_ttl"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "selected_oldest_eligible_rank": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "hold_evaluations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref_kind",
+          "owner_authority_id",
+          "evaluated_revision_sha256",
+          "enumeration_complete",
+          "active_blocker_count",
+          "released_ref_count",
+          "released_ref_set_sha256",
+          "release_fact_set_sha256",
+          "evaluated_at_utc"
+        ],
+        "properties": {
+          "ref_kind": {
+            "enum": [
+              "descendant_branch",
+              "application",
+              "preserve",
+              "legal_hold",
+              "in_flight_application",
+              "source_lineage",
+              "live_ref",
+              "backup",
+              "rollback",
+              "recovery_anchor",
+              "maintenance"
+            ]
+          },
+          "owner_authority_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evaluated_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "enumeration_complete": {
+            "const": true
+          },
+          "active_blocker_count": {
+            "const": 0
+          },
+          "released_ref_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "released_ref_set_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "release_fact_set_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "evaluated_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 11,
+      "maxItems": 11
+    },
+    "creation_companion_required": {
+      "type": "boolean"
+    },
+    "deletion_companion_required": {
+      "type": "boolean"
+    },
+    "terminal_source_admission_receipt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "retired_custody": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "family_id",
+          "canonical_key",
+          "value_schema_id",
+          "value_schema_version",
+          "canonical_encoding",
+          "value_bytes_sha256",
+          "disposition"
+        ],
+        "properties": {
+          "family_id": {
+            "enum": [
+              "restore_point_record",
+              "restore_point_creation_commit",
+              "restore_point_deletion_commit",
+              "restore_point_expiry_commit"
+            ]
+          },
+          "canonical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value_schema_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value_schema_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "canonical_encoding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value_bytes_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "disposition": {
+            "const": "removed_in_summary_transaction"
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true
+    },
+    "retirement_operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retirement_actor_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner_gate_revision_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "summary_transaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary_committed_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1
+    },
+    "source_manifest_generation_at_commit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_recovery_epoch_at_commit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "redaction_profile": {
+      "const": "no_secrets"
+    },
+    "expiry_companion_required": {
+      "type": "boolean"
+    },
+    "original_expiry_append_receipt": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "sequence_id",
+            "segment_generation",
+            "segment_name",
+            "byte_offset",
+            "commit_group_id",
+            "durability_class",
+            "durable_end_offset",
+            "durability_state",
+            "manifest_generation",
+            "acknowledged_at_utc"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "commit_group_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "durability_class": {
+              "const": "barrier"
+            },
+            "durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "durability_state": {
+              "const": "synced"
+            },
+            "manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "acknowledged_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_expiry_result": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "outcome",
+            "project_id",
+            "restore_point_id",
+            "record_ref",
+            "prior_hash",
+            "expiry_id",
+            "event_id",
+            "physical_retirement_performed"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage.restore_point_expiry_result.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "outcome": {
+              "const": "expired"
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "restore_point_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "prior_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "expiry_id": {
+              "type": "string",
+              "pattern": "^rpe_[0-9a-f]{64}$"
+            },
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "physical_retirement_performed": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "terminal_status": {
+            "const": "expired"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal_event": {
+            "properties": {
+              "event_type": {
+                "const": "restore_point.expired"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "terminal_status": {
+            "const": "deleted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal_event": {
+            "properties": {
+              "event_type": {
+                "const": "restore_point.deleted"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "terminal_status": {
+            "const": "corrupt"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal_event": {
+            "properties": {
+              "event_type": {
+                "const": "restore_point.corrupt"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "expiry_companion_required": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "terminal_status": {
+            "const": "expired"
+          },
+          "deletion_companion_required": {
+            "const": false
+          },
+          "original_expiry_append_receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "const": "barrier"
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              }
+            }
+          },
+          "original_expiry_result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "outcome",
+              "project_id",
+              "restore_point_id",
+              "record_ref",
+              "prior_hash",
+              "expiry_id",
+              "event_id",
+              "physical_retirement_performed"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.restore_point_expiry_result.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "outcome": {
+                "const": "expired"
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "restore_point_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "record_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "prior_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "expiry_id": {
+                "type": "string",
+                "pattern": "^rpe_[0-9a-f]{64}$"
+              },
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "physical_retirement_performed": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "expiry_companion_required": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "original_expiry_append_receipt": {
+            "type": "null"
+          },
+          "original_expiry_result": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "$id": "https://puppet-master.dev/schemas/restore-point-retention-summary-codec.schema.json",
+  "$comment": "CONDITIONAL OWNER-ADJUDICATION CANDIDATE. ROOT IS CURRENT WRITER V2 ONLY. Registered retained-value read dispatch is #/$defs/registered_read_value; exact v1 remains #/$defs/retention_summary_v1, exact v2 remains #/$defs/retention_summary_v2. No object wrapper, conversion, rewrite, second key/family, permission, retention change or reader-version widening. Reader dispatch MUST NOT be used as writer validation.",
+  "$defs": {
+    "retention_summary_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "representation",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "restore_point_id",
+        "record_ref",
+        "original_record_hash",
+        "terminal_status",
+        "hash_verification",
+        "creation_event",
+        "terminal_event",
+        "retention_policy",
+        "selection",
+        "hold_evaluations",
+        "creation_companion_required",
+        "deletion_companion_required",
+        "terminal_source_admission_receipt_sha256",
+        "retired_custody",
+        "retirement_operation_id",
+        "retirement_actor_ref",
+        "owner_gate_revision_sha256",
+        "summary_transaction_id",
+        "summary_committed_at_utc",
+        "source_manifest_generation_at_commit",
+        "source_recovery_epoch_at_commit",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.restore_point_retention_summary.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "representation": {
+          "const": "retained_hash_summary"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "restore_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_record_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_status": {
+          "enum": [
+            "expired",
+            "deleted",
+            "corrupt"
+          ]
+        },
+        "hash_verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "native_recipe_id",
+            "owner_verification_id",
+            "verified_capture_relation_sha256",
+            "source_store_generation_id",
+            "source_admission_receipt_sha256"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "verified_native_immutable_capture",
+                "verified_supported_historical"
+              ]
+            },
+            "native_recipe_id": {
+              "anyOf": [
+                {
+                  "const": "pm.restore_point.immutable_capture_sha256.v1"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_verification_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verified_capture_relation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "source_store_generation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_admission_receipt_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_native_immutable_capture"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "const": "pm.restore_point.immutable_capture_sha256.v1"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_supported_historical"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "creation_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "const": "restore_point.created"
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "terminal_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "enum": [
+                "restore_point.expired",
+                "restore_point.deleted",
+                "restore_point.corrupt"
+              ]
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "retention_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy_id",
+            "policy_version",
+            "expiry_action"
+          ],
+          "properties": {
+            "policy_id": {
+              "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+            },
+            "policy_version": {
+              "const": "1.0.0"
+            },
+            "expiry_action": {
+              "const": "retain_hash_summary"
+            }
+          }
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selection_kind",
+            "reference_release",
+            "evaluated_at_utc",
+            "logical_point_count_before",
+            "eligible_point_set_sha256",
+            "selected_oldest_eligible_rank"
+          ],
+          "properties": {
+            "selection_kind": {
+              "enum": [
+                "reference_release_ttl",
+                "oldest_eligible_count_pressure"
+              ]
+            },
+            "reference_release": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "closure_kind",
+                "owner_authority_id",
+                "release_id",
+                "released_at_utc",
+                "closed_ref_set_sha256",
+                "release_fact_sha256"
+              ],
+              "properties": {
+                "closure_kind": {
+                  "const": "owner_verified_reference_release"
+                },
+                "owner_authority_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "release_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "released_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "closed_ref_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "release_fact_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "evaluated_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "logical_point_count_before": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "eligible_point_set_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_oldest_eligible_rank": {
+              "anyOf": [
+                {
+                  "const": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "oldest_eligible_count_pressure"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "logical_point_count_before": {
+                    "type": "integer",
+                    "minimum": 2049
+                  },
+                  "selected_oldest_eligible_rank": {
+                    "const": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "reference_release_ttl"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "selected_oldest_eligible_rank": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "hold_evaluations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref_kind",
+              "owner_authority_id",
+              "evaluated_revision_sha256",
+              "enumeration_complete",
+              "active_blocker_count",
+              "released_ref_count",
+              "released_ref_set_sha256",
+              "release_fact_set_sha256",
+              "evaluated_at_utc"
+            ],
+            "properties": {
+              "ref_kind": {
+                "enum": [
+                  "descendant_branch",
+                  "application",
+                  "preserve",
+                  "legal_hold",
+                  "in_flight_application",
+                  "source_lineage",
+                  "live_ref",
+                  "backup",
+                  "rollback",
+                  "recovery_anchor",
+                  "maintenance"
+                ]
+              },
+              "owner_authority_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evaluated_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "enumeration_complete": {
+                "const": true
+              },
+              "active_blocker_count": {
+                "const": 0
+              },
+              "released_ref_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "released_ref_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "release_fact_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "evaluated_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 11,
+          "maxItems": 11
+        },
+        "creation_companion_required": {
+          "type": "boolean"
+        },
+        "deletion_companion_required": {
+          "type": "boolean"
+        },
+        "terminal_source_admission_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retired_custody": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "family_id",
+              "canonical_key",
+              "value_schema_id",
+              "value_schema_version",
+              "canonical_encoding",
+              "value_bytes_sha256",
+              "disposition"
+            ],
+            "properties": {
+              "family_id": {
+                "enum": [
+                  "restore_point_record",
+                  "restore_point_creation_commit",
+                  "restore_point_deletion_commit"
+                ]
+              },
+              "canonical_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_schema_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_schema_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "canonical_encoding": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_bytes_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "disposition": {
+                "const": "removed_in_summary_transaction"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "retirement_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retirement_actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_gate_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "summary_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary_committed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "source_manifest_generation_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_recovery_epoch_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "expired"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.expired"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "deleted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.deleted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "corrupt"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.corrupt"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "retention_summary_v2": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "representation",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "restore_point_id",
+        "record_ref",
+        "original_record_hash",
+        "terminal_status",
+        "hash_verification",
+        "creation_event",
+        "terminal_event",
+        "retention_policy",
+        "selection",
+        "hold_evaluations",
+        "creation_companion_required",
+        "deletion_companion_required",
+        "terminal_source_admission_receipt_sha256",
+        "retired_custody",
+        "retirement_operation_id",
+        "retirement_actor_ref",
+        "owner_gate_revision_sha256",
+        "summary_transaction_id",
+        "summary_committed_at_utc",
+        "source_manifest_generation_at_commit",
+        "source_recovery_epoch_at_commit",
+        "redaction_profile",
+        "expiry_companion_required",
+        "original_expiry_append_receipt",
+        "original_expiry_result"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.restore_point_retention_summary.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "representation": {
+          "const": "retained_hash_summary"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "restore_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_record_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_status": {
+          "enum": [
+            "expired",
+            "deleted",
+            "corrupt"
+          ]
+        },
+        "hash_verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "native_recipe_id",
+            "owner_verification_id",
+            "verified_capture_relation_sha256",
+            "source_store_generation_id",
+            "source_admission_receipt_sha256"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "verified_native_immutable_capture",
+                "verified_supported_historical"
+              ]
+            },
+            "native_recipe_id": {
+              "anyOf": [
+                {
+                  "const": "pm.restore_point.immutable_capture_sha256.v1"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_verification_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verified_capture_relation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "source_store_generation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_admission_receipt_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_native_immutable_capture"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "const": "pm.restore_point.immutable_capture_sha256.v1"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_supported_historical"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "creation_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "const": "restore_point.created"
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "terminal_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "enum": [
+                "restore_point.expired",
+                "restore_point.deleted",
+                "restore_point.corrupt"
+              ]
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "retention_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy_id",
+            "policy_version",
+            "expiry_action"
+          ],
+          "properties": {
+            "policy_id": {
+              "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+            },
+            "policy_version": {
+              "const": "1.0.0"
+            },
+            "expiry_action": {
+              "const": "retain_hash_summary"
+            }
+          }
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selection_kind",
+            "reference_release",
+            "evaluated_at_utc",
+            "logical_point_count_before",
+            "eligible_point_set_sha256",
+            "selected_oldest_eligible_rank"
+          ],
+          "properties": {
+            "selection_kind": {
+              "enum": [
+                "reference_release_ttl",
+                "oldest_eligible_count_pressure"
+              ]
+            },
+            "reference_release": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "closure_kind",
+                "owner_authority_id",
+                "release_id",
+                "released_at_utc",
+                "closed_ref_set_sha256",
+                "release_fact_sha256"
+              ],
+              "properties": {
+                "closure_kind": {
+                  "const": "owner_verified_reference_release"
+                },
+                "owner_authority_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "release_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "released_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "closed_ref_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "release_fact_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "evaluated_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "logical_point_count_before": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "eligible_point_set_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_oldest_eligible_rank": {
+              "anyOf": [
+                {
+                  "const": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "oldest_eligible_count_pressure"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "logical_point_count_before": {
+                    "type": "integer",
+                    "minimum": 2049
+                  },
+                  "selected_oldest_eligible_rank": {
+                    "const": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "reference_release_ttl"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "selected_oldest_eligible_rank": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "hold_evaluations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref_kind",
+              "owner_authority_id",
+              "evaluated_revision_sha256",
+              "enumeration_complete",
+              "active_blocker_count",
+              "released_ref_count",
+              "released_ref_set_sha256",
+              "release_fact_set_sha256",
+              "evaluated_at_utc"
+            ],
+            "properties": {
+              "ref_kind": {
+                "enum": [
+                  "descendant_branch",
+                  "application",
+                  "preserve",
+                  "legal_hold",
+                  "in_flight_application",
+                  "source_lineage",
+                  "live_ref",
+                  "backup",
+                  "rollback",
+                  "recovery_anchor",
+                  "maintenance"
+                ]
+              },
+              "owner_authority_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evaluated_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "enumeration_complete": {
+                "const": true
+              },
+              "active_blocker_count": {
+                "const": 0
+              },
+              "released_ref_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "released_ref_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "release_fact_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "evaluated_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 11,
+          "maxItems": 11
+        },
+        "creation_companion_required": {
+          "type": "boolean"
+        },
+        "deletion_companion_required": {
+          "type": "boolean"
+        },
+        "terminal_source_admission_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retired_custody": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "family_id",
+              "canonical_key",
+              "value_schema_id",
+              "value_schema_version",
+              "canonical_encoding",
+              "value_bytes_sha256",
+              "disposition"
+            ],
+            "properties": {
+              "family_id": {
+                "enum": [
+                  "restore_point_record",
+                  "restore_point_creation_commit",
+                  "restore_point_deletion_commit",
+                  "restore_point_expiry_commit"
+                ]
+              },
+              "canonical_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_schema_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_schema_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "canonical_encoding": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_bytes_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "disposition": {
+                "const": "removed_in_summary_transaction"
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "retirement_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retirement_actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_gate_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "summary_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary_committed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "source_manifest_generation_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_recovery_epoch_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "expiry_companion_required": {
+          "type": "boolean"
+        },
+        "original_expiry_append_receipt": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "sequence_id",
+                "segment_generation",
+                "segment_name",
+                "byte_offset",
+                "commit_group_id",
+                "durability_class",
+                "durable_end_offset",
+                "durability_state",
+                "manifest_generation",
+                "acknowledged_at_utc"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "commit_group_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "durability_class": {
+                  "const": "barrier"
+                },
+                "durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "durability_state": {
+                  "const": "synced"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "acknowledged_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_expiry_result": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "schema_id",
+                "schema_version",
+                "outcome",
+                "project_id",
+                "restore_point_id",
+                "record_ref",
+                "prior_hash",
+                "expiry_id",
+                "event_id",
+                "physical_retirement_performed"
+              ],
+              "properties": {
+                "schema_id": {
+                  "const": "pm.storage.restore_point_expiry_result.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "outcome": {
+                  "const": "expired"
+                },
+                "project_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "restore_point_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "record_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "prior_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "expiry_id": {
+                  "type": "string",
+                  "pattern": "^rpe_[0-9a-f]{64}$"
+                },
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "physical_retirement_performed": {
+                  "const": false
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "expired"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.expired"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "deleted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.deleted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "terminal_status": {
+                "const": "corrupt"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_event": {
+                "properties": {
+                  "event_type": {
+                    "const": "restore_point.corrupt"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "expiry_companion_required": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "terminal_status": {
+                "const": "expired"
+              },
+              "deletion_companion_required": {
+                "const": false
+              },
+              "original_expiry_append_receipt": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event_id",
+                  "sequence_id",
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "commit_group_id",
+                  "durability_class",
+                  "durable_end_offset",
+                  "durability_state",
+                  "manifest_generation",
+                  "acknowledged_at_utc"
+                ],
+                "properties": {
+                  "event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "commit_group_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "durability_class": {
+                    "const": "barrier"
+                  },
+                  "durable_end_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "durability_state": {
+                    "const": "synced"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "acknowledged_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "minLength": 1
+                  }
+                }
+              },
+              "original_expiry_result": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "outcome",
+                  "project_id",
+                  "restore_point_id",
+                  "record_ref",
+                  "prior_hash",
+                  "expiry_id",
+                  "event_id",
+                  "physical_retirement_performed"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.storage.restore_point_expiry_result.v1"
+                  },
+                  "schema_version": {
+                    "const": "1.0.0"
+                  },
+                  "outcome": {
+                    "const": "expired"
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "restore_point_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "record_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "prior_hash": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "expiry_id": {
+                    "type": "string",
+                    "pattern": "^rpe_[0-9a-f]{64}$"
+                  },
+                  "event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "physical_retirement_performed": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "expiry_companion_required": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_expiry_append_receipt": {
+                "type": "null"
+              },
+              "original_expiry_result": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "registered_read_value": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "REGISTERED SAME-KEY READ DISPATCH ONLY. Row value_schema_id and schema_version select current writer v2, which MUST validate exclusively against $defs/retention_summary_v2 and existing migration/owner gates. This root admits unchanged retained v1 and v2 values by exact discriminants, without wrapping, conversion, rewriting, new key, family or writer authority. Raw codec capability/version, raw v2 schema digest and existing owner routes do not change.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "representation",
+        "storage_instance_id",
+        "project_id",
+        "scope_partition",
+        "restore_point_id",
+        "record_ref",
+        "original_record_hash",
+        "terminal_status",
+        "hash_verification",
+        "creation_event",
+        "terminal_event",
+        "retention_policy",
+        "selection",
+        "hold_evaluations",
+        "creation_companion_required",
+        "deletion_companion_required",
+        "terminal_source_admission_receipt_sha256",
+        "retired_custody",
+        "retirement_operation_id",
+        "retirement_actor_ref",
+        "owner_gate_revision_sha256",
+        "summary_transaction_id",
+        "summary_committed_at_utc",
+        "source_manifest_generation_at_commit",
+        "source_recovery_epoch_at_commit",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "anyOf": [
+            {
+              "const": "pm.storage_value.restore_point_retention_summary.v1"
+            },
+            {
+              "const": "pm.storage_value.restore_point_retention_summary.v2"
+            }
+          ]
+        },
+        "schema_version": {
+          "anyOf": [
+            {
+              "const": "1.0.0"
+            },
+            {
+              "const": "2.0.0"
+            }
+          ]
+        },
+        "representation": {
+          "const": "retained_hash_summary"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_partition": {
+          "type": "string",
+          "pattern": "^project~[A-Za-z0-9_-]+$"
+        },
+        "restore_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_record_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_status": {
+          "enum": [
+            "expired",
+            "deleted",
+            "corrupt"
+          ]
+        },
+        "hash_verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "native_recipe_id",
+            "owner_verification_id",
+            "verified_capture_relation_sha256",
+            "source_store_generation_id",
+            "source_admission_receipt_sha256"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "verified_native_immutable_capture",
+                "verified_supported_historical"
+              ]
+            },
+            "native_recipe_id": {
+              "anyOf": [
+                {
+                  "const": "pm.restore_point.immutable_capture_sha256.v1"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "owner_verification_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "verified_capture_relation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "source_store_generation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_admission_receipt_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_native_immutable_capture"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "const": "pm.restore_point.immutable_capture_sha256.v1"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "verified_supported_historical"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "native_recipe_id": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "creation_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "const": "restore_point.created"
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "terminal_event": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "event_type",
+            "payload_schema_id",
+            "payload_sha256",
+            "producer_semantic_sha256",
+            "original_record_hash",
+            "original_frame_sha256",
+            "original_sequence_id",
+            "original_manifest_generation",
+            "original_recovery_epoch",
+            "original_segment_generation",
+            "original_segment_name",
+            "original_byte_offset",
+            "original_durable_end_offset"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "enum": [
+                "restore_point.expired",
+                "restore_point.deleted",
+                "restore_point.corrupt"
+              ]
+            },
+            "payload_schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "producer_semantic_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_frame_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "original_sequence_id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_manifest_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_recovery_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_segment_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_byte_offset": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "original_durable_end_offset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "retention_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "policy_id",
+            "policy_version",
+            "expiry_action"
+          ],
+          "properties": {
+            "policy_id": {
+              "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+            },
+            "policy_version": {
+              "const": "1.0.0"
+            },
+            "expiry_action": {
+              "const": "retain_hash_summary"
+            }
+          }
+        },
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "selection_kind",
+            "reference_release",
+            "evaluated_at_utc",
+            "logical_point_count_before",
+            "eligible_point_set_sha256",
+            "selected_oldest_eligible_rank"
+          ],
+          "properties": {
+            "selection_kind": {
+              "enum": [
+                "reference_release_ttl",
+                "oldest_eligible_count_pressure"
+              ]
+            },
+            "reference_release": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "closure_kind",
+                "owner_authority_id",
+                "release_id",
+                "released_at_utc",
+                "closed_ref_set_sha256",
+                "release_fact_sha256"
+              ],
+              "properties": {
+                "closure_kind": {
+                  "const": "owner_verified_reference_release"
+                },
+                "owner_authority_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "release_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "released_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "closed_ref_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "release_fact_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "evaluated_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "logical_point_count_before": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "eligible_point_set_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "selected_oldest_eligible_rank": {
+              "anyOf": [
+                {
+                  "const": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "oldest_eligible_count_pressure"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "logical_point_count_before": {
+                    "type": "integer",
+                    "minimum": 2049
+                  },
+                  "selected_oldest_eligible_rank": {
+                    "const": 0
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "selection_kind": {
+                    "const": "reference_release_ttl"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "selected_oldest_eligible_rank": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "hold_evaluations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref_kind",
+              "owner_authority_id",
+              "evaluated_revision_sha256",
+              "enumeration_complete",
+              "active_blocker_count",
+              "released_ref_count",
+              "released_ref_set_sha256",
+              "release_fact_set_sha256",
+              "evaluated_at_utc"
+            ],
+            "properties": {
+              "ref_kind": {
+                "enum": [
+                  "descendant_branch",
+                  "application",
+                  "preserve",
+                  "legal_hold",
+                  "in_flight_application",
+                  "source_lineage",
+                  "live_ref",
+                  "backup",
+                  "rollback",
+                  "recovery_anchor",
+                  "maintenance"
+                ]
+              },
+              "owner_authority_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evaluated_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "enumeration_complete": {
+                "const": true
+              },
+              "active_blocker_count": {
+                "const": 0
+              },
+              "released_ref_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "released_ref_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "release_fact_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "evaluated_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 11,
+          "maxItems": 11
+        },
+        "creation_companion_required": {
+          "type": "boolean"
+        },
+        "deletion_companion_required": {
+          "type": "boolean"
+        },
+        "terminal_source_admission_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "retired_custody": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "family_id",
+                  "canonical_key",
+                  "value_schema_id",
+                  "value_schema_version",
+                  "canonical_encoding",
+                  "value_bytes_sha256",
+                  "disposition"
+                ],
+                "properties": {
+                  "family_id": {
+                    "enum": [
+                      "restore_point_record",
+                      "restore_point_creation_commit",
+                      "restore_point_deletion_commit"
+                    ]
+                  },
+                  "canonical_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonical_encoding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "disposition": {
+                    "const": "removed_in_summary_transaction"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 3,
+              "uniqueItems": true
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "family_id",
+                  "canonical_key",
+                  "value_schema_id",
+                  "value_schema_version",
+                  "canonical_encoding",
+                  "value_bytes_sha256",
+                  "disposition"
+                ],
+                "properties": {
+                  "family_id": {
+                    "enum": [
+                      "restore_point_record",
+                      "restore_point_creation_commit",
+                      "restore_point_deletion_commit",
+                      "restore_point_expiry_commit"
+                    ]
+                  },
+                  "canonical_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonical_encoding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "disposition": {
+                    "const": "removed_in_summary_transaction"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 3,
+              "uniqueItems": true
+            }
+          ]
+        },
+        "retirement_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retirement_actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_gate_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "summary_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary_committed_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "source_manifest_generation_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_recovery_epoch_at_commit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        },
+        "expiry_companion_required": {
+          "type": "boolean"
+        },
+        "original_expiry_append_receipt": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "sequence_id",
+                "segment_generation",
+                "segment_name",
+                "byte_offset",
+                "commit_group_id",
+                "durability_class",
+                "durable_end_offset",
+                "durability_state",
+                "manifest_generation",
+                "acknowledged_at_utc"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "commit_group_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "durability_class": {
+                  "const": "barrier"
+                },
+                "durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "durability_state": {
+                  "const": "synced"
+                },
+                "manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "acknowledged_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_expiry_result": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "schema_id",
+                "schema_version",
+                "outcome",
+                "project_id",
+                "restore_point_id",
+                "record_ref",
+                "prior_hash",
+                "expiry_id",
+                "event_id",
+                "physical_retirement_performed"
+              ],
+              "properties": {
+                "schema_id": {
+                  "const": "pm.storage.restore_point_expiry_result.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "outcome": {
+                  "const": "expired"
+                },
+                "project_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "restore_point_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "record_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "prior_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "expiry_id": {
+                  "type": "string",
+                  "pattern": "^rpe_[0-9a-f]{64}$"
+                },
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "physical_retirement_performed": {
+                  "const": false
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/retention_summary_v1"
+        },
+        {
+          "$ref": "#/$defs/retention_summary_v2"
+        }
+      ],
+      "$defs": {
+        "retention_summary_v1": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "representation",
+            "storage_instance_id",
+            "project_id",
+            "scope_partition",
+            "restore_point_id",
+            "record_ref",
+            "original_record_hash",
+            "terminal_status",
+            "hash_verification",
+            "creation_event",
+            "terminal_event",
+            "retention_policy",
+            "selection",
+            "hold_evaluations",
+            "creation_companion_required",
+            "deletion_companion_required",
+            "terminal_source_admission_receipt_sha256",
+            "retired_custody",
+            "retirement_operation_id",
+            "retirement_actor_ref",
+            "owner_gate_revision_sha256",
+            "summary_transaction_id",
+            "summary_committed_at_utc",
+            "source_manifest_generation_at_commit",
+            "source_recovery_epoch_at_commit",
+            "redaction_profile"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.restore_point_retention_summary.v1"
+            },
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "representation": {
+              "const": "retained_hash_summary"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scope_partition": {
+              "type": "string",
+              "pattern": "^project~[A-Za-z0-9_-]+$"
+            },
+            "restore_point_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_status": {
+              "enum": [
+                "expired",
+                "deleted",
+                "corrupt"
+              ]
+            },
+            "hash_verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "native_recipe_id",
+                "owner_verification_id",
+                "verified_capture_relation_sha256",
+                "source_store_generation_id",
+                "source_admission_receipt_sha256"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "verified_native_immutable_capture",
+                    "verified_supported_historical"
+                  ]
+                },
+                "native_recipe_id": {
+                  "anyOf": [
+                    {
+                      "const": "pm.restore_point.immutable_capture_sha256.v1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "owner_verification_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "verified_capture_relation_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "source_store_generation_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_admission_receipt_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "verified_native_immutable_capture"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "native_recipe_id": {
+                        "const": "pm.restore_point.immutable_capture_sha256.v1"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "verified_supported_historical"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "native_recipe_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "creation_event": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "event_type",
+                "payload_schema_id",
+                "payload_sha256",
+                "producer_semantic_sha256",
+                "original_record_hash",
+                "original_frame_sha256",
+                "original_sequence_id",
+                "original_manifest_generation",
+                "original_recovery_epoch",
+                "original_segment_generation",
+                "original_segment_name",
+                "original_byte_offset",
+                "original_durable_end_offset"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "event_type": {
+                  "const": "restore_point.created"
+                },
+                "payload_schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "payload_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "producer_semantic_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_record_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_frame_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "terminal_event": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "event_type",
+                "payload_schema_id",
+                "payload_sha256",
+                "producer_semantic_sha256",
+                "original_record_hash",
+                "original_frame_sha256",
+                "original_sequence_id",
+                "original_manifest_generation",
+                "original_recovery_epoch",
+                "original_segment_generation",
+                "original_segment_name",
+                "original_byte_offset",
+                "original_durable_end_offset"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "event_type": {
+                  "enum": [
+                    "restore_point.expired",
+                    "restore_point.deleted",
+                    "restore_point.corrupt"
+                  ]
+                },
+                "payload_schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "payload_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "producer_semantic_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_record_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_frame_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "retention_policy": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "policy_id",
+                "policy_version",
+                "expiry_action"
+              ],
+              "properties": {
+                "policy_id": {
+                  "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+                },
+                "policy_version": {
+                  "const": "1.0.0"
+                },
+                "expiry_action": {
+                  "const": "retain_hash_summary"
+                }
+              }
+            },
+            "selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "selection_kind",
+                "reference_release",
+                "evaluated_at_utc",
+                "logical_point_count_before",
+                "eligible_point_set_sha256",
+                "selected_oldest_eligible_rank"
+              ],
+              "properties": {
+                "selection_kind": {
+                  "enum": [
+                    "reference_release_ttl",
+                    "oldest_eligible_count_pressure"
+                  ]
+                },
+                "reference_release": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "closure_kind",
+                    "owner_authority_id",
+                    "release_id",
+                    "released_at_utc",
+                    "closed_ref_set_sha256",
+                    "release_fact_sha256"
+                  ],
+                  "properties": {
+                    "closure_kind": {
+                      "const": "owner_verified_reference_release"
+                    },
+                    "owner_authority_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "release_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "released_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1
+                    },
+                    "closed_ref_set_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "release_fact_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "evaluated_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "logical_point_count_before": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "eligible_point_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_oldest_eligible_rank": {
+                  "anyOf": [
+                    {
+                      "const": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "selection_kind": {
+                        "const": "oldest_eligible_count_pressure"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "logical_point_count_before": {
+                        "type": "integer",
+                        "minimum": 2049
+                      },
+                      "selected_oldest_eligible_rank": {
+                        "const": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "selection_kind": {
+                        "const": "reference_release_ttl"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "selected_oldest_eligible_rank": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "hold_evaluations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ref_kind",
+                  "owner_authority_id",
+                  "evaluated_revision_sha256",
+                  "enumeration_complete",
+                  "active_blocker_count",
+                  "released_ref_count",
+                  "released_ref_set_sha256",
+                  "release_fact_set_sha256",
+                  "evaluated_at_utc"
+                ],
+                "properties": {
+                  "ref_kind": {
+                    "enum": [
+                      "descendant_branch",
+                      "application",
+                      "preserve",
+                      "legal_hold",
+                      "in_flight_application",
+                      "source_lineage",
+                      "live_ref",
+                      "backup",
+                      "rollback",
+                      "recovery_anchor",
+                      "maintenance"
+                    ]
+                  },
+                  "owner_authority_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evaluated_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "enumeration_complete": {
+                    "const": true
+                  },
+                  "active_blocker_count": {
+                    "const": 0
+                  },
+                  "released_ref_count": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "released_ref_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "release_fact_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "evaluated_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "minLength": 1
+                  }
+                }
+              },
+              "minItems": 11,
+              "maxItems": 11
+            },
+            "creation_companion_required": {
+              "type": "boolean"
+            },
+            "deletion_companion_required": {
+              "type": "boolean"
+            },
+            "terminal_source_admission_receipt_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_custody": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "family_id",
+                  "canonical_key",
+                  "value_schema_id",
+                  "value_schema_version",
+                  "canonical_encoding",
+                  "value_bytes_sha256",
+                  "disposition"
+                ],
+                "properties": {
+                  "family_id": {
+                    "enum": [
+                      "restore_point_record",
+                      "restore_point_creation_commit",
+                      "restore_point_deletion_commit"
+                    ]
+                  },
+                  "canonical_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonical_encoding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "disposition": {
+                    "const": "removed_in_summary_transaction"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 3,
+              "uniqueItems": true
+            },
+            "retirement_operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retirement_actor_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner_gate_revision_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "summary_transaction_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary_committed_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "source_manifest_generation_at_commit": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_recovery_epoch_at_commit": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "redaction_profile": {
+              "const": "no_secrets"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "expired"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.expired"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "deleted"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.deleted"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "corrupt"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.corrupt"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "retention_summary_v2": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "representation",
+            "storage_instance_id",
+            "project_id",
+            "scope_partition",
+            "restore_point_id",
+            "record_ref",
+            "original_record_hash",
+            "terminal_status",
+            "hash_verification",
+            "creation_event",
+            "terminal_event",
+            "retention_policy",
+            "selection",
+            "hold_evaluations",
+            "creation_companion_required",
+            "deletion_companion_required",
+            "terminal_source_admission_receipt_sha256",
+            "retired_custody",
+            "retirement_operation_id",
+            "retirement_actor_ref",
+            "owner_gate_revision_sha256",
+            "summary_transaction_id",
+            "summary_committed_at_utc",
+            "source_manifest_generation_at_commit",
+            "source_recovery_epoch_at_commit",
+            "redaction_profile",
+            "expiry_companion_required",
+            "original_expiry_append_receipt",
+            "original_expiry_result"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.storage_value.restore_point_retention_summary.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "representation": {
+              "const": "retained_hash_summary"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "scope_partition": {
+              "type": "string",
+              "pattern": "^project~[A-Za-z0-9_-]+$"
+            },
+            "restore_point_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "original_record_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_status": {
+              "enum": [
+                "expired",
+                "deleted",
+                "corrupt"
+              ]
+            },
+            "hash_verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "native_recipe_id",
+                "owner_verification_id",
+                "verified_capture_relation_sha256",
+                "source_store_generation_id",
+                "source_admission_receipt_sha256"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "verified_native_immutable_capture",
+                    "verified_supported_historical"
+                  ]
+                },
+                "native_recipe_id": {
+                  "anyOf": [
+                    {
+                      "const": "pm.restore_point.immutable_capture_sha256.v1"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "owner_verification_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "verified_capture_relation_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "source_store_generation_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_admission_receipt_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "verified_native_immutable_capture"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "native_recipe_id": {
+                        "const": "pm.restore_point.immutable_capture_sha256.v1"
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "verified_supported_historical"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "native_recipe_id": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "creation_event": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "event_type",
+                "payload_schema_id",
+                "payload_sha256",
+                "producer_semantic_sha256",
+                "original_record_hash",
+                "original_frame_sha256",
+                "original_sequence_id",
+                "original_manifest_generation",
+                "original_recovery_epoch",
+                "original_segment_generation",
+                "original_segment_name",
+                "original_byte_offset",
+                "original_durable_end_offset"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "event_type": {
+                  "const": "restore_point.created"
+                },
+                "payload_schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "payload_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "producer_semantic_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_record_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_frame_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "terminal_event": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "event_id",
+                "event_type",
+                "payload_schema_id",
+                "payload_sha256",
+                "producer_semantic_sha256",
+                "original_record_hash",
+                "original_frame_sha256",
+                "original_sequence_id",
+                "original_manifest_generation",
+                "original_recovery_epoch",
+                "original_segment_generation",
+                "original_segment_name",
+                "original_byte_offset",
+                "original_durable_end_offset"
+              ],
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "event_type": {
+                  "enum": [
+                    "restore_point.expired",
+                    "restore_point.deleted",
+                    "restore_point.corrupt"
+                  ]
+                },
+                "payload_schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "payload_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "producer_semantic_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_record_hash": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_frame_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "original_sequence_id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_manifest_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_recovery_epoch": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_generation": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_segment_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_byte_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "original_durable_end_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "retention_policy": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "policy_id",
+                "policy_version",
+                "expiry_action"
+              ],
+              "properties": {
+                "policy_id": {
+                  "const": "RP-RESTOREPOINT-90D-AFTER-RELEASE"
+                },
+                "policy_version": {
+                  "const": "1.0.0"
+                },
+                "expiry_action": {
+                  "const": "retain_hash_summary"
+                }
+              }
+            },
+            "selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "selection_kind",
+                "reference_release",
+                "evaluated_at_utc",
+                "logical_point_count_before",
+                "eligible_point_set_sha256",
+                "selected_oldest_eligible_rank"
+              ],
+              "properties": {
+                "selection_kind": {
+                  "enum": [
+                    "reference_release_ttl",
+                    "oldest_eligible_count_pressure"
+                  ]
+                },
+                "reference_release": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "closure_kind",
+                    "owner_authority_id",
+                    "release_id",
+                    "released_at_utc",
+                    "closed_ref_set_sha256",
+                    "release_fact_sha256"
+                  ],
+                  "properties": {
+                    "closure_kind": {
+                      "const": "owner_verified_reference_release"
+                    },
+                    "owner_authority_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "release_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "released_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1
+                    },
+                    "closed_ref_set_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "release_fact_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "evaluated_at_utc": {
+                  "type": "string",
+                  "format": "date-time",
+                  "minLength": 1
+                },
+                "logical_point_count_before": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "eligible_point_set_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "selected_oldest_eligible_rank": {
+                  "anyOf": [
+                    {
+                      "const": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "selection_kind": {
+                        "const": "oldest_eligible_count_pressure"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "logical_point_count_before": {
+                        "type": "integer",
+                        "minimum": 2049
+                      },
+                      "selected_oldest_eligible_rank": {
+                        "const": 0
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "selection_kind": {
+                        "const": "reference_release_ttl"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "selected_oldest_eligible_rank": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "hold_evaluations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "ref_kind",
+                  "owner_authority_id",
+                  "evaluated_revision_sha256",
+                  "enumeration_complete",
+                  "active_blocker_count",
+                  "released_ref_count",
+                  "released_ref_set_sha256",
+                  "release_fact_set_sha256",
+                  "evaluated_at_utc"
+                ],
+                "properties": {
+                  "ref_kind": {
+                    "enum": [
+                      "descendant_branch",
+                      "application",
+                      "preserve",
+                      "legal_hold",
+                      "in_flight_application",
+                      "source_lineage",
+                      "live_ref",
+                      "backup",
+                      "rollback",
+                      "recovery_anchor",
+                      "maintenance"
+                    ]
+                  },
+                  "owner_authority_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evaluated_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "enumeration_complete": {
+                    "const": true
+                  },
+                  "active_blocker_count": {
+                    "const": 0
+                  },
+                  "released_ref_count": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "released_ref_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "release_fact_set_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "evaluated_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "minLength": 1
+                  }
+                }
+              },
+              "minItems": 11,
+              "maxItems": 11
+            },
+            "creation_companion_required": {
+              "type": "boolean"
+            },
+            "deletion_companion_required": {
+              "type": "boolean"
+            },
+            "terminal_source_admission_receipt_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "retired_custody": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "family_id",
+                  "canonical_key",
+                  "value_schema_id",
+                  "value_schema_version",
+                  "canonical_encoding",
+                  "value_bytes_sha256",
+                  "disposition"
+                ],
+                "properties": {
+                  "family_id": {
+                    "enum": [
+                      "restore_point_record",
+                      "restore_point_creation_commit",
+                      "restore_point_deletion_commit",
+                      "restore_point_expiry_commit"
+                    ]
+                  },
+                  "canonical_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_schema_version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "canonical_encoding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "value_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "disposition": {
+                    "const": "removed_in_summary_transaction"
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 3,
+              "uniqueItems": true
+            },
+            "retirement_operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retirement_actor_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner_gate_revision_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "summary_transaction_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "summary_committed_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "minLength": 1
+            },
+            "source_manifest_generation_at_commit": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_recovery_epoch_at_commit": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "redaction_profile": {
+              "const": "no_secrets"
+            },
+            "expiry_companion_required": {
+              "type": "boolean"
+            },
+            "original_expiry_append_receipt": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "event_id",
+                    "sequence_id",
+                    "segment_generation",
+                    "segment_name",
+                    "byte_offset",
+                    "commit_group_id",
+                    "durability_class",
+                    "durable_end_offset",
+                    "durability_state",
+                    "manifest_generation",
+                    "acknowledged_at_utc"
+                  ],
+                  "properties": {
+                    "event_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sequence_id": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "segment_name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "byte_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "commit_group_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "durability_class": {
+                      "const": "barrier"
+                    },
+                    "durable_end_offset": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "durability_state": {
+                      "const": "synced"
+                    },
+                    "manifest_generation": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "acknowledged_at_utc": {
+                      "type": "string",
+                      "format": "date-time",
+                      "minLength": 1
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "original_expiry_result": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "schema_id",
+                    "schema_version",
+                    "outcome",
+                    "project_id",
+                    "restore_point_id",
+                    "record_ref",
+                    "prior_hash",
+                    "expiry_id",
+                    "event_id",
+                    "physical_retirement_performed"
+                  ],
+                  "properties": {
+                    "schema_id": {
+                      "const": "pm.storage.restore_point_expiry_result.v1"
+                    },
+                    "schema_version": {
+                      "const": "1.0.0"
+                    },
+                    "outcome": {
+                      "const": "expired"
+                    },
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "restore_point_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "record_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "prior_hash": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "expiry_id": {
+                      "type": "string",
+                      "pattern": "^rpe_[0-9a-f]{64}$"
+                    },
+                    "event_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "physical_retirement_performed": {
+                      "const": false
+                    }
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "expired"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.expired"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "deleted"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.deleted"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "corrupt"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_event": {
+                    "properties": {
+                      "event_type": {
+                        "const": "restore_point.corrupt"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "expiry_companion_required": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "terminal_status": {
+                    "const": "expired"
+                  },
+                  "deletion_companion_required": {
+                    "const": false
+                  },
+                  "original_expiry_append_receipt": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "event_id",
+                      "sequence_id",
+                      "segment_generation",
+                      "segment_name",
+                      "byte_offset",
+                      "commit_group_id",
+                      "durability_class",
+                      "durable_end_offset",
+                      "durability_state",
+                      "manifest_generation",
+                      "acknowledged_at_utc"
+                    ],
+                    "properties": {
+                      "event_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sequence_id": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "segment_generation": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "segment_name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "byte_offset": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "commit_group_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "durability_class": {
+                        "const": "barrier"
+                      },
+                      "durable_end_offset": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "durability_state": {
+                        "const": "synced"
+                      },
+                      "manifest_generation": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "acknowledged_at_utc": {
+                        "type": "string",
+                        "format": "date-time",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "original_expiry_result": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "schema_id",
+                      "schema_version",
+                      "outcome",
+                      "project_id",
+                      "restore_point_id",
+                      "record_ref",
+                      "prior_hash",
+                      "expiry_id",
+                      "event_id",
+                      "physical_retirement_performed"
+                    ],
+                    "properties": {
+                      "schema_id": {
+                        "const": "pm.storage.restore_point_expiry_result.v1"
+                      },
+                      "schema_version": {
+                        "const": "1.0.0"
+                      },
+                      "outcome": {
+                        "const": "expired"
+                      },
+                      "project_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "restore_point_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "record_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "prior_hash": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      },
+                      "expiry_id": {
+                        "type": "string",
+                        "pattern": "^rpe_[0-9a-f]{64}$"
+                      },
+                      "event_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "physical_retirement_performed": {
+                        "const": false
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "expiry_companion_required": {
+                    "const": false
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "original_expiry_append_receipt": {
+                    "type": "null"
+                  },
+                  "original_expiry_result": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

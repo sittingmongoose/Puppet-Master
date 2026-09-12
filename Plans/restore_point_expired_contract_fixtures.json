@@ -1,0 +1,729 @@
+{
+  "schema_id": "pm.restore_point_expired.contract_fixtures.v1",
+  "status": "STATIC_SHAPES_AND_NATIVE_ORACLES_ONLY",
+  "native_execution": "NOT_RUN",
+  "frozen_joined_subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/manifest.json",
+    "sha256": "b458da5c7684dc7a4dcfc8f3f38bc7b09722ca0f1d3136dd34602d2f40038654",
+    "files_verified": 90
+  },
+  "value_shape_cases": [
+    {
+      "id": "expiry_commit_valid",
+      "definition": "expiry_commit",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_expiry_commit.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+        "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+        "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+        "expiry_id": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+        "before_status": "available",
+        "after_status": "expired",
+        "eligibility": {
+          "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+          "policy_version": "1.0.0",
+          "selection": {
+            "selection_kind": "reference_release_ttl",
+            "reference_release": {
+              "closure_kind": "owner_verified_reference_release",
+              "owner_authority_id": "retention-owner-A",
+              "release_id": "release-A",
+              "released_at_utc": "2026-09-13T17:00:00Z",
+              "closed_ref_set_sha256": "9e076ceaf246b6003d9c2680a2b4cf0bffd069805902b0b5edeebf49039fe4bd",
+              "release_fact_sha256": "836ca2a53c540a147e766090377e2fa61203bfd18d73d58ff2eae8285ec0f9c1"
+            },
+            "evaluated_at_utc": "2026-12-12T17:00:00Z",
+            "logical_point_count_before": 20,
+            "eligible_point_set_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "selected_oldest_eligible_rank": null
+          },
+          "hold_evaluations": [
+            {
+              "ref_kind": "descendant_branch",
+              "owner_authority_id": "owner:descendant_branch",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "application",
+              "owner_authority_id": "owner:application",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "preserve",
+              "owner_authority_id": "owner:preserve",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "legal_hold",
+              "owner_authority_id": "owner:legal_hold",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "in_flight_application",
+              "owner_authority_id": "owner:in_flight_application",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "source_lineage",
+              "owner_authority_id": "owner:source_lineage",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "live_ref",
+              "owner_authority_id": "owner:live_ref",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "backup",
+              "owner_authority_id": "owner:backup",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "rollback",
+              "owner_authority_id": "owner:rollback",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "recovery_anchor",
+              "owner_authority_id": "owner:recovery_anchor",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "maintenance",
+              "owner_authority_id": "owner:maintenance",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            }
+          ],
+          "ref_release_evidence": [
+            {
+              "ref": "release-fact-A",
+              "owner_authority_id": "retention-owner-A",
+              "value_sha256": "836ca2a53c540a147e766090377e2fa61203bfd18d73d58ff2eae8285ec0f9c1"
+            }
+          ],
+          "owner_gate_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_admission_ref": "example-A",
+          "maintenance_lease_ref": "example-A",
+          "eligibility_authority_ref": "example-A"
+        },
+        "eligibility_sha256": "25438058c03636b9481a75e8e9a1acf1d9203720c5a4a1080e2f66e29ea850c2",
+        "record_hash_verification": {
+          "kind": "verified_native_immutable_capture",
+          "native_recipe_id": "pm.restore_point.immutable_capture_sha256.v1",
+          "owner_verification_id": "example-A",
+          "verified_capture_relation_sha256": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "source_store_generation_id": "example-A",
+          "source_admission_receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "creation_admission": {
+          "kind": "native_committed_creation",
+          "creation_event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "creation_source_admission_ref": "example-A",
+          "creation_source_admission_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "creation_companion_ref": "restore_point_creation_commit.v1:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "creation_companion_sha256": "5db9219c209256fe7ab6273654dfb8becff10d4cfaf064bf655cdd12f040ec6f"
+        },
+        "transitioned_at_utc": "2026-12-12T17:00:00Z",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "event_type": "restore_point.expired",
+          "project_id": "project-A",
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "retention-owner-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-12-12T17:00:00Z",
+          "observed_at_utc": "2026-12-12T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "expiry-owner-operation-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_expired/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+            "project_id": "project-A",
+            "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+            "status": "expired",
+            "retention_policy_ref": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+            "ref_release_evidence_refs": [
+              "release-fact-A"
+            ],
+            "occurred_at_utc": "2026-12-12T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747",
+        "producer_semantic_digest": "5501c5f4ed9e780e32511abbc985e001f228ee168b5a4f5ae7bcca4e4ddb2521",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "sequence_id": 17,
+          "segment_generation": 3,
+          "segment_name": "seg-000003-00000000000000000017.active",
+          "byte_offset": 0,
+          "commit_group_id": "example-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1275,
+          "durability_state": "synced",
+          "manifest_generation": 31,
+          "acknowledged_at_utc": "2026-12-12T17:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.storage.restore_point_expiry_result.v1",
+          "schema_version": "1.0.0",
+          "outcome": "expired",
+          "project_id": "project-A",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "expiry_id": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "physical_retirement_performed": false
+        },
+        "committed_at_utc": "2026-12-12T17:00:01Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "expiry_commit_unknown_field_rejected",
+      "definition": "expiry_commit",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_expiry_commit.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+        "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+        "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+        "expiry_id": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+        "before_status": "available",
+        "after_status": "expired",
+        "eligibility": {
+          "policy_id": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+          "policy_version": "1.0.0",
+          "selection": {
+            "selection_kind": "reference_release_ttl",
+            "reference_release": {
+              "closure_kind": "owner_verified_reference_release",
+              "owner_authority_id": "retention-owner-A",
+              "release_id": "release-A",
+              "released_at_utc": "2026-09-13T17:00:00Z",
+              "closed_ref_set_sha256": "9e076ceaf246b6003d9c2680a2b4cf0bffd069805902b0b5edeebf49039fe4bd",
+              "release_fact_sha256": "836ca2a53c540a147e766090377e2fa61203bfd18d73d58ff2eae8285ec0f9c1"
+            },
+            "evaluated_at_utc": "2026-12-12T17:00:00Z",
+            "logical_point_count_before": 20,
+            "eligible_point_set_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "selected_oldest_eligible_rank": null
+          },
+          "hold_evaluations": [
+            {
+              "ref_kind": "descendant_branch",
+              "owner_authority_id": "owner:descendant_branch",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "application",
+              "owner_authority_id": "owner:application",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "preserve",
+              "owner_authority_id": "owner:preserve",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "legal_hold",
+              "owner_authority_id": "owner:legal_hold",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "in_flight_application",
+              "owner_authority_id": "owner:in_flight_application",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "source_lineage",
+              "owner_authority_id": "owner:source_lineage",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "live_ref",
+              "owner_authority_id": "owner:live_ref",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "backup",
+              "owner_authority_id": "owner:backup",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "rollback",
+              "owner_authority_id": "owner:rollback",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "recovery_anchor",
+              "owner_authority_id": "owner:recovery_anchor",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            },
+            {
+              "ref_kind": "maintenance",
+              "owner_authority_id": "owner:maintenance",
+              "evaluated_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "enumeration_complete": true,
+              "active_blocker_count": 0,
+              "released_ref_count": 0,
+              "released_ref_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "release_fact_set_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "evaluated_at_utc": "2026-12-12T17:00:00Z"
+            }
+          ],
+          "ref_release_evidence": [
+            {
+              "ref": "release-fact-A",
+              "owner_authority_id": "retention-owner-A",
+              "value_sha256": "836ca2a53c540a147e766090377e2fa61203bfd18d73d58ff2eae8285ec0f9c1"
+            }
+          ],
+          "owner_gate_revision_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "writer_admission_ref": "example-A",
+          "maintenance_lease_ref": "example-A",
+          "eligibility_authority_ref": "example-A"
+        },
+        "eligibility_sha256": "25438058c03636b9481a75e8e9a1acf1d9203720c5a4a1080e2f66e29ea850c2",
+        "record_hash_verification": {
+          "kind": "verified_native_immutable_capture",
+          "native_recipe_id": "pm.restore_point.immutable_capture_sha256.v1",
+          "owner_verification_id": "example-A",
+          "verified_capture_relation_sha256": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "source_store_generation_id": "example-A",
+          "source_admission_receipt_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "creation_admission": {
+          "kind": "native_committed_creation",
+          "creation_event_id": "er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "creation_source_admission_ref": "example-A",
+          "creation_source_admission_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "creation_companion_ref": "restore_point_creation_commit.v1:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "creation_companion_sha256": "5db9219c209256fe7ab6273654dfb8becff10d4cfaf064bf655cdd12f040ec6f"
+        },
+        "transitioned_at_utc": "2026-12-12T17:00:00Z",
+        "frozen_append_input": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "event_type": "restore_point.expired",
+          "project_id": "project-A",
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "retention-owner-A",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-12-12T17:00:00Z",
+          "observed_at_utc": "2026-12-12T17:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "expiry-owner-operation-A",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/restore_point_expired/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+            "project_id": "project-A",
+            "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+            "status": "expired",
+            "retention_policy_ref": "RP-RESTOREPOINT-90D-AFTER-RELEASE",
+            "ref_release_evidence_refs": [
+              "release-fact-A"
+            ],
+            "occurred_at_utc": "2026-12-12T17:00:00Z"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "frozen_append_input_sha256": "bb650eb474aaf96f8035abe56c63d3a58fa4f0b80bfa827a3b4a7b49280b7747",
+        "producer_semantic_digest": "5501c5f4ed9e780e32511abbc985e001f228ee168b5a4f5ae7bcca4e4ddb2521",
+        "state": "committed",
+        "append_receipt": {
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "sequence_id": 17,
+          "segment_generation": 3,
+          "segment_name": "seg-000003-00000000000000000017.active",
+          "byte_offset": 0,
+          "commit_group_id": "example-A",
+          "durability_class": "barrier",
+          "durable_end_offset": 1275,
+          "durability_state": "synced",
+          "manifest_generation": 31,
+          "acknowledged_at_utc": "2026-12-12T17:00:00Z"
+        },
+        "result": {
+          "schema_id": "pm.storage.restore_point_expiry_result.v1",
+          "schema_version": "1.0.0",
+          "outcome": "expired",
+          "project_id": "project-A",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "record_ref": "rp:project-A:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "prior_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "expiry_id": "rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "physical_retirement_performed": false
+        },
+        "committed_at_utc": "2026-12-12T17:00:01Z",
+        "redaction_profile": "no_secrets",
+        "unregistered_field": true
+      }
+    },
+    {
+      "id": "checkpoint_valid",
+      "definition": "checkpoint",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_expired_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_expired",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_expired",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 31,
+          "recovery_epoch": 0,
+          "segment_generation": 3,
+          "segment_name": "seg-000003-00000000000000000017.active",
+          "byte_offset": 0,
+          "last_sequence_id": 17,
+          "last_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "full_index_checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+        "index_selection_sha256": "c5c12e4c8eb8392d365272d4312748534396980a1e05ae13c90cc3678dca9d8b",
+        "published_at_utc": "2026-12-12T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [],
+        "generic_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+          "frontier_revision": 0,
+          "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+          "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+            "selected_segment_generation": 3,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+            "manifest_generation": 31,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+            "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+            "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "snapshot:txn:initial-A"
+        }
+      }
+    },
+    {
+      "id": "checkpoint_unknown_field_rejected",
+      "definition": "checkpoint",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.restore_point_expired_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project-A",
+        "scope_partition": "project~cHJvamVjdC1B",
+        "consumer_id": "consumer.chat.restore_point_expired",
+        "consumer_version": "1.0.0",
+        "projector_id": "projector.chat.restore_point_expired",
+        "projector_version": "1.0.0",
+        "cursor": {
+          "manifest_generation": 31,
+          "recovery_epoch": 0,
+          "segment_generation": 3,
+          "segment_name": "seg-000003-00000000000000000017.active",
+          "byte_offset": 0,
+          "last_sequence_id": 17,
+          "last_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+          "projector_schema_version": "1.0.0"
+        },
+        "redaction_profile": "no_secrets",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "full_index_checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+        "index_selection_sha256": "c5c12e4c8eb8392d365272d4312748534396980a1e05ae13c90cc3678dca9d8b",
+        "published_at_utc": "2026-12-12T17:00:01Z",
+        "publication_id": "publication-current-A",
+        "hold_refs": [],
+        "retired_generations": [],
+        "generic_read_token": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+          "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+          "frontier_revision": 0,
+          "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+          "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+          "source_selection": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+            "selected_segment_generation": 3,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+            "manifest_generation": 31,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+            "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+            "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+            "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+            "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+          },
+          "redb_snapshot_id": "snapshot:txn:initial-A"
+        },
+        "unregistered_field": true
+      }
+    }
+  ],
+  "native_oracles": {
+    "status": "NOT_RUN",
+    "inherited_oracles": "All prior native obligations remain required",
+    "pairs": [
+      {
+        "id": "EXPIRY-V4-1",
+        "positive": "Actual complete E1/E2/E3 controls resolve original acknowledgement",
+        "negative": "Group/time mutation retains source coordinates but mismatches actual append owner",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-2",
+        "positive": "Actual E1 available CAS preserves complete pending/source custody",
+        "negative": "Wrong E1 transaction, before hash, pending intent or poststate mutation",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-3",
+        "positive": "Actual eligibility owner resolves policy/ref/source/writer/lease controls",
+        "negative": "Repaired ref/hash lacks actual original release or admission source",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-4",
+        "positive": "Actual E3 late commit matches retained group and current owner read",
+        "negative": "Unbound time/result/receipt mutation cannot publish completion",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-5",
+        "positive": "Ordinary checkpoint refresh preserves current holds",
+        "negative": "Cursor-only transaction attempts hold removal",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-6",
+        "positive": "R copies entire actual original E3 receipt/result before lawful removal",
+        "negative": "Partial receipt transfer changes group or acknowledgement",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRY-V4-7",
+        "positive": "Current relocated source preserves original E1/E2/E3",
+        "negative": "Old receipt is rewritten to current source coordinates",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRED-RETAINED-1",
+        "positive": "Actual already-admitted immutable companion/result and current source verify after all original transient controls have retired",
+        "negative": "Self-issued or transplanted retained rows, repaired hashes or unadmitted store origin cannot authenticate ordinary history",
+        "native_status": "NOT_RUN"
+      },
+      {
+        "id": "EXPIRED-RETAINED-2",
+        "positive": "The same actual complete read/retirement authority lease remains valid through final disclosure or handoff",
+        "negative": "Late registration/installation/origin/permission/source or hold/age/count changes invalidate publication",
+        "native_status": "NOT_RUN"
+      }
+    ]
+  },
+  "phase_qualification": "Initial native admission, fresh lifecycle admission, admitted pending recovery and later retained reads use their explicit SP-285 routes; SP-286 first receipt is adopted. Static future-trace preludes do not execute native B1/E1 ordering. Native remains NOT_RUN.",
+  "retained_phase_subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/manifest.json",
+    "sha256": "7610757b5179c517a614edf4a895b464c98660cdcd9f9d5a210e6873f8af483f"
+  },
+  "pending_recovery_subject": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/manifest.json",
+    "sha256": "3e8955dc273f48d3fdadbd2d007c612147d80ca1cddec75b764966094282e231"
+  }
+}

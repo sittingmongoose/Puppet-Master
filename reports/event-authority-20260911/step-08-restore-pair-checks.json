@@ -1,0 +1,912 @@
+{
+  "status": "CANONICAL_FAMILY_PHASE_AND_PENDING_CONTRACTS_DEFINED_COMPILATION_PENDING",
+  "baseline_head": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+  "new_families": [
+    "restore_point_expiry_commit",
+    "restore_point_expired_checkpoint",
+    "restore_point_deletion_commit",
+    "restore_point_deleted_checkpoint",
+    "restore_point_delete_result"
+  ],
+  "physical_family_counts": {
+    "before": 108,
+    "after": 113
+  },
+  "schema_copies": [
+    {
+      "canonical_path": "Plans/restore_point_expired_contracts.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/restore_point_expired_contracts.schema.json",
+      "sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205",
+      "current_sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_deleted_contracts.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/restore_point_deleted_contracts.schema.json",
+      "sha256": "e786f51b6d5ce21ff203122f61fb161c333f40eb6636bb9026b4c87505abc9e9",
+      "current_sha256": "7f52a577ef2ea546df09a298d0f1bb1b69150a8ccdc3bb8e8b463f73097412ef",
+      "exact": false,
+      "qualification": "Explicit pending-v3 result schema and named pending definition only; all seven prior definitions other than command_result_receipt preserved, all terminal branches exact."
+    },
+    {
+      "canonical_path": "Plans/restore_point_expired_owner_resolution.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/expiry-owner-resolution.schema.proposed.json",
+      "sha256": "d1799140c076cc3981ab3b2afa2afa96e22c2723164835fae90502c643d4ee2d",
+      "current_sha256": "d1799140c076cc3981ab3b2afa2afa96e22c2723164835fae90502c643d4ee2d",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_deleted_owner_controls.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/original-owner-controls.schema.proposed.json",
+      "sha256": "f62fe4cfd48eecbd50c37cc39fe86295047f31c3da52736b1a4228bde26ffee4",
+      "current_sha256": "f62fe4cfd48eecbd50c37cc39fe86295047f31c3da52736b1a4228bde26ffee4",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_deleted_read_adapter.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/typed-adapter-v3.schema.json",
+      "sha256": "114712b57821fac67a6f62717bdf6105bf7626082aa41ea72fbfe506abe9040d",
+      "current_sha256": "114712b57821fac67a6f62717bdf6105bf7626082aa41ea72fbfe506abe9040d",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_retention_summary_codec.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-summary-integration-map-20260911/writer-root-codec.schema.proposed.json",
+      "sha256": "b4469af675145206adb0ef09f5b9709e84d30eeb86092fa5259f35d1972b0fab",
+      "current_sha256": "b4469af675145206adb0ef09f5b9709e84d30eeb86092fa5259f35d1972b0fab",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_retention_summary_v2.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/retention-summary-v2.schema.proposed.json",
+      "sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+      "current_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+      "exact": true,
+      "qualification": null
+    },
+    {
+      "canonical_path": "Plans/restore_point_summary_codec_admission.schema.json",
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/summary-codec-admission.schema.proposed.json",
+      "sha256": "5d1b77fa1802cfabecafd07caf01176b7840ae6b8a399bc7a8af8bfe3db0655f",
+      "current_sha256": "5d1b77fa1802cfabecafd07caf01176b7840ae6b8a399bc7a8af8bfe3db0655f",
+      "exact": true,
+      "qualification": null
+    }
+  ],
+  "phase_schema_copies": [
+    {
+      "source": "retained-read.schema.json",
+      "target": "restore_point_retained_read.schema.json",
+      "sha256": "d95e9cdbfd84e447fc775aefb5b368f1c5d7f48fa98aa0f64cace80d3402e3ff",
+      "schema_id": "pm.restore_point.retained_read.v1"
+    },
+    {
+      "source": "retained-read-result.schema.json",
+      "target": "restore_point_retained_read_result.schema.json",
+      "sha256": "4149570c3c47b331fb5f982428c309696b51947b6bc99d928eb9a818c1d487fb",
+      "schema_id": "pm.restore_point.retained_read_result.v1"
+    },
+    {
+      "source": "retained-created-read.schema.json",
+      "target": "restore_point_retained_creation_read.schema.json",
+      "sha256": "61294612884f42eaee654346251827d6048a6b4447c416c55bcfe5dee6b2caa4",
+      "schema_id": "pm.restore_point.retained_creation_read.v1"
+    },
+    {
+      "source": "retained-created-read-result.schema.json",
+      "target": "restore_point_retained_creation_read_result.schema.json",
+      "sha256": "40285a6ce830da205b144269484d2cc7af27b5ad575dab36966e4a68f72d49a0",
+      "schema_id": "pm.restore_point.retained_created_read_result.v1"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/manifest.json",
+      "sha256": "b458da5c7684dc7a4dcfc8f3f38bc7b09722ca0f1d3136dd34602d2f40038654",
+      "files_verified": 90
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/manifest.json",
+      "sha256": "62bbf9a084a438f03c320764778768b78c98eecb3994783b145bd50509d40923",
+      "files_verified": 93
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-summary-integration-map-20260911/manifest.json",
+      "sha256": "d3913f9cb956cca58733917a83fe36af0b1a6593f27662f71f2374f16f870986",
+      "files_verified": 21
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-review-20260911/v5/manifest.json",
+      "sha256": "2c1a988ae61b416fc8cd339d97386ebd9c164116f55cfcaab42813f88d3c5a7c",
+      "files_verified": 8
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-review-20260911/v3/manifest.json",
+      "sha256": "98cfbff0996b9fc67daa30b61ff124579a8ff27c55eb2a7d69725457ad23833d",
+      "files_verified": 8
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/manifest.json",
+      "sha256": "7610757b5179c517a614edf4a895b464c98660cdcd9f9d5a210e6873f8af483f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-independent-review-20260911/v2/manifest.json",
+      "sha256": "3ec48f551e33d2b685dfadd06b566de90b10cad3a89f7e755f526f16ff5a98a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-lifecycle-admission-20260912/v1/manifest.json",
+      "sha256": "8baffe586cb6bc855d0818637160b6470d5d58090a060ad755c5890cb01ce8d6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/manifest.json",
+      "sha256": "3e8955dc273f48d3fdadbd2d007c612147d80ca1cddec75b764966094282e231"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-independent-review-20260912/v3/manifest.json",
+      "sha256": "c1351d3ac7cbc657eb7d4f87b46748ad0f4ddd777938bdaf882dd4c521f5feca"
+    }
+  ],
+  "phase_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-independent-review-20260911/v2/report.json",
+    "sha256": "9409daca682e35e85fea0c483bca125d018884bc9c03b9eae22439f64c84f370"
+  },
+  "phase_summary": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/review-summary.json",
+    "sha256": "c8d8cc2464083a7e8e5b0e55adb9d3ba92c772537faec1ff5450d77d97655635"
+  },
+  "static_checks": {
+    "initial_admission_cases_reexecuted": 199,
+    "prior_phase_cases_reexecuted": 99,
+    "additional_final_boundary_cases": 58,
+    "final_boundary_positive": 6,
+    "final_boundary_negative": 52,
+    "independent_final_boundary_cases": 30,
+    "independent_prior_counterexamples_now_rejected": 18,
+    "compact_storage_schema_cases": 18,
+    "compact_summary_codec_dispatch_cases": 10,
+    "overlap_note": "These suites preserve overlapping regression cases; counts are per suite, not distinct native executions."
+  },
+  "remaining_normative_prerequisite": "Shared Case L-2 first-native SeglogFrameV2 prefix field widths/offsets and exact fixed-order header/payload codec require explicit closure. Family pending/first-receipt/lifecycle/retained-read protocols are now defined; native execution remains NOT_RUN.",
+  "native_execution": "NOT_RUN",
+  "frozen_validator_depth_pass": false,
+  "canonical_compilation_checks": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2368,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index_generate": {
+      "blockers": [],
+      "generated_at_utc": "2026-09-12T01:44:44Z",
+      "outputs": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "schema_id": "pm.plan_index.generate_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25266,
+        "coverage_status": "pass",
+        "doc_count": 95,
+        "no_worknodes_created": true,
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "nodeseed_candidates_created": false,
+        "plan_unit_count": 6558
+      }
+    },
+    "index_validate": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T01:45:38Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25266,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6558
+      }
+    },
+    "preservation": {
+      "base_head": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+      "prior_plan_units": 6549,
+      "after_plan_units": 6558,
+      "new_units": [
+        "ACD-464",
+        "ACD-466",
+        "RAP-058",
+        "RAP-060",
+        "SIR-045",
+        "SP-268",
+        "SP-272",
+        "SP-275",
+        "SP-285"
+      ],
+      "intentional_prior_unit_fields": {
+        "ACD-465": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ],
+        "RAP-059": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ],
+        "SIR-044": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ],
+        "SP-269": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ],
+        "SP-274": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ],
+        "SP-281": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_prior_unit_semantics_preserved": true,
+      "governance_locks_or_validators_changed": false,
+      "shards": {
+        "docs_checked": 98,
+        "failures": [],
+        "shards_checked": 2368,
+        "source_count": 98,
+        "status": "pass"
+      },
+      "index_generate": {
+        "blockers": [],
+        "generated_at_utc": "2026-09-12T01:44:44Z",
+        "outputs": [
+          "Plans/.plan_index/plan_units.jsonl",
+          "Plans/.plan_index/doc_cards.json",
+          "Plans/.plan_index/dependencies.json",
+          "Plans/.plan_index/acceptance_units.jsonl",
+          "Plans/.plan_index/coverage_report.json",
+          "Plans/.plan_index/node_readiness_report.json"
+        ],
+        "schema_id": "pm.plan_index.generate_report.v1",
+        "status": "pass",
+        "summary": {
+          "acceptance_unit_count": 25266,
+          "coverage_status": "pass",
+          "doc_count": 95,
+          "no_worknodes_created": true,
+          "node_readiness_status": "blocked_runtime_certification_incomplete",
+          "nodeseed_candidates_created": false,
+          "plan_unit_count": 6558
+        }
+      }
+    },
+    "standard_gates": {
+      "status": "FAIL_RECORDED_WITH_EXACT_BOUNDARY_REVIEW",
+      "subchecks": 36,
+      "passing": 24,
+      "failing": 12,
+      "subcheck_results": {
+        "check_project_artifact_requirements": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "check_shards": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "json_syntax": {
+          "status": "fail",
+          "failures": 1,
+          "earlier_receipt_baseline_failures": 1
+        },
+        "lint_banned_phrases": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "lint_contractrefs": {
+          "status": "fail",
+          "failures": 1,
+          "earlier_receipt_baseline_failures": 1
+        },
+        "lint_path_refs": {
+          "status": "fail",
+          "failures": 10,
+          "earlier_receipt_baseline_failures": 111
+        },
+        "validate_audit_closure": {
+          "status": "fail",
+          "failures": 201,
+          "earlier_receipt_baseline_failures": 201
+        },
+        "validate_audit_status_index": {
+          "status": "fail",
+          "failures": 1,
+          "earlier_receipt_baseline_failures": 1
+        },
+        "validate_auto_decisions": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_browser_event_admission": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_case_l_non_event_materialization": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_evidence": {
+          "status": "fail",
+          "failures": 1448,
+          "earlier_receipt_baseline_failures": 1448
+        },
+        "validate_filesafe_security_policy": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_forge_backup_acceptance": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_github_project_integration": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_goal_runtime_event_fixtures": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_gui_asset_policy": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_implementation_readiness": {
+          "status": "fail",
+          "failures": 53,
+          "earlier_receipt_baseline_failures": 48
+        },
+        "validate_new_contracts": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_plan_graph": {
+          "status": "fail",
+          "failures": 1448,
+          "earlier_receipt_baseline_failures": 1448
+        },
+        "validate_plan_migration": {
+          "status": "fail",
+          "failures": 180,
+          "earlier_receipt_baseline_failures": 180
+        },
+        "validate_plans_to_code_handoff_schema": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_pm7_gui_fixtures": {
+          "status": "fail",
+          "failures": 1,
+          "earlier_receipt_baseline_failures": 1
+        },
+        "validate_prd_planning_runtime_contracts": {
+          "status": "fail",
+          "failures": 900,
+          "earlier_receipt_baseline_failures": 72
+        },
+        "validate_project_output_fixtures": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_runtime_artifact_schemas": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_server_command_gap": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_testing_session_event_admission": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_touch_closure": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 76
+        },
+        "validate_ui_command_response": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_usage_contract_drift": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_usage_gui_fixtures": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_web_capability_contracts": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_wiring_matrix": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "validate_working_notebook_contracts": {
+          "status": "pass",
+          "failures": 0,
+          "earlier_receipt_baseline_failures": 0
+        },
+        "verify_spec_lock": {
+          "status": "fail",
+          "failures": 27,
+          "earlier_receipt_baseline_failures": 26
+        }
+      },
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pair-root-20260911/run-gates.json",
+        "sha256": "7354a6eb3e4d3692e197b1f242628a41f8bb2cf5038243030366acfc80bdc23e"
+      },
+      "baseline_report": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/run-gates.json",
+        "sha256": "ed32dcd1a40fe6d5f4dfc29afff00d162b5936b1f43fe83f8d28a75222e9ce1b"
+      },
+      "resource_boundary_review": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pair-root-20260911/prd-resource-review.json",
+        "sha256": "f7ebeea36ec56292267099f4c200023862d151a2d837228c3170c19368883a4c"
+      },
+      "new_prd_reference_diagnostics": 828,
+      "new_prd_reference_diagnostics_resolve_in_actual_embedded_resources": true,
+      "existing_prd_diagnostics": 72,
+      "central_registry_data_before": 16,
+      "central_registry_data_after": 19,
+      "new_central_registry_data_classes": [],
+      "missing_fixture_note": "The raw evidence capture schema and pm7_shared fixtures are absent from HEAD, not merely omitted by sparse checkout. No unrelated fixture restored or synthesized.",
+      "qualification": "Existing governance/currentness failures remain. New PRD diagnostics result from unchanged outer-root-only reference scanner; actual embedded-resource resolution independently verified for all 900. The three new generic_read_token name diagnostics are non-capability field-name matches in the deletion family. No validator waiver, freeze digest restamp, governance regeneration or zero-failure result."
+    }
+  },
+  "retention_policy_count": 25,
+  "final_data_checks": {
+    "base_head": "0fed14e3451c71f5cf6677d70afa29619ced9a4a",
+    "prior_families": 108,
+    "after_families": 113,
+    "prior_family_changes": {
+      "restore_point_record": [
+        "consumers",
+        "replay_behavior"
+      ],
+      "restore_point_creation_commit": [
+        "consumers",
+        "producer",
+        "replay_behavior"
+      ],
+      "restore_point_retention_summary": [
+        "consumers",
+        "legacy_canonical_crosswalk_status",
+        "migration",
+        "migration_disposition",
+        "nullable_fields",
+        "producer",
+        "recovery_disposition",
+        "redaction_no_secret_rule",
+        "replay_behavior",
+        "required_fields",
+        "restore_disposition",
+        "schema_version",
+        "value_schema",
+        "value_schema_id",
+        "value_schema_ref"
+      ],
+      "restore_point_create_result": [
+        "consumers",
+        "producer",
+        "replay_behavior"
+      ]
+    },
+    "all_other_prior_families_exact": true,
+    "all_25_policy_objects_and_other_registry_fields_exact": true,
+    "all_42_event_definitions_byte_exact": true,
+    "shape_cases": {
+      "deleted": 14,
+      "expired": 4
+    },
+    "summary_codec_cases": 10,
+    "schema_copies": [
+      {
+        "canonical_path": "Plans/restore_point_expired_contracts.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/restore_point_expired_contracts.schema.json",
+        "sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205",
+        "current_sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_deleted_contracts.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/restore_point_deleted_contracts.schema.json",
+        "sha256": "e786f51b6d5ce21ff203122f61fb161c333f40eb6636bb9026b4c87505abc9e9",
+        "current_sha256": "7f52a577ef2ea546df09a298d0f1bb1b69150a8ccdc3bb8e8b463f73097412ef",
+        "exact": false,
+        "qualification": "Explicit pending-v3 result schema and named pending definition only; all seven prior definitions other than command_result_receipt preserved, all terminal branches exact."
+      },
+      {
+        "canonical_path": "Plans/restore_point_expired_owner_resolution.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/expiry-owner-resolution.schema.proposed.json",
+        "sha256": "d1799140c076cc3981ab3b2afa2afa96e22c2723164835fae90502c643d4ee2d",
+        "current_sha256": "d1799140c076cc3981ab3b2afa2afa96e22c2723164835fae90502c643d4ee2d",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_deleted_owner_controls.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/original-owner-controls.schema.proposed.json",
+        "sha256": "f62fe4cfd48eecbd50c37cc39fe86295047f31c3da52736b1a4228bde26ffee4",
+        "current_sha256": "f62fe4cfd48eecbd50c37cc39fe86295047f31c3da52736b1a4228bde26ffee4",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_deleted_read_adapter.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-deleted-20260911/v3/typed-adapter-v3.schema.json",
+        "sha256": "114712b57821fac67a6f62717bdf6105bf7626082aa41ea72fbfe506abe9040d",
+        "current_sha256": "114712b57821fac67a6f62717bdf6105bf7626082aa41ea72fbfe506abe9040d",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_retention_summary_codec.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-summary-integration-map-20260911/writer-root-codec.schema.proposed.json",
+        "sha256": "b4469af675145206adb0ef09f5b9709e84d30eeb86092fa5259f35d1972b0fab",
+        "current_sha256": "b4469af675145206adb0ef09f5b9709e84d30eeb86092fa5259f35d1972b0fab",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_retention_summary_v2.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/retention-summary-v2.schema.proposed.json",
+        "sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+        "current_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+        "exact": true,
+        "qualification": null
+      },
+      {
+        "canonical_path": "Plans/restore_point_summary_codec_admission.schema.json",
+        "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-expired-20260911/v5/summary-codec-admission.schema.proposed.json",
+        "sha256": "5d1b77fa1802cfabecafd07caf01176b7840ae6b8a399bc7a8af8bfe3db0655f",
+        "current_sha256": "5d1b77fa1802cfabecafd07caf01176b7840ae6b8a399bc7a8af8bfe3db0655f",
+        "exact": true,
+        "qualification": null
+      }
+    ],
+    "phase_schema_copies_exact": true,
+    "central_data_failures_before": 16,
+    "central_data_failures_after": 19,
+    "new_failure_classes": [],
+    "native_execution": "NOT_RUN"
+  },
+  "source_currentness": {
+    "head": "2fb965e2141affbceeee2b5f4fe1af9c58c595ac",
+    "old_pair_base": "808bd8d918b145fb70359df41dcdfe6ae32587f5",
+    "canonical_sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "pair_base_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/Shared_Integration_Runtime.md",
+        "pair_base_sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+        "current_sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "pair_base_sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+        "current_sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+        "exact": false,
+        "adjudication": "Root-reviewed CV-339 first receipt and CV-318 shared receipt/startup clarification preserved; pair now explicitly adopts them."
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "pair_base_sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "current_sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "pair_base_sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+        "current_sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "pair_base_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "pair_base_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "current_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/event_record.schema.json",
+        "pair_base_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "current_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "pair_base_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "current_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/event_record_index_binding_hash_vectors.json",
+        "pair_base_sha256": "74ac7ba31b3da81f6c570fbfc52b7cc730ab703a046f017a3c6dc8d465f11d42",
+        "current_sha256": "74ac7ba31b3da81f6c570fbfc52b7cc730ab703a046f017a3c6dc8d465f11d42",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_created_contracts.schema.json",
+        "pair_base_sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821",
+        "current_sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_created_hash_vectors.json",
+        "pair_base_sha256": "990c7fd352fbc39a5280d4c8842a3274297d9d9deffd608222167fab8313d5a1",
+        "current_sha256": "990c7fd352fbc39a5280d4c8842a3274297d9d9deffd608222167fab8313d5a1",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_create_result.schema.json",
+        "pair_base_sha256": "d34bb9e3d46ee806dfcf61d41abe1410f77882f1d195ccb394d347ce835c3c82",
+        "current_sha256": "d34bb9e3d46ee806dfcf61d41abe1410f77882f1d195ccb394d347ce835c3c82",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_create_result_join_fixtures.json",
+        "pair_base_sha256": "f69b2d52c6c462340efb032b804a341dfa3fa108bf74e8d66631b5220eab61eb",
+        "current_sha256": "f69b2d52c6c462340efb032b804a341dfa3fa108bf74e8d66631b5220eab61eb",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/full_thread_runtime_contracts.schema.json",
+        "pair_base_sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "current_sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/ui_command_response.schema.json",
+        "pair_base_sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "current_sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/shared_runtime_command_contracts.schema.json",
+        "pair_base_sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "current_sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "pair_base_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+        "current_sha256": "78434cbf8796f148016b5010b0b4ce521d5e60c8c923f24a6e9453386f84c0ed",
+        "exact": false,
+        "adjudication": "Root-reviewed SP-286 first receipt and SP-287 Goal physical custody additions; explicit receipt startup changes preserved. Pair source semantics reconciled phase-by-phase, not blind merged."
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "pair_base_sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
+        "current_sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "pair_base_sha256": "b7823792fdb50aeb61be0c5d1c74324a1fbf12e20f7a967572999929730b57b4",
+        "current_sha256": "b7823792fdb50aeb61be0c5d1c74324a1fbf12e20f7a967572999929730b57b4",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "pair_base_sha256": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
+        "current_sha256": "f250e6791abf1d3e3d231628a87463763b7403b9285fbc27c52f49423625be1f",
+        "exact": false,
+        "adjudication": "Six unrelated receipt/Goal families and one approved Goal policy added; preserved except explicit pair summary successor and three narrow original-family binding metadata changes."
+      },
+      {
+        "path": "Plans/event_index_consumer_adoption.schema.json",
+        "pair_base_sha256": "a0dc69878aa78674eb122726815b129f05bf8ad5cd45c8689a3b5119155f8912",
+        "current_sha256": "a0dc69878aa78674eb122726815b129f05bf8ad5cd45c8689a3b5119155f8912",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_created_joined_value_fixtures.json",
+        "pair_base_sha256": "281abbb390fe5cc0e9e1dfa4e56f1c69d30b8fffcb0fc1f0de6bcc69cfe230fa",
+        "current_sha256": "281abbb390fe5cc0e9e1dfa4e56f1c69d30b8fffcb0fc1f0de6bcc69cfe230fa",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/restore_point_retention_summary_fixtures.json",
+        "pair_base_sha256": "c68fc5cd76e9c66457e88c139bfd14bdf7c3e6e79dab8c2e8fe60d38efe5cf1f",
+        "current_sha256": "c68fc5cd76e9c66457e88c139bfd14bdf7c3e6e79dab8c2e8fe60d38efe5cf1f",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      },
+      {
+        "path": "Plans/event_payload_run_started.schema.json",
+        "pair_base_sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+        "current_sha256": "9dc2e503137f773dba45e3753ac5af9a507bcb7fcb61bd9cadcfd59a48cea560",
+        "exact": true,
+        "adjudication": "Exact since reviewed pair base."
+      }
+    ],
+    "dl048_rebase_all_25_draft_files_byte_exact": true,
+    "upstream_report_only_commits": [
+      "af8c45569b",
+      "4e2fd29307"
+    ]
+  },
+  "pending_schema_integration": {
+    "pending_schema_source": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/prospective-deletion-result.schema.json",
+      "sha256": "0652549489d66b4388212150e2542eadead44baa729a1836e0c721aca41282d6"
+    },
+    "pending_schema_exact_except_outer_schema_metadata": true,
+    "all_terminal_branches_unchanged": true,
+    "stored_discriminator_preserved": "pm.chat.restore_point_delete_pending_dispatch.proposal.v1",
+    "pending_shape_cases": 8,
+    "exact_binding_additions": {
+      "restore_point_record": {
+        "consumers": [
+          "reader.storage.restore_point_retained_creation@1.0.0",
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_creation_pending_recovery@1.0.0",
+          "owner.storage.restore_point_deletion_pending_recovery@1.0.0",
+          "owner.storage.restore_point_expiry_pending_recovery@1.0.0",
+          "owner.storage.restore_point_lifecycle_from_retained_creation@1.0.0"
+        ]
+      },
+      "restore_point_creation_commit": {
+        "producer": [
+          "owner.storage.restore_point_creation_pending_recovery@1.0.0"
+        ],
+        "consumers": [
+          "reader.storage.restore_point_retained_creation@1.0.0",
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_creation_pending_recovery@1.0.0"
+        ]
+      },
+      "restore_point_create_result": {
+        "producer": [
+          "owner.storage.restore_point_creation_pending_recovery@1.0.0"
+        ],
+        "consumers": [
+          "reader.storage.restore_point_retained_creation@1.0.0",
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_creation_pending_recovery@1.0.0"
+        ]
+      },
+      "restore_point_deletion_commit": {
+        "producer": [
+          "owner.storage.restore_point_deletion_pending_recovery@1.0.0"
+        ],
+        "consumers": [
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_deletion_pending_recovery@1.0.0"
+        ]
+      },
+      "restore_point_expiry_commit": {
+        "producer": [
+          "owner.storage.restore_point_expiry_pending_recovery@1.0.0"
+        ],
+        "consumers": [
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_expiry_pending_recovery@1.0.0"
+        ]
+      },
+      "restore_point_delete_result": {
+        "producer": [
+          "owner.storage.restore_point_deletion_pending_recovery@1.0.0"
+        ],
+        "consumers": [
+          "reader.storage.restore_point_retained_custody@1.0.0",
+          "owner.storage.restore_point_deletion_pending_recovery@1.0.0"
+        ]
+      }
+    },
+    "earlier_row_metadata_changes_only": [
+      "restore_point_record",
+      "restore_point_creation_commit",
+      "restore_point_create_result"
+    ],
+    "earlier_summary_writer_schema_change": "restore_point_retention_summary",
+    "physical_families": 113,
+    "retention_policies": 25,
+    "native": "NOT_RUN"
+  },
+  "pending_independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-independent-review-20260912/v3/report.json",
+    "sha256": "28574d4c96f3c540af575c44dec02e82ad382180407a61fae73020661e1ee2ed",
+    "result": "PASS_BOUNDED_STATIC_PENDING_RECOVERY_V3",
+    "cases": {
+      "preserved_recovery": 110,
+      "author_final_receipt_and_retry": 44,
+      "original_regressions": 199,
+      "fresh_rejections": 31,
+      "lawful_retries": 31,
+      "frozen_pins_verified": 348,
+      "canonical_source_pins_verified": 10
+    }
+  },
+  "native_fixture_prelude_limit": "Initial creation/lifecycle predicates consume complete synthetic future-operation fixtures. Actual native B1/E1 must authenticate its original inputs and publish pending rows before recovery, without requiring future terminal results."
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19646-L19810
+Source lines: L19648-L19826
 
-Source SHA256: `78434cbf8796f148016b5010b0b4ce521d5e60c8c923f24a6e9453386f84c0ed`
+Source SHA256: `7a40af5f4e9fab1f6c631f2afe135a1ff8f49df835ffe45a1e9c5a78a38de705`
 
 ---
 
@@ -34,7 +34,7 @@ Commit the immutable `rp` and complete pending companion in one redb transaction
 
 Read in canonical segment/offset/sequence order through the current verified survivor range. Validate EventRecord 2.0, exact payload schema, project identity, registered policy, secret posture, record/source joins and event-index lookup bytes before certifying a restore-created observation. Generic valid nonmatching records may advance traversal after envelope/registry validation without restore-specific effects. Unknown/malformed records quarantine without crossing them; valid future versions halt as unsupported and are not recast as corruption. Timestamps never order processing.
 
-Within one redb write transaction/snapshot, verify the existing event-index row and exactly one supported branch: present native point plus full native completion proof; present historical point plus the full historical completion predicate; or the independent complete lawful terminal-retention traversal predicate below. Branch C does not require lawfully purged rp/companion bytes. Commit the projector checkpoint only after the selected branch and all shared current-generation/source checks pass. The logical view is computed from that same committed snapshot and selected proof; branch C yields only terminal/summary unavailability, never live creation completion or an action. Verify the existing full-index CURRENT selection, publication_locator and resolved full-index checkpoint, source_locator frame bounds/CRC/event/payload digest and same-generation coverage. Any changed selected index digest, source manifest/epoch or missing complete range aborts publication. This consumer cannot advance the globally owned index checkpoint or infer it from its own cursor. Its only owned durable write is this checkpoint, so there are no partially published projection rows. Missing/stale index durability, failed CAS against predecessor checkpoint, unresolved retention proof, or transaction failure leaves the checkpoint unchanged. Cursor advancement cannot race source generation/recovery changes; revalidate the Storage manifest/epoch authority under its maintenance exclusion before commit. UI notification timing is not durability.
+Within one redb write transaction/snapshot, verify the existing event-index row and exactly one supported branch: present native point with fully admitted original creation and the explicitly installed SP-285 retained-present branch for its supported current status (other statuses retain their pre-existing complete native predicate and gain no new adapter); present historical point plus the full historical completion predicate; or the independent complete lawful terminal-retention traversal predicate below. Branch C does not require lawfully purged rp/companion bytes. Commit the projector checkpoint only after the selected branch and all shared current-generation/source checks pass. The logical view is computed from that same committed snapshot and selected proof; branch C yields only terminal/summary unavailability, never live creation completion or an action. Verify the existing full-index CURRENT selection, publication_locator and resolved full-index checkpoint, source_locator frame bounds/CRC/event/payload digest and same-generation coverage. Any changed selected index digest, source manifest/epoch or missing complete range aborts publication. This consumer cannot advance the globally owned index checkpoint or infer it from its own cursor. Its only owned durable write is this checkpoint, so there are no partially published projection rows. Missing/stale index durability, failed CAS against predecessor checkpoint, unresolved retention proof, or transaction failure leaves the checkpoint unchanged. Cursor advancement cannot race source generation/recovery changes; revalidate the Storage manifest/epoch authority under its maintenance exclusion before commit. UI notification timing is not durability.
 
 The checkpoint certifies **source traversal**, not live restore-point availability. Reader lookup uses the current canonical record and owner permission/source-visibility/hold state in that snapshot. Action dispatch re-runs current Chat preflight. Creation replay never writes `status=available` back, consumes a record, branches a thread, touches source files/Git/worktree/queues, clears holds, charges Usage, notifies, dispatches or emits any EventRecord. Replay after expired/deleted/corrupt retains the canonical unavailable state. A source-thread deletion stays hidden; branching remains governed by Chat’s immutable conversation restore-point lifecycle, including `source_deleted_content_unavailable` when retained bytes are insufficient. Historical creation visibility must not revive deleted source visibility.
 
@@ -59,7 +59,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#restore-point-created-n
 
 ### Lawful terminal-retention traversal
 
-Creation completion and terminal-retention traversal are separate predicates. For an indexed surviving created event, classify exactly one supported read branch: (A) a present native point with complete required native creation proof; (B) a present supported historical point with its complete historical completion proof; or (C) an owner-proven **already completed terminal retention disposition** for this exact project/restore identity and original capture hash. Branch C is not a relaxed version of A or B and does not require a purged native companion, original command request or removed `rp` bytes.
+Creation completion and terminal-retention traversal are separate predicates. For an indexed surviving created event, classify exactly one supported read branch: (A) a present native point whose original creation passed complete admission, resolved through the explicitly installed SP-285 retained-present branch for its supported current status, with the pre-existing complete native predicate unchanged for other statuses; (B) a present supported historical point with its complete historical completion proof; or (C) an owner-proven **already completed terminal retention disposition** for this exact project/restore identity and original capture hash. Branch C is not a relaxed version of A or B and does not require a purged native companion, original command request or removed `rp` bytes.
 
 Branch C must join the surviving event's project, restore ID, canonical record ref and original hash to the durable owner-authorized terminal disposition and retained required hash summary; prove the exact point's owner-defined reference release, all required hold/ref release evidence, and the applicable existing age/count/deletion authorization; and verify committed deletion/retention/successor-generation custody for the bytes actually removed. Native custody may be absent only where that same durable disposition explicitly covers its lawful removal. Verify the current source/index manifest, survivor prefix and permitted range coverage exactly as for ordinary traversal. No terminal state inferred from missing rows, elapsed wall time, event time, a deleted source thread, UI status or an unverified summary is proof. `corrupt` alone is not a removal authorization. A lifecycle event by itself is not proof of completed purge. Storage SP-269 now defines the exact new canonical restore_point_retention_summary family and atomic retirement result supplying these embedded proofs. Branch C must resolve and validate that physical value; generic storage_deletion_record, an unresolved manifest pointer or a self-issued summary is not a substitute.
 
@@ -99,12 +99,14 @@ canonical_text: Storage selects pm.storage_value.restore_point_created_checkpoin
   at 2.0.0 and explicitly adopted history, branch-preflight and Runtime Artifacts reader successors consume
   the complete SP-278 source/index token after actual owner-admitted full rebuild. Original v1 values
   and digest meanings remain compatibility-only, with exact nonrecursive v1/v2 retired cores under the
-  unchanged RP-PROJECTION-3GEN policy. Current native completion separately authenticates the original
-  creation publication/receipt and canonical record/companion transaction, which may predate the current
-  generic index generation. A matching current index anchor cannot replace original custody. Existing
-  native, supported historical and terminal-summary predicates, original capture/command hash recipes,
-  source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain unchanged.
-  No sibling checkpoint or deferred family is borrowed.
+  unchanged RP-PROJECTION-3GEN policy. Original native creation admission separately authenticates the
+  original creation publication/receipt and canonical record/companion transaction, which may predate
+  the current generic index generation. A matching current index anchor cannot replace original custody.
+  SP-285 explicitly supplies ordinary retained-creation/terminal native reads without disposed original
+  controls. Existing supported historical and terminal-summary predicates, original capture/command hash
+  recipes, source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain
+  unchanged. No sibling checkpoint or deferred family is borrowed.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 gui_related: false
 gui_classification_reason: This unit defines canonical custody, storage schemas and checkpoint mechanics.
 split_recommended: false
@@ -114,6 +116,8 @@ depends_on:
 - CV-320
 - DL-045
 - SP-278
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication
@@ -134,8 +138,14 @@ acceptance_criteria:
   edit or count override is permitted.
 - Current v2 selection binds complete SP-278 anchor/frontier/source evidence; ordinary append changes
   the current token while preserving old index-row birth anchors and filtered generation history.
-- Actual original native creation publication and canonical companion transaction bind the original receipt
-  independently of a later generic rebuild; self-consistent caller evidence cannot supply original authority.
+- At initial admission, actual original native creation publication and canonical companion transaction
+  bind the original receipt independently of a later generic rebuild; self-consistent caller evidence
+  cannot supply original authority.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
@@ -143,6 +153,10 @@ validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - Plans/event_index_consumer_adoption.schema.json
 - Plans/event_index_consumer_adoption_fixtures.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority

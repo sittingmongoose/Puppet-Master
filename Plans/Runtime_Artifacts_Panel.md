@@ -2867,13 +2867,15 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractNam
 
 This addendum defines the previously missing restore-created bindings under `DL-045` for already specified behavior. These are new owner definitions, not claims that the identifiers pre-existed. The existing `event-family-restore-point-created@2.0.0`, `restore_point.created`, project-only scope, EventRecord `pm.event.v0@2.0.0`, inline payload `https://puppetmaster.local/schemas/event_payloads/restore_point_created/1.0.0` and source policy `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0` remain unchanged. This is a static contract; native runtime, crash, GUI and durable-storage behavior remain unproven. No sibling event is admitted.
 
-Runtime Artifacts newly owns `reader.runtime_artifacts.restore_point_record@1.0.0`. It passively consumes the verified logical record/source-event view owned by Storage SP-281 and Chat ACD-465's two present-point completion predicates plus Storage SP-269's distinct typed terminal-summary result. For new native writes, require the committed matching creation companion and genuine synced created event; `rp.status=available` or a marker alone is insufficient. For supported previously completed restore points, the explicit Chat historical validating reader preserves existing history and branch preflight without fabricating a companion or today's original command fields. Missing completion/custody proof is unavailable; a native missing/pending companion cannot opt into historical mode through absence, ID spelling or timestamp.
+Runtime Artifacts newly owns `reader.runtime_artifacts.restore_point_record@1.0.0`. It passively consumes the verified logical record/source-event view owned by Storage SP-281 and Chat ACD-465's two present-point completion predicates plus Storage SP-269's distinct typed terminal-summary result. For new native writes, require the committed matching creation companion and genuine synced created event; `rp.status=available` or a marker alone is insufficient. For supported previously completed restore points, the explicit Chat historical validating reader preserves existing history and branch preflight without fabricating a companion or today's original command fields. Missing completion/custody proof is unavailable; a native missing/pending companion cannot opt into historical mode through absence, ID spelling or timestamp. The explicitly current record@2.0.0 successor adopts SP-285 retained_creation with passive_creation for available native points and retained_custody for supported present native expired/deleted points, with complete retained immutable rows and current source. Full original controls remain initial admission requirements, not disposed inputs to ordinary current reads. The record@1.0.0 compatibility branch is not widened.
 
 For a present-point native or historical result, the reader rechecks canonical current status, exact project/record/source-boundary/hash identity, holds, permission and source visibility in the same published source snapshot. For kind=terminal_retention_summary, it verifies the exact canonical summary and surviving-event joins under SP-269 without requiring removed rp/companion bytes; it displays only terminal/hash-summary availability and never an enabled apply/delete action. Applying remains the existing Chat branch command with its own fresh preflight; passive reads never dispatch it. Creation replay cannot overwrite a later expired/deleted/corrupt status, clear a hold, reveal a deleted source, revive purged content or mutate files/worktree/Git/queue. `safe_point_id` stays optional lineage and never becomes primary identity.
 
 `runtime_artifact.restore_point` is a distinct event family whose producer/admission/retention requirements remain independently held. This reader emits no artifact event, recursively emits no created event, creates no artifact-owned canonical record and does not borrow the deferred runtime-artifacts checkpoint. Artifact projection expiry never deletes the canonical `rp` or required creation custody. The existing user-facing panel/branch behavior and source policy remain unchanged; no new integration or runtime proof follows.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#restore-point-created-native-and-historical-consumers, ContractName:Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract, ContractName:Plans/Runtime_Artifacts_Panel.md#rap-046---case-l-restore-point-and-exact-restore-projection, DecisionID:DL-045
+
+Original creation admission remains complete. SP-285 creation_pending_recovery uses authentic admitted pending custody and SP-286 first receipt, with final receipt resolution before the final owner-local runtime/domain guard and atomic companion/result publication. Passive readers cannot execute recovery or infer completion from pending status.
 
 ### RAP-059 — Restore-point created consumers
 
@@ -2887,8 +2889,10 @@ canonical_text: Runtime Artifacts defines one passive restore-point record reade
   Storage current snapshot authority. It preserves existing status/permission/hold/source visibility and
   branch preflight, emits no runtime_artifact.restore_point event, and never treats a projection as canonical
   point or custody authority. For restore_point.created only, current read publication explicitly adopts
-  the named 2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and actual
-  original creation custody remains independently required.
+  the named 2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and original
+  creation controls remain required at admission; the current native branch explicitly adopts SP-285 retained_creation
+  for available and retained_custody for supported expired/deleted points without disposed original controls.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -2898,14 +2902,21 @@ depends_on:
 - ACD-465
 - SP-281
 - SP-278
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - Lawfully retired points may display their verified SP-269 terminal/hash-summary result without present
   rp/companion bytes and with no action authority.
-- Native completion requires companion plus genuine source proof; supported legacy completion remains
-  readable without guessed original fields.
+- Initial native creation requires full original admission; later current native reads require SP-285
+  authenticated retained companion/capture plus genuine current source proof; supported legacy completion
+  remains readable without guessed original fields.
 - Creation replay never revives terminal/deleted state or dispatches branch/filesystem/artifact effects.
 - The independent runtime_artifact.restore_point family remains separately gated.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- Original creation admission remains complete. SP-285 creation_pending_recovery uses authentic admitted pending custody and SP-286 first receipt, with final receipt resolution before the final owner-local runtime/domain guard and atomic companion/result publication. Passive readers cannot execute recovery or infer completion from pending status.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
@@ -2913,6 +2924,10 @@ validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - Plans/event_index_consumer_adoption.schema.json
 - Plans/event_index_consumer_adoption_fixtures.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -2942,4 +2957,133 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/FileSafe.md
+```
+
+
+## Deleted restore-point evidence admission
+
+`reader.runtime_artifacts.restore_point_deleted@1.0.0` presents passive native/historical/terminal-summary classifications through the complete SP-268/SP-272 predicate. Deletion requires complete native semantics at the actual boundaries, using SP-285 retained-created admission and its installed pending route with SP-286 receipt, plus complete current SP-278 source proof. Separate supported historical/canonical-summary inspection retains its own complete predicate and cannot replace native initial admission. Original delegated command replay remains separate and retains its genuine original receipt after lawful source retirement. B3 writes no point/hold field; independently admitted later holds permit passive terminal inspection while blocking retirement. Missing proof preserves affected unavailability and the prior valid checkpoint. The registered deleted event/payload remain unchanged; replay performs no delete, branch, FileSafe/file/Git action, hold clear or sibling artifact emission. Later native inspection explicitly adopts SP-285 retained_native_terminal through reader.storage.restore_point_retained_custody@1.0.0 and authenticates original retained companions/result/receipt plus current source, without old transaction/group/SIR inputs.
+
+### Runtime Artifacts summary codec routes
+
+Runtime Artifacts explicitly adopts SP-269 codec2 at the typed terminal-result boundary for `reader.runtime_artifacts.restore_point_deleted@1.0.0`, `reader.runtime_artifacts.restore_point_expired@1.0.0` and `reader.runtime_artifacts.restore_point_record@2.0.0`. Each requires its exact route in `Plans/restore_point_summary_reader_routes.json` and actual original coordinator receipt/journal adoption. All direct raw reader schemas/checkpoints remain v1-only and unchanged. `reader.runtime_artifacts.restore_point_record@1.0.0` is compatibility-only and rejects raw v2 and codec2. SP-269 owns complete input/output bindings, original summary custody, installation and writer gates. Passive typed metadata supplies no action authority; direct summary inspection cannot invent an event frame or advance an event checkpoint.
+
+New deletion B1 uses SP-285 retained-created original_create_result_custody with all fresh SP-268/SP-272 gates. After actual B1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed B1/creation/raw SIR controls; final receipt resolution precedes the final owner-local guard and atomic B3. Passive readers cannot execute recovery.
+
+### RAP-058 — Deleted restore-point evidence admission
+
+```yaml
+plan_unit_id: RAP-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: Runtime Artifacts presents deleted restore-point evidence through complete phase-appropriate deletion/creation
+  admission followed by explicitly adopted SP-285 authenticated retained_custody/current-source reads,
+  or actual supported terminal custody. Current artifact routes separately adopt SP-269 codec2; raw-v1
+  schemas/checkpoints and the record1 compatibility fence stay unchanged.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+gui_related: true
+gui_classification_reason: Defines visible passive restore-point history, evidence and unavailable states.
+split_recommended: false
+depends_on:
+- SP-268
+- SP-272
+- ACD-464
+- SP-269
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Full B1/B2/B3 semantics apply at each boundary through SP-285 lifecycle/pending routes and SP-286 receipt; later inspection
+  resolves SP-285 authenticated retained rows/current source and leaves later holds intact.
+- Missing source/custody/admission yields affected unavailability and preserves prior checkpoint.
+- Codec2 requires exact owner installation; passive evidence cannot dispatch delete, branch, FileSafe
+  action or hold clear.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- New deletion B1 uses SP-285 retained-created original_create_result_custody with all fresh SP-268/SP-272 gates. After actual B1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed B1/creation/raw SIR controls; final receipt resolution precedes the final owner-local guard and atomic B3. Passive readers cannot execute recovery.
+validation_surfaces:
+- Plans/restore_point_deleted_contracts.schema.json
+- Plans/restore_point_summary_reader_routes.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+```
+
+
+## Expired restore-point evidence admission
+
+`reader.runtime_artifacts.restore_point_expired@1.0.0` presents owner-resolved expired point or genuine terminal hash summary, actual prior hash/identity and precise source/currentness/custody limitations under SP-275. Expired means unavailable for apply/delete, not proof of physical purge. A later-held expired capture remains inspectable; unexplained source loss is unavailable. Expiry requires full fresh eligibility and SP-285 retained-created E1 admission, actual append/receipt and E3 publication through its installed pending route, and independent current source proof. E3 writes no point/hold field and ordinary checkpoint refresh preserves current holds and complete generation history. Native expiry retirement requires the SP-269 v2 writer and exact separately admitted codec2 route above; supported v1 cannot omit required native expiry custody. Direct summary inspection invents no surviving event frame or event cursor. No file/Git/FileSafe restore, deletion, branch, hold clear, source resurrection, runtime/queue action or `runtime_artifact.restore_point` sibling emission follows. Later native inspection explicitly adopts SP-285 retained_native_terminal through reader.storage.restore_point_retained_custody@1.0.0, requiring authenticated retained original custody and full current source without disposed E1/E2/E3/eligibility/nested creation controls or a new SP-274 dependency.
+
+New expiry E1 uses SP-285 retained-created passive_creation with all fresh SP-275 gates and no SP-274 dependency. After actual E1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed E1/eligibility/nested creation controls; final receipt resolution precedes the final owner-local guard and atomic E3. Passive readers cannot execute recovery.
+
+### RAP-060 — Expired restore-point evidence admission
+
+```yaml
+plan_unit_id: RAP-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: Runtime Artifacts passively presents expired capture or canonical terminal summary through
+  full original SP-275 admission followed by explicitly adopted SP-285 authenticated retained_custody/current-source
+  reads, or the independent canonical summary branch. Later holds remain visible custody protection; expired
+  does not prove purge. Codec2 is separately installed under SP-269 and cannot grant action or recover
+  removed bodies.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+gui_related: true
+gui_classification_reason: Defines visible passive restore-point history, evidence and unavailable states.
+split_recommended: false
+depends_on:
+- SP-275
+- ACD-466
+- SP-269
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Require full original eligibility/E1/E2/E3 receipt/group at admission; later native inspection requires
+  SP-285 authenticated retained rows/current source without disposed original controls.
+- Keep logical expiry, later custody retirement and source availability distinct in visible evidence.
+- Later holds remain intact; native expiry retirement requires coordinated v2 admission and no removed-row
+  dependency on terminal inspection.
+- Summary inspection cannot invent an event cursor or execute any restore/delete/branch/hold action.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- New expiry E1 uses SP-285 retained-created passive_creation with all fresh SP-275 gates and no SP-274 dependency. After actual E1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed E1/eligibility/nested creation controls; final receipt resolution precedes the final owner-local guard and atomic E3. Passive readers cannot execute recovery.
+validation_surfaces:
+- Plans/restore_point_expired_contracts.schema.json
+- Plans/restore_point_summary_reader_routes.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
 ```

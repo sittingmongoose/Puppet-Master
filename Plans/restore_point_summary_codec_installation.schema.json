@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/restore_point_summary_codec_installation/1.0.0",
+  "title": "Restore-point terminal summary codec owner installation evidence",
+  "description": "Closed subordinate records within the existing StorageMigrationCoordinator journal; not a new physical family.",
+  "$defs": {
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding_ref",
+        "role",
+        "raw_summary_versions",
+        "codec_admission",
+        "installation_state"
+      ],
+      "properties": {
+        "binding_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "current",
+            "compatibility_only"
+          ]
+        },
+        "raw_summary_versions": {
+          "const": [
+            "1.0.0"
+          ]
+        },
+        "codec_admission": {
+          "anyOf": [
+            {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "https://puppetmaster.local/contracts/restore_point_terminal_summary_codec/2.0.0",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "capability_id",
+                "capability_version",
+                "codec_reader",
+                "raw_summary_schema_sha256",
+                "output_kind",
+                "output_contract_owner",
+                "owner_adoption_ref",
+                "direct_reader_raw_v2",
+                "action_authority"
+              ],
+              "properties": {
+                "capability_id": {
+                  "const": "restore_point_terminal_summary_codec"
+                },
+                "capability_version": {
+                  "const": "2.0.0"
+                },
+                "codec_reader": {
+                  "const": "reader.storage.restore_point_retention_summary@2.0.0"
+                },
+                "raw_summary_schema_sha256": {
+                  "const": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227"
+                },
+                "output_kind": {
+                  "const": "terminal_retention_summary"
+                },
+                "output_contract_owner": {
+                  "const": "Plans/storage-plan.md#concrete-typed-terminal-summary-result"
+                },
+                "owner_adoption_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "direct_reader_raw_v2": {
+                  "const": false
+                },
+                "action_authority": {
+                  "const": "none"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "installation_state": {
+          "const": "installed"
+        }
+      }
+    },
+    "step_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "capability_id",
+        "capability_version",
+        "summary_schema_sha256",
+        "writer_binding",
+        "route_installations",
+        "installed_rejections",
+        "input_authority",
+        "output_authority"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.restore_point_terminal_summary_codec.owner_adoption.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capability_id": {
+          "const": "restore_point_terminal_summary_codec"
+        },
+        "capability_version": {
+          "const": "2.0.0"
+        },
+        "summary_schema_sha256": {
+          "const": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227"
+        },
+        "writer_binding": {
+          "const": "writer.storage.restore_point_retention_summary@2.0.0"
+        },
+        "route_installations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "binding_ref",
+              "role",
+              "raw_summary_versions",
+              "codec_admission",
+              "installation_state"
+            ],
+            "properties": {
+              "binding_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "enum": [
+                  "current",
+                  "compatibility_only"
+                ]
+              },
+              "raw_summary_versions": {
+                "const": [
+                  "1.0.0"
+                ]
+              },
+              "codec_admission": {
+                "anyOf": [
+                  {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "$id": "https://puppetmaster.local/contracts/restore_point_terminal_summary_codec/2.0.0",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "capability_id",
+                      "capability_version",
+                      "codec_reader",
+                      "raw_summary_schema_sha256",
+                      "output_kind",
+                      "output_contract_owner",
+                      "owner_adoption_ref",
+                      "direct_reader_raw_v2",
+                      "action_authority"
+                    ],
+                    "properties": {
+                      "capability_id": {
+                        "const": "restore_point_terminal_summary_codec"
+                      },
+                      "capability_version": {
+                        "const": "2.0.0"
+                      },
+                      "codec_reader": {
+                        "const": "reader.storage.restore_point_retention_summary@2.0.0"
+                      },
+                      "raw_summary_schema_sha256": {
+                        "const": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227"
+                      },
+                      "output_kind": {
+                        "const": "terminal_retention_summary"
+                      },
+                      "output_contract_owner": {
+                        "const": "Plans/storage-plan.md#concrete-typed-terminal-summary-result"
+                      },
+                      "owner_adoption_ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "direct_reader_raw_v2": {
+                        "const": false
+                      },
+                      "action_authority": {
+                        "const": "none"
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "installation_state": {
+                "const": "installed"
+              }
+            }
+          }
+        },
+        "installed_rejections": {
+          "const": [
+            "reader.chat.branch_from_restore@2.0.0"
+          ]
+        },
+        "input_authority": {
+          "const": "canonical same-key summary; domain-owner original custody and source validation"
+        },
+        "output_authority": {
+          "const": "existing passive terminal_retention_summary; no completion or action"
+        }
+      }
+    }
+  }
+}

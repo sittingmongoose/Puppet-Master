@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/contracts/restore_point_terminal_summary_codec/2.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capability_id",
+    "capability_version",
+    "codec_reader",
+    "raw_summary_schema_sha256",
+    "output_kind",
+    "output_contract_owner",
+    "owner_adoption_ref",
+    "direct_reader_raw_v2",
+    "action_authority"
+  ],
+  "properties": {
+    "capability_id": {
+      "const": "restore_point_terminal_summary_codec"
+    },
+    "capability_version": {
+      "const": "2.0.0"
+    },
+    "codec_reader": {
+      "const": "reader.storage.restore_point_retention_summary@2.0.0"
+    },
+    "raw_summary_schema_sha256": {
+      "const": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227"
+    },
+    "output_kind": {
+      "const": "terminal_retention_summary"
+    },
+    "output_contract_owner": {
+      "const": "Plans/storage-plan.md#concrete-typed-terminal-summary-result"
+    },
+    "owner_adoption_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "direct_reader_raw_v2": {
+      "const": false
+    },
+    "action_authority": {
+      "const": "none"
+    }
+  }
+}

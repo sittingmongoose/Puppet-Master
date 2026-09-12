@@ -540,9 +540,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 183,
-        "True": 280
+        "True": 282
       },
-      "heading_count": 675,
+      "heading_count": 680,
       "implementation_surfaces": [
         "AGENTS.md",
         "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
@@ -618,9 +618,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 25546,
+      "line_count": 25702,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 463,
+      "plan_unit_count": 465,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1084,7 +1084,9 @@
         "ACD-460",
         "ACD-461",
         "ACD-462",
-        "ACD-465"
+        "ACD-465",
+        "ACD-464",
+        "ACD-466"
       ],
       "reasoning_tiers": [
         "high",
@@ -1303,6 +1305,7 @@
         "restore_boundary",
         "restore_point_created_completion_authority",
         "restore_point_ghost_command_or_misleading_undo",
+        "restore_point_terminal_custody_or_false_completion",
         "retention_integrity",
         "retrieval",
         "retrieval_budget",
@@ -1418,10 +1421,10 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "b756ce837e6ec67820ebfc41180f9d8031c5b303fa8f4bc9674d1111edfad871",
+      "sha256": "a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 463
+        "accepted": 465
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
@@ -1430,7 +1433,7 @@
         "decision": 6,
         "gui_requirement": 5,
         "integration_contract": 1,
-        "requirement": 305,
+        "requirement": 307,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1450,6 +1453,14 @@
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/restore_point_created_contract_fixtures.json",
+        "Plans/restore_point_deleted_contracts.schema.json",
+        "Plans/restore_point_expired_contracts.schema.json",
+        "Plans/restore_point_expired_owner_resolution.schema.json",
+        "Plans/restore_point_retained_creation_read.schema.json",
+        "Plans/restore_point_retained_creation_read_result.schema.json",
+        "Plans/restore_point_retained_read.schema.json",
+        "Plans/restore_point_retained_read_result.schema.json",
+        "Plans/restore_point_summary_reader_routes.json",
         "Plans/storage_value_registry.json",
         "Plans/touch_closure.json",
         "RSP-ATOMIC-001",
@@ -1495,6 +1506,7 @@
         "python3 scripts/pm-shared-runtime-contracts.py --self-test",
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "reports/event-authority-20260911/step-06-contract-validation.md",
+        "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "rg newfeatures.md Plans/assistant-chat-design.md",
         "scripts/pm-assistant-contract-check.py",
         "server-first Chat owner audit"
@@ -14794,9 +14806,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 13,
-        "True": 43
+        "True": 45
       },
-      "heading_count": 123,
+      "heading_count": 128,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -14848,9 +14860,9 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 2945,
+      "line_count": 3089,
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "plan_unit_count": 56,
+      "plan_unit_count": 58,
       "plan_unit_ids": [
         "RAP-002",
         "RAP-032",
@@ -14907,7 +14919,9 @@
         "RAP-053",
         "RAP-055",
         "RAP-056",
-        "RAP-059"
+        "RAP-059",
+        "RAP-058",
+        "RAP-060"
       ],
       "reasoning_tiers": [
         "high",
@@ -14953,6 +14967,7 @@
         "reference_owner_drift",
         "residual_bridge_overreach",
         "restore_point_created_completion_authority",
+        "restore_point_terminal_custody_or_false_completion",
         "retention_usage_bridge_drift",
         "retention_visibility_loss",
         "route_identity_drift",
@@ -14971,16 +14986,16 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "b7823792fdb50aeb61be0c5d1c74324a1fbf12e20f7a967572999929730b57b4",
+      "sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 55,
+        "accepted": 57,
         "retired": 1
       },
       "title": "Runtime Artifacts Panel — SSOT",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 54,
+        "requirement": 56,
         "schema_contract": 1
       },
       "validation_surfaces": [
@@ -14994,6 +15009,13 @@
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/restore_point_created_contract_fixtures.json",
+        "Plans/restore_point_deleted_contracts.schema.json",
+        "Plans/restore_point_expired_contracts.schema.json",
+        "Plans/restore_point_retained_creation_read.schema.json",
+        "Plans/restore_point_retained_creation_read_result.schema.json",
+        "Plans/restore_point_retained_read.schema.json",
+        "Plans/restore_point_retained_read_result.schema.json",
+        "Plans/restore_point_summary_reader_routes.json",
         "Plans/storage_value_registry.json",
         "Redacted copy/export fixtures",
         "Usage receipt expanded detail fixtures",
@@ -15029,6 +15051,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-ui-command-response.py",
+        "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "scratchpad/pm-integration-20260831/event-authority-successor-20260901/runtime-artifact-depth-repair/manifest.json"
       ]
     },
@@ -15937,10 +15960,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 20,
+        "False": 21,
         "True": 24
       },
-      "heading_count": 103,
+      "heading_count": 105,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -15991,9 +16014,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2365,
+      "line_count": 2449,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 44,
+      "plan_unit_count": 45,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -16038,7 +16061,8 @@
         "SIR-041",
         "SIR-042",
         "SIR-044",
-        "SIR-046"
+        "SIR-046",
+        "SIR-045"
       ],
       "reasoning_tiers": [
         "high",
@@ -16076,6 +16100,7 @@
         "replay_overlap_double_attribution",
         "resource_or_progress_truth_drift",
         "restore_point_original_result_authority",
+        "restore_point_terminal_custody_or_false_completion",
         "server_claim_or_vault_identity_drift",
         "shared_connection_command_phantom_closure",
         "shared_connection_route_split_or_phantom_handler",
@@ -16090,10 +16115,10 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+      "sha256": "af2a6fa4eece5b351bfd89429439070209269e1cc2d16501998d54caf0848434",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 44
+        "accepted": 45
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -16106,7 +16131,7 @@
         "integration_contract": 2,
         "owner_boundary": 1,
         "platform_requirement": 1,
-        "requirement": 23,
+        "requirement": 24,
         "schema_contract": 4,
         "security_contract": 1
       },
@@ -16130,6 +16155,12 @@
         "Plans/restore_point_create_result_fixtures.json",
         "Plans/restore_point_create_result_join_fixtures.json",
         "Plans/restore_point_create_result_native_pairs.json",
+        "Plans/restore_point_deleted_contracts.schema.json",
+        "Plans/restore_point_deleted_read_adapter.schema.json",
+        "Plans/restore_point_retained_creation_read.schema.json",
+        "Plans/restore_point_retained_creation_read_result.schema.json",
+        "Plans/restore_point_retained_read.schema.json",
+        "Plans/restore_point_retained_read_result.schema.json",
         "Plans/shared_integration_runtime.schema.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/BackupSharedRuntimeConsumptionRecord",
@@ -16205,6 +16236,7 @@
         "replay/live races",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
+        "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "resource and security tests",
         "resource pressure tests",
         "restart/failure injection",
@@ -16486,10 +16518,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 175,
+        "False": 179,
         "True": 101
       },
-      "heading_count": 549,
+      "heading_count": 582,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16510,6 +16542,7 @@
         "Plans/Provider_OpenCode.md",
         "Plans/Release_Supply_Chain.md",
         "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Shared_Integration_Runtime.md",
         "Plans/Tools.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Widget_System.md",
@@ -16551,9 +16584,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 21603,
+      "line_count": 22301,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 276,
+      "plan_unit_count": 280,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16830,7 +16863,11 @@
         "SP-270",
         "SP-273",
         "SP-286",
-        "SP-287"
+        "SP-287",
+        "SP-268",
+        "SP-272",
+        "SP-275",
+        "SP-285"
       ],
       "reasoning_tiers": [
         "high",
@@ -16873,8 +16910,10 @@
         "required_mvp_storage_registry_omission",
         "research_decision_review_authority_or_resume_drift",
         "residual_bridge_overreach",
+        "restore_point_admission_retained_authority_phase_confusion",
         "restore_point_created_completion_authority",
         "restore_point_original_result_authority",
+        "restore_point_terminal_custody_or_false_completion",
         "restore_point_terminal_retention_authority",
         "retention_compaction_recovery_loss",
         "retired_goal_child_writer_reintroduction",
@@ -16902,17 +16941,17 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "78434cbf8796f148016b5010b0b4ce521d5e60c8c923f24a6e9453386f84c0ed",
+      "sha256": "7a40af5f4e9fab1f6c631f2afe135a1ff8f49df835ffe45a1e9c5a78a38de705",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 273,
+        "accepted": 277,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 3,
         "migration_contract": 2,
-        "requirement": 248,
+        "requirement": 252,
         "schema_contract": 9,
         "security_contract": 1,
         "storage_contract": 12,
@@ -16980,7 +17019,22 @@
         "Plans/restore_point_create_result_join_fixtures.json",
         "Plans/restore_point_create_result_native_pairs.json",
         "Plans/restore_point_created_contract_fixtures.json",
+        "Plans/restore_point_deleted_contracts.schema.json",
+        "Plans/restore_point_deleted_owner_controls.schema.json",
+        "Plans/restore_point_deleted_read_adapter.schema.json",
+        "Plans/restore_point_expired_contract_fixtures.json",
+        "Plans/restore_point_expired_contracts.schema.json",
+        "Plans/restore_point_expired_owner_resolution.schema.json",
+        "Plans/restore_point_retained_creation_read.schema.json",
+        "Plans/restore_point_retained_creation_read_result.schema.json",
+        "Plans/restore_point_retained_read.schema.json",
+        "Plans/restore_point_retained_read_result.schema.json",
+        "Plans/restore_point_retention_summary_codec.schema.json",
         "Plans/restore_point_retention_summary_fixtures.json",
+        "Plans/restore_point_retention_summary_v2.schema.json",
+        "Plans/restore_point_summary_codec_admission.schema.json",
+        "Plans/restore_point_summary_codec_installation.schema.json",
+        "Plans/restore_point_summary_reader_routes.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/seglog_append_observability_contract_fixtures.json",
@@ -17044,6 +17098,7 @@
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
+        "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "reports/event-authority-20260911/step-08-seglog-validation.md",
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/test_pm_browser_event_admission.py",
@@ -18920,7 +18975,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T01:35:12Z",
+  "generated_at_utc": "2026-09-12T01:45:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -18928,13 +18983,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3390,
-      "True": 3159
+      "False": 3395,
+      "True": 3163
     },
-    "plan_unit_count": 6549,
+    "plan_unit_count": 6558,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6358,
+      "accepted": 6367,
       "retired": 182,
       "superseded": 9
     },
@@ -19001,7 +19056,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5197,
+      "requirement": 5206,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

@@ -1,0 +1,1607 @@
+{
+  "reader": "reader.storage.restore_point_retention_summary@2.0.0",
+  "native_writer_gate": {
+    "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+    "reader_id": "reader.storage.restore_point_retention_summary@2.0.0",
+    "same_key_family": "restore_point_retention_summary",
+    "supported_versions": [
+      "1.0.0",
+      "2.0.0"
+    ],
+    "route_installations": [
+      {
+        "binding_ref": "Storage expiry owner reconciliation",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/0"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "Storage restore-point retention/recovery",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/1"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "Storage restore-point retirement owner",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/2"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "consumer.chat.restore_point_created@2.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/3"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "consumer.chat.restore_point_deleted@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/4"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "consumer.chat.restore_point_expired@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/5"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "projector.chat.restore_point_created@1.0.0",
+        "role": "compatibility_only",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": null,
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "projector.chat.restore_point_created@2.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/7"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "projector.chat.restore_point_deleted@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/8"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "projector.chat.restore_point_expired@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/9"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.chat.restore_point_history@1.0.0",
+        "role": "compatibility_only",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": null,
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.chat.restore_point_history@2.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/11"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.runtime_artifacts.restore_point_deleted@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/12"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.runtime_artifacts.restore_point_expired@1.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/13"
+        },
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.runtime_artifacts.restore_point_record@1.0.0",
+        "role": "compatibility_only",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": null,
+        "installation_state": "installed"
+      },
+      {
+        "binding_ref": "reader.runtime_artifacts.restore_point_record@2.0.0",
+        "role": "current",
+        "raw_summary_versions": [
+          "1.0.0"
+        ],
+        "codec_admission": {
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+          "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "output_kind": "terminal_retention_summary",
+          "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+          "direct_reader_raw_v2": false,
+          "action_authority": "none",
+          "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/15"
+        },
+        "installation_state": "installed"
+      }
+    ],
+    "installed_consumers": [
+      "Storage expiry owner reconciliation",
+      "Storage restore-point retention/recovery",
+      "Storage restore-point retirement owner",
+      "consumer.chat.restore_point_created@2.0.0",
+      "consumer.chat.restore_point_deleted@1.0.0",
+      "consumer.chat.restore_point_expired@1.0.0",
+      "projector.chat.restore_point_created@1.0.0",
+      "projector.chat.restore_point_created@2.0.0",
+      "projector.chat.restore_point_deleted@1.0.0",
+      "projector.chat.restore_point_expired@1.0.0",
+      "reader.chat.restore_point_history@1.0.0",
+      "reader.chat.restore_point_history@2.0.0",
+      "reader.runtime_artifacts.restore_point_deleted@1.0.0",
+      "reader.runtime_artifacts.restore_point_expired@1.0.0",
+      "reader.runtime_artifacts.restore_point_record@1.0.0",
+      "reader.runtime_artifacts.restore_point_record@2.0.0"
+    ],
+    "installed_rejections": [
+      "reader.chat.branch_from_restore@2.0.0"
+    ],
+    "coordinator_verified": true,
+    "actual_summary_writer_version": "2.0.0",
+    "source_schema_version": "2.0.0",
+    "native_expiry_companion_required": true,
+    "migration_admission": {
+      "receipt": {
+        "schema_id": "pm.storage_value.migration_receipt.v1",
+        "schema_version": "1.0.0",
+        "receipt_id": "receipt:summary-codec-synthetic",
+        "migration_id": "migration:summary-codec-synthetic",
+        "from_version": "58",
+        "to_version": "79",
+        "schema_ids": [
+          "pm.storage_value.migration_receipt.v1",
+          "pm.storage_value.restore_point_retention_summary.v2"
+        ],
+        "store_transitions": [
+          {
+            "store_or_family_id": "redb",
+            "from_version": "58",
+            "to_version": "79"
+          }
+        ],
+        "family_transitions": [
+          {
+            "store_or_family_id": "restore_point_retention_summary",
+            "from_version": "1.0.0",
+            "to_version": "2.0.0"
+          }
+        ],
+        "preflight_result": {
+          "outcome": "ready",
+          "reason_code": null,
+          "filesystem_ref": "filesystem:project-vault:1",
+          "free_bytes": 300000000,
+          "required_free_bytes": 268437456,
+          "backup_bytes": 1000,
+          "staging_bytes": 1000,
+          "reserve_bytes": 268435456,
+          "checked_at_utc": "2026-08-14T00:00:00Z"
+        },
+        "backup_ref": "backup:migration:1",
+        "applied_steps": [
+          {
+            "step_id": "RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002",
+            "status": "verified",
+            "evidence_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002"
+          }
+        ],
+        "verification_result": {
+          "status": "passed",
+          "detail_refs": [
+            "verification:migration:1"
+          ]
+        },
+        "rollback_available": true,
+        "rollback_result": null,
+        "data_loss_risk": {
+          "class": "none",
+          "backup_boundary_ref": null,
+          "affected_family_ids": [],
+          "summary_ref": null
+        },
+        "terminal_status": "committed",
+        "started_at_utc": "2026-08-14T00:00:00Z",
+        "completed_at_utc": "2026-08-14T00:03:00Z",
+        "app_version": "0.1.0",
+        "journal_ref": "journal:summary-codec-synthetic",
+        "redaction_profile": "no_secrets"
+      },
+      "receipt_key": "migration_receipt.v1:migration:summary-codec-synthetic",
+      "receipt_bytes_base64": "3gAWq2FwcF92ZXJzaW9upTAuMS4wrWFwcGxpZWRfc3RlcHORg6xldmlkZW5jZV9yZWbZV2pvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMqZzdGF0dXOodmVyaWZpZWSnc3RlcF9pZNkoUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMqpiYWNrdXBfcmVmsmJhY2t1cDptaWdyYXRpb246MbBjb21wbGV0ZWRfYXRfdXRjtDIwMjYtMDgtMTRUMDA6MDM6MDBarmRhdGFfbG9zc19yaXNrhLNhZmZlY3RlZF9mYW1pbHlfaWRzkLNiYWNrdXBfYm91bmRhcnlfcmVmwKVjbGFzc6Rub25lq3N1bW1hcnlfcmVmwLJmYW1pbHlfdHJhbnNpdGlvbnORg6xmcm9tX3ZlcnNpb26lMS4wLjCyc3RvcmVfb3JfZmFtaWx5X2lkv3Jlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnmqdG9fdmVyc2lvbqUyLjAuMKxmcm9tX3ZlcnNpb26iNTiram91cm5hbF9yZWa/am91cm5hbDpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpY6xtaWdyYXRpb25faWTZIW1pZ3JhdGlvbjpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpY7BwcmVmbGlnaHRfcmVzdWx0iaxiYWNrdXBfYnl0ZXPNA+iuY2hlY2tlZF9hdF91dGO0MjAyNi0wOC0xNFQwMDowMDowMFquZmlsZXN5c3RlbV9yZWa6ZmlsZXN5c3RlbTpwcm9qZWN0LXZhdWx0OjGqZnJlZV9ieXRlc84R4aMAp291dGNvbWWlcmVhZHmrcmVhc29uX2NvZGXAs3JlcXVpcmVkX2ZyZWVfYnl0ZXPOEAAH0K1yZXNlcnZlX2J5dGVzzhAAAACtc3RhZ2luZ19ieXRlc80D6KpyZWNlaXB0X2lkv3JlY2VpcHQ6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWOxcmVkYWN0aW9uX3Byb2ZpbGWqbm9fc2VjcmV0c7Jyb2xsYmFja19hdmFpbGFibGXDr3JvbGxiYWNrX3Jlc3VsdMCpc2NoZW1hX2lk2SVwbS5zdG9yYWdlX3ZhbHVlLm1pZ3JhdGlvbl9yZWNlaXB0LnYxqnNjaGVtYV9pZHOS2SVwbS5zdG9yYWdlX3ZhbHVlLm1pZ3JhdGlvbl9yZWNlaXB0LnYx2TNwbS5zdG9yYWdlX3ZhbHVlLnJlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnkudjKuc2NoZW1hX3ZlcnNpb26lMS4wLjCuc3RhcnRlZF9hdF91dGO0MjAyNi0wOC0xNFQwMDowMDowMFqxc3RvcmVfdHJhbnNpdGlvbnORg6xmcm9tX3ZlcnNpb26iNTiyc3RvcmVfb3JfZmFtaWx5X2lkpHJlZGKqdG9fdmVyc2lvbqI3Oa90ZXJtaW5hbF9zdGF0dXOpY29tbWl0dGVkqnRvX3ZlcnNpb26iNzmzdmVyaWZpY2F0aW9uX3Jlc3VsdIKrZGV0YWlsX3JlZnORuHZlcmlmaWNhdGlvbjptaWdyYXRpb246MaZzdGF0dXOmcGFzc2Vk",
+      "journal_ref": "journal:summary-codec-synthetic",
+      "step_evidence": {
+        "RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002": {
+          "schema_id": "pm.restore_point_terminal_summary_codec.owner_adoption.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "capability_id": "restore_point_terminal_summary_codec",
+          "capability_version": "2.0.0",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "writer_binding": "writer.storage.restore_point_retention_summary@2.0.0",
+          "route_installations": [
+            {
+              "binding_ref": "Storage expiry owner reconciliation",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/0"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "Storage restore-point retention/recovery",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/1"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "Storage restore-point retirement owner",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/2"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "consumer.chat.restore_point_created@2.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/3"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "consumer.chat.restore_point_deleted@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/4"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "consumer.chat.restore_point_expired@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/5"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "projector.chat.restore_point_created@1.0.0",
+              "role": "compatibility_only",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": null,
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "projector.chat.restore_point_created@2.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/7"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "projector.chat.restore_point_deleted@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/8"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "projector.chat.restore_point_expired@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/9"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.chat.restore_point_history@1.0.0",
+              "role": "compatibility_only",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": null,
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.chat.restore_point_history@2.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/11"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.runtime_artifacts.restore_point_deleted@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/12"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.runtime_artifacts.restore_point_expired@1.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/13"
+              },
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.runtime_artifacts.restore_point_record@1.0.0",
+              "role": "compatibility_only",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": null,
+              "installation_state": "installed"
+            },
+            {
+              "binding_ref": "reader.runtime_artifacts.restore_point_record@2.0.0",
+              "role": "current",
+              "raw_summary_versions": [
+                "1.0.0"
+              ],
+              "codec_admission": {
+                "capability_id": "restore_point_terminal_summary_codec",
+                "capability_version": "2.0.0",
+                "codec_reader": "reader.storage.restore_point_retention_summary@2.0.0",
+                "raw_summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+                "output_kind": "terminal_retention_summary",
+                "output_contract_owner": "Plans/storage-plan.md#concrete-typed-terminal-summary-result",
+                "direct_reader_raw_v2": false,
+                "action_authority": "none",
+                "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/15"
+              },
+              "installation_state": "installed"
+            }
+          ],
+          "installed_rejections": [
+            "reader.chat.branch_from_restore@2.0.0"
+          ],
+          "input_authority": "canonical same-key summary; domain-owner original custody and source validation",
+          "output_authority": "existing passive terminal_retention_summary; no completion or action"
+        }
+      },
+      "step_evidence_bytes_base64": "i61jYXBhYmlsaXR5X2lk2SRyZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWOyY2FwYWJpbGl0eV92ZXJzaW9upTIuMC4wr2lucHV0X2F1dGhvcml0edlPY2Fub25pY2FsIHNhbWUta2V5IHN1bW1hcnk7IGRvbWFpbi1vd25lciBvcmlnaW5hbCBjdXN0b2R5IGFuZCBzb3VyY2UgdmFsaWRhdGlvbrRpbnN0YWxsZWRfcmVqZWN0aW9uc5HZJXJlYWRlci5jaGF0LmJyYW5jaF9mcm9tX3Jlc3RvcmVAMi4wLjCwb3V0cHV0X2F1dGhvcml0edlEZXhpc3RpbmcgcGFzc2l2ZSB0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyeTsgbm8gY29tcGxldGlvbiBvciBhY3Rpb26zcm91dGVfaW5zdGFsbGF0aW9uc9wAEIWrYmluZGluZ19yZWbZI1N0b3JhZ2UgZXhwaXJ5IG93bmVyIHJlY29uY2lsaWF0aW9ur2NvZGVjX2FkbWlzc2lvbomwYWN0aW9uX2F1dGhvcml0eaRub25lrWNhcGFiaWxpdHlfaWTZJHJlc3RvcmVfcG9pbnRfdGVybWluYWxfc3VtbWFyeV9jb2RlY7JjYXBhYmlsaXR5X3ZlcnNpb26lMi4wLjCsY29kZWNfcmVhZGVy2TRyZWFkZXIuc3RvcmFnZS5yZXN0b3JlX3BvaW50X3JldGVudGlvbl9zdW1tYXJ5QDIuMC4wtGRpcmVjdF9yZWFkZXJfcmF3X3YywrVvdXRwdXRfY29udHJhY3Rfb3duZXLZPFBsYW5zL3N0b3JhZ2UtcGxhbi5tZCNjb25jcmV0ZS10eXBlZC10ZXJtaW5hbC1zdW1tYXJ5LXJlc3VsdKtvdXRwdXRfa2luZLp0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyebJvd25lcl9hZG9wdGlvbl9yZWbZbWpvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMi9yb3V0ZV9pbnN0YWxsYXRpb25zLzC5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSFq2JpbmRpbmdfcmVm2ShTdG9yYWdlIHJlc3RvcmUtcG9pbnQgcmV0ZW50aW9uL3JlY292ZXJ5r2NvZGVjX2FkbWlzc2lvbomwYWN0aW9uX2F1dGhvcml0eaRub25lrWNhcGFiaWxpdHlfaWTZJHJlc3RvcmVfcG9pbnRfdGVybWluYWxfc3VtbWFyeV9jb2RlY7JjYXBhYmlsaXR5X3ZlcnNpb26lMi4wLjCsY29kZWNfcmVhZGVy2TRyZWFkZXIuc3RvcmFnZS5yZXN0b3JlX3BvaW50X3JldGVudGlvbl9zdW1tYXJ5QDIuMC4wtGRpcmVjdF9yZWFkZXJfcmF3X3YywrVvdXRwdXRfY29udHJhY3Rfb3duZXLZPFBsYW5zL3N0b3JhZ2UtcGxhbi5tZCNjb25jcmV0ZS10eXBlZC10ZXJtaW5hbC1zdW1tYXJ5LXJlc3VsdKtvdXRwdXRfa2luZLp0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyebJvd25lcl9hZG9wdGlvbl9yZWbZbWpvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMi9yb3V0ZV9pbnN0YWxsYXRpb25zLzG5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSFq2JpbmRpbmdfcmVm2SZTdG9yYWdlIHJlc3RvcmUtcG9pbnQgcmV0aXJlbWVudCBvd25lcq9jb2RlY19hZG1pc3Npb26JsGFjdGlvbl9hdXRob3JpdHmkbm9uZa1jYXBhYmlsaXR5X2lk2SRyZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWOyY2FwYWJpbGl0eV92ZXJzaW9upTIuMC4wrGNvZGVjX3JlYWRlctk0cmVhZGVyLnN0b3JhZ2UucmVzdG9yZV9wb2ludF9yZXRlbnRpb25fc3VtbWFyeUAyLjAuMLRkaXJlY3RfcmVhZGVyX3Jhd192MsK1b3V0cHV0X2NvbnRyYWN0X293bmVy2TxQbGFucy9zdG9yYWdlLXBsYW4ubWQjY29uY3JldGUtdHlwZWQtdGVybWluYWwtc3VtbWFyeS1yZXN1bHSrb3V0cHV0X2tpbmS6dGVybWluYWxfcmV0ZW50aW9uX3N1bW1hcnmyb3duZXJfYWRvcHRpb25fcmVm2W1qb3VybmFsOnN1bW1hcnktY29kZWMtc3ludGhldGljIy9zdGVwX2V2aWRlbmNlL1JFU1RPUkUtUE9JTlQtVEVSTUlOQUwtU1VNTUFSWS1DT0RFQy0wMDIvcm91dGVfaW5zdGFsbGF0aW9ucy8yuXJhd19zdW1tYXJ5X3NjaGVtYV9zaGEyNTbZQDU0YWIxNmMyN2M5MTYwNmVlNjc4Y2QzNTgwOTMzMzBmMjU5NTQ0YjFhNGZkMzdkYTQwZDU5NDQyYmVlNzUyMjeyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZadjdXJyZW50hatiaW5kaW5nX3JlZtkpY29uc3VtZXIuY2hhdC5yZXN0b3JlX3BvaW50X2NyZWF0ZWRAMi4wLjCvY29kZWNfYWRtaXNzaW9uibBhY3Rpb25fYXV0aG9yaXR5pG5vbmWtY2FwYWJpbGl0eV9pZNkkcmVzdG9yZV9wb2ludF90ZXJtaW5hbF9zdW1tYXJ5X2NvZGVjsmNhcGFiaWxpdHlfdmVyc2lvbqUyLjAuMKxjb2RlY19yZWFkZXLZNHJlYWRlci5zdG9yYWdlLnJlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnlAMi4wLjC0ZGlyZWN0X3JlYWRlcl9yYXdfdjLCtW91dHB1dF9jb250cmFjdF9vd25lctk8UGxhbnMvc3RvcmFnZS1wbGFuLm1kI2NvbmNyZXRlLXR5cGVkLXRlcm1pbmFsLXN1bW1hcnktcmVzdWx0q291dHB1dF9raW5kunRlcm1pbmFsX3JldGVudGlvbl9zdW1tYXJ5sm93bmVyX2Fkb3B0aW9uX3JlZtltam91cm5hbDpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpYyMvc3RlcF9ldmlkZW5jZS9SRVNUT1JFLVBPSU5ULVRFUk1JTkFMLVNVTU1BUlktQ09ERUMtMDAyL3JvdXRlX2luc3RhbGxhdGlvbnMvM7lyYXdfc3VtbWFyeV9zY2hlbWFfc2hhMjU22UA1NGFiMTZjMjdjOTE2MDZlZTY3OGNkMzU4MDkzMzMwZjI1OTU0NGIxYTRmZDM3ZGE0MGQ1OTQ0MmJlZTc1MjI3smluc3RhbGxhdGlvbl9zdGF0ZalpbnN0YWxsZWS0cmF3X3N1bW1hcnlfdmVyc2lvbnORpTEuMC4wpHJvbGWnY3VycmVudIWrYmluZGluZ19yZWbZKWNvbnN1bWVyLmNoYXQucmVzdG9yZV9wb2ludF9kZWxldGVkQDEuMC4wr2NvZGVjX2FkbWlzc2lvbomwYWN0aW9uX2F1dGhvcml0eaRub25lrWNhcGFiaWxpdHlfaWTZJHJlc3RvcmVfcG9pbnRfdGVybWluYWxfc3VtbWFyeV9jb2RlY7JjYXBhYmlsaXR5X3ZlcnNpb26lMi4wLjCsY29kZWNfcmVhZGVy2TRyZWFkZXIuc3RvcmFnZS5yZXN0b3JlX3BvaW50X3JldGVudGlvbl9zdW1tYXJ5QDIuMC4wtGRpcmVjdF9yZWFkZXJfcmF3X3YywrVvdXRwdXRfY29udHJhY3Rfb3duZXLZPFBsYW5zL3N0b3JhZ2UtcGxhbi5tZCNjb25jcmV0ZS10eXBlZC10ZXJtaW5hbC1zdW1tYXJ5LXJlc3VsdKtvdXRwdXRfa2luZLp0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyebJvd25lcl9hZG9wdGlvbl9yZWbZbWpvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMi9yb3V0ZV9pbnN0YWxsYXRpb25zLzS5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSFq2JpbmRpbmdfcmVm2Sljb25zdW1lci5jaGF0LnJlc3RvcmVfcG9pbnRfZXhwaXJlZEAxLjAuMK9jb2RlY19hZG1pc3Npb26JsGFjdGlvbl9hdXRob3JpdHmkbm9uZa1jYXBhYmlsaXR5X2lk2SRyZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWOyY2FwYWJpbGl0eV92ZXJzaW9upTIuMC4wrGNvZGVjX3JlYWRlctk0cmVhZGVyLnN0b3JhZ2UucmVzdG9yZV9wb2ludF9yZXRlbnRpb25fc3VtbWFyeUAyLjAuMLRkaXJlY3RfcmVhZGVyX3Jhd192MsK1b3V0cHV0X2NvbnRyYWN0X293bmVy2TxQbGFucy9zdG9yYWdlLXBsYW4ubWQjY29uY3JldGUtdHlwZWQtdGVybWluYWwtc3VtbWFyeS1yZXN1bHSrb3V0cHV0X2tpbmS6dGVybWluYWxfcmV0ZW50aW9uX3N1bW1hcnmyb3duZXJfYWRvcHRpb25fcmVm2W1qb3VybmFsOnN1bW1hcnktY29kZWMtc3ludGhldGljIy9zdGVwX2V2aWRlbmNlL1JFU1RPUkUtUE9JTlQtVEVSTUlOQUwtU1VNTUFSWS1DT0RFQy0wMDIvcm91dGVfaW5zdGFsbGF0aW9ucy81uXJhd19zdW1tYXJ5X3NjaGVtYV9zaGEyNTbZQDU0YWIxNmMyN2M5MTYwNmVlNjc4Y2QzNTgwOTMzMzBmMjU5NTQ0YjFhNGZkMzdkYTQwZDU5NDQyYmVlNzUyMjeyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZadjdXJyZW50hatiaW5kaW5nX3JlZtkqcHJvamVjdG9yLmNoYXQucmVzdG9yZV9wb2ludF9jcmVhdGVkQDEuMC4wr2NvZGVjX2FkbWlzc2lvbsCyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZbJjb21wYXRpYmlsaXR5X29ubHmFq2JpbmRpbmdfcmVm2Spwcm9qZWN0b3IuY2hhdC5yZXN0b3JlX3BvaW50X2NyZWF0ZWRAMi4wLjCvY29kZWNfYWRtaXNzaW9uibBhY3Rpb25fYXV0aG9yaXR5pG5vbmWtY2FwYWJpbGl0eV9pZNkkcmVzdG9yZV9wb2ludF90ZXJtaW5hbF9zdW1tYXJ5X2NvZGVjsmNhcGFiaWxpdHlfdmVyc2lvbqUyLjAuMKxjb2RlY19yZWFkZXLZNHJlYWRlci5zdG9yYWdlLnJlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnlAMi4wLjC0ZGlyZWN0X3JlYWRlcl9yYXdfdjLCtW91dHB1dF9jb250cmFjdF9vd25lctk8UGxhbnMvc3RvcmFnZS1wbGFuLm1kI2NvbmNyZXRlLXR5cGVkLXRlcm1pbmFsLXN1bW1hcnktcmVzdWx0q291dHB1dF9raW5kunRlcm1pbmFsX3JldGVudGlvbl9zdW1tYXJ5sm93bmVyX2Fkb3B0aW9uX3JlZtltam91cm5hbDpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpYyMvc3RlcF9ldmlkZW5jZS9SRVNUT1JFLVBPSU5ULVRFUk1JTkFMLVNVTU1BUlktQ09ERUMtMDAyL3JvdXRlX2luc3RhbGxhdGlvbnMvN7lyYXdfc3VtbWFyeV9zY2hlbWFfc2hhMjU22UA1NGFiMTZjMjdjOTE2MDZlZTY3OGNkMzU4MDkzMzMwZjI1OTU0NGIxYTRmZDM3ZGE0MGQ1OTQ0MmJlZTc1MjI3smluc3RhbGxhdGlvbl9zdGF0ZalpbnN0YWxsZWS0cmF3X3N1bW1hcnlfdmVyc2lvbnORpTEuMC4wpHJvbGWnY3VycmVudIWrYmluZGluZ19yZWbZKnByb2plY3Rvci5jaGF0LnJlc3RvcmVfcG9pbnRfZGVsZXRlZEAxLjAuMK9jb2RlY19hZG1pc3Npb26JsGFjdGlvbl9hdXRob3JpdHmkbm9uZa1jYXBhYmlsaXR5X2lk2SRyZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWOyY2FwYWJpbGl0eV92ZXJzaW9upTIuMC4wrGNvZGVjX3JlYWRlctk0cmVhZGVyLnN0b3JhZ2UucmVzdG9yZV9wb2ludF9yZXRlbnRpb25fc3VtbWFyeUAyLjAuMLRkaXJlY3RfcmVhZGVyX3Jhd192MsK1b3V0cHV0X2NvbnRyYWN0X293bmVy2TxQbGFucy9zdG9yYWdlLXBsYW4ubWQjY29uY3JldGUtdHlwZWQtdGVybWluYWwtc3VtbWFyeS1yZXN1bHSrb3V0cHV0X2tpbmS6dGVybWluYWxfcmV0ZW50aW9uX3N1bW1hcnmyb3duZXJfYWRvcHRpb25fcmVm2W1qb3VybmFsOnN1bW1hcnktY29kZWMtc3ludGhldGljIy9zdGVwX2V2aWRlbmNlL1JFU1RPUkUtUE9JTlQtVEVSTUlOQUwtU1VNTUFSWS1DT0RFQy0wMDIvcm91dGVfaW5zdGFsbGF0aW9ucy84uXJhd19zdW1tYXJ5X3NjaGVtYV9zaGEyNTbZQDU0YWIxNmMyN2M5MTYwNmVlNjc4Y2QzNTgwOTMzMzBmMjU5NTQ0YjFhNGZkMzdkYTQwZDU5NDQyYmVlNzUyMjeyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZadjdXJyZW50hatiaW5kaW5nX3JlZtkqcHJvamVjdG9yLmNoYXQucmVzdG9yZV9wb2ludF9leHBpcmVkQDEuMC4wr2NvZGVjX2FkbWlzc2lvbomwYWN0aW9uX2F1dGhvcml0eaRub25lrWNhcGFiaWxpdHlfaWTZJHJlc3RvcmVfcG9pbnRfdGVybWluYWxfc3VtbWFyeV9jb2RlY7JjYXBhYmlsaXR5X3ZlcnNpb26lMi4wLjCsY29kZWNfcmVhZGVy2TRyZWFkZXIuc3RvcmFnZS5yZXN0b3JlX3BvaW50X3JldGVudGlvbl9zdW1tYXJ5QDIuMC4wtGRpcmVjdF9yZWFkZXJfcmF3X3YywrVvdXRwdXRfY29udHJhY3Rfb3duZXLZPFBsYW5zL3N0b3JhZ2UtcGxhbi5tZCNjb25jcmV0ZS10eXBlZC10ZXJtaW5hbC1zdW1tYXJ5LXJlc3VsdKtvdXRwdXRfa2luZLp0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyebJvd25lcl9hZG9wdGlvbl9yZWbZbWpvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMi9yb3V0ZV9pbnN0YWxsYXRpb25zLzm5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSFq2JpbmRpbmdfcmVm2SdyZWFkZXIuY2hhdC5yZXN0b3JlX3BvaW50X2hpc3RvcnlAMS4wLjCvY29kZWNfYWRtaXNzaW9uwLJpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlsmNvbXBhdGliaWxpdHlfb25seYWrYmluZGluZ19yZWbZJ3JlYWRlci5jaGF0LnJlc3RvcmVfcG9pbnRfaGlzdG9yeUAyLjAuMK9jb2RlY19hZG1pc3Npb26JsGFjdGlvbl9hdXRob3JpdHmkbm9uZa1jYXBhYmlsaXR5X2lk2SRyZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWOyY2FwYWJpbGl0eV92ZXJzaW9upTIuMC4wrGNvZGVjX3JlYWRlctk0cmVhZGVyLnN0b3JhZ2UucmVzdG9yZV9wb2ludF9yZXRlbnRpb25fc3VtbWFyeUAyLjAuMLRkaXJlY3RfcmVhZGVyX3Jhd192MsK1b3V0cHV0X2NvbnRyYWN0X293bmVy2TxQbGFucy9zdG9yYWdlLXBsYW4ubWQjY29uY3JldGUtdHlwZWQtdGVybWluYWwtc3VtbWFyeS1yZXN1bHSrb3V0cHV0X2tpbmS6dGVybWluYWxfcmV0ZW50aW9uX3N1bW1hcnmyb3duZXJfYWRvcHRpb25fcmVm2W5qb3VybmFsOnN1bW1hcnktY29kZWMtc3ludGhldGljIy9zdGVwX2V2aWRlbmNlL1JFU1RPUkUtUE9JTlQtVEVSTUlOQUwtU1VNTUFSWS1DT0RFQy0wMDIvcm91dGVfaW5zdGFsbGF0aW9ucy8xMblyYXdfc3VtbWFyeV9zY2hlbWFfc2hhMjU22UA1NGFiMTZjMjdjOTE2MDZlZTY3OGNkMzU4MDkzMzMwZjI1OTU0NGIxYTRmZDM3ZGE0MGQ1OTQ0MmJlZTc1MjI3smluc3RhbGxhdGlvbl9zdGF0ZalpbnN0YWxsZWS0cmF3X3N1bW1hcnlfdmVyc2lvbnORpTEuMC4wpHJvbGWnY3VycmVudIWrYmluZGluZ19yZWbZNHJlYWRlci5ydW50aW1lX2FydGlmYWN0cy5yZXN0b3JlX3BvaW50X2RlbGV0ZWRAMS4wLjCvY29kZWNfYWRtaXNzaW9uibBhY3Rpb25fYXV0aG9yaXR5pG5vbmWtY2FwYWJpbGl0eV9pZNkkcmVzdG9yZV9wb2ludF90ZXJtaW5hbF9zdW1tYXJ5X2NvZGVjsmNhcGFiaWxpdHlfdmVyc2lvbqUyLjAuMKxjb2RlY19yZWFkZXLZNHJlYWRlci5zdG9yYWdlLnJlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnlAMi4wLjC0ZGlyZWN0X3JlYWRlcl9yYXdfdjLCtW91dHB1dF9jb250cmFjdF9vd25lctk8UGxhbnMvc3RvcmFnZS1wbGFuLm1kI2NvbmNyZXRlLXR5cGVkLXRlcm1pbmFsLXN1bW1hcnktcmVzdWx0q291dHB1dF9raW5kunRlcm1pbmFsX3JldGVudGlvbl9zdW1tYXJ5sm93bmVyX2Fkb3B0aW9uX3JlZtluam91cm5hbDpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpYyMvc3RlcF9ldmlkZW5jZS9SRVNUT1JFLVBPSU5ULVRFUk1JTkFMLVNVTU1BUlktQ09ERUMtMDAyL3JvdXRlX2luc3RhbGxhdGlvbnMvMTK5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSFq2JpbmRpbmdfcmVm2TRyZWFkZXIucnVudGltZV9hcnRpZmFjdHMucmVzdG9yZV9wb2ludF9leHBpcmVkQDEuMC4wr2NvZGVjX2FkbWlzc2lvbomwYWN0aW9uX2F1dGhvcml0eaRub25lrWNhcGFiaWxpdHlfaWTZJHJlc3RvcmVfcG9pbnRfdGVybWluYWxfc3VtbWFyeV9jb2RlY7JjYXBhYmlsaXR5X3ZlcnNpb26lMi4wLjCsY29kZWNfcmVhZGVy2TRyZWFkZXIuc3RvcmFnZS5yZXN0b3JlX3BvaW50X3JldGVudGlvbl9zdW1tYXJ5QDIuMC4wtGRpcmVjdF9yZWFkZXJfcmF3X3YywrVvdXRwdXRfY29udHJhY3Rfb3duZXLZPFBsYW5zL3N0b3JhZ2UtcGxhbi5tZCNjb25jcmV0ZS10eXBlZC10ZXJtaW5hbC1zdW1tYXJ5LXJlc3VsdKtvdXRwdXRfa2luZLp0ZXJtaW5hbF9yZXRlbnRpb25fc3VtbWFyebJvd25lcl9hZG9wdGlvbl9yZWbZbmpvdXJuYWw6c3VtbWFyeS1jb2RlYy1zeW50aGV0aWMjL3N0ZXBfZXZpZGVuY2UvUkVTVE9SRS1QT0lOVC1URVJNSU5BTC1TVU1NQVJZLUNPREVDLTAwMi9yb3V0ZV9pbnN0YWxsYXRpb25zLzEzuXJhd19zdW1tYXJ5X3NjaGVtYV9zaGEyNTbZQDU0YWIxNmMyN2M5MTYwNmVlNjc4Y2QzNTgwOTMzMzBmMjU5NTQ0YjFhNGZkMzdkYTQwZDU5NDQyYmVlNzUyMjeyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZadjdXJyZW50hatiaW5kaW5nX3JlZtkzcmVhZGVyLnJ1bnRpbWVfYXJ0aWZhY3RzLnJlc3RvcmVfcG9pbnRfcmVjb3JkQDEuMC4wr2NvZGVjX2FkbWlzc2lvbsCyaW5zdGFsbGF0aW9uX3N0YXRlqWluc3RhbGxlZLRyYXdfc3VtbWFyeV92ZXJzaW9uc5GlMS4wLjCkcm9sZbJjb21wYXRpYmlsaXR5X29ubHmFq2JpbmRpbmdfcmVm2TNyZWFkZXIucnVudGltZV9hcnRpZmFjdHMucmVzdG9yZV9wb2ludF9yZWNvcmRAMi4wLjCvY29kZWNfYWRtaXNzaW9uibBhY3Rpb25fYXV0aG9yaXR5pG5vbmWtY2FwYWJpbGl0eV9pZNkkcmVzdG9yZV9wb2ludF90ZXJtaW5hbF9zdW1tYXJ5X2NvZGVjsmNhcGFiaWxpdHlfdmVyc2lvbqUyLjAuMKxjb2RlY19yZWFkZXLZNHJlYWRlci5zdG9yYWdlLnJlc3RvcmVfcG9pbnRfcmV0ZW50aW9uX3N1bW1hcnlAMi4wLjC0ZGlyZWN0X3JlYWRlcl9yYXdfdjLCtW91dHB1dF9jb250cmFjdF9vd25lctk8UGxhbnMvc3RvcmFnZS1wbGFuLm1kI2NvbmNyZXRlLXR5cGVkLXRlcm1pbmFsLXN1bW1hcnktcmVzdWx0q291dHB1dF9raW5kunRlcm1pbmFsX3JldGVudGlvbl9zdW1tYXJ5sm93bmVyX2Fkb3B0aW9uX3JlZtluam91cm5hbDpzdW1tYXJ5LWNvZGVjLXN5bnRoZXRpYyMvc3RlcF9ldmlkZW5jZS9SRVNUT1JFLVBPSU5ULVRFUk1JTkFMLVNVTU1BUlktQ09ERUMtMDAyL3JvdXRlX2luc3RhbGxhdGlvbnMvMTW5cmF3X3N1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN7JpbnN0YWxsYXRpb25fc3RhdGWpaW5zdGFsbGVktHJhd19zdW1tYXJ5X3ZlcnNpb25zkaUxLjAuMKRyb2xlp2N1cnJlbnSpc2NoZW1hX2lk2TlwbS5yZXN0b3JlX3BvaW50X3Rlcm1pbmFsX3N1bW1hcnlfY29kZWMub3duZXJfYWRvcHRpb24udjKuc2NoZW1hX3ZlcnNpb26lMi4wLjCzc3RvcmFnZV9pbnN0YW5jZV9pZNkkMTExMTExMTEtMTExMS00MTExLTgxMTEtMTExMTExMTExMTExtXN1bW1hcnlfc2NoZW1hX3NoYTI1NtlANTRhYjE2YzI3YzkxNjA2ZWU2NzhjZDM1ODA5MzMzMGYyNTk1NDRiMWE0ZmQzN2RhNDBkNTk0NDJiZWU3NTIyN653cml0ZXJfYmluZGluZ9k0d3JpdGVyLnN0b3JhZ2UucmVzdG9yZV9wb2ludF9yZXRlbnRpb25fc3VtbWFyeUAyLjAuMA==",
+      "actual_owner_snapshot": {
+        "coordinator": "StorageMigrationCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "receipt_key": "migration_receipt.v1:migration:summary-codec-synthetic",
+        "receipt_sha256": "1c09484b7540f4ca05fedd5372d20ae9af3e4fa214f4d9f0112791c0dbf8cdbd",
+        "journal_ref": "journal:summary-codec-synthetic",
+        "step_evidence_sha256": "74935f91e49d57541ab2c0436a6751db877cd70512d25e27f6aa43947ca013f7",
+        "backup_ref": "backup:migration:1",
+        "receipt_and_journal_authenticated": true,
+        "backup_verified": true,
+        "dependency_holds_current": true
+      }
+    },
+    "codec_results": {
+      "Storage expiry owner reconciliation": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/0",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "Storage restore-point retention/recovery": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/1",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "Storage restore-point retirement owner": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/2",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "consumer.chat.restore_point_created@2.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/3",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "consumer.chat.restore_point_deleted@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/4",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "consumer.chat.restore_point_expired@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/5",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "projector.chat.restore_point_created@2.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/7",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "projector.chat.restore_point_deleted@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/8",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "projector.chat.restore_point_expired@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/9",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "reader.chat.restore_point_history@2.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/11",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "reader.runtime_artifacts.restore_point_deleted@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/12",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "reader.runtime_artifacts.restore_point_expired@1.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/13",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      },
+      "reader.runtime_artifacts.restore_point_record@2.0.0": {
+        "capability_id": "restore_point_terminal_summary_codec",
+        "capability_version": "2.0.0",
+        "owner_adoption_ref": "journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/15",
+        "input": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "summary_key": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "summary_source_bytes_sha256": "59386d5ccf877cdcd4400863b00059fc80048364f134fe86801eeb2057612aee",
+          "summary_transaction_id": "example-A",
+          "summary_schema_sha256": "54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227",
+          "original_terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "generic_read_token": {
+            "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+            "checkpoint_key": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111",
+            "checkpoint_ref": "event_record_index_checkpoint.v1:11111111-1111-4111-8111-111111111111#/generations/eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_id": "eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "generation_anchor_sha256": "885658c8f6cd4344fba9848b171de4f82643294a73827c0c1d72bd8fc77501fc",
+            "frontier_revision": 0,
+            "frontier_sha256": "0d622a5042bdf2aa0cc94f55eca1620600a297ccb791a66abf8c5de4bd7a1290",
+            "index_dataset_name": "event_record_index.v2@eig_310acaedbaec8f841e93d21cac7914e773b170939dfa87fd676638c888e9fd78",
+            "source_selection": {
+              "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+              "current_ref": "storage/seglog/CURRENT",
+              "current_bytes_sha256": "60ee39059b563365d90c6a52c2435959751383d6fcf80eb8d6c56a454a485709",
+              "selected_segment_generation": 3,
+              "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+              "manifest_bytes_sha256": "4c0ee640bcbb5a76488f261c96e43ce299c5b5e231119dcf9bba2c7d773b146a",
+              "manifest_generation": 31,
+              "recovery_epoch": 0,
+              "manifest_survivor_prefix_sha256": "ede5d6b50da4ac5562fc7e6193c85899cd6175a4c076697180f683fc97eb4e24",
+              "retained_inventory_sha256": "2e797a84d0d092e18ebc72f955d73db0c9205da6a4332e5450741b015ba2ab29",
+              "durable_watermarks_sha256": "36c1dab3ee1ad884c36b55c72f8a7dfeda3cfadba78e49c09523d1fd66cc91de",
+              "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
+              "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
+            },
+            "redb_snapshot_id": "snapshot:txn:initial-A"
+          }
+        },
+        "input_sha256": "c16509c18eb998c925f6cecc403bf781462c79044537df8b592d1c2f43431874",
+        "output": {
+          "kind": "terminal_retention_summary",
+          "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "project_id": "project-A",
+          "scope_partition": "project~cHJvamVjdC1B",
+          "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+          "terminal_status": "expired",
+          "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+          "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+          "action_authority": "none",
+          "durable_effects": []
+        },
+        "output_sha256": "bee0e833fee5c9129525c51bbda9f2905401a6448d6353e3a243a0a6ae076af2"
+      }
+    }
+  },
+  "route_examples": [
+    {
+      "route": "Storage expiry owner reconciliation",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "Storage restore-point retention/recovery",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "Storage restore-point retirement owner",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "consumer.chat.restore_point_created@2.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "consumer.chat.restore_point_deleted@1.0.0",
+      "kind": "not_applicable_to_deleted_event",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "consumer.chat.restore_point_expired@1.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "projector.chat.restore_point_created@1.0.0",
+      "kind": "compatibility_route_rejects_summary_v2",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "projector.chat.restore_point_created@2.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "projector.chat.restore_point_deleted@1.0.0",
+      "kind": "not_applicable_to_deleted_event",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "projector.chat.restore_point_expired@1.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.chat.restore_point_history@1.0.0",
+      "kind": "compatibility_route_rejects_summary_v2",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.chat.restore_point_history@2.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.runtime_artifacts.restore_point_deleted@1.0.0",
+      "kind": "not_applicable_to_deleted_event",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.runtime_artifacts.restore_point_expired@1.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.runtime_artifacts.restore_point_record@1.0.0",
+      "kind": "compatibility_route_rejects_summary_v2",
+      "action_authority": "none",
+      "durable_effects": []
+    },
+    {
+      "route": "reader.runtime_artifacts.restore_point_record@2.0.0",
+      "kind": "terminal_retention_summary",
+      "summary_ref": "restore_point_retention_summary.v1:project~cHJvamVjdC1B:rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "project_id": "project-A",
+      "scope_partition": "project~cHJvamVjdC1B",
+      "restore_point_id": "rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521",
+      "terminal_status": "expired",
+      "original_record_hash": "a9af7d872cba522a25686c7e1182ee3913343494cae0c0a59832b181ff9ced20",
+      "terminal_event_id": "er_rpe_c3770b22aa8156e879cf5b91c37021f623064bb6c8c7c2b319c529ba8d1a6bd1",
+      "action_authority": "none",
+      "durable_effects": []
+    }
+  ],
+  "branch_rejection": {
+    "route": "reader.chat.branch_from_restore@2.0.0",
+    "kind": "rejected_terminal_unavailable",
+    "summary_consumer": false,
+    "action_authority": "none",
+    "durable_effects": []
+  },
+  "v1_and_nonexpiry_routes": "Original owner predicates stay separately required; no interpretation or version conversion is inferred."
+}

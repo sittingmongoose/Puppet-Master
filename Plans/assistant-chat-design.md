@@ -25419,9 +25419,9 @@ New first executions use this deterministic identity lookup to find the companio
 2. **Canonical seglog append.** Read the durable frozen input, validate all joins/digests, and pass it unchanged to the existing append API. Use barrier durability because it is a prerequisite for action publication. The writer supplies sequence/persisted time and returns only a matching synced `AppendReceipt` after its frame and manifest/watermark barriers. Seglog and redb are not one transaction. If crash occurs here, the pending companion retains every original payload category, actor, correlation, occurrence/observation time and command identity. Retry/restart never recaptures from changed live conversation state.
 3. **Commit marker.** Under the same owner gate, prove the exact source event is durable and matches the frozen input, canonical record and dedupe identity. In a second redb transaction CAS the same pending companion to committed, retaining every frozen field and storing the exact synced receipt/commit time. Only after this transaction may creation return success or a reader publish completed creation. A commit marker is an accelerator, not independent evidence; all reads/recovery still verify the matching canonical source through the receipt/index/manifest.
 
-Ordinary crashes are fully recoverable from committed custody: before barrier1 neither row exists; after barrier1 retry has complete frozen input and appends at most once; after barrier2-before3 recovery validates the durable event/dedupe then marks committed with no reappend; after barrier3-before-reply it returns the original result. A lost append acknowledgement first runs Storage recovery and checks dedupe/source proof; it never assumes the append failed. Valid unacknowledged frames follow existing Case L recovery. Changed storage/permission posture fences reconciliation until existing authority permits it. Missing/corrupt companion/input/record or unprovable identity is a disclosed recovery failure requiring canonical backup/owner recovery, distinct from an ordinary intact-custody crash.
+Ordinary crash recovery preserves committed custody and remains subject to genuine original-receipt availability: before barrier1 neither row exists; after barrier1 retry has complete frozen input and appends at most once; after barrier2-before3 recovery validates the durable event/dedupe and genuine exact first eleven-field AppendReceipt through the explicitly adopted SP-286 append-owner protocol before marking committed with no reappend; unresolved first-receipt custody remains recovery-required rather than being filled from the four-field dedupe locator; after barrier3-before-reply it returns the original result. A lost append acknowledgement first runs Storage recovery and checks dedupe/source proof; it never assumes the append failed. Valid unacknowledged frames follow existing Case L recovery. Changed storage/permission posture fences reconciliation until existing authority permits it. Missing/corrupt companion/input/record or unprovable identity is a disclosed recovery failure requiring canonical backup/owner recovery, distinct from an ordinary intact-custody crash.
 
-The **native new-write** reader predicate, including existing branch and artifact paths for those new records, is: in one current redb snapshot join project-matched `rp`, matching committed companion, matching original record/frozen payload hashes and the existing event-index entry; resolve that entry/receipt to the verified canonical synced frame under current Storage source/generation authority. The current lifecycle/holds/permission/source visibility must also pass the existing owner check. `rp.status=available` alone never constitutes completed creation. Pending companion or missing matching event yields in-progress/unavailable, no branch route, no artifact completion and no success result; a forged committed marker yields integrity/recovery unavailable. Only owner command/restart reconciliation can complete the marker; passive event replay cannot create or mutate canonical companion state.
+The **original native creation admission** predicate preserves all capture/append/commit barriers above. For ordinary current native reads, the explicitly adopted @2 routes use SP-285: available-created reads call reader.storage.restore_point_retained_creation@1.0.0 with passive_creation; supported present deleted/expired reads call reader.storage.restore_point_retained_custody@1.0.0. Their retained-domain checks, plus unchanged current branch/action preflight when an action is requested, are: in one current redb snapshot join project-matched `rp`, matching committed companion, matching original record/frozen payload hashes and the existing event-index entry; resolve the current index entry to the verified canonical synced frame under current Storage source/generation authority while preserving the stored original receipt coordinates as historical facts, never copying current locations into them. The current lifecycle/holds/permission/source visibility must also pass the existing owner check. `rp.status=available` alone never constitutes completed creation. Pending companion or missing matching event yields in-progress/unavailable, no branch route, no artifact completion and no success result; a forged committed marker yields integrity/recovery unavailable. Only owner command/restart reconciliation can complete the marker; passive event replay cannot create or mutate canonical companion state. These new passive types authenticate actual already-admitted immutable custody and surviving current source; they do not reacquire old creation transaction/publication/source/generation snapshots. Unsupported status/routes gain no automatic adoption and compatibility @1 stays unchanged.
 
 #### Supported historical completion reader
 
@@ -25459,6 +25459,8 @@ The third result is `kind = terminal_retention_summary`, backed by the exact reg
 
 Only `reader.chat.restore_point_history` and `reader.runtime_artifacts.restore_point_record` consume this third result for passive terminal/hash-summary inspection. It carries the actual terminal status and no action authority. `reader.chat.branch_from_restore` accepts only a present point satisfying native or supported historical creation completion plus its full fresh Chat preflight; it never accepts the summary result. Missing/unproven summary authority keeps unexplained-loss recovery/fencing and does not produce a terminal result. The common typed result contract distinguishes `native_completion`, `historical_completion`, and `terminal_retention_summary`; they are not interchangeable truthy success values.
 
+Original creation admission remains complete. SP-285 creation_pending_recovery uses authentic admitted pending custody and SP-286 first receipt, with final receipt resolution before the final owner-local runtime/domain guard and atomic companion/result publication. Passive readers cannot execute recovery or infer completion from pending status.
+
 ### ACD-465 — Restore-point created consumers
 
 ```yaml
@@ -25474,8 +25476,11 @@ canonical_text: Assistant Chat defines restore-created passive consumers and nat
   only the affected restore-point operations; old completion validity and companion backfill are distinct.
   Passive history additionally accepts a separately verified terminal-retention-summary result, with no
   action authority. For restore_point.created only, current read publication explicitly adopts the named
-  2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and actual original
-  creation custody remains independently required.
+  2.0.0 reader successors under SP-281/SP-278; v1 bindings are compatibility-only and full original creation
+  controls remain required at admission. Current native passive available/expired/deleted routes explicitly
+  adopt SP-285 retained_creation/retained_custody with authentic immutable rows and current source instead
+  of disposed original controls; all action preflight remains independent.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
 gui_related: true
 gui_classification_reason: This unit governs existing visible restore-point history and branch availability.
 split_recommended: false
@@ -25486,6 +25491,8 @@ depends_on:
 - SP-281
 - CV-320
 - SP-278
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - History accepts the independently typed SP-269 terminal-summary result without a present point/companion;
@@ -25494,12 +25501,16 @@ acceptance_criteria:
   new-recipe companion discriminator; lifecycle and hold changes do not change that digest.
 - Historical hash adoption never overwrites genuine stored hashes or adds a new-recipe marker without
   equal recomputation and complete genuine custody.
-- Native ordinary crash after either persistence barrier recovers the exact frozen payload once without
-  live recapture or duplicate append.
+- Native ordinary crash with SP-286 genuine exact-first-receipt custody recovers the exact
+  frozen payload once without live recapture or duplicate append.
 - Native rp.available without committed matching source proof cannot enable branch or artifact completion.
 - Supported historical rp plus genuine matching durable created event and owner custody remains readable
   with no new companion or reconstructed command request.
 - Affected-record custody fence leaves unrelated records and read-only diagnostics usable.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- Original creation admission remains complete. SP-285 creation_pending_recovery uses authentic admitted pending custody and SP-286 first receipt, with final receipt resolution before the final owner-local runtime/domain guard and atomic companion/result publication. Passive readers cannot execute recovery or infer completion from pending status.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
@@ -25507,6 +25518,10 @@ validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - Plans/event_index_consumer_adoption.schema.json
 - Plans/event_index_consumer_adoption_fixtures.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -25544,3 +25559,144 @@ owner_hints:
 The create command's original result is the SP-274 content-free `RestorePointCreateCommandResult`, with original point/ref/hash/event/receipt identities for success. Equal original command identity and request digest returns this exact owner result for the app-root lifetime, even after lawful removal of point/capture bytes. This reports the original creation, never current point availability or action permission. Fresh branch/materialization still requires current canonical point, completion and Chat/FileSafe preflight. SP-269's terminal-summary result remains a separate passive history result and cannot substitute for original command replay.
 
 Extend native creation barriers1/3 with the exact SP-274 result custody transaction; do not weaken any frozen input, source append, lifecycle/hold, historical reader or affected-point recovery requirement. The typed owner result body and schema are NEW narrow materialization; the embedded original Full Thread outcome and central UI response preserve their existing schemas/owners. Refused/failed admitted outcomes have no created target and require actual no-effect evidence; pre-dispatch refusals write nothing. Unknown effects never become false no-effect failure or automatic new creation.
+
+
+## Deleted restore-point passive history admission
+
+Adopt `consumer.chat.restore_point_deleted@1.0.0`, `projector.chat.restore_point_deleted@1.0.0` and the deletion-family route of `reader.chat.restore_point_history@2.0.0`. Deletion follows the complete SP-268/SP-272 predicates at each actual boundary, including SP-285 retained-created B1 admission, SP-274 result, current SP-278 source and explicitly installed pending recovery with SP-286 receipt. Separate supported historical inspection requires actual introduction/disposition proof; independently canonical SP-269 summary inspection keeps its own terminal predicate and cannot replace native initial admission. Later native inspection explicitly adopts SP-285 reader.storage.restore_point_retained_custody@1.0.0, validating actual admitted immutable point/companions/SP-274 result, original stored receipts and full current source without disposed original transaction/group/raw SIR controls. Present native, historical or terminal-summary classification only after the applicable phase joins; missing proof preserves affected unavailability and the prior checkpoint. Visible deleted history is passive and cannot dispatch delete, replay command success, branch, clear holds or infer available state. B3 changes no point/hold field; independently admitted later holds preserve terminal inspection and block retirement.
+
+### Chat summary codec routes
+
+Chat explicitly adopts the SP-269 codec2 typed-result boundary for `consumer.chat.restore_point_created@2.0.0`, `consumer.chat.restore_point_deleted@1.0.0`, `consumer.chat.restore_point_expired@1.0.0`, `projector.chat.restore_point_created@2.0.0`, `projector.chat.restore_point_deleted@1.0.0`, `projector.chat.restore_point_expired@1.0.0` and `reader.chat.restore_point_history@2.0.0`. Resolve each exact owner route in `Plans/restore_point_summary_reader_routes.json` and its actual coordinator receipt/journal adoption before use. Existing raw schemas/checkpoints remain v1-only and unchanged. `projector.chat.restore_point_created@1.0.0` and `reader.chat.restore_point_history@1.0.0` are compatibility-only fences rejecting raw v2 and codec2. Branch-from-restore is excluded at every version. SP-269 owns the complete codec, input/output binding, installation and writer gates; route membership alone supplies none of them. Deleted/expired consumers reject the other terminal event family.
+
+New deletion B1 uses SP-285 retained-created original_create_result_custody with all fresh SP-268/SP-272 gates. After actual B1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed B1/creation/raw SIR controls; final receipt resolution precedes the final owner-local guard and atomic B3. Passive readers cannot execute recovery.
+
+### ACD-464 — Deleted restore-point passive history admission
+
+```yaml
+plan_unit_id: ACD-464
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Chat admits deleted restore-point consumer/projector and history2 routes through full
+  original SP-268/SP-272 admission followed by explicitly adopted SP-285 authenticated retained_custody/current-source
+  inspection, or independent supported historical/summary proof. Visible terminal history remains passive.
+  Exact current Chat routes adopt the SP-269 codec2 typed boundary while compatibility routes fence raw
+  v2 and codec2.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+gui_related: true
+gui_classification_reason: Defines visible passive restore-point history, evidence and unavailable states.
+split_recommended: false
+depends_on:
+- SP-268
+- SP-272
+- SP-269
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Full original B1/B2/B3 semantics apply at their respective boundaries through SP-285 lifecycle/pending routes; later visible native
+  classification requires SP-285 authenticated retained rows/current source, while supported history/canonical
+  summary keep separate predicates.
+- Intervening holds do not cancel original deletion or permit retirement; missing proof preserves affected
+  unavailability.
+- Current codec routes require exact original coordinator adoption; raw-v1 schemas/checkpoints and compatibility
+  fences stay unchanged.
+- Terminal history cannot dispatch delete, replay success, branch, restore source content or clear holds.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- New deletion B1 uses SP-285 retained-created original_create_result_custody with all fresh SP-268/SP-272 gates. After actual B1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed B1/creation/raw SIR controls; final receipt resolution precedes the final owner-local guard and atomic B3. Passive readers cannot execute recovery.
+validation_surfaces:
+- Plans/restore_point_deleted_contracts.schema.json
+- Plans/restore_point_summary_reader_routes.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+```
+
+
+## Expired restore-point passive history admission
+
+Chat retains the existing immutable `available -> expired` predicate and RSE-P01/P02/N01/N02/N03 eligibility behavior. `producer.storage.retention.restore_point_expired@1.0.0` executes it through SP-275 E1 frozen intent/status, E2 barrier append and E3 original receipt/result. This adds no timer, cadence, UICommand, release inference or hold-clear authority. `consumer.chat.restore_point_expired@1.0.0`, `projector.chat.restore_point_expired@1.0.0` and the expiry-family history@2.0.0 route validate native, supported historical or independently canonical summary truth without executing retention. Visible expired status means unavailable for apply/delete, not proof of physical purge. Every source conversation/thread/worktree/file/Git/queue/runtime-safe-point remains under its existing owner; later legitimate holds retain inspectable expired capture.
+
+Expiry follows SP-275's full fresh E1 eligibility and SP-285 retained-created prerequisite, actual E2/E3 boundaries, current SP-278 source and explicitly installed pending recovery with SP-286 receipt. E3 writes only the companion and may read holds admitted after E1. Ordinary checkpoint refresh preserves current holds and complete lawful generation history. Native expiry-companion retirement requires SP-269 v2 writer/codec admission; retained v1 remains supported only under genuine pre-introduction custody proof. No missing native custody is fabricated. Exact Chat codec2 routes and compatibility fences are specified above; all shared writer/read authority remains in SP-269. Later passive native inspection explicitly adopts SP-285 reader.storage.restore_point_retained_custody@1.0.0 and complete authenticated retained-row/current-source joins; it does not fetch old E1/E2/E3, eligibility or nested creation controls and does not acquire an SP-274 result dependency.
+
+New expiry E1 uses SP-285 retained-created passive_creation with all fresh SP-275 gates and no SP-274 dependency. After actual E1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed E1/eligibility/nested creation controls; final receipt resolution precedes the final owner-local guard and atomic E3. Passive readers cannot execute recovery.
+
+### ACD-466 — Expired restore-point passive history admission
+
+```yaml
+plan_unit_id: ACD-466
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Chat preserves the existing expiry predicate and exposes passive expired history through
+  full original SP-275 admission followed by explicitly adopted SP-285 authenticated retained_custody/current-source
+  inspection, or supported canonical terminal admission. Expiry gains no SP-274 dependency. Logical expiry
+  is separate from physical retirement. Current history2/consumer/projector routes adopt the shared codec2
+  typed boundary with unchanged raw-v1 schemas and compatibility fences.
+  Creation, fresh lifecycle admission, admitted pending recovery and passive retained inspection follow their distinct SP-285 routes.
+gui_related: true
+gui_classification_reason: Defines visible passive restore-point history, evidence and unavailable states.
+split_recommended: false
+depends_on:
+- SP-275
+- SP-269
+- ACD-465
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Existing release age, oldest-eligible count and protecting refs gate the sole available-to-expired transition.
+- Visible expired evidence never claims physical purge or authorizes apply/delete, branch, hold clear
+  or source resurrection.
+- Full E1/E2/E3 semantics under SP-285 lifecycle/pending routes preserve later holds and legitimately late commits; later
+  native inspection uses SP-285 retained rows/current source without disposed controls or new timers.
+- Native expiry retirement requires coordinated writer2 and codec2 admission; historical v1 never substitutes
+  for missing native custody.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- New expiry E1 uses SP-285 retained-created passive_creation with all fresh SP-275 gates and no SP-274 dependency. After actual E1, its installed pending route uses authentic pending custody and SP-286 first receipt without disposed E1/eligibility/nested creation controls; final receipt resolution precedes the final owner-local guard and atomic E3. Passive readers cannot execute recovery.
+validation_surfaces:
+- Plans/restore_point_expired_contracts.schema.json
+- Plans/restore_point_expired_owner_resolution.schema.json
+- Plans/restore_point_summary_reader_routes.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+- RSE-P01
+- RSE-P02
+- RSE-N01
+- RSE-N02
+- RSE-N03
+```

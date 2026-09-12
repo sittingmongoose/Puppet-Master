@@ -1,0 +1,170 @@
+{
+  "status": "FAMILY_CONTRACTS_DEFINED_SHARED_FRAME_CODEC_PREREQUISITE_OPEN",
+  "normative_contract_complete": false,
+  "status_meaning": "PASS means the named family-level normative facet is defined, never native or frozen-validator clearance. Shared native frame-byte codec remains incomplete; the earlier pending first-receipt gap is resolved by explicit SP-285/SP-286 adoption.",
+  "events": [
+    {
+      "event_type": "restore_point.expired",
+      "criteria": [
+        {
+          "criterion": "membership_version",
+          "status": "PASS",
+          "coverage": "Existing family_revision2.0.0, closed payload1.0.0 and project_only rows unchanged."
+        },
+        {
+          "criterion": "owner_doc",
+          "status": "PASS",
+          "coverage": "Chat owns lifecycle; Storage owns physical custody and phase readers; SIR exclusively owns authentic command outcome/response."
+        },
+        {
+          "criterion": "producer",
+          "status": "PARTIAL",
+          "coverage": "Exact fresh B1/E1 lifecycle, authentic canonical pending custody, SP-286 first receipt and final atomic completion are defined. Shared first-native frame encoding remains a separate normative prerequisite."
+        },
+        {
+          "criterion": "closed_payload_schema",
+          "status": "PASS",
+          "coverage": "Existing event payload schema unchanged; new closed physical and transient sidecars and strict current summary writer are explicit."
+        },
+        {
+          "criterion": "scope_identity",
+          "status": "PASS",
+          "coverage": "Original instance/Project/point/command identity, immutable creation hash and exact event/result joins are explicitly checked."
+        },
+        {
+          "criterion": "replay_idempotency",
+          "status": "PASS",
+          "coverage": "Three pre-append/protected-publication/issued-receipt crash cuts preserve frozen input and one event/first receipt; restored old pending without fresh authority fails closed. Later retained replay uses current owner/source fences without disposed original controls."
+        },
+        {
+          "criterion": "retention",
+          "status": "PASS",
+          "coverage": "Existing policy objects unchanged. Strict summary writer2 and explicit v1/v2 readers preserve exact original reference-release age, all protecting classes and atomic exact-three-row removal; no new body retention."
+        },
+        {
+          "criterion": "redaction_custody",
+          "status": "PASS",
+          "coverage": "Same-family original pending SIR identity/dispatch/outcome and terminal result custody, independent receipt retention, nonsecret refs and current access are explicit. No raw-source history or fabricated acknowledgement is required."
+        },
+        {
+          "criterion": "transitions",
+          "status": "PASS",
+          "coverage": "Actual initial admission, fresh retained-created lifecycle admission, pending recovery and passive retained/summary reads are distinct. Complete final owner guard follows actual receipt resolution; stale attempts preserve pending rows and independently current holds."
+        },
+        {
+          "criterion": "consumers_checkpoints",
+          "status": "PARTIAL",
+          "coverage": "Exact individual consumers/checkpoints adopt current generic SP-278 source and separately installed retained readers. Field/hash/currentness/owner contracts are explicit; shared first-native frame decoder bytes are not yet completely specified."
+        },
+        {
+          "criterion": "compatibility_withdrawal",
+          "status": "PASS",
+          "coverage": "Strict summary writer2/explicit retainedv1-v2 dispatcher and per-caller routes preserve legacy/native distinctions. New pending deletion variant is explicit; old null-custody pending and old-restored pending cannot acquire fabricated authority."
+        },
+        {
+          "criterion": "positive_negative_oracles",
+          "status": "PARTIAL",
+          "coverage": "Original/phase/lifecycle and 110+44 pending suites plus 31 fresh rejection/31 retry probes pass, with original 199 regressions preserved. Exact native frame-byte oracles await shared codec closure; future-operation preludes and native execution remain qualified."
+        }
+      ]
+    },
+    {
+      "event_type": "restore_point.deleted",
+      "criteria": [
+        {
+          "criterion": "membership_version",
+          "status": "PASS",
+          "coverage": "Existing family_revision2.0.0, closed payload1.0.0 and project_only rows unchanged."
+        },
+        {
+          "criterion": "owner_doc",
+          "status": "PASS",
+          "coverage": "Chat owns lifecycle; Storage owns physical custody and phase readers; SIR exclusively owns authentic command outcome/response."
+        },
+        {
+          "criterion": "producer",
+          "status": "PARTIAL",
+          "coverage": "Exact fresh B1/E1 lifecycle, authentic canonical pending custody, SP-286 first receipt and final atomic completion are defined. Shared first-native frame encoding remains a separate normative prerequisite."
+        },
+        {
+          "criterion": "closed_payload_schema",
+          "status": "PASS",
+          "coverage": "Existing event payload schema unchanged; new closed physical and transient sidecars and strict current summary writer are explicit."
+        },
+        {
+          "criterion": "scope_identity",
+          "status": "PASS",
+          "coverage": "Original instance/Project/point/command identity, immutable creation hash and exact event/result joins are explicitly checked."
+        },
+        {
+          "criterion": "replay_idempotency",
+          "status": "PASS",
+          "coverage": "Three pre-append/protected-publication/issued-receipt crash cuts preserve frozen input and one event/first receipt; restored old pending without fresh authority fails closed. Later retained replay uses current owner/source fences without disposed original controls."
+        },
+        {
+          "criterion": "retention",
+          "status": "PASS",
+          "coverage": "Existing policy objects unchanged. Strict summary writer2 and explicit v1/v2 readers preserve exact original reference-release age, all protecting classes and atomic exact-three-row removal; no new body retention."
+        },
+        {
+          "criterion": "redaction_custody",
+          "status": "PASS",
+          "coverage": "Same-family original pending SIR identity/dispatch/outcome and terminal result custody, independent receipt retention, nonsecret refs and current access are explicit. No raw-source history or fabricated acknowledgement is required."
+        },
+        {
+          "criterion": "transitions",
+          "status": "PASS",
+          "coverage": "Actual initial admission, fresh retained-created lifecycle admission, pending recovery and passive retained/summary reads are distinct. Complete final owner guard follows actual receipt resolution; stale attempts preserve pending rows and independently current holds."
+        },
+        {
+          "criterion": "consumers_checkpoints",
+          "status": "PARTIAL",
+          "coverage": "Exact individual consumers/checkpoints adopt current generic SP-278 source and separately installed retained readers. Field/hash/currentness/owner contracts are explicit; shared first-native frame decoder bytes are not yet completely specified."
+        },
+        {
+          "criterion": "compatibility_withdrawal",
+          "status": "PASS",
+          "coverage": "Strict summary writer2/explicit retainedv1-v2 dispatcher and per-caller routes preserve legacy/native distinctions. New pending deletion variant is explicit; old null-custody pending and old-restored pending cannot acquire fabricated authority."
+        },
+        {
+          "criterion": "positive_negative_oracles",
+          "status": "PARTIAL",
+          "coverage": "Original/phase/lifecycle and 110+44 pending suites plus 31 fresh rejection/31 retry probes pass, with original 199 regressions preserved. Exact native frame-byte oracles await shared codec closure; future-operation preludes and native execution remain qualified."
+        }
+      ]
+    }
+  ],
+  "new_owner_units": [
+    "SP-268",
+    "SP-272",
+    "SP-275",
+    "SP-285",
+    "ACD-464",
+    "ACD-466",
+    "RAP-058",
+    "RAP-060",
+    "SIR-045"
+  ],
+  "qualified_existing_phase_owners": [
+    "SP-269",
+    "SP-274",
+    "SP-281",
+    "ACD-465",
+    "RAP-059",
+    "SIR-044"
+  ],
+  "new_physical_families": [
+    "restore_point_expiry_commit",
+    "restore_point_expired_checkpoint",
+    "restore_point_deletion_commit",
+    "restore_point_deleted_checkpoint",
+    "restore_point_delete_result"
+  ],
+  "all_event_membership_and_retention_policy_objects_unchanged": true,
+  "native_execution": "NOT_RUN",
+  "frozen_validator_rows_closed": 0,
+  "older_assessments_restamped": false,
+  "governance_sealed": false,
+  "existing_created_phase_repair": "SP-281/SP-274/ACD-465/RAP-059/SIR-044 now explicitly adopt retained reads and SP-285/SP-286 pending recovery. Shared frame decoder qualification remains; no Home or other family adoption follows.",
+  "remaining_shared_prerequisite": "Shared Case L-2 first-native SeglogFrameV2 prefix field widths/offsets and exact fixed-order header/payload codec require explicit closure. Family pending/first-receipt/lifecycle/retained-read protocols are now defined; native execution remains NOT_RUN."
+}

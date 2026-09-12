@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2028-L2365
+Source lines: L2028-L2380
 
-Source SHA256: `bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308`
+Source SHA256: `af2a6fa4eece5b351bfd89429439070209269e1cc2d16501998d54caf0848434`
 
 ---
 
@@ -217,6 +217,8 @@ negative_constraints:
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/ui_command_response.schema.json, ContractName:Plans/Shared_Integration_Runtime.md#SIR-015
 
 
+For the installed SP-285 pending recovery route, actual canonical pending custody delegates the original normalized identity/payload digest, original dispatch ID and genuine nonterminal SIR outcome. Initial dispatch authentication occurs before pending publication; restart never downgrades success or recreates raw dispatch payloads. SIR alone advances that same original operation. Preserve an existing acknowledgement; if absent, acknowledge in the actual current recovery frame. Bind current full owner identity, target generation, availability, frame and revision. Resolve the actual SP-286 receipt before the final complete owner-local guard, then publish terminal companion/result/outcome/response atomically with no dependent resolver between guard and publication. Stale completion preserves pending custody and current legitimate holds; no silent redispatch or new operation is allowed.
+
 ### SIR-044 - Original create-command outcome delegated custody
 
 ```yaml
@@ -227,7 +229,10 @@ owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: For cmd.chat.create_restore_point, Shared Integration Runtime delegates custody of its
   exact original CommandOutcomeRecord to the canonical SP-274 command-result value while retaining exclusive
   semantic production and authentication authority. The resolver returns the same original outcome and
-  its separately typed owner-result join for app-root replay.
+  its separately typed owner-result join for app-root replay. SP-285 preserves first-capture authentication
+  and permits later immutable retained-row resolution without disposed raw source/dispatch/transaction
+  inputs; combined available-created inspection requires original_create_result_custody.
+  Installed SP-285 pending recovery authenticates retained original dispatch custody, uses SP-286 first receipt and publishes only after the final complete owner-local runtime/domain guard.
 gui_related: false
 gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
   no visual presentation contract.
@@ -236,6 +241,8 @@ depends_on:
 - SP-274
 - CV-333
 - DL-045
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - Only the actual original SIR operation authority can supply or advance its pending outcome; Storage
@@ -244,12 +251,20 @@ acceptance_criteria:
   preserved in the same committed SP-274 publication and mandatory backup.
 - Historical resolution preserves the original operation, topology and command identity; passive replay
   writes nothing and cannot create a global outcome writer.
+- Initial source authentication remains complete; later original-result reads authenticate immutable retained
+  canonical custody and current disclosure authority without retired raw source/transaction controls or
+  reconstructed outcome/receipt facts.
+- For the installed SP-285 pending recovery route, actual canonical pending custody delegates the original normalized identity/payload digest, original dispatch ID and genuine nonterminal SIR outcome. Initial dispatch authentication occurs before pending publication; restart never downgrades success or recreates raw dispatch payloads. SIR alone advances that same original operation. Preserve an existing acknowledgement; if absent, acknowledge in the actual current recovery frame. Bind current full owner identity, target generation, availability, frame and revision. Resolve the actual SP-286 receipt before the final complete owner-local guard, then publish terminal companion/result/outcome/response atomically with no dependent resolver between guard and publication. Stale completion preserves pending custody and current legitimate holds; no silent redispatch or new operation is allowed.
 validation_surfaces:
 - Plans/restore_point_create_result.schema.json
 - Plans/restore_point_create_result_fixtures.json
 - Plans/restore_point_create_result_join_fixtures.json
 - Plans/restore_point_create_result_native_pairs.json
 - Plans/storage_value_registry.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_original_result_authority
 reasoning_tier: high
 context_scope: restore_point_create_original_result
@@ -280,7 +295,7 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
-For exactly `cmd.chat.create_restore_point`, Storage SP-274 retains the ORIGINAL SIR-owned CommandOutcomeRecord as delegated app-root command-replay custody within the command-specific canonical value. SIR remains the sole semantic producer/owner; Storage cannot generate an outcome from a typed result, schema-valid caller body, event, receipt ref, current topology or defaults. Native creation authenticates the actual operation owner and current dispatch identity before admitting the initial record and its true terminal successor. Once terminal, preserve the exact original record and schema; no conversion to a newly observed topology or new operation is permitted. The delegated resolver exposes that same original record to CV-333 through the exact stored command_outcome_ref and validates its separately owned typed result/hash/ref join. A retained actual outcome is not a global outcome writer or a substitute for initial native acknowledgement/effect evidence. Pending updates require the original SIR authority; passive replay writes nothing. This narrowly supplies custody for the existing app-root original-owner-result obligation; it does not materialize a global CommandOutcome family or alter RP-DELIVERY-365D.
+For exactly `cmd.chat.create_restore_point`, Storage SP-274 retains the ORIGINAL SIR-owned CommandOutcomeRecord as delegated app-root command-replay custody within the command-specific canonical value. SIR remains the sole semantic producer/owner; Storage cannot generate an outcome from a typed result, schema-valid caller body, event, receipt ref, current topology or defaults. Native creation authenticates the actual operation owner and current dispatch identity before admitting the initial record and its true terminal successor. Once terminal, preserve the exact original record and schema; no conversion to a newly observed topology or new operation is permitted. The delegated resolver exposes that same original record to CV-333 through the exact stored command_outcome_ref and validates its separately owned typed result/hash/ref join. A retained actual outcome is not a global outcome writer or a substitute for initial native acknowledgement/effect evidence. Pending updates require the original SIR authority; passive replay writes nothing. This narrowly supplies custody for the existing app-root original-owner-result obligation; it does not materialize a global CommandOutcome family or alter RP-DELIVERY-365D. Under SP-285, initial capture/source authentication remains complete. Later source-independent canonical-result resolution uses the exact admitted immutable row and current disclosure authority without disposed original raw payload/dispatch or redb/source controls. When combined with available-created evidence, explicitly require retained_creation read_purpose=original_create_result_custody and its actual SP-274 result; passive_creation cannot substitute or authorize replay.
 
 ### Original Home command outcome custody
 

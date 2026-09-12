@@ -507,6 +507,8 @@ Later GUI, analytics, provider, terminal, browser, worktree/lane, project-state,
 
 All persisted values require `schema_version`. Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets. Secret-bearing or sensitive data is represented only by redacted refs, masked metadata, hashes, evidence refs, or external custody refs. Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template.
 
+For the exact `restore_point_retention_summary` family, registry root schema and field/version metadata describe the current v2 writer. Retained v1/v2 reads use the explicitly registered closed `$defs.registered_read_value` dispatcher under the same inline schema, as defined in SP-269, “Restore-point summary codec and coordinated admission.” This family-specific read selection does not widen writer validation or any other registry family.
+
 This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false.
 
 ContractRef: SchemaID:pm.storage_value_registry.v1, ContractName:Plans/storage_value_registry.json, ContractName:Plans/storage_value_registry.schema.json, ContractName:Plans/storage-plan.md
@@ -19669,7 +19671,7 @@ Commit the immutable `rp` and complete pending companion in one redb transaction
 
 Read in canonical segment/offset/sequence order through the current verified survivor range. Validate EventRecord 2.0, exact payload schema, project identity, registered policy, secret posture, record/source joins and event-index lookup bytes before certifying a restore-created observation. Generic valid nonmatching records may advance traversal after envelope/registry validation without restore-specific effects. Unknown/malformed records quarantine without crossing them; valid future versions halt as unsupported and are not recast as corruption. Timestamps never order processing.
 
-Within one redb write transaction/snapshot, verify the existing event-index row and exactly one supported branch: present native point plus full native completion proof; present historical point plus the full historical completion predicate; or the independent complete lawful terminal-retention traversal predicate below. Branch C does not require lawfully purged rp/companion bytes. Commit the projector checkpoint only after the selected branch and all shared current-generation/source checks pass. The logical view is computed from that same committed snapshot and selected proof; branch C yields only terminal/summary unavailability, never live creation completion or an action. Verify the existing full-index CURRENT selection, publication_locator and resolved full-index checkpoint, source_locator frame bounds/CRC/event/payload digest and same-generation coverage. Any changed selected index digest, source manifest/epoch or missing complete range aborts publication. This consumer cannot advance the globally owned index checkpoint or infer it from its own cursor. Its only owned durable write is this checkpoint, so there are no partially published projection rows. Missing/stale index durability, failed CAS against predecessor checkpoint, unresolved retention proof, or transaction failure leaves the checkpoint unchanged. Cursor advancement cannot race source generation/recovery changes; revalidate the Storage manifest/epoch authority under its maintenance exclusion before commit. UI notification timing is not durability.
+Within one redb write transaction/snapshot, verify the existing event-index row and exactly one supported branch: present native point with fully admitted original creation and the explicitly installed SP-285 retained-present branch for its supported current status (other statuses retain their pre-existing complete native predicate and gain no new adapter); present historical point plus the full historical completion predicate; or the independent complete lawful terminal-retention traversal predicate below. Branch C does not require lawfully purged rp/companion bytes. Commit the projector checkpoint only after the selected branch and all shared current-generation/source checks pass. The logical view is computed from that same committed snapshot and selected proof; branch C yields only terminal/summary unavailability, never live creation completion or an action. Verify the existing full-index CURRENT selection, publication_locator and resolved full-index checkpoint, source_locator frame bounds/CRC/event/payload digest and same-generation coverage. Any changed selected index digest, source manifest/epoch or missing complete range aborts publication. This consumer cannot advance the globally owned index checkpoint or infer it from its own cursor. Its only owned durable write is this checkpoint, so there are no partially published projection rows. Missing/stale index durability, failed CAS against predecessor checkpoint, unresolved retention proof, or transaction failure leaves the checkpoint unchanged. Cursor advancement cannot race source generation/recovery changes; revalidate the Storage manifest/epoch authority under its maintenance exclusion before commit. UI notification timing is not durability.
 
 The checkpoint certifies **source traversal**, not live restore-point availability. Reader lookup uses the current canonical record and owner permission/source-visibility/hold state in that snapshot. Action dispatch re-runs current Chat preflight. Creation replay never writes `status=available` back, consumes a record, branches a thread, touches source files/Git/worktree/queues, clears holds, charges Usage, notifies, dispatches or emits any EventRecord. Replay after expired/deleted/corrupt retains the canonical unavailable state. A source-thread deletion stays hidden; branching remains governed by Chat’s immutable conversation restore-point lifecycle, including `source_deleted_content_unavailable` when retained bytes are insufficient. Historical creation visibility must not revive deleted source visibility.
 
@@ -19694,7 +19696,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#restore-point-created-n
 
 ### Lawful terminal-retention traversal
 
-Creation completion and terminal-retention traversal are separate predicates. For an indexed surviving created event, classify exactly one supported read branch: (A) a present native point with complete required native creation proof; (B) a present supported historical point with its complete historical completion proof; or (C) an owner-proven **already completed terminal retention disposition** for this exact project/restore identity and original capture hash. Branch C is not a relaxed version of A or B and does not require a purged native companion, original command request or removed `rp` bytes.
+Creation completion and terminal-retention traversal are separate predicates. For an indexed surviving created event, classify exactly one supported read branch: (A) a present native point whose original creation passed complete admission, resolved through the explicitly installed SP-285 retained-present branch for its supported current status, with the pre-existing complete native predicate unchanged for other statuses; (B) a present supported historical point with its complete historical completion proof; or (C) an owner-proven **already completed terminal retention disposition** for this exact project/restore identity and original capture hash. Branch C is not a relaxed version of A or B and does not require a purged native companion, original command request or removed `rp` bytes.
 
 Branch C must join the surviving event's project, restore ID, canonical record ref and original hash to the durable owner-authorized terminal disposition and retained required hash summary; prove the exact point's owner-defined reference release, all required hold/ref release evidence, and the applicable existing age/count/deletion authorization; and verify committed deletion/retention/successor-generation custody for the bytes actually removed. Native custody may be absent only where that same durable disposition explicitly covers its lawful removal. Verify the current source/index manifest, survivor prefix and permitted range coverage exactly as for ordinary traversal. No terminal state inferred from missing rows, elapsed wall time, event time, a deleted source thread, UI status or an unverified summary is proof. `corrupt` alone is not a removal authorization. A lifecycle event by itself is not proof of completed purge. Storage SP-269 now defines the exact new canonical restore_point_retention_summary family and atomic retirement result supplying these embedded proofs. Branch C must resolve and validate that physical value; generic storage_deletion_record, an unresolved manifest pointer or a self-issued summary is not a substitute.
 
@@ -19734,12 +19736,14 @@ canonical_text: Storage selects pm.storage_value.restore_point_created_checkpoin
   at 2.0.0 and explicitly adopted history, branch-preflight and Runtime Artifacts reader successors consume
   the complete SP-278 source/index token after actual owner-admitted full rebuild. Original v1 values
   and digest meanings remain compatibility-only, with exact nonrecursive v1/v2 retired cores under the
-  unchanged RP-PROJECTION-3GEN policy. Current native completion separately authenticates the original
-  creation publication/receipt and canonical record/companion transaction, which may predate the current
-  generic index generation. A matching current index anchor cannot replace original custody. Existing
-  native, supported historical and terminal-summary predicates, original capture/command hash recipes,
-  source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain unchanged.
-  No sibling checkpoint or deferred family is borrowed.
+  unchanged RP-PROJECTION-3GEN policy. Original native creation admission separately authenticates the
+  original creation publication/receipt and canonical record/companion transaction, which may predate
+  the current generic index generation. A matching current index anchor cannot replace original custody.
+  SP-285 explicitly supplies ordinary retained-creation/terminal native reads without disposed original
+  controls. Existing supported historical and terminal-summary predicates, original capture/command hash
+  recipes, source release/hold/cap policy, mandatory-backup recovery and passive consumer limits remain
+  unchanged. No sibling checkpoint or deferred family is borrowed.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 gui_related: false
 gui_classification_reason: This unit defines canonical custody, storage schemas and checkpoint mechanics.
 split_recommended: false
@@ -19749,6 +19753,8 @@ depends_on:
 - CV-320
 - DL-045
 - SP-278
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - Closed embedded prior generations carry exact atomically recorded retired_at_utc and successor publication
@@ -19769,8 +19775,14 @@ acceptance_criteria:
   edit or count override is permitted.
 - Current v2 selection binds complete SP-278 anchor/frontier/source evidence; ordinary append changes
   the current token while preserving old index-row birth anchors and filtered generation history.
-- Actual original native creation publication and canonical companion transaction bind the original receipt
-  independently of a later generic rebuild; self-consistent caller evidence cannot supply original authority.
+- At initial admission, actual original native creation publication and canonical companion transaction
+  bind the original receipt independently of a later generic rebuild; self-consistent caller evidence
+  cannot supply original authority.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
 validation_surfaces:
 - Plans/restore_point_created_contract_fixtures.json
 - Plans/storage_value_registry.json
@@ -19778,6 +19790,10 @@ validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - Plans/event_index_consumer_adoption.schema.json
 - Plans/event_index_consumer_adoption_fixtures.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_created_completion_authority
 reasoning_tier: high
 context_scope: restore_point_created_event_authority
@@ -19813,15 +19829,17 @@ owner_hints:
 
 This is a NEW shared technical prerequisite under `DL-045`, owned by Storage SP-269. The existing `restore_point_record` is a full canonical record, and `storage_deletion_record` has thread/project hide-and-purge semantics with no closed restore-point identity field. Neither is an already registered restore-point retirement summary. No event-family admission, new lifecycle edge, source-body purge command or retention policy is introduced here.
 
-The physical family is `restore_point_retention_summary@1.0.0`, key `restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}`, value `pm.storage_value.restore_point_retention_summary.v1@1.0.0`. `scope_partition` is exactly `project~` plus unpadded base64url of exact UTF-8 `project_id`. Its inline closed `value_schema` is registered with the family before any writer or reader depends on it. New writer binding is `writer.storage.restore_point_retention_summary@1.0.0`. This writer is a Storage retention action, not a producer of any new EventRecord. The value is canonical, content-free and non-rebuildable; required summary custody is included in mandatory canonical backup/recovery. It is not a derived artifact or a second logical restore point.
+The physical family remains `restore_point_retention_summary`, with exactly `restore_point_retention_summary.v1:{scope_partition}:{restore_point_id}` as its key, existing MessagePack encoding and unchanged retention policy. `scope_partition` is `project~` plus unpadded base64url of exact UTF-8 `project_id`. The current writer contract is `pm.storage_value.restore_point_retention_summary.v2@2.0.0`, selected by the registry's writer metadata and the closed root of `Plans/restore_point_retention_summary_codec.schema.json`. Retained `pm.storage_value.restore_point_retention_summary.v1@1.0.0` values remain supported read-only canonical residues through its exact registered predecessor definition and disjoint retained-value dispatcher. Both retained versions remain byte-for-byte unchanged; no conversion is defined. The original v1 definition remains unchanged at `Plans/restore_point_created_contracts.schema.json#/$defs/retention_summary`.
 
-**Current readers of the unchanged v1 summary.** For `restore_point.created`, the explicitly adopted `projector.chat.restore_point_created@2.0.0`, `reader.chat.restore_point_history@2.0.0` and `reader.runtime_artifacts.restore_point_record@2.0.0` read this same `pm.storage_value.restore_point_retention_summary.v1@1.0.0` through SP-281/SP-278 and the complete current source/index token. The physical registry names these current routes alongside the retained v1 compatibility bindings and Storage retention/recovery owner. This reader adoption changes no summary schema, key, writer, original authority predicate, retained value or retention policy, and admits no sibling event reader. `reader.chat.branch_from_restore` at either version accepts no terminal-summary result and gains no summary consumer route or branch authority. A future versioned summary requires its own explicit writer and reader adoption; the current reader version alone does not select one.
+`writer.storage.restore_point_retention_summary@2.0.0` validates exclusively against the strict writer root or identical `retention_summary_v2` branch, never against `registered_read_value`. It remains disabled until actual StorageMigrationCoordinator registration/admission, original protected backup and dependency holds, all thirteen current owner adoptions and three compatibility fences are installed and verified under the coordinated codec contract below. The value is canonical, content-free, non-rebuildable and mandatory backup/recovery custody, not a second logical point. This writer performs Storage retention and emits no EventRecord. Installing a reader definition neither authorizes a write nor selects a production store version.
 
-The exact fields are the inline schema: immutable project/point/ref/original-hash identity; `representation = retained_hash_summary`; actual storage instance; an owner-verified native-or-supported-historical capture-hash relation; original created and terminal event IDs, schema IDs, payload/semantic/frame digests and verified source coordinates; existing policy ID/version/expiry action; a complete owner reference-release fact; eligibility selection/time/count and eligible-set digest; exactly one complete evaluation for each named hold/ref class; exact canonical family/key/schema/encoding/value-byte digests removed in the transaction; owner-proven flags identifying required creation/deletion companions; and the retiring actor, operation, owner gate revision, summary transaction and commit time/source generation.
+**Current and compatibility reader boundaries.** The sixteen direct bindings enumerated below retain raw-v1-only input. Thirteen current bindings separately adopt codec2 at their typed terminal-result boundary; three compatibility-only bindings reject both raw v2 and codec2 adoption. Only `reader.storage.restore_point_retention_summary@2.0.0` consumes raw v2. Existing created/history/Runtime Artifacts @2.0.0 persisted schemas, checkpoint generations, digest meanings and direct v1 routes remain unchanged. `reader.chat.branch_from_restore` accepts no terminal-summary result at any version and has no summary route or action authority. Consumer-list membership grants neither raw-v2 support nor permission to reinterpret an old schema.
+
+The exact fields are the inline schema: immutable project/point/ref/original-hash identity; `representation = retained_hash_summary`; actual storage instance; an owner-verified native-or-supported-historical capture-hash relation; original created and terminal event IDs, schema IDs, payload/semantic/frame digests and verified source coordinates; existing policy ID/version/expiry action; a complete owner reference-release fact; eligibility selection/time/count and eligible-set digest; exactly one complete evaluation for each named hold/ref class; exact canonical family/key/schema/encoding/value-byte digests removed in the transaction; owner-proven flags identifying required creation/deletion companions and, in v2, required expiry custody with its complete original receipt/result; and the retiring actor, operation, owner gate revision, summary transaction and commit time/source generation.
 
 These are embedded durable owner decision facts. Original evidence refs/IDs are supplemental lineage, not the only available proof after lawful source-manifest retirement. `value_bytes_sha256` is SHA-256 of the exact validated canonical encoded value bytes read for the named key, using its registered encoding; it is distinct from immutable `original_record_hash`. Event payload and frame digests are SHA-256 of the exact canonical payload/frame bytes actually verified under their owners. No digest is substituted for an unperformed check. The writer must validate the real records and receipt/source authority before recording these facts; schema-shaped, self-issued or pointer-only claims cannot create a summary. The snapshot captures only minimal content-free identity, digest and decision facts needed for future terminal verification, not original command/input, title, transcript, attachment/file bytes, runtime queue, secrets or raw machine paths.
 
-`hold_evaluations` contains exactly one entry for each of `descendant_branch`, `application`, `preserve`, `legal_hold`, `in_flight_application`, `source_lineage`, `live_ref`, `backup`, `rollback`, `recovery_anchor`, and `maintenance`. Each records its actual owner/revision, completed scope enumeration, zero active blockers and the count plus canonical set digests of the genuine released refs/release facts evaluated. A zero released-ref count means the owner positively verified that no released refs were needed for that class in this closure; observing an empty cache is insufficient. The summary does not retain historical hold/ref/input arrays: each of the eleven fixed classes has one compact authoritative evaluated-result witness. Pending creation/deletion or other required canonical custody is a live/maintenance/source-custody blocker; do not manufacture an exception to fit an eligible snapshot. The separate `reference_release` closure must already exist as a complete owner fact and bind the exact point/ref set. No event, creation, deletion, summary or mtime timestamp supplies that anchor.
+`hold_evaluations` contains exactly one entry for each of `descendant_branch`, `application`, `preserve`, `legal_hold`, `in_flight_application`, `source_lineage`, `live_ref`, `backup`, `rollback`, `recovery_anchor`, and `maintenance`. Each records its actual owner/revision, completed scope enumeration, zero active blockers and the count plus canonical set digests of the genuine released refs/release facts evaluated. A zero released-ref count means the owner positively verified that no released refs were needed for that class in this closure; observing an empty cache is insufficient. The summary does not retain historical hold/ref/input arrays: each of the eleven fixed classes has one compact authoritative evaluated-result witness. Pending creation/deletion/expiry or other required canonical custody is a live/maintenance/source-custody blocker; do not manufacture an exception to fit an eligible snapshot. The separate `reference_release` closure must already exist as a complete owner fact and bind the exact point/ref set. No event, creation, deletion, summary or mtime timestamp supplies that anchor.
 
 Retirement eligibility remains the exact existing `RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0`: inclusive `reference_release + 7,776,000 seconds`, all protecting refs released, and `2,048/project` logical point count with oldest-eligible-only count pressure. `selection_kind = reference_release_ttl` requires the inclusive release age predicate. `oldest_eligible_count_pressure` additionally requires count greater than 2,048 and rank zero in the actual owner-verified eligible set; count pressure does not bypass age or holds. The 2,048 cap counts distinct full canonical `rp:` points awaiting or retaining full custody, never their companion rows. Once a point is lawfully retired, its required final hash-summary residue is not counted again as another full point; otherwise the required residue would defeat the same policy's eviction rule. Residues provide only existing-reference/history terminal inspection, not a new user history feature or point-creation surface. The summary is the existing policy's final `retain_hash_summary` residue; it is not an independently newly aging object. Do not restart 90 days at summary creation, recursively delete the required residue using that same expiry action, assign `RP-AUTHORITY-INDEFINITE`, or invent a summary TTL, cleanup timer or permanent hold. Any future change to this residual disposition requires explicit owner policy authority.
 
@@ -19829,20 +19847,57 @@ The point must already have an owner-proven terminal status `expired | deleted |
 
 ### Atomic owner retirement
 
-1. Under the aggregate writer and current maintenance exclusion, resolve the exact canonical point, its required creation/application/deletion custody and current source/index generation. Verify the actual complete native creation proof or supported historical completion proof, original capture hash relation, already committed terminal owner event, and actual closed source/payload schema. No pending marker or missing native companion qualifies as historical data. Capture their exact encoded bytes/digests before retirement.
-2. In the same owner authority boundary, revalidate the entire current release/ref/hold inventory, source visibility permissions, policy, inclusive age, logical count and selected eligible rank against canonical state. Freeze the exact list of eligible canonical keys to remove. The list must include the canonical `rp:` row and every required custody row whose removal is being authorized; it never invents a row for a historically never-required companion or silently omits an actual required native companion. Other retained source/event/receipt/backup objects remain under their own owners.
-3. In ONE redb write transaction, compare-and-swap all frozen canonical bytes and the owner gate revision, write the complete immutable committed summary, and remove exactly the listed eligible `rp`/companion keys. Either the complete summary and every listed removal commit durably together, or none of them changes. All selected keys must be in this same admitted redb store/transaction domain; an unavailable cross-store target keeps retirement unavailable and is not handled by sequential best effort. The removable custody set is bounded by the known schema: one `restore_point_record`, at most one `restore_point_creation_commit`, and at most one separately admitted `restore_point_deletion_commit`, with unique family IDs and at most three entries. The owner-proven requirement flags must match that exact set. A future extra custody family requires a versioned contract change; applications and other objects are not silently folded into this removal batch. No seglog, blob, thread, worktree, file, Git, queue or external deletion occurs in this transaction. No hold is cleared by it.
+1. Under the aggregate writer and current maintenance exclusion, resolve the exact canonical point, its required creation/application/deletion/expiry custody and current source/index generation. For supported native expired/deleted custody, resolve the SP-285 retained-terminal predicate after full original admission; do not rerun disposed creation or lifecycle transaction controls. Other supported historical/terminal-owner branches retain their complete independent predicate and gain no new adapter by similarity. Verify original capture hash relation, already committed terminal owner event, and actual closed source/payload schema. No pending marker or missing native companion qualifies as historical data. Capture their exact encoded bytes/digests before retirement.
+2. In the same SP-285 authenticated retained-read lease/snapshot and owner authority boundary, revalidate the entire fresh current release/ref/hold inventory, source visibility permissions, policy, inclusive age, logical count and selected eligible rank against canonical state. Capture the complete eleven-class protecting-ref evaluation and selection/release boundary, and compare all those current facts again at final handoff or prove their unchanged authoritative revision under the coordinated lease. Revalidate the Storage read owner again after this retirement-owner check; a late blocker or changed release/age/count selection rejects before summary publication. Freeze the exact list of eligible canonical keys to remove. The list must include the canonical `rp:` row and every required custody row whose removal is being authorized; it never invents a row for a historically never-required companion or silently omits an actual required native companion. Other retained source/event/receipt/backup objects remain under their own owners.
+3. In ONE redb write transaction, compare-and-swap all frozen canonical bytes and the owner gate revision, write the complete immutable committed summary, and remove exactly the listed eligible `rp`/companion keys. Either the complete summary and every listed removal commit durably together, or none of them changes. All selected keys must be in this same admitted redb store/transaction domain; an unavailable cross-store target keeps retirement unavailable and is not handled by sequential best effort. The removable custody set is bounded by the selected closed schema: one `restore_point_record`, at most one required `restore_point_creation_commit`, and at most one terminal companion, either `restore_point_deletion_commit` or (v2 only) `restore_point_expiry_commit`. Family IDs are unique and the set has at most three entries. The unchanged v1 definition does not admit expiry custody; native expiry retirement requires v2. Original create/delete command-result custody is excluded from this removal set. The owner-proven requirement flags must match that exact set. A future extra custody family requires a versioned contract change; applications and other objects are not silently folded into this removal batch. No seglog, blob, thread, worktree, file, Git, queue or external deletion occurs in this transaction. No hold is cleared by it.
 4. A crash before commit leaves the original rows authoritative and no summary. A crash after commit leaves the summary authoritative and the exact listed rows absent; replay of the same retirement identity and facts is a no-op. A summary conflicting with remaining canonical bytes, another summary, the original hash or retirement identity is a disclosed affected-point integrity/recovery failure; do not overwrite either side, infer successful retirement, reconstruct missing points or advance dependent traversal. Writer/maintenance exclusion prevents source-generation changes racing this transaction.
 
 The summary itself is the canonical atomic retirement result, not a promise that another manifest will later prove it. Existing seglog compaction may later remove eligible event frames under its independent verified successor protocol and frozen semantic set, which must preserve this required canonical summary custody. A source range no longer present still needs the existing verified compaction/source-range handoff before a projector translates its cursor; a summary cannot certify an arbitrary missing range. Required canonical backup/restore sets include the retained summary. A restored pre-retirement point cannot become available while a valid retained summary says it was retired; recovery must carry and honor that terminal authority before any read/action publication. A backup or rollback set missing required summary custody is incomplete and yields disclosed recovery-unavailable; do not silently select it as a complete authority or invent a new backup-retention window.
 
 ### Typed terminal traversal
 
-The created/deleted reader may return `kind = terminal_retention_summary` only by reading this exact registered summary in the current storage instance/project partition, validating its schema and immutable record/hash/event joins, and proving it was admitted through the actual owner summary transaction/source-generation path. The named event's surviving payload/frame must match the stored original digest and identity. For native-created data, `retired_custody` must explicitly cover its required creation companion at `restore_point_creation_commit.v1:{project_id}:{restore_point_id}` as well as the `rp` key. Each additional required native companion is checked against its own owner introduction and exact key; absence never proves it was optional. Supported historical status is proven from genuine admitted history, not timestamps or key spelling.
+The created/deleted/expired reader may return `kind = terminal_retention_summary` only by reading this exact registered summary in the current storage instance/project partition, validating its schema and immutable record/hash/event joins, and proving it was admitted through the actual owner summary transaction/source-generation path. The named event's surviving payload/frame must match the stored original digest and identity. For native-created data, `retired_custody` must explicitly cover its required creation companion at `restore_point_creation_commit.v1:{project_id}:{restore_point_id}` as well as the `rp` key. Each additional required native companion is checked against its own owner introduction and exact key; absence never proves it was optional. Supported historical status is proven from genuine admitted history, not timestamps or key spelling.
 
 This terminal result needs no present `rp` bytes or lawfully removed companion. It authorizes only passive traversal and terminal/hash-summary display with the actual unavailable reason. It never becomes native or historical live completion, successful create replay, action/branch permission, restored source visibility, a reconstructed point, another EventRecord or a hold clear. Missing/corrupt summary or unexplained missing canonical custody preserves the existing affected-record fence and prior traversal checkpoint. Actual current-generation/index/cursor proof remains mandatory regardless of result kind.
 
 ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/assistant-chat-design.md#immutable-conversation-restore-point-lifecycle, ContractName:Plans/storage-plan.md#restore-point-created-consumer-checkpoint-contract, DecisionID:DL-045
+
+### Restore-point summary codec and coordinated admission
+
+For this exact physical family, the registry's `value_schema_id`, `schema_version`, `required_fields`, `optional_fields`, `nullable_fields` and root `value_schema` describe the current writer contract. `value_schema_ref` resolves `Plans/restore_point_retention_summary_codec.schema.json#`, whose root is strict v2. The same inline schema registers immutable v1 at `$defs.retention_summary_v1`, immutable v2 at `$defs.retention_summary_v2` and the disjoint closed retained-value reader at `$defs.registered_read_value`. Reader selection uses both stored `schema_id` and `schema_version`, never key spelling, absent-field defaults or writer validation against the read union. No separate registry `reader_schema_ref` member or stored wrapper/discriminant is added.
+
+The standalone root and registry inline schema must be structurally identical. Its v1 definition must equal `Plans/restore_point_created_contracts.schema.json#/$defs/retention_summary`; its v2 definition must equal the exact raw schema `Plans/restore_point_retention_summary_v2.schema.json`. The expiry aggregate at `Plans/restore_point_expired_contracts.schema.json#/$defs/retention_summary_v2` has identical validation fields with only the redundant nested `$schema` declaration omitted. This metadata difference does not change stored shape or validation semantics; the raw codec digest remains pinned to the complete original raw schema. Any other mismatch fails admission. Neither definition converts stored values. Original retained v1 reads stay available under their unchanged custody predicates. V1 cannot certify native expiry-companion retirement.
+
+V2 retains every v1 identity/hash/release/hold/selection/source/transaction fact and adds required `expiry_companion_required`, `original_expiry_append_receipt` and `original_expiry_result`, with `restore_point_expiry_commit` added to the closed retired-family vocabulary. The writer validates the exact applicable complete domain predicate before retirement. Native expiry requires `terminal_status=expired`, expiry requirement true, deletion requirement false, the exact expiry key/schema/encoding/value-byte digest and the full original E3 result/receipt. Non-expiry or genuinely pre-introduction paths require false expiry requirement and null expiry receipt/result, proven by actual owner introduction and custody, never missing rows. No v1-to-v2 conversion is defined. Until coordinated writer2 admission, a logically expired point and mandatory expiry companion remain retained; count pressure cannot remove them through v1.
+
+`reader.storage.restore_point_retention_summary@2.0.0` is the separately versioned raw-summary codec with capability `restore_point_terminal_summary_codec@2.0.0`, pinned to the exact raw-v2 schema digest and unchanged v1 definition. It validates exact canonical summary bytes/key/owner transaction, complete original custody, source/event/hash joins and current SP-278 admission. Its sole output is the existing typed `kind=terminal_retention_summary` with exact `summary_ref`, `terminal_status`, `original_record_hash`, `terminal_event_id`, `project_id`, `scope_partition` and `restore_point_id`. Recompute full typed input/output binding digests and resolve the exact retained per-route adoption pointer. It grants no action or durable effect and cannot return native/historical completion, command success, branch, dispatch, delete, completion replay or hold authority. Event-specific deletion/expiry consumers reject the other terminal family as `not_applicable`. Direct summary inspection does not invent a surviving event or an event cursor; event traversal separately requires complete current surviving source coverage.
+
+The exact admission schema is `Plans/restore_point_summary_codec_admission.schema.json`; installation routes and subordinate evidence are `Plans/restore_point_summary_codec_installation.schema.json#/$defs/route` and `#/$defs/step_evidence`. `Plans/restore_point_summary_reader_routes.json` enumerates the exact sixteen direct binding identities below. Each of the thirteen current routes needs its own actual owner adoption record naming capability/version, raw schema digest, input authority and typed output boundary. The three compatibility routes reject both raw v2 and adapter adoption. Branch-from-restore is excluded at every version.
+
+| Direct binding | Admission |
+| --- | --- |
+| `Storage expiry owner reconciliation` | Codec2 typed-result adoption; raw v1 only |
+| `Storage restore-point retention/recovery` | Codec2 typed-result adoption; raw v1 only |
+| `Storage restore-point retirement owner` | Codec2 typed-result adoption; raw v1 only |
+| `consumer.chat.restore_point_created@2.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `consumer.chat.restore_point_deleted@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `consumer.chat.restore_point_expired@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `projector.chat.restore_point_created@1.0.0` | Compatibility only; raw v1; reject raw v2 and codec2 |
+| `projector.chat.restore_point_created@2.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `projector.chat.restore_point_deleted@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `projector.chat.restore_point_expired@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `reader.chat.restore_point_history@1.0.0` | Compatibility only; raw v1; reject raw v2 and codec2 |
+| `reader.chat.restore_point_history@2.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `reader.runtime_artifacts.restore_point_deleted@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `reader.runtime_artifacts.restore_point_expired@1.0.0` | Codec2 typed-result adoption; raw v1 only |
+| `reader.runtime_artifacts.restore_point_record@1.0.0` | Compatibility only; raw v1; reject raw v2 and codec2 |
+| `reader.runtime_artifacts.restore_point_record@2.0.0` | Codec2 typed-result adoption; raw v1 only |
+
+Storage owns the three Storage-route adoptions in this table. Chat ACD-464/ACD-466 owns its current route adoptions and two compatibility fences; Runtime Artifacts RAP-058/RAP-060 owns its current route adoptions and compatibility fence. Existing raw reader schemas/checkpoints are not upgraded in place.
+
+Actual admission is retained in the existing MigrationReceipt's verified `RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002` applied step; its `evidence_ref` resolves through the receipt's existing `journal_ref#/step_evidence/` fragment. The closed fragment contains the complete route map and exact per-route capability pointer. Resolve the canonical receipt key and actual original receipt/journal bytes and digests through StorageMigrationCoordinator, its Storage instance, original protected backup and current dependency hold custody. A string, repaired caller hash or fixture reference does not authenticate that owner snapshot. No receipt family, journal root or alternative installation store is created. Actual store graph/version ceilings remain required; no store version integer or critical/MVP-array membership is allocated here. All thirteen current adoptions, three compatibility fences and writer gates must be verified together before new v2 writes. Storage retention/recovery/retirement still requires its original writer, hold, custody and atomic-removal authority independently of passive codec output.
+
+ContractRef: ContractName:Plans/restore_point_retention_summary_codec.schema.json, ContractName:Plans/restore_point_summary_codec_admission.schema.json, ContractName:Plans/restore_point_summary_codec_installation.schema.json, ContractName:Plans/restore_point_summary_reader_routes.json, ContractName:Plans/storage_value_registry.json
 
 ### SP-269 — Restore-point final retention summary custody
 
@@ -19858,7 +19913,11 @@ canonical_text: Storage defines one canonical content-free restore-point retenti
   after lawful removal without requiring those removed rows, and never supplies live completion, action,
   reconstruction or source visibility. For restore_point.created, the explicitly adopted SP-281 v2 projector
   and passive history/Runtime Artifacts readers consume the unchanged v1 summary through SP-278; branch-from-restore
-  rejects this result, and no summary format or sibling-reader adoption is inferred.
+  rejects this result. The strict v2 writer root and exact retained-v1/v2 reader dispatcher preserve the
+  unchanged key and retained bytes. Thirteen current owner routes separately adopt codec2; three compatibility
+  routes remain v1-only and reject codec2. Native expiry retirement requires v2 and original expiry receipt/result.
+  Native expired/deleted retirement resolves admitted retained custody through SP-285, then independently
+  rechecks the complete fresh retirement owner gate and Storage lease at final handoff.
 gui_related: false
 gui_classification_reason: This unit defines canonical storage custody, atomic retirement and passive
   reader proof.
@@ -19867,6 +19926,7 @@ depends_on:
 - SP-242
 - CV-320
 - DL-045
+- SP-285
 unblocks: []
 acceptance_criteria:
 - Exact registered summary key, closed value schema and mandatory-backup recovery are required before
@@ -19881,11 +19941,27 @@ acceptance_criteria:
   authorize an action or resurrect source content.
 - Missing required canonical summary custody is disclosed recovery loss, not an invitation to reconstruct
   a point from events.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- Fresh complete retirement selection/release/age/count and all eleven protecting-class facts are rechecked
+  in the same retained-read lease; Storage revalidates again after the final retirement-owner check before
+  atomic summary publication.
 validation_surfaces:
 - Plans/storage_value_registry.json
 - Plans/restore_point_retention_summary_fixtures.json
+- Plans/restore_point_retention_summary_codec.schema.json
+- Plans/restore_point_retention_summary_v2.schema.json
+- Plans/restore_point_summary_codec_admission.schema.json
+- Plans/restore_point_summary_codec_installation.schema.json
+- Plans/restore_point_summary_reader_routes.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
 - python3 scripts/pm-plans-verify.py run-gates
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_terminal_retention_authority
 reasoning_tier: high
 context_scope: restore_point_retention_summary
@@ -19926,7 +20002,11 @@ canonical_text: Storage supplies canonical content-free custody of the original 
   identity, typed owner result, authenticated shared-runtime outcome, original UI response and synced
   append receipt. Pending custody commits atomically with the point and creation intent; terminal custody
   commits atomically with the committed creation marker. Original command replay survives lawful point
-  retirement without creating current point availability or accessing retired content.
+  retirement without creating current point availability or accessing retired content. SP-285 separates
+  initial genuine source capture from later authenticated immutable retained-row resolution; disposed
+  raw SIR/transaction inputs are not reacquired. Combined available-created result inspection requires
+  original_create_result_custody, never passive_creation.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 gui_related: false
 gui_classification_reason: This unit defines durable authority, authenticated custody and replay, with
   no visual presentation contract.
@@ -19935,6 +20015,8 @@ depends_on:
 - CV-333
 - SP-281
 - DL-045
+- SP-285
+- SP-286
 unblocks: []
 acceptance_criteria:
 - The exact registered result key binds the original scope, idempotency key and canonical request digest;
@@ -19952,12 +20034,21 @@ acceptance_criteria:
   or source visibility.
 - Missing required native result custody is disclosed and fenced; events, dedupe locators, summaries,
   current points and schema-shaped outcomes cannot reconstruct it.
+- Initial source authentication remains complete; later original-result reads authenticate immutable retained
+  canonical custody and current disclosure authority without retired raw source/transaction controls or
+  reconstructed outcome/receipt facts.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
 validation_surfaces:
 - Plans/restore_point_create_result.schema.json
 - Plans/restore_point_create_result_fixtures.json
 - Plans/restore_point_create_result_join_fixtures.json
 - Plans/restore_point_create_result_native_pairs.json
 - Plans/storage_value_registry.json
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
 risk_class: restore_point_original_result_authority
 reasoning_tier: high
 context_scope: restore_point_create_original_result
@@ -19998,11 +20089,11 @@ The embedded `original_command_outcome` is the actual existing SIR-owned record,
 
 **Admission boundary.** Existing global registry/handler/schema, permission, storage access, backup/custody and actual operation dispatch gates precede durable admission. A pre-dispatch refusal, including read-only storage, writes no result, outbox, receipt, point or event and fabricates no operation/Full Thread outcome. Its CV-333 response_kind is `pre_dispatch_rejection`, with existing closed error code and null owner/operation refs; no ninth generic error code or receipt-writer exemption is introduced. A retry that can only read may return an already durable permitted historical result; it cannot mutate or perform recovery. Once accepted by the actual owner operation, native terminal refused/failed results may be stored under this command-specific identity only when authoritative no-created-effect proof exists. This does not convert a failed pre-dispatch gate into an accepted operation.
 
-**Three barriers and terminal publication.** Extend native creation barrier1: atomically commit the original immutable `rp`, frozen pending creation companion, and `admitted_pending` result custody row in the SAME redb transaction, with the genuine initial Full Thread outcome/dispatch identity. The row binds the exact companion `command_request_sha256`, frozen input hash and producer semantic digest. No terminal owner result/response/hash/time exists yet. Pending already protects replay identity; a retry compares the original canonical command request digest before consulting changed live content. It resumes the same authenticated operation and frozen append input, never recaptures from current thread state.
+**Three barriers and terminal publication.** SP-274/SP-281 explicitly adopt SP-285 creation_pending_recovery and SP-286 first-receipt authority after actual initial admission; no raw retired dispatch/transaction/source controls are reacquired on that route. Extend native creation barrier1: atomically commit the original immutable `rp`, frozen pending creation companion, and `admitted_pending` result custody row in the SAME redb transaction, with the genuine initial Full Thread outcome/dispatch identity. The row binds the exact companion `command_request_sha256`, frozen input hash and producer semantic digest. No terminal owner result/response/hash/time exists yet. Pending already protects replay identity; a retry compares the original canonical command request digest before consulting changed live content. It resumes the same authenticated operation and frozen append input, never recaptures from current thread state.
 
 Barrier2 remains the same genuine synced seglog append and AppendReceipt; no cross-redb/seglog transaction is asserted. Barrier3 verifies that source and CASes the same companion committed AND result row terminal in one redb transaction. The actual SIR owner supplies/authenticates its terminal original outcome, matching this separately computed typed result; the dispatcher supplies the exact original CV-333 response. None is exposed as terminal until this commit. Retention cannot observe completed creation with missing required terminal result custody. An admitted no-effect refusal/failure commits its terminal typed result/outcome/response without a created event or point; it must prove no created effect and must not fabricate a pending capture for a rejected source. After any possible append or unknown effect, failed/no-effect is forbidden: keep pending, reconcile under the existing owner gates, and expose the existing recovery-required/effect-unknown posture without replacing the original terminal result with guessed failure.
 
-Before barrier1, no creation effect exists. After barrier1, original pending custody can recover the same frozen input. After barrier2 before3, recovery verifies the real original source/dedupe result and finishes the same barrier3 without reappend. After barrier3 before response, replay returns the original result/outcome/response identities. Outcome and response publication use this same committed custody boundary; an independently emitted premature success cannot be repaired by claiming later storage. Concurrent retries serialize under existing owner/aggregate fences and exact key/request CAS. Unsupported/unregistered required family or unresolved mandatory backup fails before admission. Passive event/projector replay never writes this family or repairs command state.
+Before barrier1, no creation effect exists. After barrier1, original pending custody can recover the same frozen input. After barrier2 before3, recovery verifies the real original source/dedupe identity and the genuine exact first eleven-field receipt through the explicitly adopted SP-286 append-owner protocol before finishing the same barrier3 without reappend; unresolved receipt custody remains recovery-required and a four-field locator cannot complete it. After barrier3 before response, replay returns the original result/outcome/response identities. Outcome and response publication use this same committed custody boundary; an independently emitted premature success cannot be repaired by claiming later storage. Concurrent retries serialize under existing owner/aggregate fences and exact key/request CAS. Unsupported/unregistered required family or unresolved mandatory backup fails before admission. Passive event/projector replay never writes this family or repairs command state.
 
 **Hash graph and joins.** `command_request_sha256` is the exact already defined creation companion canonical request digest, distinct from Full Thread payload_sha256 and the event producer digest. Compare incoming normalized domain request to this original digest; transport retry dispatch identifiers do not re-key it. Validate the original Full Thread envelope joins independently. Hash `original_owner_result` alone with RFC8785 UTF-8 SHA-256; the object contains neither its own hash nor outcome/container/response. Use that hash and the exact schema path/root definition to bind Full Thread owner_result_sha256/ref/schema_ref. The owner-result ref resolves to this row's `#/original_owner_result`; the outcome ref resolves to `#/original_command_outcome`. The typed receipt_ref resolves to the same authenticated committed command result evidence. References are identities, not recursively dereferenced hash inputs. The result's AppendReceipt digest is computed from the original exact synced AppendReceipt before retirement; it is evidence of the original creation, not a live source locator. Do not invent a later receipt from an event index.
 
@@ -20014,7 +20105,7 @@ This family is canonical_non_rebuildable, mandatory-backup, restore-from-backup,
 
 The physical row must be materialized with normal coordinator/version admission before native creation depends on it. It is not silently added to launch-critical/MVP arrays, and it creates no global CommandOutcome physical family. This specification is static contract/schema/oracle work; native durability, authentication, replay, deletion, crash and CV-333 publication tests remain NOT_RUN.
 
-**Retained original evidence closure.** The same row also retains the exact authenticated `original_normalized_request` identity projection used by CV-333 (request ref, command/instance/operation, original full owner identity, payload digest, idempotency key, target generation and dispatch frame), plus the original successful synced `AppendReceipt` object. These are closed content-free evidence, not a new UICommand envelope or recaptured domain arguments. The canonical domain request digest remains the companion's separate exact recipe. First capture must authenticate the actual original request; a fixture-shaped identity cannot establish it. Successful terminal publication proves the receipt's event/frame/durable watermark through barrier2 and requires its canonical digest to equal the typed result's append_receipt_sha256. Thereafter lawful point/event retirement need not preserve the old segment: the original receipt is historical committed command evidence, never a live locator or authority to read purged bytes. Pending and no-effect refused/failed rows have null original_append_receipt. Native retained outcome/request/response resolution is delegated through the one canonical row; original refs remain exact, with no replacement identities. The complete command-result row is preserved atomically in mandatory backup, separately from expiring point/companion custody.
+**Retained original evidence closure.** The same row also retains the exact authenticated `original_normalized_request` identity projection used by CV-333 (request ref, command/instance/operation, original full owner identity, payload digest, idempotency key, target generation and dispatch frame), plus the original successful synced `AppendReceipt` object. These are closed content-free evidence, not a new UICommand envelope or recaptured domain arguments. The canonical domain request digest remains the companion's separate exact recipe. First capture must authenticate the actual original request; a fixture-shaped identity cannot establish it. Successful terminal publication proves the receipt's event/frame/durable watermark through barrier2 and requires its canonical digest to equal the typed result's append_receipt_sha256. Thereafter lawful point/event retirement need not preserve the old segment: the original receipt is historical committed command evidence, never a live locator or authority to read purged bytes. Pending and no-effect refused/failed rows have null original_append_receipt. Native retained outcome/request/response resolution is delegated through the one canonical row; original refs remain exact, with no replacement identities. The complete command-result row is preserved atomically in mandatory backup, separately from expiring point/companion custody. Initial capture authenticates the original normalized request, dispatch/outcome/response and actual append source. Subsequent canonical result resolution under SP-285 reads that same admitted immutable row through SIR and current disclosure policy, without reacquiring disposed raw SIR payload/dispatch bytes or original redb/source controls. A combined available-created view explicitly uses retained-creation read_purpose=original_create_result_custody; passive_creation is not original-result authority. Source-independent original-result replay does not require a present point or created event.
 
 **Closed semantic publication guards.** Pending custody requires both frozen append-input and producer semantic digests, each equal to the same admitted creation companion. A terminal created result requires those same non-null original digests, actual successful outcome, accepted/succeeded response with no error, the exact point/ref/hash/event identity, and the original synced receipt with `durable_end_offset > byte_offset`. A terminal refused result requires the actual rejected outcome, rejected response with its original error and null result status, no event refs, no append receipt and no frozen append-input or producer digests. A terminal failed no-effect result requires the actual failed outcome, accepted/failed response with its original error, and the same absence of created-event/append/digest claims. All result/receipt/outcome references resolve through this one committed value's exact typed members; the canonical schema pointer is `Plans/restore_point_create_result.schema.json#/$defs/RestorePointCreateCommandResult`. Request and outcome identity joins remain mandatory in every state. The terminal time cannot precede admission; an admitted terminal value is immutable. Shape validation alone cannot establish these relational guards or native provenance.
 
@@ -20651,11 +20742,11 @@ Each index row joins its immutable generic birth anchor and exact current source
 
 ### Original native creation publication evidence
 
-Current generic generation birth may occur long after original restore-point creation. The original native receipt therefore joins independently authenticated original append/publication evidence, never blindly the latest frontier or current generic anchor. The closed `original_creation_publication` adapter input identifies Storage instance, original decoded source selection, exact original project/event/sequence/schema, full source locator and durable end, original EventRecord value/payload/producer digests, original append-receipt binding, and actual admitted committed canonical record/companion transaction reference and values. The original source selection uses SP-278's typed owner-decoded binding only; this creates no new CURRENT/manifest format, durable receipt family, history store or retention clock.
+At original creation admission, current generic generation birth may occur long after original restore-point creation. The original native receipt therefore joins independently authenticated original append/publication evidence, never blindly the latest frontier or current generic anchor. The closed `original_creation_publication` adapter input identifies Storage instance, original decoded source selection, exact original project/event/sequence/schema, full source locator and durable end, original EventRecord value/payload/producer digests, original append-receipt binding, and actual admitted committed canonical record/companion transaction reference and values. The original source selection uses SP-278's typed owner-decoded binding only; this creates no new CURRENT/manifest format, durable receipt family, history store or retention clock. These complete original-publication inputs remain mandatory for that admission; ordinary later reads explicitly adopted by SP-285 use its separately typed authenticated retained-creation or retained-terminal boundary, without reacquiring the original publication/transaction/source snapshots or old created checkpoint.
 
-Resolve original owner controls/frames or an already authenticated existing owner custody route, verify bounds/CRC/source schema and exact bytes, and resolve the actual committed creation companion transaction under existing three-barrier creation authority. The binding's Storage identity, recovery epoch, original manifest generation and survivor digest must match that original source evidence. Original receipt manifest/event/sequence/full locator/durable end must match the same original publication. Its actual transaction must be committed for the same Storage, exact companion/record keys and unchanged canonical values. The current native point/companion still must pass every original completion predicate, immutable capture/frozen input/receipt relation and current domain permission rule.
+At original creation admission, resolve original owner controls/frames or an already authenticated existing owner custody route, verify bounds/CRC/source schema and exact bytes, and resolve the actual committed creation companion transaction under existing three-barrier creation authority. The binding's Storage identity, recovery epoch, original manifest generation and survivor digest must match that original source evidence. Original receipt manifest/event/sequence/full locator/durable end must match the same original publication. Its actual transaction must be committed for the same Storage, exact companion/record keys and unchanged canonical values. The original native point/companion must pass every original completion predicate at that admission, immutable capture/frozen input/receipt relation and current domain permission rule.
 
-The original event's immutable identity/scope/schema/value/payload/producer facts must equal the surviving current source event joined by SP-278. Current physical offsets/generation may differ after governed rebuild or compaction; those current locators are separately verified by generic authority and never copied into the original receipt. Original evidence may predate the current generic anchor, as an explicit positive fixture demonstrates. Current source presence, self-consistent hashes or a caller-supplied transaction record cannot authenticate missing original publication. Missing authentic original evidence blocks native-completion release and never becomes guessed birth provenance or new canonical custody.
+The original event's immutable identity/scope/schema/value/payload/producer facts must equal the surviving current source event joined by SP-278. Current physical offsets/generation may differ after governed rebuild or compaction; those current locators are separately verified by generic authority and never copied into the original receipt. Original evidence may predate the current generic anchor, as an explicit positive fixture demonstrates. Current source presence, self-consistent hashes or a caller-supplied transaction record cannot authenticate missing original publication. Missing authentic original evidence blocks initial native-completion admission and never becomes guessed birth provenance or new canonical custody. Later SP-285 reads authenticate the already-admitted retained rows, original stored receipt and surviving current event instead; current coordinates never rewrite the original receipt.
 
 The new adapter-only original-append-receipt binding uses SP-278's canonical MessagePack binding wrapper. Exact source-value and persisted canonical record/companion byte hashes use their existing actual MessagePack bytes; the fixture encodes those values to model them. Canonical capture/command/frozen-input/producer/legacy/snapshot algorithms remain unchanged. Synthetic EventRecord-value extents are not native SeglogFrameV2 or CRC evidence.
 
@@ -21601,3 +21692,610 @@ negative_constraints:
 The schema/model, physical adapter and independent review evidence is recorded in `reports/event-authority-20260911/step-08-goal-body-validation.md`. Private issued-row/receipt/backup/deletion cells, source observations and transaction captures are bounded fixture adapters, not additional durable families or native authentication. Native concurrency/CAS/fsync, actual global writer adoption, owner/approval/stop enforcement, migration, coherent backup/restore, tombstone replay and 24-hour/30-day purge enforcement remain `NOT_RUN`.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/Goal_Runtime_System.md#GRS-064, ContractName:Plans/goal_body_custody.schema.json, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Decision_Log.md#DL-047, ContractName:Plans/Decision_Log.md#DL-045
+
+## Restore-point deletion custody and checkpoint
+
+Chat immutable restore-point lifecycle and UCC Case L own cmd.chat.delete_restore_point with exactly project_id, restore_point_id, expected_restore_point_sha256 domain arguments. The existing UICommand envelope supplies idempotency_key. Wiring /entries/assistant.chat.restore_point.delete selects handlers::chat::delete_restore_point and its existing confirmation semantics. No new command/argument is introduced. The only successful event is restore_point.deleted, existing event-family-restore-point-deleted@2.0.0, project-only EventRecord2 with its exact eight-field payload and no aliases/extensions.
+
+consumer.chat.restore_point_deleted@1.0.0 (Chat ACD-464), projector.chat.restore_point_deleted@1.0.0 (Storage SP-268) and reader.runtime_artifacts.restore_point_deleted@1.0.0 (RAP-058) are passive. Existing reader.chat.restore_point_history@2.0.0 is explicitly adopted for the deleted family here; this does not change the created-family route or create a global history upgrade. FileSafe owns no conversation deletion consumer. The logical view has no new durable per-point index; it resolves canonical point, actual event index, native deletion companion or independent terminal summary. No index performance claim is made.
+
+physical restore_point_deleted_checkpoint uses projector.checkpoint.restore_point_deleted.v1:{scope_partition}; restore_point_deletion_commit uses restore_point_deletion_commit.v1:{scope_partition}:{deletion_id}; restore_point_delete_result uses restore_point_delete_result.v1:{scope_partition}:{deletion_id}. Partition is project~ plus unpadded base64url UTF-8 project_id. Every physical row must land with this owner definition and standalone Plans/restore_point_deleted_contracts.schema.json before writes. Actual StorageMigrationCoordinator graph/version ceilings remain required, with no guessed store integer or critical/MVP-array membership.
+
+### Deletion producer identity and boundaries
+
+The deletion ID is rpd_ plus lowercase SHA256 of the concatenation of each UTF-8 value preceded by its unsigned 64-bit big-endian byte length: restore_point.deleted/delete/v1, project_id, original envelope idempotency_key. Event ID is er_rpd_ plus the same digest. The same key with a different normalized request digest fails closed. Request digest binds canonical command, exact three domain arguments, original key and authenticated actor using canonical JSON; only integer/string/bool/null structures occur. Correlation and original transition time are frozen, not regenerated by retries. A deliberately new key is a new command attempt, but a deleted point cannot undergo a second available-to-deleted transition.
+
+Global Storage gate runs first, including direct handlers. Nonwriter, unknown access, unsupported store, viewer and exhausted-I/O rejection writes no result receipt, checkpoint, event or owner state and is never automatically replayed. Under writer authority, exact project/point/hash, authenticated permission, confirmation and a complete protecting-ref enumeration are revalidated in the same serialized admission domain as holds/retirement. All descendant/application, preserve/legal, in-flight, source/live, backup/rollback/recovery/maintenance refs protect according to current owners. Refusal preserves available point and all refs. No hold is cleared.
+
+B1 is one redb transaction: CAS available with exact expected immutable hash, change only mutable status to deleted, store complete pending native deletion companion including frozen EventRecord append input, and store pending original-result custody. The immutable capture/hash is unchanged. B1 makes the point unavailable; it does not expose success. The native owner reason explicit_user_delete is a technical producer constant, not an added UI argument or global reason enum. Native envelope project equals payload project; actor matches authenticated command actor; time/reason/hash/point equal the companion; thread/run/node/attempt/account refs remain null. Payload is inline and no_secrets; replay policy is dedupe_by_idempotency_key.
+
+B2 submits exactly that frozen input through the existing append owner and receives a real barrier/synced AppendReceipt. After B1, failure/timeout is pending reconciliation, never refused/failed or rollback to available. Recovery resolves canonical dedupe identity and exact producer semantic digest, then reuses the genuine exact first eleven-field receipt through the explicitly adopted SP-286 append-owner protocol; unresolved first-receipt custody stays recovery-required and the four-field dedupe locator cannot complete B3; it cannot change IDs, payload, correlation or time. B3 atomically records committed native companion with that receipt and exact original terminal typed result. Only after B3 may the dispatcher project success. No physical purge happens at B1/B2/B3. Hold admission before B1 blocks; a later hold protects retirement and does not undo an already authorized deletion.
+
+### Deletion consumer truth and checkpoint
+
+Deletion requires complete B1/B2/B3 semantics at their respective boundaries, with the explicitly installed SP-285 retained-created B1 prerequisite and admitted-pending recovery route. Original creation admission remains complete. Later native present-point inspection explicitly calls reader.storage.restore_point_retained_custody@1.0.0 under SP-285 and consumes kind=retained_native_terminal. It verifies current canonical frame/envelope/index identity and source durability, project/point/hash/status equality, authenticated request and frozen companion digest, the exact original stored synced receipt and its immutable event/sequence/segment/offset/manifest facts, separately from the surviving current source locator, and committed result binding. Event existence or schema validity alone cannot pass. A present native point with missing mandatory companion is custody loss. Existing supported historical events are read only with actual owner-supported point/hash/status/source proof; never mint a native companion, request, receipt, creator proof or hash recipe. Hash verification uses the created immutable-capture recipe only for native eligible records; historical hash remains unchanged with explicit supported owner verification. This later read authenticates actual retained rows and full current source, not disposed original transaction/append-group/SIR controls.
+
+A separate terminal_retention_summary outcome resolves exact SP-269 summary identity, original hash and deleted terminal status, retained matching event/frame/semantic proof, and retired required native operation custody. It does not require already lawfully retired point/operation bytes. Without this independently canonical atomic retirement authority, missing bytes are unexplained loss and fence. Native_completion, historical_completion and terminal_retention_summary remain distinct typed results; the summary grants no branch/delete/action authority. History and Runtime Artifacts consume them passively. No delete/apply handler, file/Git operation, hold clear, event append or sibling artifact event is triggered by replay.
+
+The checkpoint schema closes every value and nested cursor. Its cursor points to the beginning of the last verified source record; resume verifies it and starts after its checked frame end. Coverage is contiguous over canonical source, with current full-index checkpoint/selection, Storage instance/project, manifest/segment generation, recovery epoch, survivor-prefix digest and binding versions. Missing checkpoint is uninitialized, not zero-proof. First publication requires at least one validated record. Gaps, stale indexes, missing frame durability or stale generation preserve prior checkpoint and disclose unavailable currentness.
+
+### Deleted checkpoint generation history
+
+The newly registered checkpoint value requires `publication_id`, `hold_refs`, and `retired_generations` in addition to its current identity/cursor/publication fields. Here `publication_id` is the stable **projection-generation** identity, and `published_at_utc` is that generation's first verified publication time. The exact generation discriminator is `(storage_instance_id, scope_partition, consumer_id, consumer_version, projector_id, projector_version, cursor.projector_schema_version, publication_id)`. Source segment rotation, source/index cursor advancement, updated full-index checkpoint/selection and a new event do not by themselves change this discriminator. No timestamp, filename or event sequence allocates a new generation.
+
+Ordinary traversal performs a CAS update to the same current generation's cursor and verified source/index fields, revalidating every current source/index/survivor proof and predecessor checkpoint. It preserves `publication_id`, `published_at_utc` and every retired generation/anchor. It does not archive the previous cursor position or consume a retention-generation slot. No per-cursor timestamp is needed for this contract. Source recovery/translation may continue this same generation only when the existing owner source-range/currentness proof remains valid; otherwise the projector must take the separately verified rebuild path, never copy a stale cursor into CURRENT.
+
+Only first initialization, an explicit verified projection rebuild, or an owner-reviewed supported schema/binding successor establishes a new projection generation. Repeated retry of the same unpublished generation transition reuses its selected identity; it does not slide a retirement anchor. A transition cannot publish until the new full source coverage/currentness proof succeeds. On that real generation transition, one redb transaction writes the new current core, archives the previous current core, and sets that archived entry's `retired_at_utc` exactly to the new generation's `published_at_utc`, with `successor_publication_id` exactly the new generation ID. The archived core contains the final cursor of its old generation. Retained older entries preserve their original retirement facts. The terminal-transition TTL anchor is the explicitly persisted retirement time, never the old generation's birth time or an inferred timestamp. The new publication time must be valid and cannot predate the archived core's birth; a clock/authority inconsistency fails publication rather than rewriting history.
+
+`retired_generations` contains zero to two entries, each a complete closed prior checkpoint core **without** recursive history, its required `retired_at_utc`, and `successor_publication_id`. One current plus at most two prior generations is the existing three-generation cap. No secondary history key or unspecified metadata supplies retention facts.
+
+Each archived core retains the exact old storage/project/consumer/projector identity, cursor, selected-index reference/digest, original publication ID/time and owned hold refs. All project/scope/storage identities match this logical key; publication IDs are distinct and a generation cannot retire into itself. Completed generation transition records the timestamp and successor relation atomically, so no archived generation has an unknown terminal anchor. The exact existing registry policy is `RP-PROJECTION-3GEN@1.0.0`: `current_plus_history`, `terminal_transition`, TTL `604800`, `max_cardinality=3`, `cardinality_scope=logical_key`, `overflow_action=rebuild_projection`, `hold_eligible=true`, `expiry_action=rebuild`. History expiry checks the persisted retirement anchor and owner hold state. Overflow invokes that existing rebuild disposition; these fields are not new permission for early eviction, dropping a held generation, or bypassing the stated retirement window. If the owner cannot establish a policy-permitted generation slot, preserve the last committed checkpoint and disclose affected currentness as unavailable until a lawful rebuild/publication is possible. Ordinary cursor advances do not need new slots and continue after fresh proof. Rebuild never fabricates retirement times.
+
+Archived cursors are retention/history data only. None certifies currentness or becomes a fallback CURRENT selection. The current core must independently validate against the current source/index generation and survivor authority. Moving an old core into the current position without a fresh verified publication is rejected even if its schema and earlier retirement facts are valid. No old generation can authorize a point action.
+
+### Explicit deletion SP-278, SP-281 and SP-274 adoption
+
+The three physical deletion values and consumer/projector/artifact bindings are first-native version 1.0.0 contracts, selecting SP-278 at initial admission. No deployed deleted checkpoint predecessor is reinterpreted. If an actual prior writer exists, the coordinator must resolve an explicit supported successor before use.
+
+The actual generic read is the current `event_record_index_checkpoint.v1:{storage_instance_id}` root and its selected generation in the same redb snapshot. The deleted `full_index_checkpoint_ref` is that root plus `#/generations/{generation_id}`. For this initial binding, `index_selection_sha256` uses exactly SP-278 `pm.event_index.binding.msgpack_sha256.v1` over the selection object `{storage_instance_id,checkpoint_key,checkpoint_ref,generation_id,generation_anchor_sha256,frontier_revision,frontier_sha256,index_dataset_name,source_selection}`. The exact current read token additionally binds the same-redb snapshot ID, separately checked before commit/disclosure. The selected generation's immutable row-birth anchor and current frontier are distinct. Appending a valid nonmatching event changes the current frontier/token and complete last-examined cursor without rebinding old index rows or reallocating a filtered generation. A generation-only comparison is insufficient. Actual CURRENT/source decoding, full frame validation, source range, registry payload dispatch, row membership, generation/anchor/current-frontier selection and owned checkpoint CAS all remain mandatory.
+
+Original creation admission uses the full SP-281 created2.0 predicate and its complete original creation publication/receipt/commit evidence. New deletion B1 explicitly consumes that already-admitted creation through SP-285 lifecycle_from_retained_creation with original_create_result_custody, without reacquiring disposed creation controls. The exact original point capture, frozen creation command and append input, source identity, immutable capture hash and original committed creation companion must pass. The current deleted point preserves that immutable capture; only the authorized status transition and independently owned later hold facts may differ. SP-274's original create result is separately resolved and joined to the same original created point/hash/event/receipt/command. Its current canonical row and original SIR custody are not manufactured by the delete reader. In particular, an original creation receipt does not become valid by copying the current rebuilt generic manifest generation or repairing a companion digest. For later native inspection, SP-285 resolves immutable admitted creation/deletion companions, actual SP-274 original result, original stored receipts and current created/deleted events/SP-278 instead of re-fetching original creation publication/transaction/source/generation or raw SIR inputs. The existing SP-274 deletion dependency remains; no result is manufactured.
+
+The original deletion publication adapter similarly binds its real source selection, event/schema/sequence, original locator/end, payload/value/producer digests, exact original synced receipt and actual B3 operation/result values. SP-285 pending recovery resolves the historical first receipt through SP-286 rather than disposed append controls. Source recovery or compaction may give the surviving event different current locators; current selection is verified independently. No current cursor or index birth metadata is substituted for the original receipt. These typed adapters resolve existing authority and create no persisted receipt or store.
+
+### Original transaction, retention and summary reader admission
+
+The original-admission typed native join resolves B1's exact before/after point and pending operation/result values and B3's exact committed operation/result/point values. B1 preserves every point field except status; B3 records original receipt/result after the same frozen append. Writer/permission/confirmation and all eleven actual protecting owner classes are evaluated in the serialized B1 admission. Each typed class resolution binds Storage/project/point and its actual owner revision, complete enumeration and zero blockers. Hashing the class results does not perform enumeration or authenticate it. A later hold preserves terminal read truth and blocks independent retirement; no reader clears it.
+
+SP-269 summary v1 is reused byte-for-byte from the current canonical standalone pointer `Plans/restore_point_created_contracts.schema.json#/$defs/retention_summary`. SP-269 owns the shared summary writer/read contract. A terminal delete reader validates exact project/point/ref/hash/status, the named surviving event and its original publication facts, exact unique retired family/key/schema/encoding/byte-hash set, actual requirement flags, all eleven hold/ref classes, release age/count/rank and actual canonical summary transaction. Required native deletion custody must have its exact key in the retired set; the separate app-root result and original append receipt remain retained and agree. No removed point or companion bytes are required on this terminal read path. The final summary's independent canonical admission supplies retirement custody; source-driven traversal still requires the real surviving named event and SP-278 current range proof.
+
+The SP-269 same-key v2 summary is consumed only through the separately admitted codec2 typed boundary. Deletion requires `terminal_status=deleted`, `expiry_companion_required=false` and null original expiry receipt/result under genuine introduction proof. Deletion consumer/projector1.0 and History2.0/Runtime Artifacts deletion1.0 explicitly adopt that route under ACD-464/RAP-058. Every current route and compatibility fence in SP-269 must be verified before writer2 admission; branch remains excluded. Missing or incompatible admission preserves affected unavailability.
+
+Filtered history remains the actual same-key current core plus at most two complete retired cores. The current and every retained predecessor must have lawful birth/retirement/successor chronology: each predecessor birth is no later than its first retirement, which is no later than its actual immediate successor birth. Successor IDs resolve the retained chain to the selected current generation without cycles, missing nodes or foreign identities. The selected publication identity, first birth, original read boundary and exact final predecessor core are joined to the actual initial/rebuild transaction. Ordinary traversal preserves all history and birth facts. Cleanup remains the existing inclusive seven-day retirement anchor, all actual holds/live refs and same-redb root CAS; it cannot remove current or early/held history or reserve a hidden fourth generation.
+
+### Original deletion append and B1/B3 owner controls
+
+The controls below specify original native admission and its complete initial evidence. The explicitly installed SP-285 pending recovery route consumes authentic admitted B1 custody and SP-286 first receipt instead of disposed original controls; its final receipt-before-owner-local-guard ordering and atomic B3 publication are mandatory. Later completed reads use the separately typed retained route. These phases are not interchangeable.
+
+The complete original-admission evidence requires the exact independently resolved original B1/B3 transaction values and the original deletion-owner admission controls, plus the Storage append owner's complete original acknowledgement and commit-group evidence. The Plans/restore_point_deleted_owner_controls.schema.json schema is a transient read adapter into existing source/custody; it adds no new durable family, receipt root, journal or policy. Actual source authentication, transaction admission, complete hold enumeration and fsync remain native obligations. A self-consistent caller snapshot or string ref does not become actual owner authority. These transient controls are not perpetual transaction history. Subsequent native deleted reads explicitly use SP-285, preserving complete retained original receipt/result semantics and current source/hold authority without those disposed inputs.
+
+The original B1 transaction ID is joined to the actual writer admission that authorized this exact Storage/project/partition/actor/domain request, before-record hash and owner revision. The original permission decision/scope, confirmation context and complete hold-evaluation ID/digest are resolved to their original source records and agree with the frozen preflight and actual B1 admission snapshot. Changing writer_admission_id across the operation, mirrored preflight and pending B1 value does not change the original writer-control record. B1 retains the original available-point and status-only deleted after-state; none of these joins weaken pre-B1 refusal or protecting-ref gates.
+
+The actual original Storage acknowledgement retains all eleven AppendReceipt fields, including commit_group_id and acknowledged_at_utc, and the original group binds event/sequence, manifest/segment/offset/durable end and completed frame/manifest/watermark/directory barriers. That source control also joins the original B1 identity and frozen append input/producer digest. The receipt equals both the committed operation and the retained command result's original receipt. Current index relocation does not rewrite the original source acknowledgement. A different acknowledgement within otherwise lawful clock bounds is accepted only with the corresponding actual original owner records; no new wall-clock maximum or timestamp rewrite is introduced.
+
+The actual B3 transaction ID, complete committed operation/result values and original publication reference are bound to the original owner controls, then the current canonical operation/result/point bytes are read under the actual current SP-278 token/fence. The original B3 point value is the actual point snapshot read at B3, not an instruction to rewrite the point. B3 writes only the existing operation and result keys. Its point status remains deleted and all immutable/capture fields equal the B1 after-state; independently owned holds may have changed between B1 and B3 and remain intact. A hold admitted after B1 and before B3 cannot cancel the already admitted delete or disappear through B3. Later current holds are separately owned too. Original B1 and preflight are not recaptured.
+
+After lawful point/companion/source retirement, the existing canonical retained result and authentic SIR/dispatcher custody continue to supply the original request/outcome/response and full original receipt. No new removed-source dependency is imposed on original-result replay or the independently canonical summary branch. Native completion establishes the full original append/B1/B3 semantics at their actual boundaries; the installed SP-285 restart route resolves authentic admitted pending custody and SP-286 receipt before its new atomic B3 publication, and the original authenticated retained-row predicate remains required for later replay. This retained-read correction preserves the separately versioned shared summary codec, existing terminal value branches and all retention objects. SP-285 separately defines the prospective pending-result custody refinement.
+
+Ordinary deleted-checkpoint cursor advancement preserves current `hold_refs` exactly as well as publication identity/birth and every complete predecessor core. A separate existing hold-owner operation is required to alter holds. Revalidate the complete current source/index token, actual permission/deletion controls and prior checkpoint CAS immediately before publication and disclosure. Native read adapters resolve through `Plans/restore_point_deleted_read_adapter.schema.json` and `Plans/restore_point_deleted_owner_controls.schema.json`; neither schema creates authority from caller hashes.
+
+ContractRef: ContractName:Plans/restore_point_deleted_contracts.schema.json, ContractName:Plans/restore_point_deleted_read_adapter.schema.json, ContractName:Plans/restore_point_deleted_owner_controls.schema.json, ContractName:Plans/storage-plan.md#restore-point-summary-codec-and-coordinated-admission
+
+### SP-268 — Restore-point deletion custody and checkpoint
+
+```yaml
+plan_unit_id: SP-268
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage admits exact-hash available-to-deleted under original command permission, confirmation
+  and protecting-ref controls. B1 freezes status/intent/result, B2 receives the original durable append
+  and B3 commits exact companion/result custody while preserving later holds. Initial admission composes
+  complete fresh deletion gates using SP-285 retained-created admission; later passive native reads explicitly adopt SP-285 authenticated
+  retained_custody with full current source and no disposed original controls; lawful terminal summary
+  reads never require removed custody.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+gui_related: false
+gui_classification_reason: Defines backend custody, source validation and owner-result authority.
+split_recommended: false
+depends_on:
+- SP-269
+- SP-272
+- SP-278
+- SP-281
+- SP-274
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Global nonwriter/pre-dispatch rejection changes nothing; B1 requires exact request/hash, original permission/confirmation
+  and all eleven protecting-ref classes.
+- After B1, append failure remains reconciliation; retries preserve original event/input/receipt and cannot
+  roll back or emit a second deletion.
+- B3 writes only companion/result after actual initial admission or installed SP-285 pending reconciliation
+  with SP-286 receipt; intervening holds remain intact.
+- Current global source/frontier token and exact initial/rebuild generation admission govern checkpoint
+  publication, including nonmatching final records.
+- Same-generation cursor refresh preserves current holds, birth and all predecessor cores; no early/held
+  retirement or hidden fourth generation is allowed.
+- Native, supported historical and terminal-summary branches remain distinct and passive; SP-269 codec
+  adoption cannot authorize deletion.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
+validation_surfaces:
+- Plans/restore_point_deleted_contracts.schema.json
+- Plans/restore_point_deleted_read_adapter.schema.json
+- Plans/restore_point_deleted_owner_controls.schema.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+```
+
+
+## Restore-point delete original-result custody
+
+Point/event/deletion companion use existing RP-RESTOREPOINT-90D-AFTER-RELEASE@1.0.0 unchanged: inclusive owner-proven reference_release+7,776,000 seconds, max2,048 full logical points per project, oldest eligible only, every owner hold/ref overrides. Deletion timestamp is not release. Pending custody never retires. SP-269 summary and exact retired-key proof are committed atomically before removal; its complete summary contract is an explicit shared prerequisite. No 24-hour thread hide, 30-day deletion backup, deletion-time TTL or independent companion purge is borrowed.
+
+UCC Case L expressly requires original owner result for the app-root lifetime. SP-272 materializes only the cmd.chat.delete_restore_point typed result custody needed by that existing requirement, mapped to existing RP-AUTHORITY-INDEFINITE@1.0.0 (creation anchor, retain indefinitely, no TTL/count/byte expiry, fail-closed overflow). This is separate from RP90 point/operation and summary. Store only original request/idempotency digest, compact identity/custody references and closed original typed result, never transcript/source capture. It is canonical nonrebuildable; coherent backup/restore must preserve it. After source retirement it still returns exact original result for matching request; it never reconstructs point bytes or performs deletion again. Conflicting digest fails closed. Missing required native result custody fences and discloses loss rather than recreating operation.
+
+A durable owner-admitted refusal or failed-before-B1 result has closed outcome/project/point/reason/effect=none. Its commit is the owner's durable admission under global writer authority; if that commit fails, do not claim a durable terminal result. Pending result has no terminal result/time and requires its native operation. Deleted result requires matching operation/event/digest and original success result. State/result outcome and reason must exactly match. Pre-global-gate rejections remain non-durable, with no hidden writer exception. Unknown terminal effect after B1 remains reconciliation/recovery_required.
+
+### Original shared outcome custody — SIR-045
+
+The exact existing SIR-owned CommandOutcomeRecord has no separately admitted app-root physical family; thread_command_outbox_record's RP-DELIVERY-365D cannot preserve it indefinitely. The delete result family therefore carries an immutable original_dispatch_custody capsule as narrow custody of the ORIGINAL authenticated record, not a peer outcome producer. Its closed schema references the exact existing full_thread_runtime_contracts CommandOutcomeRecord and current ui_command_response schema; it retains the original normalized request identity/payload digest/idempotency/target generation/dispatch frame, actual original outcome/ref, original response snapshot, capture authority/time and content hashes. A successful result separately retains the actual original barrier/synced AppendReceipt bytes with exact event identity; pending and no-effect results have null original append receipt. This preserves receipt custody after the point/native operation/event retires. B3 and owner-admitted terminal no-effect refusal/failure commit that complete custody with the result before returning it. Pending has no terminal capsule. Failure to capture the actual original outcome is not permission to synthesize it or expose success; reconcile under its existing SIR owner. No deferred global receipt store is borrowed.
+
+The separately closed typed result has its own schema identity and hash. CommandOutcomeRecord.owner_result_sha256 hashes ONLY that typed result, excluding custody container/outcome/response; container digests hash the captured original records, avoiding a recursive outcome-to-result-to-outcome hash. Exact command, request, instance, operation/topology, key, payload digest, generation, frame, outcome/result/error/receipt and original dispatch joins remain mandatory. Retained normalized request and original response preserve original error/status/request/dispatch semantics after transient sources expire. No current topology, availability, error or response is reconstructed in place of original values. The resolver may return that authentic retained original record through the same SIR semantic owner. SIR-045 is a narrow delete-only custody cross-reference; SP-272 owns bytes and lifetime.
+
+CV-333 remains the sole UICommandResponse contract: this result is separately typed owner_result, not a second Full Thread CommandOutcomeRecord. Existing Full Thread outcome owns request/command-instance/operation/topology/target-generation and dispatch-frame joins. Admission is conditional on actually resolving that existing owner contract; no fake topology or deferred peer store is invented. Terminal result ref/schema/hash is separately bound by the existing outcome; UI dispatcher maps exact original result and outcome to v2 response. Refused owner admission uses the existing rejected outcome mapping; failed is failed; deleted is succeeded; pending stays pending and unknown effects recovery_required. storage_read_only remains an owner reason in the existing closed UI error vocabulary, not a new error enum token. Replay preserves original request/instance/outcome/result/receipt/event identities, with the current dispatch wrapper marking replay and original_dispatch_id.
+
+### Original request/outcome/result joins and safe logical references
+
+The original deletion domain request is exactly the command ID, three existing arguments, original envelope key and authenticated actor. Its existing canonical JSON digest remains independent of the SIR normalized payload digest. Actual SIR payload bytes/normalization are resolved under SIR's owner and their digest is joined separately. Matching domain arguments do not permit a fabricated command instance, operation/topology, target generation, dispatch frame or authenticated actor.
+
+Every original terminal result is checked as a complete typed value. Deleted results must equal the exact derived deletion/event identity, project/point/ref and original hash; they require actual SIR `succeeded`, CV-333 accepted/succeeded, no error, and exactly the original deleted event ref. They cannot accept `no_op`, a rejected response or a failed outcome even if all supplied result/outcome/response hashes are repaired. Owner-admitted refusal maps to rejected and failure to failed, with the original error/reason and no event/effect. Flat request/response operation and instance fields equal the full retained IdentityEnvelope. Exact original owner result schema/ref, outcome ref, owner receipt ref, payload hash, key, generation and frame relations are all joined. A same-frame acknowledgement has the actual same frame and offset zero. Pre-dispatch rejection remains non-durable and cannot fabricate an owner operation.
+
+The physical result key contains `project~...`, but CV-333's existing `non_secret_ref` grammar does not admit `~`. Keep that physical key unchanged. Define the narrow delete-owner logical custody locator `restore-point-delete-result:{sha256_utf8(exact_physical_result_key)}`. Its `#/result` identifies the original typed result; `#/original_dispatch_custody/original_command_outcome` identifies the original SIR record. The resolver reads the actual authenticated result row, rederives its exact physical key from the retained scope/idempotency identity, hashes exact UTF-8 bytes with no normalization, and verifies the locator plus field pointer. This is not a physical key alias, second store, peer outcome, generic routing scheme or permission to guess a row from a digest. A collision/conflicting key or unresolved source fails closed.
+
+RFC8785 hashes only the closed typed original result for `CommandOutcomeRecord.owner_result_sha256`, as required by CV-333. This result contains fixed ASCII member names and string/boolean values; no numeric serialization ambiguity arises. The original deletion request/frozen input/outcome-capture/response-capture digest recipe stays the exact canonical-JSON binding recipe: UTF-8, no BOM/whitespace, minimal JSON punctuation, fixed member ordering by scalar/UTF-8 lexicographic key order, native exact decimal integer encoding, no ASCII escaping of valid non-ASCII text, no Unicode normalization, and standard JSON string escapes. Its admitted values contain no floating point fields; surrogate/invalid UTF-8 input is rejected. It must not round integer identities through IEEE754 or impose an invented 53-bit cap. SP-278's MessagePack binding codec is used only for the new generic selection bindings. Existing producer, immutable capture, command, payload and registered canonical value-byte hash meanings are not replaced by that codec.
+
+After lawful point/companion/event/source retirement, the canonical retained result and authentic SIR/dispatcher custody still supply the complete original normalized request, outcome, response and original receipt. Original-result replay requires current authenticated row resolution and applicable disclosure permissions; it does not re-require removed source/operation rows or rerun deletion. Native completion establishes the full original B1/B2/B3 predicates before publishing this custody. The source-aware read adapter is `Plans/restore_point_deleted_read_adapter.schema.json`; the exact persisted result is `Plans/restore_point_deleted_contracts.schema.json#/$defs/command_result_receipt`. Initial source authentication remains mandatory, but later SP-285 canonical retained-row resolution must not reacquire retired original normalized payload/dispatch bytes or B1/B2/B3/append-group controls. SIR remains the original outcome owner and current disclosure policy still gates replay.
+
+### SP-272 — Restore-point delete original-result custody
+
+```yaml
+plan_unit_id: SP-272
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The restore_point_delete_result family preserves the delete command owner’s original typed
+  result and delegated original SIR request/outcome/CV-333 response plus complete original append receipt
+  for the existing app-root replay duty. Authentic retained-row resolution survives lawful RP90 source
+  retirement and cannot execute deletion again. Original source authentication gates first capture; later
+  SP-285 resolution uses authentic retained canonical rows and current disclosure policy without retired
+  raw SIR/transaction/append controls.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+gui_related: false
+gui_classification_reason: Defines backend custody, source validation and owner-result authority.
+split_recommended: false
+depends_on:
+- SP-274
+- CV-333
+- DL-045
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Exact physical result key and RP-AUTHORITY-INDEFINITE preserve app-root original result independently
+  of RP90 point/operation custody and mandatory canonical backup.
+- Pre-dispatch rejections remain non-durable; owner-admitted no-effect refusal/failure requires committed
+  original custody, while pending has no terminal capsule.
+- Deleted requires genuine succeeded/accepted original outcome and response with exact identity/topology/generation/frame/result/receipt/event
+  joins.
+- Owner-result hash covers only closed typed result; captured containers preserve original record hashes
+  without circular outcome hashing or changing SIR normalization.
+- Logical locator rederives the actual physical key from authenticated row identity and binds exact member
+  pointer; digest alone cannot resolve authority.
+- Replay returns original result under current access policy after lawful source retirement without reconstructing
+  point, current topology or original receipt.
+- Initial source authentication remains complete; later original-result reads authenticate immutable retained
+  canonical custody and current disclosure authority without retired raw source/transaction controls or
+  reconstructed outcome/receipt facts.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
+validation_surfaces:
+- Plans/restore_point_deleted_contracts.schema.json
+- Plans/restore_point_deleted_read_adapter.schema.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+```
+
+
+
+
+## Restore Point Expired Custody And Checkpoint
+
+### Explicitly bindings and exact physical ownership
+
+producer.storage.retention.restore_point_expired@1.0.0 is the Storage retention executor of the existing Chat expiry predicate. It owns no new timer/cadence/SLO/product selection rule. consumer.chat.restore_point_expired@1.0.0 is the Chat-owned passive fact consumer; projector.chat.restore_point_expired@1.0.0 owns only the verified logical-view checkpoint. reader.runtime_artifacts.restore_point_expired@1.0.0 is passive terminal evidence presentation. The expiry-family route of reader.chat.restore_point_history@2.0.0 is explicitly adopted under ACD-466. The history@1.0.0 compatibility route remains fenced to raw v1.
+
+The logical projection stores no new per-point durable view/index. It resolves the canonical rp point, exact existing event_record_index.v2 row and native expiry companion, or a separately validated supported historical/terminal-summary branch. Event-index ownership stays with the existing Storage index writer. No new query-performance claim is made.
+
+Two physical families are required before use:
+
+- restore_point_expiry_commit at restore_point_expiry_commit.v1:{scope_partition}:{expiry_id}, value pm.storage_value.restore_point_expiry_commit.v1@1.0.0, canonical_non_rebuildable and mandatory-backup custody under the existing point policy.
+- restore_point_expired_checkpoint at projector.checkpoint.restore_point_expired.v1:{scope_partition}, value pm.storage_value.restore_point_expired_checkpoint.v1@1.0.0, rebuildable only from verified canonical sources under RP-PROJECTION-3GEN.
+
+scope_partition is exactly project~ plus unpadded base64url of UTF-8 project_id. New producer scope is project only. Complete physical rows contain actual standalone Plans/restore_point_expired_contracts.schema.json#/$defs/expiry_commit and #/$defs/checkpoint pointers equal to inline schemas, all required/nullable fields, owner/consumer versions, encoding, retention, redaction and migration/restore/recovery dispositions. SP-269 updates the existing summary family; it is not a third new family ID. None of these rows may remain prose-only when writes depend on them. Actual StorageMigrationCoordinator source/target graph and version ceilings are required; no store version integer or critical/MVP-array membership is guessed.
+
+### Exact eligibility, native identity and admission
+
+Eligibility is a current owner proof, not an event-label inference. The closed eligibility object stores the exact policy ID/version, complete owner-verified reference-release fact, evaluated time, selection kind/count/eligible-set digest/rank, exactly one complete evaluation of all eleven named protecting-ref classes, nonempty release-evidence refs with owner/digest, current owner-gate revision, actual writer admission and actual maintenance exclusion. Each ref must resolve to genuine durable owner evidence; a hash or string pointer is not authentication. Classes are descendant_branch, application, preserve, legal_hold, in_flight_application, source_lineage, live_ref, backup, rollback, recovery_anchor and maintenance. All have complete enumeration and zero active blockers at the lifecycle-admission boundary. An observed empty array is not release evidence. A producer's coordination lease is not an invented exception to an actual point-protecting maintenance ref.
+
+Both selection kinds require evaluated_at >= released_at + 7,776,000 seconds. oldest_eligible_count_pressure additionally requires actual count >2,048 and rank0 in the actual eligible-set proof, following the reviewed SP-269 interpretation; pressure never bypasses age or holds. The cap counts logical full points, not companion rows or final hash-summary residues. If the actual oldest eligible selected point is already terminal, this expiry producer emits nothing; its independent retirement owner handles that state. The expiry producer does not select a younger point merely to obtain an available-to-expired transition. Selection must still be current under the same writer/hold/maintenance serialization used by the transition. No point held at this boundary expires. Missing, unavailable, deleted, corrupt, already expired, hash-mismatched, unprovable, before-boundary or nonwriter input changes nothing and emits no expiry event.
+
+The actual canonical record must be available with its exact immutable hash. A native-created record requires the genuine committed created companion/source admission and the SP-281 immutable-capture hash recipe. The native recipe hashes the existing thirteen immutable fields, excluding mutable status and holds; expiry never recomputes it from an expired status or rewrites record_sha256. Supported historical capture uses its actual unchanged hash and explicitly supported owner verification. A historical record is never relabeled native solely because its fields resemble the current schema.
+
+technical expiry_id is rpe_ plus lowercase SHA256 over four UTF-8 strings, each preceded by its unsigned64 big-endian byte length: restore_point.expired/expiry/v1, project_id, restore_point_id, original record_sha256. Event ID is er_rpe_ plus the same digest; the native idempotency_key is expiry_id. Since the point lifecycle is one-way, a second expiry identity for the same point/hash cannot authorize another transition. Before initial admission an evaluation may be refreshed under the same candidate identity; after admission the complete selected proof/input is frozen. A matching existing identity/digest returns the original result; mismatch fails closed. No inference from native-looking key spelling establishes source admission.
+
+The complete envelope, registered payload, native identity/hash joins and frozen input are validated before E1; malformed input cannot change point status. The complete append input is persisted before any event append. It uses Contracts EventRecord2, exact payload schema, inline payload, no_secrets, dedupe_by_idempotency_key, authenticated retention-owner actor_ref, project parity, and null thread/run/node/attempt/requested-account/effective-account refs. Payload release refs exactly preserve the frozen admission evidence list. Occurrence time equals the logical transition time; original correlation/causation/producer sequence and event ID are retained on recovery. Producer semantic digest uses the exact Contracts1028 field set and excludes Storage-assigned sequence/observation/persistence fields. frozen_append_input_sha256 separately covers the complete frozen input. No command-result/FullThread outcome is invented for this background lifecycle transition.
+
+### Logical expiry and physical retirement are separate stages
+
+E1: Under current global writer admission, current verified source/creation prerequisites and the shared hold/maintenance exclusion, one redb transaction CAS-checks available+exact hash, changes only status to expired and stores the complete pending expiry companion. It retains the immutable capture, all source refs/holds and every required companion. It does not write a final retirement summary or remove any point/source/event byte. The point is now unavailable for apply/delete, but no completed expiry publication is exposed yet.
+
+E2: The native producer submits exactly the stored frozen event through the existing append owner and receives a real barrier/synced AppendReceipt. Actual frame/manifest/directory durability, global event-ID and scoped-idempotency admission remain the existing append owner's responsibility. Buffered or guessed coordinates are insufficient. If append fails or the process dies after E1, the point remains expired with pending mandatory custody; only the expiry owner reconciles that same intent under current writer authority. It never rolls back to available, changes occurrence/evidence/identity, publishes a terminal refusal instead, or creates a second expiry event.
+
+E3: One redb transaction commits the actual AppendReceipt and exact original typed expiry result in the companion. Result outcome is expired with original project/point/ref/hash/expiry/event identities and physical_retirement_performed=false. Only then may a completed lifecycle result be published. Crash after E2 but before E3 resolves the same canonical dedupe identity and commits the same genuine exact first eleven-field receipt through the explicitly adopted SP-286 append-owner protocol; until that custody is resolved, remain recovery-required, never fabricate the missing fields from a four-field locator; crash after E3 returns the original result. A schema-valid event or expired status alone proves none of these joins.
+
+R: Actual physical custody retirement is a later, independently authorized SP-269 transaction. After resolving admitted retained native custody through SP-285 without old original controls, it freshly re-evaluates current release/age/count/all refs and requires committed E3/native custody plus actual summary-writer and reader admission. It writes complete validated final summary and removes exactly the named eligible redb keys atomically. It emits no expired event and creates no lifecycle transition. Therefore expiry does not depend on a summary that itself needs an expiry event; retirement depends on the already completed lifecycle. R may follow E3 in one maintenance execution, but cannot collapse or reorder the durable boundaries. The same retained-read lease and complete final retirement selection/eleven-class/release check remain bound through handoff; Storage is revalidated again after that owner check.
+
+A legitimate hold/ref admitted after E1 preserves the expired capture and required custody while independently blocking R. It does not resurrect available or imply the earlier zero-blocker admission was invalid. Consumers may truthfully inspect that held expired record. A hold serialized before E1 blocks E1. No stage clears a hold. No stage deletes source thread/conversation/worktree/file/Git/index/queue/runtime-safe-point state, performs FileSafe restore, or emits runtime_artifact.restore_point. Expiry status is an unavailable conversation state, not proof of physical purge.
+
+### Passive consumer truth and currentness
+
+Native_completion requires the actual current frame/payload/semantic/index proof, expired point/project/hash relation, immutable capture/native-or-supported creation proof, exact committed companion/frozen input/eligibility digest, and actual synced receipt coordinates and original result. The current record may carry a later hold because it is inspectable terminal custody, not action eligibility. Missing a required native companion is unexplained loss, never evidence it was optional.
+
+Historical_completion requires genuine supported historical expired point/event/hash, original policy/release/ref proof, supported source/version admission and actual evidence that expiry-companion introduction did not require native custody for this source. No native companion, AppendReceipt, event, creator proof or new hash is fabricated. EventRecord1/2 or registered minimal-envelope compatibility input follows the existing normalizer/schema/source context; no alias or payload extension is added. Native-looking IDs and absence of a row are not introduction proof.
+
+Terminal_retention_summary is distinct from both present-point branches. When a surviving expired event drives traversal, its actual frame/payload/semantic/identity must match the authoritative final summary under current source/index/generation proof. This branch does not require the lawfully removed point, creation companion or expiry companion. V1 is valid only for genuinely supported pre-expiry-custody history under explicit introduction proof; native expiry retirement requires the SP-269 v2 writer and separately admitted codec2. Missing/unproven summary or unexplained loss preserves the affected-record fence and prior checkpoint. No terminal branch authorizes apply/delete, restoration, source visibility or reconstruction.
+
+The point/event/source have their own owner retention and holds. Summary publication removes only named redb custody; it is not seglog/blob/thread/file deletion permission. Later event retention may lawfully remove the expired event. The event-driven projector then cannot fabricate that frame or advance through an unexplained gap. Current owner-approved retention/compaction range/translation proof governs remaining source coverage and disclosure. Direct summary-by-point inspection and expiry-owner original-result lookup can use genuine final summary admission without requiring already retired event bytes; they do not manufacture an event cursor or certify missing source coverage. Summary is independent canonical residue, not a projection from currently present source bytes.
+
+Checkpoint publication is a single owned redb update after contiguous verified source/index coverage, with current Storage instance/project, full-index checkpoint/selection digest, manifest/recovery epoch/segment generation, survivor prefix, source offset and event identity. It binds the stable publication generation and schema/consumer/projector versions. The cursor is the beginning of the last verified record; resume validates that record and starts after its checked frame end. Missing checkpoint means uninitialized, not zero-proof. Before commit, revalidate the same current generation/source range under the existing Storage publication/maintenance protocol; a changed generation or hole leaves the last committed checkpoint unchanged. This projector does not own or rebuild the canonical event index and writes no per-point canonical repair.
+
+
+Later present native expiry inspection explicitly adopts SP-285 reader.storage.restore_point_retained_custody@1.0.0 and its retained_native_terminal output, preserving all retained immutable operation/result/receipt/capture joins and complete current SP-278 source/hold facts without reacquiring original E1/E2/E3, eligibility or nested creation controls. Historical and terminal-summary branches remain independently typed; expiry gains no SP-274 dependency.
+
+### Expired checkpoint generation history
+
+The registered checkpoint value requires `publication_id`, `hold_refs`, and `retired_generations` in addition to its current identity/cursor/publication fields. Here `publication_id` is the stable **projection-generation** identity, and `published_at_utc` is that generation's first verified publication time. The exact generation discriminator is `(storage_instance_id, scope_partition, consumer_id, consumer_version, projector_id, projector_version, cursor.projector_schema_version, publication_id)`. Source segment rotation, source/index cursor advancement, updated full-index checkpoint/selection and a new event do not by themselves change this discriminator. No timestamp, filename or event sequence allocates a new generation.
+
+Ordinary traversal performs a CAS update to the same current generation's cursor and verified source/index fields, revalidating every current source/index/survivor proof and predecessor checkpoint. It preserves `publication_id`, `published_at_utc` and every retired generation/anchor. It does not archive the previous cursor position or consume a retention-generation slot. No per-cursor timestamp is needed for this contract. Source recovery/translation may continue this same generation only when the existing owner source-range/currentness proof remains valid; otherwise the projector must take the separately verified rebuild path, never copy a stale cursor into CURRENT.
+
+Only first initialization, an explicit verified projection rebuild, or an owner-reviewed supported schema/binding successor establishes a new projection generation. Repeated retry of the same unpublished generation transition reuses its selected identity; it does not slide a retirement anchor. A transition cannot publish until the new full source coverage/currentness proof succeeds. On that real generation transition, one redb transaction writes the new current core, archives the previous current core, and sets that archived entry's `retired_at_utc` exactly to the new generation's `published_at_utc`, with `successor_publication_id` exactly the new generation ID. The archived core contains the final cursor of its old generation. Retained older entries preserve their original retirement facts. The terminal-transition TTL anchor is the explicitly persisted retirement time, never the old generation's birth time or an inferred timestamp. The new publication time must be valid and cannot predate the archived core's birth; a clock/authority inconsistency fails publication rather than rewriting history.
+
+`retired_generations` contains zero to two entries, each a complete closed prior checkpoint core **without** recursive history, its required `retired_at_utc`, and `successor_publication_id`. One current plus at most two prior generations is the existing three-generation cap. No secondary history key or unspecified metadata supplies retention facts.
+
+Each archived core retains the exact old storage/project/consumer/projector identity, cursor, selected-index reference/digest, original publication ID/time and owned hold refs. All project/scope/storage identities match this logical key; publication IDs are distinct and a generation cannot retire into itself. Completed generation transition records the timestamp and successor relation atomically, so no archived generation has an unknown terminal anchor. The exact existing registry policy is `RP-PROJECTION-3GEN@1.0.0`: `current_plus_history`, `terminal_transition`, TTL `604800`, `max_cardinality=3`, `cardinality_scope=logical_key`, `overflow_action=rebuild_projection`, `hold_eligible=true`, `expiry_action=rebuild`. History expiry checks the persisted retirement anchor and owner hold state. Overflow invokes that existing rebuild disposition; these fields are not new permission for early eviction, dropping a held generation, or bypassing the stated retirement window. If the owner cannot establish a policy-permitted generation slot, preserve the last committed checkpoint and disclose affected currentness as unavailable until a lawful rebuild/publication is possible. Ordinary cursor advances do not need new slots and continue after fresh proof. Rebuild never fabricates retirement times.
+
+Archived cursors are retention/history data only. None certifies currentness or becomes a fallback CURRENT selection. The current core must independently validate against the current source/index generation and survivor authority. Moving an old core into the current position without a fresh verified publication is rejected even if its schema and earlier retirement facts are valid. No old generation can authorize a point action.
+
+### Complete expiry, creation and original-publication predicates
+
+Initial expiry admission composes the original full expiry_commit semantic predicate, not only its schema. It derives expiry_id, EventRecord ID and idempotency from the exact existing length-prefixed original project/point/hash recipe and verifies every typed result field, before/after status, policy/release/hold/current-gate evidence and all frozen input/eligibility/producer hashes. The operation's actual Storage instance equals the admitted current Storage source/checkpoint instance; repairing a foreign operation key or digest cannot change that authority. Existing expiry eligibility, 7,776,000-second release rule, 2,048 logical point pressure and all eleven protecting-ref classes are unchanged. A later hold can protect completed expired custody without invalidating its original expiry or authorizing retirement. Later native expiry inspection explicitly calls SP-285 reader.storage.restore_point_retained_custody@1.0.0: complete retained semantic fields remain required, while old eligibility/release/transaction controls are admitted historical facts rather than reacquired inputs. Fresh current protecting refs still govern separate retirement.
+
+At original native creation admission, compose the actual SP-281 creation-domain predicate and the now canonical event_index_consumer_adoption original_creation_publication/original_creation_commit_transaction predicates. Preserve the exact admitted original created event, original canonical companion/record transaction, original append receipt and original source selection. Verify full immutable capture, request/frozen input, receipt manifest and physical interval, event/scope/schema and every original publication field and hash. The original creation transaction must identify the exact companion and record bytes; a repaired companion hash or paired receipt/source-fixture manifest is insufficient. The accepted created checkpoint's actual v2 generation admission, predecessor retirement and captured complete source/index read are independently checked under SP-281. A schema-version substitution is not admission. Later native expiry reads use SP-285 retained creation joins within the terminal adapter, without original creation publication/transaction/source snapshots or an old created checkpoint. They gain no SP-274 result dependency; historical introduction remains separate.
+
+Creation's original publication is separate from later current generic source and from expiry's own original E2 append. Preserve each original receipt's true manifest, recovery/source context and physical locator. Neither is overwritten with current rebuilt/compacted index coordinates. The current full index locates the current surviving event, whose unchanged semantics still join the original custody. Unsupported historical creation/source admission remains in its original owner lane; no native companion or new hash is manufactured to satisfy this predicate. Supported historical admission remains separately required.
+
+### Expiry SP-278 complete index adoption
+
+This first-native expiry checkpoint is its own v1 binding, with exact required generic_read_token from canonical Plans/event_record_index_checkpoint.schema.json#/$defs/read_token. No existing checkpoint version or source-hash meaning is silently changed.
+
+Within one actual redb snapshot, resolve event_record_index_checkpoint.v1:{storage_instance_id}, its selected current_generation_id and actual event_record_index.v2@{generation_id} dataset. Every row's key/source identity/digests and checkpoint_ref resolve the actual generation node. publication_locator joins its immutable generation birth anchor; an old row is not required to carry the latest append manifest. Separately validate actual CURRENT/manifest/source-control bytes, recovery epoch, inventory, synced watermarks, survivor/exclusion/gap facts and the complete advancing frontier across all scopes and families. Full row cardinality/row-set hash and exact retained source coverage precede any filtering.
+
+For this newly introduced expiry index_selection_sha256, use the exact canonical SP-278 binding codec over its closed selection object (read_token excluding redb_snapshot_id). This is a local checkpoint binding assignment, not an alteration of EventRecord payload/source, producer semantic or point hash recipes. generic_read_token additionally carries the actual redb_snapshot_id. full_index_checkpoint_ref, selection digest, current-source traversal cursor, actual index row and actual event all join that snapshot. The cursor marks the final verified global record, including nonmatching application/project events. A matching expiry event is not necessarily the traversal boundary. Same-generation append changes the full frontier token and invalidates old filtered publication even if no matching expiry event was added.
+
+Original expiry receipt/source evidence remains separate from these current coordinates. Revalidate current source/index, phase-appropriate authenticated retained receipt/point/summary custody under SP-285, with full original controls required at initial admission, owner gates, permissions/deletion and prior filtered-checkpoint CAS immediately before committing the one owned checkpoint and again before disclosure. No row/schema/ref alone authenticates a frame or policy decision. The original payload, immutable point, original append-input and producer-semantic hash algorithms remain unchanged. Source frame/CRC/native MessagePack/control encodings, sync and locking are native obligations, not established by the synthetic single-segment adapter.
+
+### Expiry final summary without removed-row dependencies
+
+SP-269 owns the exact same-key v2 summary, strict writer and registered retained-value dispatcher. All required reader/writer gates apply before physical retirement.
+
+Before R removes anything, validate the actual expired point and required creation/expiry companions, exact E3 original result/receipt, the current re-evaluated release/hold eligibility and actual summary writer/read-route admission. In the single owner summary transaction, write the final summary and remove exactly its enumerated canonical redb keys. For native expiry, the exact set is rp:{project}:{point}, restore_point_expiry_commit.v1:{partition}:{derived_expiry_id}, plus restore_point_creation_commit.v1:{project}:{point} when genuine creation introduction requires it. No deletion companion is allowed in this expired set. Every entry has its exact original registered schema ID/version, canonical encoding, actual value-byte digest and removed_in_summary_transaction disposition. Count remains at most three; the point is one logical point for the 2,048 policy.
+
+The original_expiry_result must equal the entire exact derived expiry result, including record_ref, original hash, project, point, expiry ID, event ID and physical_retirement_performed=false. terminal_event.original_record_hash and creation_event.original_record_hash equal original_record_hash. The original expiry receipt's event/sequence/manifest/segment generation/name/offset/durable end equal the ORIGINAL terminal_event publication facts exactly. Original publication coordinates must be genuine owner facts. Later current source rebuild is independently validated and does not rewrite these original facts. Original source-admission/capture verification facts remain actual owner-certified canonical summary evidence; a ref or repaired hash cannot manufacture them.
+
+After lawful retirement, direct summary inspection and expiry original-result lookup require the actual canonical summary at its exact instance/project/key and its admitted owner summary transaction/source-generation path. They do not require the removed point, creation/expiry companion or retired source manifest. Event-driven traversal additionally requires the actual surviving current event/index and unchanged payload/semantic identity, plus complete current source range. The summary itself is durable canonical owner evidence; it is not reconstructed from current EventRecord metadata. Missing authenticity, original custody or unexplained source range leaves the prior checkpoint and affected-record fence intact. None of these routes grants apply/delete/branch, process restart, FileSafe restore, purge or source-body visibility.
+
+### Expired predecessor chronology
+
+The existing exact history layout remains one current checkpoint plus at most two complete nonrecursive retired cores. Validate the input's entire history before any refresh or replacement. Every predecessor birth must be <= its first retirement <= its actual immediate successor birth; successor IDs resolve the retained chain to the selected current generation, without cycles or missing/foreign nodes. Scope/Storage/binding/version identities agree throughout. A paired bogus retirement/successor time before predecessor birth is invalid even when both values are changed together.
+
+Ordinary advancement preserves current publication_id, birth and every predecessor value/retirement/successor exactly and consumes no generation slot. Only a separately verified rebuild/supported successor may archive the exact final old core and publish a distinct generation atomically. New retirement equals that successor's actual first publication and cannot slide on retry. Existing seven-day terminal anchor, holds/live refs and three-generation protected cap remain unchanged. All protected slots blocks replacement; no erased predecessor or fabricated publication can create capacity.
+
+
+### Original expiry owner boundaries
+
+New expiry E1 consumes the actual retained-created passive_creation prerequisite under SP-285 lifecycle_from_retained_creation. The complete initial native expiry evidence composes the actual existing Storage expiry owner's original E1 transaction, E2 append acknowledgement and source commit-group controls, E3 transaction and original eligibility/admission snapshots. These are typed transient resolution inputs from the existing point/expiry custody, Storage transaction/source controls and actual owner authority. They do not create new physical families, an E1/E2/E3 journal, additional retained roots or new policy. The closed schema Plans/restore_point_expired_owner_resolution.schema.json describes this read adapter; a string ref, repaired caller digest or caller boolean does not authenticate the owner input. Every original E1/E2/E3/eligibility predicate below remains mandatory at its original boundary. After authentic E1 pending publication, the explicitly installed SP-285 pending recovery route consumes that admitted canonical custody and SP-286 first receipt without disposed E1/eligibility/nested creation controls, and applies the final receipt-before-owner-local-guard ordering before atomic E3. Later retained-row inspection uses SP-285 with actual immutable admitted companion/capture/receipt/result and current source, without these disposed transient controls.
+
+E1 resolves the exact canonical record and companion keys and Storage/project/partition/point identity. Its actual before record is available with the original immutable hash. Its after record changes only status to expired, preserving capture/source fields and hold_refs exactly. Its complete pending companion equals the frozen original operation with state pending_append and null receipt/result/commit time. The actual transaction binds original writer admission, maintenance exclusion, eligibility snapshot and owner revision and identifies only those two permitted mutations. E1's actual transition time agrees with the frozen event occurrence and original operation, not a new retry time.
+
+The original eligibility snapshot resolves the exact Storage/project/partition/point/input and selected before-record bytes; installed unchanged policy object/version; every original hold-class evaluation; actual writer identity/revision; actual maintenance lease held for that E1 transaction; selection time and reference-release source records. Every release ref resolves its full original owner value and byte digest, project/point/release ID/time and closed-ref-set digest. These new transient source adapters do not redefine any existing durable hash recipe. Actual source serialization, complete hold enumeration, provenance, writer CAS and lease exclusion remain native obligations.
+
+E2 resolves the complete original eleven-field AppendReceipt from the actual append owner, including commit_group_id and acknowledged_at_utc. Its original source group contains the event/sequence and exact manifest/segment/offset/durable-end acknowledgement, with matching frozen append input and producer semantics. Full frame/manifest/watermark/directory barriers precede a successful acknowledged group. This source selection and group remain original facts when the current generic index relocates or advances. Current location fields cannot rewrite the original acknowledgement. Contracts_V0.md's Durable append receipt and storage recovery events section is the receipt owner; no CV-338 inference is used.
+
+E3 resolves the exact pending-to-committed companion transaction, preserving the original E1/E2 references and unchanged point. The entire actual committed operation includes the actual original receipt and complete original expiry result. The E3 point snapshot may contain independently admitted post-E1 holds; E3 itself writes only the companion. Its value-byte digests and commit timestamp agree with the independently resolved original transaction and current canonical owner read under the selected current source fence. E1, acknowledgement and E3 have the required operation ordering. There is no new maximum pending age, wall-clock cutoff or future-time rejection: a legitimately late E3 remains lawful when all original/current custody, source and owner joins hold. Replacing committed_at_utc or acknowledgement time without the actual corresponding owner record fails.
+
+Current point holds can legitimately differ after E1 through their existing owner. The read still verifies the actual current canonical point bytes and preserves the frozen expired capture. Those later holds block independent retirement and cannot invalidate the original completed expiry. Before any R summary publication, the retirement owner resolves the already-admitted immutable E3 custody through SP-285 and separately validates the complete fresh current retirement gate, then copies its entire original receipt/result into the exact same-key summary. After lawful retirement, the independently canonical summary remains the terminal authority and does not acquire a dependency on removed point/operation/source rows.
+
+Ordinary checkpoint cursor advancement preserves current hold_refs exactly, in addition to publication birth/identity and every retained predecessor core. It cannot remove or add a current hold under cursor_advance. A separately authorized hold operation remains with the existing hold owner and is outside this adapter; no hold mutation is inferred from source progress.
+
+E3.record_value is the actual point snapshot read at E3. It preserves the E1 after-state's status and immutable/capture/source fields, but can contain holds admitted by their existing owner after E1. Its complete value-byte hash and the independently resolved original E3 owner record bind that actual held snapshot. E3's permitted mutation remains only the expiry companion's original receipt/result commit; it does not write the point or remove holds. The actual current point read may contain separately owned later holds as well.
+
+This does not recapture or amend E1's available point, pending input, original eligibility or preflight. A protecting ref before E1 still blocks admission. A hold admitted between E1 and E3 protects custody without cancelling the already admitted expiry. All original receipt/group/time/owner and current checkpoint-hold preservation checks remain required.
+
+### Expiry original-result lookup and terminal admission
+
+The SP-269 final summary retains the expiry owner's complete original result/receipt and terminal semantic digest for the existing app-root same-identity rule. An expiry-owner retry checks exact native intent or lawful canonical final summary before append. After point/intent/event retirement, a matching original identity/digest returns that exact original lifecycle result/receipt and never invokes E1/E2 again. `physical_retirement_performed=false` remains E3's historical result even after later physical retirement. A conflicting semantic digest fails closed; missing mandatory receipt/custody fences instead of recreating a lifecycle fact. This is the expiry owner's lookup, not command-outcome authority or a global dedupe writer.
+
+The producer, consumer, projector and passive readers use the shared SP-269 codec and exact route table. All direct bindings retain raw-v1-only support; v2 reaches current consumers only through their separately admitted codec2 typed boundary. Native expiry retirement requires v2; supported v1 history requires actual pre-introduction proof. Point/companion/event retain RP90 and independently owned holds; the checkpoint retains RP-PROJECTION-3GEN. Missing non-rebuildable native custody or summary is disclosed data loss requiring owner recovery and mandatory backup, not reconstruction from an index, checkpoint or transcript. Coherent recovery preserves held/pending custody and actual introduction/version boundaries.
+
+ContractRef: ContractName:Plans/restore_point_expired_contracts.schema.json, ContractName:Plans/restore_point_expired_owner_resolution.schema.json, ContractName:Plans/event_record_index_checkpoint.schema.json, ContractName:Plans/storage-plan.md#restore-point-summary-codec-and-coordinated-admission
+
+### SP-275 — Restore-point expiry custody and checkpoint
+
+```yaml
+plan_unit_id: SP-275
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage executes the existing expiry predicate through status-only E1, original barrier
+  append E2 and complete receipt/result E3. New E1 uses SP-285 retained-created admission and full fresh expiry gates;
+  later passive native reads explicitly adopt SP-285 retained_custody with complete current SP-278 source
+  and no disposed original or nested creation controls; later holds preserve terminal custody. Checkpoint
+  refresh preserves current holds and generation history. Independent retirement uses SP-269 v2 custody
+  and coordinated codec admission without changing retained v1.
+  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+gui_related: false
+gui_classification_reason: Defines backend custody, source validation and owner-result authority.
+split_recommended: false
+depends_on:
+- SP-269
+- SP-281
+- SP-278
+- SP-285
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Release plus 7776000 seconds, oldest-eligible count above 2048 and all eleven protecting-ref classes
+  gate admission; pressure bypasses neither age nor holds.
+- Frozen identity/input survives every E1/E2/E3 crash boundary; unresolved exact-first-receipt custody
+  stays recovery-required; actual full original receipt and source-group barriers precede completed publication.
+- E1 changes only status; E3 writes only companion and preserves independently admitted intervening holds,
+  including legitimately late commits.
+- Native, supported historical and canonical terminal-summary branches require exact source/custody/version
+  admission; no removed-row dependency is introduced after lawful retirement.
+- Full global frontier and same-redb token are revalidated before checkpoint CAS/disclosure; ordinary
+  advancement preserves birth, holds and entire lawful predecessor chronology.
+- V2 retirement retains the entire original expiry receipt/result and removes only exact admitted keys;
+  original-result replay cannot rerun expiry.
+- The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
+  rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
+  unchanged generic token alone cannot authorize disclosure.
+- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
+validation_surfaces:
+- Plans/restore_point_expired_contracts.schema.json
+- Plans/restore_point_expired_owner_resolution.schema.json
+- Plans/restore_point_expired_contract_fixtures.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+risk_class: restore_point_terminal_custody_or_false_completion
+reasoning_tier: high
+context_scope: event_authority_step08_restore_pair
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- EA-BINDINGS-285-RESPONSE-001
+- RSE-P01
+- RSE-P02
+- RSE-N01
+- RSE-N02
+- RSE-N03
+```
+
+## Restore-point original admission and retained-custody read phases
+
+This NEW technical owner definition under DL-045 is SP-285. It separates original creation/deletion/expiry admission, pending reconciliation, ordinary authenticated retained-row inspection, fresh physical-retirement authority and post-retirement summary/original-result resolution. The retained-reader phase split changes no stored schema, key, checkpoint version, original hash recipe, retention policy, hold kind or event membership. The separately installed pending-deletion recovery route below requires its explicit closed pending dispatch-custody variant in the existing result family; it does not reinterpret older null-custody rows. A current canonical committed companion/result is an owner-admitted value; it is not an instruction to repeat its original transaction. Redb and backup custody do not imply perpetual original per-transaction snapshots.
+
+### Exact transient bindings and explicit callers
+
+| New binding | Input schema and exact ID | Output schema and exact ID | Closed result |
+| --- | --- | --- | --- |
+| `reader.storage.restore_point_retained_custody@1.0.0` | `Plans/restore_point_retained_read.schema.json#`, `pm.restore_point.retained_read.v1` | `Plans/restore_point_retained_read_result.schema.json#`, `pm.restore_point.retained_read_result.v1` | `retained_native_terminal` for present native expired/deleted custody |
+| `reader.storage.restore_point_retained_creation@1.0.0` | `Plans/restore_point_retained_creation_read.schema.json#`, `pm.restore_point.retained_creation_read.v1` | `Plans/restore_point_retained_creation_read_result.schema.json#`, `pm.restore_point.retained_created_read_result.v1` | `retained_native_creation` for present available native creation |
+
+Both are separately installed transient owner adapters, not persisted families or changed checkpoint schemas. Inputs bind actual encoded canonical row bytes/keys/SHA-256, decoded values, Storage/project/point/partition, actual current created and applicable terminal EventRecords/index rows, full SP-278 read token, final examined source boundary, native-issued read lease and actual store-origin resolution. They contain no original E1/B1/E3/B3 transaction object, original creation publication/source/group object, raw original SIR payload, old created checkpoint or caller `already_admitted` flag. Original receipt/input/result members already retained in canonical rows remain exact. `read_through` carries no projector_schema_version and does not certify a stored checkpoint by itself.
+
+These exact current callers explicitly adopt the new retained-present branch:
+
+- SP-281's `consumer.chat.restore_point_created@2.0.0`, `projector.chat.restore_point_created@2.0.0`, `reader.chat.restore_point_history@2.0.0` and `reader.runtime_artifacts.restore_point_record@2.0.0` use retained_creation with `read_purpose=passive_creation` for available native points, or retained_custody for supported present native expired/deleted points. ACD-465 and RAP-059 own their passive presentation. Their old @1 compatibility bindings are not widened.
+- SP-268/ACD-464/RAP-058's `consumer.chat.restore_point_deleted@1.0.0`, `projector.chat.restore_point_deleted@1.0.0`, deletion-family history@2.0.0 and `reader.runtime_artifacts.restore_point_deleted@1.0.0` use retained_custody with deleted. The existing SP-274 creation-result dependency is preserved.
+- SP-275/ACD-466/RAP-060's `consumer.chat.restore_point_expired@1.0.0`, `projector.chat.restore_point_expired@1.0.0`, expiry-family history@2.0.0 and `reader.runtime_artifacts.restore_point_expired@1.0.0` use retained_custody with expired. Expiry/passive creation gain no SP-274 result dependency.
+- The current `reader.chat.branch_from_restore@2.0.0` may consume the available retained_creation evidence only as its creation-custody prerequisite. All existing actual current action preflight remains mandatory; this passive result grants no action, FileSafe or branch authority. Compatibility branch routes remain unchanged and terminal/summary results are not apply authority.
+- SP-274/SIR-044's combined available-created/original-result view explicitly selects `read_purpose=original_create_result_custody`, which additionally requires the actual SP-274 canonical row and all retained original result joins. The output binds that purpose and creation_result_ref. Choosing passive_creation cannot obtain original-result replay authority. Source-independent create/delete original-result replay remains with SP-274/SP-272 and SIR-044/SIR-045, using their actual immutable retained row and current disclosure authority without requiring a present point or surviving event.
+
+An unsupported caller/version, unknown native introduction, corrupt terminal status or missing required row is not accepted by these new types through shape similarity. A status outside these new types retains its pre-existing owner predicate; SP-285 neither supplies a corrupt-family completion contract nor retires an independently valid original route. Supported historical introduction and existing SP-269 summary branches remain separate and unchanged. In particular, absent/pending native custody cannot select historical mode. The thirteen summary-codec2 adoptions and three v1-only compatibility fences remain independently mandatory; they do not themselves install these retained-present readers.
+
+### Original admission, new lifecycle admission and pending recovery
+
+Original creation admission retains every SP-281/ACD-465 capture/request/frozen-input/hash, original publication, actual canonical record/companion transaction and three-barrier check, with SP-274 command custody where required. A committed-looking row never substitutes for actual native admission. The following adapters consume actual canonical custody established by those checks; they do not authenticate caller-supplied admission claims.
+
+The explicitly installed `owner.storage.restore_point_lifecycle_from_retained_creation@1.0.0` consumes `reader.storage.restore_point_retained_creation@1.0.0` as the creation prerequisite of a NEW available-to-deleted B1 or available-to-expired E1. SP-268/SP-272 and ACD-464 use `read_purpose=original_create_result_custody` for deletion, preserving the actual SP-274 result dependency. SP-275 and ACD-466 use `passive_creation` for expiry, adding no SP-274 dependency. These are lifecycle-owner calls, not a summary route or passive-reader action grant. All original creation controls were authenticated at creation admission and are not fetched again for the new lifecycle operation.
+
+Before B1/E1 changes status, consume the actual complete retained-created input/output and its current SP-278 lease in the same held transaction as the exact available-point/hash CAS and every fresh lifecycle gate. Deletion still requires its new actual writer/permission/confirmation, complete eleven-class protecting-ref evaluation and genuine new SIR dispatch. Expiry still requires its new writer/maintenance/policy/release/selection and complete eleven-class evaluation. Recheck current registration, installed bindings, origin/backup/migration/access/quarantine, exact rows and complete source frontier through mutation. Freeze expiry's existing `creation_source_admission_ref` as `retained-creation-admission:` plus the canonical JSON SHA-256 of the exact `{binding, family, input, output}` object, with this lifecycle binding, `family=expired` and the actual complete retained-reader input/output; `creation_source_admission_sha256` equals that digest. Independently issued owner resolution, not a repaired hash, authenticates the lineage. No new physical family is created.
+
+Actual original B1/E1 must authenticate all those gates and atomically publish the status-only point transition with its frozen pending operation and required pending command custody before restart can consume them. Creation similarly publishes point, creation intent and SP-274 pending result together. After that lawful publication, the admitted immutable pending rows carry the original admission facts. Restart does not reacquire old B1/E1 transaction observations, eligibility/preflight authority, original creation controls or raw SIR payloads, nor reopen the now-stale available-point lease. It verifies authentic current canonical pending origin and every retained immutable relation instead. Future B3/E3 results are not required at B1/E1; full completed-operation fixtures are static predicate evidence only.
+
+The exact installed recovery bindings are `owner.storage.restore_point_creation_pending_recovery@1.0.0` (SP-281/SP-274/ACD-465/SIR-044), `owner.storage.restore_point_deletion_pending_recovery@1.0.0` (SP-268/SP-272/ACD-464/SIR-045), and `owner.storage.restore_point_expiry_pending_recovery@1.0.0` (SP-275/ACD-466). Creation uses its existing pending schema; expiry uses its existing pending companion. Deletion requires the explicitly admitted closed pending dispatch-custody variant in its existing result family: actual original dispatch ID, original normalized identity/payload digest, genuine nonterminal original SIR outcome and capture provenance, with no terminal response/hash. Older pending rows lacking this custody remain recovery-required; migration cannot manufacture it. No operation is made pending by downgrading a terminal outcome. The first installed pending discriminator is exactly `pm.chat.restore_point_delete_pending_dispatch.proposal.v1` at `Plans/restore_point_deleted_contracts.schema.json#/$defs/pending_dispatch_custody`, with schema_version `1.0.0`. The literal `proposal` segment is preserved from the reviewed schema identity; it does not mean optional or unadmitted behavior after this explicit adoption. `command_result_receipt` and the registered physical value schema select this required pending variant; existing deleted/refused/failed branches retain their exact schemas. No alias, inferred older version or raw-payload reconstruction is allowed.
+
+These recovery bindings explicitly adopt SP-286/CV-339 for the exact first eleven-field AppendReceipt. Before append, authenticate complete current pending rows, immutable capture/frozen producer input, current full source/index and owner admission, and verify the event/scoped identity absent from the complete selected append root. Submit only that frozen input under the existing append writer; do not redispatch, recapture or repeat the status transition. A crash before source publication resumes the same intent. A crash after protected source publication but before receipt issuance uses SP-286's actual current protected-group issuance. A crash after issuance resolves its exact immutable first receipt. Repeated recovery joins the original event and produces no second event. Four-field dedupe, current latest-group metadata, current time and relocated source coordinates cannot reconstruct a receipt. Disposed original append controls need not be reacquired after lawful first-receipt custody exists; current surviving source and full immutable receipt semantics still join.
+
+For creation/deletion, actual SIR uses the retained pending normalized identity and original dispatch ID to produce the original operation's terminal outcome; the dispatcher supplies its original response. Preserve a genuine existing acknowledgement exactly. If the original accepted outcome has no acknowledgement, SIR acknowledges in its actual current recovery frame, never by fabricating an acknowledgement in the original dispatch frame. Bind current target generation, full owner identity, availability, frame and revision. Intermediate staging is undisclosed and disappears on restart. Canonical retained payload digest replaces raw payload reacquisition only in this explicitly installed pending recovery route; normalization/domain hash recipes and all other result joins remain unchanged.
+
+Immediately before terminal publication, first resolve and compare the actual full first receipt, then perform the complete owner-local final guard over current domain/runtime authority, point, pending operation/result, registration/install/migration/origin/backup/permissions/quarantine and full source/index facts. No dependent owner resolver runs after that guard and before the atomic write. Any late change rejects and preserves pending operation/result. A fresh retry uses current legitimate holds/source rather than rolling them back, and preserves the same receipt/event identity. Creation/deletion publish terminal companion and original result/outcome/response atomically; expiry publishes only its companion. B3/E3 preserve the actual point byte-for-byte, including later independently admitted holds. Receipt issuance precedes success; no guessed failure, pending-age cutoff or physical-retirement authority is introduced.
+
+SP-286's actual backup/restore authority also governs these callers. Forensic pending backup cannot restore first-issuance authority; mandatory authority backup settles protected-group issuance and retains the first receipt. An old pending operation absent from a restored settled source is not a newly admitted post-restore operation and cannot append without the required fresh owner capability. It remains recovery-required without a new identity, invented receipt or silent redispatch. This bounded refusal does not claim arbitrary rollback recovery.
+
+### Actual current-store authority and final disclosure fence
+
+The native Storage reader must itself open the actual selected canonical store under its current root/maintenance domain, materialized family/version/encoding bindings, completed startup/recovery/migration state, verified coherent backup/restore and native introduction/origin authority. It obtains one real redb/source/access snapshot and an opaque owner-issued lease. Resolve exact current canonical point, required creation/terminal companions and applicable command-result rows from that snapshot. Mere presence in a copied redb file, matching self-generated hashes, a schema ID or a caller packet does not establish admitted origin. No permanent per-row admission journal is invented.
+
+Independently resolve SP-278's entire current root/generation/immutable anchor/advancing frontier/source token, actual complete frame decoding/durability and full row/source coverage before filtering. Surviving created and applicable terminal events must match their exact canonical index rows and immutable original event semantics. Valid nonmatching records still determine the final examined boundary. Original receipt coordinates remain original committed facts and are never rewritten from the current rebuilt/compacted locator. Authenticate the adapter against the actual selected bytes/keys/values and issued snapshot, not against its own repaired digests.
+
+Every change to current family registration, reader installation, supported migration, verified backup/store origin, permissions, quarantine, canonical point/companion/result rows or selected source invalidates the lease or must fail final complete owner revalidation. Bind and recheck all these actual facts together through checkpoint publication and disclosure; checking only the generic token or a snapshot-shaped body is insufficient. The same applies to current access/deletion and independently owned hold changes. A changed fence discards the answer and preserves the prior checkpoint. This final verification uses current owner facts, not retired original admission controls.
+
+### Complete retained-domain joins
+
+Recompute the unchanged SP-281 thirteen-field immutable point hash, excluding status and holds, and verify exact project/point/ref/source boundary/capture time, category-separated created payload and context/provenance set relation, attachments, citations and optional safe-point lineage. Preserve original ordering/normalization meanings. Resolve the exact immutable committed creation companion; validate complete retained command and original digest, frozen append input/digest, identity and equality to the surviving created EventRecord excluding only Storage-assigned sequence/persisted fields. All original stored eleven receipt fields, event/sequence, successful result and original chronology remain exact canonical custody.
+
+For deleted, require the existing actual SP-274 original create-result row with its retained normalized request, original outcome, CV-333 response, full AppendReceipt, original command/frozen/producer hashes and every identity/result/receipt join. Require the full retained deletion operation, preflight/request/frozen-input/hash/identity/result and genuine original succeeded/accepted SIR semantics, not no_op or reconstructed current topology. For expired, require the full original hash-derived operation/event/idempotency, stored eligibility/digest, frozen input/producer hashes, creation-admission identity/companion digest, full committed receipt/result and chronology; physical_retirement_performed remains false in that historical lifecycle result. No SP-274 dependency is added to expiry.
+
+The original stored eligibility/permission/source facts were authenticated at admission. Ordinary later reads do not fetch original release/group/transaction/creation-generation controls, raw dispatch payloads or old before/after point snapshots. Actual retained-row origin and integrity are indispensable: a semantic hash function alone cannot distinguish a forged self-consistent store. Current point holds may legitimately differ while the original immutable capture and terminal status stay fixed. Reading those current holds does not undo the original lifecycle or authorize their release.
+
+Standalone available-created reads apply the same complete retained creation joins without terminal event/companion/result members. passive_creation requires no create-result row. original_create_result_custody requires the actual existing SP-274 row and every original retained request/outcome/response/receipt/result join; SIR/CV-333 alone supply replay semantics. Later row resolution does not recreate original acknowledgement, request, outcome, response or topology and never requires disposed raw original source merely because first capture required it.
+
+Both outputs are passive: no checkpoint/family write, event append, command dispatch, branch/apply/delete, source resurrection, FileSafe/file/Git restore, runtime/queue effect, hold clear or original-command-success publication follows from the result itself. A projector still owns its exact existing checkpoint CAS, birth/history/generation retention and complete source publication. Actions independently rerun every existing current owner preflight.
+
+### Fresh retirement and post-retirement result authority
+
+Physical retirement first resolves the admitted present native expired/deleted custody above, then acquires fresh complete policy/release/age/count/eligible-rank/all eleven protecting-class/writer2/codec/maintenance authority. It uses the same authenticated retained-read lease and snapshot throughout the no-effect custody handoff. Final retirement-owner validation compares complete current selection, release boundary, age/count ordering and every protecting-class evaluation to the captured owner snapshot, or proves their unchanged authoritative revision under the coordinated lease. Late blockers or changed release/selection reject. Revalidate the Storage read owner again after that owner check, before the independent full atomic summary writer gate.
+
+SP-269 still atomically publishes the complete summary and removes only its exact admitted set: one point, required creation companion and at most one deletion or expiry companion, never both or original command-result custody. V1/v2 closed retired-set rules, original hashes/receipts/results, coordinated writer2/codec adoption, mandatory backup and independently canonical later summary authority remain unchanged. This phase adapter itself removes nothing and does not prove native atomic summary publication. Current later holds can block retirement without invalidating passive admitted terminal inspection.
+
+After lawful retirement, SP-269's independently canonical summary and surviving-source predicate remain the terminal traversal authority without removed point/companion/original controls. SP-274/SP-272/SIR original-result replay independently resolves authentic immutable retained command custody and current disclosure policy; expiry's original lifecycle-result route resolves its admitted companion or canonical final summary. Missing required canonical authority is disclosed recovery loss, not a cue to reconstruct from an event, checkpoint or current topology.
+
+Static phase-model evidence preserves all 199 frozen original expiry/deletion admission regressions, adds retained reads after removing all original transaction/control/source objects, and rejects late current-owner/final-retirement changes. Native origin/authentication, frame CRC/sync, redb transaction/CAS, actual reader/migration/backup installation and complete atomic handoff-to-summary execution remain NOT_RUN. The reviewed pending-recovery composition explicitly adopts SP-286 first-receipt authority; native execution remains NOT_RUN and this contract does not clear runtime, depth, readiness or governance gates.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-281, ContractName:Plans/storage-plan.md#SP-274, ContractName:Plans/storage-plan.md#SP-268, ContractName:Plans/storage-plan.md#SP-275, ContractName:Plans/storage-plan.md#SP-269, ContractName:Plans/assistant-chat-design.md#ACD-465, ContractName:Plans/Shared_Integration_Runtime.md#SIR-044, DecisionID:DL-045
+
+### SP-285 — Restore-point admission and retained-read phases
+
+```yaml
+plan_unit_id: SP-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage defines two separately installed transient retained-custody readers for already-admitted
+  native restore creation and expired/deleted custody. Complete original creation and fresh lifecycle controls
+  apply at their respective original boundaries; ordinary later reads authenticate exact immutable retained canonical
+  rows and full current source without disposed original controls. All current callers adopt the exact
+  passive types explicitly. Current registration/install/migration/backup/origin/access/quarantine/row/source
+  facts remain bound through final disclosure. Physical retirement additionally rechecks fresh complete
+  release/selection/all protecting refs in the same lease, followed by Storage revalidation and the unchanged
+  atomic summary gate. Pending exact-first-AppendReceipt recovery explicitly adopts SP-286.
+  New lifecycle B1/E1 consumes admitted retained creation under its exact purpose and fresh gates; installed pending recovery uses authentic admitted pending custody and SP-286 first receipt without disposed original controls.
+gui_related: false
+gui_classification_reason: Defines Storage custody/read phase and owner verification contracts; existing
+  Chat and Runtime Artifacts units own presentation.
+depends_on:
+- SP-278
+- DL-045
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Two exact transient input/output schemas and native reader installation are required; no new physical
+  family, stored checkpoint version or existing hash meaning is introduced.
+- Every original creation/deletion/expiry admission rejection remains enforced; a committed-looking row
+  never substitutes for native first admission.
+- Available native passive creation needs no SP-274 result; original_create_result_custody and existing
+  native deletion require its actual retained row, while expiry gains no new dependency.
+- Ordinary later reads succeed only through actual retained-row origin/integrity and complete current
+  source after old original transaction/publication/SIR controls are absent; self-issued or transplanted
+  rows reject.
+- Late registration, reader installation, migration, backup/store origin, access, quarantine, row or source
+  changes invalidate the lease or fail complete final owner revalidation; generic-token equality alone
+  is insufficient.
+- Retirement compares fresh complete selection/release/age/count and all eleven protecting classes under
+  the same lease, rechecks Storage after the owner gate and preserves the exact SP-269 atomic set.
+- Historical/summary/compatibility and original-result routes retain their separate authority; no passive
+  type authorizes actions, event append, hold clear, source revival or command success.
+- Pending reconciliation uses SP-286 exact first-receipt authority and cannot manufacture missing fields from
+  four-field dedupe/current time; absent actual admitted issuance remains recovery-required.
+- Native authentication, CRC/fsync, transaction/CAS, reader/migration/backup installation and full handoff-to-summary
+  execution remain NOT_RUN; static phase tests are not runtime or governance clearance.
+- New deletion B1 uses original_create_result_custody under SP-268/SP-272/ACD-464; new expiry E1 uses passive_creation under SP-275/ACD-466 and freezes the exact retained-creation admission digest.
+- Actual B1/E1 and creation admission atomically publish pending custody before restart; future terminal fixture values are not required at that boundary.
+- All three installed recovery bindings cover pre-append, protected-publication-before-issuance and post-issuance crashes using SP-286 and exactly one original event/receipt.
+- Final actual receipt resolution precedes the complete owner-local domain/runtime/rows/source guard; stale completion preserves pending rows and retries preserve current holds.
+- Old pending rows lacking required dispatch custody or fresh restored-root capability remain recovery-required without reconstruction or redispatch.
+validation_surfaces:
+- Plans/restore_point_retained_read.schema.json
+- Plans/restore_point_retained_read_result.schema.json
+- Plans/restore_point_retained_creation_read.schema.json
+- Plans/restore_point_retained_creation_read_result.schema.json
+- reports/event-authority-20260911/step-08-restore-pair-validation.md
+risk_class: restore_point_admission_retained_authority_phase_confusion
+reasoning_tier: high
+context_scope: restore_point_retained_custody_read_phases
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: restore_point_retained_read_contract
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- owner.storage.restore_point_lifecycle_from_retained_creation@1.0.0
+- owner.storage.restore_point_creation_pending_recovery@1.0.0
+- owner.storage.restore_point_deletion_pending_recovery@1.0.0
+- owner.storage.restore_point_expiry_pending_recovery@1.0.0
+- "retained-creation-admission:"
+- reader.storage.restore_point_retained_custody@1.0.0
+- reader.storage.restore_point_retained_creation@1.0.0
+- retained_native_terminal
+- retained_native_creation
+- passive_creation
+- original_create_result_custody
+negative_constraints:
+- Do not require disposed original transaction/control/source inputs for explicitly adopted ordinary retained-row
+  reads.
+- Do not weaken original admission or infer native origin from shape, hashes, absence or an event index.
+- Do not treat a passive reader, codec adoption or four-field dedupe locator as action/first-receipt authority.
+owner_hints:
+- Plans/storage-plan.md
+```
