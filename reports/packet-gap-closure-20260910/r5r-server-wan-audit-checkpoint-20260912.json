@@ -6,7 +6,7 @@
   "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
   "initial_comparison_commit": "4735ffc4c5433d5d68a641fd8097feed6726989b",
   "published_review_comparison_commit": "9bd40d79077073d3867f792aaceb02c67c76d29e",
-  "landing_base_commit": "9bd40d79077073d3867f792aaceb02c67c76d29e",
+  "landing_base_commit": "bc66595334d8b25bba3771945709c07f53c6c9b0",
   "new_batch": {
     "case_count": 251,
     "status_counts": {"pass": 2, "partial": 245, "fail": 4},
@@ -62,6 +62,12 @@
     "additional_passages": 6,
     "current_passages_in_custody": 156,
     "changed_or_added_paths_reconciled": 16,
+    "postpublication_selected_paths_verified": 917,
+    "postpublication_changed_or_added_paths": 15,
+    "postpublication_passages_text_identical": 153,
+    "postpublication_changed_context_passages": ["current_goal_update", "current_shared_update", "current_storage_update"],
+    "postpublication_used_passages_text_identical": 19,
+    "postpublication_qualification": "The subsequent bc665953 update-consumer landing was read against all four changed owner diffs and its compact report. GRS-064/068, SP-299, CV-342 and SIR-049 now explicitly adopt current Activity/body/control/history, selected active-v3 event observation, content-free audit, separately visible retained input and original terminal-selected replay. That supersedes the unresolved-consumer wording in three broader contextual passages, none of which is one of the 19 passages used by this WAN batch. Complete current source/token/frontier and original source/body/first-publication joins remain distinct from immutable terminal-selected replay epochs; all helpers precede joint final disclosure. No event-built Goal projector/checkpoint, new writer variant or native proof follows. All 19 used WAN passages and the route/connector/Doctor/Server subjects are unchanged. Original publication and every verdict remain immutable; final checks are separately pinned against bc665953.",
     "detail": "The current-main 9bd40d7 changes to historical Goal reader adoptions and actual-prior-state restore refusal were read against all four changed owner diffs and three fixture metadata deltas. SP-271/277/280 adopt SP-278 concrete historical authority with original lawful admission, complete current token/frontier and the final post-helper source/access fence. They grant no current writer, dispatch or native positive proof. All 150 previous selected passages relocate with identical text; six additional spans are pinned. Every selected WAN/Server/connector/Doctor/security/GUI subject is unchanged. The unrelated normative history adoption does not upgrade a WAN judgment."
   },
   "verification": {
@@ -69,14 +75,14 @@
     "result_structure_identity_and_evidence_refs": {"status": "pass", "cases": 251, "errors": 0},
     "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases": 1028, "negative_cases": 3338, "internal_self_tests": 12, "boundary": "Static schema/fixture consistency only."},
     "server_command_gap_adjudication": {"status": "pass", "rows_resolved": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11, "boundary": "Schema-reference/adjudication coverage does not prove primary catalog registration or native handlers."},
-    "shards": {"status": "pass", "documents": 98, "shards": 2598},
+    "shards": {"status": "pass", "documents": 98, "shards": 2599, "published_review_shards": 2598},
     "browser_event_admission": {"status": "fail", "error": "preexisting_family_rows_changed", "positive_cases": 53, "negative_cases": 576, "command_bindings": 15, "registry_families": 42, "admitted_scoped_families": 2, "prepared_scoped_families": 51, "created_and_reset_static_subchecks": "pass", "boundary": "No historical baseline pin refresh or native/whole-Browser admission is claimed."},
     "governance": {
       "status": "fail",
       "passing_checks": 21,
       "failing_checks": 15,
       "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
-      "boundary": "Fresh initial and current-main checks retain the same 15 failing group names. Missing fixtures/references, stale governance/evidence/readiness/audits, unresolved home-layout surface and whole-registry guards remain recorded, not repaired or waived. Diagnostic arrays are capped, so this report makes no claim about unseen diagnostics."
+      "boundary": "Initial, publication-base and postpublication current-main checks retain the same 15 failing group names. Missing fixtures/references, stale governance/evidence/readiness/audits, unresolved home-layout surface and whole-registry guards remain recorded, not repaired or waived. Diagnostic arrays are capped, so this report makes no claim about unseen diagnostics."
     }
   },
   "evidence": {
@@ -89,6 +95,8 @@
     "explicit_clerical_amendments": {"path": "/mnt/Cursor/PM-Experiments/r5-server-wan251-review-20260912-XfLcI0m3/review-amendments.json", "sha256": "5b0e71672e6c8aa7a5b3e397f913b717a6ec60c2bf263ecb90cd191d59476d7c"},
     "initial_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/checks/summary.json", "sha256": "890d8303dfcb1991397e6847f61b5f06634dc25827d30f71a1d27e99ea3f8bc1"},
     "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/landing-checks/summary.json", "sha256": "077490d07e61f98e68101964f68cde13799aecc7bf7a3e1773d5c28dfc88ced5"},
+    "postpublication_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/preland-currentness.generated.json", "sha256": "0f017c09080d3fe3e7a38a2f9d94fb0420b34c4034b702fe2aebdd2d317f2066"},
+    "preland_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/preland-checks/summary.json", "sha256": "b2cf858b4e0110447bbe843de130b9d6f56ed04977d762248e15db63e2c9df7b"},
     "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-summary.json", "sha256": "39831a25efb54fef20d18beb365ba332166ad2b73136dfcb43b1a2522ca37e5c"},
     "publication_before": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-before-results.json", "sha256": "5543cd0906ae05a0833ea205032d946e752bf656516415b5fd33733c0f6e8a45"},
     "publication_after": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-wan251-review-20260912-bxZmEWLc/publication-after-results.json", "sha256": "34d726e4c2a706e5fe47236c68e6029ad7d4a2c34bff79753ae24a22c2888cf3"},
