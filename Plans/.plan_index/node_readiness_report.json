@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15209,
+    "depends_on_edge_count": 15218,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17860,
-    "node_count": 6578,
+    "edge_count": 17869,
+    "node_count": 6581,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T12:42:05Z",
+  "generated_at_utc": "2026-09-12T13:38:06Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -34828,10 +34828,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6578,
+  "plan_unit_count": 6581,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2034,
+      "high": 2037,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -35940,6 +35940,7 @@
       "event_contract_drift": 1,
       "event_driven_gui_projection_alignment": 1,
       "event_envelope_compatibility_break": 1,
+      "event_observation_misrepresented_as_goal_action": 1,
       "event_payload_schema_owner_split_drift": 1,
       "event_record_envelope_drift": 1,
       "event_record_storage_boundary_drift": 1,
@@ -38034,6 +38035,7 @@
       "stale_projection_mutation": 1,
       "stale_provider_policy_drift": 1,
       "stale_provider_resurrection": 1,
+      "stale_reader_authority_or_fabricated_original_value": 1,
       "stale_reference_drift": 2,
       "stale_reset_projection_or_replayed_owner_effect": 1,
       "stale_reuse": 1,
@@ -38364,6 +38366,7 @@
       "unification_phase_boundary": 1,
       "unknown_resolution_policy_drift": 1,
       "unnecessary_user_escalation": 1,
+      "unproved_or_incompatible_reader_installation": 1,
       "unraid_template_result_payload_enums": 1,
       "unreceipted_or_bulk_completion": 1,
       "unrecoverable_mutation": 1,
@@ -38618,7 +38621,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6387,
+      "accepted": 6390,
       "retired": 182,
       "superseded": 9
     },
@@ -38672,7 +38675,7 @@
       "migration_requirement": 3,
       "operational_policy": 1,
       "optional_requirement": 1,
-      "owner_boundary": 38,
+      "owner_boundary": 41,
       "owner_map": 6,
       "platform_requirement": 1,
       "pricing_contract": 1,
@@ -38791,7 +38794,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "c519b638da8dc6866ec886468871c4da6ffe95bd682beee4ac677f65781124fe",
+        "expected": "902b737eab1ab5a1695f23fd4c39d43bf8d377fc07ca618cf654dd7ab3cd09df",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {

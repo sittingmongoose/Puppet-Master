@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-12T08:34:11Z",
+  "generated_at_utc": "2026-09-12T13:36:49Z",
   "index_path": "Plans/_shards/release_supply_chain/00-index.md",
-  "index_sha256": "bec23622d56b98241b27f21f0891c83600b329f3cc1b923aaee2e45c471f858a",
+  "index_sha256": "99100ad7092c7740b01a4172b694b7554a2cc547462d3b345e77501e07916847",
   "manifest_path": "Plans/_shards/release_supply_chain/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/release_supply_chain/001-preamble.md",
-      "sha256": "a7584b1e0e70cabb18de62c0e206fbaaed3340fe4e43b39ad505a52abd18bf6c",
+      "sha256": "0edf971f9a8d9bf0c7e9add7f00900bcf32b9ee4c26a312b2ff26e54bef421f1",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/release_supply_chain/002-0.-scope.md",
-      "sha256": "924e811880ccad3681a5b352b4afc7c1a76faa5f7c245174dce4f44af9b7df14",
+      "sha256": "79e80f1f9d2ae7cdb407f9290a5d1441ff2c8a7615a5b8733a9628e1d4ff23f0",
       "shard_id": "002",
       "source_line_end": 10,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
-      "sha256": "8a820cdd735f818f9b91f70c3d7953fe885ad997a63569d7a5cb49f9e5b17168",
+      "sha256": "d29213fcb7a33ecdb7a9d5267f775b11190fd3d7c0168bcab5808682be8d722b",
       "shard_id": "003",
       "source_line_end": 36,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
-      "sha256": "1e99f7132c01d2544dec3bc6f4a51c4b92c3ff2fddb6cdd38a5865d91de857eb",
+      "sha256": "e721b365b019e17b2a0456e766cd265f560749f4154b138b13addc75edc735f0",
       "shard_id": "004",
       "source_line_end": 602,
       "source_line_start": 38,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "261fc2ee1632098bfcf0bf088a038b3b25510df09f7eaaf8061c51a786de7043",
+      "sha256": "236d679fe109bdd941555abdecccd18980c3017df75cc47665b3d83dee29edc2",
       "shard_id": "005",
       "source_line_end": 606,
       "source_line_start": 604,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
-      "sha256": "d7de4d2ff96d20956a8e7a82755934917ab03e12521a04f83c0acaff2cb39309",
+      "sha256": "d375a62f30625374791a23b64754134a646fbffcc3db6bce8f85117de1231841",
       "shard_id": "006",
       "source_line_end": 610,
       "source_line_start": 608,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
-      "sha256": "9574da6a31289a3967fdbf6e3e1d6af30203620f89c3e3029b6c28d3a4bde2fc",
+      "sha256": "b994b0109a81f5c74f01c4119ffaf2dcf1159ad25cfca82a9e285c14e9bd5eef",
       "shard_id": "007",
       "source_line_end": 614,
       "source_line_start": 612,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
-      "sha256": "9bafd5010f65b71ac108b0f8b80eebcf76be9e8d5f88f34bb2a0710cb6af43da",
+      "sha256": "b7c6c78cf697fc872480986a545bd9e2e94f8129e38cd30e0d8318154267bdc3",
       "shard_id": "008",
       "source_line_end": 618,
       "source_line_start": 616,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "ee2ea1212c641fddb32077559a43a9947cb04f7cee7456301e30a0a613e0143b",
+      "sha256": "acb42301657be6457a631cae16f728e10afe2927c95debf9d31b3138e08a2d69",
       "shard_id": "009",
       "source_line_end": 622,
       "source_line_start": 620,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
-      "sha256": "9fe4f4bd6a947408f88eba62b704945644af50b9a02c85d15f6e3ac08b212987",
+      "sha256": "c0a0fd044f1a610e300c0ece6cb7ee5750ff8ee7a9f721788d1b6ad4b714ecc5",
       "shard_id": "010",
       "source_line_end": 628,
       "source_line_start": 624,
@@ -98,7 +98,7 @@
     {
       "heading": "FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md",
-      "sha256": "461cbcad98d6c96fd52c36b962aab1a87b39ed334b7e01cb9534fdadc6631324",
+      "sha256": "4354c9a70096b8758d7393a002d5135ed15c8b01a7d2fda45759e127517873c0",
       "shard_id": "011",
       "source_line_end": 719,
       "source_line_start": 630,
@@ -107,7 +107,7 @@
     {
       "heading": "Case L Release Migration And Recovery Gate Propagation - 2026-07-17",
       "path": "Plans/_shards/release_supply_chain/012-case-l-release-migration-and-recovery-gate-propagation-2026-07-1.md",
-      "sha256": "922fea72bd09332b611d6a44dfebb84863accf0b7a2d6486c7705bfcb19813e8",
+      "sha256": "15c9c7dc6be76adcf792ab8b16e42e591ed1d1fcdc1f57001b621e83d5e5167f",
       "shard_id": "012",
       "source_line_end": 810,
       "source_line_start": 721,
@@ -116,7 +116,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/release_supply_chain/013-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "72e7fdbf43bd9631056c245c4b9ce9eb1307d535047c36ff171481d67e47ed6a",
+      "sha256": "c9737398a3d9fef1f7ddb009d804164273835ce6dda604b4d9bb91390f985988",
       "shard_id": "013",
       "source_line_end": 821,
       "source_line_start": 812,
@@ -125,7 +125,7 @@
     {
       "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
       "path": "Plans/_shards/release_supply_chain/014-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "9129e532619d449b5331b89727c8840df1ff133b9ba0445396b533c122cc3fdf",
+      "sha256": "3e3332e82730ce86c29a6e09ec23463fcf9aea828173c244f6ff664fb5f69f8f",
       "shard_id": "014",
       "source_line_end": 831,
       "source_line_start": 822,
@@ -134,7 +134,7 @@
     {
       "heading": "Provider CLI Acquisition Supply-Chain Addendum - 2026-08-13",
       "path": "Plans/_shards/release_supply_chain/015-provider-cli-acquisition-supply-chain-addendum-2026-08-13.md",
-      "sha256": "eacf5db85864dc8ebb96267430a7bbde6264a6056d4b7611a9105af1542583ab",
+      "sha256": "8944a57b948695ffddd1b80acbd26050822471995e28efe28475bdc39738fc01",
       "shard_id": "015",
       "source_line_end": 962,
       "source_line_start": 833,
@@ -143,7 +143,7 @@
     {
       "heading": "Plugin Package And Full-Thread Artifact Addendum - 2026-08-31",
       "path": "Plans/_shards/release_supply_chain/016-plugin-package-and-full-thread-artifact-addendum-2026-08-31.md",
-      "sha256": "dcafc7c6fb198725e66c50a3578066fdc15961ff0ce64df69ee2a1d0f5650900",
+      "sha256": "36d2d590aabfad9dda536b279a6b22c80a36ffabb8bd93c973fcd244088a29df",
       "shard_id": "016",
       "source_line_end": 1100,
       "source_line_start": 964,
@@ -152,7 +152,7 @@
     {
       "heading": "Typed Command Supply-Chain Handoff Addendum",
       "path": "Plans/_shards/release_supply_chain/017-typed-command-supply-chain-handoff-addendum.md",
-      "sha256": "f72c4d5ddbd697dfa5d1edfd2dc36a1b3413fd892944b4b129defb9c043cb791",
+      "sha256": "82d893ccb6e9ff67345ced204fa0fa6ed168795abb4cf10c483d74852f04f673",
       "shard_id": "017",
       "source_line_end": 1165,
       "source_line_start": 1102,
@@ -161,7 +161,7 @@
     {
       "heading": "Server command-gap owner closure - application update lifecycle (2026-09-01)",
       "path": "Plans/_shards/release_supply_chain/018-server-command-gap-owner-closure-application-update-lifecycle-20.md",
-      "sha256": "d3df1480fd43fa6dfdde2a560fafd2ef60a534e3425be67bc1d53b7446cba3b8",
+      "sha256": "8dca8f986a4a794e0c937bec8d9f2fce3457328c1ba9503c341e01a6928def1b",
       "shard_id": "018",
       "source_line_end": 1207,
       "source_line_start": 1167,
@@ -170,7 +170,7 @@
     {
       "heading": "Post-Integration Bundled Dependency And Provider-Registration Addendum - 2026-09-01",
       "path": "Plans/_shards/release_supply_chain/019-post-integration-bundled-dependency-and-provider-registration-ad.md",
-      "sha256": "a40bf1a860a1f1aab5ccdaf2dd4d10b13f4d4a7ac5124a91bc3537f1da864d4a",
+      "sha256": "842c373dbfdd7d79c14017269b12407b8a1c44755e3663a487ceddb950cd76c9",
       "shard_id": "019",
       "source_line_end": 1289,
       "source_line_start": 1209,
@@ -179,16 +179,25 @@
     {
       "heading": "Platform package support carrier and current installation authority",
       "path": "Plans/_shards/release_supply_chain/020-platform-package-support-carrier-and-current-installation-author.md",
-      "sha256": "b220bc4ae8e8cbf270c316c5510246edf223c3141069cb28b5de7215af7a7b8d",
+      "sha256": "0937a84f7d3794586b1afe63851026c2d4caf4488b84f472f365b0c33f796720",
       "shard_id": "020",
-      "source_line_end": 1364,
+      "source_line_end": 1366,
       "source_line_start": 1290,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Goal-created reader package graph and original installation",
+      "path": "Plans/_shards/release_supply_chain/021-goal-created-reader-package-graph-and-original-installation.md",
+      "sha256": "abd47c55059eb1a1ec12a8d55989160e02ea3268dc5e7b8a91e2901603a9ecb1",
+      "shard_id": "021",
+      "source_line_end": 1466,
+      "source_line_start": 1367,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1364,
+    "line_count": 1466,
     "path": "Plans/Release_Supply_Chain.md",
-    "sha256": "438392d6d05bbfef2bd845189f526a1d73a9d7bf4b2dc69bd23d750b85397357"
+    "sha256": "57eaaf2fdc147aef8fcc276b418e86d641f9f54bfd5a85b8ebc7507875029d1a"
   }
 }

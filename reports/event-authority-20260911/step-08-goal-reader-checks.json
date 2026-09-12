@@ -1,0 +1,319 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "verified_manifests": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-created-reader-canonical-20260912/v1/manifest.json",
+      "sha256": "1e8de8f29216acd0f3dc06b35fdcc03731e77af704e474052c41ac9db2d0e984",
+      "members": 34
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-created-reader-canonical-output-independent-review-20260912/v1/manifest.json",
+      "sha256": "3b32ec1d8838697125aa8919ef0048ab91b69578d3e073827e3990ea81a6650a",
+      "members": 9
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-created-reader-canonical-independent-review-20260912/v1/manifest.json",
+      "sha256": "a687317d41020ec1c7c72c4ecdbdc69c2b4ab17354faff54482209407e464396",
+      "members": 3
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-created-reader-canonical-root-20260912/draft-v2/manifest.json",
+      "sha256": "85771fc19770fd91ac67163721d1644f96bf1539008446af4ef10c7ae801f88b",
+      "members": 16
+    }
+  ],
+  "canonical_assets": [
+    {
+      "path": "Plans/goal_created_reader_contracts.schema.json",
+      "sha256": "4a96b5930f9925a9cf4c9ef0a190aafc13a3b2e8126e39fd4d92ec5f4e9cefa9"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/routes.json",
+      "sha256": "6e5b17c7d4ecff8db3c1e069b683349e57b03f7f4dda64fcb05208d1fd14164e"
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/retained-v2.schema.json",
+      "sha256": "80ed49a733fde275617523cf9825e85d8e4625b49c3f9d5c4890eaad5a573e92"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841"
+    },
+    {
+      "path": "Plans/goal_start_command_custody.schema.json",
+      "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/command-members.json",
+      "sha256": "3684e032d77408446da4a03cc43c12a7d905e6476b699a64d1ebd2cdc2f555c5"
+    },
+    {
+      "path": "Plans/goal_runtime_contracts.schema.json",
+      "sha256": "9ce0d88643e617df04d7d2f912662503d9695f232c3a3dfec25b0dce367b053f"
+    },
+    {
+      "path": "Plans/goal_body_custody.schema.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/full_thread_runtime_contracts.schema.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/ui_command_response.schema.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37"
+    },
+    {
+      "path": "Plans/shared_runtime_command_contracts.schema.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b"
+    }
+  ],
+  "artifact_shapes": 5,
+  "private_cursor_shapes": 1,
+  "plan_unit_preservation": {
+    "old_plan_units": 6578,
+    "new_plan_units": 6581,
+    "new_units": [
+      "SP-298",
+      "RSC-018",
+      "GRS-067"
+    ],
+    "all_old_unit_objects_preserved": true,
+    "old_acceptance_criteria": 25463,
+    "new_acceptance_criteria": 25483,
+    "registries_byte_unchanged": {
+      "Plans/event_family_registry.json": true,
+      "Plans/storage_value_registry.json": true
+    }
+  },
+  "ordinary_capture": {
+    "status": "PASS_ORDINARY_FINITE_ORIGINAL_OFFLINE_MODEL",
+    "checks": [
+      {
+        "name": "genuine_original_baseline_issuance",
+        "passed": true
+      },
+      {
+        "name": "exact_current_family_metadata",
+        "passed": true
+      },
+      {
+        "name": "nonempty_all_nonmatching_completion",
+        "passed": true
+      },
+      {
+        "name": "pending_original_event_before_terminal",
+        "passed": true
+      },
+      {
+        "name": "actual_original_frame_prefix_objects",
+        "passed": true
+      },
+      {
+        "name": "actual_immutable_anchor_object",
+        "passed": true
+      },
+      {
+        "name": "actual_original_index_row_objects",
+        "passed": true
+      },
+      {
+        "name": "original_segment_mapping_objects",
+        "passed": true
+      },
+      {
+        "name": "original_baseline_receipt_values_preserved",
+        "passed": true
+      },
+      {
+        "name": "same_generation_advanced_original_frontier",
+        "passed": true
+      },
+      {
+        "name": "one_content_free_creation_observation",
+        "passed": true
+      },
+      {
+        "name": "pending_command_does_not_invalidate_event",
+        "passed": true
+      },
+      {
+        "name": "genuine_zero_observation_prefix",
+        "passed": true
+      },
+      {
+        "name": "resume_reaches_actual_boundary",
+        "passed": true
+      },
+      {
+        "name": "same_actual_snapshot_and_session",
+        "passed": true
+      },
+      {
+        "name": "no_invented_cursor_consumption_lifetime",
+        "passed": true
+      },
+      {
+        "name": "original_terminal_settlement",
+        "passed": true
+      },
+      {
+        "name": "original_owner_member_resolved",
+        "passed": true
+      },
+      {
+        "name": "original_creation_receipt_member_resolved",
+        "passed": true
+      },
+      {
+        "name": "creation_observation_independent_of_terminal_member",
+        "passed": true
+      },
+      {
+        "name": "terminal_settlement_does_not_replace_source_snapshot",
+        "passed": true
+      },
+      {
+        "name": "old_profile_ordinary_still_passes",
+        "passed": true
+      }
+    ],
+    "passed_checks": 22,
+    "ordinary_page_captures": 7,
+    "original_baseline_receipts": 1,
+    "original_goal_receipts": 1,
+    "original_generic_frames": 2,
+    "original_generic_revision": 1,
+    "original_released_pages": 7,
+    "original_current_family_revision": "3.0.0",
+    "profile": "fresh_one_Goal_active_v3_with_existing_nonmatching_baseline",
+    "fault_or_helper_replacement_cases": 0,
+    "compaction_adoption": 0,
+    "historical_v2_positive": "UNAVAILABLE_NO_ORIGINAL_SOURCE_RECEIPT_ENROLLMENT",
+    "native": "UNAVAILABLE_NOT_RUN",
+    "scope_limits": [
+      "no historical-v2 synthesis",
+      "no empty-store construction",
+      "no multi-Goal discovery",
+      "no rotation or source restore/deletion",
+      "no durability/restart/concurrency/crash/transport atomicity",
+      "no fault/depth certification or stopped Goal probe reuse"
+    ]
+  },
+  "native_execution": false,
+  "complete_event_depth": false,
+  "schema_id": "pm.event_authority.goal_created_reader_checks.v1",
+  "captured_wire_shape_count": 20,
+  "repository_checks": {
+    "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_compaction": true,
+      "new_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "plan_unit_preservation": {
+      "old_plan_units": 6578,
+      "new_plan_units": 6581,
+      "new_units": [
+        "SP-298",
+        "RSC-018",
+        "GRS-067"
+      ],
+      "all_old_unit_objects_preserved": true,
+      "old_acceptance_criteria": 25463,
+      "new_acceptance_criteria": 25483,
+      "registries_byte_unchanged": {
+        "Plans/event_family_registry.json": true,
+        "Plans/storage_value_registry.json": true
+      }
+    },
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "complete_event_depth": false
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-reader-repository-checks-20260912/manifest.json",
+    "sha256": "a6d44d7f53a4b59e4b6fb01b2d194ea4283112e44e2a813fc3fdac728f46c44c"
+  },
+  "base_commit": "6621d9dc1d2511fd70df87f9e5e391fad4194529",
+  "canonical_source_files": [
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "902b737eab1ab5a1695f23fd4c39d43bf8d377fc07ca618cf654dd7ab3cd09df"
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "sha256": "57eaaf2fdc147aef8fcc276b418e86d641f9f54bfd5a85b8ebc7507875029d1a"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/command-members.json",
+      "sha256": "3684e032d77408446da4a03cc43c12a7d905e6476b699a64d1ebd2cdc2f555c5"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/command-members.schema.json",
+      "sha256": "0faecb1c9be52cdafc3c14722004fa2a9622583a4aa3eca5ca69ef85de015fe3"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/resource-bindings.json",
+      "sha256": "29f2b4dc23cd96ce5ccfaa9f40cdaf55a1947a8a04652cee644d9d95e84fc92b"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/resource-bindings.schema.json",
+      "sha256": "f2ace81495654dc7e921fc7b1baabf21c1918eb52599078b3f8d7082310870a3"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/retained-v2.schema.json",
+      "sha256": "80ed49a733fde275617523cf9825e85d8e4625b49c3f9d5c4890eaad5a573e92"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/routes.json",
+      "sha256": "6e5b17c7d4ecff8db3c1e069b683349e57b03f7f4dda64fcb05208d1fd14164e"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/routes.schema.json",
+      "sha256": "6eb1f554951fd2073d6f32c2bc3b250f4a09b56e72d8b5d72e87f442d8ee8408"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/schema-dependencies.json",
+      "sha256": "a1c8108c6051e2eec06c21b3c1fc6b6d8fea08a031fb6dc8c31598d297aa107a"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/schema-retrieval-bindings.json",
+      "sha256": "d4fb58bdd281b3adf1f7762e18d872bb1730c82b82b747dc71181047325602e0"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/schema-retrieval-bindings.schema.json",
+      "sha256": "9f03cf17df466f5a0b789326bd9364b30e8e9c4f60b56eb4209c03842d61d7ff"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts/support-map.json",
+      "sha256": "57e174b8861702b0d3a8073222fc197811593f50e4fda9acbcc35e21f69714f1"
+    },
+    {
+      "path": "Plans/goal_created_reader_contracts.schema.json",
+      "sha256": "4a96b5930f9925a9cf4c9ef0a190aafc13a3b2e8126e39fd4d92ec5f4e9cefa9"
+    },
+    {
+      "path": "Plans/goal_created_reader_support_map.schema.json",
+      "sha256": "98a0c6a52f8ac467a4db0ee93798c34ff2e3a032bd7abb69bd25f22c7cebcba4"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "6ab46ef95ecc859b6ad97847bd6790722b7f29104e7e44ee60eeb3f49d51b534"
+    }
+  ]
+}

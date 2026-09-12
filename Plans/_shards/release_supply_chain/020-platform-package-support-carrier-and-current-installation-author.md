@@ -2,9 +2,9 @@
 
 Source: `Plans/Release_Supply_Chain.md`
 
-Source lines: L1290-L1364
+Source lines: L1290-L1366
 
-Source SHA256: `438392d6d05bbfef2bd845189f526a1d73a9d7bf4b2dc69bd23d750b85397357`
+Source SHA256: `57eaaf2fdc147aef8fcc276b418e86d641f9f54bfd5a85b8ebc7507875029d1a`
 
 ---
 
@@ -83,3 +83,5 @@ owner_hints: [Plans/Release_Supply_Chain.md, Plans/storage-plan.md, Plans/newtoo
 ```
 
 ContractRef: ContractName:Plans/Release_Supply_Chain.md#RSC-017, ContractName:Plans/Release_Supply_Chain.md#RSC-014, ContractName:Plans/storage-plan.md#SP-290, ContractName:Plans/newtools.md#N2-157, ContractName:Plans/platform_package_support_map.schema.json
+
+<a id="goal-created-reader-package-graph"></a>

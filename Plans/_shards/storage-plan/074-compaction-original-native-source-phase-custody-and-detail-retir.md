@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23579-L23784
+Source lines: L23579-L23786
 
-Source SHA256: `799c12082800fcfc0906e79e51d64d0a09e13479586919d3d81b2d73508bbe0f`
+Source SHA256: `6ab46ef95ecc859b6ad97847bd6790722b7f29104e7e44ee60eeb3f49d51b534`
 
 ---
 
@@ -214,3 +214,5 @@ negative_constraints:
   - Do not extend receipt/event/backup lifetimes, bypass actual references, reconstruct retired detail or relabel stale restore obligations as new admission.
   - Do not claim native retirement, backup, concurrency, crash, selector-dispatch, complete depth or governance certification from finite ordinary model results.
 ```
+
+<a id="goal-created-passive-reader-and-original-members"></a>

@@ -6284,6 +6284,7 @@
     "UF-096",
     "WS-020",
     "RSC-017",
+    "RSC-018",
     "MA-051",
     "ATS-041",
     "SIR-032",
@@ -6293,6 +6294,7 @@
     "SP-250",
     "UF-095",
     "SP-290",
+    "SP-298",
     "MA-052",
     "RTIM-010",
     "RSC-015",
@@ -6301,6 +6303,7 @@
     "ATS-036",
     "SP-249",
     "N2-157",
+    "GRS-067",
     "MA-053",
     "RTIM-023",
     "FGI-015",
@@ -28388,6 +28391,16 @@
       "edge_type": "depends_on",
       "from": "GRS-066",
       "to": "SP-294"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-067",
+      "to": "GRS-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-067",
+      "to": "SP-298"
     },
     {
       "edge_type": "depends_on",
@@ -52576,6 +52589,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RSC-018",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-018",
+      "to": "DL-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-018",
+      "to": "RSC-014"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RTIM-001",
       "to": "RTIM-002"
     },
@@ -67088,6 +67116,26 @@
       "edge_type": "depends_on",
       "from": "SP-297",
       "to": "SP-296"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-298",
+      "to": "RSC-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-298",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-298",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-298",
+      "to": "SP-294"
     },
     {
       "edge_type": "depends_on",
@@ -95885,7 +95933,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T12:42:04Z",
+  "generated_at_utc": "2026-09-12T13:38:06Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -147296,6 +147344,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "passive_goal_creation_observation",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-067",
+      "reasoning_tier": "high",
+      "risk_class": "event_observation_misrepresented_as_goal_action",
+      "source_location": {
+        "heading": "GRS-067 - Passive Creation Observation And Independent Command Result",
+        "heading_level": 3,
+        "heading_line": 6172,
+        "line": 6174,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/human-in-the-loop.md",
@@ -184951,6 +185016,23 @@
       "unit_type": "owner_boundary"
     },
     {
+      "context_scope": "goal_created_reader_installation_graph",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-018",
+      "reasoning_tier": "high",
+      "risk_class": "unproved_or_incompatible_reader_installation",
+      "source_location": {
+        "heading": "RSC-018 - Goal Reader Resource Graph And Installation Authority",
+        "heading_level": 3,
+        "heading_line": 1403,
+        "line": 1405,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
+    },
+    {
       "context_scope": "rewrite_tie_in_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/rewrite-tie-in-memo.md",
@@ -194588,6 +194670,23 @@
       },
       "status": "accepted",
       "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "goal_created_passive_original_reader",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-298",
+      "reasoning_tier": "high",
+      "risk_class": "stale_reader_authority_or_fabricated_original_value",
+      "source_location": {
+        "heading": "SP-298 - Passive Goal Creation Read And Original Member Boundaries",
+        "heading_level": 3,
+        "heading_line": 23845,
+        "line": 23847,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_boundary"
     },
     {
       "context_scope": "scheduling_precedence",
@@ -207720,10 +207819,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15209,
+    "depends_on_edge_count": 15218,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17860,
-    "node_count": 6578,
+    "edge_count": 17869,
+    "node_count": 6581,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
