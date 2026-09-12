@@ -1,0 +1,305 @@
+{
+  "status": "STATICALLY_MATERIALIZED_NATIVE_NOT_RUN",
+  "scope": "SP-279 Integrity-specific original full-value producer adoption, final current-value guards, complete artifact-derived restored Store, original gap conservation; no family DEPTH_PASS",
+  "base_commit": "74c5485e3b1e945f9dcb968cd2f37a71d29966d4",
+  "owner_doc": "Plans/storage-plan.md",
+  "plan_unit": "SP-279",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-adoption-20260912/v3/manifest.json",
+    "sha256": "6635799bb57548d935b87baa05f5396fc78bdbafd0d941c364f218b33a089db8"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/integrity-adoption-v3-independent-review-20260912/review-manifest.json",
+    "sha256": "3a1e445508851373471984587d3dea73e3ee650f8c109d9b1a6be40d037acd1e"
+  },
+  "independent_verdict": "PASS_BOUNDED_I1_I2_CLOSED",
+  "author_cases": {
+    "total": 371,
+    "original_adoption": 71,
+    "original_boundaries": 21,
+    "unchanged_inherited": 234,
+    "v2_whole_store_controls": 12,
+    "prior_independent_i1_probes": 17,
+    "independent_restore_controls": 6,
+    "independent_original_gap_relocation_controls": 3,
+    "root_ordinary_append_positive": 1,
+    "new_append_gap_adverse": 6
+  },
+  "independent_cases": {
+    "total": 137,
+    "prior_focused": 17,
+    "restore_controls": 6,
+    "original_gap_relocation": 3,
+    "author_afterimage": 12,
+    "author_boundaries": 21,
+    "author_adoption": 71,
+    "author_append_adverse": 6,
+    "root_append_positive": 1,
+    "unchanged_inherited_not_rerun": 234
+  },
+  "root_current_values": {
+    "status": "PASS",
+    "captures": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/integrity-full-value-root-captures-20260912/direct_original_issuer.json",
+        "sha256": "d97fb68e1e41e9c5f36095d540e527ef462992b54137f33015c56dcd262e93d7",
+        "schema_cases": 6,
+        "storage_assignment_refusals": 3
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/integrity-full-value-root-captures-20260912/actual_settled_backup.json",
+        "sha256": "cfd4585c440fac526b8a399e795f24046521636b541b922879d7286697242745",
+        "schema_cases": 6,
+        "storage_assignment_refusals": 3
+      }
+    ],
+    "total_schema_cases": 12,
+    "total_storage_assignment_refusals": 6,
+    "native": "NOT_RUN",
+    "production_positives": 0
+  },
+  "root_currentness": {
+    "status": "PASS",
+    "head": "74c5485e3b1e945f9dcb968cd2f37a71d29966d4",
+    "exact_active_schema_checks": [
+      {
+        "path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "frozen_reference": "shared/source/Plans/event_record.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+        "sha256": "8aaf5702dbca054971fd9658f27af58c32b1fa88f46ef87cb12a527d24ab618f",
+        "frozen_reference": "shared/source/Plans/event_payload_storage_integrity_detected.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "frozen_reference": "shared/source/Plans/event_record_index_checkpoint.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/storage_integrity_finding_contracts.schema.json",
+        "sha256": "d64f605b0519f130aa6cc684f247ed398fde57f0df10bc756475eb92f3493448",
+        "frozen_reference": "proposal/proposed/Plans/storage_integrity_finding_contracts.schema.json",
+        "byte_equal": true
+      }
+    ],
+    "integrity_event_registry_object_unchanged": true,
+    "current_sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "bytes": 431648
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "bytes": 229309
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907",
+        "bytes": 1699761
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "bytes": 1193886
+      },
+      {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "sha256": "d72d25525291a655b6bcba20605df5c11f6d31181f79e5f031d5bc0a6535e025",
+        "bytes": 276382
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "bytes": 87981
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "5134582a14ee656b2e344a14e1ce743ec6b196e39d7d6d3f32007a9691817fb2",
+        "bytes": 2240794
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+        "bytes": 24636
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "bytes": 15668
+      }
+    ],
+    "scope": "Current exact schema checks and exact existing Integrity event object; owner prose read/re-adjudication separately recorded, not whole historical-doc equality."
+  },
+  "source_member_checks": {
+    "status": "PASS",
+    "manifests": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-adoption-20260912/v3/manifest.json",
+        "sha256": "6635799bb57548d935b87baa05f5396fc78bdbafd0d941c364f218b33a089db8",
+        "members": 790
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/manifest.json",
+        "sha256": "d3692a22d5af8a1d611d7b53eb4f4065ef37d9e9b3a81e8089ab1ff70751078f",
+        "members": 233
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-adoption-20260912/v3/wire/manifest.json",
+        "sha256": "d3692a22d5af8a1d611d7b53eb4f4065ef37d9e9b3a81e8089ab1ff70751078f",
+        "members": 233
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-20260912/v3/manifest.json",
+        "sha256": "c3f6f7354c81ad87bbae6b2f8df2771ead5b3ec5176157987e3cdb2db2f3c4e1",
+        "members": 103
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-adoption-20260912/v3/shared/manifest.json",
+        "sha256": "c3f6f7354c81ad87bbae6b2f8df2771ead5b3ec5176157987e3cdb2db2f3c4e1",
+        "members": 103
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/manifest.json",
+        "sha256": "a55f93701d54417ff31fc42fb9cf24ab88c0f29ab152b738a9c06e57373ea5b7",
+        "members": 67
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-adoption-20260912/v3/proposal/manifest.json",
+        "sha256": "a55f93701d54417ff31fc42fb9cf24ab88c0f29ab152b738a9c06e57373ea5b7",
+        "members": 67
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/integrity-adoption-v1-independent-review-20260912/review-manifest.json",
+        "sha256": "40137f33375a67370b55916124cfa5cd710cc31322d8ff1502ad6c3b509793c9",
+        "members": 18
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/integrity-adoption-v2-independent-review-20260912/review-manifest.json",
+        "sha256": "07b8910518da5812e952ba0c230daaebf9f567aa5ad9ac25c08b90e820cce379",
+        "members": 15
+      }
+    ],
+    "member_checks": 1629
+  },
+  "root_helpers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/check_append_gaps.py",
+      "sha256": "9085388f2133cabe2652d14482b25cbcb7b44c9a27789126f651ef09be5baf3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/capture_values.py",
+      "sha256": "ca1f7ad16d3f0cdb9399bc77373c8ce23578c9b1f577758d32c7c233408279bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/verify_pins.py",
+      "sha256": "b43d39d01901212df1652331d44c8b5734c5519be9dac37c38c85b37da3c17e4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/current_sources.py",
+      "sha256": "dab9b16cc844abcf57aec784de88210f567f0393a434554edc273caee760b1d1"
+    }
+  ],
+  "root_append_gap_comparison": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/integrity-append-gap-root-20260912/v2-results.json",
+      "sha256": "094e3516c1ddf992eeea3add0c84a7f394641bf95816ece704f5ca827948bb0d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/integrity-append-gap-root-20260912/v3-results.json",
+      "sha256": "3e0b97d35427be2e8d28fb63e5455ec729cfcf4fb9ff64b77e84fea9b2a29a9a"
+    }
+  ],
+  "failed_lineage_preserved": {
+    "I1": "V1 authenticated expected Store after unchecked restore helper; V2 pins complete original artifact before helper and final same-object equality; V3 unchanged.",
+    "I2": "V2 relocation admitted changed/dropped original gap evidence; root also reproduced normal append dropping gaps without post-admission fault. V3 independently pins/carries complete original ordered gap/evidence values at both publishers."
+  },
+  "preservation": {
+    "event_families": 42,
+    "physical_families": 115,
+    "retention_policies": 26,
+    "schema_edits": 0,
+    "registry_edits": 0,
+    "new_plan_units": 0,
+    "original_sp279_criteria": 12,
+    "additional_sp279_criteria": 4,
+    "passive_history_receipt_independent": true,
+    "shared_code_and_hash_adapters_unchanged": true
+  },
+  "limits": [
+    "All native principal/source authentication, file/directory sync, redb/CAS, runtime installation and recovery execution NOT_RUN; production positives zero.",
+    "Actual-wire finding capture does not upgrade the shared supplied-original-owner adapter into native framing/durability proof.",
+    "Full paginated passive history remains separately preserved; narrow internal selected-finding helper and logical completion response label are not new installed endpoints.",
+    "Fresh shared backup after original-control retirement unavailable; authentic saved aggregate restore remains supported.",
+    "Finding-only restored fresh append stays pending without actual shared restore-coordinator fresh-operation admission; no new first-mint path.",
+    "Both full-u64 finding-payload downstream semantic/append/receipt/history paths remain NOT_RUN_NO_CONFORMING_FIXTURE_ADAPTER; no alternate hash or numeric cap.",
+    "Control-owner detectors, exact-event corroboration, family depth, WorkNodes, readiness and governance remain unproved."
+  ],
+  "verification": {
+    "derived": "PASS",
+    "fidelity": "Full V3 implementation diff, protocol, independent review, current SP-279 and complete compiled owner diff read; actual schema/source/custody/root captures checked."
+  },
+  "cost": "Astra medium author/independent work plus root review and compilation; billing data unavailable.",
+  "compilation": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2424,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T07:22:12Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25375,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6566
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "new_plan_units": 0,
+      "total_plan_units": 6566,
+      "total_acceptance_criteria": 25375,
+      "changed_units": {
+        "SP-279": [
+          "acceptance_criteria",
+          "canonical_text",
+          "validation_surfaces"
+        ]
+      },
+      "unchanged_other_units": 6565,
+      "all_old_criteria_preserved": true,
+      "sp279_criteria_added": 4,
+      "owner_bytes_outside_sp279_exact": true,
+      "derived_shard_groups": [
+        "storage-plan"
+      ],
+      "schemas_registries_policies_unchanged": true
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/shard-check.json",
+      "sha256": "da8370818c1f74b606a1a9e4a8744f177f9641e40b64087dbd5a3ad447498154"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/index-validate.json",
+      "sha256": "0974a57b7389ab2553e0e081ac7f0f494557b6e030c689f1ea3ded6dc1706717"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-full-value-root-20260912/compilation-preservation.json",
+      "sha256": "b25db4e559b67e94f95145649fcc5ada46d9c6fe80e69f6eeec52956ab113498"
+    }
+  ]
+}
