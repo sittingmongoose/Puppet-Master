@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15236,
+    "depends_on_edge_count": 15240,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17887,
+    "edge_count": 17891,
     "node_count": 6585,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T14:37:12Z",
+  "generated_at_utc": "2026-09-12T15:49:39Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -18018,8 +18018,8 @@
         "source_location": {
           "heading": "GRS-064 - Shared Goal Body Currentness And Accepted History",
           "heading_level": 3,
-          "heading_line": 5951,
-          "line": 5953,
+          "heading_line": 5963,
+          "line": 5965,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -29535,8 +29535,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21443,
-          "line": 21465,
+          "heading_line": 21464,
+          "line": 21486,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -29546,8 +29546,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 22930,
-          "line": 22932,
+          "heading_line": 22951,
+          "line": 22953,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -38789,13 +38789,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77",
+        "expected": "10452eeea029947d3836314274d2cde7bbeccaa79c69d4c7a346a385bcb319f1",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a",
+        "expected": "3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38819,7 +38819,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "e7550c5154d530a64e3382d069c56041b5b4481f5926eb7e5b6fa59dc0f24b2f",
+        "expected": "88d387f437b66d10abfec1daaf41aeb70f61b499dd15065b6c392a702933a643",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

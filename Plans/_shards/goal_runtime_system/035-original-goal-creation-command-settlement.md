@@ -1,10 +1,10 @@
-# Shard 034: Original Goal creation command settlement
+# Shard 035: Original Goal creation command settlement
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6086-L6098
+Source lines: L6099-L6111
 
-Source SHA256: `efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a`
+Source SHA256: `3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797`
 
 ---
 

@@ -1,0 +1,24 @@
+{
+  "status": "EXACT_CANONICAL_POINT_CONSUMER_DEPENDENCIES_NOT_INSTALLATION",
+  "remote_fallback": false,
+  "resources": [
+    {
+      "path": "Plans/platform_capability_consumer_contracts.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/platform_capability_consumer_contracts/1.0.0/schema.json",
+      "sha256": "e446289715d77c5fc068df3e7bdc12a99b930b28558b090f5160d1b687ebe3c5",
+      "bytes": 3995
+    },
+    {
+      "path": "Plans/platform_capability_decision_contracts.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/platform_capability_decision_contracts/1.0.0",
+      "sha256": "f7d533d9770f88f7c0bce24aa2c0e94bb1cd519a41f9fcf8230d6be4f7075d03",
+      "bytes": 42538
+    },
+    {
+      "path": "Plans/requested_effective_runtime.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "bytes": 15878
+    }
+  ]
+}

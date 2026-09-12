@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23070-L23198
+Source lines: L23091-L23221
 
-Source SHA256: `91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa`
+Source SHA256: `3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c`
 
 ---
 
@@ -43,6 +43,8 @@ The committed branch authenticates the actual retained row, original receipt joi
 ### Passive read and complete source coverage
 
 `storage.platform_capability_decision.read.v1` resolves authentic retained decision, complete current generic EventRecord authority including later nonmatching frames, exact selected event and frozen producer semantics, all three original Storage assignments and original v2 full-value/eleven-field receipt. Current relocation or lawful disposal of old controls cannot require original locators. Source advance invalidates a stale read; a fresh read can use the new complete boundary. Output is the original decision plus complete current read-through marker and action_authority none. Independently compare final output to actual retained decision and actual current source cursor after every helper and before the final owner fence. No checkpoint, probe, reevaluation, workflow action, Doctor health assertion or capability installation results.
+
+N2-157 maps config/runner inspection and UI/diagnostics to this unchanged event-bearing passive role. Its explicitly versioned per-evaluation original run-context consumer uses this complete read before the existing runtime owner joins an actual original request/context and snapshot. No family checkpoint or event-derived config write is added, no action authority flows from this read, and its stronger current-event/full-value requirement cannot be relaxed for snapshot use. A complete original multi-capability requirement-set/reference contract, where required by the owning context, is not supplied by one decision or a provider/model snapshot ref.
 
 ### DL-048 cleanup, backups and gap custody
 

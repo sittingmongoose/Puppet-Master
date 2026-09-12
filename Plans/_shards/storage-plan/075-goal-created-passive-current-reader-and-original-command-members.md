@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23787-L23918
+Source lines: L23810-L23941
 
-Source SHA256: `91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa`
+Source SHA256: `3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa
 
 SP-298 defines the passive internal inspection facet of `goal.created`, following the original creation prerequisite SP-294/GRS-066/CV-341. It creates no durable family or projector. Its exact selectors are `storage.goal_created.current_read.v1@1.0.0`, `storage.goal_created.decode_active_v3.v1@1.0.0`, `storage.goal_created.decode_retained_v2.v1@1.0.0` and `storage.goal_start_command.resolve_member.v1@1.0.0`. The closed request/page/failure/private-cursor/observation/member shapes are `Plans/goal_created_reader_contracts.schema.json`; route and member artifacts are respectively `Plans/goal_created_reader_contracts/routes.json` and `Plans/goal_created_reader_contracts/command-members.json`, with their exact adjacent schemas. RSC-018 owns the complete package resource graph and current installation obligation. The supplied support map declares every native role unsupported.
 
-The family checkpoint disposition is `none_required` only for this passive facet. Whole original SP-278 admission remains mandatory. Durable Goal projections, their consumer/checkpoint contracts, other Goal events and complete family depth remain separately unresolved. Neither event presence nor a released observation proves command success, first-continuation eligibility, objective completion or source authority.
+The checkpoint disposition is `none_required` for this passive facet and whole original SP-278 admission remains mandatory. GRS-064 separately maps current creation Activity/body/history to existing canonical readers and the original SP-287/SP-294 durable body/command publications; it assigns no event-derived current Goal projector. That owner mapping is independent of this passive exemption. Other Goal/GoalRun events, deferred or historical projection routes and complete family depth remain separate. Neither event presence nor a released observation proves command success, first-continuation eligibility, objective completion or source authority.
 
 ### Encodings and exact shape boundary
 

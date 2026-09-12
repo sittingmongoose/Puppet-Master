@@ -1,0 +1,127 @@
+{
+  "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+  "draft_manifest_sha256": "bc647194291927937e754231492b97cc7c3ef50b3b3e4ffd33b86cbf2614a305",
+  "canonical_files": 9,
+  "plan_units_before": 6585,
+  "plan_units_after": 6585,
+  "acceptance_criteria_before": 25511,
+  "acceptance_criteria_after": 25518,
+  "changed_unit_fields": {
+    "EP-116": [
+      "acceptance_criteria",
+      "depends_on"
+    ],
+    "N2-157": [
+      "acceptance_criteria",
+      "validation_surfaces"
+    ],
+    "SP-214": [
+      "canonical_text"
+    ],
+    "SP-270": [
+      "acceptance_criteria",
+      "depends_on"
+    ],
+    "OSI-373": [
+      "compatibility_only_notes"
+    ],
+    "GRS-064": [
+      "acceptance_criteria"
+    ]
+  },
+  "all_other_units_unchanged": true,
+  "event_registry_byte_unchanged": true,
+  "storage_registry_byte_unchanged": true,
+  "changed_wiring_rows": [
+    "assistant.redesign.w_006.chat_goal_start",
+    "catalog.chat_goal_start"
+  ],
+  "schema_resources": 3,
+  "resolved_reference_sites": 19,
+  "actual_runtime_imports": 0,
+  "native_execution": false,
+  "aggregate_platform_writer_admitted": false,
+  "repository_checks": {
+    "status": "PASS_TARGETED_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_goal_update": true,
+      "new_reported_categories_or_locations": 1,
+      "added_spec_lock_path": "Plans/orchestrator-subagent-integration.md",
+      "other_new_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2598,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "aggregate_platform_writer_admitted": false,
+    "complete_step8": false
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/consumer-repository-checks-20260912/manifest.json",
+    "sha256": "05581c2682adb4288314eb9c047f0f17c3b816fe99ea4d193fa12427c8f9b5b3"
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "bytes": 1208160,
+      "sha256": "33d18d3e3568f5053b68adb6d1a86fbc694b0a10abbed235156b1224cb127f83",
+      "base_sha256": "608ece16e6396cd72f2580da53e4bd3b3e1e0532025a74f21b027ffb52b61ff6"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "bytes": 387590,
+      "sha256": "10452eeea029947d3836314274d2cde7bbeccaa79c69d4c7a346a385bcb319f1",
+      "base_sha256": "32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "bytes": 428452,
+      "sha256": "3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797",
+      "base_sha256": "efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.production.json",
+      "bytes": 5267953,
+      "sha256": "88d387f437b66d10abfec1daaf41aeb70f61b499dd15065b6c392a702933a643",
+      "base_sha256": "beb0b83a9157c44e0d5b064f736a32cb7b3f95a732a33422c76b80be994755ba"
+    },
+    {
+      "path": "Plans/newtools.md",
+      "bytes": 474633,
+      "sha256": "90599f6ac6bafc103f57e3f2f7b742b29d99a2bb4468b52e09f86db33cf35dad",
+      "base_sha256": "2988c9a3676822dbf71608b17c126ec18000b21fc28cab1d41d017eedf626600"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "bytes": 1409358,
+      "sha256": "935bdd9dc15ccc0df609a8baa99a4ace5d9eb4cc9a337a4d84cba49a276c5467",
+      "base_sha256": "9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3"
+    },
+    {
+      "path": "Plans/platform_capability_consumer_contracts.schema.json",
+      "bytes": 3995,
+      "sha256": "e446289715d77c5fc068df3e7bdc12a99b930b28558b090f5160d1b687ebe3c5",
+      "base_sha256": null
+    },
+    {
+      "path": "Plans/platform_capability_consumer_resources.json",
+      "bytes": 1051,
+      "sha256": "d80007789e2914976fdc70d5c051ae1c4ff95ad6bd37dfb7c4e133a8250784f5",
+      "base_sha256": null
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "bytes": 1880538,
+      "sha256": "3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c",
+      "base_sha256": "91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa"
+    }
+  ]
+}

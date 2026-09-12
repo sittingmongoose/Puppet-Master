@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L7265-L7342
+Source lines: L7265-L7361
 
-Source SHA256: `32c0dd6c864f092c9f3ec01ea4cbbdb5a47c4ec2845073f1ebda7bcbc5686f77`
+Source SHA256: `10452eeea029947d3836314274d2cde7bbeccaa79c69d4c7a346a385bcb319f1`
 
 ---
 
@@ -25,6 +25,18 @@ The new formulas apply only to a genuinely new logical start. During handover, b
 Consumer-only invalidation/withdrawal fences this read path and any recovery admission that requires it, while retaining existing owner behavior for independent new-run admission. Withdrawal of the run-start writer itself stops new activation/start writes until the explicit compatible successor is adopted; it does not remove registration or rewrite history. SP-265 owns checkpoint rebuild and custody; this owner retains execution admission and all current no-auto-resume rules.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/storage-plan.md#SP-265, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.requested_effective_runtime
+
+### Original run-start first-receipt recovery adoption
+
+For exactly the existing `run.started` start barrier and `executor.run_start_recovery_evidence.v2@2.0.0`, Executor explicitly adopts SP-286/CV-339's `storage.first_append_receipt.resolve.v2`. The request is the original admitted EventRecord identity/semantic request under its existing replay policy, not a caller custody row or receipt. Preserve the original Storage instance, project/run identity, actual original event ID and scoped idempotency key, immutable snapshot ref/digest, producer intent and authored semantic fields. Resolve historical original identities before applying the new-run formula; an allowed scoped alternate incoming event ID resolves the original ID and cannot create another logical start. Storage authenticates actual global/scoped key/raw identity, source semantic tuple and canonical issued custody in its original database. The returned eleven-field AppendReceipt and the retained four-field original_append_result must join that original event/sequence and Storage-owned original segment reference/offset. Exact original durability class is the required synced start barrier; a newer locator, timestamp, supplied digest or four-field dedupe result alone cannot satisfy it.
+
+An intact already-issued receipt replays unchanged after lost delivery or interrupted dependent acknowledgement. This passive receipt resolution does not reopen a retired source, reacquire the old manifest/group/request or establish present execution authority. The existing recovery reader still needs its independently verified current SP-265/SP-278 source/index boundary and original runtime snapshot when it claims those source facts; source or snapshot unavailability refuses that claim without erasing an intact receipt. Original full-frame/source/CRC/durability and complete snapshot/six-owner joins remain mandatory where required by the existing start barrier. Receipt-only resolution is not proof that a supplied complete EventRecord equals its originally issued value. For that stronger claim this owner explicitly adopts `storage.first_append_receipt.resolve_full_value.v1` with exact `full_value_request = {event: <the available complete original EventRecord>}` and `full_value_result` from `Plans/event_append_receipt_contracts.schema.json`: compare the original first receipt, original segment ref and CV-339 complete-value commitment to the independently selected original source. It requires actual v2 custody and exact original event ID. An unavailable full-value route cannot be downgraded to semantic replay; an intact v1 row retains only its existing semantic receipt use. No raw value is reconstructed for this call.
+
+Uncertain append is resolved by the actual Storage owner before any dependent start acknowledgement or attributable dispatch. Only an authenticated never-issued complete current protected group may reach `storage.first_append_receipt.issue.v2`, after the original source/manifest barriers and complete current group/source/dedupe/restore checks. Executor never calls first mint from a missing receipt, lost delivery, tail absence or a supplied never-issued flag. A proper subset, lost previously issued custody, restored old pending request or ambiguous original group remains fenced under existing `dedupe_unavailable`/integrity/recovery behavior. In-place restart after actual protected promotion follows SP-286's original group handoff without reconstructing old transient capabilities. A verified older restore does not make omitted run-start work fresh. Only an actual newly accepted owner-issued run after the coordinator's completed restore occurrence/session may use its fresh-operation admission; existing lost/restored run IDs and pending work cannot be renamed or reaccepted as a new start.
+
+At the final held Executor acknowledgement/admission boundary, after all receipt/source/snapshot/currentness helpers, compare the complete original request, resolved receipt/result, actual run/source identity, immutable snapshot and current required permission/Stop/intake/attempt/safe-point/worktree/admission facts. No helper may change those facts between the final check and publication. A passive recovery read instead applies its existing current inspection/access/source token and no-auto-resume predicates; it does not require or grant live-run authority merely to return historical receipt evidence. Any later refusal preserves actual prior start/receipt effects. Receipt recovery cannot activate or resume work, repeat provider/tool/network effects, manufacture missing owner records, change terminal run state or charge Usage. This is explicit adoption of existing shared interfaces, not a new event, source provider, native implementation claim or checkpoint.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-116, ContractName:Plans/storage-plan.md#SP-265, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/event_append_receipt_contracts.schema.json
 
 ### EP-116 - Run-start identity and recovery consumer
 
@@ -50,6 +62,8 @@ gui_classification_reason: Defines storage or execution contracts, not a new vis
 depends_on:
 - SP-265
 - SP-278
+- SP-286
+- CV-339
 unblocks: []
 acceptance_criteria:
 - Immutable snapshot and six owner joins precede the existing durable start barrier and attributable execution.
@@ -57,6 +71,11 @@ acceptance_criteria:
   cannot prove a new logical run, and unknown durable identity is dedupe_unavailable.
 - Same semantic start returns the original durable result; conflicting snapshot/intent and uncertain append
   truth produce no second event or dispatch.
+- Explicit SP-286/CV-339 receipt resolution preserves issued replay, authentic never-issued protected-group
+  recovery and restored/lost-work fencing; full-value-dependent claims require the separate exact v2
+  original-value interface without downgrading unavailable proof.
+- Final receipt/source/snapshot/admission joins precede dependent publication; passive recovery grants no
+  live-run authority and never reacquires retired source solely for an intact receipt.
 - The recovery consumer never reconstructs canonical intake/attempt authority, changes terminal state,
   auto-resumes work or charges Usage.
 validation_surfaces:

@@ -1,10 +1,10 @@
-# Shard 036: Passive original Goal creation observation
+# Shard 037: Passive original Goal creation observation
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6164-L6237
+Source lines: L6177-L6250
 
-Source SHA256: `efe049a451e77214ffbd3766ada3654d767328b13661ae0b00b1041e8deb082a`
+Source SHA256: `3b61601a5bf53e8d3632816beb7ceafcf608e18b66148ca6f6a9ed1e5adf1797`
 
 ---
 

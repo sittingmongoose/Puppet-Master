@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L15079-L15164
 
-Source SHA256: `91652e7e3f4913b727e3516303f1b216cb5628360e7ecc9aad0ca1ddd43e65aa`
+Source SHA256: `3161de48504e8baadc9d95242e0c9f8687c9c6d59f5dbc84653dff2c8e436f3c`
 
 ---
 
@@ -28,7 +28,7 @@ canonical_text: |-
 
   For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
 
-  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event.
+  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event. The current creation consumer mapping in GRS-064 supplies Activity/body/history from its existing canonical readers; the original SP-287/SP-294 transaction already owns their durable state. The older deferred goal_state/child/evidence/GoalRun projector inventory is not an active-v3 creation reducer or checkpoint assignment. This exact current-route mapping does not settle other Goal/GoalRun families or authorize historical reconstruction.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:

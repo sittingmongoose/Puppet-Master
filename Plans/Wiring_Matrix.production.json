@@ -3426,11 +3426,13 @@
       "ui_location": "Puppet Master Assistant > goal.explicit_start",
       "ui_command_id": "cmd.chat.goal.start",
       "handler_location": "handlers::goal_runtime::goal_start",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "goal.created"
+      ],
       "acceptance_checks": [
         "cmd.chat.goal.start names exactly one owner-adjudicated future target handlers::goal_runtime::goal_start in Plans/Goal_Runtime_System.md; the target string and this production-intent row are not native dispatcher or handler proof.",
         "Read state.assistant_redesign.chat_goal_start.availability and state.assistant_redesign.chat_goal_start.disabled_reason before dispatch; keep handler_unavailable until source-hashed native proof exists.",
-        "The durable effect is exactly: GoalRecordV2 + continuation. Record only the owner typed result, receipt, or projection and emit no unregistered EventRecord.",
+        "The original Goal body/command join, goal.created v3 and immutable original result follow CV-341/SP-294. Preserve real earlier effects through pending or refused later settlement; emit no duplicate or unregistered event. Continuation remains separately owner/Stop-gated.",
         "Every named reverse consumer renders from the same owner projection: Activity Goal.",
         "Negative path is enforced: no second approval.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus."
@@ -3439,11 +3441,14 @@
       "state_selector": "state.assistant_redesign.chat_goal_start.availability",
       "disabled_reason_projection": "state.assistant_redesign.chat_goal_start.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "GoalRecordV2 + continuation under Plans/Goal_Runtime_System.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
+        "effect_kind": "mixed",
+        "description": "The existing original Goal start under CV-341/GRS-066/SP-294/SIR-048 joins Goal body and command custody, original goal.created v3 publication and shared first-receipt/full-value proof before immutable terminal settlement. body_committed_pending preserves earlier accepted effects when later completion is unavailable; continuation retains its independent current owner/Stop authority.",
         "receipt_or_event_refs": [
-          "Plans/Goal_Runtime_System.md",
-          "GoalRecordV2 + continuation"
+          "goal.created",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartRequestV2",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2",
+          "Plans/goal_start_command_custody.schema.json",
+          "Plans/storage-plan.md#SP-294"
         ]
       },
       "accessibility_contract": {
@@ -3466,7 +3471,7 @@
         {
           "test_id": "wiring.assistant_redesign.chat_goal_start.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "Prove the durable effect is exactly 'GoalRecordV2 + continuation' with typed receipt correlation and zero unregistered EventRecord effects."
+          "requirement": "Prove CV-341/SP-294 original source/body/command/shared/result joins for goal.created v3, body_committed_pending and exact immutable replay; later refusal preserves earlier effects and cannot fabricate success, duplicate an event or grant continuation."
         },
         {
           "test_id": "wiring.assistant_redesign.chat_goal_start.negative",
@@ -3477,11 +3482,16 @@
           "test_id": "wiring.assistant_redesign.chat_goal_start.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role and name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_goal_start.event",
+          "evidence_kind": "event_test",
+          "requirement": "Prove the actual original goal.created v3 EventRecord joins the accepted Goal body and command custody, frozen append input and original shared first receipt/full value under SP-294/CV-341; preserve real earlier effects if later settlement is pending, and exact terminal replay emits no duplicate or automatic continuation grant. This is a required production test, not a claim of native execution."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.goal.start records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
-        "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
+        "Assert exactly the admitted original goal.created v3 follows the authentic joined Goal body/command transaction and original shared first-receipt/full-value custody; a typed receipt alone does not settle the command.",
+        "Assert genuine pre-effect refusal writes no Goal/event; preserve real body/shared/source/receipt effects when later settlement refuses or remains pending, and return immutable original replay without a duplicate effect or automatic continuation permission."
       ]
     },
     "assistant.redesign.w_007.chat_goal_pause": {
@@ -15107,22 +15117,29 @@
       "ui_location": "Assistant Chat surface",
       "ui_command_id": "cmd.chat.goal.start",
       "handler_location": "handlers::goal_runtime::goal_start",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "goal.created"
+      ],
       "acceptance_checks": [
         "cmd.chat.goal.start must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.chat.goal.start must expose projected state selector and disabled reason before dispatch",
         "cmd.chat.goal.start dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.chat.goal.start must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.chat.goal.start must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.chat.goal.start must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "Use exact CV-341 GoalStartRequestV2/GoalStartResultV2 and SP-294 original source/body/command/shared custody; native handler_unavailable remains until complete actual production proof exists."
       ],
       "evidence_required": "Production wiring contract for cmd.chat.goal.start; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.chat_goal_start.availability",
       "disabled_reason_projection": "state.commands.chat_goal_start.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.chat.goal.start has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "mixed",
+        "description": "The existing original Goal start under CV-341/GRS-066/SP-294/SIR-048 joins Goal body and command custody, original goal.created v3 publication and shared first-receipt/full-value proof before immutable terminal settlement. body_committed_pending preserves earlier accepted effects when later completion is unavailable; continuation retains its independent current owner/Stop authority.",
         "receipt_or_event_refs": [
-          "cmd.chat.goal.start.dispatch_receipt"
+          "goal.created",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartRequestV2",
+          "Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2",
+          "Plans/goal_start_command_custody.schema.json",
+          "Plans/storage-plan.md#SP-294"
         ]
       },
       "accessibility_contract": {
@@ -15145,16 +15162,22 @@
         {
           "test_id": "wiring.catalog.chat_goal_start.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.chat.goal.start has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "Prove CV-341/SP-294 original source/body/command/shared/result joins for goal.created v3, body_committed_pending and exact immutable replay; later refusal preserves earlier effects and cannot fabricate success, duplicate an event or grant continuation."
         },
         {
           "test_id": "wiring.catalog.chat_goal_start.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.chat_goal_start.event",
+          "evidence_kind": "event_test",
+          "requirement": "Prove the actual original goal.created v3 EventRecord joins the accepted Goal body and command custody, frozen append input and original shared first receipt/full value under SP-294/CV-341; preserve real earlier effects if later settlement is pending, and exact terminal replay emits no duplicate or automatic continuation grant. This is a required production test, not a claim of native execution."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.chat.goal.start records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert exactly the admitted original goal.created v3 follows the authentic joined Goal body/command transaction and original shared first-receipt/full-value custody; a typed receipt alone does not settle the command.",
+        "Assert genuine pre-effect refusal writes no Goal/event; preserve real body/shared/source/receipt effects when later settlement refuses or remains pending, and return immutable original replay without a duplicate effect or automatic continuation permission."
       ]
     },
     "catalog.chat_goal_update": {

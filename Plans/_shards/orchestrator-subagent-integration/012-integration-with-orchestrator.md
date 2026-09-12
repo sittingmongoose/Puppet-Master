@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L349-L31654
 
-Source SHA256: `9eabe26b985b7a7b02ba55bb16d5ef95f9d202bf5acfa1d79b948828282668f3`
+Source SHA256: `935bdd9dc15ccc0df609a8baa99a4ace5d9eb4cc9a337a4d84cba49a276c5467`
 
 ---
 
@@ -5256,7 +5256,7 @@ impl PlatformCapabilityManager {
 Capability snapshot rules:
 - Capability evaluation happens at run start and produces a frozen snapshot for the run/tier.
 - Precedence is: live runtime discovery -> provider policy snapshot -> static model/platform baseline.
-- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features.
+- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features. N2-157 maps its exact committed per-evaluation decision to the original run-context consumer; event replay is not a config writer or runner, and Models-owned capability_snapshot_ref remains independent.
 - This manager complements provider `capabilities.get`; it does not replace the provider-facing capability API.
 
 ### Enhanced Subagent Invoker
@@ -27675,7 +27675,7 @@ preserved_exact_tokens:
 negative_constraints:
 - PlatformCapabilityManager must not replace the provider-facing capability API.
 compatibility_only_notes:
-- Run/tier snapshot wording is preserved as source language and must align to canonical runtime identity if promoted.
+- Run/tier snapshot wording is preserved as source language and must align to canonical runtime identity if promoted. N2-157 supplies only the exact per-evaluation original-context composition with the existing requested/effective runtime schema; it does not promote legacy tier fields or materialize an unspecified aggregate capability request-set.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Provider capabilities.get remains provider-facing capability API authority.

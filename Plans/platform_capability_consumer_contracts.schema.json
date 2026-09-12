@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/platform_capability_consumer_contracts/1.0.0/schema.json",
+  "$comment": "NEW DL-045 per-evaluation original run-context consumption only, not an aggregate request-set, storage family, passive-reader replacement, installation or action grant. Existing original provider/model capability_snapshot_ref semantics remain unchanged. Full original current SP-290 source/value and all actual owner/context/snapshot joins are mandatory beyond shape.",
+  "$defs": {
+    "run_context_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consumer_binding",
+        "read_request",
+        "original_evaluation_request",
+        "runtime_snapshot"
+      ],
+      "properties": {
+        "consumer_binding": {
+          "const": "platform.capability_run_context.consume.v1@1.0.0"
+        },
+        "read_request": {
+          "$ref": "https://puppetmaster.local/schemas/platform_capability_decision_contracts/1.0.0#/$defs/read_request"
+        },
+        "original_evaluation_request": {
+          "$ref": "https://puppetmaster.local/schemas/platform_capability_decision_contracts/1.0.0#/$defs/evaluation_request"
+        },
+        "runtime_snapshot": {
+          "$ref": "https://puppetmaster.local/schemas/requested_effective_runtime/1.0.0/requested_effective_runtime.schema.json"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "read_request": {
+              "properties": {
+                "scope": {
+                  "properties": {
+                    "kind": {
+                      "const": "project"
+                    }
+                  }
+                }
+              }
+            },
+            "original_evaluation_request": {
+              "properties": {
+                "context": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "kind": {
+                          "const": "project"
+                        }
+                      }
+                    },
+                    "run_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "subject": {
+                  "properties": {
+                    "scope": {
+                      "properties": {
+                        "kind": {
+                          "const": "project"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "run_context_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consumer_binding",
+        "runtime_snapshot_ref",
+        "decision",
+        "action_authority",
+        "checkpoint_disposition"
+      ],
+      "properties": {
+        "consumer_binding": {
+          "const": "platform.capability_run_context.consume.v1@1.0.0"
+        },
+        "runtime_snapshot_ref": {
+          "pattern": "^requested_effective_runtime\\.v1:project~[A-Za-z0-9_-]+:[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "decision": {
+          "$ref": "https://puppetmaster.local/schemas/platform_capability_decision_contracts/1.0.0#/$defs/decision"
+        },
+        "action_authority": {
+          "const": "none"
+        },
+        "checkpoint_disposition": {
+          "const": "none_required"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "decision": {
+              "properties": {
+                "state": {
+                  "const": "committed"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/run_context_request"
+    },
+    {
+      "$ref": "#/$defs/run_context_result"
+    }
+  ]
+}
