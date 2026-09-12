@@ -43296,6 +43296,207 @@
           }
         ]
       }
+    },
+    {
+      "family_id": "event_append_receipt_custody",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "event_append_receipt_custody.v1:{storage_instance_id}:{event_id_sha256}",
+      "value_schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+      "value_schema_ref": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody",
+      "owner_doc": "Plans/storage-plan.md#first-append-receipt-custody",
+      "producer": [
+        "storage.first_append_receipt.issue.v1"
+      ],
+      "consumers": [
+        "storage.first_append_receipt.resolve.v1",
+        "storage.first_append_receipt.backup_gate.v1",
+        "storage.first_append_receipt.group_gate.v1"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "event_id",
+        "scope_partition",
+        "event_type",
+        "idempotency_key",
+        "producer_semantic_digest",
+        "group_digest",
+        "first_append_receipt",
+        "redaction_profile",
+        "original_segment_ref"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Literal same-redb table event_append_receipt_custody.v1. After full initial source/dedupe/locator/barrier joins, atomic issued-only custody is authoritative for exact replay without old raw source. original_segment_ref preserves the original Storage locator binding.",
+      "migration": "StorageMigrationCoordinator prospective activation; no legacy receipt fabrication. Schema change requires explicit compatible successor and verified authority-preserving migration.",
+      "retention_compaction": "App-data-root identity/result lifetime; no independent expiry or source-compaction rewrite of original receipt.",
+      "redaction_no_secret_rule": "Identity, digests, coordinates and timestamps only. No raw payload or secrets.",
+      "legacy_canonical_crosswalk_status": "Canonical issued receipt authority; existing derived dedupe rows retain their separate contract.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "event_id",
+          "scope_partition",
+          "event_type",
+          "idempotency_key",
+          "producer_semantic_digest",
+          "group_digest",
+          "first_append_receipt",
+          "redaction_profile",
+          "original_segment_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.event_append_receipt_custody.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope_partition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "producer_semantic_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "group_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "first_append_receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              }
+            }
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "original_segment_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "compatibility_key_shapes": [],
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-2-seglogframev2-acknowledgement-corruption-and-crash-convergence",
+          "Plans/Contracts_V0.md#durable-append-receipt-and-storage-recovery-events"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-2-seglogframev2-acknowledgement-corruption-and-crash-convergence",
+          "Plans/Contracts_V0.md#durable-append-receipt-and-storage-recovery-events"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-2-seglogframev2-acknowledgement-corruption-and-crash-convergence",
+          "Plans/Contracts_V0.md#durable-append-receipt-and-storage-recovery-events"
+        ]
+      },
+      "retention_policy_ref": "RP-EVENT-IDENTITY-APPROOT"
     }
   ]
 }

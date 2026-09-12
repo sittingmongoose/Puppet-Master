@@ -1,0 +1,295 @@
+{
+  "status": "CANONICAL_SHARED_DEFINITION_COMPILED_STATIC_CHECKS_PASS",
+  "base_head": "20ea55d303b328ddb581262819978a6d20cc37fd",
+  "scope": "DL-045 shared technical prerequisite; explicit per-event adoption remains required",
+  "physical_family_counts": {
+    "before": 102,
+    "after": 103
+  },
+  "new_families": [
+    "event_append_receipt_custody"
+  ],
+  "unchanged_registered_event_count": 42,
+  "unchanged_retention_policy_count": 24,
+  "definition_units": [
+    "SP-286",
+    "CV-339"
+  ],
+  "schema_definitions_exact_to_frozen_v3": true,
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-contract-packet-v3-20260911/manifest.json",
+    "sha256": "cd8bbf748a189c99963bb47d4ac8cfe2ff2bd32cbfb30f937f36710a5c5f4f21"
+  },
+  "independent_review": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-v3-independent-review-20260912/report.json",
+    "sha256": "b8a18fe67b72bb6e5ff1b6267bacd1a5e81cbd8bc2c985e7bbd720e38b077d72",
+    "manifest_sha256": "ddc9cc29baa5b984342712c429b1b9e1b8fa56ccb5dcb69480cffffc48e1a914"
+  },
+  "source_currentness": {
+    "base": "20ea55d303b328ddb581262819978a6d20cc37fd",
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "original_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_base_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "original_sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+        "current_base_sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "original_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+        "current_base_sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_record.schema.json",
+        "original_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "current_base_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "original_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "current_base_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "original_sha256": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
+        "current_base_sha256": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "original_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_base_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "exact": true
+      },
+      {
+        "path": "Plans/home_layout_event_contracts.schema.json",
+        "original_sha256": "a2558686b5d0203ea717a0e378696c0b553b0a7c45fdca2471aa4276a3d8ee1f",
+        "current_base_sha256": "a2558686b5d0203ea717a0e378696c0b553b0a7c45fdca2471aa4276a3d8ee1f",
+        "exact": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "original_sha256": "c80f3c09f4cee8f6322e222ef46bc3dfaf11ac509d28b8dfa0a630d11102d91f",
+        "current_base_sha256": "a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda",
+        "exact": false,
+        "diff_numstat": "83\t0\tPlans/Decision_Log.md",
+        "adjudication": "Append-only DL-047 retention decision; original DL-045 and all earlier source preserved."
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "original_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "current_base_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+        "original_sha256": "3739e474e72c623872e7356efac524f8576013efeaacb99f4564b0f376b3b6a0",
+        "current_base_sha256": "3739e474e72c623872e7356efac524f8576013efeaacb99f4564b0f376b3b6a0",
+        "exact": true
+      }
+    ]
+  },
+  "static_checks": {
+    "author_original_cases": 37,
+    "prior_review_regression_cases": 44,
+    "restore_protocol_cases": 32,
+    "artifact_checks": 30,
+    "independent_cases": 71,
+    "independent_positive": 7,
+    "independent_negative": 64,
+    "independent_unexpected": 0,
+    "compact_value_shape_cases": 8,
+    "exact_group_codec_vectors": 2,
+    "overlap_note": "Prior and author regression counts overlap; these are separate suite counts, not distinct native executions."
+  },
+  "data_preservation": {
+    "base_head": "20ea55d303b328ddb581262819978a6d20cc37fd",
+    "before_family_count": 102,
+    "after_family_count": 103,
+    "all_prior_families_exact": true,
+    "all_other_registry_fields_and_policies_exact": true,
+    "new_family": "event_append_receipt_custody",
+    "shape_cases": 8,
+    "group_vectors": 2,
+    "source_schema_sha256": "97da8389f695a90ee3d4ac88b22e1c38f6a5cac54562aa0dd1739cde5c77378a",
+    "canonical_schema_sha256": "abc9231a7a6f545e9a011b646f4e0aac96c701178a732032dfccfa3e123787ba",
+    "all_schema_definitions_exact": true,
+    "metadata_changes": [
+      "Canonical title",
+      "New family group_gate explicitly listed as consumer",
+      "Crosswalk status removes external proposal wording"
+    ],
+    "native": "NOT_RUN"
+  },
+  "canonical_compilation_checks": {
+    "old_units": 6543,
+    "new_total": 6545,
+    "new_units": [
+      "CV-339",
+      "SP-286"
+    ],
+    "intentional_old_unit_fields": {
+      "CV-318": [
+        "acceptance_criteria",
+        "canonical_text"
+      ],
+      "SP-230": [
+        "acceptance_criteria",
+        "canonical_text"
+      ],
+      "SP-236": [
+        "acceptance_criteria",
+        "canonical_text"
+      ]
+    },
+    "all_other_old_unit_semantics_preserved": true,
+    "all_prior_physical_rows_and_policy_objects_exact": true,
+    "all_42_events_byte_exact": true,
+    "diff_check": "pass",
+    "shard_check": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2305
+    },
+    "index_validate": {
+      "status": "pass",
+      "plan_units": 6545,
+      "acceptance_units": 25159
+    },
+    "source_governance_locks_changed": false
+  },
+  "native_execution": "NOT_RUN",
+  "frozen_validator_depth_pass": false,
+  "event_specific_adoption": "NOT_COMPLETED_BY_THIS_CHANGE",
+  "governance_seal": "NOT_RUN",
+  "standard_governance": {
+    "status": "FAIL_UNSEALED_GOVERNANCE_AND_EXISTING_REFERENCES_OR_SCANNER_LIMITATIONS",
+    "complete_run": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/run-gates.json",
+      "sha256": "ed32dcd1a40fe6d5f4dfc29afff00d162b5936b1f43fe83f8d28a75222e9ce1b",
+      "checks": 36,
+      "failed": 13
+    },
+    "targeted_rechecks_after_Concepts_materialization": {
+      "lint-path-refs": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/lint-path-refs.json",
+        "sha256": "05435a80140264c5763c880dd5956e51c05bbc5087347c0820355327a1eddcc2",
+        "status": "fail",
+        "failure_count": 10
+      },
+      "validate-prd-planning-runtime-contracts": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/validate-prd-planning-runtime-contracts.json",
+        "sha256": "72c2165c02b2b0d468ac972c15b03b6a7739c79cdaf04afa8475bdc6bb4ae2dd",
+        "status": "fail",
+        "failure_count": 72
+      },
+      "validate-touch-closure": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/validate-touch-closure.json",
+        "sha256": "66762783a6ea12b523a6be376abf8aeec085ba5d304953bbbd99c80ba0b0b81f",
+        "status": "pass",
+        "failure_count": 0
+      }
+    },
+    "combined_latest_subcheck_count": 36,
+    "remaining_failed_subchecks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_evidence",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_prd_planning_runtime_contracts",
+      "verify_spec_lock"
+    ],
+    "not_a_second_aggregate_run": true,
+    "prd_ref_scan": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/prd-baseline-review.json",
+      "sha256": "ece789edec98f79e43bbc40d144ddaba1d36487764d7efa0cc85d7fbd0f1140c",
+      "all_72_findings_in_unchanged_Home_schema": true,
+      "new_receipt_schema_errors": 0
+    },
+    "registry_data_check": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-root-20260912/registry-check.json",
+      "sha256": "5da92ddbaa10676f0e293a625faa2c05d4d86a4277677f9e2e84288a05194708",
+      "before_failures": 15,
+      "after_failures": 15,
+      "same_classes": true,
+      "three_existing_count_diagnostics_track_102_to_103": "No waiver; frozen expected counts unchanged"
+    },
+    "new_contracts_gate": "pass",
+    "new_planunit_reference_errors": false,
+    "governance_mutations": false,
+    "aggregate_scope": "Before e59bc0045a Browser rebase; not rerun as full aggregate afterward"
+  },
+  "post_rebase": {
+    "upstream": "e59bc0045ab2aa4e7474a92a1e1f582f575f9767",
+    "all_original_cited_sources_exact_to_pre_rebase_base": {
+      "Plans/00-plans-index.md": true,
+      "Plans/Contracts_V0.md": true,
+      "Plans/storage-plan.md": true,
+      "Plans/event_record.schema.json": true,
+      "Plans/event_record_index_checkpoint.schema.json": true,
+      "Plans/storage_value_registry.json": true,
+      "Plans/storage_value_registry.schema.json": true,
+      "Plans/home_layout_event_contracts.schema.json": true,
+      "Plans/Decision_Log.md": true,
+      "Plans/event_family_registry.json": true,
+      "Plans/event_payload_storage_boot_recovery.schema.json": true
+    },
+    "all_prior_102_rows_24_policies_42_events_preserved": true,
+    "old_plan_units": 6544,
+    "new_plan_units": 6546,
+    "intentional_old_unit_changes": {
+      "CV-318": [
+        "acceptance_criteria",
+        "canonical_text"
+      ],
+      "SP-230": [
+        "acceptance_criteria",
+        "canonical_text"
+      ],
+      "SP-236": [
+        "acceptance_criteria",
+        "canonical_text"
+      ]
+    },
+    "all_other_units_semantically_preserved": true,
+    "derived_owner_groups": [
+      "contracts_v0",
+      "storage-plan",
+      "storage_value_registry"
+    ],
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2306,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index_validate": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T00:46:30Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25164,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6546
+      }
+    }
+  }
+}

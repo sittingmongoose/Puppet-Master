@@ -1,0 +1,427 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "Curated storage-value shape fixtures and exact group-codec vectors; supplied native ownership and durability are not established by schema validation.",
+  "fixture_kind": "static_contract_examples",
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-contract-packet-v3-20260911/manifest.json",
+    "sha256": "cd8bbf748a189c99963bb47d4ac8cfe2ff2bd32cbfb30f937f36710a5c5f4f21"
+  },
+  "canonical_key_example": "event_append_receipt_custody.v1:11111111-1111-4111-8111-111111111111:1ee68aef8d7475d578b1913cdb70edc7365e1c4293a5d8ab9dffc70ce86a2f31",
+  "cases": [
+    {
+      "id": "complete_original_eleven_field_receipt",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "missing_original_receipt",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": null,
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "unknown_custody_field",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1",
+        "invented_authority": true
+      }
+    },
+    {
+      "id": "unsynced_receipt",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "buffered",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "unknown_receipt_field",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z",
+          "delivered_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "unsupported_custody_schema",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "2.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "null_native_idempotency",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": null,
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets",
+        "original_segment_ref": "segment:fixture-original-1"
+      }
+    },
+    {
+      "id": "missing_original_storage_segment_ref",
+      "family_id": "event_append_receipt_custody",
+      "expected_schema_valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.event_append_receipt_custody.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "event_id": "fixture-event-51",
+        "scope_partition": "app",
+        "event_type": "storage.boot_recovery",
+        "idempotency_key": "delivery-51",
+        "producer_semantic_digest": "ddd4e9928d4b24158fce2225e15e477869eff58c854fe088d04c842705983e69",
+        "group_digest": "a27ffdba8d938352b45c685d7aa77e9fe8becb8f36a2e128215adc4727350adb",
+        "first_append_receipt": {
+          "event_id": "fixture-event-51",
+          "sequence_id": 51,
+          "segment_generation": 1,
+          "segment_name": "seg-000001-00000000000000000051.active",
+          "byte_offset": 0,
+          "commit_group_id": "fixture-group-11",
+          "durability_class": "barrier",
+          "durable_end_offset": 1240,
+          "durability_state": "synced",
+          "manifest_generation": 11,
+          "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    }
+  ],
+  "group_digest_vectors": [
+    {
+      "id": "v2_null_admission_uint64_precision",
+      "group": {
+        "schema_version": "2.0.0",
+        "storage_instance_id": "store-1",
+        "commit_group_id": "group-7",
+        "durability_class": "ordinary",
+        "segment_generation": 3,
+        "segment_name": "segment-3",
+        "durable_start_offset": 64,
+        "durable_end_offset": 192,
+        "manifest_generation": 7,
+        "members": [
+          {
+            "event_id": "evt-1",
+            "sequence_id": 9007199254740993,
+            "byte_offset": 64,
+            "frame_length": 64,
+            "frame_sha256": "b1998c66d9fc9dfe6ad2c80b8a4cf88b8e68234e8d422c37901a160982a6cae5"
+          },
+          {
+            "event_id": "evt-2",
+            "sequence_id": 9007199254740994,
+            "byte_offset": 128,
+            "frame_length": 64,
+            "frame_sha256": "16f0ccacc484f843d96fb13d8917f25083d083952a5b14b8b52f29fe50b98c8f"
+          }
+        ],
+        "restore_admission": null,
+        "group_digest": "5f28b1d05bdb48acb38e4f8037d072ad2eb51f15690b43ed5eee5a1c5bfc49fe"
+      },
+      "tuple": [
+        "pm.active_durable_group.v2",
+        "2.0.0",
+        "store-1",
+        "group-7",
+        "ordinary",
+        3,
+        "segment-3",
+        64,
+        192,
+        7,
+        [
+          [
+            "evt-1",
+            9007199254740993,
+            64,
+            64,
+            "b1998c66d9fc9dfe6ad2c80b8a4cf88b8e68234e8d422c37901a160982a6cae5"
+          ],
+          [
+            "evt-2",
+            9007199254740994,
+            128,
+            64,
+            "16f0ccacc484f843d96fb13d8917f25083d083952a5b14b8b52f29fe50b98c8f"
+          ]
+        ],
+        []
+      ],
+      "canonical_messagepack_hex": "9cba706d2e6163746976655f64757261626c655f67726f75702e7632a5322e302e30a773746f72652d31a767726f75702d37a86f7264696e61727903a97365676d656e742d3340ccc0079295a56576742d31cf00200000000000014040d9406231393938633636643966633964666536616432633830623861346366383862386536383233346538643432326333373930316131363039383261366361653595a56576742d32cf0020000000000002cc8040d9403136663063636163633438346638343364393666623133643839313766323530383364303833393532613562313462386235326632396665353062393863386690",
+      "sha256": "5f28b1d05bdb48acb38e4f8037d072ad2eb51f15690b43ed5eee5a1c5bfc49fe"
+    },
+    {
+      "id": "v2_actual_supplied_admission",
+      "group": {
+        "schema_version": "2.0.0",
+        "restore_admission": {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "restore_occurrence_id": "fixture-restore-occurrence-1",
+          "restore_journal_ref": "fixture-existing-restore-journal:fixture-restore-occurrence-1",
+          "restore_journal_sha256": "8db85493a035b140b38901306eba90ee6ce0451478f6ab41bb307a5cd53a233c",
+          "recovery_epoch": 1,
+          "restored_boundary_sha256": "921aa1c6d70a00f8aa2c4eec3651d22c352e8b2244711c981f889f53c478bb90",
+          "publication_id": "fixture-publication:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+          "members": [
+            {
+              "event_id": "fixture-new-event:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+              "scope_partition": "app",
+              "event_type": "storage.boot_recovery",
+              "idempotency_key": "fixture-new-idempotency:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+              "producer_semantic_digest": "984496cd7dc16eefbf52af389f2e04bdb6f84ee31ee30677254ce8a44e3bedc4",
+              "owner_id": "StorageRecoveryCoordinator",
+              "owner_operation_id": "fixture-native-owner-operation-1",
+              "owner_operation_sha256": "b6b45375ff16db7f3d0666b702bbb244e2832f8b1ee577cf700c1b1772098283"
+            }
+          ]
+        },
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "commit_group_id": "fixture-group-12",
+        "durability_class": "barrier",
+        "segment_generation": 1,
+        "segment_name": "seg-000001-00000000000000000051.active",
+        "durable_start_offset": 1240,
+        "durable_end_offset": 2658,
+        "manifest_generation": 12,
+        "members": [
+          {
+            "event_id": "fixture-new-event:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+            "sequence_id": 52,
+            "byte_offset": 1240,
+            "frame_length": 1418,
+            "frame_sha256": "c6fdbac2a5af1f927d9ec1ebfbda28531c0b296243b09de58eb044c9071c235c"
+          }
+        ],
+        "group_digest": "5d4de5e4fec5a4b7208d655cba93f1d77f4f58c9d3afe8af3ab3cd8e8bb35592"
+      },
+      "tuple": [
+        "pm.active_durable_group.v2",
+        "2.0.0",
+        "11111111-1111-4111-8111-111111111111",
+        "fixture-group-12",
+        "barrier",
+        1,
+        "seg-000001-00000000000000000051.active",
+        1240,
+        2658,
+        12,
+        [
+          [
+            "fixture-new-event:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+            52,
+            1240,
+            1418,
+            "c6fdbac2a5af1f927d9ec1ebfbda28531c0b296243b09de58eb044c9071c235c"
+          ]
+        ],
+        [
+          "1.0.0",
+          "11111111-1111-4111-8111-111111111111",
+          "fixture-restore-occurrence-1",
+          "fixture-existing-restore-journal:fixture-restore-occurrence-1",
+          "8db85493a035b140b38901306eba90ee6ce0451478f6ab41bb307a5cd53a233c",
+          1,
+          "921aa1c6d70a00f8aa2c4eec3651d22c352e8b2244711c981f889f53c478bb90",
+          "fixture-publication:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+          [
+            [
+              "fixture-new-event:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+              "app",
+              "storage.boot_recovery",
+              "fixture-new-idempotency:fixture-restore-occurrence-1:fixture-native-owner-operation-1",
+              "984496cd7dc16eefbf52af389f2e04bdb6f84ee31ee30677254ce8a44e3bedc4",
+              "StorageRecoveryCoordinator",
+              "fixture-native-owner-operation-1",
+              "b6b45375ff16db7f3d0666b702bbb244e2832f8b1ee577cf700c1b1772098283"
+            ]
+          ]
+        ]
+      ],
+      "canonical_messagepack_hex": "9cba706d2e6163746976655f64757261626c655f67726f75702e7632a5322e302e30d92431313131313131312d313131312d343131312d383131312d313131313131313131313131b0666978747572652d67726f75702d3132a76261727269657201d9267365672d3030303030312d30303030303030303030303030303030303035312e616374697665cd04d8cd0a620c9195d94f666978747572652d6e65772d6576656e743a666978747572652d726573746f72652d6f6363757272656e63652d313a666978747572652d6e61746976652d6f776e65722d6f7065726174696f6e2d3134cd04d8cd058ad9406336666462616332613561663166393237643965633165626662646132383533316330623239363234336230396465353865623034346339303731633233356399a5312e302e30d92431313131313131312d313131312d343131312d383131312d313131313131313131313131bc666978747572652d726573746f72652d6f6363757272656e63652d31d93d666978747572652d6578697374696e672d726573746f72652d6a6f75726e616c3a666978747572652d726573746f72652d6f6363757272656e63652d31d9403864623835343933613033356231343062333839303133303665626139306565366365303435313437386636616234316262333037613563643533613233336301d94039323161613163366437306130306638616132633465656333363531643232633335326538623232343437313163393831663838396635336334373862623930d951666978747572652d7075626c69636174696f6e3a666978747572652d726573746f72652d6f6363757272656e63652d313a666978747572652d6e61746976652d6f776e65722d6f7065726174696f6e2d319198d94f666978747572652d6e65772d6576656e743a666978747572652d726573746f72652d6f6363757272656e63652d313a666978747572652d6e61746976652d6f776e65722d6f7065726174696f6e2d31a3617070b573746f726167652e626f6f745f7265636f76657279d955666978747572652d6e65772d6964656d706f74656e63793a666978747572652d726573746f72652d6f6363757272656e63652d313a666978747572652d6e61746976652d6f776e65722d6f7065726174696f6e2d31d94039383434393663643764633136656566626635326166333839663265303462646236663834656533316565333036373732353463653861343465336265646334ba53746f726167655265636f76657279436f6f7264696e61746f72d920666978747572652d6e61746976652d6f776e65722d6f7065726174696f6e2d31d94062366234353337356666313664623766336430363636623730326262623234346532383332663862316565353737636637303063316231373732303938323833",
+      "sha256": "5d4de5e4fec5a4b7208d655cba93f1d77f4f58c9d3afe8af3ab3cd8e8bb35592"
+    }
+  ],
+  "native_oracles": [
+    {
+      "id": "FIRST-RECEIPT-N01",
+      "status": "NOT_RUN",
+      "expected": "Before exposure, both actual barriers and one complete immutable all-member custody transaction have committed."
+    },
+    {
+      "id": "FIRST-RECEIPT-N02",
+      "status": "NOT_RUN",
+      "expected": "A missing receipt from later live writes cannot be reminted after older-backup restore; covered original receipts replay exactly."
+    },
+    {
+      "id": "FIRST-RECEIPT-N03",
+      "status": "NOT_RUN",
+      "expected": "An actual fresh post-restore owner operation may publish under current source/lease authority and retain compact admission through an in-place crash before first issuance."
+    },
+    {
+      "id": "FIRST-RECEIPT-N04",
+      "status": "NOT_RUN",
+      "expected": "Source advance/retirement, backup, restored pending images, partial custody and late control changes cannot bypass the protected-group gate."
+    }
+  ]
+}

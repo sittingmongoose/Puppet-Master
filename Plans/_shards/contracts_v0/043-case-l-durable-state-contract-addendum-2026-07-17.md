@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20581-L20987
+Source lines: L20581-L20988
 
-Source SHA256: `a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7`
+Source SHA256: `8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b`
 
 ---
 
@@ -14,7 +14,7 @@ This addendum is the Contracts-owner portion of the approved Case L repair packa
 
 ### Durable append receipt and storage recovery events
 
-`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the storage-owned frame and manifest/watermark durability barriers complete. `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
+`AppendReceipt` is the only successful durable-append acknowledgement shape. Required fields are `event_id`, `sequence_id`, `segment_generation`, `segment_name`, `byte_offset`, `commit_group_id`, `durability_class`, `durable_end_offset`, `durability_state`, `manifest_generation`, and `acknowledged_at_utc`. `durability_class` is `ordinary | barrier`; `durability_state` is const `synced`. The receipt becomes valid only after the storage-owned frame and manifest/watermark durability barriers complete and SP-286/CV-339 first-receipt custody is durably committed before exposure. `EventRecord.persisted_at_utc` is the writer's commit-group time and is not proof of persistence without the matching synced receipt. A failed/unknown barrier returns no successful receipt.
 
 Contracts registers these `application_only` EventRecord families; storage owns their exact payload schemas and recovery behavior:
 
@@ -174,7 +174,8 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  AppendReceipt proves a synced frame-plus-manifest durability boundary, and
+  AppendReceipt proves a synced frame-plus-manifest durability boundary with
+  SP-286/CV-339 durable first-receipt custody before exposure, and
   application-scoped storage.integrity_detected, storage.recovery_applied, and
   storage.boot_recovery payloads carry deterministic recovery identity, proven
   impact, survivor/checkpoint aftermath, and truthful disclosure references
@@ -184,7 +185,7 @@ gui_classification_reason: Defines shared durability and recovery payloads; GUI 
 depends_on: [CV-309, CV-317, SP-230]
 unblocks: []
 acceptance_criteria:
-  - AppendReceipt success is possible only with durability_state synced after both storage barriers.
+  - AppendReceipt success is possible only with durability_state synced after both storage barriers and SP-286/CV-339 durable first-receipt custody before exposure.
   - Recovery events are application-scoped, deterministic, idempotent, and carry only proven impact identities.
   - persisted_at_utc without a matching synced AppendReceipt is not successful persistence evidence.
 validation_surfaces:

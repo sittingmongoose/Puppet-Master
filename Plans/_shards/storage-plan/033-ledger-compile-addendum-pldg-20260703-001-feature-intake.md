@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16210-L16687
+Source lines: L16210-L16689
 
-Source SHA256: `02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740`
+Source SHA256: `33645a522625c805c2e3b4ed813c788a3fdcf49db63504631b130792fbab1f8e`
 
 ---
 
@@ -275,7 +275,9 @@ canonical_text: >-
   Plans/event_record.schema.json. Seglog is the authoritative append-only
   MessagePack EventRecord store; redb may store rebuildable checkpoints,
   projections, dedicated dedupe indexes, and event_record_index.v2 scope-partitioned lookup rows that
-  point back to seglog. Replay ordering uses segment generation, segment order,
+  point back to seglog. SP-286 additionally owns canonical non-rebuildable first-receipt
+  custody in redb; that custody is append acknowledgement evidence, not a second EventRecord source.
+  Replay ordering uses segment generation, segment order,
   byte offset, and sequence_id rather than timestamps. Stored values require
   schema_version, reject unsupported schema_id/schema_version pairs, use
   event_id and idempotency_key according to replay_policy, preserve
@@ -286,7 +288,7 @@ gui_classification_reason: This unit defines storage value encoding, replay, and
 depends_on: [SP-001, CV-309]
 unblocks: []
 acceptance_criteria:
-  - Seglog remains the canonical EventRecord source of truth and redb remains projection/index/checkpoint storage.
+  - Seglog remains the canonical EventRecord source of truth; redb stores projections/indexes/checkpoints and the distinct SP-286 canonical first-receipt custody, never a second EventRecord source.
   - EventRecord values are MessagePack encoded and conform to Plans/event_record.schema.json.
   - redb event lookup rows carry schema_id, schema_version, event_type, segment refs, offset, payload hash, idempotency, and causality refs while pointing back to seglog.
   - Replay order is deterministic and not timestamp-derived.

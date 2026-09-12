@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16875-L17760
+Source lines: L16877-L17762
 
-Source SHA256: `02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740`
+Source SHA256: `33645a522625c805c2e3b4ed813c788a3fdcf49db63504631b130792fbab1f8e`
 
 ---
 
@@ -189,7 +189,7 @@ Append success requires two barriers:
 1. complete frame writes plus active-segment `sync_all`;
 2. atomic manifest watermark promotion plus parent-directory synchronization.
 
-Only then may append resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
+After these two source durability barriers, SP-286 additionally requires durable first-receipt custody before append may resolve with a synced `AppendReceipt`. `persisted_at_utc` is assigned at commit-group seal and becomes persistence evidence only with that receipt. Ordinary group commit seals on the first of 10 ms, 64 records, or 1 MiB. `durability_class = barrier` forces immediate commit for safe points, runtime checkpoints, approvals, mutation-authorizing receipts/outboxes, and storage recovery events. No mutation or external side effect may continue without the synced prerequisite receipt.
 
 Sequence ranges are durably leased in blocks of 4,096 before issuance; unused IDs after crash are abandoned, never reused. Gaps are legal only with closed reason `allocator_lease_abandoned | corruption_loss | retention_compaction`.
 
@@ -593,7 +593,7 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  SeglogFrameV2 independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
+  SeglogFrameV2 independently protects framing, header metadata, and payload; resynchronizes only through fully validated candidates; acknowledges only after segment and manifest barriers plus directory durability and SP-286 durable first-receipt custody; never reuses sequence IDs; and converges rotation, truncation, recovery, janitor, and compaction through deterministic intents while disclosing every canonical-history gap and rebuilding projections from the survivor set.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false
@@ -601,7 +601,7 @@ depends_on: [SP-025, SP-026, SP-027, SP-028, SP-131, SP-139, SP-179, SP-180, SP-
 unblocks: []
 acceptance_criteria:
   - Payload/framing bit flips in active and closed segments yield the exact documented loss unit and identical survivors on rerun.
-  - No append reports success before both durable barriers and required parent-directory synchronization.
+  - No append reports success before both durable barriers, required parent-directory synchronization, and SP-286 durable first-receipt custody.
   - Safe-point/checkpoint/approval barrier fault injection proves no downstream mutation without a surviving synced receipt.
   - Rotation, truncation, janitor, and compaction crash cuts converge with one semantic recovery episode and unchanged closed-source hashes.
   - Checkpoints never use timestamps and rebuilt projections with a hole remain health degraded with exact provenance.
