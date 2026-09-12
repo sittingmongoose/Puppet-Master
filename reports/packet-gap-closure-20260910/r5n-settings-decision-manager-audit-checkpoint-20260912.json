@@ -1,0 +1,139 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5n-settings-decision-manager-457-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_review_comparison_commit": "ee421d57a02c8b303db90dd3c917a459d1d10614",
+  "review_comparison_commit": "3890d86c7038c917de8d21db204a8fddc34c1a18",
+  "landing_base_commit": "3890d86c7038c917de8d21db204a8fddc34c1a18",
+  "scope_and_authority": [
+    "All 457 remaining Settings decision/matrix occurrences in five frozen chunks receive explicit root-authored findings, statuses and residuals. Eight authored tables contain 264 semantic judgments; their explicit group_ids bind 193 additional byte-identical source occurrences without deleting any denominator entry or representing duplicate clauses as independent experiments. Each full case_ref preserves its own logical source, line, complete topic or complete parent matrix, and applicability.",
+    "Current non-pipeline Plans are normative for evaluating both implementation snapshots. Historical owner files preserve source-date lineage, not a claim of unchanged authority. The selected K3/current manager direction supersedes historical four/seven-candidate assignment mechanics without deleting their functional clauses or reopening deferred visual design. Static/headless evidence never substitutes for visible/native acceptance.",
+    "Only this compact report changes in the product repository. Raw sources, immutable snapshots, root judgments, callback/schema evidence and formal workbook results remain external. No concept, Plan owner, schema, command, wiring, generated governance, readiness or other agent file is edited. Audit findings do not authorize further product fixes, native implementation, real provider/auth activity or a governance seal."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00004", "chunk-00005", "chunk-00006", "chunk-00007", "chunk-00010"],
+    "cases": 457,
+    "separately_authored_semantic_judgments": 264,
+    "additional_duplicate_source_occurrences": 193,
+    "status_counts": {"partial": 425, "fail": 29, "pass": 3},
+    "applicability_counts": {"retained": 420, "adapted_selected_implementation": 37},
+    "source_group_counts": {
+      "settings_nested_decision_coverage": 129,
+      "settings_final_decision_coverage": 129,
+      "settings_nested_manager_matrix": 64,
+      "settings_final_manager_matrix": 64,
+      "settings_seven_manager_requirements": 71
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundary": "The three pass occurrences are only L000002 schema_id metadata in the two base matrix copies and the seven-concept matrix. They do not certify any manager, control, renderer, native handler or integration.",
+    "failure_boundary": "Twenty-nine source occurrences describe five concept-conflict families, with three separate Memory semantic facets. They are not 29 independent defects or native runtime failures. All selected manager modules are byte-identical between the frozen snapshot, initial comparison and landing comparison."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 3283,
+    "not_reviewed_cases": 10133,
+    "expected_chunks": 151,
+    "valid_result_files": 62,
+    "missing_result_files": 89,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 2935, "pass": 236, "blocked": 39, "fail": 70, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_case_families": [
+    {
+      "family": "settings_transfer_preview_currentness",
+      "source_occurrences": 5,
+      "decision_ids_in_both_copies": ["SET-012"],
+      "base_matrix_id_in_both_copies": "L000063",
+      "seven_matrix_id": "L000044",
+      "finding": "The actual published Settings-copy callbacks acknowledge a preview of 14 to 17, then recompute from a synthetically changed source and copy 19. The prepared preview is not consumed as immutable apply authority. SSYS transfer requires exact preview/currentness/revision binding, not a boolean confirmation followed by a fresh snapshot.",
+      "boundary": "Synthetic project/snapshot/render/save/paint environment; no native Settings owner or actual persistent project mutation."
+    },
+    {
+      "family": "provider_cli_auth_copy",
+      "source_occurrences": 5,
+      "decision_ids_in_both_copies": ["PROV-014"],
+      "base_matrix_id_in_both_copies": "L000012",
+      "seven_matrix_id": "L000017",
+      "finding": "The shipped Claude Code and Antigravity CLI provider records route through the actual registered sign-in callbacks to PM browser-approval/sign-in copy. Current Multi-Account and CLI owners require CLI-owned exact-host profile authority, distinct from PM direct OAuth. The preview explicitly performs no sign-in, so misleading concept semantics remain a failure rather than proof of a real OAuth bypass.",
+      "boundary": "Exact source callbacks and shipped provider records with mocked rendering; no browser opened, credentials observed, OAuth request sent or profile saved."
+    },
+    {
+      "family": "memory_owner_and_activation",
+      "source_occurrences": 11,
+      "decision_ids_in_both_copies": ["CTX-006", "CTX-007", "CTX-008", "MGR-021"],
+      "base_matrix_id_in_both_copies": "L000021",
+      "seven_matrix_id": "L000019",
+      "finding": "The selected manager treats Rules/Decisions/Preferences as unified memory instructions, says confirmed decisions never decay, and exposes Share project memories with crews with an initially enabled value. Current Memory separates rules from memory, applies activation decay to gists, and restricts RealMemory to the Assistant with NullMemory for Crew/subagents/PRD execution. The callback and help copy contradict those owner semantics.",
+      "boundary": "Concept state, labels and callback arguments only. No decay/deletion timer, persistent Memory store, prompt assembly or actual worker memory delivery was executed."
+    },
+    {
+      "family": "permission_rule_explanation_precedence",
+      "source_occurrences": 5,
+      "decision_ids_in_both_copies": ["MGR-006"],
+      "base_matrix_id_in_both_copies": "L000025",
+      "seven_matrix_id": "L000023",
+      "finding": "With two synthetic matching rules, Allow followed by Deny, the actual permissions-why callback uses the first match and explains Allow / Rule 1. Permissions §3.1 requires last-matching-rule precedence, which yields Deny / Rule 2. The source help also describes the first-match behavior.",
+      "boundary": "Explanation callback under mocked rendering and synthetic rules, not an actual permission evaluator, FileSafe operation or filesystem authorization bypass."
+    },
+    {
+      "family": "retired_goal_phase_progress_model",
+      "source_occurrences": 3,
+      "base_matrix_id_in_both_copies": "L000023",
+      "seven_matrix_id": "L000021",
+      "finding": "The unchanged selected Goal manager presents phase/progress/checkpoint-by-phase controls and constructs example Goal records with name, Running state, phase, progress, route and persona. Current Goal authority is exact text-only objective with active/paused/blocked/completed state and expressly retires phase/progress/child-Goal and budget semantics. The latest original-creation custody work does not revive the retired model.",
+      "boundary": "Direct source inspection plus exact whole-module embedding proof in both published snapshots; no actual Goal start, continuation, checkpoint, native command or phase callback was executed."
+    }
+  ],
+  "other_findings_and_boundaries": [
+    "All 38 canonical manager descriptor keys remain distinct from the 23 selected visible workspaces. Grouped presentation does not merge operational owners or admit new manager keys. Current Settings inventory is 887 canonical rows; the measured concept has 892 placements. The build records 674 manager rows, 218 page rows and no fallback rows, plus five canonical branching IDs hosted pending subgroup registration. Build counts do not establish DOM, keyboard, motion or native acceptance.",
+    "The current project-only setting owner, no-project shell, strict five-command transaction/route family, exact target/currentness/return/Escape semantics, appearance cancellation, protected-reference exclusions, named projections and draft preview/rebind constraints remain normative. Registered fields and selected source controls are partial evidence, not runtime implementation or storage atomicity.",
+    "Provider identity, discovery, install/update/auth/account/catalog/entitlement/capability/Usage states remain distinct. Explicit acquisition, current update authority and notification preferences, paid-first actual-Project onboarding and optional Free Models, CLI-owned profiles and no implicit PM OAuth are preserved. No paid account, provider purchase, install, update, token exchange or external capability probe was performed.",
+    "Every scoped MCP, LSP/DAP/Eval, resource-governor, host/environment/container, browser, collaborative workflow, Persona, Usage, command, notification, media, storage/backup, Server and insertion obligation retains its own finding and residual. Current owner registration, fixture examples or local callback success do not prove shared native implementation, actual connectivity, backup/recovery, security, performance or complete owner-return behavior.",
+    "On each snapshot, all 26 authored positive Settings fixtures validate and all 22 authored negative fixtures reject. Of 24 isolated mutations based on complete positives, 17 reject and seven pass both shape and the existing semantic helper: existing-Project preview expiry equal to creation, proposed-value IDs differing from exact IDs, route/return Project mismatch, unknown well-formed manager ID, returned outcome with stale reason, snapshot value/source-ID mismatch, and decreasing applied revision. These expose bounded relational-check gaps, not native acceptance or a demonstrated authorization bypass.",
+    "Ordinary static provider/update tests, source checks and default examples do not authorize an actual operation. Passive spellcheck, cross-surface notification delivery, manager insertion/return, visual/motion/accessibility and native Slint acceptance remain independently unverified; headless semantics are not substituted for those clauses."
+  ],
+  "currentness": [
+    "Initial custody pins 862 selected repository paths at frozen and initial comparison commits, all five primary sources, and 117 package members. Landing custody verifies 866 selected paths against the current worktree, retaining an immutable 17-file overlay instead of rewriting the initial snapshots. All 23 complete manager JavaScript files occur exactly once in each captured published TestPMConcept.html and remain byte-identical through landing.",
+    "Root read the current-main Goal/Contracts/SIR/Storage/testing changes. GRS-066/CV-341/SIR-048/SP-294 bind original source, exact revision-1 body, active content-free goal.created v3, original full EventRecord/first receipt, and immutable terminal command result. Success proves creation, not objective completion. Pending/unknown/no-effect boundaries preserve genuine earlier effects without rollback, reconstruction or retry under the same terminal command identity; first continuation requires actual successful creation plus current Goal/thread/run/permission/Stop authority.",
+    "The whole retained v2 Goal payload remains a separate decoder; the new command-custody family and installed-role/backup requirements establish no native dispatcher, current reader/projector/checkpoint, fresh-root restore, runtime eligibility or event-depth clearance. No phase/progress model, fifth Goal state, structured objective, budget or child Goal is restored. These owner changes therefore do not repair the selected Goal concept conflict.",
+    "Sixty-nine current owner passages, 65 evidence groups, complete primary clauses, source artifacts, exact snapshot checks and individually authored verdicts are hash/pointer-bound. Frozen whole owner files are retained only as historical lineage, never falsely asserted identical to current authority. All 57 preceding workbook result files remain byte-for-byte unchanged after the five new files were published."
+  ],
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/settings-457-root-review.json", "sha256": "932703ad975bf5bd57ca04f0fa9607bcaf56d4f9519a902d2d1e5577f6ec3d3f"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/review-evidence-plan.json", "sha256": "e9247780e02db43887e126af397652e3c3ccf282ae476d2117468e88d5c6e446"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/assembly-summary.json", "sha256": "f7ca8896aff443ed20c5de976296958c05dec28918936ac92ac3b6cb9dd56df7"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/input-custody.generated.json", "sha256": "43cba2fe3d49404bc49ea05874a27ca23cfac66de621104735db239c18f8738f"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/review-passage-custody.generated.json", "sha256": "6d1e15f21752be6fab7e994e194c519d0c6bd767e3f9ff36536c0323367cf3a6"},
+    "landing_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/landing-currentness.generated.json", "sha256": "44845d4213a05269c6f3367eb73b2073b16098b6f3cf875670a031a58cc09163"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/publication-summary.json", "sha256": "2de33f1122ba0fb1baa8afd0869e7ae69acc00071e17044e7e0465aaf554ec7a"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/publication-checks/packet-tests.receipt.json", "sha256": "627f2b9dd1e062d37f4c2c2ed1231808605028403dfa22d17ea277c0eb6ee233"},
+    "review_validation": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/publication-checks/validate.receipt.json", "sha256": "d6c90ff111df8266b6bd593052cfac2487fcd692645a4b4a33474b75da1a2923"},
+    "new_contracts": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/landing-checks/new-contracts/receipt.json", "sha256": "948727f90f22b5d4d27a439dd1fab31b511be4b60271dc8ad922aefd5fdd35a7"},
+    "shards": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/landing-checks/shards/receipt.json", "sha256": "0d5533b847a3d699ce92cfe986aa696bbaf38ded9dc0e56026a18a74e77e1cdc"},
+    "governance": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-settings-decisions457-review-20260912-VX6U6Y1s/landing-checks/plan-gates/receipt.json", "sha256": "967f1fccd74c8f8008b11f89b1712f859db4c2a58b1ab42e1c7eaa3f936dc645"}
+  },
+  "verification": {
+    "base": "3890d86c7038c917de8d21db204a8fddc34c1a18",
+    "review_integrity": {"status": "pass", "cases": 457, "owner_passages": 69, "evidence_groups": 65, "validation_errors": 0},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "settings_builds": {"frozen": "pass", "initial_comparison": "pass", "scripts_per_build": 29, "node_syntax_checked_per_build": 26, "native_runtime_certified": false},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases_valid": 1028, "negative_cases_rejected": 3338, "internal_self_tests_passed": 12, "claim_boundary": "static_schema_and_fixture_consistency_only"},
+    "other_snapshot_checks": "Settings draft-transfer (11 tests) and installation-update preferences (12 tests) pass on both snapshots. Frozen protected-auth fails its six declared-valid close_secure_browser/copy_device_code/open_details request/result cases; current protected-auth passes. The separate concept auth-copy and permission/Memory/transfer findings remain open despite those static passes.",
+    "shards": {"status": "pass", "docs": 98, "shards": 2471},
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete_57_prior_result_files_preserved",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 21,
+      "total_checks": 36,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "Read-only run on clean current-main base, with all 866 selected current inputs and tracked worktree status unchanged. Missing raw-capture schema, PM7 motion fixture and cited historical audit report are absent from HEAD, not sparse omissions. Stale lock/graph/evidence/readiness/migration/audit state remains; three registry predecessor-equality checks additionally fail on current main compared with r5m. Reported per-check failure lists are capped, so no capped list length is presented as a total failure count. No governance artifact, event registry, missing fixture or other-owner file is repaired or resealed here."
+    }
+  }
+}
