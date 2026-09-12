@@ -73,3 +73,7 @@ Validation: exact registry membership equality; 39 rows × 12 unique criteria; a
 Redaction/custody remains PARTIAL for every family: shared redaction rules do not establish complete custody lifecycle/provenance. Compatibility/withdrawal remains PARTIAL: aliases and forward-only migration do not establish a withdrawal protocol. Goal matrix and normative oracle evidence now cites exact per-event spans.
 
 Cost: Astra medium assessment plus root review; billing data unavailable.
+
+## Original Standard certification prerequisite — 2026-09-12
+
+SP-289/GRS-065/CV-340 now define the original Standard certification receipt prerequisite, with exact generic-v1 and separately installed Standard-v2 roles, independent original-source/provenance/row/output guards and retained receipt-only disclosure. The [certification compilation record](step-08-certified-custody-validation.md) reports 203 regression cases, 28 independent root cases and bounded schema/codec checks. This does not complete `goal_run.certified`, any other Goal event, the exception route or the joint GoalRun/body/event producer. Native installation/authentication/durability and frozen-validator depth remain unproved. Existing receipt and Goal-content lifetimes remain separate.

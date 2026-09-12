@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15077-L15158
+Source lines: L15079-L15162
 
-Source SHA256: `ee3c1a43de5ad3e2a1d53e730aff9a3ce9eb009b4325251decaad63b36fc3e15`
+Source SHA256: `e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea`
 
 ---
 
@@ -25,6 +25,8 @@ canonical_text: |-
   For exactly goal.scheduled, GRS-062/CV-336 override current-writer and Goal-state reconstruction implications: SP-280 interprets retained historical source with no family projection or scheduling effect. Existing child-status, degraded and other-row qualifications and canonical receipt/recovery fences remain unchanged.
 
   For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
+
+  For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:
@@ -35,7 +37,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Goal Runtime durable state and append-only event-log records have a storage owner for persistence/projection and replay.
-  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are preserved in append-only events and rebuilt projections.
+  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are preserved in append-only events and rebuilt projections. The goal_receipt physical values remain canonical non-rebuildable authority under GRS-042/SP-235; SP-289 defines their separately selected Standard custody.
   - storage-plan consumes Goal Runtime semantics from Plans/Goal_Runtime_System.md and does not redefine lifecycle policy.
   - Stale goal_revision or expected_goal_revision writes are rejected or reconciled through compare-and-swap recovery rather than overwriting current state.
 validation_surfaces:

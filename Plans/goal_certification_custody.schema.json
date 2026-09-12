@@ -1,0 +1,754 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "receipt_id",
+    "goal_id",
+    "receipt_kind",
+    "certification_tier",
+    "validator_outputs",
+    "child_receipt_refs",
+    "worknode_receipt_refs",
+    "unresolved_risks",
+    "final_certifier_decision",
+    "evidence_refs",
+    "created_at_utc",
+    "redaction_profile"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.goal_receipt.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "certification_tier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "validator_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "child_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "worknode_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unresolved_risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "final_certifier_decision": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "rejected",
+        "blocked"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "redaction_profile": {
+      "type": "string",
+      "enum": [
+        "no_secrets",
+        "redacted_refs_only"
+      ]
+    },
+    "goal_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workgraph_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_runtime_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "effective_runtime_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_certification_custody/1.0.0",
+  "$comment": "Root is the exact generic legacy v1 writer. Named role routes explicitly select Standard v2 and exact retained readers; a value union is not authority or installed dispatch.",
+  "$defs": {
+    "validator_output": {
+      "$comment": "A certified-success row refines skipped outputs to require waiver_ref.",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "outcome": {
+              "const": "passed"
+            }
+          },
+          "required": [
+            "outcome",
+            "evidence_ref"
+          ]
+        },
+        {
+          "properties": {
+            "outcome": {
+              "enum": [
+                "failed",
+                "blocked",
+                "skipped"
+              ]
+            }
+          },
+          "required": [
+            "outcome",
+            "reason_code"
+          ]
+        }
+      ],
+      "properties": {
+        "evidence_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "failed",
+            "blocked",
+            "skipped"
+          ],
+          "type": "string"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "validator_id": {
+          "$ref": "#/$defs/non_empty_ref"
+        },
+        "waiver_ref": {
+          "$ref": "#/$defs/non_empty_ref"
+        }
+      },
+      "required": [
+        "validator_id",
+        "outcome"
+      ],
+      "type": "object"
+    },
+    "non_empty_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "non_empty_string": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "legacy_goal_receipt_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "receipt_id",
+        "goal_id",
+        "receipt_kind",
+        "certification_tier",
+        "validator_outputs",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "unresolved_risks",
+        "final_certifier_decision",
+        "evidence_refs",
+        "created_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receipt_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "certification_tier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validator_outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "child_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "worknode_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unresolved_risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "final_certifier_decision": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "goal_run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workgraph_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requested_runtime_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effective_runtime_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "certification_semantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "receipt_id",
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "certification_tier",
+        "source_workflow_ref",
+        "source_workflow_sha256",
+        "source_schema_ref",
+        "certifier_ref",
+        "issued_at_utc",
+        "workgraph_ref",
+        "workgraph_revision",
+        "workgraph_sha256",
+        "acceptance_criteria_disposition",
+        "changed_artifact_refs",
+        "validator_outputs",
+        "validator_source_bindings",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "required_worknode_receipt_refs",
+        "authority_checks",
+        "unresolved_risk_refs",
+        "approval_refs",
+        "final_certifier_decision",
+        "truthful_result_label"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "certification_tier": {
+          "const": "standard"
+        },
+        "source_workflow_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_workflow_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_schema_ref": {
+          "const": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt"
+        },
+        "certifier_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workgraph_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workgraph_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "acceptance_criteria_disposition": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "criterion_ref",
+              "disposition",
+              "evidence_refs"
+            ],
+            "properties": {
+              "criterion_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "disposition": {
+                "enum": [
+                  "satisfied",
+                  "not_applicable"
+                ]
+              },
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "changed_artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "validator_outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validator_output"
+          }
+        },
+        "validator_source_bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "validator_id",
+              "source_ref",
+              "source_sha256"
+            ],
+            "properties": {
+              "validator_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        },
+        "child_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "worknode_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "required_worknode_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "authority_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "authority_ref",
+              "authority_sha256",
+              "target_ref",
+              "certifier_ref",
+              "decision"
+            ],
+            "properties": {
+              "authority_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "authority_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "target_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "certifier_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "decision": {
+                "const": "authorized"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "unresolved_risk_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "approval_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "final_certifier_decision": {
+          "enum": [
+            "certified",
+            "certified_with_approved_exception"
+          ]
+        },
+        "truthful_result_label": {
+          "enum": [
+            "certified",
+            "completed_with_approved_verification_exception"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "final_certifier_decision": {
+                "const": "certified"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unresolved_risk_refs": {
+                "maxItems": 0
+              },
+              "approval_refs": {
+                "maxItems": 0
+              },
+              "truthful_result_label": {
+                "const": "certified"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "final_certifier_decision": {
+                "const": "certified_with_approved_exception"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unresolved_risk_refs": {
+                "minItems": 1
+              },
+              "approval_refs": {
+                "minItems": 1
+              },
+              "truthful_result_label": {
+                "const": "completed_with_approved_verification_exception"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "standard_certification": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/certification_semantics"
+        },
+        {
+          "properties": {
+            "source_schema_ref": {
+              "const": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt"
+            },
+            "final_certifier_decision": {
+              "const": "certified"
+            },
+            "truthful_result_label": {
+              "const": "certified"
+            },
+            "validator_outputs": {
+              "items": {
+                "properties": {
+                  "outcome": {
+                    "const": "passed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "standard_certification_custody_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "legacy_goal_receipt",
+        "original_certification"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "legacy_goal_receipt": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/legacy_goal_receipt_v1"
+            },
+            {
+              "required": [
+                "goal_run_id"
+              ],
+              "properties": {
+                "goal_run_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "receipt_kind": {
+                  "const": "goal_run_certification"
+                },
+                "certification_tier": {
+                  "const": "standard"
+                },
+                "final_certifier_decision": {
+                  "const": "accepted"
+                },
+                "unresolved_risks": {
+                  "maxItems": 0
+                }
+              }
+            }
+          ]
+        },
+        "original_certification": {
+          "$ref": "#/$defs/standard_certification"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.goal_receipt.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        }
+      }
+    },
+    "registered_current_write_value": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/legacy_goal_receipt_v1"
+        },
+        {
+          "$ref": "#/$defs/standard_certification_custody_v2"
+        }
+      ]
+    },
+    "registered_read_value": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/legacy_goal_receipt_v1"
+        },
+        {
+          "$ref": "#/$defs/standard_certification_custody_v2"
+        }
+      ]
+    },
+    "standard_read_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "receipt_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

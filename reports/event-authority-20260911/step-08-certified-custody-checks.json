@@ -1,0 +1,250 @@
+{
+  "status": "CANONICAL_STANDARD_CERTIFICATION_PREREQUISITE_COMPILED_STATIC_CHECKS_PASS",
+  "base_head": "4b526eca4f8368f0e542f7b03e0d024c91487f56",
+  "scope": "DL045 original Standard receipt custody only; full event/GoalRun/body producer remains open",
+  "definition_units": [
+    "SP-289",
+    "GRS-065",
+    "CV-340"
+  ],
+  "amended_prior_units": [
+    "SP-214",
+    "SP-231"
+  ],
+  "author_and_preserved_regressions": 203,
+  "independent_root_cases": 28,
+  "frozen_packet_members_verified": 83,
+  "source_packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/manifest.json",
+    "sha256": "b14bef1470da154724b68284feffd44bcf325cf24258749c16a1186886e29be0"
+  },
+  "independent_review": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-v7-root-review-20260912/manifest.json",
+      "sha256": "dabfc021af57ecb31f748394e74e7b0feda76e3e5c0842a981c194cb107713bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-v7-root-review-20260912/review.md",
+      "sha256": "6b0884948d43f0f6aed266f174aac7b3fa5e5cf464d412c1c18a2bfc344c97d5"
+    }
+  ],
+  "installation_design": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-installation-design-20260912/v1/manifest.json",
+    "sha256": "61909eeabaacc88128aefbe877a7c2b949858ecd5fd360e775a7a461617eecff"
+  },
+  "schema_role_checks": {
+    "status": "PASS_SCHEMA_ROLE_DEFINITION_ONLY",
+    "base_head": "4b526eca4f8368f0e542f7b03e0d024c91487f56",
+    "pins_verified": 94,
+    "schema_cases": 19,
+    "request_cases": 2,
+    "generic_root_and_field_version_metadata_exact": true,
+    "other112families_all25policies_all42events_unchanged": true,
+    "original_semantics_roundtrip_exact": true,
+    "central_failures_before": 21,
+    "central_failures_after": 21,
+    "new_failures": [],
+    "role_dispatch_execution": "NOT_RUN",
+    "native": "NOT_RUN"
+  },
+  "source_codec_checks": {
+    "status": "PASS",
+    "vectors": 5,
+    "rejections": 6,
+    "duplicate_key_parse_rejections": 3,
+    "actual_original_source_byte_matches": 4,
+    "qualification": "Root-authored exact prospective source-value JSON recipe and bounded Python input parser; no native encoding or source admission claimed."
+  },
+  "canonical_version_mapping": {
+    "prototype_outer": "proposal_version=1",
+    "prototype_semantics": "proposal.1",
+    "native_outer_schema_id": "pm.storage_value.goal_receipt.v2",
+    "native_outer_schema_version": "2.0.0",
+    "native_semantics": "1.0.0",
+    "source_fields_roundtrip_exact": true,
+    "native_first_write": "Actual key absent or exact original admitted v2 retry; occupied v1 never converted",
+    "prototype_rows_are_deployed_migration_sources": false
+  },
+  "generic_compatibility": {
+    "root_and_original_field_metadata_exact": true,
+    "all_old_kinds_tiers_roles_retained": true,
+    "native_generic_v2_read_projection": "Exact authenticated legacy_goal_receipt component through explicit role/version admission; no Standard proof",
+    "exact_family_schema_role_dispatch": "DEFINED_NOT_NATIVE_INSTALLED"
+  },
+  "unchanged_event_rows": 42,
+  "unchanged_family_count": 113,
+  "unchanged_retention_policies": 25,
+  "unchanged_other_physical_families": 112,
+  "mapping": [
+    {
+      "source": "model.py WorkflowOwner.verify_initial and source_projection; original-owner-records schema and original Plans-to-Code source",
+      "canonical": "GRS-065; CV-340 semantic definitions",
+      "claim": "Complete original Workflow/workgraph/required-set/validator/child/authority/time decisions; actual source and returned decision joins"
+    },
+    {
+      "source": "model.py CustodyOwner.capture/read; v4/v5/v6/v7 corrections and root review",
+      "canonical": "SP-289 initial admission, final source/provenance/selected-row/output guards and retained reads",
+      "claim": "Immutable original admission and refusal without repaired missing origin; source-disposed metadata read"
+    },
+    {
+      "source": "certification-custody.schema.json; receipt-read.schema.json; native metadata transformation",
+      "canonical": "goal_certification_custody.schema.json; goal_receipt_version_routes.json; SP-289/CV-340",
+      "claim": "Exact generic v1 root and explicitly selected prospective Standard v2/current retained grammar, five-field request; native dispatch separate"
+    },
+    {
+      "source": "root check_codec.py; actual four original fixture source values",
+      "canonical": "CV-340 source byte recipe and goal_certification_custody_fixtures.json",
+      "claim": "Explicit canonical UTF-8 JSON hash vectors and type/duplicate rejection; distinct existing MessagePack storage codec"
+    },
+    {
+      "source": "current GRS-042/SP-235/SP-237 and DL047; installation design",
+      "canonical": "SP-289/GRS-065 lifetime, mandatory backup, original generic roles and coordinated installation",
+      "claim": "Same key/family/authority lifetime, no body retention extension, no v1 conversion or prototype migration"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/manifest.json",
+      "sha256": "b14bef1470da154724b68284feffd44bcf325cf24258749c16a1186886e29be0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/model.py",
+      "sha256": "ab1844c340981ba2082e31b50537c6e4895c9b62762e452feb505f0007b81dbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/protocol.md",
+      "sha256": "f5ae09af01d799c12fe1f45094cf52df7eb71b15bb00c7d590e8265e0391013b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/certification-custody.schema.json",
+      "sha256": "26d68d76cd68e1df76eb2e2a152649da3f3dccf80c7f2be98bb6ad1e4aa2c4eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/receipt-read.schema.json",
+      "sha256": "f963a53571d943004ced66121a754e242788020e018e2b79d2bcde5f1631b93d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/original-owner-records.schema.json",
+      "sha256": "b397288d7b2adfcdc6b48a3bd0cd10c399c026b6459085dff0f869c09f0d9120"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/source-map.json",
+      "sha256": "6465edac3d5a799589aaae8cdb2ab65901e7394dd779e2a952bdcb65c65ace44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-receipt-prerequisite-20260912/v7/standard-static-fixture.json",
+      "sha256": "930cb1c975f99f3fec2bf594539e440e1678fd305b5444ffee630dd6a7a4c94b"
+    }
+  ],
+  "integration_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/integrate_data.py",
+      "sha256": "9959755ad8ad8b896cb88d3d9ac5c2ea32849af5f067e87f80aa08274f893e3b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/integrate_owners.py",
+      "sha256": "36689dc397df1e760ad2b9fcb2b586aec95f30d334dfe64ee92bbeccecbbb742"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/check_codec.py",
+      "sha256": "8d1e2103551c994a2203cf5a1300744f6b95bfc69aeaeab8e7b3adc744372513"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/data-integration.json",
+      "sha256": "c92f2b5cddec67ed1d03b7fe4a4cf800d30a369c1460d23e9e7266744620ad8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/codec-checks.json",
+      "sha256": "ed3fbdd76f36806fe987a9fb481a16240980f63fe08f5b65f5151e8bfe1e7ac9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/source-unit-preservation.json",
+      "sha256": "21c8b025bb08f1b8f1fb4208e7191a846b46c34b292599f363459bd7195ef6be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/registry-diagnostics.json",
+      "sha256": "17d124d8fcdb7da025fc3645e71c4960e3b3f4799fd06f7b41b90548279e6f46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/verified-pins.json",
+      "sha256": "8ab8e378f4d9e1f321582e104a2d0528dcfd8ffe69d35bd9380be9301805225c"
+    }
+  ],
+  "native": {
+    "original_workflow_authentication_and_issuance": "NOT_RUN",
+    "actual_same_store_key_absence": "NOT_RUN",
+    "native_messagepack_and_source_codec": "NOT_RUN",
+    "atomic_storage_and_fsync": "NOT_RUN",
+    "generic_and_standard_role_installation": "NOT_RUN",
+    "backup_restore_and_crash": "NOT_RUN",
+    "full_goalrun_event_and_body_producer": "NOT_RUN",
+    "exception_or_waiver_issuance": "NOT_RUN"
+  },
+  "event_depth_completion": false,
+  "frozen_validator_depth_pass": false,
+  "governance_seal": false,
+  "standard_governance": "Focused registry data helper: 21 prior diagnostics, 21 after, zero new. Earlier full-suite failures remain documented; no gate edit, waiver or seal.",
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2385,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T04:33:14Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25310,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6563
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "previous_planunits": 6560,
+      "current_planunits": 6563,
+      "changed_prior_units": {
+        "SP-214": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-231": [
+          "acceptance_criteria"
+        ]
+      },
+      "new_units": [
+        "CV-340",
+        "GRS-065",
+        "SP-289"
+      ],
+      "all_other_prior_semantics_exact": true,
+      "derived_shard_groups": [
+        "contracts_v0",
+        "goal_runtime_system",
+        "storage-plan",
+        "storage_value_registry"
+      ],
+      "acceptance_units": 25310
+    }
+  },
+  "derived_check_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/shard-check.json",
+      "sha256": "35f2a5edaf89fc79181c3bec0a2876d32c8de0ca03384467a47fbefbaf280c82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/index-validate.json",
+      "sha256": "05088cc404f35088bd15b277d5a5c55d0877e8a50c36a84f617d2aa9c25495b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-certified-canonical-root-20260912/compilation-preservation.json",
+      "sha256": "f9f443755a52684e903b3020dd22bff40474f631f96f29ba94ac3783a6ba8145"
+    }
+  ]
+}

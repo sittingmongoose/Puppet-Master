@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16219-L16698
+Source lines: L16223-L16702
 
-Source SHA256: `ee3c1a43de5ad3e2a1d53e730aff9a3ce9eb009b4325251decaad63b36fc3e15`
+Source SHA256: `e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea`
 
 ---
 
@@ -370,7 +370,7 @@ acceptance_criteria:
   - Every registered storage family has key_shape, value_schema_id/ref, owner_doc, producer, consumers, schema_version, encoding, replay, migration, retention/compaction, redaction/no-secret, and legacy/canonical crosswalk status.
   - Launch-critical rows include the original Tier 0C-2 set plus Case L migration receipt, safe-point record, and safe-point restore transaction; no mutation-capable path depends on a deferred bundled family.
   - Required-MVP editor, hotreload, onboarding, restore-point, dedupe, retention/anchor/maintenance/quarantine/deletion rows are materialized with closed value schemas before implementation depends on them.
-  - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants.
+  - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants. Exact goal_receipt role routes preserve the generic v1 metadata/root and independently match each named branch; they do not change generic validator behavior.
   - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.
   - Coordination event, read-model, and debug mirror export families are registered as non-launch-critical storage families; mirrors remain compatibility/debug surfaces only.
   - scripts/pm-implementation-readiness.py validate rejects missing schema_version, missing owners, missing materialized launch-critical families, and unredacted secret-bearing fields.

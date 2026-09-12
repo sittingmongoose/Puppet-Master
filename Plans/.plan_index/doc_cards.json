@@ -3977,10 +3977,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 264,
+        "False": 265,
         "True": 73
       },
-      "heading_count": 517,
+      "heading_count": 521,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4071,9 +4071,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22269,
+      "line_count": 22351,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 337,
+      "plan_unit_count": 338,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4411,7 +4411,8 @@
         "CV-334",
         "CV-335",
         "CV-336",
-        "CV-339"
+        "CV-339",
+        "CV-340"
       ],
       "reasoning_tiers": [
         "high",
@@ -4533,6 +4534,7 @@
         "fable_residual_contract_feature_gap",
         "failure_class_enum_drift",
         "fallback_divergence_authority_and_custody_drift",
+        "false_certification_or_lost_original_decision_authority",
         "filesafe_event_payload_drift",
         "filesafe_safe_point_owner_split",
         "firecrawl_event_family_fork",
@@ -4754,10 +4756,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "5e74f320e452ae42384cd6e7dfad4832d94ee1f995648499775a4188280bd3d4",
+      "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337
+        "accepted": 338
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4767,7 +4769,7 @@
         "future_scope_decision": 1,
         "integration_contract": 3,
         "requirement": 224,
-        "schema_contract": 21,
+        "schema_contract": 22,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -4794,8 +4796,11 @@
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
+        "Plans/goal_certification_custody.schema.json",
+        "Plans/goal_certification_custody_fixtures.json",
         "Plans/goal_child_status_history_contract_fixtures.json",
         "Plans/goal_degraded_history_contract_fixtures.json",
+        "Plans/goal_receipt_version_routes.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/seglog_frame_v2_wire_fixtures.json",
@@ -4856,6 +4861,7 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
+        "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - python3 scripts/pm-implementation-readiness.py validate - python3 scripts/pm-plan-index.py validate - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "secret-bearing receipt rejection fixtures",
@@ -8046,10 +8052,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 35,
+        "False": 36,
         "True": 27
       },
-      "heading_count": 154,
+      "heading_count": 159,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8106,9 +8112,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 5998,
+      "line_count": 6075,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 62,
+      "plan_unit_count": 63,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8171,7 +8177,8 @@
         "GRS-060",
         "GRS-061",
         "GRS-062",
-        "GRS-064"
+        "GRS-064",
+        "GRS-065"
       ],
       "reasoning_tiers": [
         "high",
@@ -8192,6 +8199,7 @@
         "evidence_retention_drift",
         "external_reference_overreach",
         "fable_goal_runtime_event_payload_drift",
+        "false_certification_or_lost_original_decision_authority",
         "false_completion",
         "goal_body_currentness_accepted_history_or_receipt_authority_escape",
         "goal_completes_on_one_model_response",
@@ -8236,10 +8244,10 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "6f29ead25514f1a2471ee6d5e737cc6bec09ff9771dd2000d8ccf7005df41faf",
+      "sha256": "6a6889932369937d6023727e803270f36aab868fb2fea4d157dc1aee00d3f48b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 53,
+        "accepted": 54,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -8248,7 +8256,7 @@
         "constraint": 9,
         "requirement": 46,
         "risk": 1,
-        "schema_contract": 2,
+        "schema_contract": 3,
         "validation_criterion": 2
       },
       "validation_surfaces": [
@@ -8280,10 +8288,13 @@
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
+        "Plans/goal_certification_custody.schema.json",
+        "Plans/goal_certification_custody_fixtures.json",
         "Plans/goal_child_status_history_contract_fixtures.json",
         "Plans/goal_degraded_history_contract_fixtures.json",
         "Plans/goal_handoff_contract_fixtures.json",
         "Plans/goal_handoff_contracts.schema.json",
+        "Plans/goal_receipt_version_routes.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/storage_value_registry.json",
@@ -8342,6 +8353,7 @@
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "python3 scripts/pm-shard-plans.py --check",
+        "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md"
       ]
     },
@@ -16529,10 +16541,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 180,
+        "False": 181,
         "True": 101
       },
-      "heading_count": 600,
+      "heading_count": 605,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16595,9 +16607,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 22600,
+      "line_count": 22689,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 281,
+      "plan_unit_count": 282,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16879,7 +16891,8 @@
         "SP-272",
         "SP-275",
         "SP-285",
-        "SP-288"
+        "SP-288",
+        "SP-289"
       ],
       "reasoning_tiers": [
         "high",
@@ -16898,6 +16911,7 @@
         "event_source_and_checkpoint_authority_drift",
         "eventrecord_scope_legacy_dedupe_drift",
         "execution_boundary",
+        "false_certification_or_lost_original_decision_authority",
         "false_durability",
         "false_generic_event_index_publication_or_source_coverage",
         "false_native_append_settlement_or_source_retirement",
@@ -16954,10 +16968,10 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "ee3c1a43de5ad3e2a1d53e730aff9a3ce9eb009b4325251decaad63b36fc3e15",
+      "sha256": "e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 278,
+        "accepted": 279,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -16965,7 +16979,7 @@
         "compatibility_disposition": 3,
         "migration_contract": 2,
         "requirement": 252,
-        "schema_contract": 9,
+        "schema_contract": 10,
         "security_contract": 1,
         "storage_contract": 13,
         "storage_security_contract": 1
@@ -17021,8 +17035,11 @@
         "Plans/event_record_index_checkpoint_contract_fixtures.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
+        "Plans/goal_certification_custody.schema.json",
+        "Plans/goal_certification_custody_fixtures.json",
         "Plans/goal_child_status_history_contract_fixtures.json",
         "Plans/goal_degraded_history_contract_fixtures.json",
+        "Plans/goal_receipt_version_routes.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_scheduled_history_contract_fixtures.json",
         "Plans/home_layout_event_contract_fixtures.json",
@@ -17114,6 +17131,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
+        "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-full-value-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-hold-validation.md",
@@ -19001,7 +19019,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T03:35:09Z",
+  "generated_at_utc": "2026-09-12T04:32:33Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19009,13 +19027,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3397,
+      "False": 3400,
       "True": 3163
     },
-    "plan_unit_count": 6560,
+    "plan_unit_count": 6563,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6369,
+      "accepted": 6372,
       "retired": 182,
       "superseded": 9
     },
@@ -19087,7 +19105,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 66,
+      "schema_contract": 69,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

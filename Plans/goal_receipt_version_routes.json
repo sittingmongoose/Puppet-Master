@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.goal_receipt.version_routes.v1",
+  "schema_version": "1.0.0",
+  "status": "DEFINED_EXPLICIT_FAMILY_ROLE_ROUTES",
+  "family_id": "goal_receipt",
+  "key_shape": "goal_receipt.v1:{project_id}:{receipt_id}",
+  "encoding": "messagepack_canonical",
+  "registry_root": "Exact generic v1 writer and its outer field/version metadata; not an all-role writer grammar.",
+  "write_routes": [
+    {
+      "producer_role": "Goal Runtime certifier",
+      "binding_status": "existing_role_no_new_native_id",
+      "schema_id": "pm.storage_value.goal_receipt.v1",
+      "schema_version": "1.0.0",
+      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/legacy_goal_receipt_v1",
+      "scope": "All originally authorized generic v1 kinds/tiers remain; accepted/receipt_kind/tier strings supply no Standard proof."
+    },
+    {
+      "producer_role": "original Workflow controller or assigned canonical artifact owner through Storage",
+      "binding": "storage.goal_receipt.capture_standard.v2",
+      "schema_id": "pm.storage_value.goal_receipt.v2",
+      "schema_version": "2.0.0",
+      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_certification_custody_v2",
+      "scope": "New authenticated Standard certification only, passing validators and no unresolved risk/exception/waiver; absent original key or exact original admitted v2 retry."
+    }
+  ],
+  "read_routes": [
+    {
+      "schema_id": "pm.storage_value.goal_receipt.v1",
+      "schema_version": "1.0.0",
+      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/legacy_goal_receipt_v1",
+      "consumers": [
+        "Goal Runtime state replay",
+        "Orchestrator receipt panels",
+        "implementation-readiness gate"
+      ],
+      "standard_certification_proof": false
+    },
+    {
+      "schema_id": "pm.storage_value.goal_receipt.v2",
+      "schema_version": "2.0.0",
+      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_certification_custody_v2",
+      "binding": "storage.goal_receipt.read_standard.v1",
+      "request_schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_read_request",
+      "output_schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_certification",
+      "standard_certification_proof": "Original decision metadata only; current action, Goal availability and event proof remain separate.",
+      "generic_consumers": [
+        "Goal Runtime state replay",
+        "Orchestrator receipt panels",
+        "implementation-readiness gate"
+      ],
+      "generic_output_pointer": "/legacy_goal_receipt",
+      "generic_output_schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/legacy_goal_receipt_v1",
+      "generic_projection_admission": "Actual canonical v2 origin, exact version and currently installed generic reader authorization; preserve original generic meanings without Standard-proof authority or stored-row mutation."
+    }
+  ],
+  "owner_refs": [
+    "Plans/storage-plan.md#SP-289",
+    "Plans/Goal_Runtime_System.md#GRS-065",
+    "Plans/Contracts_V0.md#CV-340"
+  ],
+  "unknown_route": "Reject missing/unknown/uninstalled/withdrawn role or unsupported schema pair; never select by kind/tier string or silently validate every value against a union.",
+  "activation": "Actual StorageMigrationCoordinator installs schemas, exact per-role dispatcher, current origin/backup/restore admission and dependent owners before enabling Standard capture/read. Existing generic gates validate v1 root only; no native installation is asserted."
+}
