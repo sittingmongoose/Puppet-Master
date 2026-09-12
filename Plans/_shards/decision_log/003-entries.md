@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L657
+Source lines: L13-L671
 
-Source SHA256: `a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda`
+Source SHA256: `d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d`
 
 ---
 
@@ -653,3 +653,17 @@ Goal Runtime owns the meaning and accepted revision history; Storage owns the ex
 This bounded retention choice resolves the body/history policy prerequisite left open by DL-045. It authorizes the corresponding owner contract work and does not select independent post-chat Goal-history retention, certification-exception semantics, sibling event admission or runtime execution. The exact approved card is `/home/sittingmongoose/PM-Experiments/event-authority-step08-goal-objective-retention-card-20260911/goal-objective-retention-card.md`, SHA-256 `d3ac058594a52ea5231ebb1653d85b38ae3bf7898f5c90a3ba8a461208d35c67`; the repository card and response receipt preserve that choice. Concrete physical schemas, writer/read/recovery bindings and semantic checks remain required. This decision does not clear depth, readiness or governance gates.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+### DL-048: Platform decision custody follows pending evaluations and retained references
+
+On 2026-09-12, Jared answered exactly **“Approve this reference-based lifetime”** to `EA-S08-PLATFORM-CUSTODY-LIFETIME` (`call_1PJzb6orMv2uLdLZYb4jdU1w`, item 0). The response was recorded at 01:32:26 UTC as `EA-S08-PLATFORM-CUSTODY-LIFETIME-RESPONSE-001` in `reports/event-authority-20260911/decision-responses.jsonl`.
+
+Retain a minimal, non-secret immutable platform-capability decision record while its original evaluation remains pending and while any retained referencing event, frozen run snapshot or valid owner hold still requires it. After the evaluation is resolved and the last such reference or hold ends, delete the record through authorized reference-aware cleanup; do not add an independent grace period or app-root indefinite result lifetime. Cleanup must authenticate the complete current pending/reference/hold state and preserve it through the deletion boundary. A digest or absent cache is not proof that references have ended.
+
+The minimal record may preserve original occurrence/context/retry identity, admitted catalog revision and selected entry, the source-owner decision facts and provenance needed to explain the choice, frozen producer input and original receipt join. This approval does not retain raw probe logs, provider responses, credentials, account content, old transaction controls or source-service history. Those sources keep their existing owner policies. Original append receipts, retained events and frozen run snapshots keep their independent policies; this decision neither shortens them nor turns their references into a hold on raw source bodies.
+
+PlatformCapabilityManager/newtools own evaluation meaning and original decision authority, Models and concrete capability-domain owners supply source truth, Doctor remains a router, and Storage owns physical custody, reference-aware retention/deletion, migration and coherent recovery. The active catalog remains unchanged and empty. This policy creates no capability identity, new evaluation trigger, account-derived scope, event admission or runtime proof. Application/project event scope and RP-OPERATIONAL-2555D remain unchanged.
+
+This explicit product choice resolves the lifetime prerequisite excluded from DL-045's technical authority. Concrete closed record/schema/codec, writer/read/recovery, original-source admission, reference/hold enumeration and final cleanup contracts remain required before use. The frozen card is `/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-prerequisite-20260912/v1/lifetime-owner-card.md`, SHA-256 `38dc858c42126a6b12a4f10e15a0bc1d23dd2a9b4bdfc1903f40ee9792cc9d33`. No event obtains depth, readiness or governance clearance from this decision.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md

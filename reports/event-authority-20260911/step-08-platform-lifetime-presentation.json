@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.assurance.event_authority.platform_lifetime_presentation.v1",
+  "decision_id": "EA-S08-PLATFORM-CUSTODY-LIFETIME",
+  "status": "APPROVED_RECORDED_OWNER_CONTRACT_PENDING",
+  "source_head": "0fed14e3451c71f5cf6677d70afa29619ced9a4a",
+  "question": "For platform-capability decisions, may we retain a minimal, non-secret decision record while the evaluation is pending and while retained events, frozen run snapshots or valid holds still reference it, then delete it after the last reference or hold ends? This would not extend retention of raw probe logs, provider responses, credentials or account content. (EA-S08-PLATFORM-CUSTODY-LIFETIME; DL-045 leaves new retention policies to you.)",
+  "response": "Approve this reference-based lifetime",
+  "response_recorded_at_utc": "2026-09-12T01:32:26Z",
+  "source_question_id": "call_1PJzb6orMv2uLdLZYb4jdU1w",
+  "response_id": "EA-S08-PLATFORM-CUSTODY-LIFETIME-RESPONSE-001",
+  "authority_ref": "Plans/Decision_Log.md#DL-048",
+  "card": "reports/event-authority-20260911/step-08-platform-lifetime-card.md",
+  "frozen_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-prerequisite-20260912/v1/lifetime-owner-card.md",
+    "sha256": "38dc858c42126a6b12a4f10e15a0bc1d23dd2a9b4bdfc1903f40ee9792cc9d33"
+  },
+  "frozen_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-prerequisite-20260912/v1/manifest.json",
+    "sha256": "519d1ed2130073b5ab50d5f5e21ba6a07bfc6b4f073d4ea3fc56b251236d2140"
+  },
+  "product_policy_approved": true,
+  "catalog_changed": false,
+  "event_admitted": false,
+  "native_execution": "NOT_RUN",
+  "governance_sealed": false
+}

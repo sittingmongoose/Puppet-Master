@@ -1,0 +1,36 @@
+{
+  "base_head": "0fed14e3451c71f5cf6677d70afa29619ced9a4a",
+  "old_plan_units": 6548,
+  "new_plan_units": 6549,
+  "only_new_unit": "DL-048",
+  "all_prior_unit_semantics_preserved": true,
+  "exact_response_preserved": true,
+  "only_new_response_appended": true,
+  "catalog_events_registry_spec_lock_byte_exact": true,
+  "only_changed_shard_group": [
+    "decision_log"
+  ],
+  "native_execution": "NOT_RUN",
+  "governance_seal": "NOT_RUN",
+  "shard_check": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2315,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "index_validate": {
+    "failures": [],
+    "generated_at_utc": "2026-09-12T01:36:15Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 25182,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6549
+    }
+  },
+  "diff_check": "pass",
+  "standard_governance": "Not resealed; narrow decision/response/shard/index checks only. Existing full-governance baseline remains qualified."
+}

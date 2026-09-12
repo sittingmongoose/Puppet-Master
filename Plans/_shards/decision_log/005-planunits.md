@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L665-L3284
+Source lines: L679-L3361
 
-Source SHA256: `a8d52cb9e484518facd55980413623284786a1848db131aa66cc2ee6fe025fda`
+Source SHA256: `d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d`
 
 ---
 
@@ -2504,6 +2504,69 @@ owner_hints:
 - Plans/Goal_Runtime_System.md
 - Plans/storage-plan.md
 - Plans/assistant-chat-design.md
+```
+
+### DL-048 - Platform Decision Custody Reference Lifetime
+
+```yaml
+plan_unit_id: DL-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approves retaining minimal non-secret immutable platform-capability decision custody
+  while its original evaluation is pending and while retained referencing events, frozen run
+  snapshots or valid owner holds require it. After resolution and the last reference/hold,
+  authorized reference-aware cleanup deletes it without an independent grace period.
+  This does not extend raw probe logs, provider responses, credentials, account content or
+  original transaction/source observation retention, shorten event/snapshot/receipt policies, populate the
+  catalog or admit a platform event. Concrete owner/source/storage contracts remain required.
+gui_related: false
+gui_classification_reason: Defines retained decision evidence lifetime and owner custody, not visual presentation.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Preserve the exact affirmative answer, original question identity and frozen card SHA-256.
+  - Pending evaluation and every retained referencing event, frozen run snapshot or valid owner hold protect the minimal decision record.
+  - After resolution and the last reference/hold, authorized cleanup checks complete current authority through deletion without a new independent grace period.
+  - Raw probe logs, provider responses, credentials, account content and original source controls keep their independent retention and deletion rules.
+  - Event, frozen snapshot and append-receipt policies remain unchanged; no capability identity or application evaluation trigger is inferred.
+  - Closed physical and semantic contracts, authentic source admission and cleanup/recovery proofs remain required; no native/depth/readiness/seal clearance follows.
+validation_surfaces:
+  - reports/event-authority-20260911/step-08-platform-lifetime-presentation.json
+  - reports/event-authority-20260911/decision-responses.jsonl
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: platform_decision_custody_retention_and_cleanup
+reasoning_tier: high
+context_scope: minimal_platform_decision_reference_lifetime
+implementation_surfaces:
+  - Plans/newtools.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Models_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: bounded_retention_policy_approval
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - EA-S08-PLATFORM-CUSTODY-LIFETIME-RESPONSE-001
+  - call_1PJzb6orMv2uLdLZYb4jdU1w
+  - reports/event-authority-20260911/step-08-platform-lifetime-card.md
+preserved_exact_tokens:
+  - Approve this reference-based lifetime
+  - EA-S08-PLATFORM-CUSTODY-LIFETIME
+  - RP-OPERATIONAL-2555D
+negative_constraints:
+  - Do not retain raw probe/provider/account content or old source controls through decision references.
+  - Do not infer app-root indefinite result custody, shorten independent policies, populate the catalog or create a new evaluation trigger.
+  - Do not infer event admission, runtime proof, depth/readiness clearance or governance sealing.
+owner_hints:
+  - Plans/newtools.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Models_System.md
+  - Plans/storage-plan.md
 ```
 
 ### DL-001 - Decision Log Source-Preserving Bridge Retired
