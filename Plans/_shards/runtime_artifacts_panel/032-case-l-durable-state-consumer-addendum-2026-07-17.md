@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2025-L2216
+Source lines: L2025-L2232
 
-Source SHA256: `f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a`
+Source SHA256: `d72d25525291a655b6bcba20605df5c11f6d31181f79e5f031d5bc0a6535e025`
 
 ---
 
@@ -47,6 +47,10 @@ Permission-denied artifact actions consume the permission-owned blocked payload 
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md#Case-L-durable-state-owner-canon, ContractName:Plans/FileSafe.md#Case-L-Exact-Restore-Repair-Addendum, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
+Runtime Artifacts consumes `storage.integrity_history_reader.v1` under SP-279/SP-278 as a checkpoint-free application-scope view of the admitted permanent finding and exact current authorized source. It preserves scope, first actor/time/report, loss precision and separate freshness/health. Lawfully retired original damaged bytes and append controls are not reacquired for this historical read. Detection supplies no recovery or checkpoint effect. Native UI/source/fence execution remains NOT_RUN.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-279, ContractName:Plans/storage-plan.md#SP-278
+
 ### RAP-045 - Case L Canonical History And Projection Trust Consumer
 
 ```yaml
@@ -61,9 +65,13 @@ canonical_text: >-
   unavailable. Canonical-history holes, affected ranges, survivor/rebuild state,
   and repair provenance remain visible even when a survivor projection is current;
   dedupe-unavailable or replay-only input never fabricates a durable artifact.
+  storage.integrity_history_reader.v1 consumes SP-279/SP-278 without owning a checkpoint,
+  joining the admitted permanent finding, complete current source token and current
+  access/deletion snapshot before passive precision/health disclosure. It does not infer
+  recovery from detection or demand lawfully disposed original raw controls.
 gui_related: true
 gui_classification_reason: The unit defines visible artifact trust, continuity-gap, and recovery-provenance rendering.
-depends_on: [RAP-020, RAP-026, CV-317, CV-318, SP-236]
+depends_on: [RAP-020, RAP-026, CV-317, CV-318, SP-236, SP-279, SP-278]
 unblocks: []
 acceptance_criteria:
   - Runtime-artifact writes use project-scoped EventRecord 2.0 without fake project identity.
@@ -72,9 +80,15 @@ acceptance_criteria:
   - A current survivor projection with a canonical-history hole remains degraded or unavailable, never healthy.
   - dedupe_unavailable creates no persisted artifact success and projector_replay_only creates no canonical or external side effect.
   - Gap fixtures render exact event, exact byte range, bounded sequence range, and unknown remainder distinctly with recovery provenance.
+  - The exact SP-279 reader returns only the verified globally examined extent and authorized content-free finding; it owns no durable checkpoint or recovery effect.
+  - Actual issued pagination binds one request, complete current source token and root/access/deletion/maintenance snapshot; source/frontier changes invalidate old tokens.
+  - Preserve exact class/precision evidence and honest unavailable outcomes; header-only identity, supplied control-owner class, stale finding or missing authority cannot become a healthy exact finding.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Case L Runtime Artifacts continuity and EventRecord fixture suite
+  - Plans/storage_integrity_finding_contract_fixtures.json
+  - reports/event-authority-20260911/step-08-integrity-wire-validation.md
+  - reports/event-authority-20260911/step-08-integrity-wire-checks.json
 risk_class: runtime_artifact_false_continuity
 reasoning_tier: high
 context_scope: case_l_runtime_artifact_continuity
@@ -91,6 +105,8 @@ source_lineage:
   - Case-L:EVT-01..EVT-07
   - Case-L:SEG-D-013..SEG-D-016
   - PuppetMaster-AssuranceLab/orchestration-2026-07-17/phase2-case-L/planning/CONSUMER_PROPAGATION_MAP.md
+  - Plans/storage-plan.md#SP-279
+  - Plans/storage-plan.md#SP-278
 negative_constraints:
   - Do not collapse projection freshness and health.
   - Do not label rebuilt projections healthy when canonical continuity is missing.

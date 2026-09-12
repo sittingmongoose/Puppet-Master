@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-09-10T02:47:39Z",
+  "generated_at_utc": "2026-09-12T06:14:32Z",
   "index_path": "Plans/_shards/storage_value_registry.schema/00-index.md",
-  "index_sha256": "c7ae8adba9be11580d8f678e3c60c11850733fa1c68af57a37c8d2cf28797dd4",
+  "index_sha256": "aabdd5647bb1d6c93f3cb569a7e56a0217161a2d89be8aa67ed3cbc13fdb0e24",
   "manifest_path": "Plans/_shards/storage_value_registry.schema/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Lines 1-200",
       "path": "Plans/_shards/storage_value_registry.schema/001-lines-1-200.md",
-      "sha256": "d177a245535e3e95f5153afe507dd14b6e01460044cde8c86f4a9ead74770121",
+      "sha256": "98d9a41c61dfdce95751cd053ac9997f7e7497e0d269e4df62ae16f806331f80",
       "shard_id": "001",
       "source_line_end": 200,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Lines 201-400",
       "path": "Plans/_shards/storage_value_registry.schema/002-lines-201-400.md",
-      "sha256": "a088884ea018fe1390781219d6551417fc7ee847c05997d7dbde5e3457e8c41b",
+      "sha256": "3d8a429c70cc3304bd30e756f6b93a0620d874e83e049b25c254849ebf0bc0e2",
       "shard_id": "002",
       "source_line_end": 400,
       "source_line_start": 201,
@@ -26,7 +26,7 @@
     {
       "heading": "Lines 401-600",
       "path": "Plans/_shards/storage_value_registry.schema/003-lines-401-600.md",
-      "sha256": "8cb75d8e318d7c79c22db05c282166c8ea5e8269c9c5b2436e10fba0d2d2531e",
+      "sha256": "8a87c20b42512e4c924becd55a1fec24c9d6e2f945398199d2f5f1bb23670b9f",
       "shard_id": "003",
       "source_line_end": 600,
       "source_line_start": 401,
@@ -35,25 +35,25 @@
     {
       "heading": "Lines 601-800",
       "path": "Plans/_shards/storage_value_registry.schema/004-lines-601-800.md",
-      "sha256": "287696c431974a3cd9200310bcb04bb333b4836bbe3ffbc539aacf4fb5584c80",
+      "sha256": "c7ff4f3601582ad0c333293916f4952a7515b0160b848a423f75438d6204c56c",
       "shard_id": "004",
       "source_line_end": 800,
       "source_line_start": 601,
       "split_rule": "line-count-200"
     },
     {
-      "heading": "Lines 801-970",
-      "path": "Plans/_shards/storage_value_registry.schema/005-lines-801-970.md",
-      "sha256": "879983dfa3907d59a585ac1479dc9f72d0525f915dfd7f51f6ca0f13458bd835",
+      "heading": "Lines 801-971",
+      "path": "Plans/_shards/storage_value_registry.schema/005-lines-801-971.md",
+      "sha256": "88fae7e6058a17f0cec151d896cf34f9ce785826c59e0c673efdc186c3bc52c2",
       "shard_id": "005",
-      "source_line_end": 970,
+      "source_line_end": 971,
       "source_line_start": 801,
       "split_rule": "line-count-200"
     }
   ],
   "source": {
-    "line_count": 970,
+    "line_count": 971,
     "path": "Plans/storage_value_registry.schema.json",
-    "sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7"
+    "sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b"
   }
 }

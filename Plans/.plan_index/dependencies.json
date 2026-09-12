@@ -5905,6 +5905,7 @@
     "OSI-419",
     "CRAU-083",
     "SIR-046",
+    "SP-279",
     "SP-288",
     "CV-335",
     "SP-289",
@@ -49456,6 +49457,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-045",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-045",
+      "to": "SP-279"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RAP-046",
       "to": "CV-320"
     },
@@ -66418,6 +66429,56 @@
       "edge_type": "depends_on",
       "from": "SP-278",
       "to": "SP-241"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "CV-318"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-241"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-279",
+      "to": "SP-286"
     },
     {
       "edge_type": "depends_on",
@@ -95445,7 +95506,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T05:58:30Z",
+  "generated_at_utc": "2026-09-12T06:15:29Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -107833,8 +107894,8 @@
       "source_location": {
         "heading": "ATS-025 - Testing Command Family Adjudication And Quarantine Consumption",
         "heading_level": 3,
-        "heading_line": 2752,
-        "line": 2754,
+        "heading_line": 2765,
+        "line": 2767,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107850,8 +107911,8 @@
       "source_location": {
         "heading": "ATS-026 - Merged Canonical TestRunReceipt Field Schema",
         "heading_level": 3,
-        "heading_line": 2816,
-        "line": 2818,
+        "heading_line": 2829,
+        "line": 2831,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107867,8 +107928,8 @@
       "source_location": {
         "heading": "ATS-027 - TestRunReceipt Status Enum Skipped And Blocked Adjudication",
         "heading_level": 3,
-        "heading_line": 2881,
-        "line": 2883,
+        "heading_line": 2894,
+        "line": 2896,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107884,8 +107945,8 @@
       "source_location": {
         "heading": "ATS-028 - Testing Rail Panel Presentation And Receipt Honesty Contract",
         "heading_level": 3,
-        "heading_line": 2938,
-        "line": 2940,
+        "heading_line": 2951,
+        "line": 2953,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107901,8 +107962,8 @@
       "source_location": {
         "heading": "ATS-029 - Home Workspace Executable Certification Matrix",
         "heading_level": 3,
-        "heading_line": 3070,
-        "line": 3072,
+        "heading_line": 3083,
+        "line": 3085,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107918,8 +107979,8 @@
       "source_location": {
         "heading": "ATS-030 - DAP DebugSession Lifecycle And Event-Ordering Matrix",
         "heading_level": 3,
-        "heading_line": 3121,
-        "line": 3123,
+        "heading_line": 3134,
+        "line": 3136,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107935,8 +107996,8 @@
       "source_location": {
         "heading": "ATS-031 - Persistent EvalSession Acceptance And Policy Matrix",
         "heading_level": 3,
-        "heading_line": 3170,
-        "line": 3172,
+        "heading_line": 3183,
+        "line": 3185,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107952,8 +108013,8 @@
       "source_location": {
         "heading": "ATS-032 - Test And Debug Lease And Operational Awareness Consumption Matrix",
         "heading_level": 3,
-        "heading_line": 3218,
-        "line": 3220,
+        "heading_line": 3231,
+        "line": 3233,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107969,8 +108030,8 @@
       "source_location": {
         "heading": "ATS-033 - PM-Native Browser Program And Protected AuthBrowserSession Matrix",
         "heading_level": 3,
-        "heading_line": 3266,
-        "line": 3268,
+        "heading_line": 3279,
+        "line": 3281,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -107986,8 +108047,8 @@
       "source_location": {
         "heading": "ATS-034 - Multi-Agent BrowserWorkspace Fencing Matrix",
         "heading_level": 3,
-        "heading_line": 3313,
-        "line": 3315,
+        "heading_line": 3326,
+        "line": 3328,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108003,8 +108064,8 @@
       "source_location": {
         "heading": "ATS-035 - PM Browser Dependency Prohibition And External Project Test Exception",
         "heading_level": 3,
-        "heading_line": 3358,
-        "line": 3360,
+        "heading_line": 3371,
+        "line": 3373,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108020,8 +108081,8 @@
       "source_location": {
         "heading": "ATS-036 - Canonical Usage GUI Fixture Suite",
         "heading_level": 3,
-        "heading_line": 3419,
-        "line": 3421,
+        "heading_line": 3432,
+        "line": 3434,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108037,8 +108098,8 @@
       "source_location": {
         "heading": "ATS-037 - Shared PM7 Surface Interaction And Event Fixtures",
         "heading_level": 3,
-        "heading_line": 3467,
-        "line": 3469,
+        "heading_line": 3480,
+        "line": 3482,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108054,8 +108115,8 @@
       "source_location": {
         "heading": "ATS-038 - Exhaustive PM7 Static Visual Matrix",
         "heading_level": 3,
-        "heading_line": 3522,
-        "line": 3524,
+        "heading_line": 3535,
+        "line": 3537,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108071,8 +108132,8 @@
       "source_location": {
         "heading": "ATS-039 - Frame-By-Frame PM7 Motion And Transaction Audit",
         "heading_level": 3,
-        "heading_line": 3579,
-        "line": 3581,
+        "heading_line": 3592,
+        "line": 3594,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108088,8 +108149,8 @@
       "source_location": {
         "heading": "ATS-040 - Settled Command Event Receipt And Context Compaction Fixtures",
         "heading_level": 3,
-        "heading_line": 3650,
-        "line": 3652,
+        "heading_line": 3663,
+        "line": 3665,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108105,8 +108166,8 @@
       "source_location": {
         "heading": "ATS-041 - New Contract Owner-Wave Schema And Fixture Gate",
         "heading_level": 3,
-        "heading_line": 3718,
-        "line": 3720,
+        "heading_line": 3731,
+        "line": 3733,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108122,8 +108183,8 @@
       "source_location": {
         "heading": "ATS-042 - Touch And Server Command Gap Aggregate Gates",
         "heading_level": 3,
-        "heading_line": 3781,
-        "line": 3783,
+        "heading_line": 3794,
+        "line": 3796,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108139,8 +108200,8 @@
       "source_location": {
         "heading": "ATS-043 - Forgejo/Gitea, Independent Automation, And Event-Silent Forge Acceptance Matrix",
         "heading_level": 3,
-        "heading_line": 3842,
-        "line": 3844,
+        "heading_line": 3855,
+        "line": 3857,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108156,8 +108217,8 @@
       "source_location": {
         "heading": "ATS-044 - Exact Forge Backup And Connector Acceptance Custody",
         "heading_level": 3,
-        "heading_line": 3903,
-        "line": 3905,
+        "heading_line": 3916,
+        "line": 3918,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108173,8 +108234,8 @@
       "source_location": {
         "heading": "ATS-045 - Source-Bound Packet Suite Verdicts",
         "heading_level": 3,
-        "heading_line": 3961,
-        "line": 3963,
+        "heading_line": 3974,
+        "line": 3976,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108190,8 +108251,8 @@
       "source_location": {
         "heading": "Working Notebook Contract Validation Registration (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 4087,
-        "line": 4089,
+        "heading_line": 4100,
+        "line": 4102,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108207,8 +108268,8 @@
       "source_location": {
         "heading": "ATS-047 - Approved Terminal Research Protocol And Consumer Acceptance",
         "heading_level": 3,
-        "heading_line": 4156,
-        "line": 4158,
+        "heading_line": 4169,
+        "line": 4171,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108224,8 +108285,8 @@
       "source_location": {
         "heading": "ATS-048 — Existing Session and Bundle Command Bindings",
         "heading_level": 2,
-        "heading_line": 4271,
-        "line": 4330,
+        "heading_line": 4284,
+        "line": 4343,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -108241,8 +108302,8 @@
       "source_location": {
         "heading": "ATS-049 — Existing Session Event Obligations and Non-Admission",
         "heading_level": 2,
-        "heading_line": 4390,
-        "line": 4461,
+        "heading_line": 4403,
+        "line": 4474,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -182446,8 +182507,8 @@
       "source_location": {
         "heading": "RAP-045 - Case L Canonical History And Projection Trust Consumer",
         "heading_level": 3,
-        "heading_line": 2064,
-        "line": 2066,
+        "heading_line": 2068,
+        "line": 2070,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182463,8 +182524,8 @@
       "source_location": {
         "heading": "RAP-046 - Case L Restore Point And Exact Restore Projection",
         "heading_level": 3,
-        "heading_line": 2116,
-        "line": 2118,
+        "heading_line": 2132,
+        "line": 2134,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182480,8 +182541,8 @@
       "source_location": {
         "heading": "RAP-047 - Case L Storage Access And Blocked Action Affordances",
         "heading_level": 3,
-        "heading_line": 2168,
-        "line": 2170,
+        "heading_line": 2184,
+        "line": 2186,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182497,8 +182558,8 @@
       "source_location": {
         "heading": "RAP-048 - Cozy Shelves Action-To-Command Binding",
         "heading_level": 3,
-        "heading_line": 2222,
-        "line": 2224,
+        "heading_line": 2238,
+        "line": 2240,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182514,8 +182575,8 @@
       "source_location": {
         "heading": "RAP-049 - Freshness x Health Visual Mapping",
         "heading_level": 3,
-        "heading_line": 2286,
-        "line": 2288,
+        "heading_line": 2302,
+        "line": 2304,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182531,8 +182592,8 @@
       "source_location": {
         "heading": "RAP-050 - Positive Empty States",
         "heading_level": 3,
-        "heading_line": 2340,
-        "line": 2342,
+        "heading_line": 2356,
+        "line": 2358,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182548,8 +182609,8 @@
       "source_location": {
         "heading": "RAP-051 - Receipt-Row Unified Expander Consumption",
         "heading_level": 3,
-        "heading_line": 2390,
-        "line": 2392,
+        "heading_line": 2406,
+        "line": 2408,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182565,8 +182626,8 @@
       "source_location": {
         "heading": "RAP-052 - Retention, Pin, And Tombstone Surface",
         "heading_level": 3,
-        "heading_line": 2566,
-        "line": 2568,
+        "heading_line": 2582,
+        "line": 2584,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182582,8 +182643,8 @@
       "source_location": {
         "heading": "RAP-053 - Debug Adapter Model Deferral Closure",
         "heading_level": 3,
-        "heading_line": 2628,
-        "line": 2630,
+        "heading_line": 2644,
+        "line": 2646,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182599,8 +182660,8 @@
       "source_location": {
         "heading": "RAP-054 - Runtime Artifact Event Authority Owner And Payload Depth",
         "heading_level": 3,
-        "heading_line": 2484,
-        "line": 2486,
+        "heading_line": 2500,
+        "line": 2502,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182616,8 +182677,8 @@
       "source_location": {
         "heading": "Notebook Artifact Reference Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2765,
-        "line": 2769,
+        "heading_line": 2781,
+        "line": 2785,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182633,8 +182694,8 @@
       "source_location": {
         "heading": "RAP-056 — Existing Recording Playback and Watch Bindings",
         "heading_level": 2,
-        "heading_line": 2802,
-        "line": 2836,
+        "heading_line": 2818,
+        "line": 2852,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182650,8 +182711,8 @@
       "source_location": {
         "heading": "RAP-058 — Deleted restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 2973,
-        "line": 2975,
+        "heading_line": 2989,
+        "line": 2991,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182667,8 +182728,8 @@
       "source_location": {
         "heading": "RAP-059 — Restore-point created consumers",
         "heading_level": 3,
-        "heading_line": 2880,
-        "line": 2882,
+        "heading_line": 2896,
+        "line": 2898,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -182684,8 +182745,8 @@
       "source_location": {
         "heading": "RAP-060 — Expired restore-point evidence admission",
         "heading_level": 3,
-        "heading_line": 3035,
-        "line": 3037,
+        "heading_line": 3051,
+        "line": 3053,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -193757,6 +193818,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "storage_integrity_detected_only",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-279",
+      "reasoning_tier": "high",
+      "risk_class": "integrity_evidence_authority_or_crash_duplicate_or_false_recovery",
+      "source_location": {
+        "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
+        "heading_level": 3,
+        "heading_line": 22911,
+        "line": 22913,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "goal_scheduled_exact_family_historical_contract",
@@ -207025,10 +207103,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15124,
+    "depends_on_edge_count": 15136,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17775,
-    "node_count": 6563,
+    "edge_count": 17787,
+    "node_count": 6564,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

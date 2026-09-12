@@ -1,0 +1,655 @@
+{
+  "schema_id": "pm.fixture.storage_integrity_finding_contract.v1",
+  "status": "BOUNDED_TYPED_VALUE_EXAMPLES",
+  "native_execution": "NOT_RUN",
+  "source_report": "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
+  "value_shape_cases": [
+    {
+      "id": "wire_case_2",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "integrity_id": "pm.storage.integrity.v1:abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "frame_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "8ae833b5fd7f8bde32899bd4009141491698d602a4abef0c921d36bedc8e45b8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_0",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "717c9243020925050ef42c2b5799e6eee03efa44045579da496c93baad0e1631",
+        "integrity_id": "pm.storage.integrity.v1:717c9243020925050ef42c2b5799e6eee03efa44045579da496c93baad0e1631",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "945aeeaa5d18d6015d3c70942fb678587167d3ce1d5f495c3a5e963cddb5ae5b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "16696e0fb1116d220c8d277469b3be41ea8533e71351720383a1bb1c34dee775",
+          "segment_state": "closed",
+          "segment_length": 5559,
+          "frame_version": 2,
+          "failure_class": "header_integrity",
+          "detection_offset": 1850,
+          "last_good_offset": 1850,
+          "next_good_offset": 3709,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            1850,
+            3709
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 5559,
+          "expected_crc": 3119618681,
+          "observed_crc": 2762757181
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "16696e0fb1116d220c8d277469b3be41ea8533e71351720383a1bb1c34dee775",
+          "manifest_binding_sha256": "945aeeaa5d18d6015d3c70942fb678587167d3ce1d5f495c3a5e963cddb5ae5b",
+          "check_evidence_sha256": "80917ae2a279219b06b2a93bb7614398b8489070368ed4697c80f2cd54bf0cf1",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "validated_predecessor_end",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_13",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "c540919de909b4ce6e1f0dfe681516691126a2f5fffbb78cf5b3af4274bc9d62",
+        "integrity_id": "pm.storage.integrity.v1:c540919de909b4ce6e1f0dfe681516691126a2f5fffbb78cf5b3af4274bc9d62",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "e0a1649237c9e27b36163a30b3c40ec2b8fffc24238832b5bba1bb4cd188b461",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "payload_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709,
+          "expected_crc": 0,
+          "observed_crc": 491338306
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "e0a1649237c9e27b36163a30b3c40ec2b8fffc24238832b5bba1bb4cd188b461",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "a9dcebf0f47e7364d598ef960f126c61dffcaad3ecba8d45e504a8de51426936",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_37",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "c7f3ebe59bb7aeecd94c70824212e5739ccc8b002528dc49d0d3be29b20f722f",
+        "integrity_id": "pm.storage.integrity.v1:c7f3ebe59bb7aeecd94c70824212e5739ccc8b002528dc49d0d3be29b20f722f",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "c6c10fc8824ad9fb4fb56a984f770e9da5007b72d8de3fff41ce06134240bf88",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "sequence_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "bounded_sequence_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709,
+          "affected_sequence_range": [
+            10,
+            11
+          ]
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "c6c10fc8824ad9fb4fb56a984f770e9da5007b72d8de3fff41ce06134240bf88",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "396594f476c4eb21c2b755243cddfec8eae17e52179354b1089fa7ef1f22fadd",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_50",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "f4b5aad37e34c97d6aa010f7d12aac58f817ec22f33009943df8ee969a132190",
+        "integrity_id": "pm.storage.integrity.v1:f4b5aad37e34c97d6aa010f7d12aac58f817ec22f33009943df8ee969a132190",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "c331d67225b134fecfba31528f6aae79d2e209c2eca8a22380b43b7140ead4f2",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "baf31b55505d61f52f75910aa114897d22ab194665cfd55674f61e0a19b2b842",
+          "segment_state": "closed",
+          "segment_length": 30,
+          "frame_version": 2,
+          "failure_class": "frame_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 30,
+          "impact_precision": "unknown_segment_remainder",
+          "affected_byte_range": [
+            0,
+            30
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 30
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "baf31b55505d61f52f75910aa114897d22ab194665cfd55674f61e0a19b2b842",
+          "manifest_binding_sha256": "c331d67225b134fecfba31528f6aae79d2e209c2eca8a22380b43b7140ead4f2",
+          "check_evidence_sha256": "e6ca59e08aae6b3b7498d3216d7c726ca7dbd107203331052749f5c5404b8954",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "no_candidate_through_eof",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_54",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "2b28e37984a9ac1d86c06b3176f570626093cf00a325bc30921807fb90b6ae1a",
+        "integrity_id": "pm.storage.integrity.v1:2b28e37984a9ac1d86c06b3176f570626093cf00a325bc30921807fb90b6ae1a",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "87f6a772170ffa918fd4b2338ea595ae1c0b177ee610dbb8d3fc0a17ad27946b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3dbc839607b6da706d1b5cd1b9936c8692b8f6852d06e7be5725fb64d2966494",
+          "segment_state": "closed",
+          "segment_length": 1859,
+          "frame_version": 2,
+          "failure_class": "payload_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 1859,
+          "expected_crc": 491338306,
+          "observed_crc": 1783499476
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3dbc839607b6da706d1b5cd1b9936c8692b8f6852d06e7be5725fb64d2966494",
+          "manifest_binding_sha256": "87f6a772170ffa918fd4b2338ea595ae1c0b177ee610dbb8d3fc0a17ad27946b",
+          "check_evidence_sha256": "4f9efd44e7eafba51c69cce1ad9d0d06ea905fa38b4260be47a62c59befa660e",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "no_candidate_through_eof",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_41",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "fca112be34bac68ef8fd78ce4f4564a06c3a1b48ab877a398ca68c0ae5ddbcf8",
+        "integrity_id": "pm.storage.integrity.v1:fca112be34bac68ef8fd78ce4f4564a06c3a1b48ab877a398ca68c0ae5ddbcf8",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "f48bbeee6746b263a7f4a0e88cf4e3c019672929a42e349297d385a8833d5364",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "da6bb3a707db25e2f55b76c5e47dca8c14e1229dd4dd72fb568db5ab6d36075b",
+          "segment_state": "closed",
+          "segment_length": 3687,
+          "frame_version": 2,
+          "failure_class": "sequence_integrity",
+          "detection_offset": 1846,
+          "last_good_offset": 1846,
+          "next_good_offset": 3687,
+          "impact_precision": "bounded_sequence_range",
+          "affected_byte_range": [
+            1846,
+            3687
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3687,
+          "affected_sequence_range": [
+            0,
+            18446744073709551615
+          ]
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "da6bb3a707db25e2f55b76c5e47dca8c14e1229dd4dd72fb568db5ab6d36075b",
+          "manifest_binding_sha256": "f48bbeee6746b263a7f4a0e88cf4e3c019672929a42e349297d385a8833d5364",
+          "check_evidence_sha256": "d9a1986c6b21b0b52a8c86bf3deb8663170e1403812c5dea44e790ea3145a186",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "no_candidate_through_eof",
+          "predecessor_disposition": "validated_predecessor_end",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wire_case_42",
+      "definition": "finding",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "d3cf59cab41a6bf8760fe1dac6c76ed06f8dd7006bad4fd697579d3445ddc84b",
+        "integrity_id": "pm.storage.integrity.v1:d3cf59cab41a6bf8760fe1dac6c76ed06f8dd7006bad4fd697579d3445ddc84b",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "d2212386f4a91f564fd2efca5c8ca4500ac5eb7cc4ffd4dd231ff2060f86bac7",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "d6bb633c1636513da4a5b5d76ed969659f7082f41097d59fc23610121a73d7a4",
+          "segment_state": "closed",
+          "segment_length": 3695,
+          "frame_version": 2,
+          "failure_class": "sequence_integrity",
+          "detection_offset": 1846,
+          "last_good_offset": 1846,
+          "next_good_offset": 3695,
+          "impact_precision": "bounded_sequence_range",
+          "affected_byte_range": [
+            1846,
+            3695
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3695,
+          "affected_sequence_range": [
+            18446744073709551615,
+            18446744073709551615
+          ]
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "d6bb633c1636513da4a5b5d76ed969659f7082f41097d59fc23610121a73d7a4",
+          "manifest_binding_sha256": "d2212386f4a91f564fd2efca5c8ca4500ac5eb7cc4ffd4dd231ff2060f86bac7",
+          "check_evidence_sha256": "7f07c204a6bb5d2f961089e3f06879a1dab22ca100df1053ea5c4f9c3aba79c8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "no_candidate_through_eof",
+          "predecessor_disposition": "validated_predecessor_end",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "unknown_field",
+      "definition": "finding",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "integrity_id": "pm.storage.integrity.v1:abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "frame_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "8ae833b5fd7f8bde32899bd4009141491698d602a4abef0c921d36bedc8e45b8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets",
+        "raw_segment_bytes": "forbidden"
+      }
+    },
+    {
+      "id": "boolean_offset",
+      "definition": "finding",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "integrity_id": "pm.storage.integrity.v1:abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "frame_integrity",
+          "detection_offset": true,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "8ae833b5fd7f8bde32899bd4009141491698d602a4abef0c921d36bedc8e45b8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "unknown_failure_class",
+      "definition": "finding",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "1.0.0",
+        "input_sha256": "abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "integrity_id": "pm.storage.integrity.v1:abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "generic_repair",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "8ae833b5fd7f8bde32899bd4009141491698d602a4abef0c921d36bedc8e45b8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    },
+    {
+      "id": "wrong_schema_version",
+      "definition": "finding",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage_value.storage_integrity_finding.v1",
+        "schema_version": "2.0.0",
+        "input_sha256": "abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "integrity_id": "pm.storage.integrity.v1:abe8e9923be189e7e539a23d584712c7b74ab0c339fba6aeae21f9c893edc9f7",
+        "input": {
+          "action_kind": "detect_integrity",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 7,
+          "logical_root_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "precondition_manifest_generation": 11,
+          "precondition_manifest_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "storage_root_ref": "pm.storage_root:fixture",
+          "storage_root_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "segment_generation": 4,
+          "segment_name": "integrity-wire-segment-4",
+          "segment_hash": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "segment_state": "closed",
+          "segment_length": 3709,
+          "frame_version": 2,
+          "failure_class": "frame_integrity",
+          "detection_offset": 0,
+          "last_good_offset": 0,
+          "next_good_offset": 1859,
+          "impact_precision": "exact_byte_range",
+          "affected_byte_range": [
+            0,
+            1859
+          ],
+          "durable_watermark_relation": "at_or_below_durable_watermark",
+          "watermark_end_offset": 3709
+        },
+        "witness": {
+          "validator_binding": "storage.integrity_finding_capture.v1",
+          "source_boundary_sha256": "3707830f63675a06deac3e35c127d57fef7982c742ab03ac4838baea2076554c",
+          "manifest_binding_sha256": "bc41374e792546125ee97cc3f2244f6af75e6a077d6d7875e0d44694040aab1b",
+          "check_evidence_sha256": "8ae833b5fd7f8bde32899bd4009141491698d602a4abef0c921d36bedc8e45b8",
+          "header_identity_verified": false,
+          "watermark_verified": true,
+          "resync_disposition": "validated_next_candidate",
+          "predecessor_disposition": "source_origin",
+          "event_witnesses": []
+        },
+        "occurred_at_utc": "2026-09-11T20:00:00.000Z",
+        "actor_ref": "storage.coordinator:wire-fixture",
+        "redaction_profile": "reject_unhandled_secrets"
+      }
+    }
+  ],
+  "limits": [
+    "Schema examples do not authenticate original source/file/receipt owners or durable publication.",
+    "Full-u64 payload examples prove exact finding shape/file codec only; downstream existing RFC8785 admission/append/history remain unproved."
+  ]
+}

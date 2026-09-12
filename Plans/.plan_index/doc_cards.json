@@ -1825,7 +1825,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4490,
+      "line_count": 4503,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 49,
       "plan_unit_ids": [
@@ -1930,7 +1930,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+      "sha256": "abd9188ad88f12d2d424e29eaf7817c2596fc9e6bd0918b2a9de04b65932cccf",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -14875,7 +14875,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 3089,
+      "line_count": 3105,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 58,
       "plan_unit_ids": [
@@ -15001,7 +15001,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
+      "sha256": "d72d25525291a655b6bcba20605df5c11f6d31181f79e5f031d5bc0a6535e025",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 57,
@@ -15031,6 +15031,7 @@
         "Plans/restore_point_retained_read.schema.json",
         "Plans/restore_point_retained_read_result.schema.json",
         "Plans/restore_point_summary_reader_routes.json",
+        "Plans/storage_integrity_finding_contract_fixtures.json",
         "Plans/storage_value_registry.json",
         "Redacted copy/export fixtures",
         "Usage receipt expanded detail fixtures",
@@ -15066,6 +15067,8 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm-touch-closure-verify.py",
         "python3 scripts/pm-ui-command-response.py",
+        "reports/event-authority-20260911/step-08-integrity-wire-checks.json",
+        "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
         "scratchpad/pm-integration-20260831/event-authority-successor-20260901/runtime-artifact-depth-repair/manifest.json"
       ]
@@ -16549,9 +16552,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 181,
-        "True": 101
+        "True": 102
       },
-      "heading_count": 606,
+      "heading_count": 619,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16599,6 +16602,7 @@
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
+        "Plans/storage_integrity_finding_contracts.schema.json",
         "Plans/storage_recovery_contracts.schema.json",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
@@ -16616,9 +16620,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 22784,
+      "line_count": 23034,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 282,
+      "plan_unit_count": 283,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -16901,7 +16905,8 @@
         "SP-275",
         "SP-285",
         "SP-288",
-        "SP-289"
+        "SP-289",
+        "SP-279"
       ],
       "reasoning_tiers": [
         "high",
@@ -16936,6 +16941,7 @@
         "home_layout_readback_event_receipt_crash_or_replay_authority_escape",
         "import_snapshot_storage_drift",
         "inline_visualizer_replay_storage_gap",
+        "integrity_evidence_authority_or_crash_duplicate_or_false_recovery",
         "legal_hold_false_clear_original_custody_loss_or_stale_owner_publication",
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
@@ -16977,10 +16983,10 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "9a109bba6b73202fa30ce4f35f342b8ea09f10642b8560b79854208b113c285d",
+      "sha256": "b3e31951b704c491ad0a76760157ed490c580f9c553f2ee9d66d7bc01e44e3cd",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 279,
+        "accepted": 280,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -16988,7 +16994,7 @@
         "compatibility_disposition": 3,
         "migration_contract": 2,
         "requirement": 252,
-        "schema_contract": 10,
+        "schema_contract": 11,
         "security_contract": 1,
         "storage_contract": 13,
         "storage_security_contract": 1
@@ -17023,6 +17029,7 @@
         "Native execution of the named replay, crash, source-lookup and custody pairs remains required.",
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
+        "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
         "Plans/browser_event_admission_fixtures.json",
         "Plans/browser_workspace_created_contract_fixtures.json",
         "Plans/browser_workspace_created_contracts.schema.json",
@@ -17035,10 +17042,12 @@
         "Plans/event_family_registry.json",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
+        "Plans/event_payload_storage_integrity_detected.schema.json",
         "Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json",
         "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
         "Plans/event_payloads/goal_runtime/goal_scheduled.schema.json",
         "Plans/event_payloads/workspace_layout_changed.schema.json",
+        "Plans/event_record.schema.json",
         "Plans/event_record_index_binding_hash_vectors.json",
         "Plans/event_record_index_checkpoint.schema.json",
         "Plans/event_record_index_checkpoint_contract_fixtures.json",
@@ -17085,11 +17094,14 @@
         "Plans/seglog_append_observability_contracts.schema.json",
         "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
+        "Plans/storage_integrity_finding_contract_fixtures.json",
+        "Plans/storage_integrity_finding_contracts.schema.json",
         "Plans/storage_retention_hold_contracts.schema.json",
         "Plans/storage_retention_hold_evidence.schema.json",
         "Plans/storage_retention_hold_value.schema.json",
         "Plans/storage_retention_hold_version_routes.json",
         "Plans/storage_value_registry.json",
+        "Plans/storage_value_registry.schema.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Quota exceeded degrades with warning and exact subsystem, not crash.",
         "Redacted diagnostics export fixtures",
@@ -17152,6 +17164,8 @@
         "reports/event-authority-20260911/step-08-home-full-value-checks.json",
         "reports/event-authority-20260911/step-08-home-full-value-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
+        "reports/event-authority-20260911/step-08-integrity-wire-checks.json",
+        "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
         "reports/event-authority-20260911/step-08-restore-full-value-checks.json",
         "reports/event-authority-20260911/step-08-restore-full-value-validation.md",
         "reports/event-authority-20260911/step-08-restore-pair-validation.md",
@@ -19037,7 +19051,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T05:58:30Z",
+  "generated_at_utc": "2026-09-12T06:15:29Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19046,12 +19060,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3400,
-      "True": 3163
+      "True": 3164
     },
-    "plan_unit_count": 6563,
+    "plan_unit_count": 6564,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6372,
+      "accepted": 6373,
       "retired": 182,
       "superseded": 9
     },
@@ -19123,7 +19137,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 69,
+      "schema_contract": 70,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

@@ -1,0 +1,1323 @@
+{
+  "status": "INTEGRITY_WIRE_FINDING_CANONICAL_STATIC_COMPILATION_PASS",
+  "base_head": "4f984f0f8447c93afe688ea2df2a7678f916f9bd",
+  "new_unit": "SP-279",
+  "updated_existing_unit": "RAP-045",
+  "adjacent_owner_oracle_qualification": "ATS IN-P03/IN-P04; original oracle lines and execution status preserved",
+  "source_bundles": [
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/manifest.json",
+        "sha256": "a55f93701d54417ff31fc42fb9cf24ab88c0f29ab152b738a9c06e57373ea5b7"
+      },
+      "members": 67
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/manifest.json",
+        "sha256": "d3692a22d5af8a1d611d7b53eb4f4065ef37d9e9b3a81e8089ab1ff70751078f"
+      },
+      "members": 233
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/storage-integrity-wire-v1-independent-review-20260912/manifest.json",
+        "sha256": "4980cfdbf383c6351004e8e4b593467ad97e054fa4fcc21b5f96f7cb9bfed84e"
+      },
+      "members": 241
+    }
+  ],
+  "verified_source_member_and_manifest_pins": 544,
+  "doc_compilation_handoff": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-doc-compilation-20260912/manifest.json",
+    "sha256": "bfd9d2cb6814c169495ca324ae400379995f2c5e70475257f1f914bf7afe85e0"
+  },
+  "doc_compilation_source_map": {
+    "base": "4f984f0f8447c93afe688ea2df2a7678f916f9bd",
+    "scope": [
+      "storage-plan.md",
+      "Runtime_Artifacts_Panel.md",
+      "Automated_Testing_System.md"
+    ],
+    "source_manifest": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/manifest.json",
+      "sha256": "a55f93701d54417ff31fc42fb9cf24ab88c0f29ab152b738a9c06e57373ea5b7"
+    },
+    "maps": [
+      {
+        "source": "proposed-owner-contract.md + proposed-SP-279.md",
+        "target": "Plans/storage-plan.md#storage-integrity-finding-custody-and-read-contract",
+        "changes": "Append only; normalize external status and stale-count/enum-rejection scaffolding; exact serializer escape/read clarification; add scoped407 evidence and report/fixture refs."
+      },
+      {
+        "source": "proposed-RAP045-consumer-qualification.md",
+        "target": "Plans/Runtime_Artifacts_Panel.md#RAP-045",
+        "changes": "Preserve existing block fields/criteria, append exact reader qualification/dependencies/criteria/source/report refs; GUI true unchanged; no duplicate unit."
+      },
+      {
+        "source": "proposed-ATS-integrity-qualification.md",
+        "target": "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
+        "changes": "Keep all existing oracle lines exact, adjacent explicit IN-P04 and IN-P03 qualification; no new unit or native status change."
+      }
+    ],
+    "parent_owned": [
+      "schemas",
+      "registry",
+      "fixtures",
+      "reports",
+      "derived",
+      "git"
+    ],
+    "native": "NOT_RUN",
+    "fullvalue": "SEPARATE_UNPROVED",
+    "exact_event_and_three_control_detectors": "NOT_RUN",
+    "fullu64_semantic_paths": 2
+  },
+  "source_to_canonical_mapping": [
+    {
+      "source": "proposed-owner-contract.md sections 1-2; actual-wire protocol/routing-adjudication",
+      "target": "SP-279 membership and actual-byte authority",
+      "claim": "Existing family/schema/scope; unchanged CaseL2 codec and original source/first-failure/candidate/EOF proof; newly explicit class/precision routing with separate control-owner/exact-event obligations"
+    },
+    {
+      "source": "proposed-owner-contract.md sections 3-5; closed-field-mapping.json",
+      "target": "SP-279 physical finding/identity/append barrier",
+      "claim": "One immutable content-free original finding at exact hashed-instance/input path; first actor/time, exact UInt bytes/hash, complete original input and barrier pending obligation; no synthetic first-receipt proof"
+    },
+    {
+      "source": "proposed-owner-contract.md sections 6-10; proposed-RAP045-consumer-qualification.md",
+      "target": "SP-279/RAP-045 passive read and lifecycle",
+      "claim": "Complete current source/token/finding/access fence; no reader checkpoint/recovery effect or reacquisition of retired raw controls; existing policy, backup/migration and refusal rules"
+    },
+    {
+      "source": "proposed-ATS-integrity-qualification.md",
+      "target": "ATS IN-P03/IN-P04 qualification",
+      "claim": "Payload-EOF exact byte and conservative actual sequence operands distinguished from frame/header unknown remainder; exact-event needs corroborated identity; no unsupported scan-completion claim"
+    },
+    {
+      "source": "support/canonical_uint_json.py exact unchanged serializer",
+      "target": "SP-279 exact identity and envelope",
+      "claim": "Root clarified exact short/control/string escaping and canonical re-encoding, preserving source bytes/hash recipe and full uint64 domain"
+    },
+    {
+      "source": "proposed-family-row.json; proposed finding/registry schemas",
+      "target": "one current registry append and exact sidecar",
+      "claim": "Append canonical_file enum and one finding row only; current113families and all25policies preserved, currentHome3 unchanged"
+    },
+    {
+      "source": "wire-capture-vectors.json",
+      "target": "compact finding fixture",
+      "claim": "Eight exact source-derived positive finding values including2u64codec-only shapes, plus4closed-shape/type negatives; raw wire remains external"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/proposed-owner-contract.md",
+      "sha256": "1bc7963d2dc6d31e6177b07c50b7cb2caba7ee2d916cee980afbfe6233d7ea15"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/proposed-SP-279.md",
+      "sha256": "76ffc835fe2f3e7b656d2d9d35103445fd962777ba93492c9a5e147f260a7243"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/proposed-RAP045-consumer-qualification.md",
+      "sha256": "222c9a198d24e1f38ee2d96ed001d4733ad19c5c72d956dac0de8a468b30009c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/proposed-ATS-integrity-qualification.md",
+      "sha256": "7d4a0cf7125f25c9aa71287628b8d96a8b449c4523eb583b9cbf8cf0c2a193f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/closed-field-mapping.json",
+      "sha256": "efca723792679dd0e680347c69c04ec6f72851bc8b310e06c41bd4d8fe974e3d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/current-passage-recheck.json",
+      "sha256": "5610c37c34bd194151c3105e6fb449ee89e76fcfebfdbb7923135b21a9c1e4b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/depth-facets.json",
+      "sha256": "1e52be9554a9215313596897cc7208618505c2d9b196bbd51899d7a328cd2411"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/report.json",
+      "sha256": "d10ac52251497f40389db644bf8e8ff1d1ddac459e508e2f982325a7f196612c"
+    }
+  ],
+  "schema_value_checks": {
+    "status": "PASS",
+    "bundles": [
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-canonical-proposal-20260912/manifest.json",
+          "sha256": "a55f93701d54417ff31fc42fb9cf24ab88c0f29ab152b738a9c06e57373ea5b7"
+        },
+        "members": 67
+      },
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/manifest.json",
+          "sha256": "d3692a22d5af8a1d611d7b53eb4f4065ef37d9e9b3a81e8089ab1ff70751078f"
+        },
+        "members": 233
+      },
+      {
+        "manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/storage-integrity-wire-v1-independent-review-20260912/manifest.json",
+          "sha256": "4980cfdbf383c6351004e8e4b593467ad97e054fa4fcc21b5f96f7cb9bfed84e"
+        },
+        "members": 241
+      }
+    ],
+    "verified_member_and_manifest_pins": 544,
+    "currentness": {
+      "status": "PASS_RE_ADJUDICATED",
+      "base": "4f984f0f8447c93afe688ea2df2a7678f916f9bd",
+      "sources": [
+        {
+          "path": "Plans/00-plans-index.md",
+          "before_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+          "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+          "exact": true
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "before_sha256": "a825526fffc96c404feb9f7ff0b0b93fb89ad0dff4f3390fd21b72b2596e2126",
+          "current_sha256": "9a109bba6b73202fa30ce4f35f342b8ea09f10642b8560b79854208b113c285d",
+          "exact": false
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "before_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+          "current_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+          "exact": true
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "before_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+          "current_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+          "exact": true
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "before_sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
+          "current_sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
+          "exact": true
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "before_sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+          "current_sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+          "exact": true
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "before_sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+          "current_sha256": "d7d4c60325a51536a94f128bb4297aa4487e577ae6a52e8b2a070a0565cc7b54",
+          "exact": false
+        },
+        {
+          "path": "Plans/storage_value_registry.schema.json",
+          "before_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "current_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_family_registry.json",
+          "before_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+          "current_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_family_registry.schema.json",
+          "before_sha256": "c4afe062bcd097180cc948cc52998b77926b195d197ebea779e4ff992c89d072",
+          "current_sha256": "c4afe062bcd097180cc948cc52998b77926b195d197ebea779e4ff992c89d072",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_record.schema.json",
+          "before_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "current_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+          "before_sha256": "8aaf5702dbca054971fd9658f27af58c32b1fa88f46ef87cb12a527d24ab618f",
+          "current_sha256": "8aaf5702dbca054971fd9658f27af58c32b1fa88f46ef87cb12a527d24ab618f",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_record_index_checkpoint.schema.json",
+          "before_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+          "current_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+          "exact": true
+        },
+        {
+          "path": "Plans/event_append_receipt_contracts.schema.json",
+          "before_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+          "current_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+          "exact": true
+        }
+      ],
+      "changed_adjudication": "Only Home SP-273 and its three physical schema-bearing rows changed since proposal base. Shared Case L-2, integrity owner passages, SP-278/SP-286/CV-339, event/payload/retention objects, existing registry constraints and ATS/RAP passages remain exact. New family is appended to current registry, preserving Home3."
+    },
+    "new_family": "storage_integrity_finding",
+    "physical_families": 114,
+    "event_families": 42,
+    "retention_policies": 25,
+    "all_original_113_rows_and_policies_exact": true,
+    "new_storage_kind_only": "canonical_file",
+    "closed_finding_schema_exact": {
+      "path": "/home/sittingmongoose/pm-worktrees/event-authority-integrity-wire-20260912/Plans/storage_integrity_finding_contracts.schema.json",
+      "sha256": "d64f605b0519f130aa6cc684f247ed398fde57f0df10bc756475eb92f3493448"
+    },
+    "wire_vectors_redecoded": [
+      {
+        "case": 0,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "73882fc3890dd9563fd422bde45ce77b65314efa4ad43254a80fd979443fdce9",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 1,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "4fccbdd7f4ab9cfa824e39e98063d67b5e1ab99114eb7500e66d3ad16638bf7c",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 2,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "ba81ac5ae35739fa3e9b4a0fb46534f5a025da15e2037b3dcd481e4cabe16dc7",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 3,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "b7fa2ac9c71fc1ae89303bd66d3560fde14dee8d6b2ecd52abd384ee918a387d",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 4,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "ce67e32aaabbba8af3b25c647f1bd0691610f3258c749bdb89821fd56a50b8f5",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 5,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "adf2cd030aca6b5ccf904c14a19b91e36897c48ec9d933ccffd00ae95871fbfd",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 6,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "6a0917eeb22a6748156d3bd3d8b15b154882a5c2d6943d4efbc4bc14c7133d49",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 7,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "ca5afa7f6cf89a55a277cc431c885df70fe623efefd746eb617b6cfe69dac6dd",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 8,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "9c8b532a9cf3e0f399027e9c83daa01946dc7c0d9a388b3b6ec3b13795db0a04",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 9,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "bab1b890a260a9bb7d8bf4a45ac5f933bc28e489c1748dec4e1ce3a6d3c95aa9",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 10,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "26c3cc0724de9a9510faf14d7330e890c3384257626283a249d800958f9ff6bb",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 11,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "5d15e9a2f38af673d2e190aae20a5c51152a7ed2c3f1bfb48e0e1123987c93fd",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 12,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "71970e2ef66d877121c8ceeb2ae08012cf5a3013b3fba068cc174c443e9ab09b",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 13,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "c905eca1b509ec766da871a90c0838efb6595f9b33582e7620eaa4bcdb2632e8",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 14,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "b000652da8475ef0c1a809c3d9f1e9a8875fb48cc90213f4bc672fa765ee02b2",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 15,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "4a85b619c9cd821c671adb141a96ac48ad6d042994df467b4b7a49f38905ed39",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 16,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "df0eb44f739c2d7c17c2221a359ceca701685b382db9a2c18c90abb408c273d0",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 17,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "e2b5d72c3327328ff82bbe5c050515da4870113efc74207693cdc0b9f28c08dc",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 18,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "75e6165087d995375405801e87df70cb61159175d281355c03d48211abf0ee8c",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 19,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "5fb946d9882d33b10f78191401a5d5eeb57d21a97eb587f5de51af76665beb33",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 20,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "e777fcb107685ee725841495bd9579bcc87ca02096580848a80ce24e0ecde4e2",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 21,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "244a6e82e700f8ec73fd5adf31afcc2ceb248d6e2c06235611f33a9a5611d8ee",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 22,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "d2568803061ee016e7c1569e1bcc47eff977b8f9f2e1b00cf3859491ace9dd66",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 23,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "0ad3f02ba70bec9297fe79405bcf5cc2bf04af6e446caebc3e9e28c81d2bc944",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 24,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "2c1ba5ab9581006ed6932dff1c87ec0c49ab4f5777bdfe0739ca092d4096e637",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 25,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "0f0f81b053e63dd1dec2b5f6165e15fe928d0e820a46603c57eb0f6d38aec18b",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 26,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "28f34e218d0ea53650564645e3e33dd6bea36ca99d766de86d45d86bd96b4b47",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 27,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "b9868478c3e7f50d9f2c9b281b963e98f700ba0a9eaf3accf9c81de28f3cc908",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 28,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "c8d7d777f9d2cb026818ef358192dca92b03d79377d2ddc212e538549267c5ab",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 29,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "3a21eeced890b6dd375616e09561ace38b03e1851c8353395765c09a60ff2666",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 30,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "929f1a70df87d2dea4150306533cf8737a421ff8541ac1a84277e65d81927b9b",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 31,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "11f971e6e1b312fb56b3d9573b67fcde9e888153d92775f91aec5f95d3556fce",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 32,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "ca3b38786589f4eedf4f9fe1fe8ec8464e8af38f99d8322c44176cd3708088a0",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 33,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "0dcd5fd91945854d93df3d04b22c871e31e6860cbcc9f4dd8a9f31c455945c81",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 34,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "68133668768d037127a3f74be25ea399d705bb9d4210257e5a55e44a6ddb5d65",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 35,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "058e4e7d634323adfee3ae9a648b52db3d5555555736f861c47fd9564967dca5",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 36,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "7980b66fac6151f94a346ea052c88088fce7de32e56c6d905f88ba4f71c46cfa",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 37,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "ca3f2c90929ce96ed2d471a05120fecff7b388d6e6001ed8e1debd6231cde090",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 38,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "c35761044400866cad89d39ea7e0eb72c1efa71bb2214387d5de2b98afe10d89",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 39,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "46e994bd41ca1b69b3162e1864bc96af5c0412971742cec3dda01dc149429bf2",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 40,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "2c5e458e2faf93f66dc3a5a95e9aafa5ea2809c8ad6d81e9bd25a9398d7e390c",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 41,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "5235d0eb6d5d01ee2ed383b41743d4fd49624a75a1b0bdf87c63e53d0cbb4f0b",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 42,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "5266d2f0532e26bcc2809e1cc71d9ec14c411469915965b83b43e77e23342c25",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 43,
+        "class": "sequence_integrity",
+        "precision": "bounded_sequence_range",
+        "file_sha256": "7eb66ffe17c6984521374f0da8f849069224d02ba063da1f5c7e4377844929e5",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 44,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "12dd808479bdd59d31c69c79125ab192da80985b8b4105553090a930b0e98dac",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 45,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "f6817d516188642de1907e7b001bb04da36cd240f97599340614dcb038e99b27",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 46,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "7447e74459f513a25c2ea6bce13e60bd1077c0c34b1927f8275f4f1c3828e708",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 47,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "2b078ad832dd6ea5d32e85110731bcf3421b82f5322153a348ca2d1613a626a6",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 48,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "5051885ede1209a4dadb2bb1d815c1f3fc77ff7b73d7f418ea42c0c8addd9c6a",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 49,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "247b09f3e1b27b101da18b9c08ea669c69ec7e5dc3050bfe779f494158c7dcce",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 50,
+        "class": "frame_integrity",
+        "precision": "unknown_segment_remainder",
+        "file_sha256": "b2a62aa4ae2aa36b91fafa8296ef8a999751511d90778577da71e333b00d71e3",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 51,
+        "class": "frame_integrity",
+        "precision": "unknown_segment_remainder",
+        "file_sha256": "94095e5e0edc74a05568f2c0ff23503011347ab7a6c2b9b39f4d948b6a413e9e",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 52,
+        "class": "frame_integrity",
+        "precision": "unknown_segment_remainder",
+        "file_sha256": "e250b8cb3dad5b083ce62f4b10cb3324a2af4fa896781d9ce3eb45ddd55e1e63",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 53,
+        "class": "frame_integrity",
+        "precision": "unknown_segment_remainder",
+        "file_sha256": "5fe2f9a029252a1d308c7a11843edf13b9a402fb3bc46715cd2b8624f0905227",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 54,
+        "class": "payload_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "2e0066ef6a5be29109bcdb79780dfe2989d0cd0290b1c978118e2729fdfddd99",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 55,
+        "class": "frame_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "3b27aa3d4fb3ec468a981315dbf52ceb198d06c16e56d9187b7420174f138a09",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 56,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "a462f8d960007e841db69ff5d1a13982363afe5d0518a63d3c88cba54d1d5338",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      },
+      {
+        "case": 57,
+        "class": "header_integrity",
+        "precision": "exact_byte_range",
+        "file_sha256": "99f0a69af5b48e8f3820c96f430cf0a02007a387f44f49ccff3a79834a57d6b3",
+        "status": "PASS_ACTUAL_BYTE_REDECODE_AND_EXACT_FILE_SCHEMA"
+      }
+    ],
+    "schema_fixture_cases": 12,
+    "positive_fixture_cases": 8,
+    "full_uint_payload_cases_capture_file_only": [
+      41,
+      42
+    ],
+    "native": "NOT_RUN",
+    "shared_full_value_adoption": "SEPARATE_UNPROVED_PREREQUISITE"
+  },
+  "current_source_re_adjudication": {
+    "status": "PASS_RE_ADJUDICATED",
+    "base": "4f984f0f8447c93afe688ea2df2a7678f916f9bd",
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "before_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "before_sha256": "a825526fffc96c404feb9f7ff0b0b93fb89ad0dff4f3390fd21b72b2596e2126",
+        "current_sha256": "9a109bba6b73202fa30ce4f35f342b8ea09f10642b8560b79854208b113c285d",
+        "exact": false
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "before_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "current_sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "exact": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "before_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "current_sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "exact": true
+      },
+      {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "before_sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
+        "current_sha256": "f53b6ca841f8fce7a4dc9fbcfb9a43cd7bc349b28098ac330d41a3ba8aa4629a",
+        "exact": true
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "before_sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+        "current_sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+        "exact": true
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "before_sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+        "current_sha256": "d7d4c60325a51536a94f128bb4297aa4487e577ae6a52e8b2a070a0565cc7b54",
+        "exact": false
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "before_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "before_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "current_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_family_registry.schema.json",
+        "before_sha256": "c4afe062bcd097180cc948cc52998b77926b195d197ebea779e4ff992c89d072",
+        "current_sha256": "c4afe062bcd097180cc948cc52998b77926b195d197ebea779e4ff992c89d072",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_record.schema.json",
+        "before_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "current_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+        "before_sha256": "8aaf5702dbca054971fd9658f27af58c32b1fa88f46ef87cb12a527d24ab618f",
+        "current_sha256": "8aaf5702dbca054971fd9658f27af58c32b1fa88f46ef87cb12a527d24ab618f",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "before_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "current_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "exact": true
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "before_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "current_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "exact": true
+      }
+    ],
+    "changed_adjudication": "Only Home SP-273 and its three physical schema-bearing rows changed since proposal base. Shared Case L-2, integrity owner passages, SP-278/SP-286/CV-339, event/payload/retention objects, existing registry constraints and ATS/RAP passages remain exact. New family is appended to current registry, preserving Home3."
+  },
+  "fixture_source_mapping": [
+    {
+      "case": "wire_case_2",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/2/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_0",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/0/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_13",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/13/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_37",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/37/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_50",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/50/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_54",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/54/finding",
+      "scope": "BOUNDED_FINDING_SHAPE"
+    },
+    {
+      "case": "wire_case_41",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/41/finding",
+      "scope": "CAPTURE_AND_FILE_CODEC_ONLY"
+    },
+    {
+      "case": "wire_case_42",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-integrity-wire-20260912/v1/wire-capture-vectors.json",
+        "sha256": "f83d7ba7f41acc53666423f0a89caf79bb198b62246dcfae77a42ef1b9642aa4"
+      },
+      "source_pointer": "/42/finding",
+      "scope": "CAPTURE_AND_FILE_CODEC_ONLY"
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/integrate_data.py",
+      "sha256": "ad3f4bbaf63ab864600936f418785e39fe0d1eb7560a33366cc44faf9ebe1aba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/verified-pins.json",
+      "sha256": "6155313f0934b8665a178f0babcfc3dad8df0aefcf11f231b22380636497f3cc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/schema-value-checks.json",
+      "sha256": "36bbbaedac3cb620effde23d5568e922d9d622626480a78113242c92a8251396"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/current-source-check.json",
+      "sha256": "d0dd0351c7a1e38b823fdba1eedde5b96b17de148c37229c775ea47c371adc06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/fixture-source-mapping.json",
+      "sha256": "381b533b6fe7f727cbb6216cd319ee1d620b85b004b1a6811eb3c4028a9c99e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/central_check.py",
+      "sha256": "21f7c0c2051c335fd21548d66037798b6d9b24e260b1943d37970274b9628eb8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/central-data-check.json",
+      "sha256": "f096a8560766b4b731272988ee4756fcbecc3249378fb1e2d4c5c6b3fe39154b"
+    }
+  ],
+  "scoped_frozen_static_inventory": {
+    "total": 407,
+    "actual_byte_capture": 102,
+    "supplied_owner_reader": 56,
+    "unchanged_codec": 126,
+    "inherited_original_scopes": 93,
+    "additional_independent": 30
+  },
+  "root_current_compilation_verification": {
+    "frozen_vectors_redecoded_and_hash_schema_checked": 58,
+    "compact_schema_examples": 12,
+    "new_independent_behavior_cases_claimed": 0
+  },
+  "registry_delta": {
+    "physical_families_before": 113,
+    "physical_families_after": 114,
+    "new_family": "storage_integrity_finding",
+    "new_storage_kind": "canonical_file",
+    "all_prior_families_and_policy_objects_preserved": true,
+    "event_families_unchanged": 42,
+    "retention_policies_unchanged": 25,
+    "critical_mvp_and_governance_gates_unchanged": true
+  },
+  "central_data_check": {
+    "before": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 25
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 113
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 91,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 19,
+          "later_gui_or_feature_projection": 91,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "after": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 25
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 114
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 92,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 91,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "before_count": 21,
+    "after_count": 21,
+    "new_diagnostic_categories_or_locations": [],
+    "changed_details": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 114
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 92,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 91,
+          "migration_only": 3
+        }
+      }
+    ],
+    "validator_unchanged": true,
+    "waiver": false
+  },
+  "separately_unproved": [
+    "Original native source/root/manifest/watermark/permission and actual durable file admission",
+    "Native file/directory/redb/fsync/lease/crash/recovery/restore/migration execution",
+    "Segment/manifest/watermark actual owner detectors",
+    "IN-P03 fully corroborated exact-event route",
+    "Two full-u64 finding-payload downstream RFC8785 semantic admission/append/history paths",
+    "Integrity-specific shared full-value issuer/pending completion adoption"
+  ],
+  "native": "NOT_RUN",
+  "event_depth_complete": false,
+  "frozen_validator_depth_pass": false,
+  "readiness_clearance": false,
+  "governance_seal": false,
+  "cost": "Astra medium author, independent review and doc compilation; root canonical review and integration. Billing data unavailable.",
+  "compilation": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2411,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T06:16:30Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25347,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6564
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "new_units": [
+        "SP-279"
+      ],
+      "changed_prior_units": {
+        "RAP-045": [
+          "acceptance_criteria",
+          "canonical_text",
+          "depends_on",
+          "source_lineage",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_6562_prior_units_semantically_exact": true,
+      "all_prior_acceptance_criteria_preserved": true,
+      "new_acceptance_criteria": 15,
+      "total_units": 6564,
+      "total_acceptance_criteria": 25347,
+      "derived_shard_groups": [
+        "automated_testing_system",
+        "runtime_artifacts_panel",
+        "storage-plan",
+        "storage_value_registry",
+        "storage_value_registry.schema"
+      ]
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/shard-check.json",
+      "sha256": "82958bb0e5653018ed9982f49c00c0247ef7670dacef5754c6ea6d093ab52d09"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/index-validate.json",
+      "sha256": "6b3be473da0fb5abc472bcac396472efab4f18675f7377221802589ad629c268"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-integrity-wire-canonical-root-20260912/compilation-preservation.json",
+      "sha256": "12630094d109792c480425299479ce0212b2e4486b874e28e97ac6f1c3b0e10d"
+    }
+  ],
+  "root_final_fidelity_review": "Full approved owner proposal and current generated owner delta read, including exact serializer clarification; complete ATS/RAP diffs read; exact schema/field mapping and all58 actual byte observations rechecked. All other prior PlanUnit semantics remain exact."
+}

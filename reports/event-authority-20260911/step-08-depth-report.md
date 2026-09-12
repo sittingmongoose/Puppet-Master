@@ -89,3 +89,7 @@ SP-288 now explicitly adopts original full-value v2 custody for pending legal-ho
 ## Home original pending and full-value adoption — 2026-09-12
 
 SP-273/SIR-046 now compile Home3 original pending SIR custody, activation continuity, explicit shared full-value completion and complete final-value guards. The [adoption report](step-08-home-full-value-validation.md) records 279 scoped cases in independent review, two current-schema source/receipt captures and 13 value examples. Three existing Home rows adopt exact versioned readers; families, event/policy counts and lifetimes remain unchanged. Source/native, other-command and retained-history qualifications remain. Platform, integrity and boot recovery are separate work; no event inherits a depth pass.
+
+## Integrity actual-byte finding and passive reader — 2026-09-12
+
+SP-279 and RAP-045 now define the existing application integrity event's actual-frame finding and checkpoint-free read contract, with explicit ATS class/precision qualification. The [compilation report](step-08-integrity-wire-validation.md) separates 407 frozen scoped checks from 58 root capture rechecks and 12 typed examples. One immutable finding family and canonical_file enum member are added under existing audit retention; all prior rows/policies and42events remain. Native authority, three control-owner detectors, exact-event corroboration, two uint64 semantic paths and shared full-value completion remain separately unproved. This does not restamp frozen depth or complete the family.

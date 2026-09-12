@@ -819,7 +819,8 @@
             "redb_projection",
             "redb_index",
             "redb_checkpoint",
-            "redb_and_seglog"
+            "redb_and_seglog",
+            "canonical_file"
           ]
         },
         "status": {

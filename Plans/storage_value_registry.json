@@ -60624,6 +60624,563 @@
           }
         ]
       }
+    },
+    {
+      "family_id": "storage_integrity_finding",
+      "storage_kind": "canonical_file",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "storage/integrity/findings/v1/{storage_instance_path_hash}/{input_sha256}.json",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.storage_integrity_finding.v1",
+      "value_schema_ref": "Plans/storage_integrity_finding_contracts.schema.json#/$defs/finding",
+      "owner_doc": "Plans/storage-plan.md#storage-integrity-finding-custody-and-read-contract",
+      "producer": [
+        "storage.integrity_finding_capture.v1"
+      ],
+      "consumers": [
+        "Storage recovery coordinator",
+        "storage.integrity_history_reader.v1",
+        "canonical backup/restore coordinator"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "input_sha256",
+        "integrity_id",
+        "input",
+        "witness",
+        "occurred_at_utc",
+        "actor_ref",
+        "redaction_profile"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact canonical_uint_json.v1 immutable finding bytes preserve complete first input, actor and time. Identical input returns original finding/report; changed input conflicts. Durable finding without authenticated event/first receipt remains pending. No detector recovery or checkpoint effect.",
+      "migration": "StorageMigrationCoordinator installs new family under actual graph/ceilings; no retroactive finding from legacy report refs, no lazy rewrite.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-1-compatibility-admission-migration-canonical-redb-and-backuprestore"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "backup_then_replay",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#shared-boundary-backup-and-offline-restore",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-2-seglogframev2-acknowledgement-corruption-and-crash-convergence"
+        ]
+      },
+      "retention_compaction": "Existing audit-authority/source-lineage class RP-AUTHORITY-INDEFINITE@1.0.0; immutable report and pending obligations retained indefinitely, no count eviction, pressure fails closed; source raw bytes retain their independent owner custody.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Closed content-free metadata/hashes/enums and non-secret refs only. No raw paths, bytes, credentials, decoded message/body, error text, source logs or source-content copies.",
+      "legacy_canonical_crosswalk_status": "NEW exact canonical finding custody for existing integrity event under SP-279; predecessor report_ref alone never proves admission to this family.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#case-l-2-seglogframev2-acknowledgement-corruption-and-crash-convergence"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.storage_integrity_finding.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "input_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "integrity_id": {
+            "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "input": {
+            "$ref": "#/$defs/input"
+          },
+          "witness": {
+            "$ref": "#/$defs/witness"
+          },
+          "occurred_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actor_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "redaction_profile": {
+            "const": "reject_unhandled_secrets"
+          }
+        },
+        "required": [
+          "schema_id",
+          "schema_version",
+          "input_sha256",
+          "integrity_id",
+          "input",
+          "witness",
+          "occurred_at_utc",
+          "actor_ref",
+          "redaction_profile"
+        ],
+        "$defs": {
+          "byte_range": {
+            "items": false,
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              }
+            ],
+            "type": "array"
+          },
+          "sequence_range": {
+            "items": false,
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              }
+            ],
+            "type": "array"
+          },
+          "storage_integrity_detected_1_0_0_compatibility_reader": {
+            "$id": "https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/1.0.0",
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "additionalProperties": false,
+            "properties": {
+              "affected_byte_range": {
+                "items": {},
+                "type": "array"
+              },
+              "affected_event_refs": {
+                "items": {},
+                "type": "array"
+              },
+              "affected_sequence_range": {
+                "items": {},
+                "type": "array"
+              },
+              "detection_offset": {
+                "type": "integer"
+              },
+              "durable_watermark_relation": {
+                "type": "string"
+              },
+              "expected_crc": {
+                "type": "integer"
+              },
+              "failure_class": {
+                "type": "string"
+              },
+              "frame_version": {
+                "type": "integer"
+              },
+              "impact_precision": {
+                "type": "string"
+              },
+              "integrity_id": {
+                "type": "string"
+              },
+              "last_good_offset": {
+                "type": "integer"
+              },
+              "next_good_offset": {
+                "type": "integer"
+              },
+              "observed_crc": {
+                "type": "integer"
+              },
+              "report_ref": {
+                "type": "string"
+              },
+              "schema_version": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "segment_generation": {
+                "type": "integer"
+              },
+              "segment_hash": {
+                "type": "string"
+              },
+              "segment_name": {
+                "type": "string"
+              },
+              "segment_state": {
+                "type": "string"
+              },
+              "storage_root_hash": {
+                "type": "string"
+              },
+              "storage_root_ref": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "schema_version",
+              "integrity_id",
+              "storage_root_ref",
+              "storage_root_hash",
+              "segment_generation",
+              "segment_name",
+              "segment_hash",
+              "segment_state",
+              "frame_version",
+              "failure_class",
+              "detection_offset",
+              "last_good_offset",
+              "next_good_offset",
+              "impact_precision",
+              "durable_watermark_relation",
+              "report_ref"
+            ],
+            "type": "object"
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "affected_byte_range": {
+                "$ref": "#/$defs/byte_range"
+              },
+              "affected_event_refs": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxItems": 4096,
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "affected_sequence_range": {
+                "$ref": "#/$defs/sequence_range"
+              },
+              "detection_offset": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "durable_watermark_relation": {
+                "enum": [
+                  "wholly_above_durable_watermark",
+                  "at_or_below_durable_watermark",
+                  "straddles_durable_watermark",
+                  "unknown_durable_watermark_relation"
+                ]
+              },
+              "expected_crc": {
+                "maximum": 4294967295,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "failure_class": {
+                "enum": [
+                  "frame_integrity",
+                  "header_integrity",
+                  "payload_integrity",
+                  "segment_integrity",
+                  "manifest_integrity",
+                  "watermark_integrity",
+                  "sequence_integrity"
+                ]
+              },
+              "frame_version": {
+                "const": 2
+              },
+              "impact_precision": {
+                "enum": [
+                  "exact_event",
+                  "exact_byte_range",
+                  "bounded_sequence_range",
+                  "unknown_segment_remainder"
+                ]
+              },
+              "last_good_offset": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "next_good_offset": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "observed_crc": {
+                "maximum": 4294967295,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "segment_generation": {
+                "maximum": 18446744073709551615,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "segment_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "segment_name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "segment_state": {
+                "enum": [
+                  "opening",
+                  "active",
+                  "closed",
+                  "sealed_degraded"
+                ]
+              },
+              "storage_root_hash": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "storage_root_ref": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "action_kind": {
+                "const": "detect_integrity"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "root_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "logical_root_fingerprint": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "precondition_manifest_generation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "precondition_manifest_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "segment_length": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "watermark_end_offset": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "storage_root_ref",
+              "storage_root_hash",
+              "segment_generation",
+              "segment_name",
+              "segment_hash",
+              "segment_state",
+              "frame_version",
+              "failure_class",
+              "detection_offset",
+              "last_good_offset",
+              "next_good_offset",
+              "impact_precision",
+              "durable_watermark_relation",
+              "action_kind",
+              "storage_instance_id",
+              "root_generation",
+              "logical_root_fingerprint",
+              "precondition_manifest_generation",
+              "precondition_manifest_sha256",
+              "segment_length",
+              "watermark_end_offset"
+            ]
+          },
+          "witness": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "validator_binding": {
+                "const": "storage.integrity_finding_capture.v1"
+              },
+              "source_boundary_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "manifest_binding_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "check_evidence_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "header_identity_verified": {
+                "type": "boolean"
+              },
+              "watermark_verified": {
+                "type": "boolean"
+              },
+              "resync_disposition": {
+                "enum": [
+                  "validated_next_candidate",
+                  "no_candidate_through_eof"
+                ]
+              },
+              "predecessor_disposition": {
+                "enum": [
+                  "validated_predecessor_end",
+                  "source_origin"
+                ]
+              },
+              "event_witnesses": {
+                "type": "array",
+                "maxItems": 4096,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "event_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sequence_id": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "byte_start": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "byte_end": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 18446744073709551615
+                    },
+                    "header_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "event_ref",
+                    "sequence_id",
+                    "byte_start",
+                    "byte_end",
+                    "header_sha256"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "validator_binding",
+              "source_boundary_sha256",
+              "manifest_binding_sha256",
+              "check_evidence_sha256",
+              "header_identity_verified",
+              "watermark_verified",
+              "resync_disposition",
+              "predecessor_disposition",
+              "event_witnesses"
+            ]
+          },
+          "finding": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.storage_integrity_finding.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "input_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "integrity_id": {
+                "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "input": {
+                "$ref": "#/$defs/input"
+              },
+              "witness": {
+                "$ref": "#/$defs/witness"
+              },
+              "occurred_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "redaction_profile": {
+                "const": "reject_unhandled_secrets"
+              }
+            },
+            "required": [
+              "schema_id",
+              "schema_version",
+              "input_sha256",
+              "integrity_id",
+              "input",
+              "witness",
+              "occurred_at_utc",
+              "actor_ref",
+              "redaction_profile"
+            ]
+          }
+        }
+      }
     }
   ]
 }
