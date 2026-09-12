@@ -2572,3 +2572,80 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-047, ContractName:Plans/storage-plan.md#SP-288, ContractName:Plans/Shared_Integration_Runtime.md#SIR-042, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/storage_retention_hold_contracts.schema.json, ContractName:Plans/Decision_Log.md#DL-045
+
+## Original Goal start pending and terminal source custody
+
+For exactly `cmd.chat.goal.start`, `owner.sir.goal_start_pending_custody@1.0.0` is the original Goal-specific SIR source binding. SP-294 delegates content-free command/source/outcome/result custody to its single canonical command row while SIR retains exclusive source and outcome production/authentication. This is a new explicit Goal binding. Home SIROwner, legal-hold custody and other command-specific routes retain their independent scope; none supplies inferred generic Goal admission.
+
+Original admission authenticates the complete request, normalized owner/topology/command/operation identity, dispatch and target generations, payload digest, exact source surface, original actor/permission/return route, source origin references, creation grant and Stop/owner epochs. The original caller inputs and complete expected candidates are captured before selected validation/copy/owner builders. The source can exist before command enrollment; its own original birth and seals remain required. Once enrolled, the actual original semantic/physical/source/command/root/shared participants must match the original enrollment throughout live operations. Ordinary source/acknowledgement/decision/terminal-stage entries and final disclosures authenticate original custody directly and compare complete expected current values after their dependent helpers.
+
+`SourceCapture` preserves original request/dispatch/outcome/identity and genuine nonterminal acknowledgement state. Original source progression is monotonic and cannot fabricate an acknowledgement, change original scope/input/dispatch, add a second operation or imply terminal success. The content-free command row captures source progression only while pending. Exact objective text is transient original input and existing Goal body/history authority; input disposal clears that transient input's custody without reconstructing it from the original argument digest. Retained audit/replay does not gain a new live input/seal requirement. This contract adds no separate transient-input TTL or source-retention policy.
+
+An original pre-execution abort supplies genuine failed/cancelled/rejected no-effect evidence before the original body execution entry. It creates no body/revision/event and is not inferred from absent rows. An original unknown disposition preserves whether body effect is committed or unresolved and whether event proof is already issued or unresolved. It produces immutable recovery-required command custody and grants no continuation. A body accepted before later failure remains accepted with its pending custody; it is never erased to simulate atomicity across owners. A terminal unknown or no-effect result cannot be resumed into success under the same original command.
+
+For success, SIR derives its terminal stage only from the actual original command/body/shared evidence and acknowledged original source. It independently derives the whole expected owner result and CV-333/CommandOutcomeRecord values before selected result or response builders return. The actual command owner verifies exact result schema/hash/member ref, original outcome/UI response, complete source-stage custody, current participants and the whole candidate before the single terminal publication. Genuine earlier source-stage/body/shared effects survive refusal. Accepted/acknowledged pending is not terminal result success; success is exposed only after original terminal result settlement and readback.
+
+Original typed owner result and creation receipt references use CV-341's named logical members of the wrapped SP-294 row. A passive original read authenticates its immutable result, original body receipt and retained shared witness under current audit/installed-reader authority. The reference resolver never dispatches a command, reacquires disposed body inputs, rewrites a terminal result, or substitutes an event page observation for command result proof.
+
+ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-042, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/Contracts_V0.md#CV-341, ContractName:Plans/storage-plan.md#SP-294, ContractName:Plans/goal_runtime_contracts.schema.json, ContractName:Plans/goal_start_command_custody.schema.json
+
+## SIR-048 - Original Goal start pending and terminal source custody
+
+```yaml
+plan_unit_id: SIR-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: For the sole original Goal start command, the explicit Goal-only SIR binding owns authenticated
+  source, genuine acknowledgement and immutable terminal outcome production while SP-294 holds content-free original
+  custody. Independent whole-result expectations and exact logical result/receipt references preserve source and
+  effect distinctions through current final authority checks.
+gui_related: false
+gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
+  without a visual surface.
+depends_on:
+- SIR-042
+- CV-333
+- SP-294
+unblocks: []
+acceptance_criteria:
+- Only owner.sir.goal_start_pending_custody@1.0.0 delegates this exact command; Home and other command-specific
+  owners are not generalized.
+- Original source inputs and complete expected state precede helpers; source entries authenticate original birth/seals
+  and actual enrolled participants.
+- Acknowledgement/source progression is genuine and monotonic, preserving original request/dispatch/scope and content-free
+  argument identity.
+- Proven pre-execution no-effect and original unknown decisions are distinct immutable outcomes; absent rows never
+  establish no-effect.
+- Actual source stage, full expected result and CV-333 response join original body/shared evidence before terminal
+  publication, preserving genuine earlier effects.
+- Retained logical-member reads use original custody and current audit authority without acquiring live input authority
+  or dispatching.
+validation_surfaces:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/goal_runtime_contracts.schema.json
+- Plans/event_payloads/goal_runtime/goal_created.schema.json
+- Plans/goal_start_command_contract_fixtures.json
+risk_class: false_original_goal_creation_or_lost_command_custody
+reasoning_tier: high
+context_scope: original_goal_start_command_integration
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/storage_value_registry.json
+node_compile_hint:
+  mode: original_goal_start_prerequisite_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
+  or installed-role declarations.
+- Do not reconstruct disposed objective/source values, roll back genuine earlier effects, restamp first receipts
+  or retry an immutable terminal command.
+- Do not claim native installation/dispatch/restore, current event traversal/checkpoint coverage, complete event
+  depth, readiness or governance clearance.
+```

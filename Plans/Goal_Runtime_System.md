@@ -262,7 +262,7 @@ ContractRef: ContractName:Plans/ToDo_Runtime.md, ContractName:Plans/Collaborativ
 
 `cmd.chat.goal.start` and `cmd.chat.goal.update` are pre-existing registered command IDs. This wave revises their request and result contracts in place to `GoalStartRequestV2`/`GoalStartResultV2` and `GoalUpdateRequestV2`/`GoalUpdateResultV2`. They keep one registration, one sole future handler, and one wiring identity; no peer row, compatibility spelling, or second handler is minted for them.
 
-Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A failure remains a failure: it never advances state, never emits a success-shaped receipt, and never writes a revision.
+Every request carries `schema_id`, `schema_version`, command ID, command instance ID, `project_id`, `thread_id`, `goal_id` where applicable, expected revision, expected `currentness_hash`, actor, permission snapshot, idempotency key, source surface, and return route. Typed errors are `invalid_request`, `goal_not_found`, `stale_goal_revision`, `stale_currentness`, `objective_too_long`, `approval_required`, `approval_not_resolved`, `manual_stop_latched`, `blocked_condition_unresolved`, `command_not_registered`, `permission_denied`, `owner_unavailable`, or `cancelled`. A rejection or proven no-effect before original body admission writes no body/revision and emits no success-shaped receipt. For cmd.chat.goal.start, a later refusal or unresolved event/result step after a valid joined body commit preserves that accepted original revision and pending custody, emits no success-shaped receipt and creates no additional revision under GRS-066/SP-294. Other commands retain their existing atomic mutation and typed-error boundaries.
 
 Until the central command catalog, Event Authority, and production wiring rows close for a given ID, its controls render disabled with `command_not_registered`. No page-local handler, alias, fixture, or toast may simulate success.
 
@@ -2625,13 +2625,13 @@ Goal Runtime requires these data-shape families:
 
 ### Goal and GoalRun payload minima
 
-Every persisted Goal Runtime event carries the shared runtime envelope from `Contracts_V0`: `event_name`, payload `schema_version`, `occurred_at_utc`, `project_id`, `thread_id?`, `goal_id`, `parent_goal_id?`, `goal_revision`, `expected_goal_revision?` when compare-and-swap applies, `actor_ref`, `execution_role`, requested/effective provider refs, requested/effective model refs, requested/effective account refs, `correlation_id`, `causation_event_ref?`, `idempotency_key?`, `evidence_refs[]`, `artifact_refs[]`, `approval_refs[]?`, and `block_refs[]?`.
+For the complete retained `goal.created` v2 resource and the other independently governed v2 rows, the shared runtime envelope from `Contracts_V0` remains: `event_name`, payload `schema_version`, `occurred_at_utc`, `project_id`, `thread_id?`, `goal_id`, `parent_goal_id?`, `goal_revision`, `expected_goal_revision?` when compare-and-swap applies, `actor_ref`, `execution_role`, requested/effective provider refs, requested/effective model refs, requested/effective account refs, `correlation_id`, `causation_event_ref?`, `idempotency_key?`, `evidence_refs[]`, `artifact_refs[]`, `approval_refs[]?`, and `block_refs[]?`.
 
 Event-specific minima:
 
 | Event | Additional minimum payload |
 | --- | --- |
-| `goal.created` | `objective`, `acceptance_criteria[]`, `non_goals[]`, `allowed_scope`, `constraints[]`, `budget`, `attachment_refs[]`, `model_policy`, `agent_control_envelope_ref`, `agent_control_envelope_hash` |
+| `goal.created` | Active v3: the exact twelve content-free revision/currentness/body-receipt/source fields in CV-341/GRS-066. Retained whole-v2 only: `objective`, `acceptance_criteria[]`, `non_goals[]`, `allowed_scope`, `constraints[]`, `budget`, `attachment_refs[]`, `model_policy`, `agent_control_envelope_ref`, `agent_control_envelope_hash`. |
 | `goal.scheduled` | `scheduler_reason`, `eligible_at_utc`, `queue_id?`, `priority`, `budget_snapshot_ref`, `next_action` |
 | `goal.progressed` | `progress_fingerprint`, `task_delta`, `status_before`, `status_after`, `artifact_hashes[]`, `repeat_count?`, `no_progress_marker?` |
 | `goal.tool_check_recorded` | `tool_call_id`, `tool_name`, `check_kind`, `check_result`, `policy_decision`, `output_ref?`, `log_ref?` |
@@ -3530,7 +3530,7 @@ Hashes are SHA-256 over canonical bytes defined by the owning artifact contract.
 
 #### 6. Machine-oriented 21-row materialization table
 
-Every row uses family revision `2.0.0`, registry `scope_policy=project_only`, payload root pointer `#`, event payload pointer `#/$defs/event_payload`, registry redaction `{mode:"reject_unhandled_secrets",transform_id:null,transform_version:null}`, and replay `dedupe_by_idempotency_key`. `identity` supplies the ordered event-semantic tuple appended after the common identity tuple in Section 7.
+The original v2 materialization below remains authoritative for the whole retained `goal.created` v2 resource and for the other twenty v2 rows under their individual dispositions. Only active `goal.created` instead selects family `3.0.0`, root `pm.goal_runtime_event.goal_created.schema.v3`, CV-341's content-free payload and SP-294's complete original producer recipe; the old row identity tuple does not apply to that successor. The original v2 rows use family revision `2.0.0`, registry `scope_policy=project_only`, payload root pointer `#` (the retained goal.created resource is now at `#/$defs/legacy_v2_reader`), event payload pointer `#/$defs/event_payload`, registry redaction `{mode:"reject_unhandled_secrets",transform_id:null,transform_version:null}`, and replay `dedupe_by_idempotency_key`. `identity` supplies the ordered event-semantic tuple appended after the common identity tuple in Section 7.
 
 | Obligation | Event / alias | Family ID | Row schema ID | Row path | Ordered semantic identity |
 | --- | --- | --- | --- | --- | --- |
@@ -3629,6 +3629,8 @@ Historical interpretation only under GRS-060: the following original fields and 
 - Basis: `C-GRS-MIN`, `C-GRS-LIFE` (`GRS-012..014`, `GRS-042`), `D-R04`.
 
 ##### `EA-UND-0005-GOAL` — `goal.created` (`D-R05`)
+
+The following fields, branches and pseudo-state are exact retained-v2 interpretation only. Active-v3 creation follows CV-341/GRS-066 and original SP-294 custody, with the four-state GoalRecordV2 lifecycle unchanged; the old structured fields, envelope and `created` state do not supply a current writer.
 
 - Fields: `R{objective:text, acceptance_criteria:AcceptanceCriteria, non_goals:text[], allowed_scope:Scope, constraints:Constraint[], budget:Budget, attachment_refs:ref[], model_policy:ModelPolicy, agent_control_envelope_ref:ref, agent_control_envelope_hash:sha256}`; `F{expected_goal_revision}`.
 - Branches: `goal_revision=1`; no prior Goal with `goal_id` may exist; `agent_control_envelope_hash` must verify the referenced immutable envelope; `allowed_scope.write_allowed=true` requires authority evidence in `approval_refs` or the referenced envelope. `non_goals`, `constraints`, and `attachment_refs` may be empty.
@@ -3753,7 +3755,7 @@ Historical interpretation only under GRS-062: the exact following fields, branch
 
 #### Goal Runtime v2 event acceptance oracles
 
-These 21 positive/negative pairs are normative oracle prose, not executable artifacts. They are carried into this named non-generated owner subsection and mirrored as consumer expectations at the Goal Runtime event-contract anchor in `Plans/Automated_Testing_System.md`. The self-contained row schemas make their structural clauses machine-decidable, but this transaction does not produce executable inputs or modify any checker. Any transition, side-effect, replay, authority, or currentness clause not already covered by a pre-existing read-only check is honestly `NON_EXECUTABLE_UNDER_THIS_TRANSACTION`.
+These 21 positive/negative pairs are normative oracle prose, not executable artifacts. For exactly EA-UND-0005-GOAL, this pair preserves the complete retained-v2 interpretation; active-v3 original creation has the separate CV-341/SP-294/SIR-048/GRS-066 contracts and validation report. The old created projection or structured fields are not current acceptance requirements. They are carried into this named non-generated owner subsection and mirrored as consumer expectations at the Goal Runtime event-contract anchor in `Plans/Automated_Testing_System.md`. The self-contained row schemas make their structural clauses machine-decidable, but this transaction does not produce executable inputs or modify any checker. Any transition, side-effect, replay, authority, or currentness clause not already covered by a pre-existing read-only check is honestly `NON_EXECUTABLE_UNDER_THIS_TRANSACTION`.
 
 Each positive oracle describes validation of the outer EventRecord, exact row schema ID/root, common joins, row branch, current state/revision, idempotency behavior, and resulting projection. Each negative oracle requires: schema failure or named failure result, zero append, zero checkpoint advance, zero state transition, zero downstream side effect, and no receipt/certification promotion.
 
@@ -5042,24 +5044,29 @@ canonical_text: >-
   replay, Executor for WorkNode scheduling and safe-point behavior, and
   Permissions/Models/Multi-Account owners for authority and requested/effective
   identity.
+
+  For exactly goal.created, all remaining v2 common-field, branch, identity and oracle clauses retain whole-v2 historical interpretation. Active-v3 field and original creation authority follow CV-341/SP-294/SIR-048/GRS-066; no other row is migrated or granted current emission by this exception.
 gui_related: false
 gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
 depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
 unblocks: []
 acceptance_criteria:
   - >-
-    Exactly 21 current local v2 row schemas exist at the approved Section 6 paths
-    and `$id` values; each is a self-contained Draft 2020-12 root with only local
+    Exactly 21 authoritative v2 resources remain at the approved Section 6 paths
+    and `$id` values, with exactly goal.created retained whole at its nested
+    legacy_v2_reader resource and active-v3 separately selected under CV-341/GRS-066.
+    Each complete v2 resource is a self-contained Draft 2020-12 root with only local
     `#/$defs/...` references, exact row const discriminators, closed root/common
     objects and event payload, and no external schema dependency.
   - >-
     Exactly one canonical common-definition source exists in this owner document,
     and the JCS value of every shared common `$defs` member equals its local copy in
-    all 21 approved roots.
+    all 21 complete v2 resources, including the retained whole goal.created v2 resource.
   - >-
-    Exactly 21 registry rows point one-to-one to those roots with family revision
-    `2.0.0`, payload root pointer `#`, event payload pointer
-    `#/$defs/event_payload`, the approved semantic identities and replay/redaction
+    Exactly 21 registry rows remain; twenty retain their v2 bindings and exactly
+    goal.created selects active v3 under CV-341/GRS-066. The original v2 bindings
+    retain family revision `2.0.0`, payload root pointer `#` within each whole
+    resource and event payload pointer `#/$defs/event_payload`, the approved semantic identities and replay/redaction
     settings, and the sole admitted legacy alias `GoalRunStarted` only for
     `goal_run.started`; `BuildStarted` and every other alias are rejected.
   - >-
@@ -6072,4 +6079,81 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
+```
+
+## Original Goal creation command settlement
+
+The existing `cmd.chat.goal.start` operation uses CV-341's exact `GoalStartRequestV2` and `GoalStartResultV2`, SIR-048's original source and SP-294's joined body/command custody. Original user creation authority, accepted source surfaces and exact objective text retain their existing Goal owner rules. Neither normalized request shape, matching digest, public registration, acknowledged dispatch nor an isolated body receipt establishes the complete creation result.
+
+The actual original Goal builder commits revision 1 and its original SP-287 receipt once. Pending publication continues that same accepted body, original source, original event and first receipt. The source/event/result chain is acyclic: original body transaction, original shared event/first receipt, then actual immutable SIR/result settlement. It creates no durable pre-body objective copy or Goal reservation and never asks an event to contain its own future first receipt.
+
+A successful command result proves the accepted original body revision, original `goal.created` EventRecord/first AppendReceipt, and actual terminal command outcome/result. It proves creation, not objective completion or workflow certification. Original first continuation is eligible only after that successful creation result has actually settled and all existing current Goal state, thread/run, permission, availability and Stop rules also allow it. Stop wins at the final original dispatch boundary. No fifth Goal state, invented blocked reason, automatic Goal resume or inferred scheduler/host permission follows from pending or terminal unknown custody.
+
+Rejection or proven no-effect before original body admission writes no body/revision. After a valid joined body commit, a later unresolved or refused event/result operation preserves the already accepted original revision and pending custody, emits no success-shaped receipt, and creates no additional revision. Genuine earlier effects are not rolled back. An immutable original terminal no-effect or unknown result cannot be retried into a successful creation under its original command identity.
+
+The active `goal.created` v3 payload preserves content-free revision/currentness/body-receipt/source references; the exact prior whole-v2 decoder retains historical interpretation without reviving retired structured objectives, budgets or child Goals. This start prerequisite does not materialize current event traversal, a durable projector/checkpoint, `goal.updated`, other Goal commands/events, or product runtime eligibility. Existing command controls remain subject to their full central-registration/wiring/readiness requirements.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-064, ContractName:Plans/Contracts_V0.md#CV-341, ContractName:Plans/storage-plan.md#SP-294, ContractName:Plans/Shared_Integration_Runtime.md#SIR-048, ContractName:Plans/Decision_Log.md#DL-047
+
+## GRS-066 - Original Goal creation command settlement
+
+```yaml
+plan_unit_id: GRS-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Original text-only Goal creation settles its accepted revision, original goal.created event/first
+  receipt and immutable command result once. A body accepted before later refusal remains preserved; successful
+  creation settlement plus all current Goal/run/thread/permission/Stop rules precedes first continuation without
+  a new Goal state or objective-completion claim.
+gui_related: false
+gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
+  without a visual surface.
+depends_on:
+- GRS-064
+- CV-341
+- SP-294
+- SIR-048
+- DL-047
+unblocks: []
+acceptance_criteria:
+- The sole existing start command/handler consumes exact central request/result definitions and genuine original
+  creation authority.
+- Revision 1 is admitted once, followed by original shared event/first receipt and then actual source/result settlement
+  without a receipt bootstrap cycle.
+- Creation success is distinct from objective completion and certification; pending or terminal unknown grants no
+  first-continuation authority.
+- Final dispatch observes actual settled creation and current Goal/run/thread/permission/Stop rules, with Stop taking
+  precedence.
+- Pre-admission no-effect writes no revision; later refusal preserves the accepted original revision/custody and
+  emits no success-shaped receipt or extra revision.
+- Active-v3 creation and whole-retained-v2 historical meaning stay separate; other events, commands, projectors
+  and native runtime remain independently unclosed.
+validation_surfaces:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/goal_runtime_contracts.schema.json
+- Plans/event_payloads/goal_runtime/goal_created.schema.json
+- Plans/goal_start_command_contract_fixtures.json
+risk_class: false_original_goal_creation_or_lost_command_custody
+reasoning_tier: high
+context_scope: original_goal_start_command_integration
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/storage_value_registry.json
+node_compile_hint:
+  mode: original_goal_start_prerequisite_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
+  or installed-role declarations.
+- Do not reconstruct disposed objective/source values, roll back genuine earlier effects, restamp first receipts
+  or retry an immutable terminal command.
+- Do not claim native installation/dispatch/restore, current event traversal/checkpoint coverage, complete event
+  depth, readiness or governance clearance.
 ```

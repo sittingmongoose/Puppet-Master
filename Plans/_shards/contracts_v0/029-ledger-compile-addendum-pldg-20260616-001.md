@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L17829-L17964
+Source lines: L17829-L17966
 
-Source SHA256: `7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9`
+Source SHA256: `6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7`
 
 ---
 
@@ -100,6 +100,8 @@ canonical_text: |-
   For exactly goal.scheduled, schema registration preserves authoritative historical validation under GRS-062/CV-336 and admits no current scheduled-state transition. Existing other-row qualifications remain unchanged.
 
   For exactly goal.child_status_changed, the registered schema preserves authoritative historical validation under GRS-060/CV-334 and admits no current child-state transition or new writer.
+
+  For exactly goal.created, the common-v2 and structured-objective minima above remain authoritative only for the complete retained v2 resource. CV-341/GRS-066 define the active content-free v3 payload and SP-294 its original body/command/shared composition. This single version successor changes no other event row, alias, schema or admission disposition.
 gui_related: false
 gui_classification_reason: Event schema registration and owner boundaries are contract/governance behavior, not visual presentation.
 depends_on:

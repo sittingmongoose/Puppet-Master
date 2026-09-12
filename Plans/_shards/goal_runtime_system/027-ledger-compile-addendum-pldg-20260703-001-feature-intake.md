@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L4393-L5172
+Source lines: L4395-L5179
 
-Source SHA256: `6a6889932369937d6023727e803270f36aab868fb2fea4d157dc1aee00d3f48b`
+Source SHA256: `c519b638da8dc6866ec886468871c4da6ffe95bd682beee4ac677f65781124fe`
 
 ---
 
@@ -660,24 +660,29 @@ canonical_text: >-
   replay, Executor for WorkNode scheduling and safe-point behavior, and
   Permissions/Models/Multi-Account owners for authority and requested/effective
   identity.
+
+  For exactly goal.created, all remaining v2 common-field, branch, identity and oracle clauses retain whole-v2 historical interpretation. Active-v3 field and original creation authority follow CV-341/SP-294/SIR-048/GRS-066; no other row is migrated or granted current emission by this exception.
 gui_related: false
 gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
 depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
 unblocks: []
 acceptance_criteria:
   - >-
-    Exactly 21 current local v2 row schemas exist at the approved Section 6 paths
-    and `$id` values; each is a self-contained Draft 2020-12 root with only local
+    Exactly 21 authoritative v2 resources remain at the approved Section 6 paths
+    and `$id` values, with exactly goal.created retained whole at its nested
+    legacy_v2_reader resource and active-v3 separately selected under CV-341/GRS-066.
+    Each complete v2 resource is a self-contained Draft 2020-12 root with only local
     `#/$defs/...` references, exact row const discriminators, closed root/common
     objects and event payload, and no external schema dependency.
   - >-
     Exactly one canonical common-definition source exists in this owner document,
     and the JCS value of every shared common `$defs` member equals its local copy in
-    all 21 approved roots.
+    all 21 complete v2 resources, including the retained whole goal.created v2 resource.
   - >-
-    Exactly 21 registry rows point one-to-one to those roots with family revision
-    `2.0.0`, payload root pointer `#`, event payload pointer
-    `#/$defs/event_payload`, the approved semantic identities and replay/redaction
+    Exactly 21 registry rows remain; twenty retain their v2 bindings and exactly
+    goal.created selects active v3 under CV-341/GRS-066. The original v2 bindings
+    retain family revision `2.0.0`, payload root pointer `#` within each whole
+    resource and event payload pointer `#/$defs/event_payload`, the approved semantic identities and replay/redaction
     settings, and the sole admitted legacy alias `GoalRunStarted` only for
     `goal_run.started`; `BuildStarted` and every other alias are rejected.
   - >-

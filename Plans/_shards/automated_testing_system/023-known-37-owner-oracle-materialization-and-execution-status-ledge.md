@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2448-L2715
+Source lines: L2448-L2717
 
-Source SHA256: `abd9188ad88f12d2d424e29eaf7817c2596fc9e6bd0918b2a9de04b65932cccf`
+Source SHA256: `13721b5c89f245d91a8d8750ef34855a6d6992a0fe19cc12bb83ae935c933ece`
 
 ---
 
@@ -23,6 +23,8 @@ This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means th
 - `K37-STATIC-07` — `STATICALLY_MATERIALIZED` — The retained-inline remaining-nine row schemas and their owner/consumer clauses form a 37/37 historical KNOWN-KERNEL STATIC contract-depth account; the source-dated at-least-248 confirmed persisted-unregistered floor, at-least-40 unresolved exact rows, 68 exclusions, and `UNKNOWN_OPEN` complete denominator remain explicit residuals, and no runtime, fixture, gate, shard, harness, certification, buildability, or closure result is inferred.
 
 ### Goal Runtime v2 event acceptance oracles
+
+For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 structural statements describe the complete retained v2 resource. Active `goal.created` v3 instead follows CV-341/SP-294/SIR-048/GRS-066. Its report separates original joined-source/body/event/result validation from retained-v2 interpretation, ordinary corrected-model evidence, native gaps and still-separate current-reader/projector facets. The earlier pair is preserved and is not relabeled as executed or as active-v3 coverage.
 
 - `EA-UND-0001-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Append a permission block with exact permission evidence, ordered action IDs containing `request_approval`, and matching CAS; projection becomes `blocked` and exposes the exact cause/safe action.
 - `EA-UND-0001-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject unknown blocker/reason/action, missing cause/scope, action set not containing next action, generic `try_anyway`, or block from a terminal state.

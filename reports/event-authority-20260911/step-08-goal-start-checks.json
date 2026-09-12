@@ -1,0 +1,880 @@
+{
+  "schema_id": "pm.event_authority.goal_start_prerequisite_checks.v1",
+  "status": "NARROW_CONTRACT_COMPILED_FULL_GATES_FAIL",
+  "base_commit": "ee421d57a02c8b303db90dd3c917a459d1d10614",
+  "canonical_contracts": [
+    "CV-341",
+    "SP-294",
+    "SIR-048",
+    "GRS-066"
+  ],
+  "preservation": {
+    "status": "PASS",
+    "draft_base": "666344900b4908e7a2ff451b4f43575521bcf8fe",
+    "current_head": "ee421d57a02c8b303db90dd3c917a459d1d10614",
+    "current_origin_main": "ee421d57a02c8b303db90dd3c917a459d1d10614",
+    "all_used_source_files_current_byte_exact": true,
+    "old_plan_units": 6571,
+    "new_plan_units_total": 6575,
+    "added_plan_units": [
+      "CV-341",
+      "SP-294",
+      "SIR-048",
+      "GRS-066"
+    ],
+    "modified_plan_units": [
+      "CV-287",
+      "GRS-041",
+      "SP-214"
+    ],
+    "old_acceptance_criteria": 25421,
+    "new_acceptance_criteria": 25445,
+    "all_other_old_plan_units_preserved": true,
+    "all_prior_family_objects_and_policy_topology_preserved": true,
+    "central_data_diagnostics": {
+      "before": 21,
+      "after": 21,
+      "new_categories_or_locations": 0
+    },
+    "draft_native_execution": "NOT_RUN"
+  },
+  "counts": {
+    "event_families": 42,
+    "physical_families_before": 119,
+    "physical_families_after": 120,
+    "retention_policies": 26,
+    "root_ordinary_functional_scenarios": 6,
+    "actual_canonical_row_captures": 9,
+    "valid_schema_cases": 18,
+    "invalid_schema_cases": 12,
+    "source_corrected_fault_suite": "NOT_RUN",
+    "native_role_selectors_dispatched": 0
+  },
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-v3-root-review-20260912/manifest.json",
+      "sha256": "385d3ef3dcf6e3ccb7c31c20eb14d87efbec0854c4e528ee7c3f2ec33906a505"
+    },
+    "canonical_capture": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-canonical-20260912/manifest.json",
+      "sha256": "20a5bb33839d638aca94cde53e559e021c328d31bfa17d62691e23697522931b"
+    },
+    "independent_compilation_review": {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-start-compilation-independent-source-review-20260912/v1/manifest.json",
+      "sha256": "fb7d0fc22ff399950f5fb18b62317bb3e697a9b9a77e4fe120551c0458f5b434"
+    },
+    "repository_checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/manifest.json",
+      "sha256": "dc6d0dc77b1a01eade1fb4512c635b20af0f207763bc87fab231b03009c68a5d"
+    }
+  },
+  "repository_checks": {
+    "commands": {
+      "generate-shards": {
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--generate",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 0,
+        "elapsed_seconds": 1.756,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/generate-shards.stdout",
+          "sha256": "4e115e2aee5c836a072df27de64553fa8f504491b04661e4c9c5bf0ee2752398"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/generate-shards.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "changed_shard_owner_directories": [
+          "automated_testing_system",
+          "contracts_v0",
+          "goal_runtime_system",
+          "shared_integration_runtime",
+          "storage-plan",
+          "storage_value_registry"
+        ],
+        "changed_shard_paths": 599,
+        "unexpected_shards": []
+      },
+      "generate-index": {
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "generate"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 0,
+        "elapsed_seconds": 22.551,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/generate-index.stdout",
+          "sha256": "dfd7a8fa4522aade82bcc6a347c1fe3cf810a4b8cc12b6dc5a4258ce87ffbdb8"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/generate-index.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "shard-check": {
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 0,
+        "elapsed_seconds": 9.151,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/shard-check.stdout",
+          "sha256": "0293e5a35ae9196a83ef367d6da5e6fff1bddbcbdf39bab22bb23739b8d808db"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/shard-check.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "index-check": {
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 0,
+        "elapsed_seconds": 25.17,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/index-check.stdout",
+          "sha256": "a8dcd4067a96bc6d9960ecf667eec2d896b4e55bb29bbfe7a0ed6c9c9089a7b0"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/index-check.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "diff-check": {
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 0,
+        "elapsed_seconds": 1.278,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/diff-check.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/diff-check.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "run-gates": {
+        "command": [
+          "python3",
+          "scripts/pm-plans-verify.py",
+          "run-gates"
+        ],
+        "cwd": "/home/sittingmongoose/pm-worktrees/event-authority-goal-start-20260912",
+        "exit_code": 1,
+        "elapsed_seconds": 258.035,
+        "stdout": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/run-gates.stdout",
+          "sha256": "c4f61530b0877220aefe643dce0145a126c6938eb00d0a5de8eb74467b5bd421"
+        },
+        "stderr": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-start-repository-checks-20260912/run-gates.stderr",
+          "sha256": "5de28332c725423e4b0f190c133c61539b768d8f7fa1269412031e3264e783bf"
+        }
+      }
+    },
+    "gate_summary": {
+      "json_syntax": {
+        "status": "fail",
+        "elapsed_ms": 9312,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "raw_capture_manifest_schema_unavailable": 1
+        }
+      },
+      "verify_spec_lock": {
+        "status": "fail",
+        "elapsed_ms": 277,
+        "reported_failure_count": 28,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "stale_hash": 28
+        }
+      },
+      "validate_plan_graph": {
+        "status": "fail",
+        "elapsed_ms": 7258,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "artifact_hash_stale": 50
+        }
+      },
+      "validate_auto_decisions": {
+        "status": "pass",
+        "elapsed_ms": 201,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_evidence": {
+        "status": "fail",
+        "elapsed_ms": 7155,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "artifact_hash_stale": 50
+        }
+      },
+      "lint_contractrefs": {
+        "status": "fail",
+        "elapsed_ms": 36561,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "missing_ref": 1
+        }
+      },
+      "lint_banned_phrases": {
+        "status": "pass",
+        "elapsed_ms": 224,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "lint_path_refs": {
+        "status": "fail",
+        "elapsed_ms": 1941,
+        "reported_failure_count": 10,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "implementation_surface_missing_or_untyped": 10
+        }
+      },
+      "check_project_artifact_requirements": {
+        "status": "pass",
+        "elapsed_ms": 186,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "status": "pass",
+        "elapsed_ms": 138,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "status": "fail",
+        "elapsed_ms": 597,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "unresolved_local_ref": 50
+        }
+      },
+      "validate_new_contracts": {
+        "status": "pass",
+        "elapsed_ms": 106806,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_forge_backup_acceptance": {
+        "status": "pass",
+        "elapsed_ms": 687,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_browser_event_admission": {
+        "status": "fail",
+        "elapsed_ms": 6102,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "preexisting_family_rows_changed": 1
+        }
+      },
+      "validate_testing_session_event_admission": {
+        "status": "fail",
+        "elapsed_ms": 2612,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "preexisting_registry_rows_changed": 1
+        }
+      },
+      "validate_github_project_integration": {
+        "status": "fail",
+        "elapsed_ms": 1163,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "preexisting_registry_changed": 1
+        }
+      },
+      "validate_ui_command_response": {
+        "status": "pass",
+        "elapsed_ms": 1298,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_working_notebook_contracts": {
+        "status": "pass",
+        "elapsed_ms": 668,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_server_command_gap": {
+        "status": "pass",
+        "elapsed_ms": 6034,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_case_l_non_event_materialization": {
+        "status": "pass",
+        "elapsed_ms": 785,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_implementation_readiness": {
+        "status": "fail",
+        "elapsed_ms": 10915,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "buildability_gate_report_stale_or_not_canonical": 1,
+          "pnc019_source_hash_stale": 15,
+          "pnc019_source_hash_path_missing": 1,
+          "event_authority_currentness_audit_unavailable": 1,
+          "event_authority_checkpoint_changed_requires_fresh_approval": 2,
+          "event_denominator_unresolved": 2,
+          "event_family_contract_depth_unresolved": 2,
+          "event_family_registry_kernel_row_count_mismatch": 1,
+          "event_legacy_fixture_root_mismatch": 1,
+          "event_record_spec_lock_hash_stale": 1,
+          "storage_value_registry_retention_policy_count_mismatch": 1,
+          "storage_value_registry_family_count_mismatch": 1,
+          "storage_value_secret_material_key": 10,
+          "storage_value_secret_material_field": 4,
+          "storage_value_registry_status_counts_mismatch": 1,
+          "storage_value_registry_tier_counts_mismatch": 1,
+          "storage_value_registry_mvp_required_family_tier_mismatch": 2,
+          "storage_value_registry_semantic_recovery_authority_mismatch": 1,
+          "storage_value_registry_spec_lock_hash_stale": 2
+        }
+      },
+      "validate_plan_migration": {
+        "status": "fail",
+        "elapsed_ms": 23582,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "doc_count_mismatch": 1,
+          "inventory_doc_set_mismatch": 1,
+          "stale_batch_report_sha256_after": 48
+        }
+      },
+      "validate_runtime_artifact_schemas": {
+        "status": "pass",
+        "elapsed_ms": 287,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 210,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_project_output_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 212,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_usage_gui_fixtures": {
+        "status": "pass",
+        "elapsed_ms": 189,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_pm7_gui_fixtures": {
+        "status": "fail",
+        "elapsed_ms": 469,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "invalid_validator_output": 1
+        }
+      },
+      "validate_usage_contract_drift": {
+        "status": "pass",
+        "elapsed_ms": 2905,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_gui_asset_policy": {
+        "status": "pass",
+        "elapsed_ms": 334,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_web_capability_contracts": {
+        "status": "pass",
+        "elapsed_ms": 2632,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_filesafe_security_policy": {
+        "status": "pass",
+        "elapsed_ms": 229,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_wiring_matrix": {
+        "status": "pass",
+        "elapsed_ms": 449,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_touch_closure": {
+        "status": "pass",
+        "elapsed_ms": 1427,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      },
+      "validate_audit_closure": {
+        "status": "fail",
+        "elapsed_ms": 14984,
+        "reported_failure_count": 50,
+        "failure_list_may_be_capped_at_50": true,
+        "reported_error_categories": {
+          "audit_closure_validator_error": 50
+        }
+      },
+      "validate_audit_status_index": {
+        "status": "fail",
+        "elapsed_ms": 334,
+        "reported_failure_count": 1,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {
+          "stale_audit_status_index": 1
+        }
+      },
+      "check_shards": {
+        "status": "pass",
+        "elapsed_ms": 8630,
+        "reported_failure_count": 0,
+        "failure_list_may_be_capped_at_50": false,
+        "reported_error_categories": {}
+      }
+    },
+    "assessment": {
+      "total_gates": 36,
+      "passed": 21,
+      "failed": 15,
+      "whole_registry_changed_rows": [
+        "goal.created"
+      ],
+      "three_new_failures": "Browser, Testing Session and GitHub checks compare frozen whole-registry/prefix digests. Original HEAD satisfies those digests; the solely changed goal.created v3 row invalidates them. Their scoped admission checks report no other failure. Validators and frozen manifests are unchanged; no waiver or successor-baseline claim.",
+      "baseline_fixture_absence": [
+        "tests/fixtures/governance/raw_evidence_capture_modes.schema.json",
+        "tests/fixtures/pm7_shared/motion_frame_matrix.json",
+        "tests/test_pm_evidence_artifact_binding_modes.py"
+      ],
+      "fixture_absence_is_sparse_checkout_error": false,
+      "remaining_failures": "Unsealed governance, stale audit/migration/readiness artifacts, existing Home local refs and missing repository references/fixtures remain. Diagnostics may be capped at 50, so no complete before/after full-gate equivalence is claimed."
+    },
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2471,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T11:43:01Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25445,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6575
+      }
+    },
+    "central_data": {
+      "before": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_retention_policy_count_mismatch",
+          "expected": 24,
+          "actual": 26
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 119
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[50]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.read_token",
+          "field": "read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_field",
+          "field": "index_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_field",
+          "field": "index_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_field",
+          "field": "generic_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_field",
+          "field": "generic_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 97,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 24,
+            "later_gui_or_feature_projection": 92,
+            "migration_only": 3
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "runtime_resource_admission",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "observable_work_projection",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+          "family_id": "retention_hold_record",
+          "expected": "canonical_dual_homed",
+          "actual": "canonical_non_rebuildable"
+        }
+      ],
+      "after": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_retention_policy_count_mismatch",
+          "expected": 24,
+          "actual": 26
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 120
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[50]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.read_token",
+          "field": "read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_field",
+          "field": "index_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[96]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.$defs.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_field",
+          "field": "index_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[99]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+          "field": "index_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_field",
+          "field": "generic_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[102]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_field",
+          "field": "generic_read_token",
+          "field_list": "required_fields"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json:families[110]",
+          "error": "storage_value_secret_material_key",
+          "pointer": "$.properties.generic_read_token",
+          "field": "generic_read_token"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 98,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 24,
+            "later_gui_or_feature_projection": 93,
+            "migration_only": 3
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "runtime_resource_admission",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+          "family_id": "observable_work_projection",
+          "expected": "later_gui_or_feature_projection",
+          "actual": "migration_only"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+          "family_id": "retention_hold_record",
+          "expected": "canonical_dual_homed",
+          "actual": "canonical_non_rebuildable"
+        }
+      ],
+      "before_count": 21,
+      "after_count": 21,
+      "new_diagnostic_categories_or_locations": [],
+      "changed_details": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_family_count_mismatch",
+          "expected": 88,
+          "actual": 120
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_status_counts_mismatch",
+          "expected": {
+            "materialized": 66,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          },
+          "actual": {
+            "materialized": 98,
+            "deferred_not_build_blocking": 21,
+            "compatibility_alias": 1
+          }
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "error": "storage_value_registry_tier_counts_mismatch",
+          "expected": {
+            "tier_0_launch_critical": 16,
+            "later_gui_or_feature_projection": 71,
+            "migration_only": 1
+          },
+          "actual": {
+            "tier_0_launch_critical": 24,
+            "later_gui_or_feature_projection": 93,
+            "migration_only": 3
+          }
+        }
+      ],
+      "validator_unchanged": true,
+      "waiver": false
+    }
+  },
+  "limitations": [
+    "Original V2 forbidden-publication finding remains failing; stopped review was not resumed.",
+    "Source correction and six ordinary scenarios do not imply broad fault coverage or an independently completed V3 fault review.",
+    "Current event reader, deployment, native source/SIR/host/storage/restore and overall event depth remain unavailable or unverified.",
+    "No full gate pass, frozen-baseline rewrite, validator edit, governance seal, WorkNode, readiness admission or Step 8/9 completion."
+  ],
+  "cost": "Existing Astra medium author/source reviewer and root; per-step billing unavailable."
+}

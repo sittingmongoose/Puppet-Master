@@ -15095,6 +15095,8 @@ canonical_text: |-
   For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
 
   For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
+
+  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:
@@ -23475,3 +23477,100 @@ owner_hints: [Plans/storage-plan.md, Plans/Contracts_V0.md, Plans/Backup_Restore
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-293, ContractName:Plans/storage-plan.md#SP-026, ContractName:Plans/storage-plan.md#SP-236, ContractName:Plans/storage-plan.md#SP-237, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-279, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/storage_recovery_action_custody.schema.json, ContractName:Plans/event_payload_storage_recovery_applied.schema.json, ContractName:Plans/storage_value_registry.json
+
+## Goal start original command custody and publication
+
+For exactly `cmd.chat.goal.start`, the original Goal body issuer joins the five existing SP-287 physical `goal_body_record`, `goal_objective_revision`, `goal_objective_origin`, `goal_body_control` and `goal_body_mutation_receipt` values with one new `goal_start_command_custody` row in its actual original body transaction. The new row is canonical, non-rebuildable redb authority, wrapper `pm.storage_value.goal_start_command_custody.v1` version `1.0.0`, encoded by `pm.goal.start_command_json.v1` under the CV-341 key/codec. No independent caller tuple, later sync, copied owner or post-publication repair establishes participation. The existing pure body API remains separate; SP-287's body pending mechanism still supports its existing update/metadata transactions and is not repurposed as a durable pre-body start reservation. Exact objective text remains only in the existing body/history custody after lawful transient command input disposal.
+
+The actual original start builder authenticates original source birth, source/input/grant/decision/stage custody, exact original source-owner enrollment, permission and Stop/owner epoch before entering execution or calling a selected capture. It derives the full body/receipt, command row and producer expectation from the original source arguments and actual body builder before any returning whole-record helper can supply a candidate. The admitted command's original source, operation, command instance, original request argument digest and accepted goal identity stay bound together; changing the generated Goal or operation cannot evade original command-instance uniqueness.
+
+Under the actual common root lease, the original body publisher compares the complete independent expected semantic snapshot, receipts and origins, scope, all physical cells and origins, and all command cells and origins. It includes unrelated existing members, actual original participant identities, complete current source/seals and original owner enrollment. Source validity is checked directly in the original issuing method; unchanged invalid values do not become admitted evidence. All candidate, copy, parser, validator, builder and currentness helpers precede the final complete pure predicate and actual joined publication. No dependent helper runs between that predicate and publication. If a later output check refuses, an already admitted original effect remains preserved.
+
+The event producer derives `D = SHA256(JCS(["pm.goal.created.command.v1", "project", storage_instance_id, project_id, thread_id, command_id, command_instance_id, operation_id, goal_id]))` from the original source and original accepted body. Its event ID is `goal.created.v1:{D}` and event idempotency key is `goal.created.command.v1:{D}`. Original SIR idempotency remains unchanged. Occurred time is the exact original joined body transaction time, equal to initial body/revision/receipt times. Actor, correlation and nullable causation come from original source. `original_action_ref` is exactly its original request reference; `source_refs` preserves its original ordered unique list without sorting, inserting or deduplicating. Run, node, attempt, requested/effective account, producer sequence, parent event and payload reference are explicitly null; all four migration values are null. `no_secrets` and `dedupe_by_idempotency_key` remain exact. Storage supplies observed/persisted times and global sequence through its own original append authority.
+
+The command may hold `body_committed_pending` after the joined body commit. Actual original SIR acknowledgement/progression may update only the admitted current source capture. Original shared v2 group publication and first issuance then supply exact original append/full-value proof; terminal command publication joins actual source-stage outcome, owner result and CV-333 response. The Goal-only source participant must be originally enrolled with the actual semantic owner, physical owner, root and original shared adapter. The adapter independently checks live original source and pending-row/producer authority before new publication, issuance or full-value capture and after returning callbacks. Generic shared custody continues to establish its existing source/group/receipt authority; it is not represented as an independent Goal provenance validator.
+
+There is no compensating deletion or rollback when later source, receipt, result, disclosure or host steps refuse. Genuine earlier body, shared, source-stage and receipt effects remain. A pending completion whose original raw EventRecord disappeared before its first full-value capture is unavailable; it cannot reconstruct Storage-owned values or mint a replacement receipt. An already captured immutable terminal result can use retained original body/shared custody under current audit authority after lawful source/body disposal. No retained read grants live dispatch or changes the original terminal result.
+
+All six new selectors below have contract version `1.0.0`; selector major and contract version are separate. They describe required original methods, not a native selector implementation supplied by the external model.
+
+| Selector | Exact role |
+|---|---|
+| `storage.goal_start_command.issue_joined.v1` | Original Goal body issuer's start and commit transaction, joining five existing body values and one new command row |
+| `storage.goal_start_command.capture_pending_source.v1` | Original pending source progression CAS, without body/event reissuance or terminal rewriting |
+| `storage.goal_start_command.settle_original_result.v1` | Original source terminal staging and immutable result/outcome/response publication |
+| `storage.goal_start_command.read_retained.v1` | Original authenticated row and named logical-member read under current audit authority |
+| `storage.goal_start_command.backup_capture_same_owner.v1` | Complete coherent body/receipt/command image from the same actual participating owner |
+| `storage.goal_start_command.backup_restore_same_owner.v1` | Restore admitted complete image to that same actual owner/root, preserving newer terminal custody |
+
+Actual StorageMigrationCoordinator installation must bind exact family/schema/codec, all selected role versions, `owner.sir.goal_start_pending_custody@1.0.0`, current original body/receipt and shared full-value/first-receipt/group/backup roles, retention and mandatory backup compatibility under its real graph and ceilings. These selections and their actual owner epochs remain current through final staging/publication/disclosure. There is no new production store version or migration edge, fallback writer, Platform package-map adoption, native capability claim or alternate command route. Withdrawing a mutation role fences new mutation while preserving independently installed retained-read/backup authority and all original custody. Withdrawing read permission refuses disclosure without deleting the row.
+
+The command row alone uses existing `RP-AUTHORITY-INDEFINITE@1.0.0`, directly as original audit/receipt/source-lineage authority in Storage Case L-3. It contains no objective/request argument text. The body/history, transient source, raw shared frames and unrelated control families keep their existing policies. References do not hold or reconstruct deleted content. Complete coherent backup coverage is mandatory because this original authority is non-rebuildable; unproven or unresolved restore remains fenced. The same-owner external restore model does not supply arbitrary fresh-root product restore or native cross-owner backup installation. Missing broad restore/source/installation authority leaves those operations unavailable.
+
+The validation report records rejected predecessors, the independently reviewed source correction and six ordinary corrected-model scenarios separately. Inherited v1/v2 suite successes are not current-v3 regression evidence. Native redb/SIR/source authentication, native locks/fsync/crash recovery, native host dispatch, arbitrary fresh-root restore, current event traversal/checkpoint/mixed-version readers and overall event-depth/readiness remain unverified by this prerequisite.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/Contracts_V0.md#CV-341, ContractName:Plans/Shared_Integration_Runtime.md#SIR-048, ContractName:Plans/goal_start_command_custody.schema.json, ContractName:Plans/storage_value_registry.json, ContractName:Plans/Decision_Log.md#DL-045
+
+## SP-294 - Goal start original command custody and publication
+
+```yaml
+plan_unit_id: SP-294
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Original Goal start authenticates source validity and complete original expectations before joining
+  five existing body values and one content-free command row. Actual original shared publication and first receipt
+  precede immutable command-result settlement; preserved earlier effects, exact retained audit and qualified installed-role/backup
+  boundaries remain explicit.
+gui_related: false
+gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
+  without a visual surface.
+depends_on:
+- SP-286
+- SP-287
+- CV-341
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The original body issuer authenticates actual source birth/seals and full participant enrollment before execution
+  entry and original joined publication.
+- Complete body/receipt/producer/command expectations derive from original inputs before selected whole-record helpers;
+  final pure comparison includes all unrelated members and origins.
+- The exact original producer recipe uses original transaction time, ordered source refs and explicit null relationships;
+  Storage alone issues global sequence/times and first receipt.
+- Pending source progression and original shared first issuance preserve one body revision and original full-value
+  evidence without rollback, repair or redispatch.
+- The six separately versioned original roles require actual installation/current authority; withdrawal preserves
+  retained custody and independent installed read/backup roles.
+- New content-free original authority uses the existing indefinite audit class and mandatory coherent backup without
+  extending content retention or claiming broad fresh-root restore.
+- Corrected-model ordinary evidence, failed predecessors, native gaps and separate current-reader/checkpoint facets
+  remain distinguishable.
+validation_surfaces:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/goal_runtime_contracts.schema.json
+- Plans/event_payloads/goal_runtime/goal_created.schema.json
+- Plans/goal_start_command_contract_fixtures.json
+risk_class: false_original_goal_creation_or_lost_command_custody
+reasoning_tier: high
+context_scope: original_goal_start_command_integration
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/storage_value_registry.json
+node_compile_hint:
+  mode: original_goal_start_prerequisite_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
+  or installed-role declarations.
+- Do not reconstruct disposed objective/source values, roll back genuine earlier effects, restamp first receipts
+  or retry an immutable terminal command.
+- Do not claim native installation/dispatch/restore, current event traversal/checkpoint coverage, complete event
+  depth, readiness or governance clearance.
+```

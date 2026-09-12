@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json",
+  "title": "Goal start command request and result contracts",
+  "description": "Exactly the two existing central GoalStartRequestV2 and GoalStartResultV2 definitions. Other Goal command contracts remain separately owned.",
+  "$defs": {
+    "GoalStartRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route_ref",
+        "objective_text"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.start.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.start"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "null"
+        },
+        "expected_revision": {
+          "type": "null"
+        },
+        "expected_currentness_hash": {
+          "type": "null"
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "enum": [
+            "agent_runtime",
+            "approved_agent_proposal",
+            "goal_activity",
+            "goal_activity_editor",
+            "goal_control",
+            "goal_hover",
+            "natural_language",
+            "slash",
+            "wand"
+          ]
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "objective_text": {
+          "type": "string",
+          "maxLength": 4000,
+          "pattern": "^[^\\ud800-\\udfff]*$"
+        }
+      },
+      "$comment": "Existing exact central GoalStart definition. Goal-specific surface namespace from latest CAT family paragraph; not old generic UI source_surface. Owner rejects surrogate code points without changing accepted scalar/whitespace content. Empty objective remains structurally allowed. Explicit actual creation authority is not supplied by this JSON."
+    },
+    "GoalStartResultV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SucceededResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NoEffectResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/RecoveryRequiredResult"
+        }
+      ]
+    }
+  }
+}

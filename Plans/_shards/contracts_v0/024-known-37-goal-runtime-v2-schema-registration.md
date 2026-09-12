@@ -4,13 +4,13 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3564-L17488
 
-Source SHA256: `7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9`
+Source SHA256: `6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7`
 
 ---
 
 ## Known-37 Goal Runtime v2 schema registration
 
-The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Each family revision is `2.0.0`, the registry selects root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
+The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Except for active `goal.created` v3 under CV-341/GRS-066, each family revision remains `2.0.0`. The entire prior `goal.created` v2 resource remains authoritative retained decoding at `#/$defs/legacy_v2_reader`; its old payload minima and joins apply to that resource only. The active `goal.created` row uses family revision `3.0.0`. The registry selects each active root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
 
 | Event type | Current root | Exact schema ID |
 |---|---|---|
@@ -18,7 +18,7 @@ The following 21 project-scoped payload roots are authoritative Goal/GoalRun val
 | `goal.cancelled` | `Plans/event_payloads/goal_runtime/goal_cancelled.schema.json#` | `pm.goal_runtime_event.goal_cancelled.schema.v2` |
 | `goal.child_status_changed` | `Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json#` | `pm.goal_runtime_event.goal_child_status_changed.schema.v2` |
 | `goal.completed` | `Plans/event_payloads/goal_runtime/goal_completed.schema.json#` | `pm.goal_runtime_event.goal_completed.schema.v2` |
-| `goal.created` | `Plans/event_payloads/goal_runtime/goal_created.schema.json#` | `pm.goal_runtime_event.goal_created.schema.v2` |
+| `goal.created` | `Plans/event_payloads/goal_runtime/goal_created.schema.json#` | `pm.goal_runtime_event.goal_created.schema.v3` |
 | `goal.degraded` | `Plans/event_payloads/goal_runtime/goal_degraded.schema.json#` | `pm.goal_runtime_event.goal_degraded.schema.v2` |
 | `goal.evidence_captured` | `Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json#` | `pm.goal_runtime_event.goal_evidence_captured.schema.v2` |
 | `goal.progressed` | `Plans/event_payloads/goal_runtime/goal_progressed.schema.json#` | `pm.goal_runtime_event.goal_progressed.schema.v2` |

@@ -1,0 +1,1930 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json",
+  "title": "Original Goal start command custody",
+  "description": "Closed content-free original Goal command/source/result custody. SIR owns source and outcome authentication; the original body transaction admits pending start custody. No objective or complete request argument copy.",
+  "$defs": {
+    "PhysicalRevisionSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "physical_key",
+        "schema_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_revision\\.v2:[0-9a-f]+:[0-9a-f]+:1$"
+        },
+        "schema_id": {
+          "const": "pm.storage_value.goal_objective_revision.v1"
+        }
+      }
+    },
+    "OriginalAppendResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "sequence_id",
+        "byte_offset",
+        "segment_ref"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "segment_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "first_append_receipt",
+        "original_append_result",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "original_append_result": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/OriginalAppendResult"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "BodyCommit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_request",
+        "receipt_sha256",
+        "goal_revision",
+        "currentness_hash",
+        "accepted_revision_hash",
+        "objective_revision_selector"
+      ],
+      "properties": {
+        "receipt_request": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request"
+        },
+        "receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "goal_revision": {
+          "const": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "objective_revision_selector": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/PhysicalRevisionSelector"
+        }
+      }
+    },
+    "CreationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body_receipt_request",
+        "body_receipt_sha256",
+        "event_id",
+        "first_append_receipt",
+        "original_append_result",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "body_receipt_request": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt_read_request"
+        },
+        "body_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "original_append_result": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/OriginalAppendResult"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "GoalError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "evidence_ref",
+        "offending_field"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "goal_not_found",
+            "stale_goal_revision",
+            "stale_currentness",
+            "objective_too_long",
+            "approval_required",
+            "approval_not_resolved",
+            "manual_stop_latched",
+            "blocked_condition_unresolved",
+            "command_not_registered",
+            "permission_denied",
+            "owner_unavailable",
+            "cancelled"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "offending_field": {
+          "anyOf": [
+            {
+              "enum": [
+                "schema_id",
+                "schema_version",
+                "command_id",
+                "command_instance_id",
+                "project_id",
+                "thread_id",
+                "goal_id",
+                "expected_revision",
+                "expected_currentness_hash",
+                "actor_ref",
+                "permission_snapshot_ref",
+                "idempotency_key",
+                "source_surface",
+                "return_route_ref",
+                "objective_text"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "BodyEffect": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition",
+            "proof"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "committed"
+            },
+            "proof": {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/BodyCommit"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition",
+            "no_effect_proof_ref"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "not_committed"
+            },
+            "no_effect_proof_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "unresolved"
+            }
+          }
+        }
+      ]
+    },
+    "EventEffect": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition",
+            "proof"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "issued"
+            },
+            "proof": {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/OriginalPublication"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition",
+            "no_effect_proof_ref"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "not_published"
+            },
+            "no_effect_proof_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "disposition"
+          ],
+          "properties": {
+            "disposition": {
+              "const": "unresolved"
+            }
+          }
+        }
+      ]
+    },
+    "SucceededResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "goal_revision",
+        "currentness_hash",
+        "accepted_revision_hash",
+        "creation_receipt"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.start.result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.start"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "const": "succeeded"
+        },
+        "goal_revision": {
+          "const": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "creation_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/CreationReceipt"
+        }
+      }
+    },
+    "NoEffectResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "goal_revision",
+        "currentness_hash",
+        "accepted_revision_hash",
+        "creation_receipt",
+        "effect_disposition",
+        "no_effect_proof_ref",
+        "error"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.start.result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.start"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "null"
+        },
+        "status": {
+          "enum": [
+            "rejected",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "goal_revision": {
+          "type": "null"
+        },
+        "currentness_hash": {
+          "type": "null"
+        },
+        "accepted_revision_hash": {
+          "type": "null"
+        },
+        "creation_receipt": {
+          "type": "null"
+        },
+        "effect_disposition": {
+          "const": "no_goal_effect"
+        },
+        "no_effect_proof_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "error": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/GoalError"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "properties": {
+                  "code": {
+                    "const": "cancelled"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RecoveryRequiredResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "goal_revision",
+        "currentness_hash",
+        "accepted_revision_hash",
+        "creation_receipt",
+        "body_effect",
+        "event_effect",
+        "error",
+        "resolution_owner_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.start.result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.start"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "const": "recovery_required"
+        },
+        "goal_revision": {
+          "type": "null"
+        },
+        "currentness_hash": {
+          "type": "null"
+        },
+        "accepted_revision_hash": {
+          "type": "null"
+        },
+        "creation_receipt": {
+          "type": "null"
+        },
+        "body_effect": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/BodyEffect"
+        },
+        "event_effect": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/EventEffect"
+        },
+        "error": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/GoalError"
+            },
+            {
+              "properties": {
+                "code": {
+                  "const": "owner_unavailable"
+                }
+              }
+            }
+          ]
+        },
+        "resolution_owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "body_effect": {
+                "properties": {
+                  "disposition": {
+                    "const": "committed"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "goal_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_effect": {
+                "properties": {
+                  "disposition": {
+                    "const": "issued"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body_effect": {
+                "properties": {
+                  "disposition": {
+                    "const": "committed"
+                  }
+                }
+              },
+              "goal_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "NormalizedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "owner_identity",
+        "payload_sha256",
+        "idempotency_key",
+        "target_generation",
+        "dispatch_frame_id"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.start"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_identity": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+            },
+            {
+              "required": [
+                "thread_id",
+                "command_instance_id"
+              ],
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                },
+                "thread_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "command_instance_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              }
+            }
+          ]
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "NonterminalOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "outcome": {
+              "enum": [
+                "accepted",
+                "acknowledged",
+                "executing"
+              ]
+            },
+            "result_receipt_ref": {
+              "type": "null"
+            },
+            "error_ref": {
+              "type": "null"
+            },
+            "owner_result_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "type": "null"
+            },
+            "owner_result_sha256": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "SourceCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "normalized_identity",
+        "dispatch_id",
+        "command_outcome_ref",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "source_surface",
+        "return_route_ref",
+        "correlation_id",
+        "causation_event_id",
+        "creation_authority_ref",
+        "origin_refs",
+        "owner_epoch",
+        "user_stop_epoch",
+        "nonterminal_outcome",
+        "capture_authority_ref",
+        "captured_at"
+      ],
+      "properties": {
+        "normalized_identity": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NormalizedIdentity"
+        },
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_outcome_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "enum": [
+            "agent_runtime",
+            "approved_agent_proposal",
+            "goal_activity",
+            "goal_activity_editor",
+            "goal_control",
+            "goal_hover",
+            "natural_language",
+            "slash",
+            "wand"
+          ]
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "causation_event_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creation_authority_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "origin_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nonterminal_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NonterminalOutcome"
+        },
+        "capture_authority_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ProducerInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.event.v0"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "2.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "event_type": {
+          "const": "goal.created"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "node_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "requested_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "effective_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "occurred_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string"
+        },
+        "producer_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer"
+        },
+        "correlation_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "causation_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "parent_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_created.schema.v3"
+        },
+        "payload": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_created.schema.v3"
+        },
+        "payload_ref": {
+          "type": "null"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "replay_policy": {
+          "const": "dedupe_by_idempotency_key"
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration"
+        }
+      },
+      "$comment": "Only original producer-owned fields; actual full EventRecord later validates its independent canonical schema. Source-issued metadata/causality/identity remain original. No Storage assignments or own-event receipt before actual publication."
+    },
+    "TerminalSuccessOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "outcome": {
+              "const": "succeeded"
+            },
+            "error_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TerminalUnknownOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "outcome": {
+              "const": "terminal_unknown"
+            },
+            "result_receipt_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TerminalNoEffectOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "outcome": {
+              "enum": [
+                "failed",
+                "cancelled",
+                "rejected"
+              ]
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SuccessResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "ack_status": {
+              "const": "accepted"
+            },
+            "result_status": {
+              "const": "succeeded"
+            },
+            "error": {
+              "type": "null"
+            },
+            "event_refs": {
+              "minItems": 1,
+              "maxItems": 1
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "UnknownResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "ack_status": {
+              "const": "accepted"
+            },
+            "result_status": {
+              "const": "recovery_required"
+            },
+            "error": {
+              "properties": {
+                "code": {
+                  "const": "internal_error"
+                }
+              }
+            },
+            "receipt_ref": {
+              "type": "null"
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "NoEffectResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.start"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "result_status": {
+              "enum": [
+                null,
+                "failed",
+                "cancelled"
+              ]
+            },
+            "event_refs": {
+              "maxItems": 0
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalStartResultV2",
+                "schema_id": "pm.goal.start.result.v2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PendingRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "command_instance_id",
+        "operation_id",
+        "phase",
+        "admission_transaction_id",
+        "start_intent_sha256",
+        "body_commit",
+        "producer_input",
+        "producer_semantic_sha256",
+        "original_source",
+        "current_source",
+        "original_source_sha256",
+        "current_source_sha256",
+        "original_publication",
+        "owner_result",
+        "command_outcome",
+        "ui_response",
+        "terminal_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "phase": {
+          "const": "body_committed_pending"
+        },
+        "admission_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "start_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "body_commit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/BodyCommit"
+        },
+        "producer_input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/ProducerInput"
+        },
+        "producer_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "current_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "type": "null"
+        },
+        "owner_result": {
+          "type": "null"
+        },
+        "command_outcome": {
+          "type": "null"
+        },
+        "ui_response": {
+          "type": "null"
+        },
+        "terminal_transaction_id": {
+          "type": "null"
+        }
+      }
+    },
+    "SucceededRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "command_instance_id",
+        "operation_id",
+        "phase",
+        "admission_transaction_id",
+        "start_intent_sha256",
+        "body_commit",
+        "producer_input",
+        "producer_semantic_sha256",
+        "original_source",
+        "current_source",
+        "original_source_sha256",
+        "current_source_sha256",
+        "original_publication",
+        "owner_result",
+        "command_outcome",
+        "ui_response",
+        "terminal_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "phase": {
+          "const": "terminal"
+        },
+        "admission_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "start_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "body_commit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/BodyCommit"
+        },
+        "producer_input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/ProducerInput"
+        },
+        "producer_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "current_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/OriginalPublication"
+        },
+        "owner_result": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SucceededResult"
+        },
+        "command_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/TerminalSuccessOutcome"
+        },
+        "ui_response": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SuccessResponse"
+        },
+        "terminal_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "UnknownRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "command_instance_id",
+        "operation_id",
+        "phase",
+        "admission_transaction_id",
+        "start_intent_sha256",
+        "body_commit",
+        "producer_input",
+        "producer_semantic_sha256",
+        "original_source",
+        "current_source",
+        "original_source_sha256",
+        "current_source_sha256",
+        "original_publication",
+        "owner_result",
+        "command_outcome",
+        "ui_response",
+        "terminal_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "phase": {
+          "const": "terminal_unknown"
+        },
+        "admission_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "start_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "body_commit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/BodyCommit"
+        },
+        "producer_input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/ProducerInput"
+        },
+        "producer_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "current_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/OriginalPublication"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/RecoveryRequiredResult"
+            },
+            {
+              "properties": {
+                "body_effect": {
+                  "properties": {
+                    "disposition": {
+                      "const": "committed"
+                    }
+                  }
+                },
+                "goal_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              }
+            }
+          ]
+        },
+        "command_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/TerminalUnknownOutcome"
+        },
+        "ui_response": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/UnknownResponse"
+        },
+        "terminal_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "original_publication": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner_result": {
+                "properties": {
+                  "event_effect": {
+                    "properties": {
+                      "disposition": {
+                        "enum": [
+                          "not_published",
+                          "unresolved"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "owner_result": {
+                "properties": {
+                  "event_effect": {
+                    "properties": {
+                      "disposition": {
+                        "const": "issued"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "NoEffectRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "command_instance_id",
+        "operation_id",
+        "phase",
+        "admission_transaction_id",
+        "start_intent_sha256",
+        "body_commit",
+        "producer_input",
+        "producer_semantic_sha256",
+        "original_source",
+        "current_source",
+        "original_source_sha256",
+        "current_source_sha256",
+        "original_publication",
+        "owner_result",
+        "command_outcome",
+        "ui_response",
+        "terminal_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "null"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "phase": {
+          "const": "terminal_no_effect"
+        },
+        "admission_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "start_intent_sha256": {
+          "type": "null"
+        },
+        "body_commit": {
+          "type": "null"
+        },
+        "producer_input": {
+          "type": "null"
+        },
+        "producer_semantic_sha256": {
+          "type": "null"
+        },
+        "original_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "current_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "type": "null"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NoEffectResult"
+            },
+            {
+              "properties": {
+                "operation_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              }
+            }
+          ]
+        },
+        "command_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/TerminalNoEffectOutcome"
+        },
+        "ui_response": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NoEffectResponse"
+        },
+        "terminal_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "PreBodyUnknownRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "command_instance_id",
+        "operation_id",
+        "phase",
+        "admission_transaction_id",
+        "start_intent_sha256",
+        "body_commit",
+        "producer_input",
+        "producer_semantic_sha256",
+        "original_source",
+        "current_source",
+        "original_source_sha256",
+        "current_source_sha256",
+        "original_publication",
+        "owner_result",
+        "command_outcome",
+        "ui_response",
+        "terminal_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "phase": {
+          "const": "terminal_unknown"
+        },
+        "admission_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "start_intent_sha256": {
+          "type": "null"
+        },
+        "body_commit": {
+          "type": "null"
+        },
+        "producer_input": {
+          "type": "null"
+        },
+        "producer_semantic_sha256": {
+          "type": "null"
+        },
+        "original_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "current_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SourceCapture"
+        },
+        "original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "type": "null"
+        },
+        "owner_result": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/RecoveryRequiredResult"
+            },
+            {
+              "properties": {
+                "body_effect": {
+                  "properties": {
+                    "disposition": {
+                      "enum": [
+                        "unresolved",
+                        "not_committed"
+                      ]
+                    }
+                  }
+                },
+                "event_effect": {
+                  "properties": {
+                    "disposition": {
+                      "enum": [
+                        "unresolved",
+                        "not_published"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "command_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/TerminalUnknownOutcome"
+        },
+        "ui_response": {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/UnknownResponse"
+        },
+        "terminal_transaction_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "Record": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/PendingRecord"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/SucceededRecord"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/UnknownRecord"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/PreBodyUnknownRecord"
+        },
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/NoEffectRecord"
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "record"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.goal_start_command_custody.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record": {
+      "$ref": "https://puppetmaster.local/schemas/goal_start_command_custody/1.0.0/goal_start_command_custody.schema.json#/$defs/Record"
+    }
+  }
+}

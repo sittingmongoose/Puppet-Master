@@ -3563,7 +3563,7 @@ owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-
 
 ## Known-37 Goal Runtime v2 schema registration
 
-The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Each family revision is `2.0.0`, the registry selects root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
+The following 21 project-scoped payload roots are authoritative Goal/GoalRun validation schemas; current emission follows each exact event owner disposition. Exactly `goal.child_status_changed` (GRS-060/CV-334), `goal.degraded` (GRS-061/CV-335), and `goal.scheduled` (GRS-062/CV-336) are historical-only and admit no current writes under their individual owner rulings. Except for active `goal.created` v3 under CV-341/GRS-066, each family revision remains `2.0.0`. The entire prior `goal.created` v2 resource remains authoritative retained decoding at `#/$defs/legacy_v2_reader`; its old payload minima and joins apply to that resource only. The active `goal.created` row uses family revision `3.0.0`. The registry selects each active root `#`, every root is closed and self-contained, and its schema ID is byte-equal across the file `$id`, event-family `payload_schema_id`, and `payload_schema_ref.schema_id`. The EventRecord remains Contracts-owned `2.0.0`; outer/inner project, account, actor, correlation, causation, run, and optional thread joins must agree. `GoalRunStarted` is the sole admitted alias for `goal_run.started`; `BuildStarted` and all other aliases are rejected. Legacy v1 input is reader/upgrader-only and cannot be a new write.
 
 | Event type | Current root | Exact schema ID |
 |---|---|---|
@@ -3571,7 +3571,7 @@ The following 21 project-scoped payload roots are authoritative Goal/GoalRun val
 | `goal.cancelled` | `Plans/event_payloads/goal_runtime/goal_cancelled.schema.json#` | `pm.goal_runtime_event.goal_cancelled.schema.v2` |
 | `goal.child_status_changed` | `Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json#` | `pm.goal_runtime_event.goal_child_status_changed.schema.v2` |
 | `goal.completed` | `Plans/event_payloads/goal_runtime/goal_completed.schema.json#` | `pm.goal_runtime_event.goal_completed.schema.v2` |
-| `goal.created` | `Plans/event_payloads/goal_runtime/goal_created.schema.json#` | `pm.goal_runtime_event.goal_created.schema.v2` |
+| `goal.created` | `Plans/event_payloads/goal_runtime/goal_created.schema.json#` | `pm.goal_runtime_event.goal_created.schema.v3` |
 | `goal.degraded` | `Plans/event_payloads/goal_runtime/goal_degraded.schema.json#` | `pm.goal_runtime_event.goal_degraded.schema.v2` |
 | `goal.evidence_captured` | `Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json#` | `pm.goal_runtime_event.goal_evidence_captured.schema.v2` |
 | `goal.progressed` | `Plans/event_payloads/goal_runtime/goal_progressed.schema.json#` | `pm.goal_runtime_event.goal_progressed.schema.v2` |
@@ -17918,6 +17918,8 @@ canonical_text: |-
   For exactly goal.scheduled, schema registration preserves authoritative historical validation under GRS-062/CV-336 and admits no current scheduled-state transition. Existing other-row qualifications remain unchanged.
 
   For exactly goal.child_status_changed, the registered schema preserves authoritative historical validation under GRS-060/CV-334 and admits no current child-state transition or new writer.
+
+  For exactly goal.created, the common-v2 and structured-objective minima above remain authoritative only for the complete retained v2 resource. CV-341/GRS-066 define the active content-free v3 payload and SP-294 its original body/command/shared composition. This single version successor changes no other event row, alias, schema or admission disposition.
 gui_related: false
 gui_classification_reason: Event schema registration and owner boundaries are contract/governance behavior, not visual presentation.
 depends_on:
@@ -22348,4 +22350,75 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
+```
+
+## Goal start original command shapes
+
+`Plans/goal_runtime_contracts.schema.json` supplies exactly the two already referenced definitions `GoalStartRequestV2` and `GoalStartResultV2`, for the existing `cmd.chat.goal.start` command and its sole `handlers::goal_runtime::goal_start` handler. It supplies no other Goal command definition. The request preserves the complete original normalized argument value, including exact Unicode objective text, for original admission; only its authenticated digest and content-free identity enter command custody. Empty objective text is valid and the existing limit is 4,000 Unicode scalar values. No trimming, normalization, surrogate acceptance, frozen input, attachment, budget or GoalRecordV2 extension follows.
+
+`Plans/goal_start_command_custody.schema.json` is the closed wrapper and local-definition authority for the new physical command family. Its `PendingRecord`, `SucceededRecord`, `UnknownRecord`, `NoEffectRecord` and `PreBodyUnknownRecord` branches preserve different actual effect boundaries. A successful creation result joins the exact original body mutation receipt request/hash, original append result, full original EventRecord commitment and eleven-field first AppendReceipt. It reports creation success; it is not objective completion or workflow certification. Proven pre-execution no-effect results and unresolved results retain their distinct source-issued evidence and original terminal result. Row absence is neither no-effect proof nor permission to retry a terminal operation.
+
+The active payload is `pm.goal_runtime_event.goal_created.schema.v3`, with the exact twelve required content-free fields in `Plans/event_payloads/goal_runtime/goal_created.schema.json`. Revision and accepted objective revision are both 1. The entire prior v2 root, including its own ID and all local definitions, remains under `#/$defs/legacy_v2_reader`; retained decoding selects that whole resource explicitly. There is no shape-based fallback, v2-to-v3 reinterpretation, implicit legacy backfill, old structured-objective writer or extension of the event census. An active-v3 writer and a whole-v2 retained decoder are separate installation roles. A package unable to supply required actual roles is unavailable for that operation; a declaration does not prove native dispatch or mixed-version traversal.
+
+The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged.
+
+The physical key is `goal_start_command.v1:{P}:{T}:{C}`, where each component is lowercase hexadecimal of the exact UTF-8 `project_id`, `thread_id` and `command_instance_id`, respectively. The outer record's values must equal the decoded key, original operation/owner scope and original source identity. A logical member reference `<key>#/owner_result` resolves to `/record/owner_result` in the authenticated wrapped row; `<key>#/creation_receipt` resolves to `/record/owner_result/creation_receipt`. These are named owner-resolved members, not raw JSON Pointers at the wrapper root. Missing/null/unsettled members are unavailable and never synthesized. The result schema reference is exactly `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2`, schema identity `pm.goal.start.result.v2`. The resolver checks current audit authority and the exact original row/body/shared evidence before returning a member; traversal of an event is a separate consumer facet.
+
+ContractRef: ContractName:Plans/goal_runtime_contracts.schema.json, ContractName:Plans/goal_start_command_custody.schema.json, ContractName:Plans/event_payloads/goal_runtime/goal_created.schema.json, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-047
+
+## CV-341 - Goal start original command shapes
+
+```yaml
+plan_unit_id: CV-341
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Exact original Goal start request/result, content-free command custody, named logical-member resolution
+  and active-v3/whole-retained-v2 payload routes preserve distinct source/body/shared hash and authority domains.
+gui_related: false
+gui_classification_reason: Defines original internal command/source/body/event/result and retained audit authority
+  without a visual surface.
+depends_on:
+- CV-333
+- CV-339
+- GRS-064
+unblocks: []
+acceptance_criteria:
+- Exactly the existing GoalStartRequestV2 and GoalStartResultV2 central definitions are materialized without another
+  command or GoalRecordV2 field.
+- The closed content-free command row has exact key, wrapper, codec and distinct pending/success/no-effect/unknown
+  branches.
+- Only goal.created selects active content-free v3; the complete prior v2 resource and local definitions remain
+  exact retained interpretation.
+- Named owner-result and creation-receipt members resolve their exact wrapped locations under original row and current
+  audit authority.
+- Original body, source/producer/result and shared full-value/receipt hash domains remain distinct; schema validity
+  does not grant installed ownership.
+validation_surfaces:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/goal_runtime_contracts.schema.json
+- Plans/event_payloads/goal_runtime/goal_created.schema.json
+- Plans/goal_start_command_contract_fixtures.json
+risk_class: false_original_goal_creation_or_lost_command_custody
+reasoning_tier: high
+context_scope: original_goal_start_command_integration
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/goal_start_command_custody.schema.json
+- Plans/storage_value_registry.json
+node_compile_hint:
+  mode: original_goal_start_prerequisite_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20260911/step-08-goal-start-validation.md
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- Do not infer original authority from unchanged invalid values, selected helper results, hashes, schema registration
+  or installed-role declarations.
+- Do not reconstruct disposed objective/source values, roll back genuine earlier effects, restamp first receipts
+  or retry an immutable terminal command.
+- Do not claim native installation/dispatch/restore, current event traversal/checkpoint coverage, complete event
+  depth, readiness or governance clearance.
 ```

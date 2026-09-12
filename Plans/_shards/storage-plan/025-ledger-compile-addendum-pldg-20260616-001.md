@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15079-L15162
+Source lines: L15079-L15164
 
-Source SHA256: `71a2cfe2d19dcd08d42d316b467fd788cf31b1fa9ac2267143b815f6bfa0e61e`
+Source SHA256: `fda644f3612bd7bdb1c86224f67900c91ef38227f7c63461bb96e3feb171d492`
 
 ---
 
@@ -27,6 +27,8 @@ canonical_text: |-
   For exactly goal.child_status_changed, GRS-060/CV-334 forbid current writes and child-state reconstruction. SP-271 defines only bounded historical inspection without a family projection or checkpoint write; schema registration does not restore retired child topology.
 
   For the exact goal_receipt physical family, GRS-042 and SP-235 supersede the older disposable-receipt wording above: generic v1 and SP-289 Standard v2 are canonical non-rebuildable receipt authority. SP-289 adds only explicit same-family original certification custody; event and Goal-body producer integration remain separate.
+
+  For exactly goal.created, CV-341/GRS-066 and SP-294 select active content-free v3 original creation integration while retaining the whole v2 resource as historical decoding. The new command family is canonical non-rebuildable original authority; this prerequisite neither materializes an event projector/checkpoint nor permits body reconstruction from the event.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:

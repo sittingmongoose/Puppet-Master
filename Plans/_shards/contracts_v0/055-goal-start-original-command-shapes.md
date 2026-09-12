@@ -1,0 +1,23 @@
+# Shard 055: Goal start original command shapes
+
+Source: `Plans/Contracts_V0.md`
+
+Source lines: L22355-L22367
+
+Source SHA256: `6fa82fa34310c8f1ad1f86174ac077c2d5d448d3cd52de21a5213599da44baf7`
+
+---
+
+## Goal start original command shapes
+
+`Plans/goal_runtime_contracts.schema.json` supplies exactly the two already referenced definitions `GoalStartRequestV2` and `GoalStartResultV2`, for the existing `cmd.chat.goal.start` command and its sole `handlers::goal_runtime::goal_start` handler. It supplies no other Goal command definition. The request preserves the complete original normalized argument value, including exact Unicode objective text, for original admission; only its authenticated digest and content-free identity enter command custody. Empty objective text is valid and the existing limit is 4,000 Unicode scalar values. No trimming, normalization, surrogate acceptance, frozen input, attachment, budget or GoalRecordV2 extension follows.
+
+`Plans/goal_start_command_custody.schema.json` is the closed wrapper and local-definition authority for the new physical command family. Its `PendingRecord`, `SucceededRecord`, `UnknownRecord`, `NoEffectRecord` and `PreBodyUnknownRecord` branches preserve different actual effect boundaries. A successful creation result joins the exact original body mutation receipt request/hash, original append result, full original EventRecord commitment and eleven-field first AppendReceipt. It reports creation success; it is not objective completion or workflow certification. Proven pre-execution no-effect results and unresolved results retain their distinct source-issued evidence and original terminal result. Row absence is neither no-effect proof nor permission to retry a terminal operation.
+
+The active payload is `pm.goal_runtime_event.goal_created.schema.v3`, with the exact twelve required content-free fields in `Plans/event_payloads/goal_runtime/goal_created.schema.json`. Revision and accepted objective revision are both 1. The entire prior v2 root, including its own ID and all local definitions, remains under `#/$defs/legacy_v2_reader`; retained decoding selects that whole resource explicitly. There is no shape-based fallback, v2-to-v3 reinterpretation, implicit legacy backfill, old structured-objective writer or extension of the event census. An active-v3 writer and a whole-v2 retained decoder are separate installation roles. A package unable to supply required actual roles is unavailable for that operation; a declaration does not prove native dispatch or mixed-version traversal.
+
+The new row codec is `pm.goal.start_command_json.v1`: UTF-8 RFC 8785 canonical JSON over closed ASCII member names, Unicode scalar strings, arrays in original order, booleans/null and exact interoperable integers in the inclusive range -9,007,199,254,740,991 through 9,007,199,254,740,991. Object members sort as required by RFC 8785; the ASCII-key restriction makes the specified order unambiguous. Bytes have no BOM, extra whitespace or trailing newline. SHA-256 uses lowercase hexadecimal. Source, original producer semantic value, typed owner result, physical row, existing body currentness/revision, original shared full-value commitment and wire framing retain their separate exact hash domains; equal hashes alone do not authenticate original authority. The existing shared UInt64/MessagePack contracts are unchanged.
+
+The physical key is `goal_start_command.v1:{P}:{T}:{C}`, where each component is lowercase hexadecimal of the exact UTF-8 `project_id`, `thread_id` and `command_instance_id`, respectively. The outer record's values must equal the decoded key, original operation/owner scope and original source identity. A logical member reference `<key>#/owner_result` resolves to `/record/owner_result` in the authenticated wrapped row; `<key>#/creation_receipt` resolves to `/record/owner_result/creation_receipt`. These are named owner-resolved members, not raw JSON Pointers at the wrapper root. Missing/null/unsettled members are unavailable and never synthesized. The result schema reference is exactly `Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2`, schema identity `pm.goal.start.result.v2`. The resolver checks current audit authority and the exact original row/body/shared evidence before returning a member; traversal of an event is a separate consumer facet.
+
+ContractRef: ContractName:Plans/goal_runtime_contracts.schema.json, ContractName:Plans/goal_start_command_custody.schema.json, ContractName:Plans/event_payloads/goal_runtime/goal_created.schema.json, ContractName:Plans/Contracts_V0.md#CV-333, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-047
