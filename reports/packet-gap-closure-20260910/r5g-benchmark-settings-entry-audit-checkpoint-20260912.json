@@ -1,0 +1,199 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5g-benchmark-settings-entry-13-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "a955657362a0778b286b36fef7f5d1cec9cb3ede",
+  "landing_base_commit": "62bb745fedbfa15487f2e1f3f5d2986027076432",
+  "scope_and_authority": [
+    "Individually root-authored review of the four DOC-0110 benchmark arms (chunk 00034) and all nine DOC-0067 Settings correction README cases (chunk 00035). Helpers preserve custody, run bounded static checks and validate/serialize judgments; they never infer semantic verdicts.",
+    "Preserve all frozen applicability: ten retained and three adapted_selected_implementation (Settings README lines 7, 11 and 15). Historical candidates are lineage; later selected Settings authority is not a whole-case exclusion.",
+    "This landing changes this compact report only. Formal reviews, source snapshots, raw captures and experiment helpers remain outside the product repository. No Plans, concepts, deferred visual design, generated governance, WorkNodes, readiness admission, native handlers or other agents' edits are changed."
+  ],
+  "new_batch": {
+    "chunk_ids": [
+      "chunk-00034",
+      "chunk-00035"
+    ],
+    "cases": 13,
+    "status_counts": {
+      "partial": 12,
+      "pass": 1
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundary": "Only settings_correction_readme/L000005 passes: exact historical package omission/path correction and manifest-valid supplied authorities. This is not proof of prior source reading, semantic correction, provider behavior or native implementation."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 896,
+    "not_reviewed_cases": 12520,
+    "expected_chunks": 151,
+    "valid_result_files": 17,
+    "missing_result_files": 134,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {
+      "partial": 667,
+      "pass": 170,
+      "blocked": 39,
+      "fail": 17,
+      "not_applicable": 3
+    },
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "important_partial_boundaries": [
+    "The benchmark source requires exact A named actions, B direct rich typed BrowserProgram, C compact script compilation and D optional external adapter; held conditions, multiple competence tiers, twelve task classes and the full success/call/token/byte/time/resource/intervention/evidence/recording metrics remain mandatory. SMPFS-151's initial 4x2x1x1 = 8 cells and 36 leaves/cell = 288 denominator is preregistration, not execution or twelve-class coverage.",
+    "No verified comparable benchmark cells or recovered runnable named benchmark bundle were established by this review. The exact runner/self-test directory is absent from both complete tracked trees. That is not a universal assertion that no external run or archived artifact exists. Unavailable arms stay in the denominator and prevent winner/order/savings claims.",
+    "Arm B's experimental rich input does not replace PP-083's shipped compact digest and explicit on-demand help policy. Arm C retains typed bounded no-host-interpreter compilation. Arm D retains private runtime, scoped credentials, typed bounded IPC, process-tree cancellation and explicit billable close; no paid/provider or protected-auth run is authorized by the audit.",
+    "The historical Settings reference-review report explicitly records material Performance omissions and mostly unprovable pre-build reads. Its empty defects array, claimed repairs and historical test prose are not independently verified current-selected acceptance.",
+    "Inspected historical operation/rebuild/hydration code contains explicit simulated fixtures. Current Settings selects K3-polish concept-12 geometry plus later owner/T50 content; original four candidates and concept-09 reports remain lineage. Native progress, lifecycle, complete correction impact, command/wiring/DRY reconciliation and exact visual/interaction evidence remain open.",
+    "Frozen and current checkpoint builds reproduce the published concept with 29 script elements, 26 syntax-checked scripts and unchanged input snapshots. The build-local 892 embedded reference IDs, 674 manager rows, 218 page rows, zero fallback rows and five orphan subgroup IDs are not the live inventory census, a full correction review or native/visual proof.",
+    "The original and correction package manifests verify all 33 and 5 entries respectively. The original lacks the named full Performance register and root provider file; the provider exists under reference/ and matches the correction/root file byte-for-byte. The correction includes both root authorities. A narrow provider byte identity does not establish that missing Performance content made no difference.",
+    "The follow-on 1,112-line Performance register was read in full while checks ran, but its separately extracted cases are not reviewed or counted in this checkpoint. Whole-audit and implementation completion remain unproved."
+  ],
+  "current_comparison_boundaries": [
+    "Custody covers 724 selected repository paths at frozen/comparison pins, seventeen selected repository passages and six source passages. All selected repository passages are byte-identical; source/lineage retention is not transitive semantic closure.",
+    "The intervening Browser Program output-schema/actual-byte binding and workspace-reset authority were inspected. They do not produce benchmark or native proof and do not rewrite frozen verdicts.",
+    "Rebase preserved separate original Standard-certification changes in Contracts, Goal and Storage. The landing snapshot covers 727 selected paths: ten existing whole files changed outside the cited passages and three new certification schema/fixture/route files were added. All seventeen selected passages still match. Those independent changes are not certified by this review."
+  ],
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/benchmark-entry-13-root-review.json",
+      "sha256": "cac5865729e16086b7c0df6fa859b68210937ae8db1ca2f0d9fbf3dddae58042"
+    },
+    "authored_judgments": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/root-review-working.json",
+      "sha256": "e6ca9b7c2891a12e980f15003d324d292627cc9b705ad4f986a92a2873d5e750"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/assembly-summary.json",
+      "sha256": "1bd45c6d62f5431bf165bc97051a948289e087962213d160588a2f8a05c6f189"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/input-custody.generated.json",
+      "sha256": "263748f43b55ce690b826ad5c81da11a6ecae9d3e405aa746c468c5c4059dacb"
+    },
+    "passage_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/review-passage-custody.generated.json",
+      "sha256": "a798a82c8c4af7b1f17855b4708eee6fcc7afaa8f99ebe48c3ba0ddaafedb7bb"
+    },
+    "landing_inputs": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-inputs/62bb745fedbfa15487f2e1f3f5d2986027076432/receipt.json",
+      "sha256": "9f5c3f59e9b3f9be158bf0b2bacbcfede3d027dd8f3daac4c460b5eb1845648a"
+    },
+    "evidence_pin_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-evidence-verification/receipt.json",
+      "sha256": "e5ca1caafa7398d5de48f83f7c315a24af5f30ef54ceaf49e1195eba51ea0d4a"
+    },
+    "frozen_settings_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/settings-checks/frozen/receipt.json",
+      "sha256": "bf695994506a46c57e811d941e2aa479d8f9027583c0e49a51ee4e77add5d61e"
+    },
+    "current_settings_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/settings-checks/current/receipt.json",
+      "sha256": "559068d351b2ef229a3860e3212af1a7e08d13b149010ebe93fcb7285911d1c6"
+    },
+    "comparison_governance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/verification/gates.receipt.json",
+      "sha256": "b4f66740c4426a5236de9038e2afd1a0958d62f3797579b30950b7a969cd97ef"
+    },
+    "packet_tests": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/packet-tests.receipt.json",
+      "sha256": "402169bbbd1a7cb314423a38b8f821bb386ceca317195b4e120fb37f0c35c2bd"
+    },
+    "shards": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/shards.receipt.json",
+      "sha256": "b91de0d02d9e4e345afdedf99df693817ef32fce9144b44c64c429744fa9be6d"
+    },
+    "review_integrity": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/review-integrity.receipt.json",
+      "sha256": "0127d8d9ed7bd0cca3398f7cfe78d6fe73cc72b75b8ec7aa595e79cc58f8cc2f"
+    },
+    "workbook_status": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/audit-status.receipt.json",
+      "sha256": "98fdbb8e19f2d2f2e6d1ec7442cab73c1f334357d0d272fd846b85b61c125b99"
+    },
+    "governance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/gates.receipt.json",
+      "sha256": "aa44b7a6cc11b6c1a5834adf4e052e99e291c64e656d90e9db7ebc6ae65eee0d"
+    },
+    "governance_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/landing-verification/gates.json",
+      "sha256": "373a816ec5702a19185d5623e8ba8c20c2d298102284a74e7a3c692b38fe7819"
+    },
+    "chunk_00034": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/chunk-00034-root-review.json",
+      "sha256": "6fc9d0a41e37fee82efdb6867d59d1ea8565190bb817c12cf7492355d7ddb56e"
+    },
+    "chunk_00035": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-benchmark-entry13-review-20260912-8di101sd/chunk-00035-root-review.json",
+      "sha256": "26a0541a329520dba0bba5d5fa69434fb422722d1bc3252831371e6454aec06f"
+    },
+    "formal_00034": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00034.result.json",
+      "sha256": "2f17df5b0ee12256b5c306170e6da7d2967a0fb1424ab8de1ed2a9bdbee6f458"
+    },
+    "formal_00035": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00035.result.json",
+      "sha256": "818f4f054b69c927e9aa67be585811bbff0efce205b728ac3a609bd4f581d3de"
+    }
+  },
+  "verification": {
+    "base": "62bb745fedbfa15487f2e1f3f5d2986027076432",
+    "selected_inputs_per_landing_capture": 2472,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore, Concepts py/js/json/html, cohort root Python/JSON, frozen manifest and formal results; not full transitive closure.",
+    "review_integrity": {
+      "status": "pass",
+      "cases": 13,
+      "repository_passages": 17,
+      "source_passages": 6
+    },
+    "evidence_pin_check": {
+      "status": "pass",
+      "selected_receipts": 20,
+      "distinct_hashed_files": 2258,
+      "boundary": "Exact explicit path/SHA-256 pins; not recursive prior evidence graphs, input_hashes-map certification, semantic or native closure."
+    },
+    "packet_tests": {
+      "status": "pass",
+      "tests": 45
+    },
+    "shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2385
+    },
+    "frozen_and_comparison_settings": {
+      "status": "pass_static_only",
+      "scripts": 29,
+      "scripts_node_checked": 26,
+      "changed_inputs": 0
+    },
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1448,
+        "validate_implementation_readiness": 55,
+        "validate_plan_graph": 1448,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 900,
+        "verify_spec_lock": 27
+      },
+      "boundary": "Fresh comparison and rebased landing checks have the same failure counts. Missing raw-capture schema, PM7 motion fixture and governed audit reference are absent from committed trees, not repaired by this report. Stale governance/readiness/evidence/migration and PRD schema failures remain recorded. No reseal or full-integration success is claimed."
+    }
+  }
+}
