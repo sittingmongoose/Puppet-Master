@@ -10,6 +10,8 @@ The [legal-hold custody supplement](step-08-hold-validation.md) now defines exac
 
 The [shared wire supplement](step-08-wire-validation.md) defines exact Case L-2 / SP-026 / SP-236 bytes and reconciles CV-309 plus Hold/SIR references. It supersedes the earlier unspecified-wire finding without automatically adopting any individual integrity, recovery or history implementation. All event and storage registries and policies are unchanged; native execution and complete depth remain unproven.
 
+The [original full-value custody review](step-08-full-value-custody-review.md) adds a narrower pending-recovery qualification: shared v1 semantic replay does not authenticate all original Storage-assigned values after original controls retire. Platform has an independently reproduced issuance interleave; source inspection identifies exact Hold and Restore pending routes requiring successor adoption. Existing settled Hold/Home immutable full-value proofs remain qualified. A same-family stored-receipt v2 is the selected technical direction, not yet a canonical or validated successor. Prior dated assessments remain unchanged; no family inherits closure.
+
 ## Historical initial assessment (before DL-045 contract definitions)
 
 State: **INCOMPLETE**. All 39 registered families were freshly assessed across 12 criteria (468 cells). No family has complete depth. All 39 exact consumer/checkpoint cells remain unclosed and route to six owner-batched unresolved-binding work records (completion already authorized; no approval sought).

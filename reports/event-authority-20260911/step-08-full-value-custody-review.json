@@ -1,0 +1,194 @@
+{
+  "status": "OPEN_SHARED_FULL_VALUE_PREREQUISITE",
+  "reviewed_head": "06ad4268ab4c0a22fb02f53ed2d88a5fcfec3908",
+  "classification": "root technical direction under DL-045; not a new Jared product decision or canonical contract",
+  "selected_alternative": "B: strict same-family stored custody v2, with exact retained v1 and v2 readers",
+  "native_execution": "NOT_RUN",
+  "depth_pass": false,
+  "canon_changed": false,
+  "preserved": [
+    "eleven-field AppendReceipt",
+    "four-field original_append_result",
+    "v1 producer-semantic replay",
+    "immutable issued receipts",
+    "physical table/key",
+    "RP-EVENT-IDENTITY-APPROOT@1.0.0",
+    "all event registry membership",
+    "raw-source/control retention"
+  ],
+  "required": [
+    "compute full canonical EventRecord value commitment at actual all-member first issuance",
+    "bind codec, domain and version; include all three Storage-assigned fields; exclude relocatable framing",
+    "all issuance, recovery and mandatory backup paths use exact successor",
+    "authenticated retained full-value witness interface",
+    "no legacy backfill from unauthenticated current event or bare group_digest",
+    "explicit per-caller adoption and independent review"
+  ],
+  "caller_map": [
+    {
+      "caller": "Platform v4",
+      "classification": "independent execution reproduces generic-issuance/backup interleave refusal and unchanged v1 replay accepting changed observation",
+      "pending_route": "source publication before original_storage_fields CAS",
+      "required": "v2 witness adoption before guarded assignment custody; separately fix candidate preimage binding"
+    },
+    {
+      "caller": "Hold v9",
+      "classification": "source-inspection candidate gap; no new failure execution claimed",
+      "pending_route": "lost cache plus raw-control retirement before terminal full-value hash creation",
+      "required": "authenticate original whole value before pending terminalization",
+      "settled_route": "existing immutable event and full-value pin remain qualified"
+    },
+    {
+      "caller": "Restore creation/deletion/expiry pending v3",
+      "classification": "source-inspection persisted_at_utc candidate gap; no new failure execution claimed",
+      "pending_route": "after_issuance recovery from frozen input excluding sequence/persistence plus v1 replay",
+      "required": "authenticate full original value before pending terminalization",
+      "observation": "not classified as producer ownership drift; prior admitted full fixture carries observation but actual independent Storage capture seam remains unproved"
+    },
+    {
+      "caller": "Home v4",
+      "classification": "missing actual pending protocol; existing settled static birth and retained full-value reader remain qualified",
+      "required": "new pending protocol explicitly adopts successor; no inherited closure from static terminal fixture"
+    }
+  ],
+  "canonical_sources": [
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "a8e786e0bcc52607867096ae89873fa6fffba05046fec6a8c727a5cde52cd9cd"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "6452c533d694ae75071b524c3baf829cd049105b05247a06ae3ed68fbeb71cd2"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "abc9231a7a6f545e9a011b646f4e0aac96c701178a732032dfccfa3e123787ba"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "6eb290946e06632af8c16522b5e66c2e9d10b3a3a324213cbb7612f2e12add62"
+    }
+  ],
+  "frozen_sources": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-cross-caller-map-20260912/manifest.json",
+      "sha256": "20ef4cab76c0a95355ddc8dc4420c4de3271fcfad50038341cfa63bd3bdf073c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-cross-caller-map-20260912/review.md",
+      "sha256": "31b4a334b7acbe618807b65f4683058faf2f3d09ed3bdbcf7626ab9ebf0e01be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-full-value-alternatives-20260912/manifest.json",
+      "sha256": "ea8e8e10fe05fd25398914dc5861c37569b47ae295c4d1397402175201bee145"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-v4-independent-review-20260912/manifest.json",
+      "sha256": "3ef5bdcf1eb30206d0c27607dea943b643e3d1279b2dd85a76881a33eebfe297"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-v4-independent-review-20260912/review.md",
+      "sha256": "2cd7714739ab72cd6ea0b8d7f77b101c3ae751ca47d9f46185b6d319c514265f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-cross-caller-map-20260912/review.md",
+      "sha256": "31b4a334b7acbe618807b65f4683058faf2f3d09ed3bdbcf7626ab9ebf0e01be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-cross-caller-map-20260912/source-pins.json",
+      "sha256": "7a988caf32a6bb3a13020867ce4ccc9fbf8e47fa6ec329005ba7197e789fc4c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-contract-packet-v3-20260911/model.py",
+      "sha256": "3a5a4e7fbf671886d6730ae6e4b939a7ce33dd2ebebdff1bd7c10cf327a34195"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-append-receipt-contract-packet-v3-20260911/manifest.json",
+      "sha256": "cd8bbf748a189c99963bb47d4ac8cfe2ff2bd32cbfb30f937f36710a5c5f4f21"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/model.py",
+      "sha256": "45401f92632bb2ac06cb0ef684fe4c600b67c1f64b1f3df49d7fdbe123754633"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/manifest.json",
+      "sha256": "8d250dd01e41c92097c3f2a39d240a9242def16a47d3aee5481fc90e4896c77b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/preappend.py",
+      "sha256": "1faac9d3829a062c2a0ef92b09eb308e7d7bd77bf2d3bbdfb060d2ccb6ea0757"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/creation.py",
+      "sha256": "2dbd4565ad285c6d3301a48304c736f793e8f2b0e85087bdbbda4b6157723bde"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/deletion.py",
+      "sha256": "7af0d47c8d09f5903a62cad03ab16ee17cd474bdf9a8363a385e235da073d535"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/derived-expiry-complete.py.txt",
+      "sha256": "2a96fc6eb31820395569f95348e3364e4d0c473c48e81375a2c2280cacb00a61"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/owner-contract.md",
+      "sha256": "0940981581ee251fc7b49605d97296b7e1762f72e6c65841ff2b558d0b354de5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/manifest.json",
+      "sha256": "3e8955dc273f48d3fdadbd2d007c612147d80ca1cddec75b764966094282e231"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v1/pending.py",
+      "sha256": "4807c4817c23449c08fa8acb22edc94f91f67eabfdfc1fc8cdc3f8bf62196e6a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-lifecycle-admission-20260912/v1/derived-delete-check.py.txt",
+      "sha256": "c1d98afca7886581ffc240254bd05dba451ac85f5bc99f1024fa06757528e452"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/validate_v4.py",
+      "sha256": "751d0ab0a0fb656d245a65c9cc7cb4b1756bd979195f665af05470a4e871b05a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
+      "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-full-value-alternatives-20260912/alternatives.md",
+      "sha256": "00ecdbfb16b88bc8fddb7d0acd70ab9b33f46ffb7fbf6afac6e0ea5fb58a57c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-full-value-alternatives-20260912/source-pins.json",
+      "sha256": "ae4bf219e3c9cd54f6fe8afb3f7025f6546742f7a39c462a5d17242a84aa9502"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v4/manifest.json",
+      "sha256": "9dcc2173db6a366d1af1134c069e88d9e0048993070b626067d3ad5bd29e2ca3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v4/sources/Plans/Contracts_V0.md",
+      "sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v4/sources/Plans/storage-plan.md",
+      "sha256": "78434cbf8796f148016b5010b0b4ce521d5e60c8c923f24a6e9453386f84c0ed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v4/sources/Plans/Decision_Log.md",
+      "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-20260912/v4/append-owner/support/group_codec.py",
+      "sha256": "251a9874419f944f0efb5329bcaecc00c449b05a9b21a209abc5cfffedf20597"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-platform-decision-custody-v4-independent-review-20260912/review.md",
+      "sha256": "2cd7714739ab72cd6ea0b8d7f77b101c3ae751ca47d9f46185b6d319c514265f"
+    }
+  ]
+}
