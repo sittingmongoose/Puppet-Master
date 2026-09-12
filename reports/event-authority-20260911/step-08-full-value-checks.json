@@ -173,5 +173,20 @@
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-full-value-root-20260912/compilation-preservation.json",
       "sha256": "25e5d2f7a6c45bb5ada0933571dd524225bca427dd1cb7ed37e8c4d3573b80ac"
     }
-  ]
+  ],
+  "post_rebase": {
+    "base_head": "ea4b688ebe23d241b2816a57ac6a6f76c272eddf",
+    "upstream_changed_paths": [
+      "reports/packet-gap-closure-20260910/r5e-security-audit-checkpoint-20260912.json"
+    ],
+    "all_six_cited_source_preimages_exact": true,
+    "source_paths": [
+      "Plans/00-plans-index.md",
+      "Plans/storage-plan.md",
+      "Plans/Contracts_V0.md",
+      "Plans/event_append_receipt_contracts.schema.json",
+      "Plans/event_record.schema.json",
+      "Plans/storage_value_registry.json"
+    ]
+  }
 }
