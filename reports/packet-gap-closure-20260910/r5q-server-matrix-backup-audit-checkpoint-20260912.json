@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "ce26c14e141dbf75c1f07f89c43e43527ab2395f",
+  "published_review_comparison_commit": "5fc9747b6f62e0279a9e86d015708da69b809e6f",
+  "landing_base_commit": "6df1db15e8b4f6be90a6d69e7f2daeec8e491f41",
+  "new_batch": {
+    "case_count": 201,
+    "status_counts": {"partial": 186, "fail": 15},
+    "applicability_counts": {"retained": 199, "adapted_selected_implementation": 2},
+    "groups": {
+      "server_owner_consumer_rows": 57,
+      "server_machine_requirements": 38,
+      "server_backup_restore_contract": 41,
+      "server_backup_restore_acceptance": 65
+    },
+    "chunks": ["chunk-00020", "chunk-00021", "chunk-00024", "chunk-00025"],
+    "authored_judgment_files": 4,
+    "evidence_groups": 158,
+    "selected_owner_passages": 145,
+    "method": "Every original case has an individually root-authored finding, residual and status, exact complete source object or context-bound source line, source-document custody, current owner evidence and resolved path-plus-SHA-256 references. Helpers validate identity, hashes, structure and explicit mappings only; they do not generate semantic judgments. The acceptance group includes broad Server, remote, security, execution, GUI and performance obligations, not only backup."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 4101,
+    "remaining_cases": 9315,
+    "result_files": 71,
+    "remaining_result_files": 80,
+    "status_counts": {"pass": 236, "partial": 3710, "blocked": 39, "fail": 113, "not_applicable": 3},
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "complete": false,
+    "remaining_scope": {
+      "touch_closure_dimensions": 8359,
+      "september_3_onboarding_doctor_tour_detail_groups": 492,
+      "onboarding_doctor_requirements": 128,
+      "full_thread_topics": 85,
+      "server_wan_contract": 251
+    },
+    "prior_result_files_preserved_byte_for_byte": 67
+  },
+  "failed_case_families": [
+    {
+      "finding": "Static update-frequency inventory and placement conflict with the application owner's no-user-defined-schedule boundary",
+      "failed_occurrences": 10,
+      "evidence_groups": ["matrix_application_update", "matrix_settings_inventory", "update_inventory_cadence_conflict"],
+      "detail": "system.advanced.update-frequency remains an advanced select with Daily/Weekly/Monthly/Never, Weekly default and recommendation, mapped to updates-settings. RSC-014 forbids a user-defined schedule. The retained source also specifies internal Stable approximately 24-hour, Canary 6-12-hour and Nightly 1-6-hour cadence. Selected bounded owner/schema searches do not resolve those exact intervals or the named initial UpdateSource adapter. This is one shared static conflict represented by ten source cases, including two retained fence lines; it is not proof of a visible normal-menu control or a running scheduler defect.",
+      "repair_authorized_by_this_audit": false
+    },
+    {
+      "finding": "Previously documented central command-primary registration gaps remain",
+      "failed_occurrences": 5,
+      "evidence_groups": ["matrix_commands", "matrix_catalog", "command_census_gaps", "remote_command_gap"],
+      "canonical_targets": ["cmd.auth_profile.open_official_page", "cmd.integration.connection.add", "cmd.integration.connection.update", "cmd.integration.connection.test", "cmd.integration.connection.remove", "cmd.integration.connection.open_details", "cmd.remote_access.route.test"],
+      "detail": "Fresh frozen/current exact-token scans find one production-intent row for each target but no own first-cell primary row in either Commands System or UI Command Catalog. Alias/context mentions do not supply primary registration. cmd.remote_access.remote_link.test remains an approved normalization-only alias to route.test; it is not a newly rejected spelling. Five broad source cases reference these seven existing underlying gaps, not five newly introduced command bugs.",
+      "repair_authorized_by_this_audit": false
+    }
+  ],
+  "retained_interpretation_boundaries": [
+    "The source's create-or-adjudicate instruction permits existing canonical owners for proposed new filenames. Absent proposed owners are not mechanically failed or created. The absent Usage_Concepts_Rebuild_Plan still needs explicit obligation-disposition evidence and remains partial.",
+    "Current new backup policy includes Project files and complete Git/Jujutsu history. Older optional or source-excluded policy is historical compatibility, not the new default. Full Server capture must close every non-rebuildable dependency, not just list a manifest.",
+    "Restore keeps four current modes, an orthogonal settings strategy and separate browse. BRS-023 permits only its verified-unavailable and exact human-consent emergency exception; rollback still requires real recovery custody and no other safety gates are waived.",
+    "RAS-015 retains one PM-owned Go tsnet helper identity per Server, automatic private endpoint and separately gated public routes. Retired full-Tailscale installation, CLI/Serve controls and sidecar mechanics are not revived. A replacement Client requires a new authorized protected-content handoff.",
+    "No native, rendered visual, motion, provider, credential, WAN, performance, app update, backup or restore acceptance is established by schemas, source declarations or static checks. All 186 partial cases retain explicit unproved obligations."
+  ],
+  "currentness": {
+    "selected_paths_verified": 911,
+    "published_review_selected_paths": 906,
+    "prior_passages_text_identical": 152,
+    "additional_passages_text_identical": 25,
+    "changed_prior_passage_readjudicated": "goal_reader_installation_map",
+    "postpublication_selected_passages_text_identical": 144,
+    "postpublication_changed_passage_readjudicated": "storage_goal_passive",
+    "postpublication_qualification": "The subsequent current-main consumer reconciliation explicitly maps active Goal-created Activity/body/history to existing canonical body/command custody and readers, not an event-built current Goal projector or invented checkpoint. This supersedes the older generalized unresolved-projector sentence in the one changed selected SP-298 span without proving runtime, backup or continuation. EP-116/SP-270 add original first-receipt adoption while preserving certified post-expiry prefix independence; N2-157 adds only exact passive/per-evaluation original-context joins, not a config writer, Doctor-health proof, aggregate Platform writer or replacement Models snapshot. Both existing Start wiring rows now bind created-v3/original settlement but remain handler_unavailable. All published results remain immutable; the 186 partial and 15 failed judgments are unchanged. The seven gap catalogs/rows, frequency objects and Browser registry subjects retain exact bytes. Final current-main checks are separate from the published 5fc9747 evidence.",
+    "detail": "The latest Goal-update landing was read against current owners. GRS-068/SP-299/SIR-049/CV-342 add original accepted-source, body participation, updated-v3 event and immutable terminal custody. Four new non-rebuildable physical families require complete original source/input/progress epochs and head/terminal members plus body and event custody in backup. Unsupported old/native backup paths must refuse entry and final publication. Input follows Thread disposal; content-free audit remains indefinite. Release installation faces the expanded exact dependency graph. The companion finite offline report does not prove native backup, crash/concurrency, fresh-root migration, agent intake or current updated-event reader depth. These strengthen the existing partial residuals, not the completed-case count or runtime claims."
+  },
+  "verification": {
+    "packet_audit_tests": {"status": "pass", "tests": 45},
+    "result_structure_identity_and_evidence_refs": {"status": "pass", "cases": 201, "errors": 0},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases": 1028, "negative_cases": 3338, "internal_self_tests": 12, "boundary": "Static schema/fixture consistency only."},
+    "server_command_gap_adjudication": {"status": "pass", "rows_resolved": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11, "boundary": "Schema-reference/adjudication coverage does not prove missing primary catalog rows or native handlers."},
+    "shards": {"status": "pass", "documents": 98, "shards": 2598},
+    "browser_event_admission": {"status": "fail", "error": "preexisting_family_rows_changed", "positive_cases": 53, "negative_cases": 576, "command_bindings": 15, "registry_families": 42, "admitted_scoped_families": 2, "prepared_scoped_families": 51, "created_and_reset_static_subchecks": "pass", "attribution": "The same 39 original IDs retain their historical fingerprint; only Goal-created and Goal-updated original rows differ, each now v3. No historical pin is refreshed and no native/whole-Browser admission is claimed."},
+    "governance": {
+      "status": "fail",
+      "passing_checks": 21,
+      "failing_checks": 15,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "Same failing group names as the previous checkpoint. The latest consumer landing also leaves its edited Orchestrator owner hash stale in Spec Lock; no lock is refreshed. Raw diagnostics remain pinned; per-group arrays are capped, so no assertion covers unseen diagnostics. Missing fixtures/references, stale locks/evidence/readiness/audits and whole-registry guards are not repaired or waived by this report."
+    }
+  },
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/server-matrix-backup-201-root-review.json", "sha256": "d198f2e6836992c3971dd751de32f5041a3b7a1c9e2d9f9e1bb56b10de48b244"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/review-evidence-plan.json", "sha256": "5f3e918baad5ee2f32f9b886caa8de27d8fc492c42ce3ba385285dab8178c68c"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/assembly-summary.json", "sha256": "64820707eea0116d107bdbbddf99e9ee08147c4d434edbbab6501930d9a0efce"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/review-passage-custody.generated.json", "sha256": "a1e2c4b0a16e3d8c897d7ad494696d1227cbcee0b4c90a01d101066fd6fd827a"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/input-custody.generated.json", "sha256": "5c63c746fda0a2c2eb8b4a8bf5e427d638d821e37a974f98dac415c08e1e1d1d"},
+    "landing_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/landing-currentness.generated.json", "sha256": "46452900499d8311b8d16f6b39882c6341348bfec130dd1f7198d7a1ccfcfba0"},
+    "postpublication_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/preland-currentness.generated.json", "sha256": "6d13c444987977995a6b584e7cf890e9ad8d1fc9ebb6a8179aa3fba1726f9bc1"},
+    "selected_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/selected-review-evidence.generated.json", "sha256": "6f16fb8f815d96b64dff759c42c2cdac1327e8bbaf49e5e8bbe14427795dece3"},
+    "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/landing-checks/summary.json", "sha256": "6f1b8324fa200c2aca37b7f261e6e8b0a7681d6a3233d79842951df74cb7cb2a"},
+    "preland_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/preland-checks/summary.json", "sha256": "aba5bf2e20ae6a085efe04c524ee307804d0fa05a0c56cf730ee8a61b3c373d0"},
+    "browser_baseline_attribution": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/browser-preexisting-pin-attribution.generated.json", "sha256": "6118c25a1ef29428f26a623a7ee25e763be9f400123113f71e010e8fc586baca"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/publication-summary.json", "sha256": "27bbdf2583df34fcb7095f0be263c6123d796f62ddb9e1a8de64898692e4c663"},
+    "publication_before": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/publication-before-results.json", "sha256": "447a2c085d66811d1f9ec8fc37ebf08cf57d026cc0e58b1afd08f188822cfee0"},
+    "publication_after": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/publication-after-results.json", "sha256": "5543cd0906ae05a0833ea205032d946e752bf656516415b5fd33733c0f6e8a45"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-matrix-backup201-review-20260912-hJFVUkKI/publication-checks/packet-tests.receipt.json", "sha256": "0fd4c228e87d63bd75487baa042e1abc5cbed2b8e6797bc273105ed83a4567e2"}
+  },
+  "boundary": "Report-only landing. Raw evidence and helper code remain outside the repository. No canonical product edit, new command, rendered design change, live backup/auth/provider/network operation, historical review rewrite, generated governance refresh, Spec Lock change, Event Authority closure, native-readiness claim or whole-packet completion. The remaining 9,315 original cases stay open."
+}
