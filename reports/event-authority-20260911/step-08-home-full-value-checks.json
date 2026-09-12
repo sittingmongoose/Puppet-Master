@@ -999,5 +999,15 @@
       "sha256": "e5079d81a8a42ff8e84c9f41ef11cd9fe98e55022a7f8fdce6425fc4ad84880c"
     }
   ],
-  "report_fidelity_review": "Astra medium read-only reviewer checked report counts, source mappings, current hashes and limitations. One depth-supplement phrase corrected to scoped cases in independent review."
+  "report_fidelity_review": "Astra medium read-only reviewer checked report counts, source mappings, current hashes and limitations. One depth-supplement phrase corrected to scoped cases in independent review.",
+  "landing_currentness": {
+    "status": "PASS",
+    "original_base": "29dfc9ac32e2deb0163f0316964ba96c115bcebe",
+    "landing_base": "7ba0774f3215da46ff026b5542c2fa413b6711cd",
+    "all_cited_canonical_preimages_exact": 16,
+    "intervening_paths": [
+      "reports/packet-gap-closure-20260910/r5h-performance-register-audit-checkpoint-20260912.json"
+    ],
+    "adjudication": "Only unrelated report changed; all cited canonical bytes remain exact. Branch rebased without canonical or generated conflicts."
+  }
 }
