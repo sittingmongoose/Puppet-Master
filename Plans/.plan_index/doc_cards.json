@@ -16630,7 +16630,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 23143,
+      "line_count": 23170,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 284,
       "plan_unit_ids": [
@@ -16995,7 +16995,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907",
+      "sha256": "b9496d399b47cbcaaa434cdfec82e2237d0c8dfcaa9e0db70b1a8017d63a63f4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 281,
@@ -17177,6 +17177,8 @@
         "reports/event-authority-20260911/step-08-home-full-value-checks.json",
         "reports/event-authority-20260911/step-08-home-full-value-validation.md",
         "reports/event-authority-20260911/step-08-home-validation.md",
+        "reports/event-authority-20260911/step-08-integrity-full-value-checks.json",
+        "reports/event-authority-20260911/step-08-integrity-full-value-validation.md",
         "reports/event-authority-20260911/step-08-integrity-wire-checks.json",
         "reports/event-authority-20260911/step-08-integrity-wire-validation.md",
         "reports/event-authority-20260911/step-08-platform-custody-validation.md",
@@ -19065,7 +19067,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-12T06:45:25Z",
+  "generated_at_utc": "2026-09-12T07:21:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

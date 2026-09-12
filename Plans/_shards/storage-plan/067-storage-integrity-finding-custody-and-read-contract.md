@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L22788-L23037
+Source lines: L22788-L23064
 
-Source SHA256: `e72da89398067e67dcf3b6650e6769278329504112579bce60e481417e830907`
+Source SHA256: `b9496d399b47cbcaaa434cdfec82e2237d0c8dfcaa9e0db70b1a8017d63a63f4`
 
 ---
 
@@ -79,7 +79,19 @@ The coordinator obtains a Case L-authorized valid append sink without modifying 
 Append as durability_class=barrier under Case L-2 and SP-286/CV-339: actual complete frame write + active-segment sync_all, then actual atomic watermark/manifest promotion + parent directory sync, then durable custody of the first synced AppendReceipt before success. The existing original eleven receipt fields and four-field append result remain exact. Read back selected manifest and original source frame, event identity/digest/payload, finding/report hash and receipt identity/generation/group/offset/durable end. A returned four-field event tuple, timestamps, existing index row or receipt-shaped object is not durability proof. Only that proof releases an appended detection result. This release never clears the global integrity block, authorizes mutation, publishes recovery effects or advances a reader.
 
 
-The new finding is not itself the shared first-receipt custody row or a full-value witness. Integrity-specific adoption of the shared full-value receipt dependency, exact original semantic payload validation and any pending continuation after original append/control retirement remain a separate unproved prerequisite. Do not infer this adoption from the old capture, generated receipt-shaped fixture, current wire frame, file hash or passive historical read. Keep unresolved producer completion pending until the actual required original owner/receipt route is established. Historical inspection after lawful original-source disposal is a distinct read-only route and does not retrospectively certify producer issuance.
+The immutable finding is the existing producer's sole recoverable domain pending obligation; it is not the shared first-receipt row or a full-value witness. SP-279 explicitly adopts SP-286/CV-339's strict v2 writer, retained version readers, full-value resolver and settled-backup gate for Integrity-specific producer completion. This is a new technical composition under DL-045. It introduces no new installed completion endpoint, mutable domain terminal row, event/payload/physical family, policy, raw journal or semantic codec.
+
+Before original append, derive every producer-owned EventRecord field from actual admitted immutable finding bytes and fixed owner constants. Preserve the original actor/time, exact input and event identities, and required-present nulls. Independently fix this complete projection before any copy, validator or source helper; sequence_id, observed_at_utc and persisted_at_utc remain Storage's three original assignments. The actual recovery coordinator must admit the safe append sink and the same original append owner under current root, installation, access/deletion and maintenance authority. A public flag, copied owner or matching hash is no grant. Complete source/dedupe absence remains necessary for fresh append. The final source publisher conserves every previously admitted event and the complete ordered sequence-gap/evidence values; ordinary append or relocation cannot drop or rewrite gap authority while preserving only event bytes.
+
+Original source publication and first receipt issuance use the same actual shared owner, with the complete original-owner and Integrity guards held through their respective final publications. Independently retain exact expected source/issuance values before returning helpers, then compare the entire candidate after all helpers and validators. Preserve the original eleven-field AppendReceipt and four-field append result exactly. A later Integrity refusal does not undo an already lawful shared source publication, receipt transaction or shared backup artifact; it withholds only the not-yet-authorized outer result. Missing or ambiguous first issuance stays pending, with no duplicate append or invented acknowledgement.
+
+Producer completion and settled response retry require the genuine current complete EventRecord under the full current SP-278 source/token, the exact admitted finding, and the actual retained v2 custody. Compare the entire producer projection with the finding and open that current event through storage.first_append_receipt.resolve_full_value.v1 on the same actual shared owner. Require its exact three-field witness to equal the actual canonical custody projection: all eleven original receipt fields, original opaque segment ref and original-event value commitment. The commitment authenticates Storage's three assigned fields as well as the frozen producer input. At return, recheck the same owner, complete current source/token, actual selected finding/event, installation/access/deletion snapshot and exact whole output after the last resolver/copy. A missing current event or v2 witness is unavailable completion; legacy semantic replay cannot backfill or replace the full-value route.
+
+After genuine first issuance, lawful disposal of original damaged-source or append controls does not require reacquiring them for completion from the surviving current event, permanent finding and retained full-value custody. This producer completion route remains distinct from the existing receipt-independent passive historical reader. Passive inspection can disclose a verified current detection without an issued receipt and cannot certify issuance, authorize recovery, advance a checkpoint or stand in for completion.
+
+Aggregate backup invokes the actual shared settled-backup gate, verifies the returned token against the exact current shared owner snapshot, and binds genuine finding bytes and current source under the same outer fence. If shared settlement succeeds before outer refusal, preserve that lawful receipt/artifact but publish no aggregate finding backup. An authentic aggregate saved before original-control disposal can later restore exact issued pending-response custody. The current shared backup path still requires its actual original controls for a fresh capture; unavailable controls cause refusal before reacquisition, not a claim of successful new backup.
+
+Restore authenticates the selected actual aggregate token, original vault and complete original artifact. Before invoking the vault's returning restore helper, independently derive the exact entire typed expected Store state from that authenticated artifact with only the existing required settled-restore origin transformation. Immediately validate the returned Store against that expectation; after every remaining validator/copy, require the same returned object and complete expected state together with exact finding/source/root/binding values and original aggregate currentness before admission. Do not learn the expected state from the unchecked returned Store. Finding-only restored work has no fresh-append grant from its mere presence or a domain sink flag: without actual SP-286 restore-coordinator admission it stays pending. No new restored-root first-mint path is supplied here.
 
 Crash before finding durability returns no durable detection success. After finding, retries reconcile authoritative dedupe/source state. Valid unacknowledged frames may be adopted only by existing Case L recovery; ambiguous append stays pending and fenced. Once the semantic event may exist, no duplicate append and no report rollback. Same identity/same producer semantic digest returns original event/result; mismatch conflicts. If canonical evidence cannot distinguish absence from incomplete indexing, do not append on absence-from-index. Closed source segments remain immutable throughout.
 
@@ -127,7 +139,9 @@ Native segment/manifest/watermark detectors, source/root/manifest/watermark auth
 
 ### 11. Bounded validation and outstanding authority
 
-The reviewed actual-wire successor records 407 bounded static checks: 102 actual-byte/capture, 56 supplied-owner/reader, 126 unchanged codec vectors, 93 inherited checks and 30 independent controls. Inherited checks retain their original scope and do not make the predecessor synthetic frame into actual-wire evidence. This inventory and its exact source pins are recorded in `reports/event-authority-20260911/step-08-integrity-wire-validation.md` and `reports/event-authority-20260911/step-08-integrity-wire-checks.json`. The two full-u64 finding-payload paths remain capture/file-codec evidence only; exact_event corroboration, the three separate control-owner detectors, Integrity-specific shared full-value adoption and all native obligations above remain unproved. Static checks do not execute the native IN oracles or establish DEPTH_PASS.
+The reviewed actual-wire successor records 407 bounded static checks: 102 actual-byte/capture, 56 supplied-owner/reader, 126 unchanged codec vectors, 93 inherited checks and 30 independent controls. Inherited checks retain their original scope and do not make the predecessor synthetic frame into actual-wire evidence. This inventory and its exact source pins are recorded in `reports/event-authority-20260911/step-08-integrity-wire-validation.md` and `reports/event-authority-20260911/step-08-integrity-wire-checks.json`. The two full-u64 finding-payload paths remain capture/file-codec evidence only; exact_event corroboration, the three separate control-owner detectors and all native obligations above remain unproved. Static checks do not execute the native IN oracles or establish DEPTH_PASS.
+
+The separately reviewed Integrity full-value successor supplies the explicit producer composition in §5, with 371 scoped author checks and 137 bounded independent correction checks recorded in `reports/event-authority-20260911/step-08-integrity-full-value-validation.md` and `reports/event-authority-20260911/step-08-integrity-full-value-checks.json`. The report preserves the failed predecessor restore and gap-conservation findings and their corrected scope. Shared source adapters remain supplied-owner fixtures; no capture, current schema check or matching receipt upgrades them into native wire/durability/authentication proof. Existing passive paginated history remains independently preserved. Fresh backup after original-control retirement and finding-only restored fresh append without the actual shared coordinator remain unavailable under the declared unchanged prerequisites.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-026, ContractName:Plans/storage-plan.md#SP-236, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-045, ContractName:Plans/Decision_Log.md#DL-045, SchemaID:https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0
 
@@ -144,8 +158,11 @@ canonical_text: The existing application-only storage.integrity_detected event a
   actor/time. The exact checkpoint-free storage.integrity_history_reader.v1 independently joins the
   admitted finding, full current SP-278 source/token and current access/deletion fences; historical
   reads do not reacquire lawfully retired damaged bytes or original append controls. Native owner/durability
-  proof, three control-owner detectors, shared full-value custody adoption and the full-u64 finding-payload
-  semantic adapter remain separately unproved; no detection authorizes recovery or checkpoint effects.
+  proof, three control-owner detectors and the full-u64 finding-payload semantic adapter remain separately
+  unproved. Producer completion explicitly joins the actual finding, complete current event/SP-278 token
+  and original SP-286 v2 full-value custody; final append/relocation conserves original gap evidence, and
+  restore authenticates the complete artifact-derived Store before admission. No detection authorizes
+  recovery or checkpoint effects.
 gui_related: true
 gui_classification_reason: Runtime Artifacts and History display application scope, exact loss precision
   and truthful degraded or unavailable health from these verified read-only joins.
@@ -189,7 +206,17 @@ acceptance_criteria:
   existing RFC8785 semantic adapter is available; no replacement hash or 53-bit cap.
 - Qualify ATS IN-P04 by actual authenticated class/operands and retain IN-P03 complete identity proof
   as NOT_RUN; separate normative text, bounded static evidence and native evidence.
+- Explicitly complete and retry through the same actual shared full-value owner, complete current
+  source/token and exact immutable finding; recheck the whole original witness and result after helpers.
+- Independently conserve complete original ordered gap/evidence values at ordinary append and relocation
+  publication; event-byte preservation or a self-consistent rebuilt candidate alone is insufficient.
+- Derive complete expected restored Store state from the authenticated selected artifact before the
+  restore helper; check its entire returned state and final same-object custody, preserving lawful earlier effects.
+- Preserve receipt-independent passive history, saved aggregate restore after original-control disposal,
+  and pending finding-only restore without actual shared fresh-operation admission; no new first-mint path.
 validation_surfaces:
+- reports/event-authority-20260911/step-08-integrity-full-value-validation.md
+- reports/event-authority-20260911/step-08-integrity-full-value-checks.json
 - Plans/storage_integrity_finding_contract_fixtures.json
 - reports/event-authority-20260911/step-08-integrity-wire-validation.md
 - reports/event-authority-20260911/step-08-integrity-wire-checks.json
