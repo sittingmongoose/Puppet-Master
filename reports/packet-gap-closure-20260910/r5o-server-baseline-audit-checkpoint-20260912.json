@@ -1,0 +1,96 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5o-server-baseline-243-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "6621d9dc1d2511fd70df87f9e5e391fad4194529",
+  "landing_base_commit": "6621d9dc1d2511fd70df87f9e5e391fad4194529",
+  "scope_and_authority": [
+    "All 243 original August 14 server_full_thread_obligations receive separately root-authored findings and residuals. These are the original full source objects, including packet_files and negative_constraints, not the September preservation-wrapper occurrences already reviewed. Every frozen case identity and applicability remains intact.",
+    "Current non-pipeline Plans supply normative owner meaning. Historical source language and frozen owner snapshots preserve lineage without overruling current owners. Static contracts, fixture checks, concept callbacks and historical observations with revalidated identical inputs do not establish native or live integration acceptance.",
+    "Only this compact report changes in the repository. Raw sources, snapshots, judgments, evidence and formal workbook results remain external. No Plan, schema, Concept, command, wiring, generated governance, readiness or other agent file is edited. Audit findings do not authorize product fixes, real provider/auth operations, deferred visual work or a governance seal."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00015", "chunk-00016"],
+    "cases": 243,
+    "source_group": "server_full_thread_obligations",
+    "separately_authored_semantic_judgments": 243,
+    "status_counts": {"partial": 241, "fail": 2},
+    "applicability_counts": {"retained": 241, "adapted_selected_implementation": 2},
+    "adapted_case_ids": ["CWD-008", "GOV-001"],
+    "complete_for_review_scope": true,
+    "implementation_complete": false
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 3526,
+    "not_reviewed_cases": 9890,
+    "expected_chunks": 151,
+    "valid_result_files": 64,
+    "missing_result_files": 87,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 3176, "pass": 236, "blocked": 39, "fail": 72, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_cases": [
+    {
+      "case_id": "SET-014",
+      "family": "settings_transfer_preview_currentness",
+      "finding": "Current SSYS-007 strengthens the historical optional preview into an immutable reviewed transaction. The unchanged published T50 Copy callback re-prepares the source instead of consuming its acknowledged preview. The pinned synthetic callback observation previews font size 14 to 17, then applies 19 after only the source snapshot changes.",
+      "boundary": "Prior callback execution is retained after exact frozen/current source and helper-input revalidation. No fresh browser/native transaction, actual project mutation or authorization bypass is claimed."
+    },
+    {
+      "case_id": "OND-009",
+      "family": "doctor_active_retired_serve_contract",
+      "finding": "The unchanged active DoctorScenarioProjection valid fixture admits a configured/required healthy/fresh Hosted Tailscale private Serve row with RAS-003 lineage. Current RAS-015 retires this framing in favor of separate connector, private, Funnel and Puppet Master health. The fixture is not a compatibility reader.",
+      "boundary": "Static fixture and validator conflict with the current owner; no claim that the selected GUI displays Serve, that a real route was exercised or that WAN security was tested."
+    }
+  ],
+  "other_findings_and_boundaries": [
+    "Project identity, Home Server/canonical writer, scope/location, Settings categories and copy, machine protection, EventRecord/Vault/catalog/search, source control, provider acquisition/update/auth, backup, deployment and WAN obligations remain separately reviewed. Owner registration and accepted schemas establish partial evidence, not durable native implementation or actual connectivity/recovery/security/performance.",
+    "Current owner supersessions include mandatory Settings copy preview, no initial provider bundling, the draft/copy/late-commit onboarding flow, the spaced Puppet Master product name, tsnet with no Serve/sidecar/host-client adoption, the explicit opaque provider-owned SQLite exception, bounded Browser evaluate and source-inclusive backup. BRS-023 retains its phase-local emergency alternative. None is resolved by restoring historical packet wording.",
+    "Goal handoff has six closed commands, checkpoint/source/lease/currentness constraints and explicit handler_unavailable behavior until implementation. The latest original-creation custody proves at most Goal creation and terminal command settlement, never objective completion or a handoff implementation. A bounded selected-owner/fixture search leaves the packet's Paused — Ready destination assertion unresolved.",
+    "Selected current RAS-014 guidance resolves the new-Server configuration versus existing-Client URL-only NGINX Proxy Manager distinction. Selected-owner searches leave the exact UpdateSource/GitHub Releases initial-adapter wording, Stable 24h / Canary 6–12h / Nightly 1–6h polling cadence, named initial Cloudflare provider, Docker Hub server-image registry and four execution-evidence-label mapping unresolved. These are bounded searches, not repository-wide absence proofs.",
+    "Current-main compaction changes were re-adjudicated from the changed owner passages. They distinguish complete source/target manifests, CURRENT visibility and joined activation/index completion; preserve genuine earlier effects on failure; and retain unresolved custody without a retirement anchor. The seven-day policy is 604800 seconds from the first fully settled terminal command result. Ordinary finite offline composition and new contract resources do not prove the native compactor, broad storage/backup correctness, fresh-root restore or event-depth clearance.",
+    "All visual, motion, native Slint, provider, live authentication, security, recovery, performance and runtime clauses retain their own residuals. This review neither executes nor certifies those boundaries."
+  ],
+  "currentness": [
+    "Initial custody binds all 243 full source objects, the primary coverage JSON and 93 package files. Landing custody verifies 875 selected repository paths against committed current-main and live worktree bytes. Unchanged immutable historical snapshots are referenced, not rewritten.",
+    "All 88 previously selected baseline owner passages were matched exactly against current main, with line relocations recorded. Six additional owner/source passages bring this review to 94. Current-main Storage additions and changed passages were read and re-adjudicated; the whole new native schema is retained as an artifact, not claimed independently audited by a complete runtime or semantic experiment.",
+    "All selected prior Settings transfer, Doctor, backup and OAuth observations retain byte-identical frozen/current subject inputs and explicit historical execution boundaries. Fresh static checks are separately pinned to the landing base. All 62 preceding formal result files remain byte-for-byte unchanged after publishing the two new files."
+  ],
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/server-baseline-243-root-review.json", "sha256": "e9c0a92dd672184a6bd082ab6cd42b4a7bbcbb0a26c47126a18cd00db60f169f"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/review-evidence-plan.json", "sha256": "01b529ff39b21de35d59b01d41716665258db7539986d6d83dc4ded7befe2248"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/assembly-summary.json", "sha256": "60819ae4eb6d26e44eab7b622bfd6b33a489bac08cfb7d6ec2678652191f1464"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/input-custody.generated.json", "sha256": "358933061779ffeb1f1972f94547338afe56d97ebcfd1cada3ba6e471f1928fb"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/review-passage-custody.generated.json", "sha256": "238923c618f85cbe8b19ed8f405a7ec7d4ef1670189407136fc5431baf13722a"},
+    "landing_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/landing-currentness.generated.json", "sha256": "7abc274f2fa53e354837269be50a448b10d077ae2cb8a4c5db80f0d4eeefebda"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/publication-summary.json", "sha256": "f578f34a07296065942a8dff7815b7e65f8cea1598d44fd9aaea626358146d96"},
+    "packet_tests": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/publication-checks/packet-tests.receipt.json", "sha256": "a3654d4357b2dc8bbc966cfc0c1a308dfced3fdb27a90a6c112d0429fca175c3"},
+    "review_validation": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/publication-checks/validate.receipt.json", "sha256": "06f637f7db702373f8a161076908ee8a802d3bbe61ace1c1c7e05bf14e97e489"},
+    "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/landing-checks/summary.json", "sha256": "e3933abf3fb5857775051c33c6a800318919dc53203b4b78b9c41fcc25a0114e"},
+    "owner_searches": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-baseline243-review-20260912-FvhUQQ9A/owner-searches/summary.json", "sha256": "eb18f12d137430a42bb431cd4b048928df9bd64dac9d520eda44bd11d2582492"}
+  },
+  "verification": {
+    "base": "6621d9dc1d2511fd70df87f9e5e391fad4194529",
+    "review_integrity": {"status": "pass", "cases": 243, "owner_passages": 94, "evidence_groups": 32, "validation_errors": 0},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases_valid": 1028, "negative_cases_rejected": 3338, "internal_self_tests_passed": 12, "claim_boundary": "static_schema_and_fixture_consistency_only"},
+    "server_command_gap": {"status": "pass", "adjudication_rows": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11},
+    "settings_draft": {"status": "pass", "tests": 11},
+    "shards": {"status": "pass", "docs": 98, "shards": 2538},
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete_62_prior_result_files_preserved",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 21,
+      "total_checks": 36,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "Read-only run on the clean landing base, with all 875 selected current inputs and tracked worktree status unchanged. These are the same 15 failed check groups as r5n, not a claim that every diagnostic is identical. Per-check diagnostic lists are capped and their lengths are not total failure counts. No governance artifact, registry, missing fixture or other-owner file is repaired or resealed."
+    }
+  }
+}
