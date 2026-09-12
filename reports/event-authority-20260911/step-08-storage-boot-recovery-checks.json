@@ -1,0 +1,798 @@
+{
+  "status": "STATICALLY_MATERIALIZED_NATIVE_NOT_RUN",
+  "scope": "SP-291/SP-292 original Boot aggregate, canonical installation, first-receipt history continuity and exact original issuer/backup composition; no complete family depth or native proof.",
+  "base_commit": "e7c7f14a9dc765494b402a8120c6d2be3a987ce0",
+  "plan_units": [
+    "SP-291",
+    "SP-292"
+  ],
+  "existing_sp286_change": "Narrow original issuance/mandatory backup hook only; prior unit metadata unchanged.",
+  "author_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/manifest.json",
+    "sha256": "613d2bd4dfdeeb68b8eee5c423925200aeda6a8f50698d1827df6bb6f92d937c"
+  },
+  "independent_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/boot-v5-independent-review-20260912/review-manifest.json",
+    "sha256": "9966ade5a245ba9b5aa14096976e04b2aa9c76285206d97a322309fab12df379"
+  },
+  "author_cases": {
+    "integrated": 175,
+    "standalone_original_shared": 120,
+    "total": 295
+  },
+  "independent_cases": {
+    "integrated_author_rerun": 175,
+    "old_correction_controls": 5,
+    "new_probes": 8,
+    "integrated_total": 188,
+    "standalone_original_shared": 120,
+    "total": 308
+  },
+  "source_verification": {
+    "status": "PASS",
+    "manifests": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/manifest.json",
+        "sha256": "613d2bd4dfdeeb68b8eee5c423925200aeda6a8f50698d1827df6bb6f92d937c",
+        "members": 90
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/boot-v5-independent-review-20260912/review-manifest.json",
+        "sha256": "9966ade5a245ba9b5aa14096976e04b2aa9c76285206d97a322309fab12df379",
+        "members": 212
+      }
+    ],
+    "member_checks": 302
+  },
+  "compilation_manifests": [
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/boot-storage-compilation-draft-20260912/manifest.json",
+        "sha256": "a0c5f6f51bca372f064b0dc6cc2cc188d83c599522cb016fae21016fc2aaaec6"
+      },
+      "members": 13
+    },
+    {
+      "manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/boot-storage-compilation-applied-20260912/manifest.json",
+        "sha256": "8b0d178ef55623c938bfe246ac3eec560cc7bd874730c0345e93afe26db94314"
+      },
+      "members": 3
+    }
+  ],
+  "current_source_check": {
+    "status": "PASS",
+    "head": "e7c7f14a9dc765494b402a8120c6d2be3a987ce0",
+    "exact_active_schema_checks": [
+      {
+        "path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "frozen_reference": "append-owner/source/Plans/event_record.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+        "sha256": "3739e474e72c623872e7356efac524f8576013efeaacb99f4564b0f376b3b6a0",
+        "frozen_reference": "append-owner/source/Plans/event_payload_storage_boot_recovery.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "frozen_reference": "append-owner/source/Plans/event_record_index_checkpoint.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/storage_recovery_contracts.schema.json",
+        "sha256": "b00d0e8cbf50b322f9502cb7fadc65dc390390b2cbb917033a24fc373fa485cd",
+        "frozen_reference": "storage_recovery_contracts.schema.json",
+        "byte_equal": true
+      },
+      {
+        "path": "Plans/storage_recovery_contract_fixtures.json",
+        "sha256": "9f47b61c488d2eba3b6a01733322f911150c80ab7cf5caea4aabd04081cea153",
+        "frozen_reference": "storage_recovery_contract_fixtures.json",
+        "byte_equal": true
+      }
+    ],
+    "boot_event_registry_object_unchanged": true,
+    "current_sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "bytes": 431648
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "bytes": 229309
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "b9496d399b47cbcaaa434cdfec82e2237d0c8dfcaa9e0db70b1a8017d63a63f4",
+        "bytes": 1706399
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "bytes": 1193886
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+        "bytes": 566740
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "bytes": 87981
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "5134582a14ee656b2e344a14e1ce743ec6b196e39d7d6d3f32007a9691817fb2",
+        "bytes": 2240794
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "31779ca5f21f2ebb77dac7d4cbd9366682543337939b690f7e6a9dabf1ff4d2b",
+        "bytes": 24636
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "bytes": 15668
+      }
+    ],
+    "scope": "Exact active source schemas and existing event object. Whole historical Storage prose equality is not claimed; current owner mapping is separately adjudicated."
+  },
+  "root_current_captures": {
+    "status": "PASS",
+    "schema_promotions": [
+      {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/boot-control.schema.proposed.json",
+          "sha256": "d8b18f55a4cbbf4882e24716429c62e10c16c0683d745c1f112fca9280fb0039"
+        },
+        "canonical": {
+          "path": "/home/sittingmongoose/pm-worktrees/event-authority-boot-recovery-20260912/Plans/storage_boot_recovery_control.schema.json",
+          "sha256": "ccb7a1017b6c89457bfe889fc7a265535046326e9c76e9c89b4a21ce376b2822"
+        },
+        "metadata_changes": [
+          {
+            "json_pointer": "/$id",
+            "old": "https://puppetmaster.local/schemas/proposed/boot_recovery_control/1.0.0",
+            "new": "https://puppetmaster.local/schemas/storage_boot_recovery_control/1.0.0"
+          },
+          {
+            "json_pointer": "/$defs/pending_event/$id",
+            "old": "https://puppetmaster.local/schemas/proposed/boot_pending_event/1.0.0",
+            "new": "https://puppetmaster.local/schemas/storage_boot_recovery_pending_event/1.0.0"
+          }
+        ],
+        "structural_changes": []
+      },
+      {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/boot-history-floor.proposed.schema.json",
+          "sha256": "d50cb950a925ef983bcdff0e87e56a3dd271f989ce7fb04673e4dae77d2139b8"
+        },
+        "canonical": {
+          "path": "/home/sittingmongoose/pm-worktrees/event-authority-boot-recovery-20260912/Plans/storage_boot_history_floor.schema.json",
+          "sha256": "288287b91f672a91a5d7fb3033822e9b28bddf1f6df0f96fc0a5ec5a7ae91e41"
+        },
+        "metadata_changes": [
+          {
+            "json_pointer": "/$id",
+            "old": "urn:pm:proposal:boot-history-floor:4",
+            "new": "https://puppetmaster.local/schemas/storage_boot_history_floor/1.0.0"
+          }
+        ],
+        "structural_changes": []
+      },
+      {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/boot-history-pending.proposed.schema.json",
+          "sha256": "3c08e6e08539f4f7ddc0c4f6e569554b3bbef2dd007d425a2003cf2e4ebbdd1e"
+        },
+        "canonical": {
+          "path": "/home/sittingmongoose/pm-worktrees/event-authority-boot-recovery-20260912/Plans/storage_boot_history_pending.schema.json",
+          "sha256": "02777166f381d36d0a6996446fe6a48acf8b7f0a6b6dda2bd705deb3d40e23ef"
+        },
+        "metadata_changes": [
+          {
+            "json_pointer": "/$id",
+            "old": "urn:pm:proposal:boot-history-pending:1",
+            "new": "https://puppetmaster.local/schemas/storage_boot_history_pending/1.0.0"
+          }
+        ],
+        "structural_changes": []
+      },
+      {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-boot-recovery-20260912/v5/boot-original-source-contracts.proposed.schema.json",
+          "sha256": "b366b8e7a8b9d9f6ff4e1520492afe5f2c98acd9a0b020294cfe3b6f22ea4cff"
+        },
+        "canonical": {
+          "path": "/home/sittingmongoose/pm-worktrees/event-authority-boot-recovery-20260912/Plans/storage_boot_original_source_contracts.schema.json",
+          "sha256": "02d04ac94462ef543781fae3e69e308075538628e1d1271b390efc7c1f37d207"
+        },
+        "metadata_changes": [
+          {
+            "json_pointer": "/$id",
+            "old": "urn:pm:proposal:boot-original-sources:1",
+            "new": "https://puppetmaster.local/schemas/storage_boot_original_source_contracts/1.0.0"
+          }
+        ],
+        "structural_changes": []
+      }
+    ],
+    "canonical_activation_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+    "proposal_activation_lineage_only": "2b80e6d85ed5d0c61024698199d0d70fb469b542ab09e22343ace89819b6b957",
+    "captures": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/direct_original_store.json",
+        "sha256": "f560977142a87e553b452c51d3002e812d24480b1198f73ad9cb687753e62bf6"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/actual_backup_vault.json",
+        "sha256": "549a496281b02e2807b1b4bd46ec605bd2537f8b4573fab35e65a174f1f78c35"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/original_after_db_recovery.json",
+        "sha256": "12ab7c9859ac82741105c483d9fe766877e93ed9cc5e544e960286e46e77c1ff"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/birth_before_db.json",
+        "sha256": "595e384afec115f3f0a4326847fc5dfc99427cd5db1661a808838054d58eac48"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/birth_after_db.json",
+        "sha256": "d3a12f2c9d1a9bfde1f47f009c44321cdaef32a9ae8663158b0d45c8e8489daf"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/birth_after_rename.json",
+        "sha256": "d59cea297b083c89040a6672b1c7673a715ba0c527bd4cff95dec114d166f875"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/birth_after_anchor.json",
+        "sha256": "b1e451ead187fb5bcd344adad33aed649c4d7227bb692a6a417976525b541501"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/boot-canonical-captures-20260912/unknown.json",
+        "sha256": "8ebe668fac5f4a9addfa9954227cf8d104d6179062472af005f5f07d48487e63"
+      }
+    ],
+    "execution_checks": [
+      {
+        "route": "direct_original_store",
+        "status": "PASS",
+        "actual_shared_transactions_before_settlement": 1,
+        "same_actual_original_store": true,
+        "real_original_vault_capture_and_restore": true
+      },
+      {
+        "route": "actual_backup_vault",
+        "status": "PASS",
+        "actual_shared_transactions_before_settlement": 1,
+        "same_actual_original_store": true,
+        "real_original_vault_capture_and_restore": true
+      },
+      {
+        "route": "original_after_db_recovery",
+        "status": "PASS",
+        "actual_shared_transactions_before_settlement": 1,
+        "same_actual_original_store": true,
+        "real_original_vault_capture_and_restore": true
+      },
+      {
+        "route": "birth_before_db",
+        "status": "PASS"
+      },
+      {
+        "route": "birth_after_db",
+        "status": "PASS"
+      },
+      {
+        "route": "birth_after_rename",
+        "status": "PASS"
+      },
+      {
+        "route": "birth_after_anchor",
+        "status": "PASS"
+      },
+      {
+        "route": "unknown_history",
+        "status": "PASS_REFUSED_COMPLETENESS"
+      }
+    ],
+    "native": "NOT_RUN",
+    "scope": "Canonical binding configured before original birth/capture; in-process supplied owners and unchanged original shared issuer/BackupVault. No native filesystem/source/activation proof."
+  },
+  "schema_value_checks": {
+    "status": "PASS",
+    "physical_families": 118,
+    "event_families": 42,
+    "retention_policies": 26,
+    "all_prior_115_families_and_26_policies_exact": true,
+    "all_other_registry_fields_exact": true,
+    "source_schema_structural_changes": [],
+    "inline_floor_normalization": "Redundant root object/closed/common-required/union-properties assertions; exact original disjoint oneOf and both closed branches unchanged. Each branch structurally implies the root envelope.",
+    "anchor_recovery_adapter_classification": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge. The existing strategy enum has no non-restorable external-current-anchor category: deferred_owner_contract records the unresolved native parent-recovery adapter only. Current anchor continuity is mandatory now; this classification permits no reconstruction, rollback or producer bypass.",
+    "capture_checks": [
+      {
+        "route": "direct_original_store",
+        "status": "PASS_CURRENT_CANONICAL_SHAPES_AND_ORIGINAL_VALUE_JOINS",
+        "original_storage_field_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ]
+      },
+      {
+        "route": "actual_backup_vault",
+        "status": "PASS_CURRENT_CANONICAL_SHAPES_AND_ORIGINAL_VALUE_JOINS",
+        "original_storage_field_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ]
+      },
+      {
+        "route": "original_after_db_recovery",
+        "status": "PASS_CURRENT_CANONICAL_SHAPES_AND_ORIGINAL_VALUE_JOINS",
+        "original_storage_field_substitutions_distinguished": [
+          "sequence_id",
+          "observed_at_utc",
+          "persisted_at_utc"
+        ]
+      }
+    ],
+    "fixture_cases": 25,
+    "positive_fixtures": 15,
+    "negative_fixtures": 10,
+    "native": "NOT_RUN"
+  },
+  "central_registry_checks": {
+    "before": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 26
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 115
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 93,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 20,
+          "later_gui_or_feature_projection": 92,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "after": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_retention_policy_count_mismatch",
+        "expected": 24,
+        "actual": 26
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 118
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[50]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.read_token",
+        "field": "read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.checkpoint_core.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[96]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.$defs.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_field",
+        "field": "index_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[99]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.index_read_token",
+        "field": "index_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[102]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.previous_generations.items.properties.value.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_field",
+        "field": "generic_read_token",
+        "field_list": "required_fields"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.retired_generations.items.properties.checkpoint.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json:families[110]",
+        "error": "storage_value_secret_material_key",
+        "pointer": "$.properties.generic_read_token",
+        "field": "generic_read_token"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 96,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 23,
+          "later_gui_or_feature_projection": 92,
+          "migration_only": 3
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "runtime_resource_admission",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_mvp_required_family_tier_mismatch",
+        "family_id": "observable_work_projection",
+        "expected": "later_gui_or_feature_projection",
+        "actual": "migration_only"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "family_id": "retention_hold_record",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable"
+      }
+    ],
+    "before_count": 21,
+    "after_count": 21,
+    "new_diagnostic_categories_or_locations": [],
+    "changed_details": [
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_family_count_mismatch",
+        "expected": 88,
+        "actual": 118
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_status_counts_mismatch",
+        "expected": {
+          "materialized": 66,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        },
+        "actual": {
+          "materialized": 96,
+          "deferred_not_build_blocking": 21,
+          "compatibility_alias": 1
+        }
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "error": "storage_value_registry_tier_counts_mismatch",
+        "expected": {
+          "tier_0_launch_critical": 16,
+          "later_gui_or_feature_projection": 71,
+          "migration_only": 1
+        },
+        "actual": {
+          "tier_0_launch_critical": 23,
+          "later_gui_or_feature_projection": 92,
+          "migration_only": 3
+        }
+      }
+    ],
+    "validator_unchanged": true,
+    "waiver": false
+  },
+  "helpers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/verify_pins.py",
+      "sha256": "06d2b7bcf3782a3b2fa59c3f47846978233594b7d4e4a890dd1d3c7347ff970e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/current_sources.py",
+      "sha256": "4668de9bb4f4cea9cf8e3610732fd7292ee8c7f89ed5cf2ac9f656c82f33322a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/capture_values.py",
+      "sha256": "240850fe423d2895c5a927d3edb11dcf819f166d0ba461024018f43e9d4e2617"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/runtime-binding.json",
+      "sha256": "9f3b2a9ce21d7114447b689954cfb8eea35a8674901885473caca113ac3b7b18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/integrate_data.py",
+      "sha256": "533d790c5537033b8cb60cc0dcdd23655abc25c76a5b3b81c13a17ddfc62eeed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/fixture-source-mapping.json",
+      "sha256": "3a524c360070e684e82543fb8f97e199414901c6b8aa5e6b4a8bd3e49178383a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/central_check.py",
+      "sha256": "bb1c881c04b03d6cbd2be156e596441fc9aece8dd2c51e4ba5da57e318346e5a"
+    }
+  ],
+  "preservation": {
+    "physical_families": 118,
+    "new_physical_families": 3,
+    "event_families": 42,
+    "retention_policies": 26,
+    "prior_families": 115,
+    "prior_registry_objects_unchanged": true,
+    "production_migration_edges_added": 0,
+    "governance_refreshed": false
+  },
+  "limits": [
+    "All original source-positive paths are supplied actual-owner in-process fixtures; native codecs, principals, original absence/install/selection/leases and cold-process reconstruction NOT_RUN.",
+    "Native redb atomicity, SeglogFrameV2/CRC/fsync, namespace rename/sync, whole-root backup enumeration and offline restore NOT_RUN.",
+    "Application aggregate retains the unchanged 2000000/project operational policy; actual application-to-project policy-owner adapter remains unproved. No new root bucket or fabricated project.",
+    "External anchor is not restored with root backup. Existing registry enum deferred_owner_contract records unresolved native parent-recovery adaptation only; current anchor continuity remains mandatory.",
+    "Unknown, old or missing history remains unavailable. Fresh post-restore Boot producer admission and Boot source relocation are not implemented by this model.",
+    "Receipt-only earliest metadata does not prove retained EventRecord body, current source availability or a new action.",
+    "Frozen validator depth, readiness, WorkNodes and governance are not closed; the unchanged central checker retains 21 existing diagnostic categories."
+  ],
+  "verification": {
+    "derived": "PASS",
+    "fidelity": "Root read full V5 delta/protocol, independent review, 190-line new owner text and exact schema/persistence mapping; schema promotion occurs before original source/owner creation."
+  },
+  "cost": "Astra medium author and independent review plus root adjudication and compilation; billing data unavailable.",
+  "compilation": {
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2437,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T07:53:02Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25393,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6568
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "new_plan_units": 2,
+      "total_plan_units": 6568,
+      "total_acceptance_criteria": 25393,
+      "all_prior_6566_planunit_semantics_exact": true,
+      "new_criteria": 18,
+      "new_gui_related": false,
+      "owner_diff_exact_reviewed": true,
+      "derived_shard_groups": [
+        "storage-plan",
+        "storage_value_registry"
+      ],
+      "physical_families": 118,
+      "event_families": 42,
+      "retention_policies": 26
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/shard-check.json",
+      "sha256": "6b1df89ea30c0706fb1ec26a17074f0b80d12eaea269639f1747a2733146dc82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/index-validate.json",
+      "sha256": "a6f96291563d0b4d5b8f8484c60e060923486c23a87e11c59c0458d3757ccde2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-boot-recovery-root-20260912/compilation-preservation.json",
+      "sha256": "de84309edaf48acf48127079d915483d27800d66ed88bc0f7217ae00389d4e95"
+    }
+  ]
+}

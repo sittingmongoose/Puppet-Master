@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21570-L21743
+Source lines: L21570-L21745
 
-Source SHA256: `b9496d399b47cbcaaa434cdfec82e2237d0c8dfcaa9e0db70b1a8017d63a63f4`
+Source SHA256: `761d9a33e9124f002905f2da62dacded98c3d9d6036153aa63c5743ea11d44a4`
 
 ---
 
@@ -37,6 +37,8 @@ At the actual first issuance, compute CV-339's exact domain/version/codec-bound 
 The value selected from a source/validation helper must exactly join the actual admitted original owner source/group before preparation and again before publication. Independently bind the complete expected custody row set to that source before later helpers. Validate every pending row and transaction, then compare the exact typed expected rows, pending/postimage/transaction, selected preimage, actual original source/owner/restore/gate facts and any caller predicate after all dependent validators and copies. Schema validity and host-language equality alone are insufficient: booleans, integers, integral floats and signed zero preserve distinct canonical types/bytes. No dependent resolver follows the final complete guard before the original owner's atomic issuance. A later backup, output or domain refusal preserves an already real issuance; it does not erase or restamp it.
 
 The commitment excludes relocatable frame prefix/header/CRC/physical coordinates while retaining the full immutable EventRecord value. It is bounded non-secret hash metadata within the unchanged `RP-EVENT-IDENTITY-APPROOT@1.0.0` lifetime. It adds no raw event/source/control retention, group-opening archive or Platform lifetime. The original public receipt and four-field result remain unchanged.
+
+For the activated `storage.boot_recovery` lane, SP-291/SP-292 bind positive actual Boot enrollment at every original issuance route and the original mandatory backup boundary. The existing same original one-member barrier publication advances the Boot floor with its original receipt row; pending-to-anchor completion remains separately guarded. Any actual Boot event requires this binding regardless of native ID/actor grammar. Unrelated issuance retains its existing admission, while a full backup containing Boot custody must preserve that custody's installed continuity. This extension adds no receipt fields, legacy writer fallback, second issuer or replacement full-value resolver.
 
 ### Protected last group and immutable promotion terms
 

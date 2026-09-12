@@ -1,0 +1,1861 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/storage_boot_original_source_contracts/1.0.0",
+  "$defs": {
+    "migration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.migration.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "migration"
+        },
+        "source_owner": {
+          "const": "StorageMigrationCoordinator"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "migration_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "journal": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "terminal_migration_receipt": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "interrupted_phase": {
+              "enum": [
+                "backup_verified",
+                "applying",
+                "pre_stamp_verified",
+                "stamp_committed",
+                "post_stamp_verifying",
+                "restore_required",
+                "restoring"
+              ]
+            },
+            "terminal_phase": {
+              "enum": [
+                "committed",
+                "rolled_back"
+              ]
+            },
+            "verification": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            }
+          },
+          "required": [
+            "migration_id",
+            "journal",
+            "terminal_migration_receipt",
+            "interrupted_phase",
+            "terminal_phase",
+            "verification"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "backup_restore": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.backup_restore.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "backup_restore"
+        },
+        "source_owner": {
+          "const": "StorageRecoveryCoordinator"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "restore_operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "journal": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "selected_backup": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "pre_restore_or_quarantine": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "promotion_set": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "verified_reopened_boundary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            }
+          },
+          "required": [
+            "restore_operation_id",
+            "journal",
+            "selected_backup",
+            "pre_restore_or_quarantine",
+            "promotion_set",
+            "verified_reopened_boundary"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "rotation_truncation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.rotation_truncation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "rotation_truncation"
+        },
+        "source_owner": {
+          "const": "StorageSeglogRecoveryOwner"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "recovery_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "intent": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "operation": {
+              "enum": [
+                "rotation",
+                "unacknowledged_tail_truncation"
+              ]
+            },
+            "target_preimage": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "target_postcondition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "manifest_precondition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "manifest_postcondition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "loss_disposition": {
+              "enum": [
+                "no_canonical_loss",
+                "unacknowledged_tail_only"
+              ]
+            }
+          },
+          "required": [
+            "recovery_id",
+            "intent",
+            "operation",
+            "target_preimage",
+            "target_postcondition",
+            "manifest_precondition",
+            "manifest_postcondition",
+            "loss_disposition"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "compaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.compaction.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "compaction"
+        },
+        "source_owner": {
+          "const": "StorageMaintenanceCoordinator"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compaction_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "intent": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "source_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "target_generation": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 18446744073709551615
+            },
+            "frozen_source_boundary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "verified_target": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "current_publication": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "finalized_redb_generation": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            }
+          },
+          "required": [
+            "compaction_id",
+            "intent",
+            "source_generation",
+            "target_generation",
+            "frozen_source_boundary",
+            "verified_target",
+            "current_publication",
+            "finalized_redb_generation"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "deletion_quarantine": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.deletion_quarantine.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "deletion_quarantine"
+        },
+        "source_owner": {
+          "const": "StorageDeletionQuarantineOwner"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation": {
+              "enum": [
+                "deletion",
+                "quarantine"
+              ]
+            },
+            "original_record": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "original_admitted_transition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "final_record": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "verified_postcondition": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "dependency_decision": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            }
+          },
+          "required": [
+            "operation_id",
+            "operation",
+            "original_record",
+            "original_admitted_transition",
+            "final_record",
+            "verified_postcondition",
+            "dependency_decision"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "root_relocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage.boot_source.root_relocation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "kind": {
+          "const": "root_relocation"
+        },
+        "source_owner": {
+          "const": "StorageRootSelectionOwner"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "original_occurrence": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "source_admission": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "ref",
+            "schema_id",
+            "schema_version",
+            "sha256"
+          ]
+        },
+        "integrity_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "recovery_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "facts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "relocation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "journal": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "source_identity": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "destination_identity": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "frozen_boundary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "selected_bootstrap_binding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "verified_reopen": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "retained_source_custody": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "ref",
+                "schema_id",
+                "schema_version",
+                "sha256"
+              ]
+            },
+            "disposition": {
+              "enum": [
+                "verified_destination_selected",
+                "verified_source_selected"
+              ]
+            }
+          },
+          "required": [
+            "relocation_id",
+            "journal",
+            "source_identity",
+            "destination_identity",
+            "frozen_boundary",
+            "selected_bootstrap_binding",
+            "verified_reopen",
+            "retained_source_custody",
+            "disposition"
+          ]
+        },
+        "redaction_profile": {
+          "const": "no_secrets"
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "kind",
+        "source_owner",
+        "storage_instance_id",
+        "root_generation",
+        "recovery_epoch",
+        "original_occurrence",
+        "source_admission",
+        "integrity_ids",
+        "recovery_ids",
+        "facts",
+        "redaction_profile"
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "integrity_ids": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "properties": {
+            "recovery_ids": {
+              "minItems": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/migration"
+    },
+    {
+      "$ref": "#/$defs/backup_restore"
+    },
+    {
+      "$ref": "#/$defs/rotation_truncation"
+    },
+    {
+      "$ref": "#/$defs/compaction"
+    },
+    {
+      "$ref": "#/$defs/deletion_quarantine"
+    },
+    {
+      "$ref": "#/$defs/root_relocation"
+    }
+  ]
+}

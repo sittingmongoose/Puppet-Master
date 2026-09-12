@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15148,
+    "depends_on_edge_count": 15162,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17799,
-    "node_count": 6566,
+    "edge_count": 17813,
+    "node_count": 6568,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-12T07:21:34Z",
+  "generated_at_utc": "2026-09-12T07:52:24Z",
   "gui_related_units": {
     "count": 3164,
     "units": [
@@ -29546,8 +29546,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 22925,
-          "line": 22927,
+          "heading_line": 22927,
+          "line": 22929,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -34828,10 +34828,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6566,
+  "plan_unit_count": 6568,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2022,
+      "high": 2024,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36046,6 +36046,7 @@
       "fallback_divergence_authority_and_custody_drift": 1,
       "fallback_e2e_snippets": 1,
       "false_backup_or_restore_receipt": 1,
+      "false_boot_occurrence_or_non_original_receipt_publication": 1,
       "false_buildability_enablement": 1,
       "false_certainty": 2,
       "false_certification_or_lost_original_decision_authority": 3,
@@ -36053,6 +36054,7 @@
       "false_completion_claim": 1,
       "false_dap_lifecycle_proof": 1,
       "false_durability": 2,
+      "false_earliest_boot_history_or_lost_original_activation_continuity": 1,
       "false_frozen_boundary_claim": 1,
       "false_generic_event_index_publication_or_source_coverage": 1,
       "false_green_home_certification": 1,
@@ -38609,7 +38611,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6375,
+      "accepted": 6377,
       "retired": 182,
       "superseded": 9
     },
@@ -38693,7 +38695,7 @@
       "source_lineage_disposition": 2,
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
-      "storage_contract": 14,
+      "storage_contract": 16,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -38764,7 +38766,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "5134582a14ee656b2e344a14e1ce743ec6b196e39d7d6d3f32007a9691817fb2",
+        "expected": "3df203a3fea833c3343d0664536b7001949f9bf3644240202248ae699b729092",
         "source_path": "Plans/storage_value_registry.json"
       },
       {

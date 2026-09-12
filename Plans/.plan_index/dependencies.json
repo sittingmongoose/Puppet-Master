@@ -5908,6 +5908,7 @@
     "SP-279",
     "SP-288",
     "SP-290",
+    "SP-291",
     "CV-335",
     "SP-289",
     "SP-282",
@@ -6039,6 +6040,7 @@
     "PSMERA-021",
     "UCC-124",
     "N2-157",
+    "SP-292",
     "SP-277",
     "SP-281",
     "SMPFS-036",
@@ -66774,6 +66776,76 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-291",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "SP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "SP-236"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "SP-237"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-292",
+      "to": "SP-291"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -95568,7 +95640,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-12T07:21:34Z",
+  "generated_at_utc": "2026-09-12T07:52:23Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -193738,8 +193810,8 @@
       "source_location": {
         "heading": "SP-268 — Restore-point deletion custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 21940,
-        "line": 21942,
+        "heading_line": 21942,
+        "line": 21944,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193806,8 +193878,8 @@
       "source_location": {
         "heading": "SP-272 — Restore-point delete original-result custody",
         "heading_level": 3,
-        "heading_line": 22036,
-        "line": 22038,
+        "heading_line": 22038,
+        "line": 22040,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193857,8 +193929,8 @@
       "source_location": {
         "heading": "SP-275 — Restore-point expiry custody and checkpoint",
         "heading_level": 3,
-        "heading_line": 22234,
-        "line": 22236,
+        "heading_line": 22236,
+        "line": 22238,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193908,8 +193980,8 @@
       "source_location": {
         "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
         "heading_level": 3,
-        "heading_line": 22925,
-        "line": 22927,
+        "heading_line": 22927,
+        "line": 22929,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193976,8 +194048,8 @@
       "source_location": {
         "heading": "SP-285 — Restore-point admission and retained-read phases",
         "heading_level": 3,
-        "heading_line": 22389,
-        "line": 22391,
+        "heading_line": 22391,
+        "line": 22393,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -193993,8 +194065,8 @@
       "source_location": {
         "heading": "SP-286 - First AppendReceipt Custody And Restore Admission",
         "heading_level": 3,
-        "heading_line": 21684,
-        "line": 21686,
+        "heading_line": 21686,
+        "line": 21688,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194010,8 +194082,8 @@
       "source_location": {
         "heading": "SP-287 - Goal Body Physical Custody And Thread Lifetime",
         "heading_level": 3,
-        "heading_line": 21803,
-        "line": 21805,
+        "heading_line": 21805,
+        "line": 21807,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194027,8 +194099,8 @@
       "source_location": {
         "heading": "SP-288 - Legal Hold Transition And Original SIR Custody",
         "heading_level": 3,
-        "heading_line": 22610,
-        "line": 22612,
+        "heading_line": 22612,
+        "line": 22614,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194044,8 +194116,8 @@
       "source_location": {
         "heading": "SP-289 - Original Standard Certification Custody",
         "heading_level": 3,
-        "heading_line": 22737,
-        "line": 22739,
+        "heading_line": 22739,
+        "line": 22741,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -194061,8 +194133,42 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 23113,
-        "line": 23115,
+        "heading_line": 23115,
+        "line": 23117,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "original_boot_source_and_aggregate_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-291",
+      "reasoning_tier": "high",
+      "risk_class": "false_boot_occurrence_or_non_original_receipt_publication",
+      "source_location": {
+        "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
+        "heading_level": 3,
+        "heading_line": 23220,
+        "line": 23222,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
+      "context_scope": "boot_first_receipt_continuity_and_pending_anchor",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-292",
+      "reasoning_tier": "high",
+      "risk_class": "false_earliest_boot_history_or_lost_original_activation_continuity",
+      "source_location": {
+        "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
+        "heading_level": 3,
+        "heading_line": 23318,
+        "line": 23320,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -207199,10 +207305,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15148,
+    "depends_on_edge_count": 15162,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17799,
-    "node_count": 6566,
+    "edge_count": 17813,
+    "node_count": 6568,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

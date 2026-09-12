@@ -1,0 +1,1869 @@
+{
+  "schema_id": "pm.fixture.storage_boot_custody.v1",
+  "status": "BOUNDED_TYPED_VALUE_EXAMPLES",
+  "source_report": "reports/event-authority-20260911/step-08-storage-boot-recovery-validation.md",
+  "native_execution": "NOT_RUN",
+  "value_shape_cases": [
+    {
+      "id": "birth_floor",
+      "definition": "floor",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "complete",
+        "previous_floor_sha256": null,
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 0,
+        "boot_receipt_set_sha256": "acd87cfc7694dd3e2926dbb5dea8f475cb3d59d6edd03d590b727549a4ce05af",
+        "last_transition": {
+          "kind": "birth"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "collecting_control",
+      "definition": "control",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 0,
+        "phase": "collecting",
+        "source_members": [],
+        "frozen": null,
+        "issued": null,
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": null,
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "captured_control",
+      "definition": "control",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 1,
+        "phase": "collecting",
+        "source_members": [
+          {
+            "kind": "backup_restore",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:backup_restore.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/backup_restore",
+              "schema_id": "pm.storage.boot_source.backup_restore.v1"
+            },
+            "source_journal_ref": "fixture:backup_restore.facts.journal.ref",
+            "source_journal_sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809",
+            "source_admission_ref": "fixture:backup_restore.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "3fb0d7f5a240634413c89a3e100836c43439eab2d0bdcb623890ae19107307f5",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+            ]
+          },
+          {
+            "kind": "compaction",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:compaction.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/compaction",
+              "schema_id": "pm.storage.boot_source.compaction.v1"
+            },
+            "source_journal_ref": "fixture:compaction.facts.intent.ref",
+            "source_journal_sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc",
+            "source_admission_ref": "fixture:compaction.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "5f9fbd6a1f863a1f0953b9c237d0678f5b926a2c0c16eca285f472766b5cecbd",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+            ]
+          },
+          {
+            "kind": "deletion_quarantine",
+            "source_owner": "storage retention/deletion/quarantine owner",
+            "operation_id": "fixture:deletion_quarantine.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/deletion_quarantine",
+              "schema_id": "pm.storage.boot_source.deletion_quarantine.v1"
+            },
+            "source_journal_ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "source_journal_sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96",
+            "source_admission_ref": "fixture:deletion_quarantine.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "b96f54ef98fe54eb928748436addbd4512eb90015f07e8a3894e86a323a7999d",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+            ]
+          },
+          {
+            "kind": "migration",
+            "source_owner": "StorageMigrationCoordinator",
+            "operation_id": "fixture:migration.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/migration",
+              "schema_id": "pm.storage.boot_source.migration.v1"
+            },
+            "source_journal_ref": "fixture:migration.facts.journal.ref",
+            "source_journal_sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2",
+            "source_admission_ref": "fixture:migration.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "234b35c920cec84ad375a1e052b3b8da394b9486285e939a88974daa6fbd9413",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+            ]
+          },
+          {
+            "kind": "root_relocation",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:root_relocation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/root_relocation",
+              "schema_id": "pm.storage.boot_source.root_relocation.v1"
+            },
+            "source_journal_ref": "fixture:root_relocation.facts.journal.ref",
+            "source_journal_sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce",
+            "source_admission_ref": "fixture:root_relocation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "2c9b73f1e8f3ee9b4177e7182f8f5aedf25332577fb783dff2d3fa6a23a17e1e",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+            ]
+          },
+          {
+            "kind": "rotation_truncation",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:rotation_truncation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/rotation_truncation",
+              "schema_id": "pm.storage.boot_source.rotation_truncation.v1"
+            },
+            "source_journal_ref": "fixture:rotation_truncation.facts.intent.ref",
+            "source_journal_sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa",
+            "source_admission_ref": "fixture:rotation_truncation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "4ee6a5295e597eb8063de1eaf2f468ffc9c7ba06e7c6d3833c11afdd43a4b374",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+            ]
+          }
+        ],
+        "frozen": null,
+        "issued": null,
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": null,
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "frozen_control",
+      "definition": "control",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 2,
+        "phase": "frozen",
+        "source_members": [
+          {
+            "kind": "backup_restore",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:backup_restore.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/backup_restore",
+              "schema_id": "pm.storage.boot_source.backup_restore.v1"
+            },
+            "source_journal_ref": "fixture:backup_restore.facts.journal.ref",
+            "source_journal_sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809",
+            "source_admission_ref": "fixture:backup_restore.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "3fb0d7f5a240634413c89a3e100836c43439eab2d0bdcb623890ae19107307f5",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+            ]
+          },
+          {
+            "kind": "compaction",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:compaction.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/compaction",
+              "schema_id": "pm.storage.boot_source.compaction.v1"
+            },
+            "source_journal_ref": "fixture:compaction.facts.intent.ref",
+            "source_journal_sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc",
+            "source_admission_ref": "fixture:compaction.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "5f9fbd6a1f863a1f0953b9c237d0678f5b926a2c0c16eca285f472766b5cecbd",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+            ]
+          },
+          {
+            "kind": "deletion_quarantine",
+            "source_owner": "storage retention/deletion/quarantine owner",
+            "operation_id": "fixture:deletion_quarantine.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/deletion_quarantine",
+              "schema_id": "pm.storage.boot_source.deletion_quarantine.v1"
+            },
+            "source_journal_ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "source_journal_sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96",
+            "source_admission_ref": "fixture:deletion_quarantine.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "b96f54ef98fe54eb928748436addbd4512eb90015f07e8a3894e86a323a7999d",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+            ]
+          },
+          {
+            "kind": "migration",
+            "source_owner": "StorageMigrationCoordinator",
+            "operation_id": "fixture:migration.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/migration",
+              "schema_id": "pm.storage.boot_source.migration.v1"
+            },
+            "source_journal_ref": "fixture:migration.facts.journal.ref",
+            "source_journal_sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2",
+            "source_admission_ref": "fixture:migration.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "234b35c920cec84ad375a1e052b3b8da394b9486285e939a88974daa6fbd9413",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+            ]
+          },
+          {
+            "kind": "root_relocation",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:root_relocation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/root_relocation",
+              "schema_id": "pm.storage.boot_source.root_relocation.v1"
+            },
+            "source_journal_ref": "fixture:root_relocation.facts.journal.ref",
+            "source_journal_sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce",
+            "source_admission_ref": "fixture:root_relocation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "2c9b73f1e8f3ee9b4177e7182f8f5aedf25332577fb783dff2d3fa6a23a17e1e",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+            ]
+          },
+          {
+            "kind": "rotation_truncation",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:rotation_truncation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/rotation_truncation",
+              "schema_id": "pm.storage.boot_source.rotation_truncation.v1"
+            },
+            "source_journal_ref": "fixture:rotation_truncation.facts.intent.ref",
+            "source_journal_sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa",
+            "source_admission_ref": "fixture:rotation_truncation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "4ee6a5295e597eb8063de1eaf2f468ffc9c7ba06e7c6d3833c11afdd43a4b374",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+            ]
+          }
+        ],
+        "frozen": {
+          "work_set_digest": "dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347",
+          "recovery_set_digest": "0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+          "members_sha256": "e0f4d234f0e4731744debabda1349b4353db954abb52740b1417f9935e6326f3",
+          "captured_manifest_sha256": "261d6ade4fd4ccad108ecad5071e3a7895a832d46b8e47dc375a7465bbdb14e0",
+          "captured_segment_sha256": "9b11f6b9606823b3cb6054c60ad1c646e64fea43ab1ab945bffb8020e903276d",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "event_type": "storage.boot_recovery",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "storage.boot_recovery.publish.v1:11111111-1111-4111-8111-111111111111",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-11T22:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:boot-occurrence:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+            "payload": {
+              "schema_version": "2.0.0",
+              "recovery_set_id": "pm.storage.recovery_set.v1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+              "integrity_ids": [],
+              "recovery_ids": [
+                "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253",
+                "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c",
+                "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187",
+                "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d",
+                "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e",
+                "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+              ],
+              "interrupted_transaction_kinds": [
+                "backup_restore",
+                "compaction",
+                "deletion_quarantine",
+                "migration",
+                "root_relocation",
+                "rotation_truncation"
+              ],
+              "manifest_generation": 10,
+              "recovery_epoch": 1,
+              "active_segment_ref": "pm.storage.segment.v1:1:1:active:624e1fd5c50b42e32dbdfed0bd373e71d5dc76880e719843269ba0b21eb2b319"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          }
+        },
+        "issued": null,
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": null,
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "settled_control",
+      "definition": "control",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 3,
+        "phase": "settled",
+        "source_members": [
+          {
+            "kind": "backup_restore",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:backup_restore.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/backup_restore",
+              "schema_id": "pm.storage.boot_source.backup_restore.v1"
+            },
+            "source_journal_ref": "fixture:backup_restore.facts.journal.ref",
+            "source_journal_sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809",
+            "source_admission_ref": "fixture:backup_restore.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "3fb0d7f5a240634413c89a3e100836c43439eab2d0bdcb623890ae19107307f5",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+            ]
+          },
+          {
+            "kind": "compaction",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:compaction.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/compaction",
+              "schema_id": "pm.storage.boot_source.compaction.v1"
+            },
+            "source_journal_ref": "fixture:compaction.facts.intent.ref",
+            "source_journal_sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc",
+            "source_admission_ref": "fixture:compaction.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "5f9fbd6a1f863a1f0953b9c237d0678f5b926a2c0c16eca285f472766b5cecbd",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+            ]
+          },
+          {
+            "kind": "deletion_quarantine",
+            "source_owner": "storage retention/deletion/quarantine owner",
+            "operation_id": "fixture:deletion_quarantine.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/deletion_quarantine",
+              "schema_id": "pm.storage.boot_source.deletion_quarantine.v1"
+            },
+            "source_journal_ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "source_journal_sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96",
+            "source_admission_ref": "fixture:deletion_quarantine.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "b96f54ef98fe54eb928748436addbd4512eb90015f07e8a3894e86a323a7999d",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+            ]
+          },
+          {
+            "kind": "migration",
+            "source_owner": "StorageMigrationCoordinator",
+            "operation_id": "fixture:migration.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/migration",
+              "schema_id": "pm.storage.boot_source.migration.v1"
+            },
+            "source_journal_ref": "fixture:migration.facts.journal.ref",
+            "source_journal_sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2",
+            "source_admission_ref": "fixture:migration.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "234b35c920cec84ad375a1e052b3b8da394b9486285e939a88974daa6fbd9413",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+            ]
+          },
+          {
+            "kind": "root_relocation",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:root_relocation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/root_relocation",
+              "schema_id": "pm.storage.boot_source.root_relocation.v1"
+            },
+            "source_journal_ref": "fixture:root_relocation.facts.journal.ref",
+            "source_journal_sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce",
+            "source_admission_ref": "fixture:root_relocation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "2c9b73f1e8f3ee9b4177e7182f8f5aedf25332577fb783dff2d3fa6a23a17e1e",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+            ]
+          },
+          {
+            "kind": "rotation_truncation",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:rotation_truncation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/rotation_truncation",
+              "schema_id": "pm.storage.boot_source.rotation_truncation.v1"
+            },
+            "source_journal_ref": "fixture:rotation_truncation.facts.intent.ref",
+            "source_journal_sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa",
+            "source_admission_ref": "fixture:rotation_truncation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "4ee6a5295e597eb8063de1eaf2f468ffc9c7ba06e7c6d3833c11afdd43a4b374",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+            ]
+          }
+        ],
+        "frozen": {
+          "work_set_digest": "dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347",
+          "recovery_set_digest": "0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+          "members_sha256": "e0f4d234f0e4731744debabda1349b4353db954abb52740b1417f9935e6326f3",
+          "captured_manifest_sha256": "261d6ade4fd4ccad108ecad5071e3a7895a832d46b8e47dc375a7465bbdb14e0",
+          "captured_segment_sha256": "9b11f6b9606823b3cb6054c60ad1c646e64fea43ab1ab945bffb8020e903276d",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "event_type": "storage.boot_recovery",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "storage.boot_recovery.publish.v1:11111111-1111-4111-8111-111111111111",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-11T22:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:boot-occurrence:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+            "payload": {
+              "schema_version": "2.0.0",
+              "recovery_set_id": "pm.storage.recovery_set.v1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+              "integrity_ids": [],
+              "recovery_ids": [
+                "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253",
+                "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c",
+                "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187",
+                "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d",
+                "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e",
+                "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+              ],
+              "interrupted_transaction_kinds": [
+                "backup_restore",
+                "compaction",
+                "deletion_quarantine",
+                "migration",
+                "root_relocation",
+                "rotation_truncation"
+              ],
+              "manifest_generation": 10,
+              "recovery_epoch": 1,
+              "active_segment_ref": "pm.storage.segment.v1:1:1:active:624e1fd5c50b42e32dbdfed0bd373e71d5dc76880e719843269ba0b21eb2b319"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          }
+        },
+        "issued": {
+          "first_append_receipt": {
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "sequence_id": 1,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000001.active",
+            "byte_offset": 0,
+            "commit_group_id": "fixture-group-11",
+            "durability_class": "barrier",
+            "durable_end_offset": 2031,
+            "durability_state": "synced",
+            "manifest_generation": 11,
+            "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+          },
+          "original_segment_ref": "segment:fixture-original-1",
+          "original_event_value_commitment": {
+            "schema_id": "pm.storage.original_event_value_commitment.v1",
+            "schema_version": "1.0.0",
+            "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+            "domain": "pm.storage.original_event_value_commitment.v1",
+            "event_schema_id": "pm.event.v0",
+            "event_schema_version": "2.0.0",
+            "sha256": "7807bb38c8c77a91545f79a4796e973cd38b7e85d786b47a5428e03b20deeb7b"
+          },
+          "sequence_id": 1,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": "2026-09-11T22:00:00Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "current_floor",
+      "definition": "floor",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 1,
+        "state": "complete",
+        "previous_floor_sha256": "30a5e2849fcb281d57bfdf7a01d143664f642fd6e91918078db3010ec65339bf",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 1,
+        "boot_receipt_set_sha256": "d53b3af330458f4d2526d4f17aad2592070ca6f8ce627ad0008c48a6ad9e769f",
+        "last_transition": {
+          "kind": "issued",
+          "receipt_key": "event_append_receipt_custody.v1:11111111-1111-4111-8111-111111111111:b47ebf76c80fce0b5da132e7e39eb4894cdd428b66f669f966d0edd2e082ccb6",
+          "receipt_custody_sha256": "5930b5b6bc8daa574e1e12aa56f469fa1098d9a5a7c842f8d2ff15cf2d29d0ed"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_migration",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.migration.v1",
+        "schema_version": "1.0.0",
+        "kind": "migration",
+        "source_owner": "StorageMigrationCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:migration.source_admission.ref",
+          "schema_id": "fixture:migration.source_admission.schema_id",
+          "schema_version": "fixture:migration.source_admission.schema_version",
+          "sha256": "16ef4465af23999094939a62fe979f4aff1323c7f44b5170c3421ced940343a9"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+        ],
+        "facts": {
+          "migration_id": "fixture:migration.facts.migration_id",
+          "journal": {
+            "ref": "fixture:migration.facts.journal.ref",
+            "schema_id": "fixture:migration.facts.journal.schema_id",
+            "schema_version": "fixture:migration.facts.journal.schema_version",
+            "sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2"
+          },
+          "terminal_migration_receipt": {
+            "ref": "fixture:migration.facts.terminal_migration_receipt.ref",
+            "schema_id": "fixture:migration.facts.terminal_migration_receipt.schema_id",
+            "schema_version": "fixture:migration.facts.terminal_migration_receipt.schema_version",
+            "sha256": "c01ff48a474a18a6491ec05910a1b9f74edde0ab70423d673e80452683bdb9e4"
+          },
+          "interrupted_phase": "backup_verified",
+          "terminal_phase": "committed",
+          "verification": {
+            "ref": "fixture:migration.facts.verification.ref",
+            "schema_id": "fixture:migration.facts.verification.schema_id",
+            "schema_version": "fixture:migration.facts.verification.schema_version",
+            "sha256": "6a94cff1fc5b6602ba4a0c38a6f52a781ba9aa6ed6f388e2714e11f39f182a2f"
+          }
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_backup_restore",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.backup_restore.v1",
+        "schema_version": "1.0.0",
+        "kind": "backup_restore",
+        "source_owner": "StorageRecoveryCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:backup_restore.source_admission.ref",
+          "schema_id": "fixture:backup_restore.source_admission.schema_id",
+          "schema_version": "fixture:backup_restore.source_admission.schema_version",
+          "sha256": "87a1f9cbc1f41d58dc1901a24e238dbff61d1d98dd7784a65346edebefb5dcbf"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+        ],
+        "facts": {
+          "restore_operation_id": "fixture:backup_restore.facts.restore_operation_id",
+          "journal": {
+            "ref": "fixture:backup_restore.facts.journal.ref",
+            "schema_id": "fixture:backup_restore.facts.journal.schema_id",
+            "schema_version": "fixture:backup_restore.facts.journal.schema_version",
+            "sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809"
+          },
+          "selected_backup": {
+            "ref": "fixture:backup_restore.facts.selected_backup.ref",
+            "schema_id": "fixture:backup_restore.facts.selected_backup.schema_id",
+            "schema_version": "fixture:backup_restore.facts.selected_backup.schema_version",
+            "sha256": "b65781a7cb121f8e03e65f19482cdd3e8cb80481675a8d9b428a409c62103a83"
+          },
+          "pre_restore_or_quarantine": {
+            "ref": "fixture:backup_restore.facts.pre_restore_or_quarantine.ref",
+            "schema_id": "fixture:backup_restore.facts.pre_restore_or_quarantine.schema_id",
+            "schema_version": "fixture:backup_restore.facts.pre_restore_or_quarantine.schema_version",
+            "sha256": "e0e8f41ae59023c8bd1b1417a3bd7fa0ea56017b4dc918a6be515fc82d8cb842"
+          },
+          "promotion_set": {
+            "ref": "fixture:backup_restore.facts.promotion_set.ref",
+            "schema_id": "fixture:backup_restore.facts.promotion_set.schema_id",
+            "schema_version": "fixture:backup_restore.facts.promotion_set.schema_version",
+            "sha256": "3d53aa610524efae4825c75ad9b8910cab1df50e6f5551d7bb8cf6d94413ba65"
+          },
+          "verified_reopened_boundary": {
+            "ref": "fixture:backup_restore.facts.verified_reopened_boundary.ref",
+            "schema_id": "fixture:backup_restore.facts.verified_reopened_boundary.schema_id",
+            "schema_version": "fixture:backup_restore.facts.verified_reopened_boundary.schema_version",
+            "sha256": "326d97fac3fa23a786659d09731eb6e7d2f8bb20e6e5a7bace03186a3f0f8fc7"
+          }
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_rotation_truncation",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.rotation_truncation.v1",
+        "schema_version": "1.0.0",
+        "kind": "rotation_truncation",
+        "source_owner": "StorageSeglogRecoveryOwner",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:rotation_truncation.source_admission.ref",
+          "schema_id": "fixture:rotation_truncation.source_admission.schema_id",
+          "schema_version": "fixture:rotation_truncation.source_admission.schema_version",
+          "sha256": "5b98016156a179fffcbf58cffece603498f8cfbc90b8d88963e24575f00f05f8"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+        ],
+        "facts": {
+          "recovery_id": "fixture:rotation_truncation.facts.recovery_id",
+          "intent": {
+            "ref": "fixture:rotation_truncation.facts.intent.ref",
+            "schema_id": "fixture:rotation_truncation.facts.intent.schema_id",
+            "schema_version": "fixture:rotation_truncation.facts.intent.schema_version",
+            "sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa"
+          },
+          "operation": "rotation",
+          "target_preimage": {
+            "ref": "fixture:rotation_truncation.facts.target_preimage.ref",
+            "schema_id": "fixture:rotation_truncation.facts.target_preimage.schema_id",
+            "schema_version": "fixture:rotation_truncation.facts.target_preimage.schema_version",
+            "sha256": "5bb6f1b7738ac51874ab3904f8d79658a29f17a11897b6661e0bfc56967a52c7"
+          },
+          "target_postcondition": {
+            "ref": "fixture:rotation_truncation.facts.target_postcondition.ref",
+            "schema_id": "fixture:rotation_truncation.facts.target_postcondition.schema_id",
+            "schema_version": "fixture:rotation_truncation.facts.target_postcondition.schema_version",
+            "sha256": "e512104587a2641994ebb85fcc518805037a3f68432159561f480c54356b4410"
+          },
+          "manifest_precondition": {
+            "ref": "fixture:rotation_truncation.facts.manifest_precondition.ref",
+            "schema_id": "fixture:rotation_truncation.facts.manifest_precondition.schema_id",
+            "schema_version": "fixture:rotation_truncation.facts.manifest_precondition.schema_version",
+            "sha256": "7e69ab8f84a2c60f81a40b0dc88974cb6cca3081c0ed9fdba6e451fdc999a1de"
+          },
+          "manifest_postcondition": {
+            "ref": "fixture:rotation_truncation.facts.manifest_postcondition.ref",
+            "schema_id": "fixture:rotation_truncation.facts.manifest_postcondition.schema_id",
+            "schema_version": "fixture:rotation_truncation.facts.manifest_postcondition.schema_version",
+            "sha256": "75fa7b9ca46b5006450d95544f5375012b2479f569101d05242b727605713782"
+          },
+          "loss_disposition": "no_canonical_loss"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_compaction",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.compaction.v1",
+        "schema_version": "1.0.0",
+        "kind": "compaction",
+        "source_owner": "StorageMaintenanceCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:compaction.source_admission.ref",
+          "schema_id": "fixture:compaction.source_admission.schema_id",
+          "schema_version": "fixture:compaction.source_admission.schema_version",
+          "sha256": "5e683d8b5a7189c8c470ea9720ed04f28833ec0d845446cef077e5e50c0ac071"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+        ],
+        "facts": {
+          "compaction_id": "fixture:compaction.facts.compaction_id",
+          "intent": {
+            "ref": "fixture:compaction.facts.intent.ref",
+            "schema_id": "fixture:compaction.facts.intent.schema_id",
+            "schema_version": "fixture:compaction.facts.intent.schema_version",
+            "sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc"
+          },
+          "source_generation": 1,
+          "target_generation": 2,
+          "frozen_source_boundary": {
+            "ref": "fixture:compaction.facts.frozen_source_boundary.ref",
+            "schema_id": "fixture:compaction.facts.frozen_source_boundary.schema_id",
+            "schema_version": "fixture:compaction.facts.frozen_source_boundary.schema_version",
+            "sha256": "04d3cdddaee80ead696b31500d5054556ffa491cbdc3f2a5434c432f0d44957e"
+          },
+          "verified_target": {
+            "ref": "fixture:compaction.facts.verified_target.ref",
+            "schema_id": "fixture:compaction.facts.verified_target.schema_id",
+            "schema_version": "fixture:compaction.facts.verified_target.schema_version",
+            "sha256": "d776a0783132caada2ca3c163991d201538725e8523cc74aad8a5945e76a0cd1"
+          },
+          "current_publication": {
+            "ref": "fixture:compaction.facts.current_publication.ref",
+            "schema_id": "fixture:compaction.facts.current_publication.schema_id",
+            "schema_version": "fixture:compaction.facts.current_publication.schema_version",
+            "sha256": "5ed079bf29d6d8b23c06464b56d65068199ffbd78327ac3eac5188926c2f6bae"
+          },
+          "finalized_redb_generation": {
+            "ref": "fixture:compaction.facts.finalized_redb_generation.ref",
+            "schema_id": "fixture:compaction.facts.finalized_redb_generation.schema_id",
+            "schema_version": "fixture:compaction.facts.finalized_redb_generation.schema_version",
+            "sha256": "6492354929a1768601e204e068a670daa2c847f4f13fc15c60c45ae8c4217bd1"
+          }
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_deletion_quarantine",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.deletion_quarantine.v1",
+        "schema_version": "1.0.0",
+        "kind": "deletion_quarantine",
+        "source_owner": "StorageDeletionQuarantineOwner",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:deletion_quarantine.source_admission.ref",
+          "schema_id": "fixture:deletion_quarantine.source_admission.schema_id",
+          "schema_version": "fixture:deletion_quarantine.source_admission.schema_version",
+          "sha256": "f589d6c99c95f148f1b2bbe373e7ec007f8e08a04324b6a5c7a9b1aba31e2dfe"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+        ],
+        "facts": {
+          "operation_id": "fixture:deletion_quarantine.facts.operation_id",
+          "operation": "deletion",
+          "original_record": {
+            "ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "schema_id": "fixture:deletion_quarantine.facts.original_record.schema_id",
+            "schema_version": "fixture:deletion_quarantine.facts.original_record.schema_version",
+            "sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96"
+          },
+          "original_admitted_transition": {
+            "ref": "fixture:deletion_quarantine.facts.original_admitted_transition.ref",
+            "schema_id": "fixture:deletion_quarantine.facts.original_admitted_transition.schema_id",
+            "schema_version": "fixture:deletion_quarantine.facts.original_admitted_transition.schema_version",
+            "sha256": "628db9c50503b0c02de493329ec0385e077514c6435124f49aad48cbc0cc25ac"
+          },
+          "final_record": {
+            "ref": "fixture:deletion_quarantine.facts.final_record.ref",
+            "schema_id": "fixture:deletion_quarantine.facts.final_record.schema_id",
+            "schema_version": "fixture:deletion_quarantine.facts.final_record.schema_version",
+            "sha256": "5bde09e1995e5ff49480d0b2a332544dfd3f590003e531d36f79510994f6495d"
+          },
+          "verified_postcondition": {
+            "ref": "fixture:deletion_quarantine.facts.verified_postcondition.ref",
+            "schema_id": "fixture:deletion_quarantine.facts.verified_postcondition.schema_id",
+            "schema_version": "fixture:deletion_quarantine.facts.verified_postcondition.schema_version",
+            "sha256": "3f95dd2edd8648c80f098132cbbed4f28eda8cc997bc5249c3ed7322dea8e81a"
+          },
+          "dependency_decision": {
+            "ref": "fixture:deletion_quarantine.facts.dependency_decision.ref",
+            "schema_id": "fixture:deletion_quarantine.facts.dependency_decision.schema_id",
+            "schema_version": "fixture:deletion_quarantine.facts.dependency_decision.schema_version",
+            "sha256": "4e9d90f17624383d4448748fbfd20e764b831b58939f32b7ded53990e7a422c9"
+          }
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_root_relocation",
+      "definition": "source",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_source.root_relocation.v1",
+        "schema_version": "1.0.0",
+        "kind": "root_relocation",
+        "source_owner": "StorageRootSelectionOwner",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:root_relocation.source_admission.ref",
+          "schema_id": "fixture:root_relocation.source_admission.schema_id",
+          "schema_version": "fixture:root_relocation.source_admission.schema_version",
+          "sha256": "c787eca42dae589a89a54beb9605069566038146d1b7fc2e3fd917785247b51c"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+        ],
+        "facts": {
+          "relocation_id": "fixture:root_relocation.facts.relocation_id",
+          "journal": {
+            "ref": "fixture:root_relocation.facts.journal.ref",
+            "schema_id": "fixture:root_relocation.facts.journal.schema_id",
+            "schema_version": "fixture:root_relocation.facts.journal.schema_version",
+            "sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce"
+          },
+          "source_identity": {
+            "ref": "fixture:root_relocation.facts.source_identity.ref",
+            "schema_id": "fixture:root_relocation.facts.source_identity.schema_id",
+            "schema_version": "fixture:root_relocation.facts.source_identity.schema_version",
+            "sha256": "17f475d0211d1905df93aea9c0756d6262ad8d6d94ef8e1f1cb13c39b685d3f2"
+          },
+          "destination_identity": {
+            "ref": "fixture:root_relocation.facts.destination_identity.ref",
+            "schema_id": "fixture:root_relocation.facts.destination_identity.schema_id",
+            "schema_version": "fixture:root_relocation.facts.destination_identity.schema_version",
+            "sha256": "4d9fa277ca49126fa784dfdf7126ef520bdc40d58ef461b76e353dc801be3a84"
+          },
+          "frozen_boundary": {
+            "ref": "fixture:root_relocation.facts.frozen_boundary.ref",
+            "schema_id": "fixture:root_relocation.facts.frozen_boundary.schema_id",
+            "schema_version": "fixture:root_relocation.facts.frozen_boundary.schema_version",
+            "sha256": "0a2b51707e8aca6e9641727ae87ec97efb565732888f9af484598fa8b67826bf"
+          },
+          "selected_bootstrap_binding": {
+            "ref": "fixture:root_relocation.facts.selected_bootstrap_binding.ref",
+            "schema_id": "fixture:root_relocation.facts.selected_bootstrap_binding.schema_id",
+            "schema_version": "fixture:root_relocation.facts.selected_bootstrap_binding.schema_version",
+            "sha256": "bf243db93b0b84a9f450b5e0bb029f6c7c77decd4c2bea77a29789842279ccaa"
+          },
+          "verified_reopen": {
+            "ref": "fixture:root_relocation.facts.verified_reopen.ref",
+            "schema_id": "fixture:root_relocation.facts.verified_reopen.schema_id",
+            "schema_version": "fixture:root_relocation.facts.verified_reopen.schema_version",
+            "sha256": "5ec1517e976bbdb845923c1b85b9756b602f91a93e7133b8787729417b6c7415"
+          },
+          "retained_source_custody": {
+            "ref": "fixture:root_relocation.facts.retained_source_custody.ref",
+            "schema_id": "fixture:root_relocation.facts.retained_source_custody.schema_id",
+            "schema_version": "fixture:root_relocation.facts.retained_source_custody.schema_version",
+            "sha256": "1cafe823e2feb27251e6b3f8d56388324e7fae4bac003573dd017db8617984cf"
+          },
+          "disposition": "verified_destination_selected"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "issued_pending",
+      "definition": "pending",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 1,
+        "state": "complete",
+        "previous_floor_sha256": "30a5e2849fcb281d57bfdf7a01d143664f642fd6e91918078db3010ec65339bf",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 1,
+        "boot_receipt_set_sha256": "d53b3af330458f4d2526d4f17aad2592070ca6f8ce627ad0008c48a6ad9e769f",
+        "last_transition": {
+          "kind": "issued",
+          "receipt_key": "event_append_receipt_custody.v1:11111111-1111-4111-8111-111111111111:b47ebf76c80fce0b5da132e7e39eb4894cdd428b66f669f966d0edd2e082ccb6",
+          "receipt_custody_sha256": "5930b5b6bc8daa574e1e12aa56f469fa1098d9a5a7c842f8d2ff15cf2d29d0ed"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "birth_before_db",
+      "definition": "pending",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "complete",
+        "previous_floor_sha256": null,
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 0,
+        "boot_receipt_set_sha256": "acd87cfc7694dd3e2926dbb5dea8f475cb3d59d6edd03d590b727549a4ce05af",
+        "last_transition": {
+          "kind": "birth"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "unknown",
+      "definition": "floor",
+      "valid": true,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "unavailable",
+        "reason": "unknown_pre_native_history",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "unknown_floor_field",
+      "definition": "floor",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 1,
+        "state": "complete",
+        "previous_floor_sha256": "30a5e2849fcb281d57bfdf7a01d143664f642fd6e91918078db3010ec65339bf",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 1,
+        "boot_receipt_set_sha256": "d53b3af330458f4d2526d4f17aad2592070ca6f8ce627ad0008c48a6ad9e769f",
+        "last_transition": {
+          "kind": "issued",
+          "receipt_key": "event_append_receipt_custody.v1:11111111-1111-4111-8111-111111111111:b47ebf76c80fce0b5da132e7e39eb4894cdd428b66f669f966d0edd2e082ccb6",
+          "receipt_custody_sha256": "5930b5b6bc8daa574e1e12aa56f469fa1098d9a5a7c842f8d2ff15cf2d29d0ed"
+        },
+        "redaction_profile": "no_secrets",
+        "raw_control": "forbidden"
+      }
+    },
+    {
+      "id": "unknown_gets_birth",
+      "definition": "floor",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "unavailable",
+        "reason": "unknown_pre_native_history",
+        "redaction_profile": "no_secrets",
+        "birth": {}
+      }
+    },
+    {
+      "id": "boolean_floor_revision",
+      "definition": "floor",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": true,
+        "state": "complete",
+        "previous_floor_sha256": "30a5e2849fcb281d57bfdf7a01d143664f642fd6e91918078db3010ec65339bf",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 1,
+        "boot_receipt_set_sha256": "d53b3af330458f4d2526d4f17aad2592070ca6f8ce627ad0008c48a6ad9e769f",
+        "last_transition": {
+          "kind": "issued",
+          "receipt_key": "event_append_receipt_custody.v1:11111111-1111-4111-8111-111111111111:b47ebf76c80fce0b5da132e7e39eb4894cdd428b66f669f966d0edd2e082ccb6",
+          "receipt_custody_sha256": "5930b5b6bc8daa574e1e12aa56f469fa1098d9a5a7c842f8d2ff15cf2d29d0ed"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "birth_has_predecessor",
+      "definition": "floor",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "complete",
+        "previous_floor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 0,
+        "boot_receipt_set_sha256": "acd87cfc7694dd3e2926dbb5dea8f475cb3d59d6edd03d590b727549a4ce05af",
+        "last_transition": {
+          "kind": "birth"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "issued_missing_original_key",
+      "definition": "pending",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 1,
+        "state": "complete",
+        "previous_floor_sha256": "30a5e2849fcb281d57bfdf7a01d143664f642fd6e91918078db3010ec65339bf",
+        "birth": {
+          "native_birth_id": "fixture-native-birth-1",
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "original_absence": {
+            "bootstrap_binding": false,
+            "root_identity": false,
+            "redb": false,
+            "seglog": false,
+            "journals": false,
+            "backups": false
+          },
+          "identity_creation_sha256": "9265faadfec464bd8cd5af4c3594d7f5045f0114b8695876d6d8b3ce8be8c46f",
+          "activation_contract_sha256": "f3d1985f410e814c4f482cc6d890af63575890aa21d97b237b227807d0efb0c8",
+          "activation_migration_receipt_key": "migration_receipt.v1:migration:1",
+          "activation_migration_receipt_sha256": "c80d7c5470588a4ff0484fdd16dc5c203d1932cd4886ca91b54ebc3508049a1c"
+        },
+        "boot_receipt_count": 1,
+        "boot_receipt_set_sha256": "d53b3af330458f4d2526d4f17aad2592070ca6f8ce627ad0008c48a6ad9e769f",
+        "last_transition": {
+          "kind": "issued",
+          "receipt_custody_sha256": "5930b5b6bc8daa574e1e12aa56f469fa1098d9a5a7c842f8d2ff15cf2d29d0ed"
+        },
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "pending_is_unavailable",
+      "definition": "pending",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_history_floor.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "revision": 0,
+        "state": "unavailable",
+        "reason": "unknown_pre_native_history",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "unknown_control_field",
+      "definition": "control",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 3,
+        "phase": "settled",
+        "source_members": [
+          {
+            "kind": "backup_restore",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:backup_restore.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/backup_restore",
+              "schema_id": "pm.storage.boot_source.backup_restore.v1"
+            },
+            "source_journal_ref": "fixture:backup_restore.facts.journal.ref",
+            "source_journal_sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809",
+            "source_admission_ref": "fixture:backup_restore.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "3fb0d7f5a240634413c89a3e100836c43439eab2d0bdcb623890ae19107307f5",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+            ]
+          },
+          {
+            "kind": "compaction",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:compaction.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/compaction",
+              "schema_id": "pm.storage.boot_source.compaction.v1"
+            },
+            "source_journal_ref": "fixture:compaction.facts.intent.ref",
+            "source_journal_sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc",
+            "source_admission_ref": "fixture:compaction.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "5f9fbd6a1f863a1f0953b9c237d0678f5b926a2c0c16eca285f472766b5cecbd",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+            ]
+          },
+          {
+            "kind": "deletion_quarantine",
+            "source_owner": "storage retention/deletion/quarantine owner",
+            "operation_id": "fixture:deletion_quarantine.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/deletion_quarantine",
+              "schema_id": "pm.storage.boot_source.deletion_quarantine.v1"
+            },
+            "source_journal_ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "source_journal_sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96",
+            "source_admission_ref": "fixture:deletion_quarantine.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "b96f54ef98fe54eb928748436addbd4512eb90015f07e8a3894e86a323a7999d",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+            ]
+          },
+          {
+            "kind": "migration",
+            "source_owner": "StorageMigrationCoordinator",
+            "operation_id": "fixture:migration.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/migration",
+              "schema_id": "pm.storage.boot_source.migration.v1"
+            },
+            "source_journal_ref": "fixture:migration.facts.journal.ref",
+            "source_journal_sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2",
+            "source_admission_ref": "fixture:migration.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "234b35c920cec84ad375a1e052b3b8da394b9486285e939a88974daa6fbd9413",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+            ]
+          },
+          {
+            "kind": "root_relocation",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:root_relocation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/root_relocation",
+              "schema_id": "pm.storage.boot_source.root_relocation.v1"
+            },
+            "source_journal_ref": "fixture:root_relocation.facts.journal.ref",
+            "source_journal_sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce",
+            "source_admission_ref": "fixture:root_relocation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "2c9b73f1e8f3ee9b4177e7182f8f5aedf25332577fb783dff2d3fa6a23a17e1e",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+            ]
+          },
+          {
+            "kind": "rotation_truncation",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:rotation_truncation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/rotation_truncation",
+              "schema_id": "pm.storage.boot_source.rotation_truncation.v1"
+            },
+            "source_journal_ref": "fixture:rotation_truncation.facts.intent.ref",
+            "source_journal_sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa",
+            "source_admission_ref": "fixture:rotation_truncation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "4ee6a5295e597eb8063de1eaf2f468ffc9c7ba06e7c6d3833c11afdd43a4b374",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+            ]
+          }
+        ],
+        "frozen": {
+          "work_set_digest": "dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347",
+          "recovery_set_digest": "0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+          "members_sha256": "e0f4d234f0e4731744debabda1349b4353db954abb52740b1417f9935e6326f3",
+          "captured_manifest_sha256": "261d6ade4fd4ccad108ecad5071e3a7895a832d46b8e47dc375a7465bbdb14e0",
+          "captured_segment_sha256": "9b11f6b9606823b3cb6054c60ad1c646e64fea43ab1ab945bffb8020e903276d",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "event_type": "storage.boot_recovery",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "storage.boot_recovery.publish.v1:11111111-1111-4111-8111-111111111111",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-11T22:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:boot-occurrence:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+            "payload": {
+              "schema_version": "2.0.0",
+              "recovery_set_id": "pm.storage.recovery_set.v1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+              "integrity_ids": [],
+              "recovery_ids": [
+                "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253",
+                "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c",
+                "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187",
+                "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d",
+                "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e",
+                "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+              ],
+              "interrupted_transaction_kinds": [
+                "backup_restore",
+                "compaction",
+                "deletion_quarantine",
+                "migration",
+                "root_relocation",
+                "rotation_truncation"
+              ],
+              "manifest_generation": 10,
+              "recovery_epoch": 1,
+              "active_segment_ref": "pm.storage.segment.v1:1:1:active:624e1fd5c50b42e32dbdfed0bd373e71d5dc76880e719843269ba0b21eb2b319"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          }
+        },
+        "issued": {
+          "first_append_receipt": {
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "sequence_id": 1,
+            "segment_generation": 1,
+            "segment_name": "seg-000001-00000000000000000001.active",
+            "byte_offset": 0,
+            "commit_group_id": "fixture-group-11",
+            "durability_class": "barrier",
+            "durable_end_offset": 2031,
+            "durability_state": "synced",
+            "manifest_generation": 11,
+            "acknowledged_at_utc": "2026-09-11T22:00:00Z"
+          },
+          "original_segment_ref": "segment:fixture-original-1",
+          "original_event_value_commitment": {
+            "schema_id": "pm.storage.original_event_value_commitment.v1",
+            "schema_version": "1.0.0",
+            "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+            "domain": "pm.storage.original_event_value_commitment.v1",
+            "event_schema_id": "pm.event.v0",
+            "event_schema_version": "2.0.0",
+            "sha256": "7807bb38c8c77a91545f79a4796e973cd38b7e85d786b47a5428e03b20deeb7b"
+          },
+          "sequence_id": 1,
+          "observed_at_utc": "2026-09-11T22:00:00Z",
+          "persisted_at_utc": "2026-09-11T22:00:00Z"
+        },
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": "2026-09-11T22:00:00Z",
+        "redaction_profile": "no_secrets",
+        "authority": true
+      }
+    },
+    {
+      "id": "settled_without_result",
+      "definition": "control",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_recovery_control.v1",
+        "schema_version": "1.0.0",
+        "selection": {
+          "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+          "root_generation": 1,
+          "logical_root_fingerprint": "35c4686fcf63655449fc710575d9f031709c4be4ac295b79196ee2ebdafc47bb",
+          "actual_recovery_occurrence_ref": "fixture:boot-occurrence:1",
+          "actual_recovery_occurrence_sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15",
+          "recovery_epoch": 1
+        },
+        "control_revision": 3,
+        "phase": "settled",
+        "source_members": [
+          {
+            "kind": "backup_restore",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:backup_restore.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/backup_restore",
+              "schema_id": "pm.storage.boot_source.backup_restore.v1"
+            },
+            "source_journal_ref": "fixture:backup_restore.facts.journal.ref",
+            "source_journal_sha256": "f4d1ee5d6b71deb27806b62b883fb273c298d2ddd41655d9d054423225a3e809",
+            "source_admission_ref": "fixture:backup_restore.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "3fb0d7f5a240634413c89a3e100836c43439eab2d0bdcb623890ae19107307f5",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+            ]
+          },
+          {
+            "kind": "compaction",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:compaction.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/compaction",
+              "schema_id": "pm.storage.boot_source.compaction.v1"
+            },
+            "source_journal_ref": "fixture:compaction.facts.intent.ref",
+            "source_journal_sha256": "261a3182a62fc72d8bfaadd1e96aa90a2ba16bf1087f7f17708bd80e6d0c56dc",
+            "source_admission_ref": "fixture:compaction.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "5f9fbd6a1f863a1f0953b9c237d0678f5b926a2c0c16eca285f472766b5cecbd",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187"
+            ]
+          },
+          {
+            "kind": "deletion_quarantine",
+            "source_owner": "storage retention/deletion/quarantine owner",
+            "operation_id": "fixture:deletion_quarantine.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/deletion_quarantine",
+              "schema_id": "pm.storage.boot_source.deletion_quarantine.v1"
+            },
+            "source_journal_ref": "fixture:deletion_quarantine.facts.original_record.ref",
+            "source_journal_sha256": "0bd67a173bf9ef1ebf554c20e335286d3d1db9630845d6fb64fbd43217dcdd96",
+            "source_admission_ref": "fixture:deletion_quarantine.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "b96f54ef98fe54eb928748436addbd4512eb90015f07e8a3894e86a323a7999d",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253"
+            ]
+          },
+          {
+            "kind": "migration",
+            "source_owner": "StorageMigrationCoordinator",
+            "operation_id": "fixture:migration.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/migration",
+              "schema_id": "pm.storage.boot_source.migration.v1"
+            },
+            "source_journal_ref": "fixture:migration.facts.journal.ref",
+            "source_journal_sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2",
+            "source_admission_ref": "fixture:migration.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "234b35c920cec84ad375a1e052b3b8da394b9486285e939a88974daa6fbd9413",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+            ]
+          },
+          {
+            "kind": "root_relocation",
+            "source_owner": "StorageRecoveryCoordinator",
+            "operation_id": "fixture:root_relocation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/root_relocation",
+              "schema_id": "pm.storage.boot_source.root_relocation.v1"
+            },
+            "source_journal_ref": "fixture:root_relocation.facts.journal.ref",
+            "source_journal_sha256": "b770844d029b0d387b1f8a6e3f4b619c73940d87fd3a9dda5443917fe56ea3ce",
+            "source_admission_ref": "fixture:root_relocation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "2c9b73f1e8f3ee9b4177e7182f8f5aedf25332577fb783dff2d3fa6a23a17e1e",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c"
+            ]
+          },
+          {
+            "kind": "rotation_truncation",
+            "source_owner": "storage maintenance coordinator",
+            "operation_id": "fixture:rotation_truncation.source_admission.ref",
+            "source_contract": {
+              "path": "Plans/storage_boot_original_source_contracts.schema.json",
+              "json_pointer": "#/$defs/rotation_truncation",
+              "schema_id": "pm.storage.boot_source.rotation_truncation.v1"
+            },
+            "source_journal_ref": "fixture:rotation_truncation.facts.intent.ref",
+            "source_journal_sha256": "3b295e5b2c37f3c79bfcf97fc80e4d94f5b0bb007ad198cccde3433f63e8eaaa",
+            "source_admission_ref": "fixture:rotation_truncation.source_admission.ref",
+            "source_precondition_sha256": "dd492012d9c7735e293ab85dd6307c019038f835bb63ea0471a407c039c7e349",
+            "source_postcondition_sha256": "4ee6a5295e597eb8063de1eaf2f468ffc9c7ba06e7c6d3833c11afdd43a4b374",
+            "integrity_ids": [],
+            "recovery_ids": [
+              "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e"
+            ]
+          }
+        ],
+        "frozen": {
+          "work_set_digest": "dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347",
+          "recovery_set_digest": "0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+          "members_sha256": "e0f4d234f0e4731744debabda1349b4353db954abb52740b1417f9935e6326f3",
+          "captured_manifest_sha256": "261d6ade4fd4ccad108ecad5071e3a7895a832d46b8e47dc375a7465bbdb14e0",
+          "captured_segment_sha256": "9b11f6b9606823b3cb6054c60ad1c646e64fea43ab1ab945bffb8020e903276d",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+            "event_type": "storage.boot_recovery",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "storage.boot_recovery.publish.v1:11111111-1111-4111-8111-111111111111",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-11T22:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:boot-occurrence:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "boot-recovery:v1:dd28200d17eb775b81ee23a4eed7b3e0ce364d571c1ab275f159fc556ea73347:1",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+            "payload": {
+              "schema_version": "2.0.0",
+              "recovery_set_id": "pm.storage.recovery_set.v1:0c0f10edef7cdef1b54134fa5d50f1168c940f25dbcaade3dc791dfc249b9386",
+              "integrity_ids": [],
+              "recovery_ids": [
+                "pm.storage.recovery.v1:630b1de0a99438486ee52dffee51e5079e2e65bd76ed501ca7d5ae861280f253",
+                "pm.storage.recovery.v1:7c6e1e0b7dcf0dcdb5dfd395727c209105fcc710fb5bcd54c1202fa5be9fea0c",
+                "pm.storage.recovery.v1:8fb727d1743d828f70706e490471a6a9102ff6d7f0a2a9fbb9f9afb0faa25187",
+                "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d",
+                "pm.storage.recovery.v1:a5bcc41dd200c285d0504dedcce64889101203c65591e4fa75fb52092caa573e",
+                "pm.storage.recovery.v1:c543404d3044b47d38ad67949714ad8a79018fd7af65640c31caa540e28f2587"
+              ],
+              "interrupted_transaction_kinds": [
+                "backup_restore",
+                "compaction",
+                "deletion_quarantine",
+                "migration",
+                "root_relocation",
+                "rotation_truncation"
+              ],
+              "manifest_generation": 10,
+              "recovery_epoch": 1,
+              "active_segment_ref": "pm.storage.segment.v1:1:1:active:624e1fd5c50b42e32dbdfed0bd373e71d5dc76880e719843269ba0b21eb2b319"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          }
+        },
+        "issued": null,
+        "started_at_utc": "2026-09-11T22:00:00Z",
+        "terminal_at_utc": "2026-09-11T22:00:00Z",
+        "redaction_profile": "no_secrets"
+      }
+    },
+    {
+      "id": "source_unknown_field",
+      "definition": "source",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_source.migration.v1",
+        "schema_version": "1.0.0",
+        "kind": "migration",
+        "source_owner": "StorageMigrationCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:migration.source_admission.ref",
+          "schema_id": "fixture:migration.source_admission.schema_id",
+          "schema_version": "fixture:migration.source_admission.schema_version",
+          "sha256": "16ef4465af23999094939a62fe979f4aff1323c7f44b5170c3421ced940343a9"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [
+          "pm.storage.recovery.v1:a49cf9389ddc8dcbf6e206624d6c3f928ae10ebef2e7d5e9e0ac02e234d4ad4d"
+        ],
+        "facts": {
+          "migration_id": "fixture:migration.facts.migration_id",
+          "journal": {
+            "ref": "fixture:migration.facts.journal.ref",
+            "schema_id": "fixture:migration.facts.journal.schema_id",
+            "schema_version": "fixture:migration.facts.journal.schema_version",
+            "sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2"
+          },
+          "terminal_migration_receipt": {
+            "ref": "fixture:migration.facts.terminal_migration_receipt.ref",
+            "schema_id": "fixture:migration.facts.terminal_migration_receipt.schema_id",
+            "schema_version": "fixture:migration.facts.terminal_migration_receipt.schema_version",
+            "sha256": "c01ff48a474a18a6491ec05910a1b9f74edde0ab70423d673e80452683bdb9e4"
+          },
+          "interrupted_phase": "backup_verified",
+          "terminal_phase": "committed",
+          "verification": {
+            "ref": "fixture:migration.facts.verification.ref",
+            "schema_id": "fixture:migration.facts.verification.schema_id",
+            "schema_version": "fixture:migration.facts.verification.schema_version",
+            "sha256": "6a94cff1fc5b6602ba4a0c38a6f52a781ba9aa6ed6f388e2714e11f39f182a2f"
+          }
+        },
+        "redaction_profile": "no_secrets",
+        "trusted": true
+      }
+    },
+    {
+      "id": "source_empty_result_union",
+      "definition": "source",
+      "valid": false,
+      "value": {
+        "schema_id": "pm.storage.boot_source.migration.v1",
+        "schema_version": "1.0.0",
+        "kind": "migration",
+        "source_owner": "StorageMigrationCoordinator",
+        "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+        "root_generation": 1,
+        "recovery_epoch": 1,
+        "original_occurrence": {
+          "ref": "fixture:boot-occurrence:1",
+          "schema_id": "fixture.original_boot_occurrence",
+          "schema_version": "1.0.0",
+          "sha256": "2cf84c2d645dbab20af68a3bd7bdac08604661a25752fadcfbf86e11898e6a15"
+        },
+        "source_admission": {
+          "ref": "fixture:migration.source_admission.ref",
+          "schema_id": "fixture:migration.source_admission.schema_id",
+          "schema_version": "fixture:migration.source_admission.schema_version",
+          "sha256": "16ef4465af23999094939a62fe979f4aff1323c7f44b5170c3421ced940343a9"
+        },
+        "integrity_ids": [],
+        "recovery_ids": [],
+        "facts": {
+          "migration_id": "fixture:migration.facts.migration_id",
+          "journal": {
+            "ref": "fixture:migration.facts.journal.ref",
+            "schema_id": "fixture:migration.facts.journal.schema_id",
+            "schema_version": "fixture:migration.facts.journal.schema_version",
+            "sha256": "04d8f238226cdd8df9d58785b35f9399db3431ef0a1c059f9e8af06e5d3cd4c2"
+          },
+          "terminal_migration_receipt": {
+            "ref": "fixture:migration.facts.terminal_migration_receipt.ref",
+            "schema_id": "fixture:migration.facts.terminal_migration_receipt.schema_id",
+            "schema_version": "fixture:migration.facts.terminal_migration_receipt.schema_version",
+            "sha256": "c01ff48a474a18a6491ec05910a1b9f74edde0ab70423d673e80452683bdb9e4"
+          },
+          "interrupted_phase": "backup_verified",
+          "terminal_phase": "committed",
+          "verification": {
+            "ref": "fixture:migration.facts.verification.ref",
+            "schema_id": "fixture:migration.facts.verification.schema_id",
+            "schema_version": "fixture:migration.facts.verification.schema_version",
+            "sha256": "6a94cff1fc5b6602ba4a0c38a6f52a781ba9aa6ed6f388e2714e11f39f182a2f"
+          }
+        },
+        "redaction_profile": "no_secrets"
+      }
+    }
+  ],
+  "limits": [
+    "Supplied original owners and source records are in-process fixtures; no native admission, frame/fsync, root/birth/installation or cold-process proof.",
+    "Canonical configuration precedes every original birth/capture; proposal activation hashes are historical lineage only.",
+    "Shape examples do not prove current authority, complete discovery or original receipt issuance."
+  ]
+}

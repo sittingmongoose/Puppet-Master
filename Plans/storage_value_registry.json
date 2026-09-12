@@ -63274,6 +63274,2180 @@
           }
         }
       }
+    },
+    {
+      "family_id": "boot_recovery_control",
+      "storage_kind": "canonical_file",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "storage/migrations/boot-recovery.v1/{sha256_utf8(storage_instance_id)}/{recovery_epoch_20}.intent.msgpack",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage.boot_recovery_control.v1",
+      "value_schema_ref": "Plans/storage_boot_recovery_control.schema.json",
+      "owner_doc": "Plans/storage-plan.md#boot-recovery-aggregate-and-original-producer-custody",
+      "producer": [
+        "storage.boot_recovery.publish.v1"
+      ],
+      "consumers": [
+        "storage.boot_recovery.publish.v1",
+        "storage.boot_recovery.resolve_earliest.v1",
+        "StorageRecoveryCoordinator",
+        "original mandatory backup owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "selection",
+        "control_revision",
+        "phase",
+        "source_members",
+        "frozen",
+        "issued",
+        "started_at_utc",
+        "terminal_at_utc",
+        "redaction_profile"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "frozen",
+        "issued",
+        "terminal_at_utc"
+      ],
+      "replay_behavior": "One original selected episode retains complete six-owner source membership, frozen producer input and issued result. Capture/readback precedes raw-source retirement. Pending completion joins the actual current original EventRecord and same original v2 full-value receipt. Retained settled retry returns exact original result under current custody guards; no reevaluation, checkpoint, new receipt or source recreation.",
+      "migration": "StorageMigrationCoordinator must install exact canonical schemas, source/producer/receipt/reader/backup roles and actual root selection before activation. No production from/to edge is allocated from fixture versions; proposal hashes and copied receipts are not current installation. Unknown history cannot initialize from an empty scan.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#boot-recovery-aggregate-and-original-producer-custody"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ]
+      },
+      "retention_compaction": "Unsettled controls remain protected until actual original resolution. Settled/no-obligation terminal transition uses unchanged RP-OPERATIONAL-2555D@1.0.0 plus stronger refs/holds. Existing 2000000/project cardinality is not a new application-root bucket; the application aggregate policy-owner adapter remains unproved and fails closed. No policy value is changed.",
+      "retention_policy_ref": "RP-OPERATIONAL-2555D",
+      "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
+      "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "selection",
+          "control_revision",
+          "phase",
+          "source_members",
+          "frozen",
+          "issued",
+          "started_at_utc",
+          "terminal_at_utc",
+          "redaction_profile"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage.boot_recovery_control.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "selection": {
+            "$ref": "#/$defs/selection"
+          },
+          "control_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "phase": {
+            "enum": [
+              "collecting",
+              "frozen",
+              "issued",
+              "settled",
+              "no_obligation"
+            ]
+          },
+          "source_members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/source_member"
+            },
+            "uniqueItems": true
+          },
+          "frozen": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/frozen"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "issued": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/issued"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "started_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "terminal_at_utc": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/storage_boot_recovery_control/1.0.0",
+        "$defs": {
+          "pending_event": {
+            "$id": "https://puppetmaster.local/schemas/storage_boot_recovery_pending_event/1.0.0",
+            "title": "Puppet Master EventRecord Envelope",
+            "description": "Canonical persisted EventRecord envelope for schema_id pm.event.v0. The envelope is closed and carries identity, sequence, causality, redaction, replay, idempotency, and migration fields. Event-specific payload content is dispatched through payload_schema_id and remains owned by the registered payload schema. No raw secret, token, password, credential, API key, OAuth value, or local machine secret may be stored in this envelope or payload.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "scope_kind",
+              "event_id",
+              "event_type",
+              "project_id",
+              "thread_id",
+              "run_id",
+              "node_id",
+              "attempt_id",
+              "actor_ref",
+              "requested_account_ref",
+              "effective_account_ref",
+              "occurred_at_utc",
+              "producer_sequence_id",
+              "correlation_id",
+              "causation_event_id",
+              "parent_event_id",
+              "idempotency_key",
+              "payload_schema_id",
+              "payload",
+              "payload_ref",
+              "redaction_profile",
+              "replay_policy",
+              "migration"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.event.v0"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "scope_kind": {
+                "const": "application"
+              },
+              "event_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "event_type": {
+                "const": "storage.boot_recovery"
+              },
+              "project_id": {
+                "type": "null"
+              },
+              "thread_id": {
+                "type": "null"
+              },
+              "run_id": {
+                "type": "null"
+              },
+              "node_id": {
+                "type": "null"
+              },
+              "attempt_id": {
+                "type": "null"
+              },
+              "actor_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "requested_account_ref": {
+                "type": "null"
+              },
+              "effective_account_ref": {
+                "type": "null"
+              },
+              "occurred_at_utc": {
+                "$ref": "#/$defs/date_time_string"
+              },
+              "producer_sequence_id": {
+                "type": "null"
+              },
+              "correlation_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "causation_event_id": {
+                "type": "null"
+              },
+              "parent_event_id": {
+                "type": "null"
+              },
+              "idempotency_key": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "payload_schema_id": {
+                "const": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0"
+              },
+              "payload": {
+                "$defs": {
+                  "storage_boot_recovery_1_0_0_compatibility_reader": {
+                    "$id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/1.0.0",
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "additionalProperties": false,
+                    "properties": {
+                      "active_segment_ref": {
+                        "type": "string"
+                      },
+                      "integrity_ids": {
+                        "items": {},
+                        "type": "array"
+                      },
+                      "interrupted_transaction_kinds": {
+                        "items": {},
+                        "type": "array"
+                      },
+                      "manifest_generation": {
+                        "type": "integer"
+                      },
+                      "recovery_epoch": {
+                        "type": "integer"
+                      },
+                      "recovery_ids": {
+                        "items": {},
+                        "type": "array"
+                      },
+                      "recovery_set_id": {
+                        "type": "string"
+                      },
+                      "repeat_of": {
+                        "type": "string"
+                      },
+                      "schema_version": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schema_version",
+                      "recovery_set_id",
+                      "integrity_ids",
+                      "recovery_ids",
+                      "interrupted_transaction_kinds",
+                      "manifest_generation",
+                      "recovery_epoch",
+                      "active_segment_ref"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "$id": "https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0",
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "additionalProperties": false,
+                "anyOf": [
+                  {
+                    "properties": {
+                      "integrity_ids": {
+                        "minItems": 1
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "recovery_ids": {
+                        "minItems": 1
+                      }
+                    }
+                  }
+                ],
+                "properties": {
+                  "active_segment_ref": {
+                    "pattern": "^pm\\.storage\\.segment\\.v1:(?:0|[1-9][0-9]*):(?:0|[1-9][0-9]*):(opening|active|closed|sealed_degraded):[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "integrity_ids": {
+                    "items": {
+                      "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "maxItems": 4096,
+                    "minItems": 0,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "interrupted_transaction_kinds": {
+                    "items": {
+                      "enum": [
+                        "migration",
+                        "backup_restore",
+                        "rotation_truncation",
+                        "compaction",
+                        "deletion_quarantine",
+                        "root_relocation"
+                      ]
+                    },
+                    "maxItems": 6,
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "manifest_generation": {
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "recovery_epoch": {
+                    "maximum": 18446744073709551615,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "recovery_ids": {
+                    "items": {
+                      "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                      "type": "string"
+                    },
+                    "maxItems": 4096,
+                    "minItems": 0,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "recovery_set_id": {
+                    "pattern": "^pm\\.storage\\.recovery_set\\.v1:[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "repeat_of": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "schema_version": {
+                    "const": "2.0.0"
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "recovery_set_id",
+                  "integrity_ids",
+                  "recovery_ids",
+                  "interrupted_transaction_kinds",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "active_segment_ref"
+                ],
+                "type": "object"
+              },
+              "payload_ref": {
+                "type": "null"
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "replay_policy": {
+                "const": "dedupe_by_idempotency_key"
+              },
+              "migration": {
+                "$ref": "#/$defs/migration"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "$ref": "#/$defs/non_empty_string"
+                    }
+                  }
+                }
+              }
+            ],
+            "$defs": {
+              "non_empty_string": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nullable_non_empty_string": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "nullable_non_negative_integer": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "date_time_string": {
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
+              },
+              "migration": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "migrated_from_schema_id",
+                  "migrated_from_schema_version",
+                  "migration_id",
+                  "compatibility_event_type"
+                ],
+                "properties": {
+                  "migrated_from_schema_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "migrated_from_schema_version": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "migration_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "compatibility_event_type": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  }
+                }
+              },
+              "event_record_1_0_0_compatibility_reader": {
+                "description": "Frozen compatibility reader shape for persisted pm.event.v0 version 1.0.0 values. New writers must not emit this shape.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "event_id",
+                  "event_type",
+                  "project_id",
+                  "thread_id",
+                  "run_id",
+                  "node_id",
+                  "attempt_id",
+                  "actor_ref",
+                  "requested_account_ref",
+                  "effective_account_ref",
+                  "occurred_at_utc",
+                  "observed_at_utc",
+                  "persisted_at_utc",
+                  "sequence_id",
+                  "producer_sequence_id",
+                  "correlation_id",
+                  "causation_event_id",
+                  "parent_event_id",
+                  "idempotency_key",
+                  "payload_schema_id",
+                  "payload",
+                  "payload_ref",
+                  "redaction_profile",
+                  "replay_policy",
+                  "migration"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "type": "string",
+                    "const": "pm.event.v0"
+                  },
+                  "schema_version": {
+                    "type": "string",
+                    "const": "1.0.0"
+                  },
+                  "event_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "event_type": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+                  },
+                  "project_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "thread_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "run_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "node_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "attempt_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "actor_ref": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "requested_account_ref": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "effective_account_ref": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "occurred_at_utc": {
+                    "$ref": "#/$defs/date_time_string"
+                  },
+                  "observed_at_utc": {
+                    "$ref": "#/$defs/date_time_string"
+                  },
+                  "persisted_at_utc": {
+                    "$ref": "#/$defs/date_time_string"
+                  },
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "producer_sequence_id": {
+                    "$ref": "#/$defs/nullable_non_negative_integer"
+                  },
+                  "correlation_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "causation_event_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "parent_event_id": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "idempotency_key": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "payload_schema_id": {
+                    "$ref": "#/$defs/non_empty_string"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "payload_ref": {
+                    "$ref": "#/$defs/nullable_non_empty_string"
+                  },
+                  "redaction_profile": {
+                    "type": "string",
+                    "enum": [
+                      "no_secrets",
+                      "redacted",
+                      "secret_refs_only"
+                    ]
+                  },
+                  "replay_policy": {
+                    "type": "string",
+                    "enum": [
+                      "append_once",
+                      "dedupe_by_event_id",
+                      "dedupe_by_idempotency_key",
+                      "projector_replay_only"
+                    ]
+                  },
+                  "migration": {
+                    "$ref": "#/$defs/migration"
+                  }
+                }
+              }
+            }
+          },
+          "schema_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "json_pointer",
+              "schema_id"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "json_pointer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schema_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "source_member": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "source_owner",
+              "operation_id",
+              "source_contract",
+              "source_journal_ref",
+              "source_journal_sha256",
+              "source_admission_ref",
+              "source_precondition_sha256",
+              "source_postcondition_sha256",
+              "integrity_ids",
+              "recovery_ids"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "migration",
+                  "backup_restore",
+                  "rotation_truncation",
+                  "compaction",
+                  "deletion_quarantine",
+                  "root_relocation"
+                ]
+              },
+              "source_owner": {
+                "enum": [
+                  "StorageMigrationCoordinator",
+                  "StorageRecoveryCoordinator",
+                  "storage maintenance coordinator",
+                  "storage retention/deletion/quarantine owner"
+                ]
+              },
+              "operation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_contract": {
+                "$ref": "#/$defs/schema_ref"
+              },
+              "source_journal_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_journal_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "source_admission_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_precondition_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "source_postcondition_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "integrity_ids": {
+                "items": {
+                  "pattern": "^pm\\.storage\\.integrity\\.v1:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "recovery_ids": {
+                "items": {
+                  "pattern": "^pm\\.storage\\.recovery\\.v1:[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                "maxItems": 4096,
+                "minItems": 0,
+                "type": "array",
+                "uniqueItems": true
+              }
+            }
+          },
+          "selection": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "root_generation",
+              "logical_root_fingerprint",
+              "actual_recovery_occurrence_ref",
+              "actual_recovery_occurrence_sha256",
+              "recovery_epoch"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "root_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "logical_root_fingerprint": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "actual_recovery_occurrence_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actual_recovery_occurrence_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              }
+            }
+          },
+          "frozen": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "work_set_digest",
+              "recovery_set_digest",
+              "members_sha256",
+              "captured_manifest_sha256",
+              "captured_segment_sha256",
+              "producer_intent"
+            ],
+            "properties": {
+              "work_set_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "recovery_set_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "members_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "captured_manifest_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "captured_segment_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "producer_intent": {
+                "$ref": "#/$defs/pending_event"
+              }
+            }
+          },
+          "issued": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "first_append_receipt",
+              "original_segment_ref",
+              "original_event_value_commitment",
+              "observed_at_utc",
+              "persisted_at_utc",
+              "sequence_id"
+            ],
+            "properties": {
+              "first_append_receipt": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "event_id",
+                  "sequence_id",
+                  "segment_generation",
+                  "segment_name",
+                  "byte_offset",
+                  "commit_group_id",
+                  "durability_class",
+                  "durable_end_offset",
+                  "durability_state",
+                  "manifest_generation",
+                  "acknowledged_at_utc"
+                ],
+                "properties": {
+                  "event_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sequence_id": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "segment_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "byte_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "commit_group_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "durability_class": {
+                    "enum": [
+                      "ordinary",
+                      "barrier"
+                    ]
+                  },
+                  "durable_end_offset": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "durability_state": {
+                    "const": "synced"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "acknowledged_at_utc": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "date-time"
+                  }
+                }
+              },
+              "original_segment_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_event_value_commitment": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "codec",
+                  "domain",
+                  "event_schema_id",
+                  "event_schema_version",
+                  "sha256"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "const": "pm.storage.original_event_value_commitment.v1"
+                  },
+                  "schema_version": {
+                    "const": "1.0.0"
+                  },
+                  "codec": {
+                    "const": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1"
+                  },
+                  "domain": {
+                    "const": "pm.storage.original_event_value_commitment.v1"
+                  },
+                  "event_schema_id": {
+                    "const": "pm.event.v0"
+                  },
+                  "event_schema_version": {
+                    "const": "2.0.0"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "observed_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "persisted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "collecting"
+                }
+              },
+              "required": [
+                "phase"
+              ]
+            },
+            "then": {
+              "properties": {
+                "frozen": {
+                  "type": "null"
+                },
+                "issued": {
+                  "type": "null"
+                },
+                "terminal_at_utc": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "frozen"
+                }
+              },
+              "required": [
+                "phase"
+              ]
+            },
+            "then": {
+              "properties": {
+                "frozen": {
+                  "$ref": "#/$defs/frozen"
+                },
+                "issued": {
+                  "type": "null"
+                },
+                "terminal_at_utc": {
+                  "type": "null"
+                },
+                "source_members": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "issued"
+                }
+              },
+              "required": [
+                "phase"
+              ]
+            },
+            "then": {
+              "properties": {
+                "frozen": {
+                  "$ref": "#/$defs/frozen"
+                },
+                "issued": {
+                  "$ref": "#/$defs/issued"
+                },
+                "terminal_at_utc": {
+                  "type": "null"
+                },
+                "source_members": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "settled"
+                }
+              },
+              "required": [
+                "phase"
+              ]
+            },
+            "then": {
+              "properties": {
+                "frozen": {
+                  "$ref": "#/$defs/frozen"
+                },
+                "issued": {
+                  "$ref": "#/$defs/issued"
+                },
+                "terminal_at_utc": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "source_members": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "phase": {
+                  "const": "no_obligation"
+                }
+              },
+              "required": [
+                "phase"
+              ]
+            },
+            "then": {
+              "properties": {
+                "frozen": {
+                  "type": "null"
+                },
+                "issued": {
+                  "type": "null"
+                },
+                "terminal_at_utc": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "source_members": {
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "boot_recovery_history_floor",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "boot_recovery_history_floor.v1:{storage_instance_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage.boot_history_floor.v1",
+      "value_schema_ref": "Plans/storage_boot_history_floor.schema.json",
+      "owner_doc": "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation",
+      "producer": [
+        "storage.boot_recovery.publish.v1 joined to storage.first_append_receipt.issue.v2"
+      ],
+      "consumers": [
+        "storage.boot_recovery.resolve_earliest.v1",
+        "StorageRecoveryCoordinator",
+        "original mandatory backup owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "revision",
+        "redaction_profile",
+        "state"
+      ],
+      "optional_fields": [
+        "previous_floor_sha256",
+        "birth",
+        "boot_receipt_count",
+        "boot_receipt_set_sha256",
+        "last_transition",
+        "reason"
+      ],
+      "nullable_fields": [
+        "previous_floor_sha256"
+      ],
+      "replay_behavior": "One current complete/unavailable floor in exact table boot_recovery_history_floor.v1. Original all-absent birth and installed canonical hash precede completeness; each original Boot receipt and next floor publish in the same actual DB transaction. Complete Boot-only set, original row and current external anchor authenticate earliest minimum original sequence. Unknown history, older restore or lost continuity remains unavailable.",
+      "migration": "StorageMigrationCoordinator must install exact canonical schemas, source/producer/receipt/reader/backup roles and actual root selection before activation. No production from/to edge is allocated from fixture versions; proposal hashes and copied receipts are not current installation. Unknown history cannot initialize from an empty scan.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ]
+      },
+      "retention_compaction": "Unchanged RP-EVENT-IDENTITY-APPROOT@1.0.0 identity lifetime; no expiry, cardinality/byte ceiling, compaction rewrite or retained floor history chain. Mandatory coherent backup includes the in-root floor and original receipt table; it cannot roll back the current external anchor.",
+      "retention_policy_ref": "RP-EVENT-IDENTITY-APPROOT",
+      "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
+      "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/storage_boot_history_floor/1.0.0",
+        "$defs": {
+          "complete": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "revision",
+              "redaction_profile",
+              "state",
+              "previous_floor_sha256",
+              "birth",
+              "boot_receipt_count",
+              "boot_receipt_set_sha256",
+              "last_transition"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.boot_history_floor.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "state": {
+                "const": "complete"
+              },
+              "previous_floor_sha256": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "birth": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "native_birth_id",
+                  "storage_instance_id",
+                  "original_absence",
+                  "identity_creation_sha256",
+                  "activation_contract_sha256",
+                  "activation_migration_receipt_key",
+                  "activation_migration_receipt_sha256"
+                ],
+                "properties": {
+                  "native_birth_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "storage_instance_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "original_absence": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "bootstrap_binding",
+                      "root_identity",
+                      "redb",
+                      "seglog",
+                      "journals",
+                      "backups"
+                    ],
+                    "properties": {
+                      "bootstrap_binding": {
+                        "const": false
+                      },
+                      "root_identity": {
+                        "const": false
+                      },
+                      "redb": {
+                        "const": false
+                      },
+                      "seglog": {
+                        "const": false
+                      },
+                      "journals": {
+                        "const": false
+                      },
+                      "backups": {
+                        "const": false
+                      }
+                    }
+                  },
+                  "identity_creation_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "activation_contract_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "activation_migration_receipt_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "activation_migration_receipt_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "boot_receipt_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "boot_receipt_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "last_transition": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "birth"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "receipt_key",
+                      "receipt_custody_sha256"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "issued"
+                      },
+                      "receipt_key": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "receipt_custody_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "last_transition": {
+                      "properties": {
+                        "kind": {
+                          "const": "birth"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "previous_floor_sha256": {
+                      "type": "null"
+                    },
+                    "revision": {
+                      "const": 0
+                    },
+                    "boot_receipt_count": {
+                      "const": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_transition": {
+                      "properties": {
+                        "kind": {
+                          "const": "issued"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "previous_floor_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "revision": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 18446744073709551615
+                    },
+                    "boot_receipt_count": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 18446744073709551615
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "unavailable": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "revision",
+              "redaction_profile",
+              "state",
+              "reason"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.boot_history_floor.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "state": {
+                "const": "unavailable"
+              },
+              "reason": {
+                "enum": [
+                  "unknown_pre_native_history",
+                  "continuity_unavailable"
+                ]
+              }
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/complete"
+          },
+          {
+            "$ref": "#/$defs/unavailable"
+          }
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "revision",
+          "redaction_profile",
+          "state"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage.boot_history_floor.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "const": "complete"
+              },
+              {
+                "const": "unavailable"
+              }
+            ]
+          },
+          "previous_floor_sha256": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "birth": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "native_birth_id",
+              "storage_instance_id",
+              "original_absence",
+              "identity_creation_sha256",
+              "activation_contract_sha256",
+              "activation_migration_receipt_key",
+              "activation_migration_receipt_sha256"
+            ],
+            "properties": {
+              "native_birth_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_absence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "bootstrap_binding",
+                  "root_identity",
+                  "redb",
+                  "seglog",
+                  "journals",
+                  "backups"
+                ],
+                "properties": {
+                  "bootstrap_binding": {
+                    "const": false
+                  },
+                  "root_identity": {
+                    "const": false
+                  },
+                  "redb": {
+                    "const": false
+                  },
+                  "seglog": {
+                    "const": false
+                  },
+                  "journals": {
+                    "const": false
+                  },
+                  "backups": {
+                    "const": false
+                  }
+                }
+              },
+              "identity_creation_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "activation_contract_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "activation_migration_receipt_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "activation_migration_receipt_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "boot_receipt_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "boot_receipt_set_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "last_transition": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "birth"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "receipt_key",
+                  "receipt_custody_sha256"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "issued"
+                  },
+                  "receipt_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "receipt_custody_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            ]
+          },
+          "reason": {
+            "enum": [
+              "unknown_pre_native_history",
+              "continuity_unavailable"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "boot_recovery_history_anchor",
+      "storage_kind": "canonical_file",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "boot-recovery-history.v1/{sha256_utf8(storage_instance_id)}.anchor.msgpack",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage.boot_history_floor.v1",
+      "value_schema_ref": "Plans/storage_boot_history_floor.schema.json",
+      "owner_doc": "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation",
+      "producer": [
+        "storage.boot_recovery.publish.v1 through actual bootstrap-binding owner"
+      ],
+      "consumers": [
+        "storage.boot_recovery.resolve_earliest.v1",
+        "StorageRecoveryCoordinator",
+        "original mandatory backup owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "revision",
+        "redaction_profile",
+        "state"
+      ],
+      "optional_fields": [
+        "previous_floor_sha256",
+        "birth",
+        "boot_receipt_count",
+        "boot_receipt_set_sha256",
+        "last_transition",
+        "reason"
+      ],
+      "nullable_fields": [
+        "previous_floor_sha256"
+      ],
+      "replay_behavior": "Actual existing out-of-root bootstrap-binding parent owns the current exact floor bytes and at most one protected boot-recovery-history.v1/{sha256_utf8(storage_instance_id)}.pending.msgpack replacement narrowed by Plans/storage_boot_history_pending.schema.json. Pending is this same family publication path, consumed by exact rename/sync or actual never-committed cancellation; no independent row, TTL, archive or staging file. Closed pre/post/birth/rename recovery preserves original receipts and unrelated progress.",
+      "migration": "StorageMigrationCoordinator must install exact canonical schemas, source/producer/receipt/reader/backup roles and actual root selection before activation. No production from/to edge is allocated from fixture versions; proposal hashes and copied receipts are not current installation. Unknown history cannot initialize from an empty scan.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "not_applicable",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ]
+      },
+      "retention_compaction": "Unchanged RP-EVENT-IDENTITY-APPROOT@1.0.0 current identity authority, with no independent pending policy or lifetime. Ordinary root backup/restore does not copy, reconstruct or roll back this external anchor. Missing or skewed current authority fences dependent reads/completion.",
+      "retention_policy_ref": "RP-EVENT-IDENTITY-APPROOT",
+      "redaction_no_secret_rule": "Closed non-secret identity, hash, original receipt, typed result and source references only; no raw recovery/source bytes, credentials, machine path, log/error text or copied source body.",
+      "legacy_canonical_crosswalk_status": "NEW first-native Boot custody under SP-291/SP-292. Existing event/payload readers and all previous families/policies remain unchanged. No reconstructive legacy backfill or fixture production migration edge. The existing strategy enum has no non-restorable external-current-anchor category: deferred_owner_contract records the unresolved native parent-recovery adapter only. Current anchor continuity is mandatory now; this classification permits no reconstruction, rollback or producer bypass.",
+      "recovery_disposition": {
+        "authority_class": "required_recovery_anchor",
+        "strategy": "deferred_owner_contract",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#boot-earliest-receipt-continuity-and-activation"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/storage_boot_history_floor/1.0.0",
+        "$defs": {
+          "complete": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "revision",
+              "redaction_profile",
+              "state",
+              "previous_floor_sha256",
+              "birth",
+              "boot_receipt_count",
+              "boot_receipt_set_sha256",
+              "last_transition"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.boot_history_floor.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "state": {
+                "const": "complete"
+              },
+              "previous_floor_sha256": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "birth": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "native_birth_id",
+                  "storage_instance_id",
+                  "original_absence",
+                  "identity_creation_sha256",
+                  "activation_contract_sha256",
+                  "activation_migration_receipt_key",
+                  "activation_migration_receipt_sha256"
+                ],
+                "properties": {
+                  "native_birth_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "storage_instance_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "original_absence": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "bootstrap_binding",
+                      "root_identity",
+                      "redb",
+                      "seglog",
+                      "journals",
+                      "backups"
+                    ],
+                    "properties": {
+                      "bootstrap_binding": {
+                        "const": false
+                      },
+                      "root_identity": {
+                        "const": false
+                      },
+                      "redb": {
+                        "const": false
+                      },
+                      "seglog": {
+                        "const": false
+                      },
+                      "journals": {
+                        "const": false
+                      },
+                      "backups": {
+                        "const": false
+                      }
+                    }
+                  },
+                  "identity_creation_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "activation_contract_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "activation_migration_receipt_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "activation_migration_receipt_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "boot_receipt_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "boot_receipt_set_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "last_transition": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "birth"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "receipt_key",
+                      "receipt_custody_sha256"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "issued"
+                      },
+                      "receipt_key": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "receipt_custody_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "last_transition": {
+                      "properties": {
+                        "kind": {
+                          "const": "birth"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "previous_floor_sha256": {
+                      "type": "null"
+                    },
+                    "revision": {
+                      "const": 0
+                    },
+                    "boot_receipt_count": {
+                      "const": 0
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "last_transition": {
+                      "properties": {
+                        "kind": {
+                          "const": "issued"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "previous_floor_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "revision": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 18446744073709551615
+                    },
+                    "boot_receipt_count": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 18446744073709551615
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "unavailable": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "revision",
+              "redaction_profile",
+              "state",
+              "reason"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.boot_history_floor.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "redaction_profile": {
+                "const": "no_secrets"
+              },
+              "state": {
+                "const": "unavailable"
+              },
+              "reason": {
+                "enum": [
+                  "unknown_pre_native_history",
+                  "continuity_unavailable"
+                ]
+              }
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/complete"
+          },
+          {
+            "$ref": "#/$defs/unavailable"
+          }
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "revision",
+          "redaction_profile",
+          "state"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage.boot_history_floor.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "redaction_profile": {
+            "const": "no_secrets"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "const": "complete"
+              },
+              {
+                "const": "unavailable"
+              }
+            ]
+          },
+          "previous_floor_sha256": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "birth": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "native_birth_id",
+              "storage_instance_id",
+              "original_absence",
+              "identity_creation_sha256",
+              "activation_contract_sha256",
+              "activation_migration_receipt_key",
+              "activation_migration_receipt_sha256"
+            ],
+            "properties": {
+              "native_birth_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_absence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "bootstrap_binding",
+                  "root_identity",
+                  "redb",
+                  "seglog",
+                  "journals",
+                  "backups"
+                ],
+                "properties": {
+                  "bootstrap_binding": {
+                    "const": false
+                  },
+                  "root_identity": {
+                    "const": false
+                  },
+                  "redb": {
+                    "const": false
+                  },
+                  "seglog": {
+                    "const": false
+                  },
+                  "journals": {
+                    "const": false
+                  },
+                  "backups": {
+                    "const": false
+                  }
+                }
+              },
+              "identity_creation_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "activation_contract_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "activation_migration_receipt_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "activation_migration_receipt_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "boot_receipt_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18446744073709551615
+          },
+          "boot_receipt_set_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "last_transition": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "birth"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "receipt_key",
+                  "receipt_custody_sha256"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "issued"
+                  },
+                  "receipt_key": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "receipt_custody_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            ]
+          },
+          "reason": {
+            "enum": [
+              "unknown_pre_native_history",
+              "continuity_unavailable"
+            ]
+          }
+        }
+      }
     }
   ]
 }
