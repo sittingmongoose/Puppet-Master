@@ -422,5 +422,94 @@
       "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/compilation-preservation.json",
       "sha256": "8088b7cb7ebc75b4aec3d9ddc2b86f22af83d1aefc5eb9089d1f8415c952f5bd"
     }
-  ]
+  ],
+  "post_rebase_currentness": {
+    "status": "PASS",
+    "rebased_onto": "ba198464f71b59a9d4ae22885703860aac0b9e7e",
+    "upstream_changed_paths": [
+      "reports/packet-gap-closure-20260910/r5g-benchmark-settings-entry-audit-checkpoint-20260912.json"
+    ],
+    "source_preimages": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/Shared_Integration_Runtime.md",
+        "sha256": "aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "sha256": "a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/event_append_receipt_contracts.schema.json",
+        "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_created_contracts.schema.json",
+        "sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_create_result.schema.json",
+        "sha256": "d34bb9e3d46ee806dfcf61d41abe1410f77882f1d195ccb394d347ce835c3c82",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_deleted_contracts.schema.json",
+        "sha256": "7f52a577ef2ea546df09a298d0f1bb1b69150a8ccdc3bb8e8b463f73097412ef",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_expired_contracts.schema.json",
+        "sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_retained_read.schema.json",
+        "sha256": "d95e9cdbfd84e447fc775aefb5b368f1c5d7f48fa98aa0f64cace80d3402e3ff",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/restore_point_retained_creation_read.schema.json",
+        "sha256": "61294612884f42eaee654346251827d6048a6b4447c416c55bcfe5dee6b2caa4",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99",
+        "unchanged_at_rebase": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "unchanged_at_rebase": true
+      }
+    ],
+    "all_current_source_preimages_exact": true,
+    "evidence": {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/post-rebase-source-currentness.json",
+      "sha256": "1d264407bdaae48651dc5d6a140c96ef44b498caf3f9ac3044435e207555bbf3"
+    }
+  }
 }

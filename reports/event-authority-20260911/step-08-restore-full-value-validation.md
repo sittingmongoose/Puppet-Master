@@ -15,3 +15,5 @@ Evidence: `/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-p
 The predecessor's full-future fixture still does not prove initial observation allocation or native source provenance. Native binding activation, SIR/source authentication, exact frame/CRC encoding, redb/fsync, concurrent leases, process crashes and whole-root restoration remain NOT_RUN. Initial-admission, settled retained-reader and summary authorities keep their existing separate qualifications; this pending-only change cannot reconstruct old source selections or group openings. No event-depth completion, frozen-validator DEPTH_PASS, readiness clearance or seal is granted.
 
 Cost: Astra medium authorship/independent review and root adjudication/compilation; billing data unavailable.
+
+Post-rebase source check: all fifteen canonical preimages are byte-identical at `ba198464f7`; the sole intervening change is an unrelated report. No source re-adjudication or derived merge was needed.
