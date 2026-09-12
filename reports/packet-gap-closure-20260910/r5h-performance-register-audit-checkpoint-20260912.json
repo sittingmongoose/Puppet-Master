@@ -1,0 +1,162 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5h-performance-register-399-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "review_comparison_commit": "ba198464f71b59a9d4ae22885703860aac0b9e7e",
+  "landing_base_commit": "29dfc9ac32e2deb0163f0316964ba96c115bcebe",
+  "scope_and_authority": [
+    "Individually root-authored review of all 399 extracted DOC-0068 settings_correction_decision_register cases in chunks 00036 through 00039. Root read the complete 1112-line primary register and each extracted case, selected current owners, source implementation and bounded static evidence. Helpers preserve custody and serialize/validate the authored judgments; they do not infer semantic verdicts.",
+    "Preserve all frozen applicability: 397 retained and two adapted_selected_implementation cases at source lines 589 and 811. Later owner decisions and selected implementations qualify findings; supersession is not an automatic whole-case exclusion or pass.",
+    "This landing changes this compact report only. Formal results, root judgments, source snapshots, raw captures and experiment helpers remain outside the product repository. No Plans, concepts, deferred visual design, generated governance, WorkNodes, readiness admission, native handlers or other agents' edits are changed."
+  ],
+  "new_batch": {
+    "chunk_ids": ["chunk-00036", "chunk-00037", "chunk-00038", "chunk-00039"],
+    "cases": 399,
+    "status_counts": {"partial": 398, "pass": 1},
+    "complete_for_review_scope": true,
+    "implementation_complete": false,
+    "pass_boundary": "Only settings_correction_decision_register/L001101 passes: the formerly open naming/identity choice is explicitly resolved to user-facing Plan/Plans/New Plan and canonical NamedPlan/named_plan_id, with predecessor PlanWorkstream/plan_workstream_id retained only as read/migration aliases. Owner text and passing static scope/vocabulary checks establish this decision, not runtime, GUI or persisted migration completion."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 1295,
+    "not_reviewed_cases": 12121,
+    "expected_chunks": 151,
+    "valid_result_files": 21,
+    "missing_result_files": 130,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {"partial": 1065, "pass": 171, "blocked": 39, "fail": 17, "not_applicable": 3},
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "important_partial_boundaries": [
+    "Shared Integration Runtime retains one lifecycle/connection/governor boundary, typed operation/resource axes, seven fair lanes, physical-core parent accounting for SMT, multidimensional budgets, bounded projections, startup waves and byte-bounded hot/warm/cold residency. Static schema, semantic, identity and import checks do not execute a native scheduler, allocator, worker pool, cancellation or resource-pressure policy.",
+    "The Governor schema retains 26 named resource families and closed decision values. This defines the accepted vocabulary, not empirical accounting for actual GPU/media/PTY/browser/provider/native resources, exhaustive fixture coverage of every family or proof of requested-versus-effective budget enforcement.",
+    "The performance concept source uses synthetic counters/projections and local simulated authorities. Its self-check is explicitly noncertifying, launches no browser and fails on both snapshots: the exact actionable_closure artifact is missing and systems_source, systems_verifier, performance_source and performance_verifier hashes mismatch. The 105-action census (28 local, 77 commands) and absence of implicit IDs cannot override those failures.",
+    "Native hardware PERF-010, WAN topology TST-005, adversarial security TST-006 and route-change fault injection TST-007 remain not_run in the self-check. No measured four-core/many-core fairness, FPS, latency, CPU/RSS/VRAM, real startup denominator, end-to-end benchmark, direct/relay performance or recovery matrix was established by this review.",
+    "Bounded exact-spelling searches of the 98 root Markdown owners did not locate the specified Git status batching/FSMonitor/untracked-cache, short redb transaction/Tantivy batch-commit and detailed simultaneously-open/per-Vault queue clauses. These search results are not exhaustive semantic-absence proof. Each affected authored finding retains the source obligation and its unverified implementation instead of converting absence to exclusion.",
+    "Server/Client identity, compact Catalog projections, one physical Vault, verified Project staging/move and explicit Goal handoff have canonical owners. They do not establish actual multi-Vault admission/isolation, WAN failover, live terminal/browser transfer, backup/restore or crash-safe execution. Goal handoff preserves reconstructible state and current ownership fencing; a checkpoint is not a live-process transfer.",
+    "Remote access remains private-first with explicit hosted/Funnel enablement, current-Client authentication handoff and independent security gates. Prompt Pipeline retains shipped compact digests and bounded on-demand help, while provider installation/auth/readiness and usage pricing/entitlement/settlement remain separate axes. No live external support, token-savings, provider purchase/authentication, quota or billing assertion is inferred from dated owner text.",
+    "Release's Skia/default, FemtoVG-wgpu/fallback and software/emergency order is resolved by the explicit September 9 user adjudication. The compound source clause also requires packaging/Safe UI strategy; launcher/probe, last-known-good, diagnostic export and native platform recovery remain unverified, so that compound case stays partial.",
+    "Settings preserves its 38-key manager registry, 887-row live inventory and later manager-first placement/T50 generation, with the concept's 892-ID historical distinction explicit. Named manager families require both presentation and underlying working behavior. Registry titles, synthetic concept operations and a failed static performance self-check cannot establish their complete GUI/runtime acceptance.",
+    "Current Onboarding uses the accepted draft/copy/late-commit owner flow, not a predecessor stage list. Home source preserves layout v1.1.0 migration, stable panel/browser routing, factory tabs and customized-layout protection. This source inspection does not prove the complete factory/customized/corrupt-layout rendered matrix, screenshot/motion acceptance, real terminal/browser lifecycle, full regression suite or user visual approval.",
+    "Complete frozen/comparison tracked-path censuses contain only nine Slint concept snippets and no Rust source or Cargo manifest/lock. That bounded repository observation and historical not_started reports do not prove that no external experiment or implementation evidence exists. No native performance acceptance follows from them."
+  ],
+  "current_comparison_boundaries": [
+    "Original custody pins 602 selected repository paths at frozen/comparison commits, the complete primary register and correction package, all 399 case identities, 63 exact selected owner/source-code passages and bounded search receipts. All selected passages are byte-identical between those snapshots.",
+    "After rebasing, root read the complete intervening Storage and transient Hold evidence-schema diffs and both full-value validation reports. SP-285 pending restore and SP-288 Hold require authentic original full-value/v2 receipt custody, independent row/afterimage/output authority and final publication guards. Their bounded tests expressly retain native activation, authentication, codecs/CRC/fsync, redb/concurrency and real crash/restore limitations.",
+    "The latest landing snapshot pins 604 selected paths. Eight previously selected whole files changed (Storage, its transient Hold evidence schema and six generated index files); two full-value validation reports were added. All 63 cited passages still match exactly. These separate changes supply no missing performance-register acceptance and are preserved without certifying their external implementations or rewriting frozen judgments."
+  ],
+  "evidence": {
+    "primary_register": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/misc/packet-gap-closure-20260910/sources/legacy-custody/raw/PKT-02-pm-settings-dependency-and-work-correction-2026-08-13/PM_Settings_Dependency_and_Work_Correction_2026-08-13/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md",
+      "sha256": "3df7ad729c5ea1be0df192d19845e42326b5047de03e9f59fbe4918943e0150d"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/performance-register-399-root-review.json",
+      "sha256": "74389348d7c28d37797a954b2cf87ad82a83cd30f7eb151547fe8f77542e4702"
+    },
+    "evidence_plan": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/review-evidence-plan.json",
+      "sha256": "a9d25459724ea7062e803d91f99d1767b44d786e3ebebdade8ab18127da9b51c"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/assembly-summary.json",
+      "sha256": "07a73defca602899da6f9aeb239bcbb6b84a03a5b6be2ce67edfdbfcfbf4db7f"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/input-custody.generated.json",
+      "sha256": "32681247619ec8ac1738f05e4c53a77f1df339a0175fd3ee2f13c7208ba7ed0d"
+    },
+    "passage_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/review-passage-custody.generated.json",
+      "sha256": "abe55005b48ebfdcec43edddc9fd777a870d769a689d0da1032a47b7db66e6db"
+    },
+    "landing_inputs": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/landing-inputs/29dfc9ac32e2deb0163f0316964ba96c115bcebe/receipt.json",
+      "sha256": "27a691ea9af38914b9ca4478e61fd688b08763bcd9c19775de5748658f5e4b85"
+    },
+    "evidence_pin_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/evidence-verification/receipt.json",
+      "sha256": "a97430662b9c65f0ef334eb03f1f766c531c2f738065987940d5bf1055989d64"
+    },
+    "review_integrity": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/review-integrity.receipt.json",
+      "sha256": "e470bf9f58eda2c6d83870a404a68b10d76b8eb4ffe4e73a93cc610d424b0feb"
+    },
+    "packet_tests": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/packet-tests.receipt.json",
+      "sha256": "a67a15fdbb2c735e65a19e4f89b115f404751c8a4d48edb47a537e15ae3149df"
+    },
+    "shards": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/shards.receipt.json",
+      "sha256": "30c7dd7768be5fb1e34ee6291e7940ad315822509f1b7642cfb475cbccfb6b5c"
+    },
+    "workbook_status": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/audit-status.receipt.json",
+      "sha256": "cc839e1a188887a92798d548d76b32d0f506c656eca54d8cd0ac0971dc65a0c2"
+    },
+    "governance": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/gates.receipt.json",
+      "sha256": "30ea02599e24f298cfbd15d82744158b2c67b4d80542001899fec9c1cfac4668"
+    },
+    "governance_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-performance-register399-review-20260912-yQrzwj/verification/gates.json",
+      "sha256": "04af002d8012f161e33164bd4535254f00a29ed3915e590a8e5f6b75d7f10567"
+    },
+    "formal_00036": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00036.result.json",
+      "sha256": "71811207c8df2c192606a7ebd5d4c0f57372350b4c8d4c4890acad0a8c99121b"
+    },
+    "formal_00037": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00037.result.json",
+      "sha256": "da9fe7e6bad72ebe9961facc058e6b6d283f67eecf7b166c9f4ee496a818df7b"
+    },
+    "formal_00038": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00038.result.json",
+      "sha256": "e36e234e1ae0fe06853989cce060f0757948bd16842856e14cbfaf326b4f2e14"
+    },
+    "formal_00039": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/packet-r5-freeze-20260911-CGlSZp/workbook/review-work/results/chunk-00039.result.json",
+      "sha256": "e9b9a79639a231f838169381e44b9f06cc0a1a39e09f4817f88d0cfa46e09c28"
+    }
+  },
+  "verification": {
+    "base": "29dfc9ac32e2deb0163f0316964ba96c115bcebe",
+    "selected_inputs_per_prepublication_capture": 2482,
+    "selected_inputs_per_postpublication_status_capture": 2486,
+    "changed_selected_inputs": 0,
+    "selection_boundary": "Root Plans md/json/jsonl, scripts/tests Python, .gitignore, Concepts py/js/json/html, selected cohort Python/JSON/landing receipts, frozen manifest and formal results; not full transitive closure.",
+    "review_integrity": {"status": "pass", "cases": 399, "selected_owner_passages": 63, "whole_source_context_lines": 1112},
+    "evidence_pin_check": {"status": "pass", "selected_receipts": 37, "distinct_hashed_files": 1847, "boundary": "Exact explicit path/SHA-256 pins, not recursive prior evidence graphs, input_hashes-map certification, semantic or native closure."},
+    "packet_tests": {"status": "pass", "tests": 45},
+    "shards": {"status": "pass", "docs": 98, "shards": 2385},
+    "frozen_and_comparison_static_tests": {"status": "pass_static_only", "full_thread_tests_per_snapshot": 15, "vocabulary_tests_per_snapshot": 6, "identity_scope_tests_per_snapshot": 5, "changed_snapshot_inputs": 0},
+    "frozen_and_comparison_concept_self_check": {"status": "fail", "manifest_errors_per_snapshot": 5, "browser_launched": false, "provenance_admission_eligible": false, "native_only_cases": "not_run", "changed_snapshot_inputs": 0},
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 24,
+      "total_checks": 36,
+      "failed_check_counts": {
+        "json_syntax": 1,
+        "lint_contractrefs": 1,
+        "lint_path_refs": 10,
+        "validate_audit_closure": 201,
+        "validate_audit_status_index": 1,
+        "validate_evidence": 1448,
+        "validate_implementation_readiness": 55,
+        "validate_plan_graph": 1448,
+        "validate_plan_migration": 180,
+        "validate_pm7_gui_fixtures": 1,
+        "validate_prd_planning_runtime_contracts": 900,
+        "verify_spec_lock": 27
+      },
+      "boundary": "Fresh checks on the rebased landing base retain the prior checkpoint's failure counts. Named missing raw-capture/PM7 fixtures, audit reference and implementation-surface paths are absent from HEAD's tracked tree, not omissions repaired by this report. Stale governance/readiness/evidence/migration and PRD schema failures remain recorded. No reseal or full-integration success is claimed."
+    }
+  }
+}
