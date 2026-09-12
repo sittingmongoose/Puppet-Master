@@ -1,0 +1,229 @@
+{
+  "schema_id": "pm.packet_audit.progress_checkpoint.v1",
+  "checkpoint_id": "r5p-server-command-census-374-20260912",
+  "reviewer": "codex-root-packet-audit",
+  "status": "partial_audit_progress_not_goal_complete",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "2614ecd639b569183ed012dce6cda35898a2dd09",
+  "review_comparison_commit": "58f95a87ea15fcc83be57f09dba5f9cedd6b2ef4",
+  "landing_base_commit": "58f95a87ea15fcc83be57f09dba5f9cedd6b2ef4",
+  "scope_and_authority": [
+    "All 374 original August 14 server_command_candidates receive individually root-authored findings, current semantic targets and residuals. Every full four-field source object, frozen identity and retained applicability is preserved. The original census requires reconciliation and shared-owner/full command closure; a listed candidate is not automatically an accepted primary.",
+    "Current non-pipeline Plans control owner meaning, including command aliases, rejected tokens, typed local actions, exact production intent and later user corrections. A canonical_target on a rejected source row identifies a semantic replacement or rejection marker, not permission to normalize or dispatch the old token. Historical Onboarding cmd.* spellings remain non-dispatchable and are not silently mapped to local actions.",
+    "Only this compact checkpoint changes in the repository. Raw evidence, experiment code and formal workbook results remain external. No Plan, schema, Concept, command, wiring, generated governance, readiness or other-agent file is edited. Findings do not authorize product fixes, live provider/auth operations, deferred visual work or a governance seal."
+  ],
+  "new_batch": {
+    "chunk_ids": [
+      "chunk-00017",
+      "chunk-00018",
+      "chunk-00019"
+    ],
+    "cases": 374,
+    "source_group": "server_command_candidates",
+    "separately_authored_semantic_judgments": 374,
+    "authored_files": 13,
+    "evidence_groups": 126,
+    "status_counts": {
+      "partial": 348,
+      "fail": 26
+    },
+    "applicability_counts": {
+      "retained": 374
+    },
+    "complete_for_review_scope": true,
+    "implementation_complete": false
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 3900,
+    "not_reviewed_cases": 9516,
+    "expected_chunks": 151,
+    "valid_result_files": 67,
+    "missing_result_files": 84,
+    "duplicate_cases": 0,
+    "validation_failures": 0,
+    "status_counts": {
+      "partial": 3524,
+      "pass": 236,
+      "blocked": 39,
+      "fail": 98,
+      "not_applicable": 3
+    },
+    "complete": false,
+    "implementation_verdict": "not_inferred"
+  },
+  "failed_case_families": [
+    {
+      "canonical_target": "cmd.auth_profile.open_official_page",
+      "failed_occurrences": 1
+    },
+    {
+      "canonical_target": "cmd.integration.connection.add",
+      "failed_occurrences": 3
+    },
+    {
+      "canonical_target": "cmd.integration.connection.update",
+      "failed_occurrences": 7
+    },
+    {
+      "canonical_target": "cmd.integration.connection.test",
+      "failed_occurrences": 7
+    },
+    {
+      "canonical_target": "cmd.integration.connection.remove",
+      "failed_occurrences": 3
+    },
+    {
+      "canonical_target": "cmd.integration.connection.open_details",
+      "failed_occurrences": 3
+    },
+    {
+      "canonical_target": "cmd.remote_access.route.test",
+      "failed_occurrences": 2
+    }
+  ],
+  "failure_scope": "These 26 original occurrences represent seven shared underlying central-primary registration gaps, not 26 independent defects. For each exact target both frozen and current Commands_System and UI_Command_Catalog have zero first-cell primary rows despite one typed production-intent row. Root owner review establishes the required primary edge; alias-target mentions, proposed schema refs and handler strings do not supply it. The route.test gap affects the original route.test and remote_link.test alias. All original case identities and their separate findings remain in the root receipt.",
+  "other_findings_and_boundaries": [
+    "Authentication, credentials, shared connections, installation, execution topology, Server/Client and remote access retain separate owners, generations, explicit choices, redaction, permissions and actual target resolution. The bounded auth-profile probe admits a synthetic owner_reconciler-origin mutation by schema shape on both snapshots; it does not execute a rename or prove an authorization bypass. Native enforcement remains unproved.",
+    "Browser commands consume current Section 15 named-action/program semantics and the exact event-admission manifest, not superseded empty-event metadata. Inspection remains effect-free. Created/reset passing synthetic checks do not establish actual authority, resolved Storage bytes, native durability, all 53 family admissions or native screenshot/capture acceptance. Capture, browser and provider-owned authentication boundaries remain separate.",
+    "Source Control and Jujutsu commands require their exact owner receipt/currentness and remote-effect contracts; unknown effects do not become safe retries. Qualified editing and stack-review additions do not silently enlarge the admitted command sets. Forge typed hosting, independent automation bindings and immutable review heads remain separate from ordinary Git transport and credential ownership.",
+    "Remote access follows the current PM-owned Go tsnet connector, private endpoint and separate opt-in Funnel contract. It neither adopts or administers a host-managed Tailscale client nor revives normal private Serve. Hosted authentication survives Client loss only through a newly authorized current-Client handoff; inherited URLs are not trust. No real endpoint or provider operation was performed.",
+    "Project unarchive is the current persisted registry mutation, not its predecessor optimistic local action. Move/Goal handoff, content sync and backup restore require real owner state, checkpoint/lease/provenance and precise phase receipts. Settings copy requires the acknowledged immutable preview and late binding to a real Project. Doctor local actions do not replace domain operations or run an unbounded global check.",
+    "Onboarding follows draft/copy/late commit and post-commit provider/Free Models setup with bounded owner-routed precommit source reads/authentication. Current UCC-106 rejection wins over older adjudication metadata describing historical command spellings as local. Neither draft nor local result is Project creation authority.",
+    "Current-main GRS-067/SP-298 add a passive content-free Goal creation reader and independently retained original command members, not Goal action or handoff proof. RSC-018 adds the separate Goal reader package/installation/withdrawal proof obligations alongside unchanged RSC-017 Platform obligations. Both app install_restart/rollback findings explicitly consume these new constraints. The new supporting resources are pinned, not claimed wholly audited or natively executed.",
+    "Every runtime, native Slint, security, recovery, network/provider, persistence, performance and final visual obligation retains a specific residual. A partial judgment is not an implementation acceptance or an inferred pass."
+  ],
+  "currentness": [
+    "Source custody pins all 374 full original objects, their exact source lines, 93 package files and the original coverage document. Initial comparison binds 875 repository paths; the landing comparison binds 890 selected paths to committed current main and the actual worktree.",
+    "All 94 previously selected owner passages remain byte-identical at the landing base. This batch selects 21 of those plus 59 additional root-read passages, for 80. All 150 mechanically used command/catalog/wiring/schema subjects remain byte-identical; 96 selected schema definitions resolve without unresolved refs. The additional exact connector.check target has separately pinned frozen/current occurrences and wiring.",
+    "The three changed owner additions were root-read and re-adjudicated before assembly. Initial checks and probes retain their original comparison labels; five fresh static checks are separately pinned to the landing base. All 64 earlier result files remain byte-for-byte unchanged after publishing exactly three new files."
+  ],
+  "evidence": {
+    "root_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/server-command-374-root-review.json",
+      "sha256": "2d70fe434ff0ef68225dddba7825a09cec0334f2aca8bf6bc9c7690e6f0d0462"
+    },
+    "evidence_plan": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/review-evidence-plan.json",
+      "sha256": "67530a22a1eccc0aff93a761bce7954f153e66e08390b185e387224c62a18fd7"
+    },
+    "assembly": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/assembly-summary.json",
+      "sha256": "d97f6256516df223b925fddad9bc579fd8c9ab0f3921bf11dc9f65e74a15b68a"
+    },
+    "input_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/input-custody.generated.json",
+      "sha256": "66f97edd385e2dc1b347d859d4b79cfdbd2c0cadbd44cb0328537cd72e6c4b46"
+    },
+    "passage_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/review-passage-custody.generated.json",
+      "sha256": "86836ce4e9a0750eb7dd58b8aeb7c83d594b40d5f3786ec4d0ef12418c606c84"
+    },
+    "landing_currentness": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/landing-currentness.generated.json",
+      "sha256": "fbb8e4a123ac0d03affe1ac1c8aa3e491e7704b02838c42e9eda127693e5a82c"
+    },
+    "mechanical_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/command-evidence.generated.json",
+      "sha256": "20d3f7f228b9a3d861b5bf56b84a1117a7467b3049689c2c1ae9e22e6b39f730"
+    },
+    "publication": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/publication-summary.json",
+      "sha256": "00516202d90ab10d2ce8a70c4bbd0d6dda2c437eee74e2e2cabce72c5c443e20"
+    },
+    "packet_tests": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/publication-checks/packet-tests.receipt.json",
+      "sha256": "f9120f8f054a75bd9b4ec6e5a191556607e271e36d8659306bd305f7de51d6ec"
+    },
+    "review_validation": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/publication-checks/validate.receipt.json",
+      "sha256": "70331445b4d7545090d02215ae7250e7a0b1b09cdc5eef3724ba5eaf51332870"
+    },
+    "fresh_checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/landing-checks/summary.json",
+      "sha256": "8a6029f1150639cf4470b246fbc945079a69febba6746fee54bde2b615d1c305"
+    },
+    "initial_checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/static-contract-checks.generated.json",
+      "sha256": "3449df479fe0ea1149df5158a985aa04674efd358defb63dd40b9c3c3e4b63c8"
+    },
+    "browser_failure_attribution": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-server-commands374-review-20260912-FikXkKup/browser-preexisting-pin-attribution.generated.json",
+      "sha256": "57f8843efe45e27cb5ebcdb4b99f108e8a50594f9f725336e918eaf896ee51d5"
+    }
+  },
+  "verification": {
+    "base": "58f95a87ea15fcc83be57f09dba5f9cedd6b2ef4",
+    "review_integrity": {
+      "status": "pass",
+      "cases": 374,
+      "owner_passages": 80,
+      "evidence_groups": 126,
+      "validation_errors": 0
+    },
+    "packet_tests": {
+      "status": "pass",
+      "tests": 45
+    },
+    "new_contracts": {
+      "status": "pass",
+      "contract_pairs": 30,
+      "positive_cases_valid": 1028,
+      "negative_cases_rejected": 3338,
+      "internal_self_tests_passed": 12,
+      "claim_boundary": "static_schema_and_fixture_consistency_only"
+    },
+    "server_command_gap": {
+      "status": "pass",
+      "adjudication_rows": 171,
+      "schema_bearing_rows": 168,
+      "rejected_rows": 3,
+      "negative_self_tests": 11,
+      "claim_boundary": "The 171-row gap manifest is not the entire 374-row source census."
+    },
+    "browser_event_admission": {
+      "status": "fail",
+      "failures": [
+        "preexisting_family_rows_changed"
+      ],
+      "positive_cases": 53,
+      "negative_cases": 576,
+      "bindings_checked": 15,
+      "admitted_families": 2,
+      "prepared_families": 51,
+      "creation_subcheck": "pass_static_only",
+      "reset_subcheck": "pass_static_only",
+      "attribution": "The pinned 39 preexisting family IDs are unchanged. Goal-created alone changed from 2.0 to 3.0 while the original baseline hash stayed fixed. Frozen bytes match that baseline. This is not failure of every Browser family; no baseline pin is refreshed or other-owner change undone."
+    },
+    "shards": {
+      "status": "pass",
+      "docs": 98,
+      "shards": 2541
+    },
+    "formal_workbook_status": "pass_structural_validation_audit_incomplete_64_prior_result_files_preserved",
+    "governance": {
+      "status": "fail",
+      "passed_checks": 21,
+      "total_checks": 36,
+      "failed_checks": [
+        "json_syntax",
+        "verify_spec_lock",
+        "validate_plan_graph",
+        "validate_evidence",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_prd_planning_runtime_contracts",
+        "validate_browser_event_admission",
+        "validate_testing_session_event_admission",
+        "validate_github_project_integration",
+        "validate_implementation_readiness",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_audit_closure",
+        "validate_audit_status_index"
+      ],
+      "boundary": "Fresh read-only run on the clean landing base with all 890 selected current inputs and tracked worktree status unchanged. These are the same 15 failed groups as r5o, not identical diagnostics or total failure counts. Diagnostic arrays are capped. No missing fixture, registry, governance artifact or other-owner file is repaired or resealed."
+    }
+  }
+}
