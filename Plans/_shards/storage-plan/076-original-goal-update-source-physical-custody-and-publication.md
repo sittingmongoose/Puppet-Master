@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L23933-L24138
+Source lines: L23995-L24608
 
-Source SHA256: `f4a54c0577233839b1bb0fa2acf61a2e2c7bb8da6dff865acc1cbce9bff92cca`
+Source SHA256: `2d4828c52e63f6175e4c13927af8e45b6bdc223b4566a35888d7fea7c1729640`
 
 ---
 
@@ -214,3 +214,411 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/goal_update_schema_resources.json
+
+### SP-300 - Exact historical goal.progressed source reader
+
+```yaml
+plan_unit_id: SP-300
+unit_type: constraint
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: For exactly goal.progressed, storage.goal_progressed_history_read.v1@1.0.0 returns one original
+  historical record and truthful validation disposition under the unchanged authoritative whole v2 contract, current
+  Project/access authority and complete actual SP-278 root/current generation/dataset/birth anchor/global frontier/source
+  token. Original admission and all D-R08 historical predicates remain independent requirements. Every original
+  helper and composite read is guarded before helpers and by a final complete pure after-helper source/output/access
+  check. This exact family owns zero durable effect and none_required family checkpoint; the actual generic checkpoint
+  is separately mandatory.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-069
+- CV-343
+- SP-278
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.progressed` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A current blocked/active/paused Goal, a To-Do transition, an unchanged
+  fingerprint, or a schema-valid old running pair cannot authorize a current append. Historical task IDs do not
+  become active To-Dos, Goal children or percentages.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_progressed.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_progressed_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_progressed_historical_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.progressed
+- pm.goal_runtime_event.goal_progressed.schema.v2
+- storage.goal_progressed_history_read.v1@1.0.0
+- D-R08
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+Exact internal binding `storage.goal_progressed_history_read.v1@1.0.0`; no public command. It adopts the complete mechanics below for this family independently, with its own exact original D-R08/schema/receipt/reference predicates under GRS-069. Request is the closed four-field project_id, goal_id, event_id, sequence_id selector; actual selected Storage instance and access authority are owner context. It returns one ephemeral original historical record and truthful validation/provenance disposition, never an event-derived active Goal record.
+
+For this exact family, SP-214's old Goal-state/child/evidence/progress projection implications are superseded: no family projection or durable replay effect is owned, and checkpoint disposition is `none_required`. This is a direct zero-effect owner assignment for `goal.progressed`, not borrowed from another event. The independently required SP-278 generic root/anchor/frontier/token/source publication remains mandatory. No write to canonical receipt, Goal body/control/history, To-Do, WorkGraph, Workflow/GoalRun, source index, checkpoint, hold or recovery state occurs. Storage keeps the existing RP-AUTHORITY-INDEFINITE event assignment; source/frame/index and referenced record lifetimes remain under their own owners.
+
+The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields. IDs are exact nonempty strings; sequence is an exact nonnegative integer in the existing EventRecord/source owner domain. There is no binary64 round trip or new 53-bit/fixed-width cap. Resolve the actual selected Storage instance, Project/audit access, original applicable-contract custody and current installed reader version from owner context, not caller flags.
+
+Use SP-278's actual `reader.storage.event_record_index@1.0.0` and exact `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real redb snapshot resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current `current_generation_id`, exact `#/generations/{generation_id}` node and same-database `event_record_index.v2@{generation_id}` dataset. Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain. The immutable row publication locator/checkpoint joins generation birth anchor; it is not silently compared to the latest appended manifest. Current advancing frontier separately joins actual synchronized CURRENT/manifest and complete global source, including nonmatching and other-Project records.
+
+Preserve every field of the exact full read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Complete source_selection binds actual CURRENT/manifest bytes, selected generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Same-generation append invalidates the previous token. No filtered matching maximum, foreign dataset, reference-only checkpoint or sibling family checkpoint qualifies.
+
+Read the complete original source frame at its full segment-generation/name/byte-offset/sequence tuple; verify bounds, CRC, durable watermark, event/project/Goal/sequence/type identities, exact outer EventRecord, authoritative whole original v2 payload root and all common/row field joins. Preserve actor/runtime/account identity and optional parent/causation/idempotency members as historical source data only. Apply original producer/payload/semantic/idempotency digest rules and the schema header's original n -> n+1/current-CAS predicate; do not apply current state aliases. Generic source coverage/translation requires actual committed authority and preserved original identity; a later suffix joins current frontier separately. This reader never reconstructs source or runs generic rebuild/recovery.
+
+Original lawful historical admission is independently mandatory: actual applicable-contract source-generation/compatibility evidence or authenticated identity-preserving restoration and original recovery custody. A timestamp, current schema validity, old-looking bytes, valid hash or absence of a current writer cannot establish historical admission. Preserve the exact row's original predecessor, decision, receipt and referenced-record predicates. Where those independently required original facts cannot be proved, return `unresolved_historical_validation` with non-content-bearing missing-obligation identifiers, no assertion that the old transition was lawful, and no current action authority. A `verified_historical` result requires all of them. A missing/corrupt/withdrawn source/access/token returns `unavailable`; this read does not write quarantine. No historical positive instance is claimed.
+
+The ephemeral output has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the four-field request. `reader_binding` is this PlanUnit's exact constant. `kind` is `verified_historical | unresolved_historical_validation | unavailable`; `original_validation` is respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and exact full SP-278 read token; unavailable carries null for both. A verified result has an empty obligation array. An unresolved result has a nonempty unique array of fixed identifiers from `original_admission`, `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_decision`, `original_row_predicate`; each identifies an independently unproved obligation in this exact row, without adding dynamic source text. Unavailable has an empty obligation array and discloses no source value. The complete actual original checks determine the kind; absence of a diagnostic never proves a predicate. Denied access, invalid source/envelope/payload or changed current source/token cannot become unresolved-with-content. Missing historical semantic/admission evidence may be reported unresolved only when the current generic source read and permission independently authorize the complete raw historical observation. No unresolved output claims original lawful transition, completion or present action authority. Current permission must authorize every disclosed original value and ref; no partial/drop/redact transform may be presented as the original full value. Existing reject-unhandled-secrets remains mandatory. This output is internal and ephemeral, not a new persisted event, receipt, schema family or public command.
+
+At each original reader entry before the first decoder/resolver/validator/copy/output helper, independently capture the selector, actual Storage/root/node/dataset/whole source-token/maintenance fence, original applicable-contract/source/receipt facts and current access/deletion/hold authority. Independently derive the complete permitted original record and validation/provenance output before its builders. After all helpers—including receipt/predecessor validation and the final currentness/permission helper—compare the entire candidate, immutable selector, actual original admission/source facts and complete current owner/token fence in a final pure predicate. No replaceable helper may run between that predicate and ephemeral disclosure. Drift discards the answer; an old coherent snapshot cannot claim a new boundary. Original source invalidity cannot be certified merely because its bytes did not change. Every independently callable source resolver, frame decoder, original-admission/row validator or output helper is itself an original entry boundary: it captures its actual invoking owner scope and required source/access inputs before replaceable helpers, independently derives its entire permitted typed result, and makes its own complete pure source/output/fence comparison after all helpers before returning. A caller-supplied witness or a later composite guard does not discharge that helper boundary. The outer reader still performs the complete final boundary after those helper returns; no helper may run between that predicate and disclosure.
+
+This exact family owner explicitly assigns no durable effect: no state projector, acknowledgment token, replay cursor, idempotency ledger, command, notification, provider/tool call, Usage charge, hold/recovery action or canonical receipt mutation. Family checkpoint is individually `none_required`; SP-278's actual generic checkpoint is still required. Current lookup does not reacquire lawfully disposed old control files just to reconstruct authority; if preserved original admission cannot suffice under its owner, disclose unavailable/unresolved. Existing event/source/ref retention and recovery owners remain unchanged; refs do not create new content holds. Withdrawal stops this reader, retains old custody and does not install a producer or silently select another version.
+
+This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-069, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_progressed.schema.v2
+
+### SP-301 - Exact historical goal.replanned source reader
+
+```yaml
+plan_unit_id: SP-301
+unit_type: constraint
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: For exactly goal.replanned, storage.goal_replanned_history_read.v1@1.0.0 returns one original historical
+  record and truthful validation disposition under the unchanged authoritative whole v2 contract, current Project/access
+  authority and complete actual SP-278 root/current generation/dataset/birth anchor/global frontier/source token.
+  Original admission and all D-R10 historical predicates remain independent requirements. Every original helper
+  and composite read is guarded before helpers and by a final complete pure after-helper source/output/access check.
+  This exact family owns zero durable effect and none_required family checkpoint; the actual generic checkpoint
+  is separately mandatory.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-070
+- CV-344
+- SP-278
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.replanned` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. Current material objective change or workflow replan cannot append
+  this exact old Goal event, and missing original child/evidence/currentness facts cannot be backfilled with present
+  workflow state.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_replanned.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_replanned_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_replanned_historical_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.replanned
+- pm.goal_runtime_event.goal_replanned.schema.v2
+- storage.goal_replanned_history_read.v1@1.0.0
+- D-R10
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+Exact internal binding `storage.goal_replanned_history_read.v1@1.0.0`; no public command. It adopts the complete mechanics below for this family independently, with its own exact original D-R10/schema/receipt/reference predicates under GRS-070. Request is the closed four-field project_id, goal_id, event_id, sequence_id selector; actual selected Storage instance and access authority are owner context. It returns one ephemeral original historical record and truthful validation/provenance disposition, never an event-derived active Goal record.
+
+For this exact family, SP-214's old Goal-state/child/evidence/progress projection implications are superseded: no family projection or durable replay effect is owned, and checkpoint disposition is `none_required`. This is a direct zero-effect owner assignment for `goal.replanned`, not borrowed from another event. The independently required SP-278 generic root/anchor/frontier/token/source publication remains mandatory. No write to canonical receipt, Goal body/control/history, To-Do, WorkGraph, Workflow/GoalRun, source index, checkpoint, hold or recovery state occurs. Storage keeps the existing RP-AUTHORITY-INDEFINITE event assignment; source/frame/index and referenced record lifetimes remain under their own owners.
+
+The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields. IDs are exact nonempty strings; sequence is an exact nonnegative integer in the existing EventRecord/source owner domain. There is no binary64 round trip or new 53-bit/fixed-width cap. Resolve the actual selected Storage instance, Project/audit access, original applicable-contract custody and current installed reader version from owner context, not caller flags.
+
+Use SP-278's actual `reader.storage.event_record_index@1.0.0` and exact `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real redb snapshot resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current `current_generation_id`, exact `#/generations/{generation_id}` node and same-database `event_record_index.v2@{generation_id}` dataset. Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain. The immutable row publication locator/checkpoint joins generation birth anchor; it is not silently compared to the latest appended manifest. Current advancing frontier separately joins actual synchronized CURRENT/manifest and complete global source, including nonmatching and other-Project records.
+
+Preserve every field of the exact full read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Complete source_selection binds actual CURRENT/manifest bytes, selected generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Same-generation append invalidates the previous token. No filtered matching maximum, foreign dataset, reference-only checkpoint or sibling family checkpoint qualifies.
+
+Read the complete original source frame at its full segment-generation/name/byte-offset/sequence tuple; verify bounds, CRC, durable watermark, event/project/Goal/sequence/type identities, exact outer EventRecord, authoritative whole original v2 payload root and all common/row field joins. Preserve actor/runtime/account identity and optional parent/causation/idempotency members as historical source data only. Apply original producer/payload/semantic/idempotency digest rules and the schema header's original n -> n+1/current-CAS predicate; do not apply current state aliases. Generic source coverage/translation requires actual committed authority and preserved original identity; a later suffix joins current frontier separately. This reader never reconstructs source or runs generic rebuild/recovery.
+
+Original lawful historical admission is independently mandatory: actual applicable-contract source-generation/compatibility evidence or authenticated identity-preserving restoration and original recovery custody. A timestamp, current schema validity, old-looking bytes, valid hash or absence of a current writer cannot establish historical admission. Preserve the exact row's original predecessor, decision, receipt and referenced-record predicates. Where those independently required original facts cannot be proved, return `unresolved_historical_validation` with non-content-bearing missing-obligation identifiers, no assertion that the old transition was lawful, and no current action authority. A `verified_historical` result requires all of them. A missing/corrupt/withdrawn source/access/token returns `unavailable`; this read does not write quarantine. No historical positive instance is claimed.
+
+The ephemeral output has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the four-field request. `reader_binding` is this PlanUnit's exact constant. `kind` is `verified_historical | unresolved_historical_validation | unavailable`; `original_validation` is respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and exact full SP-278 read token; unavailable carries null for both. A verified result has an empty obligation array. An unresolved result has a nonempty unique array of fixed identifiers from `original_admission`, `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_decision`, `original_row_predicate`; each identifies an independently unproved obligation in this exact row, without adding dynamic source text. Unavailable has an empty obligation array and discloses no source value. The complete actual original checks determine the kind; absence of a diagnostic never proves a predicate. Denied access, invalid source/envelope/payload or changed current source/token cannot become unresolved-with-content. Missing historical semantic/admission evidence may be reported unresolved only when the current generic source read and permission independently authorize the complete raw historical observation. No unresolved output claims original lawful transition, completion or present action authority. Current permission must authorize every disclosed original value and ref; no partial/drop/redact transform may be presented as the original full value. Existing reject-unhandled-secrets remains mandatory. This output is internal and ephemeral, not a new persisted event, receipt, schema family or public command.
+
+At each original reader entry before the first decoder/resolver/validator/copy/output helper, independently capture the selector, actual Storage/root/node/dataset/whole source-token/maintenance fence, original applicable-contract/source/receipt facts and current access/deletion/hold authority. Independently derive the complete permitted original record and validation/provenance output before its builders. After all helpers—including receipt/predecessor validation and the final currentness/permission helper—compare the entire candidate, immutable selector, actual original admission/source facts and complete current owner/token fence in a final pure predicate. No replaceable helper may run between that predicate and ephemeral disclosure. Drift discards the answer; an old coherent snapshot cannot claim a new boundary. Original source invalidity cannot be certified merely because its bytes did not change. Every independently callable source resolver, frame decoder, original-admission/row validator or output helper is itself an original entry boundary: it captures its actual invoking owner scope and required source/access inputs before replaceable helpers, independently derives its entire permitted typed result, and makes its own complete pure source/output/fence comparison after all helpers before returning. A caller-supplied witness or a later composite guard does not discharge that helper boundary. The outer reader still performs the complete final boundary after those helper returns; no helper may run between that predicate and disclosure.
+
+This exact family owner explicitly assigns no durable effect: no state projector, acknowledgment token, replay cursor, idempotency ledger, command, notification, provider/tool call, Usage charge, hold/recovery action or canonical receipt mutation. Family checkpoint is individually `none_required`; SP-278's actual generic checkpoint is still required. Current lookup does not reacquire lawfully disposed old control files just to reconstruct authority; if preserved original admission cannot suffice under its owner, disclose unavailable/unresolved. Existing event/source/ref retention and recovery owners remain unchanged; refs do not create new content holds. Withdrawal stops this reader, retains old custody and does not install a producer or silently select another version.
+
+This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-070, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_replanned.schema.v2
+
+### SP-302 - Exact historical goal.stopped source reader
+
+```yaml
+plan_unit_id: SP-302
+unit_type: constraint
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: For exactly goal.stopped, storage.goal_stopped_history_read.v1@1.0.0 returns one original historical
+  record and truthful validation disposition under the unchanged authoritative whole v2 contract, current Project/access
+  authority and complete actual SP-278 root/current generation/dataset/birth anchor/global frontier/source token.
+  Original admission and all D-R12 historical predicates remain independent requirements. Every original helper
+  and composite read is guarded before helpers and by a final complete pure after-helper source/output/access check.
+  This exact family owns zero durable effect and none_required family checkpoint; the actual generic checkpoint
+  is separately mandatory.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-071
+- CV-345
+- SP-278
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.stopped` append is refused before dedupe/CAS/append with no state, receipt, provider,
+  Usage, scheduling, Goal or workflow effect. A user Stop, cleared dependency, quota reset, execution window, recovery
+  receipt or retained resumable=true never authorizes current stopped Goal state, resume/stop-epoch clearing or
+  a new settlement/receipt.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_stopped.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_stopped_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_stopped_historical_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.stopped
+- pm.goal_runtime_event.goal_stopped.schema.v2
+- storage.goal_stopped_history_read.v1@1.0.0
+- D-R12
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+Exact internal binding `storage.goal_stopped_history_read.v1@1.0.0`; no public command. It adopts the complete mechanics below for this family independently, with its own exact original D-R12/schema/receipt/reference predicates under GRS-071. Request is the closed four-field project_id, goal_id, event_id, sequence_id selector; actual selected Storage instance and access authority are owner context. It returns one ephemeral original historical record and truthful validation/provenance disposition, never an event-derived active Goal record.
+
+For this exact family, SP-214's old Goal-state/child/evidence/progress projection implications are superseded: no family projection or durable replay effect is owned, and checkpoint disposition is `none_required`. This is a direct zero-effect owner assignment for `goal.stopped`, not borrowed from another event. The independently required SP-278 generic root/anchor/frontier/token/source publication remains mandatory. No write to canonical receipt, Goal body/control/history, To-Do, WorkGraph, Workflow/GoalRun, source index, checkpoint, hold or recovery state occurs. Storage keeps the existing RP-AUTHORITY-INDEFINITE event assignment; source/frame/index and referenced record lifetimes remain under their own owners.
+
+The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields. IDs are exact nonempty strings; sequence is an exact nonnegative integer in the existing EventRecord/source owner domain. There is no binary64 round trip or new 53-bit/fixed-width cap. Resolve the actual selected Storage instance, Project/audit access, original applicable-contract custody and current installed reader version from owner context, not caller flags.
+
+Use SP-278's actual `reader.storage.event_record_index@1.0.0` and exact `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real redb snapshot resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current `current_generation_id`, exact `#/generations/{generation_id}` node and same-database `event_record_index.v2@{generation_id}` dataset. Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain. The immutable row publication locator/checkpoint joins generation birth anchor; it is not silently compared to the latest appended manifest. Current advancing frontier separately joins actual synchronized CURRENT/manifest and complete global source, including nonmatching and other-Project records.
+
+Preserve every field of the exact full read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Complete source_selection binds actual CURRENT/manifest bytes, selected generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Same-generation append invalidates the previous token. No filtered matching maximum, foreign dataset, reference-only checkpoint or sibling family checkpoint qualifies.
+
+Read the complete original source frame at its full segment-generation/name/byte-offset/sequence tuple; verify bounds, CRC, durable watermark, event/project/Goal/sequence/type identities, exact outer EventRecord, authoritative whole original v2 payload root and all common/row field joins. Preserve actor/runtime/account identity and optional parent/causation/idempotency members as historical source data only. Apply original producer/payload/semantic/idempotency digest rules and the schema header's original n -> n+1/current-CAS predicate; do not apply current state aliases. Generic source coverage/translation requires actual committed authority and preserved original identity; a later suffix joins current frontier separately. This reader never reconstructs source or runs generic rebuild/recovery.
+
+Original lawful historical admission is independently mandatory: actual applicable-contract source-generation/compatibility evidence or authenticated identity-preserving restoration and original recovery custody. A timestamp, current schema validity, old-looking bytes, valid hash or absence of a current writer cannot establish historical admission. Preserve the exact row's original predecessor, decision, receipt and referenced-record predicates. Where those independently required original facts cannot be proved, return `unresolved_historical_validation` with non-content-bearing missing-obligation identifiers, no assertion that the old transition was lawful, and no current action authority. A `verified_historical` result requires all of them. A missing/corrupt/withdrawn source/access/token returns `unavailable`; this read does not write quarantine. No historical positive instance is claimed.
+
+The ephemeral output has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the four-field request. `reader_binding` is this PlanUnit's exact constant. `kind` is `verified_historical | unresolved_historical_validation | unavailable`; `original_validation` is respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and exact full SP-278 read token; unavailable carries null for both. A verified result has an empty obligation array. An unresolved result has a nonempty unique array of fixed identifiers from `original_admission`, `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_decision`, `original_row_predicate`; each identifies an independently unproved obligation in this exact row, without adding dynamic source text. Unavailable has an empty obligation array and discloses no source value. The complete actual original checks determine the kind; absence of a diagnostic never proves a predicate. Denied access, invalid source/envelope/payload or changed current source/token cannot become unresolved-with-content. Missing historical semantic/admission evidence may be reported unresolved only when the current generic source read and permission independently authorize the complete raw historical observation. No unresolved output claims original lawful transition, completion or present action authority. Current permission must authorize every disclosed original value and ref; no partial/drop/redact transform may be presented as the original full value. Existing reject-unhandled-secrets remains mandatory. This output is internal and ephemeral, not a new persisted event, receipt, schema family or public command.
+
+At each original reader entry before the first decoder/resolver/validator/copy/output helper, independently capture the selector, actual Storage/root/node/dataset/whole source-token/maintenance fence, original applicable-contract/source/receipt facts and current access/deletion/hold authority. Independently derive the complete permitted original record and validation/provenance output before its builders. After all helpers—including receipt/predecessor validation and the final currentness/permission helper—compare the entire candidate, immutable selector, actual original admission/source facts and complete current owner/token fence in a final pure predicate. No replaceable helper may run between that predicate and ephemeral disclosure. Drift discards the answer; an old coherent snapshot cannot claim a new boundary. Original source invalidity cannot be certified merely because its bytes did not change. Every independently callable source resolver, frame decoder, original-admission/row validator or output helper is itself an original entry boundary: it captures its actual invoking owner scope and required source/access inputs before replaceable helpers, independently derives its entire permitted typed result, and makes its own complete pure source/output/fence comparison after all helpers before returning. A caller-supplied witness or a later composite guard does not discharge that helper boundary. The outer reader still performs the complete final boundary after those helper returns; no helper may run between that predicate and disclosure.
+
+This exact family owner explicitly assigns no durable effect: no state projector, acknowledgment token, replay cursor, idempotency ledger, command, notification, provider/tool call, Usage charge, hold/recovery action or canonical receipt mutation. Family checkpoint is individually `none_required`; SP-278's actual generic checkpoint is still required. Current lookup does not reacquire lawfully disposed old control files just to reconstruct authority; if preserved original admission cannot suffice under its owner, disclose unavailable/unresolved. Existing event/source/ref retention and recovery owners remain unchanged; refs do not create new content holds. Withdrawal stops this reader, retains old custody and does not install a producer or silently select another version.
+
+This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-071, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_stopped.schema.v2
+
+### SP-303 - Exact historical goal.verification_decided source reader
+
+```yaml
+plan_unit_id: SP-303
+unit_type: constraint
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: For exactly goal.verification_decided, storage.goal_verification_decided_history_read.v1@1.0.0 returns
+  one original historical record and truthful validation disposition under the unchanged authoritative whole v2
+  contract, current Project/access authority and complete actual SP-278 root/current generation/dataset/birth anchor/global
+  frontier/source token. Original admission and all D-R15 historical predicates remain independent requirements.
+  Every original helper and composite read is guarded before helpers and by a final complete pure after-helper source/output/access
+  check. This exact family owns zero durable effect and none_required family checkpoint; the actual generic checkpoint
+  is separately mandatory.
+gui_related: false
+gui_classification_reason: This is an internal historical source/validation contract with no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-072
+- CV-346
+- SP-278
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Current schema-valid `goal.verification_decided` append is refused before dedupe/CAS/append with no state, receipt,
+  provider, Usage, scheduling, Goal or workflow effect. A current reviewer result, VerificationCycle.status, valid
+  Workflow receipt, or old passed payload cannot append this Goal event, mutate Goal state, create a required Goal
+  verifier/adjudicator role, or claim completion.
+- Given an actually lawfully admitted original historical event, its complete source and original applicable owner
+  proof, the exact historical reader returns that original value with verified historical provenance under a current
+  full SP-278 token and permitted disclosure. This is a normative conditional oracle, not a claim that such an instance
+  exists.
+- Missing original required predecessor/receipt/source/decision proof reports unresolved historical validation;
+  current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
+  quarantine or a checkpoint.
+- A same-generation nonmatching append, changed root/anchor/frontier/source, access/deletion/hold/maintenance change
+  or post-helper candidate alteration invalidates the read before disclosure. No helper runs after the final actual-owner
+  guard.
+- Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
+  custody. Lawfully removed required source yields unavailable, not payload reconstruction.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
+- Plans/event_family_registry.json
+- Plans/storage_value_registry.json
+- Plans/event_record_index_checkpoint.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_verification_decided_historical_authority_confusion
+reasoning_tier: high
+context_scope: goal_verification_decided_historical_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: historical_source_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Goal_Runtime_System.md#GRS-052
+- Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima
+preserved_exact_tokens:
+- goal.verification_decided
+- pm.goal_runtime_event.goal_verification_decided.schema.v2
+- storage.goal_verification_decided_history_read.v1@1.0.0
+- D-R15
+- RP-AUTHORITY-INDEFINITE
+- none_required
+negative_constraints:
+- No current writer, event-derived Goal state, retired topology/role/stage, new event admission, historical byte
+  rewriting, or original-admission inference from schema/hash/timestamp.
+- No durable reader effect, family checkpoint, read-triggered recovery/quarantine, native proof, WorkNode/readiness
+  admission or governance seal.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+```
+
+Exact internal binding `storage.goal_verification_decided_history_read.v1@1.0.0`; no public command. It adopts the complete mechanics below for this family independently, with its own exact original D-R15/schema/receipt/reference predicates under GRS-072. Request is the closed four-field project_id, goal_id, event_id, sequence_id selector; actual selected Storage instance and access authority are owner context. It returns one ephemeral original historical record and truthful validation/provenance disposition, never an event-derived active Goal record.
+
+For this exact family, SP-214's old Goal-state/child/evidence/progress projection implications are superseded: no family projection or durable replay effect is owned, and checkpoint disposition is `none_required`. This is a direct zero-effect owner assignment for `goal.verification_decided`, not borrowed from another event. The independently required SP-278 generic root/anchor/frontier/token/source publication remains mandatory. No write to canonical receipt, Goal body/control/history, To-Do, WorkGraph, Workflow/GoalRun, source index, checkpoint, hold or recovery state occurs. Storage keeps the existing RP-AUTHORITY-INDEFINITE event assignment; source/frame/index and referenced record lifetimes remain under their own owners.
+
+The exact internal request is `{project_id, goal_id, event_id, sequence_id}` with no additional fields. IDs are exact nonempty strings; sequence is an exact nonnegative integer in the existing EventRecord/source owner domain. There is no binary64 round trip or new 53-bit/fixed-width cap. Resolve the actual selected Storage instance, Project/audit access, original applicable-contract custody and current installed reader version from owner context, not caller flags.
+
+Use SP-278's actual `reader.storage.event_record_index@1.0.0` and exact `Plans/event_record_index_checkpoint.schema.json#/$defs/read_token`. In one real redb snapshot resolve table `checkpoints`, key `event_record_index_checkpoint.v1:{storage_instance_id}`, uniquely current `current_generation_id`, exact `#/generations/{generation_id}` node and same-database `event_record_index.v2@{generation_id}` dataset. Resolve the original row key `event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}` under the existing key codec and admitted integer domain. The immutable row publication locator/checkpoint joins generation birth anchor; it is not silently compared to the latest appended manifest. Current advancing frontier separately joins actual synchronized CURRENT/manifest and complete global source, including nonmatching and other-Project records.
+
+Preserve every field of the exact full read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection and redb_snapshot_id. Complete source_selection binds actual CURRENT/manifest bytes, selected generation, manifest generation, recovery epoch, survivor prefix, retained inventory, durable watermarks, excluded ranges and retired inputs. Same-generation append invalidates the previous token. No filtered matching maximum, foreign dataset, reference-only checkpoint or sibling family checkpoint qualifies.
+
+Read the complete original source frame at its full segment-generation/name/byte-offset/sequence tuple; verify bounds, CRC, durable watermark, event/project/Goal/sequence/type identities, exact outer EventRecord, authoritative whole original v2 payload root and all common/row field joins. Preserve actor/runtime/account identity and optional parent/causation/idempotency members as historical source data only. Apply original producer/payload/semantic/idempotency digest rules and the schema header's original n -> n+1/current-CAS predicate; do not apply current state aliases. Generic source coverage/translation requires actual committed authority and preserved original identity; a later suffix joins current frontier separately. This reader never reconstructs source or runs generic rebuild/recovery.
+
+Original lawful historical admission is independently mandatory: actual applicable-contract source-generation/compatibility evidence or authenticated identity-preserving restoration and original recovery custody. A timestamp, current schema validity, old-looking bytes, valid hash or absence of a current writer cannot establish historical admission. Preserve the exact row's original predecessor, decision, receipt and referenced-record predicates. Where those independently required original facts cannot be proved, return `unresolved_historical_validation` with non-content-bearing missing-obligation identifiers, no assertion that the old transition was lawful, and no current action authority. A `verified_historical` result requires all of them. A missing/corrupt/withdrawn source/access/token returns `unavailable`; this read does not write quarantine. No historical positive instance is claimed.
+
+The ephemeral output has exactly eight required fields: `kind`, `reader_binding`, `selector`, `original_event`, `original_validation`, `unresolved_obligations`, `read_token`, `action_authority`. `selector` is exactly the four-field request. `reader_binding` is this PlanUnit's exact constant. `kind` is `verified_historical | unresolved_historical_validation | unavailable`; `original_validation` is respectively `verified | unresolved | unavailable`, and `action_authority` is always `none`. The first two kinds carry the complete unchanged original EventRecord and exact full SP-278 read token; unavailable carries null for both. A verified result has an empty obligation array. An unresolved result has a nonempty unique array of fixed identifiers from `original_admission`, `original_producer_authority`, `original_revision_cas`, `original_predecessor_state`, `original_runtime_identity`, `original_idempotency`, `original_referenced_record`, `original_decision`, `original_row_predicate`; each identifies an independently unproved obligation in this exact row, without adding dynamic source text. Unavailable has an empty obligation array and discloses no source value. The complete actual original checks determine the kind; absence of a diagnostic never proves a predicate. Denied access, invalid source/envelope/payload or changed current source/token cannot become unresolved-with-content. Missing historical semantic/admission evidence may be reported unresolved only when the current generic source read and permission independently authorize the complete raw historical observation. No unresolved output claims original lawful transition, completion or present action authority. Current permission must authorize every disclosed original value and ref; no partial/drop/redact transform may be presented as the original full value. Existing reject-unhandled-secrets remains mandatory. This output is internal and ephemeral, not a new persisted event, receipt, schema family or public command.
+
+At each original reader entry before the first decoder/resolver/validator/copy/output helper, independently capture the selector, actual Storage/root/node/dataset/whole source-token/maintenance fence, original applicable-contract/source/receipt facts and current access/deletion/hold authority. Independently derive the complete permitted original record and validation/provenance output before its builders. After all helpers—including receipt/predecessor validation and the final currentness/permission helper—compare the entire candidate, immutable selector, actual original admission/source facts and complete current owner/token fence in a final pure predicate. No replaceable helper may run between that predicate and ephemeral disclosure. Drift discards the answer; an old coherent snapshot cannot claim a new boundary. Original source invalidity cannot be certified merely because its bytes did not change. Every independently callable source resolver, frame decoder, original-admission/row validator or output helper is itself an original entry boundary: it captures its actual invoking owner scope and required source/access inputs before replaceable helpers, independently derives its entire permitted typed result, and makes its own complete pure source/output/fence comparison after all helpers before returning. A caller-supplied witness or a later composite guard does not discharge that helper boundary. The outer reader still performs the complete final boundary after those helper returns; no helper may run between that predicate and disclosure.
+
+This exact family owner explicitly assigns no durable effect: no state projector, acknowledgment token, replay cursor, idempotency ledger, command, notification, provider/tool call, Usage charge, hold/recovery action or canonical receipt mutation. Family checkpoint is individually `none_required`; SP-278's actual generic checkpoint is still required. Current lookup does not reacquire lawfully disposed old control files just to reconstruct authority; if preserved original admission cannot suffice under its owner, disclose unavailable/unresolved. Existing event/source/ref retention and recovery owners remain unchanged; refs do not create new content holds. Withdrawal stops this reader, retains old custody and does not install a producer or silently select another version.
+
+This binding selects the unchanged authoritative whole v2 payload and original supported EventRecord envelope only. Existing separately owned legacy v1 reader/upgrader routes remain unchanged; this contract adds no legacy conversion, v1 output or current-write route. The original generic source envelope/version admission remains independently mandatory. The original retained frame and referenced records keep their existing separate clocks; RP-AUTHORITY-INDEFINITE@1.0.0 and RP-EVENT-INDEX-SOURCE@1.0.0 remain the exact source/index assignments. Original source translation must have authentic committed identity-preserving authority, with immutable target birth and later current suffix checked separately. No old original control file is reacquired merely to recreate disposed admission evidence, and no reference creates a new content hold. An old coherent snapshot may finish only under its actual still-valid owner lease/fence and may never claim a newer boundary. No fixture, schema result or hypothetical historical positive establishes native reader availability.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/storage-plan.md#SP-278, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2

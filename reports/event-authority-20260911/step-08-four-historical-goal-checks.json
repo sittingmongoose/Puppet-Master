@@ -1,0 +1,128 @@
+{
+  "status": "PASS_TARGETED_SOURCE_AND_INDEX_CHECKS_FULL_GATES_REMAIN_RED",
+  "base_commit": "bc66595334d8b25bba3771945709c07f53c6c9b0",
+  "applied_files": [
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "bytes": 466165,
+      "sha256": "e425b2bfc395e1b4e5d39bbb074523cfe0be1b5945b9fc618aa3e6fd590fe757",
+      "base_sha256": "d47d2c6751e64a671b5d4d6e5545b86dfd30f91ab7159eea2d13c79e4530cdca"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "bytes": 1232591,
+      "sha256": "b16f0ad622bd4389bbc758e778e15aa796fd4dc92592e1f00fe823313c5af643",
+      "base_sha256": "28dd60a4c3db0d01a42799aeb95bf30b35200fd8bc578aa8a58bfaf9c6991fca"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "bytes": 1976180,
+      "sha256": "477ac9dd5f00f40ed430774ade53d9a750c2bebe95491940edf830b3e28bd30f",
+      "base_sha256": "f4a54c0577233839b1bb0fa2acf61a2e2c7bb8da6dff865acc1cbce9bff92cca"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "bytes": 397257,
+      "sha256": "3ffcbc949af16a26957ce9e08144b835fdbe55f6884a6a109320c4f56254b7b9",
+      "base_sha256": "47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609"
+    }
+  ],
+  "new_planunits": [
+    "CV-343",
+    "CV-344",
+    "CV-345",
+    "CV-346",
+    "GRS-069",
+    "GRS-070",
+    "GRS-071",
+    "GRS-072",
+    "SP-300",
+    "SP-301",
+    "SP-302",
+    "SP-303"
+  ],
+  "new_planunit_count": 12,
+  "existing_units_checked_in_changed_docs": 748,
+  "existing_metadata_changes": {
+    "SP-214": [
+      "acceptance_criteria",
+      "canonical_text"
+    ]
+  },
+  "total_planunits_before": 6585,
+  "total_planunits_expected": 6597,
+  "acceptance_criteria_added": 53,
+  "source_input_count": 27,
+  "unchanged_registries_and_wiring": true,
+  "native_execution": "NOT_RUN",
+  "repository_checks": {
+    "status": "PASS_TARGETED_SOURCE_AND_INDEX_CHECKS_FULL_GATES_REMAIN_RED",
+    "full_gates": {
+      "pass_count": 21,
+      "fail_count": 15,
+      "same_failure_groups_as_goal_updated_consumer_landing": true,
+      "added_reported_categories_or_locations": 0,
+      "comparison_limit": "Per-group failure lists are capped at 50; no claim about unseen diagnostics."
+    },
+    "shard_check": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2599,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "independent_source_review": "No blocking new findings; v4 EOF-only delta independently verified.",
+    "initial_diff_check": "Three extra final LF bytes found and removed; initial checks preserved.",
+    "no_validator_or_governance_artifacts_changed": true,
+    "native_execution": false,
+    "complete_step8": false
+  },
+  "complete_index_preservation": {
+    "status": "PASS",
+    "old_units_checked": 6585,
+    "new_units": 12,
+    "ignored_generated_fields": [
+      "source_doc_sha256",
+      "source_location"
+    ],
+    "metadata_changes": {
+      "SP-214": [
+        "acceptance_criteria",
+        "canonical_text"
+      ]
+    },
+    "acceptance_criteria_before": 25527,
+    "acceptance_criteria_after": 25580
+  },
+  "repository_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-historical-four-repository-checks-20260912/manifest.json",
+    "sha256": "a62a8e09aeef0c4c7aa583c238f7499ae835ab8c04dd625f6a9e2d77b0cc1f24"
+  },
+  "canonical_source_files": [
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "bytes": 466164,
+      "sha256": "51a12e64668bec85a61dd810af0ca8919c1d8bfc2a40c010ae261448603b9baa",
+      "base_sha256": "d47d2c6751e64a671b5d4d6e5545b86dfd30f91ab7159eea2d13c79e4530cdca"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "bytes": 1232636,
+      "sha256": "ce738bd2b4603f80caa28b0a5c85a385abb93853550c34c0107f2a980e98e26a",
+      "base_sha256": "28dd60a4c3db0d01a42799aeb95bf30b35200fd8bc578aa8a58bfaf9c6991fca"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "bytes": 1976179,
+      "sha256": "2d4828c52e63f6175e4c13927af8e45b6bdc223b4566a35888d7fea7c1729640",
+      "base_sha256": "f4a54c0577233839b1bb0fa2acf61a2e2c7bb8da6dff865acc1cbce9bff92cca"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "bytes": 397257,
+      "sha256": "3ffcbc949af16a26957ce9e08144b835fdbe55f6884a6a109320c4f56254b7b9",
+      "base_sha256": "47074bed6c4d07d09a1e2ba6b65ce2ff484e8b2ac957f622778eb197a5217609"
+    }
+  ],
+  "existing_schema_registry_wiring_bytes_unchanged": true
+}
