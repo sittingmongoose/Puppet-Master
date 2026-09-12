@@ -7,7 +7,7 @@
   "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
   "initial_comparison_commit": "e59bc0045ab2aa4e7474a92a1e1f582f575f9767",
   "review_completion_comparison_commit": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
-  "landing_base_commit": "34b2097849476e1bb571f5f46797a57d3c16d7d6",
+  "landing_base_commit": "0fed14e3451c71f5cf6677d70afa29619ced9a4a",
   "scope_and_authority": [
     "Individual evidence-backed review of all 176 command/alias tokens in the frozen Egolite command register, DOC-0115; formal chunks 00028 and 00029.",
     "The previously saved 53 judgments were retained byte-for-byte, supplemented by 123 individually authored judgments, and only then published as complete chunk results.",
@@ -106,6 +106,17 @@
     "historical_verdicts_restamped": false
   },
   "verification": {
+    "post_rebase_landing": {
+      "status": "pass_bounded_currentness_and_static_checks",
+      "head": "af8c45569bc1be69296ea84c29c7fd19ffd26863",
+      "landing_base": "0fed14e3451c71f5cf6677d70afa29619ced9a4a",
+      "unchanged_selected_command_inputs": 30,
+      "unchanged_owner_reference_texts": 86,
+      "unchanged_audit_helpers_and_tests": 5,
+      "receipt": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-command176-root-review-20260912-rIKBu8Uo/landing-verification/receipt.json",
+      "sha256": "72f22f4e350e4c174bdaaa644cb24e4d7d09f77fe9c3e5177d85824344b49323",
+      "boundary": "Main advanced during the first fast-forward attempt, which safely failed. A new landing branch preserves the original published branch without force-pushing. All selected command inputs and owner text remain unchanged; shard verification and the 45 audit tests pass again. Unrelated Goal/Storage changes are preserved, not certified. Earlier governance evidence remains scoped to comparison commit 34b2097849476e1bb571f5f46797a57d3c16d7d6, not relabelled as a post-rebase run."
+    },
     "review_integrity": {
       "status": "pass",
       "cases": 176,
