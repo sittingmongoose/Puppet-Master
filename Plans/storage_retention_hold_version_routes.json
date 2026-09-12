@@ -1,0 +1,96 @@
+{
+  "status": "DEFINED_EXPLICIT_FAMILY_VERSION_ROUTES",
+  "family_id": "retention_hold_record",
+  "key_shape": "retention_hold_record.v1:{scope_partition}:{hold_id}",
+  "current_writer": {
+    "binding": "storage.legal_hold_transition.v2",
+    "command": "cmd.storage.legal_hold.manage",
+    "hold_kind": "legal_hold",
+    "schema_ref": "Plans/storage_retention_hold_value.schema.json#/$defs/writer_value",
+    "required_permission": "storage.legal_hold.manage",
+    "recovery": "canonical_non_rebuildable / restore_from_mandatory_backup; no payload reconstruction"
+  },
+  "read_routes": [
+    {
+      "schema_id": "pm.storage_value.retention_hold_record.v1",
+      "schema_version": "1.0.0",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/HoldCoreV1",
+      "consumers": [
+        "janitor",
+        "compaction",
+        "FileSafe",
+        "protected hold commands"
+      ],
+      "hold_kinds": [
+        "legal_hold",
+        "preserved_run",
+        "recent_run",
+        "recovery_anchor",
+        "manual_keep",
+        "audit",
+        "promotion",
+        "evidence"
+      ],
+      "recovery": "Existing canonical_dual_homed / restore_backup_then_replay only with original complete v1 authority; no v2 slot or original receipt inference."
+    },
+    {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/HoldV2",
+      "consumers": [
+        "janitor",
+        "compaction",
+        "FileSafe",
+        "protected hold commands",
+        "storage.retention_hold_history_reader.v2"
+      ],
+      "recovery": "Exact whole v2 backup/readback; events alone cannot regenerate original command/SIR/AppendReceipt slots."
+    }
+  ],
+  "existing_v1_writer_routes": [
+    {
+      "hold_kind": "preserved_run",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized preserved_run transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "recent_run",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized recent_run transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "recovery_anchor",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized recovery_anchor transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "manual_keep",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized manual_keep transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "audit",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized audit transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "promotion",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized promotion transitions only; no new trigger, release authority or event producer admitted."
+    },
+    {
+      "hold_kind": "evidence",
+      "producer_role": "storage retention authority",
+      "schema_ref": "Plans/storage_retention_hold_contracts.schema.json#/$defs/LegacyOtherKindWriterValue",
+      "scope": "Existing owner-authorized evidence transitions only; no new trigger, release authority or event producer admitted."
+    }
+  ],
+  "binding_evidence": "The registered original producer is the bounded role storage retention authority. No seven separate native writer IDs are canonically registered; none is invented. The role/kind/schema triples explicitly preserve those existing duties and exclude legal_hold from v1 command writes. FileSafe trigger/release requests and recent-run owner rules remain as already defined.",
+  "unknown_route": "Unavailable/fail-closed; no current writer may select reader union by shape."
+}

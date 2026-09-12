@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8523-L9709
+Source lines: L8523-L9719
 
-Source SHA256: `a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646`
+Source SHA256: `3fddb30a33cf6cec72274a1b4bae94bb5274cc905d03b4adcf8e245254c39a3a`
 
 ---
 
@@ -35,7 +35,7 @@ These are the seventeen stable Case L IDs forced by approved controls. `storage.
 | `cmd.storage.fallback.export_both` | Closed `StorageFallbackDispositionRequest` export variant: common fields plus only `destination_ref` and `encryption_key_ref`, with `command_id = "cmd.storage.fallback.export_both"` and `confirmation = "encrypt_exact_bytes_and_retain_sources"`; direct recovery-shell export action | `storage_access_mode == viewer && storage_mode_reason == fallback_diverged && permission_allowed && confirmation == "encrypt_exact_bytes_and_retain_sources" && destination_available && encryption_key_available && !operation_in_progress` | Dispatches only `handlers::storage::fallback_export_both`; consumes `StorageFallbackDispositionResult`, returns output `export_custody` for the encrypted exact-byte package, retains both roots until separate cleanup, and writes `StorageFallbackResolutionReceipt` without an EventRecord. | `domain_action` |
 | `cmd.storage.open_value` | `{ storage_instance_id, root_generation, store_family_id, value_key_ref, route_target, open_subject }`; normalizes to `route_target`/`OpenSubject` | compatible captured value is readable under ordinary read/export permission | Opens exact redacted owner-resolved identity at the captured high-water mark; raw path is never authority and no state changes. | `navigation_wrapper` |
 | `cmd.storage.open_root` | `{ storage_instance_id, root_generation, root_kind, root_ref, route_target, open_subject }`, where `root_kind = logical_root | active_root | relocation_source | fallback_recovery_copy`; normalizes to `route_target`/`OpenSubject` | exact retained root identity is safely revealable under ordinary read/export permission | Reveals/navigates to the exact target only; it cannot select authority, promote writer mode, initialize, relocate, clear a hold, or fall back to an empty surface. | `navigation_wrapper` |
-| `cmd.storage.legal_hold.manage` | `{ scope_kind, project_id?, hold_id, action, semantic_scope_ref, reason, expected_hold_sha256? }`, `action = set | clear` | `storage_access_mode == writer && permission(storage.legal_hold.manage) && reason_present && retention_hold_record_available` | Produces the durable `retention_hold_record` receipt plus `storage.retention_hold_changed` EventRecord 2.0 with `scope_kind = application | project` and matching conditional `project_id`. Holds compose by union and never clear automatically. | `domain_action` |
+| `cmd.storage.legal_hold.manage` | `{ scope_kind, project_id?, hold_id, action, semantic_scope_ref, reason, expected_hold_sha256? }`, `action = set | clear` | `storage_access_mode == writer && permission(storage.legal_hold.manage) && reason_present && retention_hold_record_available` | SP-288 owner `storage.legal_hold_transition.v2` returns the committed `pm.storage.legal_hold_result.v1` OwnerResult and same-row receipt plus `storage.retention_hold_changed` EventRecord 2.0. SIR-047 binds actual pending/terminal custody through `owner.sir.storage_legal_hold_pending_custody@1.0.0`; CV-333 publishes the joined response only after complete commit/readback. Pending stays protective; application/project scope is exact, holds compose by union and never clear automatically. | `domain_action` |
 | `cmd.storage.compaction.request` | `{ storage_instance_id, retention_policy_ref, reason? }`; owner-admitted maintenance request only | `storage_access_mode == writer && permission_allowed && storage_maintenance_operation_available && maintenance_lease_available` | Requests owner evaluation; it never directly compacts or bypasses holds/anchors/refs. Accepted lifecycle uses application-scoped `storage.compaction_lifecycle_changed` EventRecord 2.0 and the `storage_maintenance_operation` row. | `domain_action` |
 | `cmd.settings.open_storage_retention` | `{ project_id?, route_target, open_subject }`; navigation to `Advanced > Storage & Retention` | settings inventory and route target are available | Opens the owner-backed Settings surface. Individual settings remain registry-owned/non-command values; this command changes no retention value and emits no domain event. | `navigation_wrapper` |
 | `cmd.project.delete_data` | `{ project_id, expected_project_data_sha256, confirmation_strength: "strong", reason? }`; destructive project-data intent, distinct from `cmd.project.remove` | `storage_access_mode == writer && project_data_enumerated && strong_confirmation_complete && permission_allowed && storage_deletion_record_available` | Persists the project-scoped `storage_deletion_record` and `storage.deletion_lifecycle_changed` EventRecord 2.0, removes project content only through owner compaction, and blocks on ambiguous/cross-project reachability or holds. It never means Remove project from list. | `domain_action` |
@@ -984,17 +984,27 @@ canonical_text: >-
   confirmed project-content purge intent distinct from cmd.project.remove. Existing cmd.chat.delete
   immediately performs logical deletion and requests physical content purge within 24 hours unless
   held while preserving a content-free tombstone and owner-governed receipts.
+  The legal-hold command consumes SP-288 strict same-row transition/result custody and SIR-047
+  original pending/terminal delegation; acknowledgement never publishes held/cleared success before
+  complete durable row/result/outcome readback, and original replay never repeats a hold action.
 gui_related: true
 gui_classification_reason: Registers visible retention, legal-hold, compaction-request, settings, and destructive deletion controls and confirmations.
-depends_on: [UIW-002, UIW-003, SP-237, CV-319, UCC-056, UCC-118]
+depends_on: [UIW-002, UIW-003, SP-237, CV-319, UCC-056, UCC-118, SP-288, SIR-047, CV-333]
 unblocks: []
 acceptance_criteria:
   - Hold set and clear require storage.legal_hold.manage, actor identity, reason, expected state when supplied, and a durable retention_hold_record plus EventRecord v2 receipt.
+  - Legal-hold owner storage.legal_hold_transition.v2 binds the exact Plans/storage_retention_hold_contracts.schema.json#/$defs/OwnerResult, schema pm.storage.legal_hold_result.v1 version 1.0.0, to the original command instance, hold key/ID, action, committed held/cleared status, event/receipt and core hash.
+  - SIR-047 delegates actual original request/nonterminal and terminal custody through owner.sir.storage_legal_hold_pending_custody@1.0.0; CV-333 joins its separately hashed typed owner result only after SP-288 final authority guards and complete commit/readback.
+  - Pending set/clear remains protective and never success; same original replay preserves request/outcome/result/receipt/event with zero repeated effects, and history does no cleanup or hold action.
   - Compaction request never directly compacts or bypasses holds, recovery/recent-run/live/backup/rollback/maintenance refs, registry policy, or the maintenance lease.
   - Storage and Retention settings navigation creates no peer setting command; registry-owned values enforce owner minima.
   - cmd.chat.delete discloses immediate logical removal, the 24-hour purge target, legal-hold delay, and content-free tombstone retention.
   - cmd.project.remove remains list-only and cmd.project.delete_data remains a separate strongly confirmed, project-scoped data-purge intent.
 validation_surfaces:
+  - Plans/storage_retention_hold_contracts.schema.json
+  - Plans/storage_retention_hold_evidence.schema.json
+  - Plans/storage_retention_hold_version_routes.json
+  - reports/event-authority-20260911/step-08-hold-validation.md
   - future RET, CMP, DEL, and legal-hold command fixtures
   - future thread/project deletion confirmation and hold-blocked snapshots
   - python3 scripts/pm-plan-index.py validate

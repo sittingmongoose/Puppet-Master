@@ -509,6 +509,8 @@ All persisted values require `schema_version`. Stored values must not contain ra
 
 For the exact `restore_point_retention_summary` family, registry root schema and field/version metadata describe the current v2 writer. Retained v1/v2 reads use the explicitly registered closed `$defs.registered_read_value` dispatcher under the same inline schema, as defined in SP-269, “Restore-point summary codec and coordinated admission.” This family-specific read selection does not widen writer validation or any other registry family.
 
+For the exact `retention_hold_record` family, SP-288 registers the strict self-contained current legal-command writer at `Plans/storage_retention_hold_value.schema.json#/$defs/writer_value`, equal to its inline registry schema and semantically `HoldV2`. The independent exact v1/v2 reader dispatcher and seven existing non-legal v1 role/kind/schema writer routes remain explicit in `Plans/storage_retention_hold_version_routes.json`; their semantic definitions stay in `Plans/storage_retention_hold_contracts.schema.json`. Neither the read union nor a legacy route widens the current writer root. The physical family/table/key and exact original v1 core remain unchanged.
+
 This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false.
 
 ContractRef: SchemaID:pm.storage_value_registry.v1, ContractName:Plans/storage_value_registry.json, ContractName:Plans/storage_value_registry.schema.json, ContractName:Plans/storage-plan.md
@@ -17116,7 +17118,7 @@ SourceRef: `PD-L005-01` through `PD-L005-07`, `PD-SCHEMA-01`, `Case-L:L-005`
 
 #### Holds and recovery anchors
 
-Legal holds require `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt; they never clear automatically. Multiple holds compose by union.
+Legal holds require `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt; they never clear automatically. Multiple holds compose by union. SP-288 supplies this existing protected command's exact HoldV2 pending/terminal custody, SP-286 first-receipt adoption, explicit legacy/read/write routes and passive history; SIR-047 supplies its original command-specific delegated outcome custody. Those contracts do not change the independent anchor kinds, release reasons or dependency eligibility below.
 
 A blocked episode with `requires_safe_point_restore = true`, its canonical safe-point record, snapshot/blob refs, and `recovery_anchor_record` publish as one durability unit. Release is allowed only for `resolved | superseded_with_verified_successor | abandoned_by_user`; run completion, age, archive, exit, or worktree unbinding is insufficient. If a required snapshot is missing/corrupt, state becomes `recovery_unavailable`, remains blocked and anchored, preserves local work, disables restore, and requires locate/verified recovery, replan, or explicit abandonment with receipt.
 
@@ -22299,3 +22301,197 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+## Legal-hold transition custody and passive history
+
+SP-288 owns the exact command-specific producer, canonical transition custody, recovery and passive history binding for the existing `storage.retention_hold_changed` event. Case L-3 remains the owner of retention policy, dependency eligibility, union protection, FileSafe request/release duties and cleanup. SIR-047 owns original SIR production and delegated pending/terminal custody; CV-333 owns the single UI response projection. This contract adopts the shared SP-286/CV-339 first-receipt interfaces for this exact barrier producer. The separately unresolved shared exact frame/header/payload codec remains an OPEN prerequisite; this adoption does not declare complete event depth or native implementation.
+
+### Protected command, scope and lifetime
+
+The existing `cmd.storage.legal_hold.manage` arguments remain exactly `scope_kind`, optional `project_id`, `hold_id`, `action = set | clear`, `semantic_scope_ref`, `reason` and optional `expected_hold_sha256`. Admission requires actual writer posture, installed hold-family reader/writer versions, authenticated original SIR command/actor, `storage.legal_hold.manage`, a nonempty reason, actual resolved semantic target and exact expected core hash when supplied. The expected hash is lowercase SHA-256 of the exact canonical MessagePack preimage core; supplied expected state cannot authorize an absent or different core. A pre-admission refusal creates no append, hold mutation, projection/checkpoint effect or hold action.
+
+Only `hold_kind = legal_hold` belongs to this producer. Existing `preserved_run`, `recent_run`, `recovery_anchor`, `manual_keep`, `audit`, `promotion` and `evidence` roles retain their original owner routes. Shared schema membership does not authorize this command to create or clear another kind. FileSafe retains its trigger/release request role and the closed `resolved | superseded_with_verified_successor | abandoned_by_user` recovery-anchor release reasons. Latest-25-run automatic protection remains independent; none of these anchors is automatically converted into a legal hold or this event.
+
+The event registration remains family revision `2.0.0`, payload schema `1.0.0`, `scope_policy = application_or_project`. Application arguments and payload omit `project_id`; the EventRecord and full owner identity carry null project ID. Project scope requires the same nonempty project ID from command, actual target, owner identity, payload and envelope. A semantic target may be an existing application, project, thread, run, event, safe point or receipt only through the existing typed target resolver. Required subject IDs, target ownership and permission must resolve; a ref string, current focus or fabricated Project is insufficient. `affected_semantic_refs` is the unique set in UTF-8 byte order. `policy_ref` identifies the held target's policy, not the hold event's retention policy; the complete target scope, policy, anchor and affected-ref set remain bound to the accepted operation.
+
+The permanent hold event and command/receipt custody use unchanged `RP-AUTHORITY-INDEFINITE@1.0.0`, mandatory coherent backup/restore and fail-closed storage pressure. Target lifetime and dependency eligibility stay independent. Unknown policy remains indefinite/no-count-eviction and `materially_incomplete`; it cannot authorize cleanup. Reasons and semantic refs retain their actual existing content/no-secret classification; a user reason is not inherently content-free. No raw file path, body, transcript, credential or implicit redaction transform is added.
+
+### Same physical family and exact version routes
+
+Use table `retention_hold_record.v1` in the existing admitted redb instance and unchanged logical key `retention_hold_record.v1:{scope_partition}:{hold_id}`. Partition is `app` or `project~` plus unpadded base64url of the project ID's exact UTF-8 bytes. No second receipt table, physical-key alias or new hold family exists.
+
+The current legal-command writer is `storage.legal_hold_transition.v2`, strictly the `HoldV2` semantic contract in `Plans/storage_retention_hold_contracts.schema.json#/$defs/HoldV2`, with schema ID `pm.storage_value.retention_hold_record.v2` and version `2.0.0`. Its exact registry `value_schema_ref` is `Plans/storage_retention_hold_value.schema.json#/$defs/writer_value`: that self-contained writer definition includes the local definitions and equals the inline registry writer schema exactly. This schema-ref wrapper changes neither stored identity/version nor any predicate. Semantic result, pending and read routes remain in the original contracts file. The registry root never accepts a v1/v2 writer union. `Plans/storage_retention_hold_version_routes.json` separately dispatches exact `pm.storage_value.retention_hold_record.v1@1.0.0` to unchanged `HoldCoreV1` for all eight kinds, and exact v2 to `HoldV2`. `HoldReaderValue` is a read-only convenience, never a writer root or shape-based admission. Janitor, compaction, FileSafe and protected hold commands retain their original read duties; the v2 historical reader is explicit.
+
+Seven exact role/kind/schema routes retain `storage retention authority`'s existing non-legal v1 writers through `LegacyOtherKindWriterValue`. They preserve the seven kinds above, without inventing seven implementation IDs, triggers, release permissions or event producers. A legacy legal hold can be cleared by the v2 command only after the explicit per-key coordinator admission below. Unsupported, malformed or unresolved routes are unavailable/fail-closed; a key prefix or schema-shaped body cannot select a fallback writer.
+
+`HoldV2` is a closed row containing schema fields, exact `hold_key`, unchanged v1-shaped `core`, `phase`, `set_custody`, required nullable `clear_transition` and redaction classification. Its phases are `set_pending | held | clear_pending | cleared`, and v2 is legal-hold-only. One hold ID has one immutable set and at most one immutable clear. A cleared ID is terminal; renewed protection requires a fresh ID. The same original command/semantics returns its original result with no second event; another command against an already used set/clear identity conflicts. Fresh-set absence must come from actual complete admitted canonical root/hold authority, not an empty projection, old backup, mtime or caller assertion.
+
+### Immutable intent, event and result
+
+Each native set/clear `Transition` contains the actual normalized `OriginalRequest`: request/dispatch refs and original dispatch ID, command and command-instance identity, idempotency, authenticated actor, accepted time, full original owner `IdentityEnvelope` and exact arguments. It retains `ResolvedTarget`, exact preimage core, intended `after_core`, `pending_admission_id`, `transition_id`, `receipt_ref`, complete producer-owned EventRecord intent and the mandatory original/current SIR capsule. Pending intent excludes Storage-assigned `observed_at_utc`, `persisted_at_utc` and `sequence_id`; its actual event and every terminal publication/result/outcome/response member are null until genuine terminal custody can commit.
+
+Define the new transition binding as `hold-transition:` plus SP-278's canonical MessagePack binding digest over `{domain: pm.storage.legal_hold_transition.v2, request: OriginalRequest, target: ResolvedTarget, preimage_core_sha256: SHA256(exact canonical core bytes) | null}`. Null is used only for original fresh-set absence. This new preimage changes no existing EventRecord RFC8785 producer-semantic digest, payload/value MessagePack hash, legacy identity or other receipt hash. Numeric identities must remain exact; unsupported exact native encoding refuses admission without rounding an otherwise valid owner value.
+
+The original EventRecord ID is `evt_hold_` plus that digest; idempotency key is `storage.retention_hold_changed:` plus the full transition ID; replay policy is `dedupe_by_idempotency_key`. Actor and occurrence time equal original accepted command facts, and correlation ID is the original command instance. Thread/run/node/attempt, requested/effective accounts, producer sequence, parent and causation are null for this narrow metadata command. A more specific target remains in its typed target/ref and does not create execution identity. Storage alone supplies observed/persisted/sequence fields. The exact closed payload carries schema `1.0.0`, hold ID, resolved scope ref, original action/actor/reason/time, held-target policy/anchor/affected refs and receipt, with project ID only for project scope. The full EventRecord and payload must equal this original producer intent.
+
+The logical receipt is `pm.storage.hold_receipt.v2:{sha256_utf8(exact_hold_key)}:{set|clear}`. Given independently proven scope/hold/action, the owner rederives the physical key and this ref, and selects exactly `set_custody.transition` or `clear_transition`. It never searches arbitrary keys from a digest or treats a checksum as authority. The logical ref avoids exposing `project~` through CV-333's stricter non-secret-ref grammar; it is not a physical alias. Appending `/owner_result` resolves the same slot's separately typed result.
+
+`OwnerResult` has exact schema ID `pm.storage.legal_hold_result.v1`, version `1.0.0`, command instance, hold key/ID, action, status `held | cleared`, actual event ref, receipt ref and committed `core_sha256`. Status is `held` exactly for set and `cleared` exactly for clear. Its canonical core hash, command, key, action, receipt and event must match the actual committed slot. SIR binds this object ALONE through the existing RFC8785/SHA-256 `owner_result_sha256`, exact result ref and `{path: Plans/storage_retention_hold_contracts.schema.json, json_pointer: #/$defs/OwnerResult, schema_id: pm.storage.legal_hold_result.v1}`. It contains no containing outcome/response hash and creates no recursive digest.
+
+Set requires actual absent hold identity and creates immutable set actor/reason/time with all clear fields null. Clear requires the actual active legal-hold core with exact scope/ID and optional expected hash; it preserves every set field, prior event ref and full original set custody, adding only its clear actor/reason/time and new event ref. Core clear fields are all null or all nonempty together. Other hold values remain untouched. Union protection and all live/backup/rollback/recovery/maintenance dependencies still govern eligibility after a named clear.
+
+### Same-row original and current SIR custody
+
+Every native transition requires the closed `PendingSIRCustody` with exactly `schema_id`, `schema_version`, `owner_binding`, `original_source`, `current_source`, `original_source_sha256` and `current_source_sha256`. Constants are `pm.storage.legal_hold_pending_sir_custody.v1`, `1.0.0` and `owner.sir.storage_legal_hold_pending_custody@1.0.0`. SIR-047 delegates this exact command's custody before transient source disposal; it is not a generic Full Thread physical family.
+
+Each closed `SIRDispatchSource` carries actual SIR owner, full original request, target generation, original dispatch frame, acknowledgement frame/offset/receipt, original outcome ref, source stage clock, complete genuine nonterminal CommandOutcomeRecord, capture-authority ref and capture time. `original_source` is immutable first-admission custody; `current_source` initially equals it. Both source checksums use the existing canonical-JSON hash over the complete respective source object, excluding the containing capsule. Hashes are consistency checks, not authentication. Original request/identity, command, argument payload hash, idempotency, target generation, dispatch frame and outcome ref must join the actual SIR source exactly. Source stage clock is no earlier than capture, capture no earlier than nonterminal observation or original command acceptance.
+
+Only actual `accepted | acknowledged | executing` outcomes may occupy these source slots; result receipt, error and owner-result ref/schema/hash remain null. Accepted without acknowledgement preserves null acknowledgement frame/offset/receipt and `same_frame_acknowledged = false`. It cannot append a hold event or acquire a guessed same-frame acknowledgement. Acknowledged/executing requires the genuine receipt/frame/offset. When acknowledgement exists, frame equality, zero offset and the same-frame flag are equivalent, as SIR-042 requires.
+
+A real later SIR observation may advance only `current_source` and its checksum under a complete pending-row CAS, preserving original source/checksum, command/request/dispatch/outcome identity, pending admission, core, intent and set/clear count. Progress cannot regress from executing to acknowledged/accepted or acknowledged to accepted. An existing real acknowledgement cannot be relabelled. Capture and observation times cannot regress; a first later acknowledgement observation cannot precede the original capture. Capture the actual new frame/offset/receipt/time/authority before any append or successful terminal work. Source-shaped caller values, a downgraded terminal record or mutually repaired capture hashes cannot supply missing original nonterminal custody.
+
+The SIR resolver binds the original outcome ref and request to the actual authenticated row/slot: `set_custody.transition.pending_sir_custody.original_source.nonterminal_outcome` or `clear_transition.pending_sir_custody.original_source.nonterminal_outcome`, with current progress at the parallel `current_source` path. No arbitrary caller-selected slot, authenticity flag or global outcome store substitutes. Once the selected transition is committed, that same original outcome ref resolves its exact admitted terminal `command_outcome`; the retained original/current nonterminal captures remain source custody, not a second live outcome.
+
+### Pending admission, barrier append and terminal publication
+
+1. Capture the complete current owner fence before dispatch/request/target/capsule helpers, authenticate actual original SIR and Storage authority, derive the immutable intent and exact absent/held whole-row preimage, and reserve the actual pending transaction identity. Privately prepare both the row and its in-process SIR delegation. After all row/schema/source/permission/target helpers, directly revalidate installed actual SIR binding, complete actual source, current actor grant/writer posture, target, whole owner fence and row preimage immediately before publication. Durably admit the complete prepared row with its capsule under the owner lock/CAS and bind only that admitted row. No fallible post-write source/binding resolution may stand in for this pre-write guard.
+2. `set_pending` protects the resolved target after durable admission; its core has no promised event ref. `clear_pending` retains the original active core and protection. `pending_admission_id` is the actual canonical transaction's stable identity and remains unchanged. Pending is not successful completion or released protection. There is no timeout, janitor clear or failed-clear erasure to unlock cleanup. Same-command pending retry rechecks actual target, SIR source/binding, permission/writer and complete admission fence before returning the existing row.
+3. Before pending acknowledgement advance, capture the complete owner fence before row/target/source helpers, validate the actual permitted observation and exact old capsule, and privately prepare the changed capsule/delegation. After the final helper, recheck complete actual SIR source, installed binding, permission/writer, exact current target, whole fence and preimage. Publish the one changed current capsule and matching delegation without a fallible post-write bind. Denial preserves old pending bytes/protection; the actual SIR owner's observed acknowledgement may remain available for a later authorized retry.
+4. Before any append or finish, reauthenticate the actual original normalized request, current command-specific SIR delegation, actual acknowledgement and actual current typed target. The complete scope/policy/anchor/affected-ref target must equal the accepted target. An unavailable or changed target/source leaves the pending row protective. Accepted without acknowledgement cannot append. After explicit source recovery when needed and durable acknowledgement capture, append the exact original intent once through SP-286 as `durability_class = barrier`. Initial frame/source/group/dedupe and both actual durability barriers plus canonical first-receipt issuance are required; ambiguous existence stays pending and cannot cause a second append.
+5. After actual original append proof, validate the complete EventRecord identity/value bytes, payload and unchanged producer-semantic digest against the accepted intent. `OriginalPublication` retains only event ID, exact original eleven-field AppendReceipt, exact event-value SHA-256, payload SHA-256 and producer-semantic digest. Actual current source selection/read token belongs to admission evidence; it is not a new permanent original-manifest field. Privately derive the exact post-core and typed owner result. SIR alone authenticates the original operation/result and stages its genuine original terminal CommandOutcomeRecord and CV-333 response. Storage cannot synthesize them from a typed body or receipt. Staged success is not public success.
+6. After every receipt, actual custody, current-source, target and SIR resolver, perform the final complete owner guard and ONE terminal canonical redb transaction against the actual entire durable pending row. Preserve pending admission, complete immutable intent and original source/current capsule, sibling/set custody and all other holds. `CommitBinding` equals the reserved actual terminal transaction identity, original pending admission identity, exact accepted preimage-core hash and intended committed-core hash. The old core/hash binds the original intent; it is not the terminal database preimage, which is the complete admitted pending row. Caller-repaired candidate/admission IDs cannot authenticate this binding. Commit the complete terminal core/slot with original publication, result, actual original outcome and response together, and verify exact committed readback before publishing clear visibility or SIR/CV-333 success. There is no incomplete terminal row later patched with SIR fields.
+
+The final terminal guard rechecks selected private-stage/transition binding, complete staged records, independently captured complete source and actual current original SIR source after all dependent validators have returned. Direct final predicates also require installed command binding, authentic source/delegation, actual terminal clock, target, permission/writer and complete current owner/preimage fence. Hold the real owner/domain lock or equivalent exclusion through mutation; no dependent callback runs between this guard and publication. Source removal/replacement, stage deletion/drift, capture drift, clock or authority change rejects before mutation even if a candidate remains schema-valid. Postcommit publication rejection cannot supply this guarantee. The whole fence includes canonical rows/revision, access/permission, deletion and maintenance state, target/other protecting refs, writer, restored-pending context and current generic authority. An independent valid source/index republication also invalidates an earlier observation.
+
+Only a fully committed slot may expose actual SIR `succeeded` and CV-333 `owner_operation`, accepted/succeeded, null error, exact sole event/receipt/result refs and original dispatch/request/command/instance/operation/full owner identity. Original response has `replayed = false` and null `original_dispatch_id`; a later dispatcher replay projection may identify its new dispatch while preserving all original values and original dispatch ID. Acknowledgement alone is never completion. No public outcome enum, peer outbox or global SIR writer is added. SIR-042/CV-333 require authentic owner verification before publication, not public success before delegated custody is durable; private stage then complete commit/readback then publication preserves those owners.
+
+Failed capture/CAS/commit/readback never reports success. Reconcile the original pending or actually committed canonical state under the same owner, retaining protection where completion is unproved; do not erase an ambiguous transition, append again on unproved absence, retrofit a terminal row, fabricate a failed-clear event or add an automatic retry policy. Cleared rows and both original slots remain permanent authority. A missing row is not a clear.
+
+### First-receipt adoption and crash cuts
+
+For this exact Hold barrier producer, install and use `storage.first_append_receipt.issue.v1`, `storage.first_append_receipt.resolve.v1`, `storage.first_append_receipt.group_gate.v1` and `storage.first_append_receipt.backup_gate.v1` with the current SP-286/CV-339 schemas, exact canonical receipt table/key and protected-group contract. The common owner authenticates complete actual group/source/frame/segment mapping/dedupe/durability class and both barriers; all member first receipts commit atomically before any Hold terminal release. Hold does not create or widen that shared custody.
+
+Before source/manifest promotion there is no receipt. Valid unacknowledged tail adoption follows Case L-2 and SP-286's actual recovery group/publication/class; OS visibility or an unknown directory barrier is not prior acknowledgement. After both barriers but before issuance, only an authenticated never-issued intact protected current group can first-mint at the actual later issuance time, with original coordinates/promotion terms and group-wide guard. Proper subsets, missing issued authority, source/epoch skew or ambiguous origin fence instead of filling missing receipts. After issuance but before Hold terminal commit or caller delivery, resolve the exact stored original eleven fields and continue the original pending operation without another append or first acknowledgement. Source advance/retirement and recovery events remain under the complete group gate.
+
+A four-field dedupe result, current index locator, newer manifest, retry clock or receipt-shaped body cannot reconstruct the original receipt. Lost volatile append maps must resolve the exact surviving event through actual current source/SP-278 authority and the independent canonical issued receipt. Missing current source or mandatory receipt authority is failure, not proof that the event never existed. Initial admission verifies original frame/group/durability; later recovery may verify relocated current event bytes against the immutable original receipt. Current physical coordinates may differ and never relabel the original receipt. Current mutation permission and target gates remain independent of passive receipt proof.
+
+Pending source capture, append observation/persistence/acknowledgement and terminal observation are separately actual owner facts. Fresh first append observation cannot precede the admitted current nonterminal capture. Terminal SIR clock must be valid and no earlier than the current capture or original append acknowledgement; restart supplies its actual clock, not an invented old-source time. Exact receipt replay keeps original times even after a later executing observation. Discarded private staging is not an immutable public response; a later genuine stage may carry its actual later time while reusing the first receipt.
+
+### Explicit pending resume and repeated lawful recovery
+
+An in-flight finish never silently falls back from a disappearing live SIR source to retained custody. The separate explicit `resume_pending_sir` route is restricted to an actual canonically admitted prepared slot. It authenticates the installed SIR-047 binding and selected canonical row/capsule, original identity, current target/permission/writer and an actual current SIR clock. The canonical row is the source of admitted pending identity; no caller capsule, current topology default or indefinite original transaction history is needed or accepted.
+
+Capture the complete current owner fence and actual source/delegation/clock state before row/schema/permission/target/clock helpers. Derive resumed source, delegation and return value privately. After the final dependent helper, directly require the actual installed SIR owner/binding, unchanged source/delegation/clock state, current grant/writer/target and complete unchanged owner fence. Only then bind the resumed source/delegation and disclose the already prepared result, with no post-binding resolver. The separate retained bind path uses the same final authority rule. Owner identity comparison must preserve the actual authenticated owner binding rather than copy it into an unequal substitute or accept a caller-made lookalike.
+
+Repeating unchanged explicit resume is lawful and adds no durable transaction, history, redispatch or semantic effect. Multiple independently admitted pending delegations remain valid when resuming one; compare immutable owner/key/action/transition/capsule bindings plus complete observed state without inventing a new owner instance. A late actual-owner substitution still rejects. After a second crash, explicit resume may read the durably advanced current capsule and preserve its real acknowledgement. Once resumed, every live final source/stage/clock/current-owner guard applies again. Successful set/clear count and original receipt remain unchanged.
+
+Incomplete mandatory capsule/custody remains recovery-required and protective. A schema/version label or old prototype is not installed native authority; no upgrader may fabricate original nonterminal request/acknowledgement or downgrade a terminal record. Exact supported schema/resolver installation is required before any producer or reader relies on this route.
+
+### Whole-row backup, restore and legacy protection
+
+V2 is canonical non-rebuildable command/receipt authority. Restore its exact complete row from mandatory backup under actual schema/hash/root/coherent-boundary checks, then reconcile current source/event availability. The hold EventRecord payload cannot reconstruct original request, SIR records, first receipt or slots. Missing/corrupt required v2 custody fences receipt-dependent writes and returns unavailable history; it never clears protection. Whole-row pending custody may be preserved only with its complete original/current SIR capsule. This does not permit a pending common receipt group in a supported authority backup: SP-286's backup gate must first settle complete group issuance and capture coherent source/custody.
+
+The restore owner's actual current context identifies an old restored pending intent. It may resolve an exact surviving original event/receipt, but receipt absence cannot first-mint—even when the backup captured that intent before any then-observed append. A restored pending image is not an in-place restart or proof that live execution never issued afterward. Settled older rollback likewise cannot restamp lost old work. Actual Hold-specific fresh post-restore owner acceptance is not supplied by this contract: that scoped first-mint path remains unavailable until separately adopted against SP-286's actual new restore occurrence, acceptance session/lease and original owner operation. No fresh-origin flag, new restore family, receipt field or copied protected-group capability bypass is added. Exact surviving receipt replay remains lawful.
+
+The separate v1 roles retain existing `canonical_dual_homed / restore_backup_then_replay` only where complete original v1 authority is actually available. This is not a claim that the small current event payload serializes every v1 field, and cannot synthesize v2 SIR/result/receipt custody. Unresolvable v1 authority stays unavailable/protective. Storage's whole-boundary backup membership, deleted-state/root/version continuity and coordinator exclusion remain mandatory; newest-looking data never wins.
+
+A genuine active v1 legal hold remains protective without recoverable original set-event/receipt evidence. `StorageMigrationCoordinator` may explicitly admit that exact key/core to v2 `legacy_admitted_v1_protection`, retaining original core/key/value hash, actual migration/admission identity/time and exact actual MigrationReceipt ref/hash; `original_set_receipt` is exactly null. Admission verifies the completed existing receipt, supported `retention_hold_record` family edge `1.0.0 -> 2.0.0`, original selected backup ref/key/raw core bytes/hash, coherent root/version/lease and actual coordinator target readback. Use the actual supported graph/ceilings; no production store integers or guessed edge are assigned here. Receipt/hash publication must not introduce a recursive target-value/receipt dependency.
+
+A new authorized clear then uses the actual admitted v2 preimage, preserves legacy set/core custody and emits only its new clear event/result/receipt. Old event_refs are not original set receipt proof. A later clear need not reacquire retired migration control snapshots once canonical admission is authenticated, nor borrow original bytes from another root. No original set outcome/receipt is invented; reuse of a cleared identity remains forbidden. Non-legal v1 values stay with their existing roles.
+
+Activation installs exact current writer, independent v1/v2 readers, seven existing other-kind writer routes, same-family pending/terminal resolver and all shared first-receipt prerequisites through actual coordinator preflight, supported migration, protected coherent backup, target/schema verification, stamp-last and receipt readback before mutation admission. Unsupported or partial installation fences. Withdrawn/incompatible custody cannot be dropped to restore older writer behavior; preserve admitted protection and original authority until a verified supported successor or whole-boundary restore resolves it. Unknown/missing source or receipt remains unavailable, not permission to enable a fallback writer.
+
+### Passive current history and original command replay
+
+`storage.retention_hold_history_reader.v2` selects an actual retained event and its immutable set/clear slot from the authenticated canonical store. It adopts SP-278's complete current read token: root/CURRENT/manifest/source selection, generation birth anchor, advancing frontier, verified current index/source dataset and exact same-snapshot hold bytes. Capture and finally compare the complete current owner/access/deletion/maintenance fence, canonical row state, current generic authority, permission and other protecting refs immediately before disclosure. Caller-supplied hold values or authentication booleans are not inputs. Even a valid late index republication invalidates the old observation.
+
+Selected event identity, scope, payload and producer semantics must equal the immutable slot and actual verified current frame. Lawful relocation changes the current locator without changing original event/receipt proof. Later passive reads use intact admitted canonical custody and current source/disclosure authority; they do not reacquire original SIR stages, target resolver records, transaction/group controls or old manifest snapshots. Initial source authentication remains complete and is not weakened by that later source-independent receipt resolution.
+
+A historical set event alone does not claim current active protection. Current status comes from the actual same-snapshot version-dispatched hold record and union dependencies. V1 may establish protection but cannot supply an invented v2 receipt; legacy clear history truthfully reports unavailable original set receipt. Missing/corrupt mandatory slot/source, unsupported value, ambiguous scope or stale/deleted/unauthorized observation returns unavailable, never clear, applied or authority to reconstruct from an index.
+
+History has no durable checkpoint, hidden projection, cleanup, hold mutation, dispatch or recovery effect. This exact event/slot binding does not introduce pagination or a global search implementation. Original command replay independently checks current disclosure permission, actual original scope/hold lookup and exact actor/command-instance/arguments/idempotency/transition joins, then returns original request/outcome/result/receipt with no repeated effect. Changed semantics or identity conflict. A new CV-333 transport projection preserves original dispatch and all original operation/topology/time/error/event identities; returned objects cannot rewrite canonical custody. A historical read, receipt or set/clear replay never authorizes cleanup, restoration, new hold action or a new acknowledgement.
+
+### Verification boundary
+
+`reports/event-authority-20260911/step-08-hold-validation.md` records bounded schema, actual-owner-adapter and independent regression evidence. `Plans/storage_retention_hold_evidence.schema.json` defines closed transaction, complete owner fence, actual SIR source and terminal-witness test evidence; it creates no durable family or indefinite runtime transaction-history requirement. Product authority remains actual canonical rows and independently authenticated owners, not a successful schema check or supplied witness.
+
+The shared exact frame/header/payload wire contract remains OPEN until separately adopted; its absence is more than an unrun native test. Full native frame/MessagePack interoperability, authenticated SIR/target/permissions and complete hold/dependency enumeration, original transaction identities, actual owner/domain exclusion, redb/fsync/barriers, backup/restore/migration/withdrawal and crash cuts remain `NOT_RUN`. Static set/clear/legacy/retry/relocation/final-fence evidence is not `DEPTH_PASS`, broad Case L closure, event-family admission, readiness, WorkNode/NodeSeed creation or governance seal.
+
+### SP-288 - Legal Hold Transition And Original SIR Custody
+
+```yaml
+plan_unit_id: SP-288
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The existing legal-hold command writes strict same-family HoldV2 with immutable original intent,
+  required original/current pending SIR custody, protective pending phases and one set plus at most one
+  clear per hold identity. Actual SP-286 first-receipt issue/resolve/group/backup interfaces supply the
+  barrier producer's original append evidence. All dependent resolvers precede final complete owner
+  guards and complete pending/terminal row publication; SIR-047 retains original outcome production.
+  Explicit repeated pending resume preserves actual owner identity, acknowledgement and original receipt.
+  Whole-row mandatory backup, truthful legacy protection and passive source/current-authority reads
+  never reconstruct original custody, clear another hold, first-mint restored old work or execute history.
+gui_related: false
+gui_classification_reason: Canonical storage, command custody, recovery and passive metadata authority.
+split_recommended: false
+depends_on:
+- SP-237
+- SP-278
+- SP-286
+- CV-333
+- CV-339
+- SIR-047
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Strict HoldV2 uses the same physical table/key; exact v1 reads and seven bounded existing other-kind v1 writer roles remain independent.
+- Original request/target/core/producer intent, pending admission and required original/current SIR capsule remain authentic and exactly joined.
+- Accepted without real acknowledgement remains protective without append; actual nonterminal progress commits by full pending-row CAS without changing original capture.
+- Pending publication, acknowledgement capture, resumed-source disclosure and terminal commit recheck complete current owner facts after all dependent helpers and before effects.
+- Genuine original barrier issue, middle-cut never-issued protected-group recovery and post-issuance exact replay adopt SP-286/CV-339; missing issued authority never first-mints.
+- Terminal set/clear commits exact first receipt, immutable event/result/SIR/response and whole-row binding before public success; one hold ID never repeats a set or clear.
+- Explicit repeated/multiple pending resume preserves real owner bindings and unchanged source/clock/fence state with no redispatch, transaction history or second semantic effect.
+- Complete v2 backup is non-rebuildable; old restored pending work cannot first-mint; explicit v1 legacy admission preserves protection with null original set receipt.
+- History resolves actual immutable slots/current SP-278 source plus final disclosure authority, reports current protection separately and has no checkpoint, cleanup or mutation effect.
+- Shared exact frame/header/payload codec remains OPEN; native authentication, exclusion, durability and recovery remain NOT_RUN, with no complete depth claim.
+validation_surfaces:
+- Plans/storage_retention_hold_value.schema.json
+- Plans/storage_retention_hold_contracts.schema.json
+- Plans/storage_retention_hold_evidence.schema.json
+- Plans/storage_retention_hold_version_routes.json
+- Plans/event_append_receipt_contracts.schema.json
+- reports/event-authority-20260911/step-08-hold-validation.md
+risk_class: legal_hold_false_clear_original_custody_loss_or_stale_owner_publication
+reasoning_tier: high
+context_scope: storage_retention_hold_changed_original_pending_and_terminal_custody
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/Shared_Integration_Runtime.md
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-237
+- Plans/storage-plan.md#SP-286
+- Plans/Shared_Integration_Runtime.md#SIR-042
+- Plans/Contracts_V0.md#CV-333
+preserved_exact_tokens:
+- retention_hold_record.v1
+- storage.legal_hold_transition.v2
+- owner.sir.storage_legal_hold_pending_custody@1.0.0
+- storage.retention_hold_history_reader.v2
+- RP-AUTHORITY-INDEFINITE
+- pending_admission_id
+- original_set_receipt
+negative_constraints:
+- No new family, policy, command, event, global outcome producer, automatic clear, cross-kind hold authority or payload reconstruction.
+- No first-mint from restored old pending or missing receipt authority, hidden historical action, perpetual raw-control custody or invented native proof.
+- No readiness, complete event depth, WorkNodes, NodeSeeds or governance seal.
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-288, ContractName:Plans/Shared_Integration_Runtime.md#SIR-047, ContractName:Plans/UI_Command_Catalog.md#UCC-124, ContractName:Plans/storage_retention_hold_contracts.schema.json, ContractName:Plans/storage_retention_hold_evidence.schema.json, ContractName:Plans/storage_retention_hold_version_routes.json, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-045

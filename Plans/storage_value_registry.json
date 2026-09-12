@@ -14196,45 +14196,40 @@
       "tier": "later_gui_or_feature_projection",
       "key_shape": "retention_hold_record.v1:{scope_partition}:{hold_id}",
       "compatibility_key_shapes": [],
-      "value_schema_id": "pm.storage_value.retention_hold_record.v1",
-      "value_schema_ref": "Plans/storage_value_registry.json#/families/retention_hold_record/value_schema",
-      "owner_doc": "Plans/storage-plan.md#case-l-3-retention-holds-compaction-deletion-and-quarantine",
+      "value_schema_id": "pm.storage_value.retention_hold_record.v2",
+      "value_schema_ref": "Plans/storage_retention_hold_value.schema.json#/$defs/writer_value",
+      "owner_doc": "Plans/storage-plan.md#SP-288",
       "producer": [
-        "storage retention authority"
+        "storage retention authority",
+        "storage.legal_hold_transition.v2"
       ],
       "consumers": [
         "janitor",
         "compaction",
         "FileSafe",
-        "protected hold commands"
+        "protected hold commands",
+        "storage.retention_hold_history_reader.v2"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "messagepack_canonical",
       "required_fields": [
         "schema_id",
         "schema_version",
-        "hold_id",
-        "hold_kind",
-        "scope",
-        "set_by_actor_ref",
-        "set_reason",
-        "set_at_utc",
-        "cleared_by_actor_ref",
-        "clear_reason",
-        "cleared_at_utc",
-        "event_refs",
+        "hold_key",
+        "core",
+        "phase",
+        "set_custody",
+        "clear_transition",
         "redaction_profile"
       ],
       "optional_fields": [],
       "nullable_fields": [
-        "cleared_by_actor_ref",
-        "clear_reason",
-        "cleared_at_utc"
+        "clear_transition"
       ],
-      "replay_behavior": "Set and clear are durable authority transitions; legal holds never clear automatically and multiple holds compose by union.",
-      "migration": "First distinct hold authority family; no prefix or mtime inference may synthesize or clear it.",
+      "replay_behavior": "Current v2 legal-command root is strict HoldV2. Explicit separate v1 readers preserve all eight original kinds; existing Storage retention authority retains v1 writes for seven non-legal kinds through LegacyOtherKindWriterValue. Restore v2 only from exact mandatory backup, never rebuild receipt/SIR slots from event payload. See exact Plans/storage_retention_hold_version_routes.json and SP-288.",
+      "migration": "Coordinator-only per-key exact v1 legal-held admission preserving original core; residual v1 remains a supported protection read. No synthesized old event or receipt.",
       "migration_disposition": {
-        "mode": "current_schema",
+        "mode": "store_coordinator",
         "canonical_write_key_only": true,
         "compatibility_keys_read_only": false,
         "ambiguity_policy": "not_applicable",
@@ -14243,10 +14238,10 @@
         ]
       },
       "restore_disposition": {
-        "mode": "backup_then_replay",
+        "mode": "mandatory_backup",
         "transaction_family_id": null,
-        "outcome_owner_ref": null,
-        "mutation_fence_on_unresolved": false,
+        "outcome_owner_ref": "Plans/storage-plan.md#storage-legal-hold-transition-custody-and-passive-history",
+        "mutation_fence_on_unresolved": true,
         "source_refs": [
           "Plans/storage-plan.md#shared-boundary-backup-and-offline-restore"
         ]
@@ -14254,10 +14249,10 @@
       "retention_compaction": "Authority receipts retain indefinitely and reach all named snapshot/blob/receipt dependencies.",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
       "redaction_no_secret_rule": "Semantic scope and actor refs only; no raw local path or secret material.",
-      "legacy_canonical_crosswalk_status": "Materialized owner row for legal, preserved, recent-run, and recovery hold authority.",
+      "legacy_canonical_crosswalk_status": "Strict current v2 writer root plus explicitly named separate legacy read and owner-role write schema routes. No generic union writer or schema inference.",
       "recovery_disposition": {
-        "authority_class": "canonical_dual_homed",
-        "strategy": "restore_backup_then_replay",
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
         "source_family_ids": [],
         "source_refs": [
           "Plans/storage-plan.md#case-l-3-retention-holds-compaction-deletion-and-quarantine"
@@ -14272,139 +14267,1307 @@
         "required": [
           "schema_id",
           "schema_version",
-          "hold_id",
-          "hold_kind",
-          "scope",
-          "set_by_actor_ref",
-          "set_reason",
-          "set_at_utc",
-          "cleared_by_actor_ref",
-          "clear_reason",
-          "cleared_at_utc",
-          "event_refs",
+          "hold_key",
+          "core",
+          "phase",
+          "set_custody",
+          "clear_transition",
           "redaction_profile"
         ],
         "properties": {
           "schema_id": {
-            "const": "pm.storage_value.retention_hold_record.v1"
+            "const": "pm.storage_value.retention_hold_record.v2"
           },
           "schema_version": {
-            "const": "1.0.0"
+            "const": "2.0.0"
           },
-          "hold_id": {
+          "hold_key": {
             "type": "string",
             "minLength": 1
           },
-          "hold_kind": {
+          "core": {
+            "$ref": "#/$defs/HoldCoreV1"
+          },
+          "phase": {
             "enum": [
-              "legal_hold",
-              "preserved_run",
-              "recent_run",
-              "recovery_anchor",
-              "manual_keep",
-              "audit",
-              "promotion",
-              "evidence"
+              "set_pending",
+              "held",
+              "clear_pending",
+              "cleared"
             ]
           },
-          "scope": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "scope_kind"
-            ],
-            "properties": {
-              "scope_kind": {
-                "enum": [
-                  "application",
-                  "project",
-                  "thread",
-                  "run",
-                  "event",
-                  "safe_point",
-                  "receipt"
-                ]
+          "set_custody": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/NativeSetCustody"
               },
-              "project_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "thread_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "run_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "event_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "safe_point_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "receipt_id": {
-                "type": [
-                  "string",
-                  "null"
-                ]
+              {
+                "$ref": "#/$defs/LegacySetCustody"
               }
-            }
-          },
-          "set_by_actor_ref": {
-            "type": "string",
-            "minLength": 1
-          },
-          "set_reason": {
-            "type": "string",
-            "minLength": 1
-          },
-          "set_at_utc": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "cleared_by_actor_ref": {
-            "type": [
-              "string",
-              "null"
             ]
           },
-          "clear_reason": {
-            "type": [
-              "string",
-              "null"
+          "clear_transition": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Transition"
+              },
+              {
+                "type": "null"
+              }
             ]
-          },
-          "cleared_at_utc": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "event_refs": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1
-            },
-            "uniqueItems": true
           },
           "redaction_profile": {
             "enum": [
               "no_secrets",
               "redacted_refs_only"
+            ]
+          }
+        },
+        "$defs": {
+          "HoldCoreV1": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "hold_id",
+              "hold_kind",
+              "scope",
+              "set_by_actor_ref",
+              "set_reason",
+              "set_at_utc",
+              "cleared_by_actor_ref",
+              "clear_reason",
+              "cleared_at_utc",
+              "event_refs",
+              "redaction_profile"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.retention_hold_record.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "hold_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hold_kind": {
+                "enum": [
+                  "legal_hold",
+                  "preserved_run",
+                  "recent_run",
+                  "recovery_anchor",
+                  "manual_keep",
+                  "audit",
+                  "promotion",
+                  "evidence"
+                ]
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "scope_kind"
+                ],
+                "properties": {
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project",
+                      "thread",
+                      "run",
+                      "event",
+                      "safe_point",
+                      "receipt"
+                    ]
+                  },
+                  "project_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "thread_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "run_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "event_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "safe_point_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "receipt_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "set_by_actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "set_reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "set_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "cleared_by_actor_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "clear_reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "cleared_at_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "event_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "redaction_profile": {
+                "enum": [
+                  "no_secrets",
+                  "redacted_refs_only"
+                ]
+              }
+            }
+          },
+          "AppendReceipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "sequence_id",
+              "segment_generation",
+              "segment_name",
+              "byte_offset",
+              "commit_group_id",
+              "durability_class",
+              "durable_end_offset",
+              "durability_state",
+              "manifest_generation",
+              "acknowledged_at_utc"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sequence_id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "segment_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "byte_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "commit_group_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "durability_class": {
+                "enum": [
+                  "ordinary",
+                  "barrier"
+                ]
+              },
+              "durable_end_offset": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "durability_state": {
+                "const": "synced"
+              },
+              "manifest_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acknowledged_at_utc": {
+                "type": "string",
+                "minLength": 1,
+                "format": "date-time"
+              }
+            }
+          },
+          "EventRecord": {
+            "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+          },
+          "CommandOutcome": {
+            "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+          },
+          "Identity": {
+            "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+          },
+          "UIResponse": {
+            "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+          },
+          "read_token": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "storage_instance_id",
+              "checkpoint_key",
+              "checkpoint_ref",
+              "generation_id",
+              "generation_anchor_sha256",
+              "frontier_revision",
+              "frontier_sha256",
+              "index_dataset_name",
+              "source_selection",
+              "redb_snapshot_id"
+            ],
+            "properties": {
+              "storage_instance_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "checkpoint_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkpoint_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "generation_id": {
+                "type": "string",
+                "pattern": "^eig_[0-9a-f]{64}$"
+              },
+              "generation_anchor_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "frontier_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 18446744073709551615
+              },
+              "frontier_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "index_dataset_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_selection": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "storage_instance_id",
+                  "current_ref",
+                  "current_bytes_sha256",
+                  "selected_segment_generation",
+                  "manifest_ref",
+                  "manifest_bytes_sha256",
+                  "manifest_generation",
+                  "recovery_epoch",
+                  "manifest_survivor_prefix_sha256",
+                  "retained_inventory_sha256",
+                  "durable_watermarks_sha256",
+                  "excluded_ranges_sha256",
+                  "retired_inputs_sha256"
+                ],
+                "properties": {
+                  "storage_instance_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "current_ref": {
+                    "const": "storage/seglog/CURRENT"
+                  },
+                  "current_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "selected_segment_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_ref": {
+                    "const": "storage/seglog/manifest.v1.msgpack"
+                  },
+                  "manifest_bytes_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "manifest_generation": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "recovery_epoch": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 18446744073709551615
+                  },
+                  "manifest_survivor_prefix_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retained_inventory_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "durable_watermarks_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "excluded_ranges_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "retired_inputs_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "redb_snapshot_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "Arguments": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scope_kind",
+              "hold_id",
+              "action",
+              "semantic_scope_ref",
+              "reason"
+            ],
+            "properties": {
+              "scope_kind": {
+                "enum": [
+                  "application",
+                  "project"
+                ]
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hold_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "enum": [
+                  "set",
+                  "clear"
+                ]
+              },
+              "semantic_scope_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expected_hold_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "OriginalRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_ref",
+              "command_id",
+              "command_instance_id",
+              "idempotency_key",
+              "actor_ref",
+              "accepted_at_utc",
+              "dispatch_id",
+              "identity",
+              "arguments"
+            ],
+            "properties": {
+              "request_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "command_id": {
+                "const": "cmd.storage.legal_hold.manage"
+              },
+              "command_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idempotency_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "accepted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "dispatch_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "identity": {
+                "$ref": "#/$defs/Identity"
+              },
+              "arguments": {
+                "$ref": "#/$defs/Arguments"
+              }
+            }
+          },
+          "ResolvedTarget": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scope_ref",
+              "scope",
+              "policy_ref",
+              "anchor_ref",
+              "affected_semantic_refs"
+            ],
+            "properties": {
+              "scope_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "scope_kind"
+                ],
+                "properties": {
+                  "scope_kind": {
+                    "enum": [
+                      "application",
+                      "project",
+                      "thread",
+                      "run",
+                      "event",
+                      "safe_point",
+                      "receipt"
+                    ]
+                  },
+                  "project_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "thread_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "run_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "event_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "safe_point_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "receipt_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "policy_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "anchor_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "affected_semantic_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            }
+          },
+          "OwnerResult": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "command_instance_id",
+              "hold_key",
+              "hold_id",
+              "action",
+              "status",
+              "event_ref",
+              "receipt_ref",
+              "core_sha256"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.legal_hold_result.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "command_instance_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hold_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hold_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "enum": [
+                  "set",
+                  "clear"
+                ]
+              },
+              "status": {
+                "enum": [
+                  "held",
+                  "cleared"
+                ]
+              },
+              "event_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "core_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "OriginalPublication": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "append_receipt",
+              "source_value_sha256",
+              "producer_semantic_digest",
+              "payload_sha256"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "append_receipt": {
+                "$ref": "#/$defs/AppendReceipt"
+              },
+              "source_value_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "producer_semantic_digest": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "payload_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "description": "Original exact first AppendReceipt plus verified immutable event hashes. Current source verification lives in the admission/read evidence; no obsolete original manifest snapshot is retained or reacquired."
+          },
+          "CommitBinding": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "transaction_id",
+              "admission_id",
+              "preimage_core_sha256",
+              "committed_core_sha256"
+            ],
+            "properties": {
+              "transaction_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "admission_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preimage_core_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "committed_core_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "Transition": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "transition_id",
+              "action",
+              "phase",
+              "request",
+              "target",
+              "preimage_core",
+              "after_core",
+              "receipt_ref",
+              "event",
+              "original_publication",
+              "commit_binding",
+              "owner_result",
+              "command_outcome_ref",
+              "command_outcome",
+              "ui_response",
+              "producer_intent",
+              "pending_admission_id",
+              "pending_sir_custody"
+            ],
+            "properties": {
+              "transition_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "enum": [
+                  "set",
+                  "clear"
+                ]
+              },
+              "phase": {
+                "enum": [
+                  "prepared",
+                  "committed"
+                ]
+              },
+              "request": {
+                "$ref": "#/$defs/OriginalRequest"
+              },
+              "target": {
+                "$ref": "#/$defs/ResolvedTarget"
+              },
+              "preimage_core": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/HoldCoreV1"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "after_core": {
+                "$ref": "#/$defs/HoldCoreV1"
+              },
+              "receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "event": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/EventRecord"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_publication": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/OriginalPublication"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "commit_binding": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/CommitBinding"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "owner_result": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/OwnerResult"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "command_outcome_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "command_outcome": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/CommandOutcome"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "ui_response": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/UIResponse"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "producer_intent": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "schema_id",
+                  "schema_version",
+                  "scope_kind",
+                  "event_id",
+                  "event_type",
+                  "project_id",
+                  "thread_id",
+                  "run_id",
+                  "node_id",
+                  "attempt_id",
+                  "actor_ref",
+                  "requested_account_ref",
+                  "effective_account_ref",
+                  "occurred_at_utc",
+                  "producer_sequence_id",
+                  "correlation_id",
+                  "causation_event_id",
+                  "parent_event_id",
+                  "idempotency_key",
+                  "payload_schema_id",
+                  "payload",
+                  "payload_ref",
+                  "redaction_profile",
+                  "replay_policy",
+                  "migration"
+                ],
+                "properties": {
+                  "schema_id": {
+                    "type": "string",
+                    "const": "pm.event.v0"
+                  },
+                  "schema_version": {
+                    "type": "string",
+                    "const": "2.0.0"
+                  },
+                  "scope_kind": {
+                    "type": "string",
+                    "enum": [
+                      "application",
+                      "project"
+                    ]
+                  },
+                  "event_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+                  },
+                  "event_type": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+                  },
+                  "project_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "thread_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "run_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "node_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "attempt_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "actor_ref": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+                  },
+                  "requested_account_ref": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "effective_account_ref": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "occurred_at_utc": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string"
+                  },
+                  "producer_sequence_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer"
+                  },
+                  "correlation_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+                  },
+                  "causation_event_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "parent_event_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "idempotency_key": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+                  },
+                  "payload_schema_id": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "payload_ref": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+                  },
+                  "redaction_profile": {
+                    "type": "string",
+                    "enum": [
+                      "no_secrets",
+                      "redacted",
+                      "secret_refs_only"
+                    ]
+                  },
+                  "replay_policy": {
+                    "type": "string",
+                    "enum": [
+                      "append_once",
+                      "dedupe_by_event_id",
+                      "dedupe_by_idempotency_key",
+                      "projector_replay_only"
+                    ]
+                  },
+                  "migration": {
+                    "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration"
+                  }
+                }
+              },
+              "pending_admission_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pending_sir_custody": {
+                "$ref": "#/$defs/PendingSIRCustody"
+              }
+            }
+          },
+          "LegacySetCustody": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "original_core",
+              "original_key",
+              "original_value_sha256",
+              "migration_id",
+              "migration_receipt_ref",
+              "admission_id",
+              "admitted_at_utc",
+              "original_set_receipt",
+              "migration_receipt_sha256"
+            ],
+            "properties": {
+              "kind": {
+                "const": "legacy_admitted_v1_protection"
+              },
+              "original_core": {
+                "$ref": "#/$defs/HoldCoreV1"
+              },
+              "original_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_value_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "migration_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "migration_receipt_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "admission_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "admitted_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "original_set_receipt": {
+                "const": null
+              },
+              "migration_receipt_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "NativeSetCustody": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "transition"
+            ],
+            "properties": {
+              "kind": {
+                "const": "native_set"
+              },
+              "transition": {
+                "$ref": "#/$defs/Transition"
+              }
+            }
+          },
+          "HoldV2": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "hold_key",
+              "core",
+              "phase",
+              "set_custody",
+              "clear_transition",
+              "redaction_profile"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.retention_hold_record.v2"
+              },
+              "schema_version": {
+                "const": "2.0.0"
+              },
+              "hold_key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "core": {
+                "$ref": "#/$defs/HoldCoreV1"
+              },
+              "phase": {
+                "enum": [
+                  "set_pending",
+                  "held",
+                  "clear_pending",
+                  "cleared"
+                ]
+              },
+              "set_custody": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/NativeSetCustody"
+                  },
+                  {
+                    "$ref": "#/$defs/LegacySetCustody"
+                  }
+                ]
+              },
+              "clear_transition": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Transition"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "redaction_profile": {
+                "enum": [
+                  "no_secrets",
+                  "redacted_refs_only"
+                ]
+              }
+            }
+          },
+          "MigrationReceipt": {
+            "$ref": "https://puppetmaster.local/schemas/storage_value/migration_receipt/1.0.0/migration_receipt.schema.json"
+          },
+          "HoldReaderValue": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/$defs/HoldCoreV1"
+              },
+              {
+                "$ref": "#/$defs/HoldV2"
+              }
+            ]
+          },
+          "LegacyOtherKindWriterValue": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/HoldCoreV1"
+              },
+              {
+                "properties": {
+                  "hold_kind": {
+                    "enum": [
+                      "preserved_run",
+                      "recent_run",
+                      "recovery_anchor",
+                      "manual_keep",
+                      "audit",
+                      "promotion",
+                      "evidence"
+                    ]
+                  }
+                },
+                "required": [
+                  "hold_kind"
+                ]
+              }
+            ]
+          },
+          "SIRDispatchSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "owner",
+              "request",
+              "target_generation",
+              "dispatch_frame_id",
+              "acknowledgement_frame_id",
+              "acknowledgement_frame_offset",
+              "acknowledgement_receipt_ref",
+              "command_outcome_ref",
+              "stage_clock",
+              "nonterminal_outcome",
+              "capture_authority_ref",
+              "captured_at_utc"
+            ],
+            "properties": {
+              "owner": {
+                "const": "Shared Integration Runtime"
+              },
+              "request": {
+                "$ref": "pm.storage.retention_hold_contracts.v2#/$defs/OriginalRequest"
+              },
+              "target_generation": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "dispatch_frame_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "acknowledgement_frame_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "acknowledgement_frame_offset": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "acknowledgement_receipt_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1
+              },
+              "command_outcome_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "stage_clock": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "nonterminal_outcome": {
+                "allOf": [
+                  {
+                    "$ref": "pm.storage.retention_hold_contracts.v2#/$defs/CommandOutcome"
+                  },
+                  {
+                    "properties": {
+                      "outcome": {
+                        "enum": [
+                          "accepted",
+                          "acknowledged",
+                          "executing"
+                        ]
+                      },
+                      "result_receipt_ref": {
+                        "type": "null"
+                      },
+                      "error_ref": {
+                        "type": "null"
+                      },
+                      "owner_result_ref": {
+                        "type": "null"
+                      },
+                      "owner_result_schema_ref": {
+                        "type": "null"
+                      },
+                      "owner_result_sha256": {
+                        "type": "null"
+                      }
+                    }
+                  }
+                ]
+              },
+              "capture_authority_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "captured_at_utc": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "PendingSIRCustody": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage.legal_hold_pending_sir_custody.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "owner_binding": {
+                "const": "owner.sir.storage_legal_hold_pending_custody@1.0.0"
+              },
+              "original_source": {
+                "$ref": "#/$defs/SIRDispatchSource"
+              },
+              "current_source": {
+                "$ref": "#/$defs/SIRDispatchSource"
+              },
+              "original_source_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "current_source_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "schema_id",
+              "schema_version",
+              "owner_binding",
+              "original_source",
+              "current_source",
+              "original_source_sha256",
+              "current_source_sha256"
             ]
           }
         }

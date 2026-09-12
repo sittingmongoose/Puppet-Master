@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16879-L17764
+Source lines: L16881-L17766
 
-Source SHA256: `7a40af5f4e9fab1f6c631f2afe135a1ff8f49df835ffe45a1e9c5a78a38de705`
+Source SHA256: `e654e04d8d37f891b23625996ee5aa0f5769f7039b89833b07c0b01083fa80c6`
 
 ---
 
@@ -248,7 +248,7 @@ SourceRef: `PD-L005-01` through `PD-L005-07`, `PD-SCHEMA-01`, `Case-L:L-005`
 
 #### Holds and recovery anchors
 
-Legal holds require `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt; they never clear automatically. Multiple holds compose by union.
+Legal holds require `storage.legal_hold.manage`, actor, reason, and durable set/clear receipt; they never clear automatically. Multiple holds compose by union. SP-288 supplies this existing protected command's exact HoldV2 pending/terminal custody, SP-286 first-receipt adoption, explicit legacy/read/write routes and passive history; SIR-047 supplies its original command-specific delegated outcome custody. Those contracts do not change the independent anchor kinds, release reasons or dependency eligibility below.
 
 A blocked episode with `requires_safe_point_restore = true`, its canonical safe-point record, snapshot/blob refs, and `recovery_anchor_record` publish as one durability unit. Release is allowed only for `resolved | superseded_with_verified_successor | abandoned_by_user`; run completion, age, archive, exit, or worktree unbinding is insufficient. If a required snapshot is missing/corrupt, state becomes `recovery_unavailable`, remains blocked and anchored, preserves local work, disables restore, and requires locate/verified recovery, replan, or explicit abandonment with receipt.
 

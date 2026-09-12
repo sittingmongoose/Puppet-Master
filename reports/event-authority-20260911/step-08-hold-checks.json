@@ -1,0 +1,352 @@
+{
+  "base_head": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+  "frozen_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/manifest.json",
+    "sha256": "8d250dd01e41c92097c3f2a39d240a9242def16a47d3aee5481fc90e4896c77b"
+  },
+  "schema_copies": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/hold-contracts.schema.proposed.json",
+      "canonical_path": "Plans/storage_retention_hold_contracts.schema.json",
+      "sha256": "3ebf5fad84f074898057be3ad5db4366fafa54fc407c51c42ecf1593e111ec1d",
+      "byte_exact": true
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/hold-evidence.schema.proposed.json",
+      "canonical_path": "Plans/storage_retention_hold_evidence.schema.json",
+      "sha256": "c6347c64a27bfa4b1398ede0050545abcead0d8f8cfc1cf3e6494badae065f12",
+      "byte_exact": true
+    }
+  ],
+  "writer_schema_value_exact_to_frozen_family": true,
+  "writer_wrapper_is_reference_scope_only": true,
+  "hold_core_v1_exact": true,
+  "all_other_112_families_exact": true,
+  "all25_policies_and_other_registry_fields_exact": true,
+  "physical_families": 113,
+  "shape_cases": 30,
+  "central_data_failures_before": 19,
+  "central_data_failures_after": 21,
+  "new_failure_classes": [
+    "storage_value_registry_semantic_recovery_authority_mismatch"
+  ],
+  "changed_hold_metadata": [
+    "value_schema",
+    "migration",
+    "nullable_fields",
+    "legacy_canonical_crosswalk_status",
+    "value_schema_id",
+    "migration_disposition",
+    "consumers",
+    "restore_disposition",
+    "owner_doc",
+    "recovery_disposition",
+    "producer",
+    "value_schema_ref",
+    "schema_version",
+    "replay_behavior",
+    "required_fields"
+  ],
+  "native": "NOT_RUN",
+  "status": "CANONICAL_CONTRACT_DEFINED_SHARED_WIRE_OPEN",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/manifest.json",
+      "sha256": "8d250dd01e41c92097c3f2a39d240a9242def16a47d3aee5481fc90e4896c77b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-v9-independent-review-20260912/manifest.json",
+      "sha256": "75ed98d202be5a4bfd36089a59f74063af15b43c18861e7ab6458524221b453e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-canonical-draft-20260912/semantic-mapping.json",
+      "sha256": "fe7ddb248afe4f714ed73d67b94f81388d11bb7f9dc659be5cc0983b71642a86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/source-currentness.json",
+      "sha256": "8c0e190c69f986e35a7f5a38d05704c6820e5036d10bc5b9a1dbabcabf74ad37"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/schema-reference-review.json",
+      "sha256": "aabb68717a6278a90e3512862ecb313dc871b1da21a463183a76f28e6888105e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/registry-diagnostics.json",
+      "sha256": "e3e9015fd64dce36bee72c4609a6cc23ba5544c234f9296ebeb4ac8e6246975e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/shard-check.json",
+      "sha256": "33c19c083b6831844b26bd626ec9db1065f618bf633c7db2a8a56dbc9bc671e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/index-validate.json",
+      "sha256": "75b651c5be1c92a41476373e7fc10bf2bbe1fba83514e0588e9241c0fada821f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-hold-root-20260912/compilation-preservation.json",
+      "sha256": "b8e7d35304809ef05d9382546fb180fa439a18df835a301c8e6fb7276b06c302"
+    }
+  ],
+  "source_currentness": {
+    "source_head": "36a5568ee239eac7c21d034f2034c0fa0e206a39",
+    "patch_base": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+    "sources": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "current_base_sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "02ecf0f3feb6fd1c9d3ef9db7fbe6949ada51012a255978ef02d896d3fabc740",
+        "current_base_sha256": "7a40af5f4e9fab1f6c631f2afe135a1ff8f49df835ffe45a1e9c5a78a38de705",
+        "unchanged": false,
+        "adjudication": "Reviewed shared first receipt SP-286 and prior lifecycle/Goal additions; original Case L-3 is exact. This patch explicitly adopts SP-286 and refines only exact legal-command custody."
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "21cbe7a49a89c8e215c3acdac4dbf405be284c5d384df4d5ae962bd5a3b8e47e",
+        "current_base_sha256": "75bc47230ec6957ba528f12d063caade0132e4292467242f6825e5b17621bd6d",
+        "unchanged": false,
+        "adjudication": "Prior shared receipt, Goal, summary and lifecycle additions preserved. Exact original hold family unchanged from frozen source to patch base; this patch changes only that family."
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "current_base_sha256": "8411da212b007fd79b21f241384d96798468b8c0bcaec906cf9254411cfe59d7",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/event_family_registry.json",
+        "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "current_base_sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/event_record.schema.json",
+        "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "current_base_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/event_record_index_checkpoint.schema.json",
+        "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "current_base_sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "a2162465c345a3f78453582e882008088635dbce423926018950b0d8be4ffee7",
+        "current_base_sha256": "8a58b1d1d93d6b2dde047ae2370f52f8e955dd0cf9d9c2952557d5631a53531b",
+        "unchanged": false,
+        "adjudication": "Shared CV-339 first receipt appended; original CV-333 is exact and used without schema change."
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "current_base_sha256": "a81084cd460190df3feccf209d4a44db1e0e8fb3ac60bc29df8a475cdc7f2646",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/FileSafe.md",
+        "sha256": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339",
+        "current_base_sha256": "aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+        "current_base_sha256": "69d2958d8c2f621bec39bc9f9679d2e3e67d2f3087b546e99a85426cc65bc076",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+        "current_base_sha256": "6faf36d17e149faabc6f59591d59e875158a51f5a552ec7f444101ab61af4b52",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "sha256": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
+        "current_base_sha256": "159a3a21434eed3117a5b340250d28e36fc798eeca5545bffa5d5760462a8f8f",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/Decision_Policy.md",
+        "sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d",
+        "current_base_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/Shared_Integration_Runtime.md",
+        "sha256": "bee13f9d369a84198c3eedc811bb272f5c76e07c4f7ba2cd2fba7b2ebd817308",
+        "current_base_sha256": "af2a6fa4eece5b351bfd89429439070209269e1cc2d16501998d54caf0848434",
+        "unchanged": false,
+        "adjudication": "Create/Home/Delete exact command delegations added; original SIR-042 PlanUnit exact; intervening SP-285 pending paragraph explicitly applies only that earlier route and was re-read against Hold. New SIR-047 is explicit separate legal-command delegation."
+      },
+      {
+        "path": "Plans/full_thread_runtime_contracts.schema.json",
+        "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "current_base_sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/ui_command_response.schema.json",
+        "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "current_base_sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+        "unchanged": true
+      },
+      {
+        "path": "Plans/shared_runtime_command_contracts.schema.json",
+        "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "current_base_sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+        "unchanged": true
+      }
+    ],
+    "exact_owner_sections": [
+      {
+        "path": "Plans/storage-plan.md",
+        "start": "### Case L-3.",
+        "end_exclusive": "### Case L-4.",
+        "source_and_current_base_sha256": "d39da96581e308b862de16d22d2adb409916f4cb8d9a66c803c4b4b538e07392",
+        "exact": true
+      },
+      {
+        "path": "Plans/Shared_Integration_Runtime.md",
+        "start": "### SIR-042 -",
+        "end_exclusive": "### SIR-044 -",
+        "source_and_current_base_sha256": "d9a18aff78876cf0f54ba50a1e5575a1b07162bb5f81de542f69acd073a5a9a3",
+        "exact": true
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "start": "### CV-333 -",
+        "end_exclusive": "## DL-043",
+        "source_and_current_base_sha256": "9a1e16eebac4435e1a6049064d4684e2a0f0a73ee34c6e163392ea5791e6c5de",
+        "exact": true
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "start": "### UCC-124 -",
+        "end_exclusive": "### UCC-125 -",
+        "source_and_current_base_sha256": "4b85efc4f65c5beb89b83d56ba8afd21d553c16608c21cd24d177af55e32e0ea",
+        "exact": true
+      }
+    ],
+    "source_hold_family_exact_at_base": true,
+    "all42_event_rows_unchanged": true,
+    "reviewed_compiled_owner_prose": true,
+    "new_planunits": [
+      "SP-288",
+      "SIR-047"
+    ],
+    "prior_unit_refinement": [
+      "UCC-124"
+    ]
+  },
+  "schema_reference_review": {
+    "status": "PASS",
+    "resolved_references": 271,
+    "resource_resolution": "Actual canonical schema resources including embedded MigrationReceipt $id; no test-only alias."
+  },
+  "bounded_tests": {
+    "author_cases": 371,
+    "author_preserved": 357,
+    "author_new_repeat_resume": 14,
+    "independent_author_rerun": 371,
+    "independent_final_boundary_negatives": 18,
+    "independent_complex_recovery_positives": 2,
+    "independent_fixed_repeat_resume_positives": 2,
+    "independent_frozen_pins_verified": 538,
+    "integrated_shape_cases": 30,
+    "qualification": "Overlapping suites; bounded adapters and schema evidence, not native execution."
+  },
+  "root_review": {
+    "three_compiled_owner_docs_read": true,
+    "schema_copy_and_wrapper_scope_review": true,
+    "source_to_canon_mappings": 39,
+    "new_planunits": [
+      "SP-288",
+      "SIR-047"
+    ],
+    "prior_planunit_changes": [
+      "UCC-124"
+    ],
+    "registry_rows_and_policy_preservation": "112 other rows and all 25 policies exact; 113 physical families and all 42 event rows unchanged."
+  },
+  "verification_limits": [
+    "Shared exact frame/header/payload codec remains a normative prerequisite.",
+    "Hold-specific genuinely fresh post-restore acceptance is unavailable; old restored pending cannot first-mint.",
+    "Native authentication, owner/domain exclusion, dispatch, redb/fsync, backups, migration and crash cuts NOT_RUN.",
+    "No frozen-validator DEPTH_PASS, readiness, WorkNodes, NodeSeeds or seal."
+  ],
+  "central_registry_delta": {
+    "before": 19,
+    "after": 21,
+    "new_diagnostics": [
+      {
+        "class": "storage_value_secret_material_key",
+        "field": "$defs.read_token",
+        "adjudication": "The complete schema defines a non-capability currentness/source binding. Name-only diagnostic remains recorded without renaming or waiving it."
+      },
+      {
+        "class": "storage_value_registry_semantic_recovery_authority_mismatch",
+        "expected": "canonical_dual_homed",
+        "actual": "canonical_non_rebuildable",
+        "adjudication": "Unchanged helper hardcodes v1 classification. V2 full original request/SIR/result/receipt custody cannot be rebuilt from the event payload. Exact v1 routes preserve prior dual-home recovery only from complete original authority."
+      }
+    ],
+    "validator_changed": false,
+    "waiver": false
+  },
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2376,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T02:33:13Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25287,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6560
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "before": 6558,
+      "after": 6560,
+      "new_planunits": [
+        "SIR-047",
+        "SP-288"
+      ],
+      "changed_prior_semantics": {
+        "UCC-124": [
+          "canonical_text",
+          "depends_on",
+          "acceptance_criteria",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_prior_semantics_exact": true,
+      "derived_shard_groups": [
+        "shared_integration_runtime",
+        "storage-plan",
+        "storage_value_registry",
+        "ui_command_catalog"
+      ],
+      "base": "7fa3b65df7a5008e3c01453f4e93c22b60bf2dc4",
+      "upstream": "6d949c1a533fa1a67a19fccd570c284d37b7a0ca"
+    },
+    "upstream_change": "6d949c1a53 is unrelated report-only; all cited canonical sources unchanged."
+  }
+}

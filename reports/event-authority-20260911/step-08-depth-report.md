@@ -6,6 +6,8 @@ Earlier supplements reported that `run.started` and `restore_point.created` have
 
 The [shared Goal body and accepted objective custody definition](step-08-goal-body-validation.md) supplies the current body/history/origin/control/transaction-receipt prerequisite and DL-047's explicit content lifetime. Each Goal event still requires its own actual producer, original action/SIR/event/receipt admission, exact reader and current terminal boundaries. This shared definition does not close the three historical Goal dispositions, certification exceptions or any of the 21 registered Goal event rows. Native execution and frozen-validator depth remain unproven.
 
+The [legal-hold custody supplement](step-08-hold-validation.md) now defines exact SP-288/SIR-047 pending, terminal, legacy and passive history behavior with explicit shared first-receipt adoption. Its [twelve-facet assessment](step-08-hold-depth.json) remains qualified by the open shared wire contract; native execution and frozen-validator depth are unproven. V2 is non-rebuildable original command custody, while exact original v1 protection and seven nonlegal writer roles remain available. No new event family or policy is admitted.
+
 ## Historical initial assessment (before DL-045 contract definitions)
 
 State: **INCOMPLETE**. All 39 registered families were freshly assessed across 12 criteria (468 cells). No family has complete depth. All 39 exact consumer/checkpoint cells remain unclosed and route to six owner-batched unresolved-binding work records (completion already authorized; no approval sought).

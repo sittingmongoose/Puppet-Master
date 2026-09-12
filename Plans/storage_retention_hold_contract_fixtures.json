@@ -1,0 +1,3796 @@
+{
+  "schema_id": "pm.storage.retention_hold_contract_fixtures.v1",
+  "fixture_only": true,
+  "qualification": "Closed shape and explicit version-route cases only. Owner relational/source/phase/authority semantics require SP-288 and SIR-047; schema success is not native or complete transition evidence. Values are selected from frozen actual bounded-model outputs, not a copied execution trace. Native NOT_RUN.",
+  "source_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-storage-retention-hold-20260911/v9/manifest.json",
+    "sha256": "8d250dd01e41c92097c3f2a39d240a9242def16a47d3aee5481fc90e4896c77b"
+  },
+  "base_values": {
+    "native_set_pending": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:app:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "application"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2026-09-12T03:00:00Z",
+        "cleared_by_actor_ref": null,
+        "clear_reason": null,
+        "cleared_at_utc": null,
+        "event_refs": [],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "set_pending",
+      "set_custody": {
+        "kind": "native_set",
+        "transition": {
+          "action": "set",
+          "phase": "prepared",
+          "pending_sir_custody": {
+            "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+            "schema_version": "1.0.0",
+            "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+            "original_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "current_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "original_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268",
+            "current_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268"
+          },
+          "pending_admission_id": "hold-fixture-tx:1",
+          "request": {
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "idempotency_key": "command-idem:1",
+            "actor_ref": "actor:storage-admin",
+            "accepted_at_utc": "2026-09-12T03:00:00Z",
+            "dispatch_id": "dispatch:1",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "arguments": {
+              "scope_kind": "application",
+              "hold_id": "legal-1",
+              "action": "set",
+              "semantic_scope_ref": "application",
+              "reason": "Preserve reviewed authority"
+            }
+          },
+          "target": {
+            "scope_ref": "application",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ]
+          },
+          "preimage_core": null,
+          "transition_id": "hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "event": null,
+          "after_core": {
+            "schema_id": "pm.storage_value.retention_hold_record.v1",
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "hold_kind": "legal_hold",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "set_by_actor_ref": "actor:storage-admin",
+            "set_reason": "Preserve reviewed authority",
+            "set_at_utc": "2026-09-12T03:00:00Z",
+            "cleared_by_actor_ref": null,
+            "clear_reason": null,
+            "cleared_at_utc": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "redaction_profile": "no_secrets"
+          },
+          "original_publication": null,
+          "commit_binding": null,
+          "owner_result": null,
+          "command_outcome_ref": null,
+          "command_outcome": null,
+          "ui_response": null
+        }
+      },
+      "clear_transition": null,
+      "redaction_profile": "no_secrets"
+    },
+    "native_held": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:app:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "application"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2026-09-12T03:00:00Z",
+        "cleared_by_actor_ref": null,
+        "clear_reason": null,
+        "cleared_at_utc": null,
+        "event_refs": [
+          "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+        ],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "held",
+      "set_custody": {
+        "kind": "native_set",
+        "transition": {
+          "action": "set",
+          "phase": "committed",
+          "pending_sir_custody": {
+            "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+            "schema_version": "1.0.0",
+            "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+            "original_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "current_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "original_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268",
+            "current_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268"
+          },
+          "pending_admission_id": "hold-fixture-tx:1",
+          "request": {
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "idempotency_key": "command-idem:1",
+            "actor_ref": "actor:storage-admin",
+            "accepted_at_utc": "2026-09-12T03:00:00Z",
+            "dispatch_id": "dispatch:1",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "arguments": {
+              "scope_kind": "application",
+              "hold_id": "legal-1",
+              "action": "set",
+              "semantic_scope_ref": "application",
+              "reason": "Preserve reviewed authority"
+            }
+          },
+          "target": {
+            "scope_ref": "application",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ]
+          },
+          "preimage_core": null,
+          "transition_id": "hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            },
+            "sequence_id": 1,
+            "observed_at_utc": "2026-09-12T04:00:00Z",
+            "persisted_at_utc": "2026-09-12T04:00:00Z"
+          },
+          "after_core": {
+            "schema_id": "pm.storage_value.retention_hold_record.v1",
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "hold_kind": "legal_hold",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "set_by_actor_ref": "actor:storage-admin",
+            "set_reason": "Preserve reviewed authority",
+            "set_at_utc": "2026-09-12T03:00:00Z",
+            "cleared_by_actor_ref": null,
+            "clear_reason": null,
+            "cleared_at_utc": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "redaction_profile": "no_secrets"
+          },
+          "original_publication": {
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "append_receipt": {
+              "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+              "sequence_id": 1,
+              "segment_generation": 11,
+              "segment_name": "seg-000011-00000000000000000001.active",
+              "byte_offset": 0,
+              "commit_group_id": "fixture-group-21",
+              "durability_class": "barrier",
+              "durable_end_offset": 1356,
+              "durability_state": "synced",
+              "manifest_generation": 21,
+              "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+            },
+            "source_value_sha256": "853917e8397771a1f5e1de419dab5542b97a62ef00ed68a6380a8cfda8a1a887",
+            "payload_sha256": "b9f2e91196907ed78dbba6d0fcd3b255ce8eda61318ad494f6eceb82ff264a40",
+            "producer_semantic_digest": "20e4639da74f71f35b90cc3a36fba8ffd4e359d41c602f3ea02d25aa691b294c"
+          },
+          "commit_binding": {
+            "transaction_id": "hold-fixture-tx:2",
+            "admission_id": "hold-fixture-tx:1",
+            "preimage_core_sha256": null,
+            "committed_core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "owner_result": {
+            "schema_id": "pm.storage.legal_hold_result.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "command:1",
+            "hold_key": "retention_hold_record.v1:app:legal-1",
+            "hold_id": "legal-1",
+            "action": "set",
+            "status": "held",
+            "event_ref": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "command_outcome_ref": "outcome:1",
+          "command_outcome": {
+            "schema_id": "pm.full_thread_runtime.contracts.v1",
+            "record_kind": "command_outcome",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_id": "cmd.storage.legal_hold.manage",
+            "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+            "idempotency_key": "command-idem:1",
+            "target_generation": 1,
+            "outcome": "succeeded",
+            "dispatch_frame_id": "frame:1",
+            "acknowledgement_frame_id": "frame:1",
+            "acknowledgement_frame_offset": 0,
+            "same_frame_acknowledged": true,
+            "acknowledgement_receipt_ref": "dispatch-ack:1",
+            "result_receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "error_ref": null,
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "owner_result_sha256": "3198ac497b7eed35937fc67e4a729d8cedb05bc7b1e07a7bcee2a84624392c6f",
+            "observed_at": "2026-09-12T04:03:00Z"
+          },
+          "ui_response": {
+            "schema_id": "pm.ui_command_response.v2",
+            "schema_version": "2.0.0",
+            "dispatch_id": "dispatch:1",
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "response_kind": "owner_operation",
+            "ack_status": "accepted",
+            "result_status": "succeeded",
+            "error": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "operation_id": "operation:1",
+            "owner_identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_outcome_ref": "outcome:1",
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "replayed": false,
+            "original_dispatch_id": null,
+            "ts": "2026-09-12T04:03:00Z"
+          }
+        }
+      },
+      "clear_transition": null,
+      "redaction_profile": "no_secrets"
+    },
+    "native_clear_pending": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:app:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "application"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2026-09-12T03:00:00Z",
+        "cleared_by_actor_ref": null,
+        "clear_reason": null,
+        "cleared_at_utc": null,
+        "event_refs": [
+          "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+        ],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "clear_pending",
+      "set_custody": {
+        "kind": "native_set",
+        "transition": {
+          "action": "set",
+          "phase": "committed",
+          "pending_sir_custody": {
+            "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+            "schema_version": "1.0.0",
+            "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+            "original_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "current_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "original_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268",
+            "current_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268"
+          },
+          "pending_admission_id": "hold-fixture-tx:1",
+          "request": {
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "idempotency_key": "command-idem:1",
+            "actor_ref": "actor:storage-admin",
+            "accepted_at_utc": "2026-09-12T03:00:00Z",
+            "dispatch_id": "dispatch:1",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "arguments": {
+              "scope_kind": "application",
+              "hold_id": "legal-1",
+              "action": "set",
+              "semantic_scope_ref": "application",
+              "reason": "Preserve reviewed authority"
+            }
+          },
+          "target": {
+            "scope_ref": "application",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ]
+          },
+          "preimage_core": null,
+          "transition_id": "hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            },
+            "sequence_id": 1,
+            "observed_at_utc": "2026-09-12T04:00:00Z",
+            "persisted_at_utc": "2026-09-12T04:00:00Z"
+          },
+          "after_core": {
+            "schema_id": "pm.storage_value.retention_hold_record.v1",
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "hold_kind": "legal_hold",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "set_by_actor_ref": "actor:storage-admin",
+            "set_reason": "Preserve reviewed authority",
+            "set_at_utc": "2026-09-12T03:00:00Z",
+            "cleared_by_actor_ref": null,
+            "clear_reason": null,
+            "cleared_at_utc": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "redaction_profile": "no_secrets"
+          },
+          "original_publication": {
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "append_receipt": {
+              "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+              "sequence_id": 1,
+              "segment_generation": 11,
+              "segment_name": "seg-000011-00000000000000000001.active",
+              "byte_offset": 0,
+              "commit_group_id": "fixture-group-21",
+              "durability_class": "barrier",
+              "durable_end_offset": 1356,
+              "durability_state": "synced",
+              "manifest_generation": 21,
+              "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+            },
+            "source_value_sha256": "853917e8397771a1f5e1de419dab5542b97a62ef00ed68a6380a8cfda8a1a887",
+            "payload_sha256": "b9f2e91196907ed78dbba6d0fcd3b255ce8eda61318ad494f6eceb82ff264a40",
+            "producer_semantic_digest": "20e4639da74f71f35b90cc3a36fba8ffd4e359d41c602f3ea02d25aa691b294c"
+          },
+          "commit_binding": {
+            "transaction_id": "hold-fixture-tx:2",
+            "admission_id": "hold-fixture-tx:1",
+            "preimage_core_sha256": null,
+            "committed_core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "owner_result": {
+            "schema_id": "pm.storage.legal_hold_result.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "command:1",
+            "hold_key": "retention_hold_record.v1:app:legal-1",
+            "hold_id": "legal-1",
+            "action": "set",
+            "status": "held",
+            "event_ref": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "command_outcome_ref": "outcome:1",
+          "command_outcome": {
+            "schema_id": "pm.full_thread_runtime.contracts.v1",
+            "record_kind": "command_outcome",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_id": "cmd.storage.legal_hold.manage",
+            "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+            "idempotency_key": "command-idem:1",
+            "target_generation": 1,
+            "outcome": "succeeded",
+            "dispatch_frame_id": "frame:1",
+            "acknowledgement_frame_id": "frame:1",
+            "acknowledgement_frame_offset": 0,
+            "same_frame_acknowledged": true,
+            "acknowledgement_receipt_ref": "dispatch-ack:1",
+            "result_receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "error_ref": null,
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "owner_result_sha256": "3198ac497b7eed35937fc67e4a729d8cedb05bc7b1e07a7bcee2a84624392c6f",
+            "observed_at": "2026-09-12T04:03:00Z"
+          },
+          "ui_response": {
+            "schema_id": "pm.ui_command_response.v2",
+            "schema_version": "2.0.0",
+            "dispatch_id": "dispatch:1",
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "response_kind": "owner_operation",
+            "ack_status": "accepted",
+            "result_status": "succeeded",
+            "error": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "operation_id": "operation:1",
+            "owner_identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_outcome_ref": "outcome:1",
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "replayed": false,
+            "original_dispatch_id": null,
+            "ts": "2026-09-12T04:03:00Z"
+          }
+        }
+      },
+      "clear_transition": {
+        "action": "clear",
+        "phase": "prepared",
+        "pending_sir_custody": {
+          "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+          "schema_version": "1.0.0",
+          "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+          "original_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:2",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:2",
+              "idempotency_key": "command-idem:2",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:2",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:2",
+            "acknowledgement_frame_id": "frame:2",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:2",
+            "command_outcome_ref": "outcome:2",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "246ec5f1707cb42c38311ac27cbff02af4255bb4be60d3c260d4f4ee70e545b0",
+              "idempotency_key": "command-idem:2",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:2",
+              "acknowledgement_frame_id": "frame:2",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:2",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:2",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "current_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:2",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:2",
+              "idempotency_key": "command-idem:2",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:2",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:2",
+            "acknowledgement_frame_id": "frame:2",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:2",
+            "command_outcome_ref": "outcome:2",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "246ec5f1707cb42c38311ac27cbff02af4255bb4be60d3c260d4f4ee70e545b0",
+              "idempotency_key": "command-idem:2",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:2",
+              "acknowledgement_frame_id": "frame:2",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:2",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:2",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "original_source_sha256": "3c190c683765254800d696a69cf2e6cb7b8ea1a8daacf94262694c1fb92296a9",
+          "current_source_sha256": "3c190c683765254800d696a69cf2e6cb7b8ea1a8daacf94262694c1fb92296a9"
+        },
+        "pending_admission_id": "hold-fixture-tx:3",
+        "request": {
+          "request_ref": "request:2",
+          "command_id": "cmd.storage.legal_hold.manage",
+          "command_instance_id": "command:2",
+          "idempotency_key": "command-idem:2",
+          "actor_ref": "actor:storage-admin",
+          "accepted_at_utc": "2026-09-12T03:00:00Z",
+          "dispatch_id": "dispatch:2",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:2",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:2"
+          },
+          "arguments": {
+            "scope_kind": "application",
+            "hold_id": "legal-1",
+            "action": "clear",
+            "semantic_scope_ref": "application",
+            "reason": "Preserve reviewed authority",
+            "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          }
+        },
+        "target": {
+          "scope_ref": "application",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "policy_ref": "RP-OPERATIONAL-2555D",
+          "anchor_ref": "anchor:target-original",
+          "affected_semantic_refs": [
+            "semantic:held-target"
+          ]
+        },
+        "preimage_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2026-09-12T03:00:00Z",
+          "cleared_by_actor_ref": null,
+          "clear_reason": null,
+          "cleared_at_utc": null,
+          "event_refs": [
+            "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "transition_id": "hold-transition:b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+        "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+        "producer_intent": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "event_type": "storage.retention_hold_changed",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:storage-admin",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-12T03:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command:2",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "storage.retention_hold_changed:hold-transition:b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "scope_ref": "application",
+            "action": "clear",
+            "actor_ref": "actor:storage-admin",
+            "reason": "Preserve reviewed authority",
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "event": null,
+        "after_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2026-09-12T03:00:00Z",
+          "cleared_by_actor_ref": "actor:storage-admin",
+          "clear_reason": "Preserve reviewed authority",
+          "cleared_at_utc": "2026-09-12T03:00:00Z",
+          "event_refs": [
+            "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "original_publication": null,
+        "commit_binding": null,
+        "owner_result": null,
+        "command_outcome_ref": null,
+        "command_outcome": null,
+        "ui_response": null
+      },
+      "redaction_profile": "no_secrets"
+    },
+    "native_cleared": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:app:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "application"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2026-09-12T03:00:00Z",
+        "cleared_by_actor_ref": "actor:storage-admin",
+        "clear_reason": "Preserve reviewed authority",
+        "cleared_at_utc": "2026-09-12T03:00:00Z",
+        "event_refs": [
+          "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+          "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5"
+        ],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "cleared",
+      "set_custody": {
+        "kind": "native_set",
+        "transition": {
+          "action": "set",
+          "phase": "committed",
+          "pending_sir_custody": {
+            "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+            "schema_version": "1.0.0",
+            "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+            "original_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "current_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:1",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:1",
+                "idempotency_key": "command-idem:1",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:1",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "arguments": {
+                  "scope_kind": "application",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "application",
+                  "reason": "Preserve reviewed authority"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:1",
+              "acknowledgement_frame_id": "frame:1",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:1",
+              "command_outcome_ref": "outcome:1",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "application",
+                  "operation_id": "operation:1",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": null,
+                  "project_home_server_id": null,
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:1"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+                "idempotency_key": "command-idem:1",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:1",
+                "acknowledgement_frame_id": "frame:1",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:1",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:1",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "original_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268",
+            "current_source_sha256": "15fee9f48ebb388e116c79cbdf7a160a4c5bae7d981e8e6ac15a205380781268"
+          },
+          "pending_admission_id": "hold-fixture-tx:1",
+          "request": {
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "idempotency_key": "command-idem:1",
+            "actor_ref": "actor:storage-admin",
+            "accepted_at_utc": "2026-09-12T03:00:00Z",
+            "dispatch_id": "dispatch:1",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "arguments": {
+              "scope_kind": "application",
+              "hold_id": "legal-1",
+              "action": "set",
+              "semantic_scope_ref": "application",
+              "reason": "Preserve reviewed authority"
+            }
+          },
+          "target": {
+            "scope_ref": "application",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ]
+          },
+          "preimage_core": null,
+          "transition_id": "hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": null,
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:1",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "application",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            },
+            "sequence_id": 1,
+            "observed_at_utc": "2026-09-12T04:00:00Z",
+            "persisted_at_utc": "2026-09-12T04:00:00Z"
+          },
+          "after_core": {
+            "schema_id": "pm.storage_value.retention_hold_record.v1",
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "hold_kind": "legal_hold",
+            "scope": {
+              "scope_kind": "application"
+            },
+            "set_by_actor_ref": "actor:storage-admin",
+            "set_reason": "Preserve reviewed authority",
+            "set_at_utc": "2026-09-12T03:00:00Z",
+            "cleared_by_actor_ref": null,
+            "clear_reason": null,
+            "cleared_at_utc": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "redaction_profile": "no_secrets"
+          },
+          "original_publication": {
+            "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "append_receipt": {
+              "event_id": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+              "sequence_id": 1,
+              "segment_generation": 11,
+              "segment_name": "seg-000011-00000000000000000001.active",
+              "byte_offset": 0,
+              "commit_group_id": "fixture-group-21",
+              "durability_class": "barrier",
+              "durable_end_offset": 1356,
+              "durability_state": "synced",
+              "manifest_generation": 21,
+              "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+            },
+            "source_value_sha256": "853917e8397771a1f5e1de419dab5542b97a62ef00ed68a6380a8cfda8a1a887",
+            "payload_sha256": "b9f2e91196907ed78dbba6d0fcd3b255ce8eda61318ad494f6eceb82ff264a40",
+            "producer_semantic_digest": "20e4639da74f71f35b90cc3a36fba8ffd4e359d41c602f3ea02d25aa691b294c"
+          },
+          "commit_binding": {
+            "transaction_id": "hold-fixture-tx:2",
+            "admission_id": "hold-fixture-tx:1",
+            "preimage_core_sha256": null,
+            "committed_core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "owner_result": {
+            "schema_id": "pm.storage.legal_hold_result.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "command:1",
+            "hold_key": "retention_hold_record.v1:app:legal-1",
+            "hold_id": "legal-1",
+            "action": "set",
+            "status": "held",
+            "event_ref": "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          },
+          "command_outcome_ref": "outcome:1",
+          "command_outcome": {
+            "schema_id": "pm.full_thread_runtime.contracts.v1",
+            "record_kind": "command_outcome",
+            "identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_id": "cmd.storage.legal_hold.manage",
+            "payload_sha256": "8529fdb141e4f311814b7ff8f70310de4c351c3e18d9f4fe891e9450bfca6ec4",
+            "idempotency_key": "command-idem:1",
+            "target_generation": 1,
+            "outcome": "succeeded",
+            "dispatch_frame_id": "frame:1",
+            "acknowledgement_frame_id": "frame:1",
+            "acknowledgement_frame_offset": 0,
+            "same_frame_acknowledged": true,
+            "acknowledgement_receipt_ref": "dispatch-ack:1",
+            "result_receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "error_ref": null,
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "owner_result_sha256": "3198ac497b7eed35937fc67e4a729d8cedb05bc7b1e07a7bcee2a84624392c6f",
+            "observed_at": "2026-09-12T04:03:00Z"
+          },
+          "ui_response": {
+            "schema_id": "pm.ui_command_response.v2",
+            "schema_version": "2.0.0",
+            "dispatch_id": "dispatch:1",
+            "request_ref": "request:1",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:1",
+            "response_kind": "owner_operation",
+            "ack_status": "accepted",
+            "result_status": "succeeded",
+            "error": null,
+            "event_refs": [
+              "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set",
+            "operation_id": "operation:1",
+            "owner_identity": {
+              "scope_kind": "application",
+              "operation_id": "operation:1",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": null,
+              "project_home_server_id": null,
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:1"
+            },
+            "command_outcome_ref": "outcome:1",
+            "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "replayed": false,
+            "original_dispatch_id": null,
+            "ts": "2026-09-12T04:03:00Z"
+          }
+        }
+      },
+      "clear_transition": {
+        "action": "clear",
+        "phase": "committed",
+        "pending_sir_custody": {
+          "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+          "schema_version": "1.0.0",
+          "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+          "original_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:2",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:2",
+              "idempotency_key": "command-idem:2",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:2",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:2",
+            "acknowledgement_frame_id": "frame:2",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:2",
+            "command_outcome_ref": "outcome:2",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "246ec5f1707cb42c38311ac27cbff02af4255bb4be60d3c260d4f4ee70e545b0",
+              "idempotency_key": "command-idem:2",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:2",
+              "acknowledgement_frame_id": "frame:2",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:2",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:2",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "current_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:2",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:2",
+              "idempotency_key": "command-idem:2",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:2",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:2",
+            "acknowledgement_frame_id": "frame:2",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:2",
+            "command_outcome_ref": "outcome:2",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:2",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:2"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "246ec5f1707cb42c38311ac27cbff02af4255bb4be60d3c260d4f4ee70e545b0",
+              "idempotency_key": "command-idem:2",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:2",
+              "acknowledgement_frame_id": "frame:2",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:2",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:2",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "original_source_sha256": "3c190c683765254800d696a69cf2e6cb7b8ea1a8daacf94262694c1fb92296a9",
+          "current_source_sha256": "3c190c683765254800d696a69cf2e6cb7b8ea1a8daacf94262694c1fb92296a9"
+        },
+        "pending_admission_id": "hold-fixture-tx:3",
+        "request": {
+          "request_ref": "request:2",
+          "command_id": "cmd.storage.legal_hold.manage",
+          "command_instance_id": "command:2",
+          "idempotency_key": "command-idem:2",
+          "actor_ref": "actor:storage-admin",
+          "accepted_at_utc": "2026-09-12T03:00:00Z",
+          "dispatch_id": "dispatch:2",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:2",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:2"
+          },
+          "arguments": {
+            "scope_kind": "application",
+            "hold_id": "legal-1",
+            "action": "clear",
+            "semantic_scope_ref": "application",
+            "reason": "Preserve reviewed authority",
+            "expected_hold_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb"
+          }
+        },
+        "target": {
+          "scope_ref": "application",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "policy_ref": "RP-OPERATIONAL-2555D",
+          "anchor_ref": "anchor:target-original",
+          "affected_semantic_refs": [
+            "semantic:held-target"
+          ]
+        },
+        "preimage_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2026-09-12T03:00:00Z",
+          "cleared_by_actor_ref": null,
+          "clear_reason": null,
+          "cleared_at_utc": null,
+          "event_refs": [
+            "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "transition_id": "hold-transition:b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+        "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+        "producer_intent": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "event_type": "storage.retention_hold_changed",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:storage-admin",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-12T03:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command:2",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "storage.retention_hold_changed:hold-transition:b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "scope_ref": "application",
+            "action": "clear",
+            "actor_ref": "actor:storage-admin",
+            "reason": "Preserve reviewed authority",
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "event_type": "storage.retention_hold_changed",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:storage-admin",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-12T03:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command:2",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "storage.retention_hold_changed:hold-transition:b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "scope_ref": "application",
+            "action": "clear",
+            "actor_ref": "actor:storage-admin",
+            "reason": "Preserve reviewed authority",
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          },
+          "sequence_id": 2,
+          "observed_at_utc": "2026-09-12T04:00:00Z",
+          "persisted_at_utc": "2026-09-12T04:00:00Z"
+        },
+        "after_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2026-09-12T03:00:00Z",
+          "cleared_by_actor_ref": "actor:storage-admin",
+          "clear_reason": "Preserve reviewed authority",
+          "cleared_at_utc": "2026-09-12T03:00:00Z",
+          "event_refs": [
+            "evt_hold_2b1ce848b5f83357fb0c9c16a60eefa66c868336e3b28c59a4138e6030407ebd",
+            "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "original_publication": {
+          "event_id": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "append_receipt": {
+            "event_id": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+            "sequence_id": 2,
+            "segment_generation": 11,
+            "segment_name": "seg-000011-00000000000000000001.active",
+            "byte_offset": 1356,
+            "commit_group_id": "fixture-group-22",
+            "durability_class": "barrier",
+            "durable_end_offset": 2716,
+            "durability_state": "synced",
+            "manifest_generation": 22,
+            "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+          },
+          "source_value_sha256": "0bc68e2a0af6a3d31984c9d02ab2c18b42ba1a5d06f8bd5a8cfa9bb4e8308b48",
+          "payload_sha256": "ed287bfcb1c7039389ffa2ebcbe2fa765807263b6e86ad5739a77400b91114c6",
+          "producer_semantic_digest": "075328106b49e644c335cc1f7e27029865d52a9b699a8fe009d37bbb1f54cff5"
+        },
+        "commit_binding": {
+          "transaction_id": "hold-fixture-tx:4",
+          "admission_id": "hold-fixture-tx:3",
+          "preimage_core_sha256": "4b2fa04338454c8ac551ef7adabd59ee9859895e47969bc8c46a081c7d30ceeb",
+          "committed_core_sha256": "4355746d37e19e50d302fc2fdb7904eda9220ca9590ee98cf92e6878b960bf9b"
+        },
+        "owner_result": {
+          "schema_id": "pm.storage.legal_hold_result.v1",
+          "schema_version": "1.0.0",
+          "command_instance_id": "command:2",
+          "hold_key": "retention_hold_record.v1:app:legal-1",
+          "hold_id": "legal-1",
+          "action": "clear",
+          "status": "cleared",
+          "event_ref": "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "core_sha256": "4355746d37e19e50d302fc2fdb7904eda9220ca9590ee98cf92e6878b960bf9b"
+        },
+        "command_outcome_ref": "outcome:2",
+        "command_outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:2",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:2"
+          },
+          "command_id": "cmd.storage.legal_hold.manage",
+          "payload_sha256": "246ec5f1707cb42c38311ac27cbff02af4255bb4be60d3c260d4f4ee70e545b0",
+          "idempotency_key": "command-idem:2",
+          "target_generation": 1,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:2",
+          "acknowledgement_frame_id": "frame:2",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "dispatch-ack:2",
+          "result_receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "error_ref": null,
+          "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear/owner_result",
+          "owner_result_schema_ref": {
+            "path": "Plans/storage_retention_hold_contracts.schema.json",
+            "json_pointer": "#/$defs/OwnerResult",
+            "schema_id": "pm.storage.legal_hold_result.v1"
+          },
+          "owner_result_sha256": "6219cadba9c0444ec08a4a277110c1e9fe301f03916ced9fa1921ba39c9f89e4",
+          "observed_at": "2026-09-12T04:03:00Z"
+        },
+        "ui_response": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch:2",
+          "request_ref": "request:2",
+          "command_id": "cmd.storage.legal_hold.manage",
+          "command_instance_id": "command:2",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [
+            "evt_hold_b9cd701b4291c2a7c360d11f79b664f07dde89cdc60d4d8ef672956b1daa10c5"
+          ],
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "operation_id": "operation:2",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:2",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:2"
+          },
+          "command_outcome_ref": "outcome:2",
+          "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear/owner_result",
+          "owner_result_schema_ref": {
+            "path": "Plans/storage_retention_hold_contracts.schema.json",
+            "json_pointer": "#/$defs/OwnerResult",
+            "schema_id": "pm.storage.legal_hold_result.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-12T04:03:00Z"
+        }
+      },
+      "redaction_profile": "no_secrets"
+    },
+    "project_held": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:project~cHJvamVjdDpob2xk:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "project",
+          "project_id": "project:hold"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2026-09-12T03:00:00Z",
+        "cleared_by_actor_ref": null,
+        "clear_reason": null,
+        "cleared_at_utc": null,
+        "event_refs": [
+          "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6"
+        ],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "held",
+      "set_custody": {
+        "kind": "native_set",
+        "transition": {
+          "action": "set",
+          "phase": "committed",
+          "pending_sir_custody": {
+            "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+            "schema_version": "1.0.0",
+            "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+            "original_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:4",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:4",
+                "idempotency_key": "command-idem:4",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:4",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "operation:4",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": "project:hold",
+                  "project_home_server_id": "server:original",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:4"
+                },
+                "arguments": {
+                  "scope_kind": "project",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "project:project:hold",
+                  "reason": "Preserve reviewed authority",
+                  "project_id": "project:hold"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:4",
+              "acknowledgement_frame_id": "frame:4",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:4",
+              "command_outcome_ref": "outcome:4",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "operation:4",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": "project:hold",
+                  "project_home_server_id": "server:original",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:4"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "e4a9b4fa0a428e51e13b33b6c61452ae6affbccd37855f330b6a5b96988e6a73",
+                "idempotency_key": "command-idem:4",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:4",
+                "acknowledgement_frame_id": "frame:4",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:4",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:4",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "current_source": {
+              "owner": "Shared Integration Runtime",
+              "request": {
+                "request_ref": "request:4",
+                "command_id": "cmd.storage.legal_hold.manage",
+                "command_instance_id": "command:4",
+                "idempotency_key": "command-idem:4",
+                "actor_ref": "actor:storage-admin",
+                "accepted_at_utc": "2026-09-12T03:00:00Z",
+                "dispatch_id": "dispatch:4",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "operation:4",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": "project:hold",
+                  "project_home_server_id": "server:original",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:4"
+                },
+                "arguments": {
+                  "scope_kind": "project",
+                  "hold_id": "legal-1",
+                  "action": "set",
+                  "semantic_scope_ref": "project:project:hold",
+                  "reason": "Preserve reviewed authority",
+                  "project_id": "project:hold"
+                }
+              },
+              "target_generation": 1,
+              "dispatch_frame_id": "frame:4",
+              "acknowledgement_frame_id": "frame:4",
+              "acknowledgement_frame_offset": 0,
+              "acknowledgement_receipt_ref": "dispatch-ack:4",
+              "command_outcome_ref": "outcome:4",
+              "stage_clock": "2026-09-12T03:30:00Z",
+              "nonterminal_outcome": {
+                "schema_id": "pm.full_thread_runtime.contracts.v1",
+                "record_kind": "command_outcome",
+                "identity": {
+                  "scope_kind": "project",
+                  "operation_id": "operation:4",
+                  "operation_generation": 1,
+                  "server_id": "server:original",
+                  "project_id": "project:hold",
+                  "project_home_server_id": "server:original",
+                  "named_plan_id": null,
+                  "execution_host_id": "host:original",
+                  "execution_environment_id": "environment:original",
+                  "topology_generation": 7,
+                  "command_instance_id": "command:4"
+                },
+                "command_id": "cmd.storage.legal_hold.manage",
+                "payload_sha256": "e4a9b4fa0a428e51e13b33b6c61452ae6affbccd37855f330b6a5b96988e6a73",
+                "idempotency_key": "command-idem:4",
+                "target_generation": 1,
+                "outcome": "acknowledged",
+                "dispatch_frame_id": "frame:4",
+                "acknowledgement_frame_id": "frame:4",
+                "acknowledgement_frame_offset": 0,
+                "same_frame_acknowledged": true,
+                "acknowledgement_receipt_ref": "dispatch-ack:4",
+                "result_receipt_ref": null,
+                "error_ref": null,
+                "owner_result_ref": null,
+                "owner_result_schema_ref": null,
+                "owner_result_sha256": null,
+                "observed_at": "2026-09-12T03:30:00Z"
+              },
+              "capture_authority_ref": "sir:fixture-explicit-source:request:4",
+              "captured_at_utc": "2026-09-12T03:30:00Z"
+            },
+            "original_source_sha256": "54b13946731cfa3496563c1c26130aae1af194f31b896a50832a8c4b07d76dde",
+            "current_source_sha256": "54b13946731cfa3496563c1c26130aae1af194f31b896a50832a8c4b07d76dde"
+          },
+          "pending_admission_id": "hold-fixture-tx:1",
+          "request": {
+            "request_ref": "request:4",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:4",
+            "idempotency_key": "command-idem:4",
+            "actor_ref": "actor:storage-admin",
+            "accepted_at_utc": "2026-09-12T03:00:00Z",
+            "dispatch_id": "dispatch:4",
+            "identity": {
+              "scope_kind": "project",
+              "operation_id": "operation:4",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": "project:hold",
+              "project_home_server_id": "server:original",
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:4"
+            },
+            "arguments": {
+              "scope_kind": "project",
+              "hold_id": "legal-1",
+              "action": "set",
+              "semantic_scope_ref": "project:project:hold",
+              "reason": "Preserve reviewed authority",
+              "project_id": "project:hold"
+            }
+          },
+          "target": {
+            "scope_ref": "project:project:hold",
+            "scope": {
+              "scope_kind": "project",
+              "project_id": "project:hold"
+            },
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ]
+          },
+          "preimage_core": null,
+          "transition_id": "hold-transition:c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+          "receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+          "producer_intent": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": "project:hold",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:4",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "project:project:hold",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+              "project_id": "project:hold"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "event_type": "storage.retention_hold_changed",
+            "project_id": "project:hold",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "actor:storage-admin",
+            "requested_account_ref": null,
+            "effective_account_ref": null,
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "producer_sequence_id": null,
+            "correlation_id": "command:4",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "storage.retention_hold_changed:hold-transition:c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+            "payload": {
+              "schema_version": "1.0.0",
+              "hold_id": "legal-1",
+              "scope_ref": "project:project:hold",
+              "action": "set",
+              "actor_ref": "actor:storage-admin",
+              "reason": "Preserve reviewed authority",
+              "occurred_at_utc": "2026-09-12T03:00:00Z",
+              "policy_ref": "RP-OPERATIONAL-2555D",
+              "anchor_ref": "anchor:target-original",
+              "affected_semantic_refs": [
+                "semantic:held-target"
+              ],
+              "receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+              "project_id": "project:hold"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            },
+            "sequence_id": 1,
+            "observed_at_utc": "2026-09-12T04:00:00Z",
+            "persisted_at_utc": "2026-09-12T04:00:00Z"
+          },
+          "after_core": {
+            "schema_id": "pm.storage_value.retention_hold_record.v1",
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "hold_kind": "legal_hold",
+            "scope": {
+              "scope_kind": "project",
+              "project_id": "project:hold"
+            },
+            "set_by_actor_ref": "actor:storage-admin",
+            "set_reason": "Preserve reviewed authority",
+            "set_at_utc": "2026-09-12T03:00:00Z",
+            "cleared_by_actor_ref": null,
+            "clear_reason": null,
+            "cleared_at_utc": null,
+            "event_refs": [
+              "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6"
+            ],
+            "redaction_profile": "no_secrets"
+          },
+          "original_publication": {
+            "event_id": "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "append_receipt": {
+              "event_id": "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+              "sequence_id": 1,
+              "segment_generation": 11,
+              "segment_name": "seg-000011-00000000000000000001.active",
+              "byte_offset": 0,
+              "commit_group_id": "fixture-group-21",
+              "durability_class": "barrier",
+              "durable_end_offset": 1397,
+              "durability_state": "synced",
+              "manifest_generation": 21,
+              "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+            },
+            "source_value_sha256": "bee14883970b970ae5be0524fc357b2ae149ce7effef059142b9c25c3a585550",
+            "payload_sha256": "bac580e84811c8d06b5db2b9adc2d2cd1ca375236b7578430a8dcdee4fa339b8",
+            "producer_semantic_digest": "766b4d18fb93775d2add9b1f7684dff7b6482f539a5c6429251bc429c609de5c"
+          },
+          "commit_binding": {
+            "transaction_id": "hold-fixture-tx:2",
+            "admission_id": "hold-fixture-tx:1",
+            "preimage_core_sha256": null,
+            "committed_core_sha256": "18e40ad4bb4a5dd7b048eb9afe16d8797ee5e1625c70f781d79c666bc026b178"
+          },
+          "owner_result": {
+            "schema_id": "pm.storage.legal_hold_result.v1",
+            "schema_version": "1.0.0",
+            "command_instance_id": "command:4",
+            "hold_key": "retention_hold_record.v1:project~cHJvamVjdDpob2xk:legal-1",
+            "hold_id": "legal-1",
+            "action": "set",
+            "status": "held",
+            "event_ref": "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6",
+            "receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+            "core_sha256": "18e40ad4bb4a5dd7b048eb9afe16d8797ee5e1625c70f781d79c666bc026b178"
+          },
+          "command_outcome_ref": "outcome:4",
+          "command_outcome": {
+            "schema_id": "pm.full_thread_runtime.contracts.v1",
+            "record_kind": "command_outcome",
+            "identity": {
+              "scope_kind": "project",
+              "operation_id": "operation:4",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": "project:hold",
+              "project_home_server_id": "server:original",
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:4"
+            },
+            "command_id": "cmd.storage.legal_hold.manage",
+            "payload_sha256": "e4a9b4fa0a428e51e13b33b6c61452ae6affbccd37855f330b6a5b96988e6a73",
+            "idempotency_key": "command-idem:4",
+            "target_generation": 1,
+            "outcome": "succeeded",
+            "dispatch_frame_id": "frame:4",
+            "acknowledgement_frame_id": "frame:4",
+            "acknowledgement_frame_offset": 0,
+            "same_frame_acknowledged": true,
+            "acknowledgement_receipt_ref": "dispatch-ack:4",
+            "result_receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+            "error_ref": null,
+            "owner_result_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "owner_result_sha256": "8be37d549ad0aa52d63a1b456a891d9b4eebcdaa7b579bf994c5c7a8e818bdef",
+            "observed_at": "2026-09-12T04:03:00Z"
+          },
+          "ui_response": {
+            "schema_id": "pm.ui_command_response.v2",
+            "schema_version": "2.0.0",
+            "dispatch_id": "dispatch:4",
+            "request_ref": "request:4",
+            "command_id": "cmd.storage.legal_hold.manage",
+            "command_instance_id": "command:4",
+            "response_kind": "owner_operation",
+            "ack_status": "accepted",
+            "result_status": "succeeded",
+            "error": null,
+            "event_refs": [
+              "evt_hold_c59e3f67e38dbd75359abd69e5351ea965bfbcf224d9d498cfbc7fbffd4ea0a6"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set",
+            "operation_id": "operation:4",
+            "owner_identity": {
+              "scope_kind": "project",
+              "operation_id": "operation:4",
+              "operation_generation": 1,
+              "server_id": "server:original",
+              "project_id": "project:hold",
+              "project_home_server_id": "server:original",
+              "named_plan_id": null,
+              "execution_host_id": "host:original",
+              "execution_environment_id": "environment:original",
+              "topology_generation": 7,
+              "command_instance_id": "command:4"
+            },
+            "command_outcome_ref": "outcome:4",
+            "owner_result_ref": "pm.storage.hold_receipt.v2:15f64449106584fee2e18a6046c8b7f49cf85aae804dfffbf234101dbeff84d9:set/owner_result",
+            "owner_result_schema_ref": {
+              "path": "Plans/storage_retention_hold_contracts.schema.json",
+              "json_pointer": "#/$defs/OwnerResult",
+              "schema_id": "pm.storage.legal_hold_result.v1"
+            },
+            "replayed": false,
+            "original_dispatch_id": null,
+            "ts": "2026-09-12T04:03:00Z"
+          }
+        }
+      },
+      "clear_transition": null,
+      "redaction_profile": "no_secrets"
+    },
+    "legacy_cleared": {
+      "schema_id": "pm.storage_value.retention_hold_record.v2",
+      "schema_version": "2.0.0",
+      "hold_key": "retention_hold_record.v1:app:legal-1",
+      "core": {
+        "schema_id": "pm.storage_value.retention_hold_record.v1",
+        "schema_version": "1.0.0",
+        "hold_id": "legal-1",
+        "hold_kind": "legal_hold",
+        "scope": {
+          "scope_kind": "application"
+        },
+        "set_by_actor_ref": "actor:storage-admin",
+        "set_reason": "Preserve reviewed authority",
+        "set_at_utc": "2020-01-01T00:00:00Z",
+        "cleared_by_actor_ref": "actor:storage-admin",
+        "clear_reason": "Preserve reviewed authority",
+        "cleared_at_utc": "2026-09-12T03:00:00Z",
+        "event_refs": [
+          "legacy:event:set-not-custody",
+          "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8"
+        ],
+        "redaction_profile": "no_secrets"
+      },
+      "phase": "cleared",
+      "set_custody": {
+        "kind": "legacy_admitted_v1_protection",
+        "original_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2020-01-01T00:00:00Z",
+          "cleared_by_actor_ref": null,
+          "clear_reason": null,
+          "cleared_at_utc": null,
+          "event_refs": [
+            "legacy:event:set-not-custody"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "original_key": "retention_hold_record.v1:app:legal-1",
+        "original_value_sha256": "f9abf925cfb535e2db19caca35408e1d7bcd364fd52cc624047e6d723d94db8d",
+        "migration_id": "migration:actual-hold-v1",
+        "migration_receipt_ref": "migration_receipt.v1:migration:actual-hold-v1",
+        "admission_id": "migration-admission:original",
+        "admitted_at_utc": "2026-09-12T02:00:00Z",
+        "original_set_receipt": null,
+        "migration_receipt_sha256": "cf6d8d9c07dcbdf8e8ce9b16541a20dbbfff88e5f437cc6db5ec1bc1e05cf549"
+      },
+      "clear_transition": {
+        "action": "clear",
+        "phase": "committed",
+        "pending_sir_custody": {
+          "schema_id": "pm.storage.legal_hold_pending_sir_custody.v1",
+          "schema_version": "1.0.0",
+          "owner_binding": "owner.sir.storage_legal_hold_pending_custody@1.0.0",
+          "original_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:3",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:3",
+              "idempotency_key": "command-idem:3",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:3",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:3",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:3"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "f9abf925cfb535e2db19caca35408e1d7bcd364fd52cc624047e6d723d94db8d"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:3",
+            "acknowledgement_frame_id": "frame:3",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:3",
+            "command_outcome_ref": "outcome:3",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:3",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:3"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "32ad09f6cd0efe6d2767df970a4f2333cd25400c02c2543d83bb9355763a6a63",
+              "idempotency_key": "command-idem:3",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:3",
+              "acknowledgement_frame_id": "frame:3",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:3",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:3",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "current_source": {
+            "owner": "Shared Integration Runtime",
+            "request": {
+              "request_ref": "request:3",
+              "command_id": "cmd.storage.legal_hold.manage",
+              "command_instance_id": "command:3",
+              "idempotency_key": "command-idem:3",
+              "actor_ref": "actor:storage-admin",
+              "accepted_at_utc": "2026-09-12T03:00:00Z",
+              "dispatch_id": "dispatch:3",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:3",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:3"
+              },
+              "arguments": {
+                "scope_kind": "application",
+                "hold_id": "legal-1",
+                "action": "clear",
+                "semantic_scope_ref": "application",
+                "reason": "Preserve reviewed authority",
+                "expected_hold_sha256": "f9abf925cfb535e2db19caca35408e1d7bcd364fd52cc624047e6d723d94db8d"
+              }
+            },
+            "target_generation": 1,
+            "dispatch_frame_id": "frame:3",
+            "acknowledgement_frame_id": "frame:3",
+            "acknowledgement_frame_offset": 0,
+            "acknowledgement_receipt_ref": "dispatch-ack:3",
+            "command_outcome_ref": "outcome:3",
+            "stage_clock": "2026-09-12T03:30:00Z",
+            "nonterminal_outcome": {
+              "schema_id": "pm.full_thread_runtime.contracts.v1",
+              "record_kind": "command_outcome",
+              "identity": {
+                "scope_kind": "application",
+                "operation_id": "operation:3",
+                "operation_generation": 1,
+                "server_id": "server:original",
+                "project_id": null,
+                "project_home_server_id": null,
+                "named_plan_id": null,
+                "execution_host_id": "host:original",
+                "execution_environment_id": "environment:original",
+                "topology_generation": 7,
+                "command_instance_id": "command:3"
+              },
+              "command_id": "cmd.storage.legal_hold.manage",
+              "payload_sha256": "32ad09f6cd0efe6d2767df970a4f2333cd25400c02c2543d83bb9355763a6a63",
+              "idempotency_key": "command-idem:3",
+              "target_generation": 1,
+              "outcome": "acknowledged",
+              "dispatch_frame_id": "frame:3",
+              "acknowledgement_frame_id": "frame:3",
+              "acknowledgement_frame_offset": 0,
+              "same_frame_acknowledged": true,
+              "acknowledgement_receipt_ref": "dispatch-ack:3",
+              "result_receipt_ref": null,
+              "error_ref": null,
+              "owner_result_ref": null,
+              "owner_result_schema_ref": null,
+              "owner_result_sha256": null,
+              "observed_at": "2026-09-12T03:30:00Z"
+            },
+            "capture_authority_ref": "sir:fixture-explicit-source:request:3",
+            "captured_at_utc": "2026-09-12T03:30:00Z"
+          },
+          "original_source_sha256": "c2dbb83ae7ff485dd966453c1bb0bbdbe80bb44faa6ee898e6eadf28b9b131c8",
+          "current_source_sha256": "c2dbb83ae7ff485dd966453c1bb0bbdbe80bb44faa6ee898e6eadf28b9b131c8"
+        },
+        "pending_admission_id": "hold-fixture-tx:2",
+        "request": {
+          "request_ref": "request:3",
+          "command_id": "cmd.storage.legal_hold.manage",
+          "command_instance_id": "command:3",
+          "idempotency_key": "command-idem:3",
+          "actor_ref": "actor:storage-admin",
+          "accepted_at_utc": "2026-09-12T03:00:00Z",
+          "dispatch_id": "dispatch:3",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:3",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:3"
+          },
+          "arguments": {
+            "scope_kind": "application",
+            "hold_id": "legal-1",
+            "action": "clear",
+            "semantic_scope_ref": "application",
+            "reason": "Preserve reviewed authority",
+            "expected_hold_sha256": "f9abf925cfb535e2db19caca35408e1d7bcd364fd52cc624047e6d723d94db8d"
+          }
+        },
+        "target": {
+          "scope_ref": "application",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "policy_ref": "RP-OPERATIONAL-2555D",
+          "anchor_ref": "anchor:target-original",
+          "affected_semantic_refs": [
+            "semantic:held-target"
+          ]
+        },
+        "preimage_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2020-01-01T00:00:00Z",
+          "cleared_by_actor_ref": null,
+          "clear_reason": null,
+          "cleared_at_utc": null,
+          "event_refs": [
+            "legacy:event:set-not-custody"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "transition_id": "hold-transition:82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+        "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+        "producer_intent": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "event_type": "storage.retention_hold_changed",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:storage-admin",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-12T03:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command:3",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "storage.retention_hold_changed:hold-transition:82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "scope_ref": "application",
+            "action": "clear",
+            "actor_ref": "actor:storage-admin",
+            "reason": "Preserve reviewed authority",
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          }
+        },
+        "event": {
+          "schema_id": "pm.event.v0",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "event_id": "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "event_type": "storage.retention_hold_changed",
+          "project_id": null,
+          "thread_id": null,
+          "run_id": null,
+          "node_id": null,
+          "attempt_id": null,
+          "actor_ref": "actor:storage-admin",
+          "requested_account_ref": null,
+          "effective_account_ref": null,
+          "occurred_at_utc": "2026-09-12T03:00:00Z",
+          "producer_sequence_id": null,
+          "correlation_id": "command:3",
+          "causation_event_id": null,
+          "parent_event_id": null,
+          "idempotency_key": "storage.retention_hold_changed:hold-transition:82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_retention_hold_changed/1.0.0",
+          "payload": {
+            "schema_version": "1.0.0",
+            "hold_id": "legal-1",
+            "scope_ref": "application",
+            "action": "clear",
+            "actor_ref": "actor:storage-admin",
+            "reason": "Preserve reviewed authority",
+            "occurred_at_utc": "2026-09-12T03:00:00Z",
+            "policy_ref": "RP-OPERATIONAL-2555D",
+            "anchor_ref": "anchor:target-original",
+            "affected_semantic_refs": [
+              "semantic:held-target"
+            ],
+            "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear"
+          },
+          "payload_ref": null,
+          "redaction_profile": "no_secrets",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "migration": {
+            "migrated_from_schema_id": null,
+            "migrated_from_schema_version": null,
+            "migration_id": null,
+            "compatibility_event_type": null
+          },
+          "sequence_id": 1,
+          "observed_at_utc": "2026-09-12T04:00:00Z",
+          "persisted_at_utc": "2026-09-12T04:00:00Z"
+        },
+        "after_core": {
+          "schema_id": "pm.storage_value.retention_hold_record.v1",
+          "schema_version": "1.0.0",
+          "hold_id": "legal-1",
+          "hold_kind": "legal_hold",
+          "scope": {
+            "scope_kind": "application"
+          },
+          "set_by_actor_ref": "actor:storage-admin",
+          "set_reason": "Preserve reviewed authority",
+          "set_at_utc": "2020-01-01T00:00:00Z",
+          "cleared_by_actor_ref": "actor:storage-admin",
+          "clear_reason": "Preserve reviewed authority",
+          "cleared_at_utc": "2026-09-12T03:00:00Z",
+          "event_refs": [
+            "legacy:event:set-not-custody",
+            "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8"
+          ],
+          "redaction_profile": "no_secrets"
+        },
+        "original_publication": {
+          "event_id": "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "append_receipt": {
+            "event_id": "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+            "sequence_id": 1,
+            "segment_generation": 11,
+            "segment_name": "seg-000011-00000000000000000001.active",
+            "byte_offset": 0,
+            "commit_group_id": "fixture-group-21",
+            "durability_class": "barrier",
+            "durable_end_offset": 1360,
+            "durability_state": "synced",
+            "manifest_generation": 21,
+            "acknowledged_at_utc": "2026-09-12T04:01:00Z"
+          },
+          "source_value_sha256": "9b976c2efdf78019624396bdecf0c66391df161b62a743317d9bbaf22468194f",
+          "payload_sha256": "ed287bfcb1c7039389ffa2ebcbe2fa765807263b6e86ad5739a77400b91114c6",
+          "producer_semantic_digest": "90fbcc5e0be55a401b15bfc28dff3e5ac6c00c0e0355cf409cb30983f31823b2"
+        },
+        "commit_binding": {
+          "transaction_id": "hold-fixture-tx:3",
+          "admission_id": "hold-fixture-tx:2",
+          "preimage_core_sha256": "f9abf925cfb535e2db19caca35408e1d7bcd364fd52cc624047e6d723d94db8d",
+          "committed_core_sha256": "5011ee7c6a0652dd97a7c7aeb63e64a8aafa3a6227bb7a8a6d0251483ef0954c"
+        },
+        "owner_result": {
+          "schema_id": "pm.storage.legal_hold_result.v1",
+          "schema_version": "1.0.0",
+          "command_instance_id": "command:3",
+          "hold_key": "retention_hold_record.v1:app:legal-1",
+          "hold_id": "legal-1",
+          "action": "clear",
+          "status": "cleared",
+          "event_ref": "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8",
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "core_sha256": "5011ee7c6a0652dd97a7c7aeb63e64a8aafa3a6227bb7a8a6d0251483ef0954c"
+        },
+        "command_outcome_ref": "outcome:3",
+        "command_outcome": {
+          "schema_id": "pm.full_thread_runtime.contracts.v1",
+          "record_kind": "command_outcome",
+          "identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:3",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:3"
+          },
+          "command_id": "cmd.storage.legal_hold.manage",
+          "payload_sha256": "32ad09f6cd0efe6d2767df970a4f2333cd25400c02c2543d83bb9355763a6a63",
+          "idempotency_key": "command-idem:3",
+          "target_generation": 1,
+          "outcome": "succeeded",
+          "dispatch_frame_id": "frame:3",
+          "acknowledgement_frame_id": "frame:3",
+          "acknowledgement_frame_offset": 0,
+          "same_frame_acknowledged": true,
+          "acknowledgement_receipt_ref": "dispatch-ack:3",
+          "result_receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "error_ref": null,
+          "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear/owner_result",
+          "owner_result_schema_ref": {
+            "path": "Plans/storage_retention_hold_contracts.schema.json",
+            "json_pointer": "#/$defs/OwnerResult",
+            "schema_id": "pm.storage.legal_hold_result.v1"
+          },
+          "owner_result_sha256": "bc4ffc2577ab1a4a9811f54c9df015f9a93e986d53bc2bcda867bce71b4b31ea",
+          "observed_at": "2026-09-12T04:03:00Z"
+        },
+        "ui_response": {
+          "schema_id": "pm.ui_command_response.v2",
+          "schema_version": "2.0.0",
+          "dispatch_id": "dispatch:3",
+          "request_ref": "request:3",
+          "command_id": "cmd.storage.legal_hold.manage",
+          "command_instance_id": "command:3",
+          "response_kind": "owner_operation",
+          "ack_status": "accepted",
+          "result_status": "succeeded",
+          "error": null,
+          "event_refs": [
+            "evt_hold_82156a088c51975c33b344c3aa1e2312a0432cf59c9ca78286f64374acdae5f8"
+          ],
+          "receipt_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear",
+          "operation_id": "operation:3",
+          "owner_identity": {
+            "scope_kind": "application",
+            "operation_id": "operation:3",
+            "operation_generation": 1,
+            "server_id": "server:original",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "execution_host_id": "host:original",
+            "execution_environment_id": "environment:original",
+            "topology_generation": 7,
+            "command_instance_id": "command:3"
+          },
+          "command_outcome_ref": "outcome:3",
+          "owner_result_ref": "pm.storage.hold_receipt.v2:7692cf608d078fbf791243fb49f805e2c3a4528eef99b0e0e9d50fb2b466d55e:clear/owner_result",
+          "owner_result_schema_ref": {
+            "path": "Plans/storage_retention_hold_contracts.schema.json",
+            "json_pointer": "#/$defs/OwnerResult",
+            "schema_id": "pm.storage.legal_hold_result.v1"
+          },
+          "replayed": false,
+          "original_dispatch_id": null,
+          "ts": "2026-09-12T04:03:00Z"
+        }
+      },
+      "redaction_profile": "no_secrets"
+    },
+    "legacy_core": {
+      "schema_id": "pm.storage_value.retention_hold_record.v1",
+      "schema_version": "1.0.0",
+      "hold_id": "legal-1",
+      "hold_kind": "legal_hold",
+      "scope": {
+        "scope_kind": "application"
+      },
+      "set_by_actor_ref": "actor:storage-admin",
+      "set_reason": "Preserve reviewed authority",
+      "set_at_utc": "2020-01-01T00:00:00Z",
+      "cleared_by_actor_ref": null,
+      "clear_reason": null,
+      "cleared_at_utc": null,
+      "event_refs": [
+        "legacy:event:set-not-custody"
+      ],
+      "redaction_profile": "no_secrets"
+    }
+  },
+  "cases": [
+    {
+      "id": "native_set_pending",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "native_held",
+      "base": "native_held",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "native_clear_pending",
+      "base": "native_clear_pending",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "native_cleared",
+      "base": "native_cleared",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "project_held",
+      "base": "project_held",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "legacy_cleared",
+      "base": "legacy_cleared",
+      "definition": "HoldV2",
+      "valid": true,
+      "patch": []
+    },
+    {
+      "id": "legacy_root_not_v2_writer",
+      "base": "legacy_core",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": []
+    },
+    {
+      "id": "legacy_reader_legal_hold",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "legal_hold"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_legal_hold",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": false,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "legal_hold"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_preserved_run",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "preserved_run"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_preserved_run",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "preserved_run"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_recent_run",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "recent_run"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_recent_run",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "recent_run"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_recovery_anchor",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "recovery_anchor"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_recovery_anchor",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "recovery_anchor"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_manual_keep",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "manual_keep"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_manual_keep",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "manual_keep"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_audit",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "audit"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_audit",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "audit"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_promotion",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "promotion"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_promotion",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "promotion"
+        }
+      ]
+    },
+    {
+      "id": "legacy_reader_evidence",
+      "base": "legacy_core",
+      "definition": "HoldReaderValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "evidence"
+        }
+      ]
+    },
+    {
+      "id": "existing_v1_writer_evidence",
+      "base": "legacy_core",
+      "definition": "LegacyOtherKindWriterValue",
+      "valid": true,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/hold_kind",
+          "value": "evidence"
+        }
+      ]
+    },
+    {
+      "id": "missing_pending_capsule",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "remove",
+          "path": "/set_custody/transition/pending_sir_custody"
+        }
+      ]
+    },
+    {
+      "id": "missing_original_source",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "remove",
+          "path": "/set_custody/transition/pending_sir_custody/original_source"
+        }
+      ]
+    },
+    {
+      "id": "missing_current_source",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "remove",
+          "path": "/set_custody/transition/pending_sir_custody/current_source"
+        }
+      ]
+    },
+    {
+      "id": "missing_pending_identity",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "remove",
+          "path": "/set_custody/transition/pending_admission_id"
+        }
+      ]
+    },
+    {
+      "id": "unsupported_v2_version",
+      "base": "native_held",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/schema_version",
+          "value": "3.0.0"
+        }
+      ]
+    },
+    {
+      "id": "extra_root_field",
+      "base": "native_held",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "add",
+          "path": "/guessed_authority",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "foreign_pending_binding",
+      "base": "native_set_pending",
+      "definition": "HoldV2",
+      "valid": false,
+      "patch": [
+        {
+          "op": "replace",
+          "path": "/set_custody/transition/pending_sir_custody/owner_binding",
+          "value": "other"
+        }
+      ]
+    }
+  ]
+}

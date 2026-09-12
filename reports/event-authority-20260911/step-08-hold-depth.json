@@ -1,0 +1,70 @@
+{
+  "status": "FAMILY_CONTRACT_DEFINED_SHARED_FRAME_CODEC_PREREQUISITE_OPEN",
+  "normative_contract_complete": false,
+  "event_type": "storage.retention_hold_changed",
+  "criteria": [
+    {
+      "criterion": "membership_version",
+      "status": "PASS",
+      "coverage": "Existing event family revision 2.0.0, payload 1.0.0 and application_or_project registration unchanged."
+    },
+    {
+      "criterion": "owner_doc",
+      "status": "PASS",
+      "coverage": "SP-288 owns exact legal-command custody, SIR-047 authentic original outcome, UCC-124/CV-333 public response."
+    },
+    {
+      "criterion": "producer",
+      "status": "PARTIAL",
+      "coverage": "Actual-original request/target/pending intent, protected barrier and exact SP-286 issue/resolve/group/backup adoption defined. Shared frame/header/payload codec remains open."
+    },
+    {
+      "criterion": "closed_payload_schema",
+      "status": "PASS",
+      "coverage": "Existing event payload unchanged; strict HoldV2 writer, explicit retained v1/v2 readers and closed actual-owner evidence/result definitions installed."
+    },
+    {
+      "criterion": "scope_identity",
+      "status": "PASS",
+      "coverage": "Application omission and envelope null, exact Project partition, actor/request/operation/target/key/slot/event/receipt/result joins; no execution-identity invention."
+    },
+    {
+      "criterion": "replay_idempotency",
+      "status": "PASS",
+      "coverage": "One immutable set and at most one clear per hold identity; repeated pending resume and original eleven-field receipt replay preserve actual owner bindings, no second action."
+    },
+    {
+      "criterion": "retention",
+      "status": "PASS",
+      "coverage": "Unchanged RP-AUTHORITY-INDEFINITE and whole coherent backup; union protection, pending set/clear and legacy held cores remain protective; no automatic clear."
+    },
+    {
+      "criterion": "redaction_custody",
+      "status": "PASS",
+      "coverage": "Original/current SIR capsules and terminal command/result remain canonical non-rebuildable custody. Reasons retain actual content classification; no invented redaction."
+    },
+    {
+      "criterion": "transitions",
+      "status": "PASS",
+      "coverage": "Initial admission, real acknowledgement advance, explicit pending resume, barrier issue/recovery, full terminal CAS/readback, legacy migration and passive reads have distinct final actual-owner checks."
+    },
+    {
+      "criterion": "consumers_checkpoints",
+      "status": "PARTIAL",
+      "coverage": "Exact passive history and command replay plus existing janitor/compaction/FileSafe roles use version dispatch and current SP-278 authority; no history checkpoint or action. Shared byte decoder remains open."
+    },
+    {
+      "criterion": "compatibility_withdrawal",
+      "status": "PASS",
+      "coverage": "Exact original eight-kind v1 core and seven nonlegal writer roles preserved; legacy legal clear uses explicit coordinator admission. Missing custody/unsupported installation fences; no fresh first receipt from restored old work."
+    },
+    {
+      "criterion": "positive_negative_oracles",
+      "status": "PARTIAL",
+      "coverage": "371 author cases, independent late-boundary/repeat/recovery evidence and 30 integrated shape cases pass. Native wire/crash/authentication behavior remains unrun."
+    }
+  ],
+  "native": "NOT_RUN",
+  "frozen_validator_depth_pass": false,
+  "evidence_report": "reports/event-authority-20260911/step-08-hold-checks.json"
+}
