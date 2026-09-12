@@ -77,3 +77,7 @@ Cost: Astra medium assessment plus root review; billing data unavailable.
 ## Original Standard certification prerequisite — 2026-09-12
 
 SP-289/GRS-065/CV-340 now define the original Standard certification receipt prerequisite, with exact generic-v1 and separately installed Standard-v2 roles, independent original-source/provenance/row/output guards and retained receipt-only disclosure. The [certification compilation record](step-08-certified-custody-validation.md) reports 203 regression cases, 28 independent root cases and bounded schema/codec checks. This does not complete `goal_run.certified`, any other Goal event, the exception route or the joint GoalRun/body/event producer. Native installation/authentication/durability and frozen-validator depth remain unproved. Existing receipt and Goal-content lifetimes remain separate.
+
+## Restore pending full-value adoption — 2026-09-12
+
+The three SP-285 creation/deletion/expiry pending routes now explicitly adopt original full-value v2 custody, actual source/token authentication and complete independently derived terminal afterimages. The [pending adoption record](step-08-restore-full-value-validation.md) reports 244 author, 199 underlying and 24 independent controls plus current-schema/value checks. This closes the specified pending full-value dependency only; initial observation provenance, settled-reader/summary contracts, per-family exact-wire integration and native execution remain qualified. Hold, Home and Platform still need their own completed successor adoption; no event inherits depth.

@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L21805-L21948
 
-Source SHA256: `e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea`
+Source SHA256: `5f1e07ec677040a72e2c5644ba8b017f433f4ca92339ccabca4fb182fa7b126d`
 
 ---
 
@@ -99,7 +99,7 @@ canonical_text: Storage admits exact-hash available-to-deleted under original co
   complete fresh deletion gates using SP-285 retained-created admission; later passive native reads explicitly adopt SP-285 authenticated
   retained_custody with full current source and no disposed original controls; lawful terminal summary
   reads never require removed custody.
-  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 gui_related: false
 gui_classification_reason: Defines backend custody, source validation and owner-result authority.
 split_recommended: false
@@ -128,7 +128,7 @@ acceptance_criteria:
 - The explicitly installed SP-285 retained-present route rejects unknown native origin, missing required
   rows and any late registration/install/migration/backup/permission/quarantine/row/source change; an
   unchanged generic token alone cannot authorize disclosure.
-- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 - Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
 validation_surfaces:
 - Plans/restore_point_deleted_contracts.schema.json

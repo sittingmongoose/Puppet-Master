@@ -1,0 +1,426 @@
+{
+  "status": "CANONICAL_RESTORE_PENDING_FULL_VALUE_ADOPTION_COMPILED_STATIC_CHECKS_PASS",
+  "base_head": "62bb745fedbfa15487f2e1f3f5d2986027076432",
+  "scope": "Three exact installed creation/deletion/expiry pending recovery bindings only",
+  "source_packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/manifest.json",
+    "sha256": "27cbebf4cdc44f0977e40f14cc3a72037f8b3843919e962baddfaa11d5164976"
+  },
+  "source_members_verified": 151,
+  "independent_review": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-v2-independent-review-20260912/review-manifest.json",
+      "sha256": "e5c7dde32c1f3baf170b8a54afc15726c74dc5d1713c48d2fefff6cbdd94cf02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-v2-independent-review-20260912/review.md",
+      "sha256": "a914c4c76dc9f4b2999ab5b130197a0f44b07536d9c9c69df8412594624845aa"
+    }
+  ],
+  "independent_review_members_verified": 160,
+  "author_cases": 244,
+  "unchanged_underlying_cases": 199,
+  "independent_cases": 24,
+  "root_schema_value_checks": {
+    "status": "PASS",
+    "schema_cases": [
+      {
+        "family": "created",
+        "phase": "initial_pending",
+        "row": "operation",
+        "schema": "restore_point_created_contracts.schema.json",
+        "definition": "creation_companion",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "created",
+        "phase": "initial_pending",
+        "row": "result",
+        "schema": "restore_point_create_result.schema.json",
+        "definition": null,
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "created",
+        "phase": "terminal",
+        "row": "operation",
+        "schema": "restore_point_created_contracts.schema.json",
+        "definition": "creation_companion",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "created",
+        "phase": "terminal",
+        "row": "result",
+        "schema": "restore_point_create_result.schema.json",
+        "definition": null,
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "deleted",
+        "phase": "initial_pending",
+        "row": "operation",
+        "schema": "restore_point_deleted_contracts.schema.json",
+        "definition": "deletion_commit",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "deleted",
+        "phase": "initial_pending",
+        "row": "result",
+        "schema": "restore_point_deleted_contracts.schema.json",
+        "definition": "command_result_receipt",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "deleted",
+        "phase": "terminal",
+        "row": "operation",
+        "schema": "restore_point_deleted_contracts.schema.json",
+        "definition": "deletion_commit",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "deleted",
+        "phase": "terminal",
+        "row": "result",
+        "schema": "restore_point_deleted_contracts.schema.json",
+        "definition": "command_result_receipt",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "expired",
+        "phase": "initial_pending",
+        "row": "operation",
+        "schema": "restore_point_expired_contracts.schema.json",
+        "definition": "expiry_commit",
+        "valid": true,
+        "unknown_field_rejected": true
+      },
+      {
+        "family": "expired",
+        "phase": "terminal",
+        "row": "operation",
+        "schema": "restore_point_expired_contracts.schema.json",
+        "definition": "expiry_commit",
+        "valid": true,
+        "unknown_field_rejected": true
+      }
+    ],
+    "whole_value_joins": [
+      {
+        "family": "created",
+        "actual_complete_original_value_commitment_match": true,
+        "all_eleven_receipt_fields_exact": true,
+        "returned_output_equals_actual_terminal_value": true,
+        "point_bytes_and_holds_preserved": true,
+        "old_source_controls_disposed": true,
+        "storage_field_changes_detected": [
+          "sequence_id",
+          "persisted_at_utc",
+          "observed_at_utc"
+        ]
+      },
+      {
+        "family": "deleted",
+        "actual_complete_original_value_commitment_match": true,
+        "all_eleven_receipt_fields_exact": true,
+        "returned_output_equals_actual_terminal_value": true,
+        "point_bytes_and_holds_preserved": true,
+        "old_source_controls_disposed": true,
+        "storage_field_changes_detected": [
+          "sequence_id",
+          "persisted_at_utc",
+          "observed_at_utc"
+        ]
+      },
+      {
+        "family": "expired",
+        "actual_complete_original_value_commitment_match": true,
+        "all_eleven_receipt_fields_exact": true,
+        "returned_output_equals_actual_terminal_value": true,
+        "point_bytes_and_holds_preserved": true,
+        "old_source_controls_disposed": true,
+        "storage_field_changes_detected": [
+          "sequence_id",
+          "persisted_at_utc",
+          "observed_at_utc"
+        ]
+      }
+    ],
+    "prospective_delete_pending_schema_equals_existing_canonical": true,
+    "no_schema_changes": true,
+    "native": "NOT_RUN"
+  },
+  "current_source_preimages": [
+    {
+      "path": "Plans/00-plans-index.md",
+      "sha256": "83cef828f5301d3ebddd286da84a3c9ff0776c0769f3fcf6e37ffd6483086926"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "7ca6efdae0e3b2c22d2482bc1bea509394e9bc964b84fe7691a0bdc7360446f9"
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "sha256": "aba3c0b3216ce0a7e18826691e3f53352780311489503ed458ed2464097f6d08"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "a5abf9d987b6a14ad276b58cedc88a0aa0690eda4a905c527fc55c59dce5a9d5"
+    },
+    {
+      "path": "Plans/Decision_Log.md",
+      "sha256": "d913d458dee4fa50b3edfee8d3ecb6553e418421bf568c867f5029025269705d"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/restore_point_created_contracts.schema.json",
+      "sha256": "69ad7cd6908ef8b4233cffcf2468e7d69361bc5ffea7dacaf6a3ec8bbcdf5821"
+    },
+    {
+      "path": "Plans/restore_point_create_result.schema.json",
+      "sha256": "d34bb9e3d46ee806dfcf61d41abe1410f77882f1d195ccb394d347ce835c3c82"
+    },
+    {
+      "path": "Plans/restore_point_deleted_contracts.schema.json",
+      "sha256": "7f52a577ef2ea546df09a298d0f1bb1b69150a8ccdc3bb8e8b463f73097412ef"
+    },
+    {
+      "path": "Plans/restore_point_expired_contracts.schema.json",
+      "sha256": "061c4bb28951f2c6ab01e2a252060ba51058fa45c5aa18ee7df2409bd13ff205"
+    },
+    {
+      "path": "Plans/restore_point_retained_read.schema.json",
+      "sha256": "d95e9cdbfd84e447fc775aefb5b368f1c5d7f48fa98aa0f64cace80d3402e3ff"
+    },
+    {
+      "path": "Plans/restore_point_retained_creation_read.schema.json",
+      "sha256": "61294612884f42eaee654346251827d6048a6b4447c416c55bcfe5dee6b2caa4"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "354127ee5cf5760cfcf39ab3b8a3ad44bbca599a6aada8771ab511756d79dc99"
+    },
+    {
+      "path": "Plans/event_family_registry.json",
+      "sha256": "6522979e0c4e0f094bbf854dd3f53e6aec54052601ba31d64e8a857eb321bd80"
+    }
+  ],
+  "unchanged_registered_events": 42,
+  "unchanged_physical_families": 113,
+  "unchanged_retention_policies": 25,
+  "new_durable_schemas": 0,
+  "new_terminal_metadata_variants": 0,
+  "full_value_dependency": "storage.first_append_receipt.resolve_full_value.v1",
+  "pending_owner_bindings": [
+    "owner.storage.restore_point_creation_pending_recovery@1.0.0",
+    "owner.storage.restore_point_deletion_pending_recovery@1.0.0",
+    "owner.storage.restore_point_expiry_pending_recovery@1.0.0"
+  ],
+  "shared_packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-first-receipt-full-value-20260912/v3/manifest.json",
+    "sha256": "c3f6f7354c81ad87bbae6b2f8df2771ead5b3ec5176157987e3cdb2db2f3c4e1"
+  },
+  "definition_unit": "SP-285",
+  "pending_callers_updated": [
+    "SP-281",
+    "SP-274",
+    "SP-268",
+    "SP-272",
+    "SP-275"
+  ],
+  "native": "NOT_RUN",
+  "initial_observation_provenance": "UNCHANGED_FULL_FUTURE_FIXTURE_LIMITATION_NOT_RUN",
+  "settled_reader_and_summary_expansion": false,
+  "event_depth_completion": false,
+  "frozen_validator_depth_pass": false,
+  "governance_seal": false,
+  "standard_governance": "Registry data is byte-unchanged; the prior 21 diagnostics and documented full-suite failures are not waived or reclassified. No validator change or seal.",
+  "mapping": [
+    {
+      "source": "full_value_adoption.py resolve_original_full_value/exact_receipt; pending/preappend/creation/deletion/expiry owner paths",
+      "canonical": "SP-285 pending full-value dependency and five caller qualifications",
+      "claim": "Stage and final actual complete EventRecord/custody witness equality; exact legacy-v1 unavailable; three crash cuts and immutable original result"
+    },
+    {
+      "source": "terminal_expectations.py capture/check; deletion.py and expiry.py correction diffs",
+      "canonical": "SP-285 complete expected terminal afterimages and final pure publication",
+      "claim": "Actual pending originals, existing keys/codec bytes/hashes and output fixed before dependent helpers; only named terminal overlays"
+    },
+    {
+      "source": "terminal_expectations.py actual_snapshot/authenticate/revalidate",
+      "canonical": "SP-285 direct actual snapshot/source/token authentication",
+      "claim": "Actual canonical rows/bytes and complete current source/lease, not matching detached returns"
+    },
+    {
+      "source": "full_value_adoption.py current_joint_guard/issue_with_pending_guard; preappend.py; independent focused controls",
+      "canonical": "SP-285 same-owner shared publication and effect conservation",
+      "claim": "Actual local current owner predicate inside shared install/issue; preserve genuine direct/backup effects after local refusal"
+    },
+    {
+      "source": "terminal-field-inspection.md; existing canonical value schemas; owner-contract.md limits",
+      "canonical": "SP-285 unchanged terminal shapes, initial/settled boundaries and native qualifications",
+      "claim": "No old source selection/group opening fabricated from witness; no new schema/family/lifetime or observed-at allocation proof"
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/owner-contract.md",
+      "sha256": "77472992915a952fb660f3189bdee77fb5e0baa219e8d368d24d0dc7e0095bf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/afterimage-correction-protocol.md",
+      "sha256": "b25e16ea43ba7bca94d0ba28f595ef9b5293131e7dcc7d3c0f95a2e363073a93"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/terminal-field-inspection.md",
+      "sha256": "87777acfa75c286d011558b0ea1bcf89aec7e5b01b31cc31cf2761bfe0fe19a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/terminal_expectations.py",
+      "sha256": "74759f5221fd681b8208f077fdf4bf04f6a5090c63eb9169840613991b75bb01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/full_value_adoption.py",
+      "sha256": "01d65ad2182f9c7ef4330a298c83e6873b75a6846e7022c64b2b865674e67c48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/deletion.py",
+      "sha256": "af3542eae2ae6cb7b465e023735b8876130ddc22fd220541ad71753b19e1bf56"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/creation.py",
+      "sha256": "a28ec31d053a2cb875a3128f5476e487fc61f5f47d90bca2ec03518312266084"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/expiry.py",
+      "sha256": "62895b4e86402d9378f4ccf6b8eaf4558017c7c3e09fa5406a10a089a85f996f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-pending-full-value-20260912/v2/preappend.py",
+      "sha256": "a86506e4fe71d7cd7d00c8c593dbdfb3140241bb70b4f3692eef135607dbbb27"
+    }
+  ],
+  "external_trace_evidence": [
+    {
+      "family": "created",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-pending-full-value-v2/created-pending-through-terminal.json",
+      "sha256": "ed92a22353e1b3542a2bfe3806db9fcae6d706ca7a09e5b5776cd0c5a811c3af"
+    },
+    {
+      "family": "deleted",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-pending-full-value-v2/deleted-pending-through-terminal.json",
+      "sha256": "ba9fccbe50236882253b269bb08f5073e0a07c85b30fcfb8aec42df1fd0862f4"
+    },
+    {
+      "family": "expired",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/restore-pending-full-value-v2/expired-pending-through-terminal.json",
+      "sha256": "69f78a31be917cd0bd4ac6a743e5173cf9e45624f3642ad3ba9618606493ab5b"
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/verified-pins.json",
+      "sha256": "5bb95b7c8d000c69625f4602ff17a733d612a2bb2c33f3789d0d181913c7e8f2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/schema-and-value-checks.json",
+      "sha256": "bf966debd1c37b26fa6ed107a9e19bb60481ea134e6d5157e6303218cedb51ec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/check_and_report.py",
+      "sha256": "732c5200948274ea984cdd1120b6c5add338d1730a3f49cecf6e9c2fa05c6860"
+    }
+  ],
+  "compilation": {
+    "status": "PASS",
+    "shards": {
+      "docs_checked": 98,
+      "failures": [],
+      "shards_checked": 2385,
+      "source_count": 98,
+      "status": "pass"
+    },
+    "index": {
+      "failures": [],
+      "generated_at_utc": "2026-09-12T04:54:09Z",
+      "schema_id": "pm.plan_index.validation_report.v1",
+      "status": "pass",
+      "summary": {
+        "acceptance_unit_count": 25315,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_runtime_certification_incomplete",
+        "plan_unit_count": 6563
+      }
+    },
+    "preservation": {
+      "status": "PASS",
+      "planunits": 6563,
+      "acceptance_units": 25315,
+      "new_units": [],
+      "changed_prior_units": {
+        "SP-268": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-272": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-274": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-275": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-281": [
+          "acceptance_criteria",
+          "canonical_text"
+        ],
+        "SP-285": [
+          "acceptance_criteria",
+          "canonical_text",
+          "preserved_exact_tokens",
+          "validation_surfaces"
+        ]
+      },
+      "all_other_prior_semantics_exact": true,
+      "derived_shard_groups": [
+        "storage-plan"
+      ],
+      "all_event_family_schema_and_policy_files_unchanged": true
+    }
+  },
+  "derived_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/shard-check.json",
+      "sha256": "35f2a5edaf89fc79181c3bec0a2876d32c8de0ca03384467a47fbefbaf280c82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/index-validate.json",
+      "sha256": "ae1461c0e399d9f0d8a2c34cb8cd258b6de3934cfc458042179dd2913062c633"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-full-value-canonical-root-20260912/compilation-preservation.json",
+      "sha256": "8088b7cb7ebc75b4aec3d9ddc2b86f22af83d1aefc5eb9089d1f8415c952f5bd"
+    }
+  ]
+}

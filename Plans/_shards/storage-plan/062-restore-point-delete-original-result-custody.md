@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L21951-L22041
 
-Source SHA256: `e37fa7e09a25499948f1d58ddee35430472dba6cd33048ec610f2110fe1a90ea`
+Source SHA256: `5f1e07ec677040a72e2c5644ba8b017f433f4ca92339ccabca4fb182fa7b126d`
 
 ---
 
@@ -49,7 +49,7 @@ canonical_text: The restore_point_delete_result family preserves the delete comm
   retirement and cannot execute deletion again. Original source authentication gates first capture; later
   SP-285 resolution uses authentic retained canonical rows and current disclosure policy without retired
   raw SIR/transaction/append controls.
-  SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+  SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 gui_related: false
 gui_classification_reason: Defines backend custody, source validation and owner-result authority.
 split_recommended: false
@@ -76,7 +76,7 @@ acceptance_criteria:
 - Initial source authentication remains complete; later original-result reads authenticate immutable retained
   canonical custody and current disclosure authority without retired raw source/transaction controls or
   reconstructed outcome/receipt facts.
-- SP-285 pending recovery resolves the SP-286 first receipt before the final complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
+- SP-285 pending recovery explicitly requires the installed SP-286 full-value resolver at terminal staging and final publication, authenticating the original complete event and actual v2 receipt custody before the complete owner-local guard; no dependent resolver intervenes before atomic terminal publication.
 - Authentic admitted pending custody replaces disposed original admission controls only on the exact installed recovery route; final completion preserves independently current point holds.
 validation_surfaces:
 - Plans/restore_point_deleted_contracts.schema.json
