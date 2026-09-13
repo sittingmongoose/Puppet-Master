@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2654-L2807
+Source lines: L2654-L2879
 
-Source SHA256: `99d7c7bf3a7ac862eb9f5ba1c4d15624399a6d0834825dab27c55db89577e861`
+Source SHA256: `d1ce65fa651bd4df3b10089e97006c19ed3e69292b78a08ead7d1ecc357f2910`
 
 ---
 
@@ -162,3 +162,75 @@ The exact narrow original owner roles are `owner.sir.goal_cancel@1.0.0` and `own
 Retained replay reads exact immutable Terminal and its original progress epoch, preserving original request/result/outcome/response and applying only CV-333 original_dispatch_id/replayed decoration. It never dispatches again, relatches Stop, emits a new event, republishes control, or changes prior unknown to success. Current-body visibility is not an audit prerequisite; actual current app/Project audit authority and original physical/source/codec/retention installation remain required. Recovery may settle genuine pending effects under their owners but cannot rewrite the original issued terminal result. SP-304 owns the exact source-to-terminal stage predicates, fixed original error profile and no-effect/unknown branches.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+### SIR-051 - Original bound Plan acknowledgement, terminal and retained replay custody
+
+SIR-051 integrates the existing cmd.chat.goal.cancel bound Plan profile with GRS-076 and APR-017 through the same original SIR dispatch/result owner. It adds no public command, peer dispatcher, synthetic PlanCancelRequest or new CommandOutcomeRecord state. The existing complete cancellation result, original owner identity, acknowledgement, outcome/response and immutable terminal schemas remain exact.
+
+Original C-source may have an accepted nonterminal outcome. The actual SIR owner must issue and durably read back its genuine original acknowledgement, or an executing successor that preserves that acknowledgement, before the original append owner acquires the exclusive cancellation reservation. Preserve the actual acknowledgement receipt and frame offset, complete normalized/dispatch/command-instance identity and all target/topology/operation generations. Missing acknowledgement is unavailable before C-stop; an assumed zero or copied matching outcome is not authority. This order permits acknowledgement to use its own original append authority without waiting behind a later cancellation reservation.
+
+C's existing AssignmentInput/AssignmentAudit commits the entire authentic acknowledged source and physical selection, original source/binding, original reservation, event term tree, complete numeric domain, original codecs and exact control/progress bounds. That C assignment is issued before Plan BeforeStopPrepared and never consumes its future hash or effects. Plan preparation then consumes the identical genuine current_cancel_assignment. Preserve SP-305's exact assignment input/domain prefixes, LF and complete local Goal JSON preimages. All actual current original sources/owners and both independently prepared domains must remain valid at C-stop. No Plan preparation work may smuggle an append under the already held fence; genuine release/abandonment and fresh pre-Stop preparation is required if its actual work needs competing append authority.
+
+No-bound Plan-version leaves remain null. Bound SucceededResult's nested OwnerSettlement.original_execution_binding.plan_version is the exact original nonnull positive integer singleton, with no new ceiling or alternate codec. All nested original result, receipt, publication, control, SIR outcome/response generations and acknowledgement offsets preserve the complete existing inventory. The CV-333 whole-result RFC8785 contract, original producer JCS and complete EventRecord MessagePack remain separate. Retained SIR carriers continue to use their existing exact Goal JSON and complete original transport schemas; this integration introduces no extra JCS projection for outcome/response. Unrepresentable exact original values are route unavailability, never rounded/stringified/omitted state.
+
+Original cancellation_id equals SourceAudit.normalized_identity.operation_id; cancellation receipt accepted_at and event payload cancelled_at_utc equal the exact original producer occurred_at_utc bytes. Plan/Scheduler commit times, SourceOrigin issuance, Storage observations, Run settlement and later compaction times are distinct original sources and never overwrite the Goal acceptance time. No new EventRecord field, event or cancellation receipt field is introduced. Progress retains original 0..7 phase/path rules and no retry increment. Actual append consumption replaces the unused-reservation check with genuine original full EventRecord/append/first-receipt custody for later terminal publication; serialized audit is neither an unconsumed native fence nor an effect.
+
+`BoundTerminalEntry` is only the succeeded branch after actual assignment and current original Plan settlement; it requires unchanged TerminalInput with SucceededResult. `BoundUnsettledTerminalEntry` preserves TerminalInput NoEffectResult or RecoveryRequiredResult without requiring AssignmentAudit or Plan effects. A preparation refusal before assignment issuance may still use the authentic original zero-effect proof and original SIR predicate. Unknown truthfully binds its original selected immutable progress and original effect evidence. Prior acknowledgement, sequence allocation, Stop or genuine owner work is not erased, and no_effect never labels this operation's real partial cancellation effects as absent.
+
+`BoundRetainedReplayEntry` is only passive replay of an original succeeded terminal. It joins original SourceAudit, immutable terminal/result/outcome/response/progress identity and APR-017's authentic RetainedEffectReadSuccess from the original published compact Plan/Scheduler effect/result/origin custody. The original normalized command/request/idempotency/operation and current actual SIR replay principal/permission must agree. The retained reader needs the genuine original first-settlement origin, not a newly reconstructed full Run, old Plan preparation or expired action lease. Source retirement does not by itself invalidate those retained immutable original objects. Returned action_authority remains none.
+
+`BoundUnsettledReplayEntry` instead preserves passive immutable no_effect/unknown replay through the original SIR custody/proof/permission route and requires no nonexistent Plan effects. A later genuine owner recovery cannot mutate an original unknown to success. The original terminal-selected progress snapshot and hash remain unchanged even if the current progress head later advances. No retained route reopens C-owners/C-publish, supplies first-publication current settlement, reacquires a consumed append reservation, emits a second event, repeats Plan/Scheduler mutation or fabricates any missing original receipt. Conflicting/missing original custody remains unavailable under the original result vocabulary.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: SIR-051
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: Original bound Plan acknowledgement, terminal and retained replay custody. Genuine original
+  acknowledgement and durable readback precede cancellation append reservation and complete C assignment
+  precedes Plan preparation.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- SIR-050
+- GRS-076
+- SP-307
+unblocks: []
+acceptance_criteria:
+- Genuine original acknowledgement and durable readback precede cancellation append reservation and complete
+  C assignment precedes Plan preparation.
+- Bound successful terminal/result hashing preserves every original codec, identity, numeric domain and
+  accepted-time byte.
+- Success-only retained Plan-effect replay is distinct from original no_effect/unknown terminal and replay
+  paths without nonexistent dependencies.
+- Replay preserves immutable terminal/result/outcome/response and original progress snapshots, grants
+  no current publication authority and never repeats effects.
+validation_surfaces:
+- Plans/assistant_plan_cancel_bound_entry.schema.json
+- Plans/assistant_plan_cancel_contracts/bound-method-adoptions.json
+- Plans/assistant_plan_cancel_contracts/bound-semantic-obligations.json
+- Plans/goal_cancel_command_custody.schema.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: sir_051_bound_plan_custody
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```

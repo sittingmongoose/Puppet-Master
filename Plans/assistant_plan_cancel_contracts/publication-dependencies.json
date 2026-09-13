@@ -1,0 +1,95 @@
+{
+  "cancel_nodes": [
+    {
+      "node": "original_sources_and_reserved_identity",
+      "depends_on": []
+    },
+    {
+      "node": "genuine_canonical_Stop_and_cancellation_receipts",
+      "depends_on": [
+        "original_sources_and_reserved_identity"
+      ]
+    },
+    {
+      "node": "native_after_values_with_original_run_anchor",
+      "depends_on": [
+        "original_sources_and_reserved_identity"
+      ]
+    },
+    {
+      "node": "native_source_origins",
+      "depends_on": [
+        "native_after_values_with_original_run_anchor"
+      ]
+    },
+    {
+      "node": "original_Plan_and_Scheduler_effects",
+      "depends_on": [
+        "native_source_origins",
+        "genuine_canonical_Stop_and_cancellation_receipts"
+      ]
+    },
+    {
+      "node": "effect_origins",
+      "depends_on": [
+        "original_Plan_and_Scheduler_effects"
+      ]
+    },
+    {
+      "node": "original_result_with_request_identity",
+      "depends_on": [
+        "effect_origins",
+        "original_sources_and_reserved_identity"
+      ]
+    },
+    {
+      "node": "result_origin",
+      "depends_on": [
+        "original_result_with_request_identity"
+      ]
+    },
+    {
+      "node": "passive_settlement_delivery",
+      "depends_on": [
+        "result_origin",
+        "effect_origins"
+      ]
+    }
+  ],
+  "retirement_nodes": [
+    {
+      "node": "actual_existing_full_run_origins_and_original_terminal_anchor",
+      "depends_on": []
+    },
+    {
+      "node": "actual_existing_policy_membership_protection_and_survivor_inputs",
+      "depends_on": []
+    },
+    {
+      "node": "complete_original_retention_boundary_commitment",
+      "depends_on": [
+        "actual_existing_policy_membership_protection_and_survivor_inputs"
+      ]
+    },
+    {
+      "node": "retirement_receipt",
+      "depends_on": [
+        "actual_existing_full_run_origins_and_original_terminal_anchor",
+        "complete_original_retention_boundary_commitment"
+      ]
+    },
+    {
+      "node": "atomic_receipt_publication_and_exact_full_run_removal",
+      "depends_on": [
+        "retirement_receipt"
+      ]
+    },
+    {
+      "node": "retained_retirement_read",
+      "depends_on": [
+        "atomic_receipt_publication_and_exact_full_run_removal"
+      ]
+    }
+  ],
+  "qualification": "Declarative physical dependencies, not executed instances. No anchor hashes its containing value; original-source survivors exclude the not-yet-born retirement receipt. Original full input/candidate native guards remain required."
+}

@@ -1,0 +1,484 @@
+{
+  "schema_id": "pm.event_authority_step08_assistant_plan_cancel_checks.v1",
+  "source_base": "274c681e43845d3011f0438d379a276bdc4503df",
+  "scope": "Original bound Plan cancellation source and SIR integration plus full-Run runtime-only retirement; no event admission",
+  "source_files": [
+    {
+      "path": "Plans/Assistant_Plan_Runtime.md",
+      "sha256": "8a7697d7ee7800c7510683104f6d27b7891e534e7b7f49d36032d241916fdd06",
+      "bytes": 137292
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "sha256": "02174d365649f9fa5305d01a03314d50e317b093527671deaa3c78cf453bc8ab",
+      "bytes": 413590
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "sha256": "f2f241eaab17b9c6afa65d9cc460034a13323832e13de141effbdecb2e6930e9",
+      "bytes": 1263835
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "sha256": "0f2a22408493d57bbc77c3ed6873a5b2d4de4adede558a9942d99adc5287d12d",
+      "bytes": 520143
+    },
+    {
+      "path": "Plans/Scheduling_and_Quota_Resume.md",
+      "sha256": "ba46ac7e4943bd3a15e05577d34d0bef49391e103270fec6c806a46e6147437f",
+      "bytes": 67664
+    },
+    {
+      "path": "Plans/Shared_Integration_Runtime.md",
+      "sha256": "d1ce65fa651bd4df3b10089e97006c19ed3e69292b78a08ead7d1ecc357f2910",
+      "bytes": 296612
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_bound_entry.schema.json",
+      "sha256": "5a952fc07e3084a9d652106324c95bba4b2057e719d208a568ce812c6e48c578",
+      "bytes": 12577
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/bound-method-adoptions.json",
+      "sha256": "bd86e0f19a0837be18918ad03c15d71173f754eced3873122945ddad6ad9c107",
+      "bytes": 5823
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/bound-semantic-obligations.json",
+      "sha256": "19de653c41388df728d038c63fdb9ec6763fa2fa3ad09c772289ff356f92618b",
+      "bytes": 3024
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/future-slot-rules.json",
+      "sha256": "8dac7ab56758890c370c257009efd11f885eb570de4bc69c037c69bb7fda9dc4",
+      "bytes": 2404
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/methods.json",
+      "sha256": "f90c20ac96d41f3ceca387e6e8057f1ae2b80c8db1fbe45f98830587bdfa391e",
+      "bytes": 14197
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/numeric-paths.json",
+      "sha256": "0974c313d46c69a4e1cb7ed9238b6b9d1099cce6a1b77e4c8e00a21c4dab029d",
+      "bytes": 91484
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/owner-field-map.json",
+      "sha256": "759373da891e092ebe86a4f1cccf4d1b7ed417861a2617bdd53c1831425111cf",
+      "bytes": 16274
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/physical-families.json",
+      "sha256": "554a69e027a9757a1d9a9fc2b4babaf1f15a5c18b741be02e97e3d0f19981e5e",
+      "bytes": 11407
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
+      "sha256": "bd6f71370ad85a5f5c947c9dfad0281ae8f4093788d9c4f48bb9e4e6d0369cab",
+      "bytes": 2508
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_contracts/semantic-obligations.json",
+      "sha256": "ec5e3b210a5a2b1db0ff100a51af350bfdeba3662bbf9f4fb7c4ea69bda24602",
+      "bytes": 11121
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_custody.schema.json",
+      "sha256": "abe41a40ab6aa0d8ba5953e61e660930ecf84d60878b9f3ff24ce9284849ad85",
+      "bytes": 99516
+    },
+    {
+      "path": "Plans/assistant_plan_cancel_schema_resources.json",
+      "sha256": "9b18403cf43307c31e5b75a307c4ecb31941f055a5d4ad874b8197cdca9338f7",
+      "bytes": 7419
+    },
+    {
+      "path": "Plans/goal_cancel_contracts/execution-methods.json",
+      "sha256": "824b5051f142c6f6fbe23e73af34a59aa468cdd1a89743fd0aafa32619c5f376",
+      "bytes": 20236
+    },
+    {
+      "path": "Plans/goal_cancel_contracts/methods.json",
+      "sha256": "53d16be0cda522885ab376cd2ce2a509a97e8a9e83494319c084b890c948d844",
+      "bytes": 12419
+    },
+    {
+      "path": "Plans/goal_cancel_contracts/numeric-paths.json",
+      "sha256": "ccba7ee1c1bd6d371302a7753444da2010c9b18b9160122e4229fe3374ad52de",
+      "bytes": 16595
+    },
+    {
+      "path": "Plans/goal_cancel_contracts/semantic-obligations.json",
+      "sha256": "a060c25dbdaadf83d5f1ad6ced70af3f7dd558296cd64153d967bd83c15805ad",
+      "bytes": 13969
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "sha256": "fe3cab3c5136b0340d4463251e00f93405eb2a3649e46ca08be21f04f0ece2b6",
+      "bytes": 2085726
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "sha256": "bd5aa3b073d25cbb4f1cf716fc7a4f24233fe540de705e8b4890e2ff72feb522",
+      "bytes": 3402313
+    }
+  ],
+  "root_contract_checks": {
+    "classification": "ROOT_CANONICAL_DRAFT_STRUCTURAL_AND_SOURCE_CHECKS",
+    "native": "NOT_RUN",
+    "model_and_concurrency": "NOT_RUN",
+    "passed": 257,
+    "failed": 0,
+    "references_resolved": 2308,
+    "new_storage_families": 10,
+    "old_storage_families_preserved": 156,
+    "canonical_resource_count": 21,
+    "embedded_resource_count": 3
+  },
+  "applied_source_checks": {
+    "base": "274c681e43845d3011f0438d379a276bdc4503df",
+    "new_units": [
+      "APR-017",
+      "ATS-052",
+      "CV-348",
+      "GRS-076",
+      "SQR-011",
+      "SIR-051",
+      "SP-306",
+      "SP-307"
+    ],
+    "new_acceptance_criteria": 35,
+    "prior_unit_changes": [
+      {
+        "id": "APR-016",
+        "changed_fields": [
+          "acceptance_criteria"
+        ]
+      }
+    ],
+    "passed": 157,
+    "native": "NOT_RUN"
+  },
+  "independent_machine_checks": 168,
+  "independent_prose_review": "NO_REMAINING_BLOCKING_PROSE_FIDELITY_FINDINGS",
+  "schema_graph": {
+    "whole_resources": 21,
+    "embedded_resources": 3,
+    "root_ref_occurrences": 2308,
+    "independent_ref_occurrences": 2371,
+    "difference": "Independent count separately traverses registered embedded resources."
+  },
+  "storage": {
+    "existing_families_preserved": 156,
+    "new_families": 10,
+    "total_families": 166,
+    "runtime_policy_family": "assistant_plan_run",
+    "other_new_families": "Existing RP-AUTHORITY-INDEFINITE mappings",
+    "all_existing_policy_objects_preserved": true,
+    "all_42_event_rows_bytes_preserved": true
+  },
+  "index": {
+    "failures": [],
+    "generated_at_utc": "2026-09-13T21:54:40Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 25670,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6615
+    }
+  },
+  "shards": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2610,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "derived_scope": {
+    "changed": 766,
+    "source_files": 24,
+    "shard_dirs": [
+      "Plans/_shards/automated_testing_system",
+      "Plans/_shards/contracts_v0",
+      "Plans/_shards/goal_runtime_system",
+      "Plans/_shards/shared_integration_runtime",
+      "Plans/_shards/storage-plan",
+      "Plans/_shards/storage_value_registry"
+    ],
+    "index_files": [
+      "Plans/.plan_index/acceptance_units.jsonl",
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl"
+    ],
+    "only_edited_owner_shards": true,
+    "new_index_plan_units": 6615,
+    "new_index_acceptance_units": 25670
+  },
+  "standard_gates": {
+    "pass": 21,
+    "fail": 15,
+    "failing_checks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_browser_event_admission",
+      "validate_evidence",
+      "validate_github_project_integration",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_prd_planning_runtime_contracts",
+      "validate_testing_session_event_admission",
+      "verify_spec_lock"
+    ],
+    "comparison": {
+      "baseline_source_commit": "274c681e43845d3011f0438d379a276bdc4503df",
+      "baseline_failing_checks": [
+        "json_syntax",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_audit_closure",
+        "validate_audit_status_index",
+        "validate_browser_event_admission",
+        "validate_evidence",
+        "validate_github_project_integration",
+        "validate_implementation_readiness",
+        "validate_plan_graph",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_prd_planning_runtime_contracts",
+        "validate_testing_session_event_admission",
+        "verify_spec_lock"
+      ],
+      "current_failing_checks": [
+        "json_syntax",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_audit_closure",
+        "validate_audit_status_index",
+        "validate_browser_event_admission",
+        "validate_evidence",
+        "validate_github_project_integration",
+        "validate_implementation_readiness",
+        "validate_plan_graph",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_prd_planning_runtime_contracts",
+        "validate_testing_session_event_admission",
+        "verify_spec_lock"
+      ],
+      "added_failing_checks": [],
+      "removed_failing_checks": [],
+      "comparison_scope": "Exact named gate outcomes. Existing diagnostic lists are bounded samples, not a proof that every failure location is unchanged."
+    }
+  },
+  "root_corrections": [
+    "Canonical URI/path/qualification normalization and complete original resource registration.",
+    "Original pre-reservation source/ack guard, post-reservation issue/admission mapping, and both terminal/replay branches explicitly attach to actual original operations.",
+    "Passive retained SIR replay requires authentic compact effect/result/origin/first-settlement custody without claiming current full-Run presence or retirement.",
+    "Full native source authority classification is distinguished from referenced raw content lifetime; full PlanRun retains existing runtime-only class."
+  ],
+  "limitations": [
+    "Native source/issuer installation and codec behavior NOT_RUN.",
+    "Actual safe-stop/all-writer/callback exclusion, atomic native commit, durability/crash/replay and Janitor/backup/restore NOT_RUN.",
+    "Workflow-specific Goal cancellation settlement remains a separate original-owner integration.",
+    "Broader safe-stop operations that mutate fixed selected Plan/Scheduler sources require their own original source profile.",
+    "Existing governance/frozen-validator/readiness failures remain; no family depth pass, Step9 admission or seal."
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/plan-source/manifest.json",
+      "sha256": "e6d0c4cd070cfc55cdc3de6fcc739b70e1ad6092fcb8497b06483deb5444f95d",
+      "bytes": 40403,
+      "members": 212,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/bound-source/manifest.json",
+      "sha256": "a98f71c5680d45c99347c5078bb5c66f0d7b06e80f8c8dba1d1b4d0b2fb5cfdf",
+      "bytes": 1403,
+      "members": 9,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/plan-review/manifest.json",
+      "sha256": "9a0321eb8b77eac1764fe4251899f9289064dff6f77be1e8ac4a41055f40f3c7",
+      "bytes": 559,
+      "members": 1,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/bound-review/manifest.json",
+      "sha256": "833b17d980fc108bc2c312de53416fe21d904a3df5fd80bd243993ac9e8f8dd8",
+      "bytes": 549,
+      "members": 1,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/prose-source/manifest.json",
+      "sha256": "13eb381f9dd9b828d1a59bb551473c34ec8345172c992e504aff26b0bb8bc2b0",
+      "bytes": 2297,
+      "members": 15,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/machine-review/manifest.json",
+      "sha256": "10d49550515d732fe255ca79d0627fcf854d434a08731de9bf52828f3b3ca4f5",
+      "bytes": 1340,
+      "members": 9,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/prose-review/manifest.json",
+      "sha256": "b2390ad8485060b9b29e1cc8a70bfb6efdc767d69abaece49814612c3785c85b",
+      "bytes": 2363,
+      "members": 13,
+      "all_members_verified": true
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/applied-source-checks.json",
+      "sha256": "a94939afbd348136028ea7dd234c072365be18109ade87185694196506f614d7",
+      "bytes": 17177
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/baseline-run-gates.json",
+      "sha256": "c9cd7287faea706bf275d9db6a3bdde48c60254814970414595a2bef004729fb",
+      "bytes": 176257
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/build_report.py",
+      "sha256": "99f0f93f50938994cf7376ca3b0a07aaa91692145a72e546a34b1f54e700fe1b",
+      "bytes": 9873
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/canonical-source-pins.json",
+      "sha256": "ab50d60d4f4dc8d975e1ee2154a6c0f1abf2839772adb13f60f8f03d153dc6d3",
+      "bytes": 4465
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/check_draft.py",
+      "sha256": "20907aae8055519b05a3c2a279d2927cfceb741aaeadb8adc1e85d99351d4773",
+      "bytes": 10736
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/derived-scope.json",
+      "sha256": "d9b3e5a1f95d67eb5753e3e8c29ab7f64e2cae27c5bb135025dbfe9e3d872280",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/draft-checks.json",
+      "sha256": "e933262de105c3ed1a2b8330bb8dc9acca039abf5033d11179c2ad9c475de4d1",
+      "bytes": 28605
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/draft-resolved-refs.json",
+      "sha256": "23fba1546233f4a93e577fe26e93f659e9bd327eb94ff147d85601ae1d364f71",
+      "bytes": 424205
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/gate-comparison.json",
+      "sha256": "478f24066456336f4163d93622897a150d319f7de82fc6e44b76993f9a0e514b",
+      "bytes": 1339
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/gate-history.json",
+      "sha256": "8d1824a8d52c9907e7aebc73cf984b9ae3d37a40d600bdfeaaeed061f35e654e",
+      "bytes": 709
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/gates-before-exit.json",
+      "sha256": "5cc319f54b05a38799195a491c303aa686eab7caccfdbbf1e8b8c07405cb7392",
+      "bytes": 17
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/gates-before.log",
+      "sha256": "d6f51995d5a891637b06cadd86724f36afc4cdc45f72769b963e6a043aa79eb0",
+      "bytes": 145022
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/index-generate.log",
+      "sha256": "6129d0ddc248122e6e13d412ae5cfc230523c6899ecd373228676c17b41749e9",
+      "bytes": 713
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/index-validate.log",
+      "sha256": "d2d93f45bcb3da8ee87adcd049440fb7c750ef7139bce7b2385fadd111b88d17",
+      "bytes": 328
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/machine-scope.json",
+      "sha256": "476698674c11f01dbcc3e37dc32999cb6001189f158fdc618108d72760c45265",
+      "bytes": 1560
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/prepare_machine.py",
+      "sha256": "22525b9b33e9ec0019f30e74327942ad82a7d24a20a57ac0a5eeb0bdf8363bc4",
+      "bytes": 14120
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/prepare_prose.py",
+      "sha256": "d937bad8375dc44897b76160d97ebe6a29b597c725b15bedb1be37ff439c3543",
+      "bytes": 5878
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/prose-scope.json",
+      "sha256": "103cf190771576bbc57096407cb47c8323e235557a8972654dd3b27764434b37",
+      "bytes": 6674
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/retention-adjudication.md",
+      "sha256": "7631e60361d1273c9d105fa20cd40b9f58f1b1ccd93b0dba4b5fa56a8d6ebe6a",
+      "bytes": 9351
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/run-gates-normalized.json",
+      "sha256": "d7cb860a80e9f44a74104845dfa6b0c10ae4230ade1522ad106bbf05005f7e6c",
+      "bytes": 142986
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/run-gates.json",
+      "sha256": "ba20995ae984e4862dda7e1409a28802b88e2ea61d685f760f147128ceb5eb49",
+      "bytes": 139145
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/run-gates.log",
+      "sha256": "b55aa26df52712555c71a4befc1b8cc7c91d53c9fc76f29e88479dfc09259843",
+      "bytes": 143853
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/shard-check.log",
+      "sha256": "0fb4826f5b7f711e663527e724e15b803e00b067b71922f15c9d237324e190d0",
+      "bytes": 111
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/shard-generate.log",
+      "sha256": "ab4a8f497a3330557bfe973cfca8a94352062e0b71b59cfcd0f910b7df7ae73c",
+      "bytes": 115
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/source-paths.json",
+      "sha256": "74474f3f918c60a60295dc328ee4633385140fd050ed7df0ada37024e7a40ade",
+      "bytes": 1269
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/gate-diagnostic-comparison.json",
+      "sha256": "a1ce910d160942d0f026a80391cc500908ee59e77103f76cbb07eb803518ce7d",
+      "bytes": 3504
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/assistant-plan-cancel-canonical-20260913/root/final-scope.json",
+      "sha256": "0aa8b4d7a051f693783e8d523cb54808c4606d8d9c3173b88580b20979683629",
+      "bytes": 59409
+    }
+  ],
+  "cost": "Source review and repository checks only; monetary attribution unavailable."
+}

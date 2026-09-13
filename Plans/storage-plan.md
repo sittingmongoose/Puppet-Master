@@ -24684,7 +24684,7 @@ If an older SP-287 objective/metadata pending reservation exists, cancellation d
 
 C-receipt issues one immutable minimal CancellationReceipt under the same shared Goal/Storage fence after the actual StopReceipt and authentic cancellation_pending are established and older ordinary pending is clear. Scope, operation, cancellation_id, original body revision/currentness, SourceAudit, actual original StopReceipt and original accepted occurrence agree. The receipt records user cancellation acceptance and its original durable Stop; it does not assert event issuance, active-view removal, SIR success or Workflow settlement. It contains no future receipt/event/control-publication hash and no text. cancellation_id equals the exact already genuine SourceAudit.normalized_identity.operation_id; its scope is the same Storage/Project/thread/Goal tuple. The cancellation_receipt_ref is the exact existing goal_cancel_receipt:O physical key. Both identifiers are known at original C-source and never allocated anew by C-receipt or replay. accepted_at equals SourceAudit.producer_metadata.occurred_at_utc byte-for-byte, preserving the original accepted cancellation time and spelling; receipt durability time is separate actual progress/transaction evidence. Actual receipt and receipt_committed progress publication are atomic. Later loss or refusal preserves that genuine receipt.
 
-C-owners obtains the actual independently owned effect disposition for this exact execution. No-bound-Plan requires complete actual binding-owner proof, not active_run_ref=null or an empty caller list; it preserves Workflow/run records and asserts none_required only for the Plan coupling specified below. A bound Plan requires its genuine original PlanRun cancellation, Plan Canceled control, exact run-specific schedule/quota invalidation and late-callback fence under PGOAL-007..010 before owners_settled. Goal never writes those bodies, cancels unrelated schedules or manufactures settlement receipts. The exact bound-Plan producer/query/CAS/result adapters are not yet supplied by the current owners; SP-305 remaining source integrations marks that variant unbound before C-stop. An already begun genuine owner effect can only be reconciled by that owner, never represented as none_required. Ordinary in-flight run/tool safe-stop obligations remain with their actual owners; this contract supplies no Goal child/tool/write settlement list or blanket workflow cancellation.
+C-owners obtains the actual independently owned effect disposition for this exact execution. No-bound-Plan requires complete actual binding-owner proof, not active_run_ref=null or an empty caller list; it preserves Workflow/run records and asserts none_required only for the Plan coupling specified below. A bound Plan requires its genuine original PlanRun cancellation, Plan Canceled control, exact run-specific schedule/quota invalidation and late-callback fence under PGOAL-007..010 before owners_settled. Goal never writes those bodies, cancels unrelated schedules or manufactures settlement receipts. APR-017, SQR-011, CV-348 and SP-306 supply the exact original bound-Plan producer/query/CAS/result source contracts; GRS-076 and SIR-051 bind their complete C-source/assignment/publication profile before C-stop. Actual original owner installation, full codec admission and current native authority remain mandatory. An already begun genuine owner effect can only be reconciled by that owner, never represented as none_required. Ordinary in-flight run/tool safe-stop obligations remain with their actual owners; this contract supplies no Goal child/tool/write settlement list or blanket workflow cancellation.
 
 C-event freezes ProducerInput from the actual original minimal receipt, SourceAudit and independently authenticated owners_settled progress, with payload revision/currentness equal to the original unchanged body. Cancelled occurrence is the original accepted cancellation time, not append acknowledgement. The exact active-v3 payload references the earlier actual receipt and source; it never contains the future first AppendReceipt, ControlPublication or terminal. Compare and publish the complete immutable producer input by progress CAS; changing current body/time/caller metadata cannot reseal an old event.
 
@@ -24878,13 +24878,13 @@ The original append boundary repeats the full domain/resource/source/candidate c
 
 ##### Every original entry and final boundary
 
-The exact method/family matrix is Plans/goal_cancel_contracts/execution-methods.json. The complete integer path inventory and source derivations are Plans/goal_cancel_contracts/numeric-paths.json; conditional nullable Plan-version paths remain null in this bounded route, and full EventRecord adds its separately reserved sequence singleton. Before the first returning helper, each independently callable installer, creator, association reserving/committing/transferring/migrating/restoring/deleting method, current/audit reader, selection issuer, assignment reservation issuer, domain validator and original append/terminal publisher independently captures complete actual original participant/root/registration/owner/operation/source preimages and the entire permitted output. This includes unrelated existing members that its transaction must preserve. A supplied BindingRevision, Selection, EncodingTerm, AssignmentAudit or builder result is not that independent expectation.
+The exact method/family matrix is Plans/goal_cancel_contracts/execution-methods.json. The complete integer path inventory and source derivations are Plans/goal_cancel_contracts/numeric-paths.json; no_bound_plan Plan-version paths remain null, bound_plan paths are the exact nonnull positive integer singleton from the authentic original binding under the unchanged original CV-333 whole-result codec, and full EventRecord adds its separately reserved sequence singleton. Before the first returning helper, each independently callable installer, creator, association reserving/committing/transferring/migrating/restoring/deleting method, current/audit reader, selection issuer, assignment reservation issuer, domain validator and original append/terminal publisher independently captures complete actual original participant/root/registration/owner/operation/source preimages and the entire permitted output. This includes unrelated existing members that its transaction must preserve. A supplied BindingRevision, Selection, EncodingTerm, AssignmentAudit or builder result is not that independent expectation.
 
 After ALL parsers, schema validators, hash/codec functions, membership builders, copies, currentness checks and source resolvers return, one final pure predicate compares the complete actual native source/permission/Stop/cancellation/registration/root/backup/owner/lease set and every pending candidate byte with the independently derived permitted result. Actual whole control/head CAS, immutable-key absence, pending identity and all old preserved members participate. No returning helper occurs between this predicate and original commit/append/disclosure. Readback verifies complete actual committed values before dependent publication. An outer check after an incorrect original effect is insufficient. Third-state or changed guards fence; they do not roll back an earlier Stop, receipt, original event, control publication, SIR result or unrelated genuine effect.
 
 ##### Exact remaining scope
 
-Bound Plan routes retain PGOAL-007..010: original PlanRun cancellation, Plan Canceled control, exact run-specific schedules/quota consent invalidation and late-callback fencing, without cancelling unrelated thread messages. Their complete original effect/CAS/settlement sources remain a separate normative integration dependency; this contract supplies association truth but not those effects. Workflow-specific disposition is likewise not inferred from no AssistantPlan binding. Unsupported prior Stop representations and pre-enrollment binding mappings require exact original migration evidence; neither is zero-initialized. No new product lifecycle or retention selection was made. This is Step 8 contract work for an already registered event. Native installation and full depth remain unproved; the distinct Step 9 campaign is untouched.
+Bound Plan routes retain PGOAL-007..010: original PlanRun cancellation, Plan Canceled control, exact run-specific schedules/quota consent invalidation and late-callback fencing, without cancelling unrelated thread messages. APR-017, SQR-011, CV-348 and SP-306 supply their complete original effect/CAS/settlement source contracts, with GRS-076 and SIR-051 providing exact bound C-source/assignment/publication admission. Genuine current native owner/effect/codec authority remains independently required. Workflow-specific disposition is likewise not inferred from no AssistantPlan binding. Unsupported prior Stop representations and pre-enrollment binding mappings require exact original migration evidence; neither is zero-initialized. No new product lifecycle or retention selection was made. This is Step 8 contract work for an already registered event. Native installation and full depth remain unproved; the distinct Step 9 campaign is untouched.
 
 #### Exact source bytes, keys, codecs and retention
 
@@ -24949,6 +24949,220 @@ These are normative source integration requirements, not native execution or Ste
 
 Native registration/all-writer exclusion, Goal birth, actual source authentication, actual codec implementation, locking/leases, atomic redb/Seglog/first receipt, backup/restore/deletion, ordinary/crash/fault behavior and model fixtures are all NOT_RUN. The bounded canonical source contracts do not prove these native behaviors. Metaschema/reference/hash inspection is only source evidence.
 
-The exact physical-family and independently callable method contracts are `Plans/goal_cancel_contracts/execution-physical-families.json` and `Plans/goal_cancel_contracts/execution-methods.json`. `Plans/goal_cancel_contracts/numeric-paths.json` is the complete selected source integer inventory; it does not impose a new Goal integer bound. All schema references resolve through CV-347's complete offline graph. Original Plan/Workflow settlement adapters, unsupported prior-source migrations, and genuinely installed native roles/codec/publication remain independent prerequisites; declaring these source records supplies none of their actual execution evidence.
+The exact physical-family and independently callable method contracts are `Plans/goal_cancel_contracts/execution-physical-families.json` and `Plans/goal_cancel_contracts/execution-methods.json`. `Plans/goal_cancel_contracts/numeric-paths.json` is the complete selected source integer inventory; it does not impose a new Goal integer bound. All schema references resolve through CV-347's complete offline graph. APR-017/SQR-011 and GRS-076/SIR-051 supply the bound Plan source and cancellation integration contracts. Original Workflow settlement adapters, unsupported prior-source migrations, and genuinely installed native roles/codec/publication remain independent prerequisites; declaring these source records supplies none of their actual execution evidence.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+### SP-306 - Original Plan cancellation physical custody and existing class assignments
+
+SP-306 supplies the original native redb custody for APR-017/SQR-011. CV-348's schema resource and `Plans/assistant_plan_cancel_contracts/physical-families.json` define the exact wrappers and keys. All ten families are canonical, non-rebuildable original custody with mandatory coherent backup; none is a cache or materialized event projection. The actual semantic source owner remains Plan, Scheduling or original Storage as declared by the family. This is a registry/source classification under the existing Case L-3 classes, not a product lifetime decision or unknown-policy fallback.
+
+| Family / wrapper | Exact physical key | Existing policy at 1.0.0 | Actual semantic class |
+|---|---|---|---|
+| `assistant_plan_record` / `StorageAssistantPlanRecord` | `assistant_plan_record.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(assistant_plan_id)}` | `RP-AUTHORITY-INDEFINITE` | original Plan identity, approved-version and source-lineage authority |
+| `assistant_plan_run` / `StoragePlanRun` | `assistant_plan_run.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(plan_run_id)}` | `RP-RUNTIME-365D` | full runtime Run; original run_completion anchor and runtime policy only |
+| `execution_schedule` / `StorageExecutionSchedule` | `execution_schedule.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(schedule_id)}` | `RP-AUTHORITY-INDEFINITE` | actual admitted exact-target scheduling instruction/source authority |
+| `quota_resume_consent` / `StorageQuotaResumeConsent` | `quota_resume_consent.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(run_id)}:{hex(provider_id)}:{hex(account_id)}:{hex(consent_id)}` | `RP-AUTHORITY-INDEFINITE` | actual run/provider/account-scoped opt-in approval authority |
+| `execution_schedule_run_binding` / `StorageScheduleRunBinding` | `execution_schedule_run_binding.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(schedule_id)}` | `RP-AUTHORITY-INDEFINITE` | original admitted schedule-to-run source lineage |
+| `plan_cancel_effect` / `StoragePlanEffect` | `plan_cancel_effect.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(plan_run_id)}:{hex(cancellation_id)}` | `RP-AUTHORITY-INDEFINITE` | immutable original cancellation receipt/audit authority |
+| `schedule_quota_cancel_effect` / `StorageScheduleQuotaEffect` | `schedule_quota_cancel_effect.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_run_id)}:{hex(cancellation_id)}` | `RP-AUTHORITY-INDEFINITE` | immutable original invalidation receipt; reason digest only |
+| `assistant_plan_cancel_result` / `StoragePlanCancelResult` | `assistant_plan_cancel_result.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(plan_run_id)}:{hex(cancellation_id)}` | `RP-AUTHORITY-INDEFINITE` | immutable original native result/request-lineage authority |
+| `plan_cancel_source_origin` / `StorageSourceOrigin` | `plan_cancel_source_origin.v1:{hex(storage_instance_id)}:{hex(issued_physical_key)}:{issued_physical_sha256}` | `RP-AUTHORITY-INDEFINITE` | immutable original source lineage, including original compact run anchor |
+| `assistant_plan_run_retirement` / `StorageRunRetirementReceipt` | `assistant_plan_run_retirement.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(thread_id)}:{hex(plan_run_id)}` | `RP-AUTHORITY-INDEFINITE` | original atomic redb compaction receipt and source lineage; no full Run body or history |
+
+Plans/assistant_plan_cancel_contracts/physical-families.json declares exact original redb families/keys/wrappers for the four records, original schedule-to-execution correlation, original source origins, both original effects, original cancellation result and runtime retirement receipt. Logical IDs are lower-case hex of exact UTF-8, never normalized or extracted by prefix guess. Each mutable original source has a monotonically increasing source_revision in its wrapper, starting at 1 at genuine absent-key native birth and advancing by one per actual mutation. This technical revision supports exact CAS and ABA rejection independently of Plan document version, schedule revision, and PlanRun epoch.
+
+Before any original mutation, the actual owner authenticates the whole prior physical value and origin. The owner compares whole bytes/hash, schema/key/storage scope, source_revision and actual current ownership; permitted field changes are derived independently from the actual original operation. The new source and its immutable SourceOrigin publish atomically. The origin names the exact original issuer, operation/transaction, previous whole physical hash (null only for actual proven absent-key birth), new whole physical hash, source revision and causation. An origin is not accepted from a public caller and cannot be minted later to authenticate a preexisting or copied record.
+
+Original native values use the explicitly selected canonical JSON physical codec below; all record fields are retained. SourceBinding binds exact source and origin physical hashes, schema and key. The selector decoder enforces exact family-to-schema/wrapper-role mapping, not only a caller string. Numeric representability is a read/write-route qualification, not a new logical field cap. Values valid under the logical schemas but unsupported by the physical route fail before C-stop for this route; they are not rounded, clamped or silently rewritten. Original restore/deletion/backup/encryption rules remain Storage's.
+
+The mutable source stores only its latest original value; effect receipts store exact before/after bindings and commitments rather than duplicate full Plan/schedule bodies. The explicit existing policy-class assignments below govern the complete compact origins and original native result. They grant no indefinite lifetime to referenced full runtime bodies. No raw transcript/archive, new TTL or alternative physical history store is introduced. Restart must restore the durable native records and original result identity needed by the existing owners; missing source custody is unavailable, never reconstructed from goal.cancelled, owner-effect summaries, UI or worker prose.
+
+#### Exact physical codec and commitments
+
+The declared new native record/receipt/origin families use Storage json_canonical with the existing RFC8785/JCS qualification already consumed by the current cancellation owner and Contracts_V0. This contract does not redefine JCS, canonical MessagePack, Goal JSON or historic physical bytes. The local registry handle RFC8785-JCS-exact-route-v1 names that existing algorithm plus the required original-value exactness preflight; it is not a new numerical product domain.
+
+At the actual original native input boundary reject malformed UTF-8, duplicate keys, surrogate code points, nonfinite/invalid JSON numbers and unknown record fields. Preserve strings without normalization and arrays in original order. Validate the whole native schema. Qualify every actual integer/number against its complete original exact value and the selected JCS implementation, encode canonically, then require exact decode/re-encode equality and equality to the original authorized semantic value. Never let a floating-point parser erase evidence of original rounding before this comparison. Valid logical values not representable on this route are unavailable before C-stop; neither JSON Schema nor this source declaration adds a fixed-width integer cap or confidence range.
+
+Every physical SHA is lowercase SHA-256 over the entire actual canonical wrapper bytes, including schema/version/storage instance/key/source revision where present and all record fields. SourceOrigin.issued_physical_sha256 hashes the entire issued original wrapper. prior_physical_sha256 hashes the entire previous original wrapper; null is allowed only under proven original absent-key birth. SourceBinding.origin hashes the complete original origin wrapper. No semantic-only hash is substituted for a physical selection.
+
+scheduler_complete_selection_sha256 hashes the full canonical ordered object {schedules: [...], consents: [...]} using the complete ScheduleExpected and ConsentExpected values in OwnerSelection. Arrays are sorted by complete physical source keys in exact UTF-8 order and must have unique full source identity; consent identity retains run/provider/account/consent joins. It commits to complete full original values and original source/origin bindings. Actual complete selection and all-writer exclusion still come from the native Scheduler owner, not from the hash or serialized array.
+
+A currentness hash for this native Plan source profile is the whole StorageAssistantPlanRecord physical hash. Actual expected PlanRun, schedule/consent, source revisions and current Stop/permission/owner guards are independent CAS operands. Source revision arithmetic and PlanRun epoch arithmetic remain mathematical integers; an unrepresentable resulting physical value refuses this declared route rather than losing information.
+
+Source assembly order is native after-values -> their origins -> Plan/Scheduler effect receipts -> their origins -> typed Plan cancellation result -> its origin. Native source values do not contain their own origin hash, and origins do not contain their own physical SHA. Effect receipts point at already assembled native source/origin pairs; the typed result points at the already assembled PlanEffect. There is no self/future hash cycle.
+
+
+Every hex component is lowercase hexadecimal of the complete original Unicode-scalar UTF-8 identity with no normalization, trimming, prefix inference or case folding. The issued_physical_sha256 component in the origin key is the exact lowercase 64-character digest of the earlier whole issued value. Every selected physical key, schema/version, storage instance, wrapper role and inner identity must agree. Source revision is an exact integer starting at 1 only at genuine never-born admission and advancing once for each changed mutable wrapper. Full native rows keep all fields, including full schedule invalidation reason; origin/effect/result metadata does not substitute for them.
+
+The Plan record's authority classification covers actual Plan identity, immutable strategy/scope and approved-version/hash source/approval authority; it is the current full aggregate and not document/history-body custody. Schedule authority covers the actual admitted exact-target scheduling instruction, including its full original reason, not timer caches, telemetry, scheduled messages or attachment bodies. Quota consent covers the actual scoped opt-in approval; no provider response/usage archive or future-run consent is added. ScheduleRunBinding is original scheduling lineage and creates no hold on the referenced full Run.
+
+The full PlanRun alone uses RP-RUNTIME-365D@1.0.0; original run source origins preserve its compact first-settlement anchor under SP-307 without retaining the full Run indefinitely. Original effects, result/request identity, source origins and retirement receipt are compact receipt/result/audit/source-lineage authority under RP-AUTHORITY-INDEFINITE@1.0.0. Indefinite-class source admission must reject secret/raw-body content in fields restricted to opaque authentic identities/refs; it cannot sanitize an already accepted value and call it identical. This restriction does not redact full native fields assigned to actual source authority.
+
+The existing authority policy remains indefinite, creation anchored, hold eligible, expiry none and overflow fail_closed, with no TTL/cardinality/max-byte limit. The existing runtime policy remains exactly as SP-307 states. References, hashes and compact receipts create no new full-source hold, content lifetime, restore capability or reconstructible archive. Existing thread/Project visibility, legal holds, content deletion and backup windows remain independently owned.
+
+StorageSourceOrigin authenticates genuine simultaneous issuance by its actual native owner, operation/transaction, exact prior/issued whole hash and original source revision. Birth authenticates complete prior-origin and retirement custody as well as row absence; absence is not never-born proof. All native writers/readers/coherent backup/restore/migration roles are installed together with complete anchor and identity invariants. The canonical map's original_issuer_identities retains the five actual source issuer identities; matching their strings does not create native enrollment. Those issuer identities are provenance, not alternate unqualified v1 direct routes; every actual method uses the full current private entry qualification in the canonical method map. An actual prior deployed value without the required complete schema/original migration is unavailable. No alternate cancellation-owned source database or automatic migration is introduced.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: SP-306
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Original Plan cancellation physical custody and existing class assignments. Exactly ten
+  canonical non-rebuildable original families use complete source/wrapper schemas, exact keys, whole-value
+  hashes and mandatory coherent backup.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- SP-305
+- CV-348
+unblocks: []
+acceptance_criteria:
+- Exactly ten canonical non-rebuildable original families use complete source/wrapper schemas, exact keys,
+  whole-value hashes and mandatory coherent backup.
+- Full PlanRun uses the unchanged runtime class; other families use explicitly justified original authority
+  classes without creating a full runtime archive.
+- Native source birth and every mutation jointly publish authentic origins and preserve complete original
+  logical fields.
+- Every physical/hash/selection codec is exact; unsupported representability refuses the route without
+  a product bound or alternate codec.
+validation_surfaces:
+- Plans/assistant_plan_cancel_contracts/physical-families.json
+- Plans/assistant_plan_cancel_custody.schema.json
+- Plans/storage_value_registry.json
+- Plans/storage_value_registry.schema.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: sp_306_bound_plan_custody
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-029
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```
+
+### SP-307 - Original run completion anchor and runtime-only retirement
+
+SP-307 applies only to the full `assistant_plan_run` runtime row and its original compact retirement custody. It does not retire the Plan aggregate, scheduling instruction, consent, correlations, original origins/effects/result, blobs, EventRecords or backup content. `RunCompletionAnchor`, complete `RunRetentionBoundary`, `RunRetirementSources`, `StorageRunRetirementReceipt` and the independently callable methods are defined by CV-348's canonical schema and `Plans/assistant_plan_cancel_contracts/methods.json`.
+
+#### First actual settlement anchor
+
+`StoragePlanRun.run_completion_anchor` is a NEW required nullable physical-wrapper field; it is not a sixteenth logical PlanRun field. At a genuine unfinished Run birth it is null. `running`, `paused`, `waiting_quota`, `waiting_window`, `blocked` and an unfinished `failed` Run retain null. A failed Run's failure time, Stop time, first cancellation request, audit read, file mtime or backup/restore time is never a run-completion anchor.
+
+The original Plan owner creates `RunCompletionAnchor` exactly once in the same native write that first settles that Run as `completed` or `cancelled`. It contains the exact original storage/Project/thread/Plan/Run identity, terminal state, actual original owner operation and transaction IDs, actual original settlement UTC timestamp, and the **at-settlement** wrapper source_revision and PlanRun epoch. For the new cancellation route those two integers are the independently derived original +1 values; the operation/transaction are the real pre-reserved Plan operation and joint transaction. The time is the actual original native settlement time, not a guessed future clock value. The terminal state must equal the actual native Run state.
+
+The actual native transaction supplies its original timestamp once before full candidate encoding/publication. It becomes an authoritative settlement time only if the transaction commits. Never restamp it on retry. The original Plan effect's committed_at_utc and this first cancellation anchor use that same actual Plan settlement timestamp. An origin's issued_at_utc is independently its actual source issuance time; a later origin time never becomes a new completion anchor.
+
+The new whole Run value and its genuine `SourceOrigin` publish atomically. Every run SourceOrigin carries the exact `run_completion_anchor` of the issued Run wrapper; every non-run SourceOrigin carries null. At first settlement the original source_revision equals anchor.settlement_source_revision and the native epoch equals anchor.settlement_plan_run_epoch. All later lawful writers preserve the whole first anchor byte-exact even if their own source revision or issuance time advances. Their original scopes and terminal state remain immutable; no writer reuses the Run identity, resumes a settled Run, or resets the anchor. Historical terminal sources without authentic first-settlement evidence are unavailable under this profile, not backfilled from current state/time.
+
+The anchor deliberately contains no hash of its own wrapper or origin. Hash order is full Run including anchor -> Run physical hash -> Run SourceOrigin including copied anchor -> origin physical hash -> Plan/Scheduler effects -> effect origins -> original result -> result origin. This is acyclic. The actual native original first-settlement origin is the retained anchor carrier after lawful full Run retirement. Its existing authority/source-lineage class does not turn the full Run into an indefinite archive.
+
+`owner.storage.assistant_plan_run.read_completion_anchor.v3` resolves the exact original terminal SourceOrigin by actual native origin-family custody and exact Run scope, not by source timestamp or row-prefix guesses. The original first-settlement origin must name the same actual run key, have source_revision equal to the anchor's settlement revision, original operation/transaction equal to the anchor's, nonnull prior source hash, and the complete anchor identity/state. The actual origin owner's retained authentication proves issuance. All later encountered run origins must preserve the same anchor. Conflicts or missing original terminal origin return unavailable. A complete original-family lookup or already authoritative exact membership resolver is required; an optional index miss does not prove absence. The read projects `anchor_kind=run_completion` and `retention_anchor_at_utc=anchor.settled_at_utc` for the existing policy resolver, without changing original spelling. It does not claim current full Run availability or lawful deletion merely because an anchor exists.
+
+#### Existing runtime policy and atomic full-row successor
+
+Case L-3's runtime policy is exactly 31,536,000 seconds after actual run completion, 1,000,000/run plus 5,000,000/project, overflow `roll_successor`, expiry `compact`, hold eligible. Those are the existing class limits, not per-new-family caps. Age eligibility is inclusive at original anchor + TTL. Counts use the actual complete runtime class population and the existing order `(retention_anchor_at_utc, sequence_id?, stable_object_id)`, never filename, new observation clock or a cancellation-only count. No numerical product cap or count-scope substitute is added.
+
+`RunRetentionBoundary` is the complete typed original native selection for this one full Run: exact unchanged policy, frozen actual cutoff, full actual scoped runtime population, full actual Project terminal-Run cohort, all applicable protecting refs and required authority survivors, with their actual original owner/source identity and current backup/restore/deletion sources. The actual Storage owner must resolve complete authoritative membership, not accept caller arrays, summary counts or an optional index miss. The population's exact records preserve original owner/run identity, source commitments and existing sequence/stable-object order. Refs/hashes authenticate the actual original native membership source only alongside its full native origin/currentness guard; they do not manufacture completeness.
+
+The latest 25 genuinely terminal Runs in the Project receive the existing automatic recent_run protection. The cohort includes all relevant actual runtime owners, not only Assistant Plan or cancelled Runs; its own authentic original anchors and ordering must be available. A failed unfinished PlanRun has no invented terminal anchor and is not counted as a settled Run by this source profile. Becoming 26th releases only that automatic protection. Unknown cohort/member/currentness evidence blocks compaction. No new recent-run count or timeline is selected.
+
+Every applicable legal hold, recovery/preserved/recent-run anchor, live ref, backup ref, rollback ref and maintenance ref overrides age/count eligibility. Live current readers, unfinished C-publication, original command reconciliation, pending effect recovery and callbacks needing the full original Run are covered by their actual existing live/maintenance/recovery reference owners. The narrow current-after-state route cannot release its own dependency by converting itself into retained audit. Actual retained-result consumers that only need original compact custody do not invent a permanent full-Run ref; their real source owner must explicitly confirm that dependency has settled. No reference is released merely because a side receipt or timer says done.
+
+The executing Janitor's own transaction-scoped selection/exclusion is consumed by this atomic operation; it is not evidence that other live/maintenance refs vanished. Any independently protecting self/pending maintenance dependency must satisfy its actual owner release rule. Do not filter it out by matching operation names.
+
+This narrow `compact_expired.v3` full-row replacement requires actual TTL expiry **and** all original eligibility protections cleared. Count pressure can initiate existing successor rollover/compaction, but cannot use this route to erase unexpired or protected full runtime values. Earlier count-driven successor rollover preserves those values under the original policy. If complete successor capacity/eligibility cannot be proven, the original maintenance owner preserves source authority rather than changing the policy or dropping protected data.
+
+The existing native Storage Janitor/maintenance owner runs this original step under the aggregate canonical-store lock and applicable original maintenance lease. The outer `compact_expired.v3` accepts exact RunScope in that actual native invocation, resolves a prior genuine retirement receipt first, and otherwise resolves the complete original `RunRetirementSources` for the directly callable `compact_expired_native.v3` participant. Thus replay after full-row retirement requires no reconstructed Run input. Missing full source without authentic prior receipt returns unavailable. `RunRetirementSources.actual_maintenance_operation` uses the complete existing generic storage_maintenance_operation shape with actual operation_kind=compaction. Its actual owner, scope, lease, source/target authority and full current operation bytes are independently authenticated. Merely validating that generic shape grants no native maintenance authority. The owner performs this exact redb compaction step, not an EventRecord-only seglog source/target manifest or CURRENT transition. No seglog generation, event or storage lifecycle status is fabricated or borrowed as proof of a redb row removal.
+
+Before any returning helper, independently capture the complete current anchored StoragePlanRun, exact current source origin, original first-settlement origin, actual maintenance operation, original policy/whole selection/protection/backup sources, existing retirement destination, and all required authority survivors. Derive the complete candidate retirement receipt and independently expected write/removal set. Whole values and numerical domains are qualified under the installed exact schemas/JCS before mutation. Reserve original native transaction/receipt identity through the actual owner; the deterministic receipt key is based on original storage/Project/thread/Run identity. Set compacted_at_utc only to that genuine original Storage compaction transaction's time. It is never an anchor for the old Run's runtime policy.
+
+The permanent compact receipt names the exact full removed Run source binding, original terminal origin selector and immutable anchor, original native maintenance operation/transaction/owner/lease, unchanged policy identity/registry commitment, original frozen cutoff, complete original selection/protection/authority-survivor commitments, exact observed class counts and original backup/deletion source bindings. Full runtime population arrays, complete beforeimages and private eligibility inputs are transient native operation inputs; they are not copied into the permanent receipt. Every committed receipt member is independently derived from those full originals. No field contains a hash of its own receipt or a later journal/result, so the graph is acyclic.
+
+After all returning helpers, the existing Storage and original Plan participants independently recheck their complete native source/operation/control/permission/membership/policy/reference/hold/backup/recovery/currentness facts, exact original full candidate and complete survivor union. In **one original redb transaction**, CAS the full Run bytes/revision and required original gate/preimages, require actual absence of the exact retirement destination, publish the complete immutable original retirement receipt, and remove only the selected expired full StoragePlanRun row. All original run SourceOrigins, the original anchor, Plan/Scheduler effects, results, other required authority receipts, Plan aggregate, schedule/consent/correlation values and unrelated rows remain byte-exact survivors. The transaction performs no file/blob/seglog deletion, hold release, public status change, new Run birth or second cancellation.
+
+This receipt is the compact linked successor custody for the one retired full runtime value: original identity/anchor/receipt commitments survive while the expired full Run does not. It is not a new live Run or a replacement full runtime body. Case L-3's verified-successor principle is applied to this exact redb atomic scope; the receipt's own original same-transaction publication, source CAS/removal and survivor verification prove that scope. It does not certify any external seglog range, blob, backup or another store. Required survivor bytes/identity are verified before commit and read back under the independently fenced post-commit owner boundary before success is delivered.
+
+Before commit, crash leaves the original full Run authoritative and no retirement receipt. After commit, the authentic receipt and original compact survivors are authoritative, and the full Run is absent. Loss before readback does not authorize repeating mutation; the existing native owner resolves the original exact result from committed custody. A present receipt plus inconsistent remaining full Run, conflicting original anchor/source hash, or incomplete authority survivors enters existing disclosed source/recovery unavailability, not inferred success. The source is not deleted in a sequential best-effort step after writing a receipt.
+
+`read_retirement.v3` accepts exact RunScope, obtains the full original compact receipt and original terminal SourceOrigin through their actual native owners, checks current read/restore/deletion authority and native consistent retirement disposition, and returns the original result with a separate replay_of. The inner typed reader has the same independent guards. No old full Run or original cleanup lease is required for passive retained disclosure. Missing receipt plus missing full Run is unavailable, not proof of lawful retirement. An anchor alone also proves no removal. The native full-Run/current-effect reader reports unavailable after authentic retirement and never rebuilds the full value from retained hashes.
+
+#### Original backup, restore and identity
+
+All original native writers and native backup/restore roles are installed together with the immutable anchor invariant and exact source/result/origin schemas. Mandatory coherent backup includes the original full current Run while it exists, original immutable run origins/anchor, required original effects/results/request identity, and any actual committed retirement receipt. No partial backup or restore can claim complete cancellation/retirement authority. The existing content/backup lifetimes remain unchanged; a reference creates no new full-source hold.
+
+Restore preserves original anchor bytes and original operation/transaction/time. It processes genuine terminal/retirement authority before exposing current Run state. It cannot resurrect a pre-retirement full Run as current, reset its source revision/epoch/anchor, discard the original receipt or create a fresh identity because the main row is absent. Source birth checks authentic prior-origin and retirement custody under the same whole native owner fence; original full-row absence is not never-born proof. Corrupt/conflicting or incomplete original history/backup/retirement custody remains unavailable for current action.
+
+An old backup containing full Run bytes retains them only under the existing backup/deletion/hold rules and cannot publish them over later authentic compaction authority. Restoration into another native root must prove coherent original authority and installed migration/backup compatibility; this contract does not declare arbitrary root reconstruction from hashes. Retained origin/receipt disclosure remains possible under current permission even when raw runtime source is lawfully gone, but never recreates that source or authorizes new action.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: SP-307
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Original run completion anchor and runtime-only retirement. run_completion_anchor is immutable
+  physical-wrapper metadata created only by actual first completed/cancelled native Run settlement; the
+  15 logical PlanRun fields remain unchanged.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- SP-306
+- APR-017
+unblocks: []
+acceptance_criteria:
+- run_completion_anchor is immutable physical-wrapper metadata created only by actual first completed/cancelled
+  native Run settlement; the 15 logical PlanRun fields remain unchanged.
+- Retirement requires actual 31536000-second expiry, full runtime-class membership, latest-25 Project
+  terminal-run protection and every original hold/reference/backup guard.
+- One original redb transaction publishes the compact retirement receipt and removes only the expired
+  full Run while preserving complete required authority survivors.
+- Count pressure cannot erase unexpired/protected Runs; absent/conflicting original sources or survivor
+  authority refuse compaction.
+- Retained anchor/retirement reads and coherent restore preserve original time/identity and never reconstruct
+  or resurrect a retired full Run.
+validation_surfaces:
+- Plans/assistant_plan_cancel_custody.schema.json
+- Plans/assistant_plan_cancel_contracts/methods.json
+- Plans/assistant_plan_cancel_contracts/publication-dependencies.json
+- Plans/storage_value_registry.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: sp_307_bound_plan_custody
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-029
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```

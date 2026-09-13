@@ -1550,8 +1550,9 @@ acceptance_criteria:
 - All original Plan association writers and current readers participate in complete writer-domain/Stop/cancellation
   fencing.
 - Missing binding control, a null active_run_ref or an empty supplied Plan list cannot establish no bound work.
-- The bound cancellation route requires exact original PlanRun/Plan/schedule/quota effect adapters and all
-  existing PGOAL obligations.
+- APR-017 and SQR-011 supply the original PlanRun/Plan/schedule/quota source contracts; GRS-076 and SIR-051
+  bind their exact C-source/assignment/publication profile. All existing PGOAL and actual native admission
+  obligations remain mandatory.
 - No unrelated message schedule, peer build route, new Workflow policy or certification claim is introduced.
 validation_surfaces:
 - Plans/goal_cancel_command_custody.schema.json
@@ -1583,3 +1584,132 @@ The original PGOAL Goal/PlanRun/binding birth joins GRS-074/SP-305 through the e
 PGOAL-007 through PGOAL-010 retain all original bound-run effects: cancel the actual bound PlanRun, set the Plan control to Canceled, invalidate only that execution's schedules and quota consent, fence late callbacks, and preserve unrelated scheduled messages. SP-305 supplies original association selection; it does not supply the remaining exact original PlanRun/Plan/schedule/quota expected-state CAS, durable settlement and invalidation query/result adapters. Until those source contracts are actually bound, that variant is unavailable before C-stop. The minimal Goal cancellation receipt or v3 event proves none of those independently owned settlements. Likewise no AssistantPlan binding is not evidence of absent Workflow association or permission to discard its ordinary in-flight run/tool obligations.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+### APR-017 - Original bound Plan cancellation effects and retained reads
+
+The original Assistant Plan and Scheduling owners supply the bound cancellation source profile through `Plans/assistant_plan_cancel_custody.schema.json` and `Plans/assistant_plan_cancel_contracts/methods.json`. CV-348 owns the complete typed preparation and codec domains; SP-306 owns physical custody; SQR-011 owns exact execution selection; GRS-076 and SIR-051 join original Goal cancellation. The method suffixes in the canonical map are exact technical identities, not the schema resource version.
+
+Assistant_Plan_Runtime owns AssistantPlanRecord, PlanRun, expected-state cancellation and durable Build control. Scheduling_and_Quota_Resume owns ExecutionSchedule, QuotaResumeConsent, server timers, shared eligibility and exact execution-scoped invalidation. ToDoController remains the sole To-Do writer; Plan cancellation adds no To-Do status and never bulk-completes, skips or rewrites the list. The full existing owners remain authoritative for all other operations.
+
+Plans/assistant_plan_cancel_custody.schema.json declares closed full native records using every identified owner field for these four record roles. These closed schemas materialize the complete original native records, not summaries used instead of them. Native additions such as source_revision and original origin are in Storage wrappers; plan_run_epoch binds the already-required PlanRun epoch, not a new lifecycle. goal_ref binds the already-named Goal reference. named_plan_id preserves the owner-defined nullable promotion link. ExecutionSchedule.dst_policy binds the owner's explicitly stored DST policy; the known named policy is preserve_local_wall_clock. Unknown policy semantics are not guessed or silently normalized. The exact canonical field map is Plans/assistant_plan_cancel_contracts/owner-field-map.json.
+
+The four logical state enums are unchanged: Plan control build/building/completed/canceled; PlanRun running/paused/waiting_quota/waiting_window/blocked/completed/cancelled/failed; schedule active/paused/cancelled/completed/invalidated; quota uses its original enabled boolean, no invented state. Result transport status committed is a technical committed-result discriminator, not a fifth Plan control or new PlanRun state. Scope, strategy/backend, version/hash, approved document and To-Do/runtime/permission/project bindings retain their exact owner meanings.
+
+Fresh native original writers create the declared whole records under the original Plan or Scheduling owner and simultaneously create SourceOrigin. Original scope/owner/currentness/permission/source custody is held by the actual native operation, never inferred from schema validation or supplied origin. Every later original writer preserves the full schema and updates the same authoritative source; no duplicate cancellation-owned Plan database or scheduling service exists. A real preexisting native record with additional/unknown fields, a different epoch representation or different full carrier must be adjudicated/migrated by its owner before this source profile may read or write it. It is never trimmed into this schema and called original.
+
+#### Original coupled effects
+
+C-stop remains the genuine existing Goal/host Stop operation and cancellation receipt. Do not reissue Stop, reset its epoch, fake a new cancellation or undo a genuine earlier Stop on later failure. The CancellationLink binds the actual source audit, cancellation receipt, Stop receipt/epoch and separately owned original scope selection. A typed link supplies joins; it is not the native lease or owner authority.
+
+The Goal handler calls the original Assistant Plan cancellation owner internally for this bound effect. It does not spoof plan_card, register a new public command or synthesize a user PlanCancelRequest. handlers::assistant_plan::plan_cancel remains the canonical declared public handler; native wiring evidence remains NOT_RUN. BoundCancelRequest is a narrow internal owner integration interface, retaining the genuine original GoalCancelRequest ref/hash and exact expected-state selection. This fully typed internal cancellation operation is caused by that actual Goal command; it does not depend on inventing active_run_disposition alternatives for the separate general public Plan command.
+
+At the original safe-stop boundary, the actual Plan owner quiesces in-flight mutation using its existing safe-stop/recovery semantics. All attempts and callback consumers are already fenced by the real current Stop. Waiting is waiting_for_safe_stop under the existing owner result; it is not terminal Plan cancellation. Unknown external effects remain with their original reconciliation owner and cannot be counted as safely stopped from a matching receipt hash.
+
+Once the genuine original safe-stop condition is established, a single original native transaction enlists Assistant Plan and Scheduling owners and Storage. It CASes every complete selected native source/wrapper, source revision, original correlation/currentness, current Stop/permission/owner and scheduler complete-set predicate. Under that final fence it performs exactly these native changes:
+
+* PlanRun.state becomes cancelled and plan_run_epoch advances by one. Every other PlanRun record field is preserved exactly, including To-Do revision, runtime/permission/project snapshots, goal_ref, optional schedule_ref, frozen version/hash and identity.
+* AssistantPlanRecord.control_state becomes canceled. All other record fields are unchanged; neither approved bytes/version/hash nor current document version/strategy/backend/NamedPlan binding changes.
+* Every selected active or paused ExecutionSchedule becomes invalidated, its existing revision advances by one, and invalidated_reason is the original owner cancellation reason identifying this execution. Other fields, exact target/version/hash, local time/timezone/DST and policy are unchanged. Already cancelled/completed/invalidated schedules remain whole-byte unchanged and are reported as preserved original terminal values; no historical reason is overwritten. The associated original schedule correlation remains unchanged.
+* Every selected enabled QuotaResumeConsent becomes enabled=false with updated_at set by the actual original Scheduling operation. All other fields, including original user_stop_epoch, reset truth/time/confidence, provider/account/run and optional schedule identity, are preserved. Already-disabled consent remains whole-byte unchanged. The current genuine Stop epoch defeats any old eligibility computation independently of this field update.
+* Each actual changed source advances only its Storage source_revision as specified; unchanged rows preserve it. Each changed source gets its genuine original SourceOrigin in that same transaction. The two immutable original PlanEffect and ScheduleQuotaEffect receipts and their origins publish in that original transaction; their metadata is derived from the actual before/after records. Native owner result identity and idempotent result custody join this commit, not a later helper acknowledgement.
+
+Every parser, schema check, codec, copy, set builder, source resolver and returned helper completes before the final native predicate. After all such helpers return, the original owners independently compare full actual beforeimages, independently derived afterimages, exact original Stop/ownership/permissions and whole selected membership once more. No returning helper executes between that final predicate and commit. Readback verifies complete actual committed native values and original effect receipts. Hash equality is a commitment check in that real owner transaction, never a stand-in for native mutation or effect.
+
+The entire positive coupled effect commits or none of its Plan/schedule/quota changes do. This atomicity is a technical implementation of the already-required coupled cancellation, not a new cancellation policy. C-stop can already be genuine if this later transaction cannot finish; preserve it and existing cancellation progress/recovery semantics. Do not fabricate bound_plan_settled, roll back the Stop or route to none_required. If an independently genuine earlier owner effect exists, preserve its original identity and use the existing recovery path instead of reapplying/renaming it.
+
+#### Run and late-callback fences
+
+Every Plan admission/retry/resume and every attempt result/worker/provider/tool callback retains original plan_run_id and captured plan_run_epoch. At its actual mutation/effect boundary the original execution owner reads the current PlanRun and current effective Stop, confirms state remains eligible and epoch matches, and rechecks after returning helpers. A callback admitted before the Stop or old run epoch cannot publish new Plan status or resume cancelled work. Cancel advances the epoch in the real original run record; a side receipt does not fence an attempt.
+
+ToDoController independently checks current thread/list/item revision, exact TodoWorkBinding, Plan version/hash and captured/current run epoch before applying any late proposal/outcome, as TDR/PPROG require. This contract supplies the original PlanRun read source; it does not take over To-Do statuses, produce a new To-Do cancelled status, mutate completed side effects, or discard required audit evidence. Unknown in-flight outcomes are reconciled under the existing owner.
+
+Scheduling re-evaluates all canonical eligibility clauses at decision and immediately before dispatch. It reads the exact original schedule/consent, original run binding, current PlanRun and real current Stop; a state/revision/currentness change, disabled consent, terminal run, mismatched epoch or invalidated target refuses the dispatch and retains the existing precise failed clause. A quota reset, window open, old timer, fresh context or new schedule cannot resume this cancelled run: target existing-and-unfinished remains independently mandatory. Only the existing explicit user/new-work owner semantics can admit another run; no old run ID is repurposed.
+
+#### Current effects and retained original result
+
+`owner.goal.cancel.read_current_plan_effects.v3` accepts the closed `EffectSelector`, not pre-Stop preparation. The native reader resolves it and obtains actual complete current Goal/body/Stop/binding/writer-domain sources, Plan and Run after-values/origins, every selected current schedule/binding and consent, original safe-stop result and callback domain, actual Plan/Scheduler owners, and the complete native current read boundary. The directly callable inner `owner.storage.plan_effects.verify_current_custody.v3` receives `CurrentEffectReadRequest` containing those full `CurrentEffectSources`. This is the private original owner read result; a public caller cannot grant it authority. Missing source resolution returns exact NotSettled through the outer selector route rather than requiring a fabricated input bundle.
+
+The current reader independently authenticates original effects/result/origins and verifies their full scope, original C-source/Stop/cancellation links, same original joint transaction, complete owner-set selection and actual current after-state physical bytes. Its expected original effect/result must derive from authentic original custody rather than a later caller selection. The current Goal/Stop/binding/control facts must satisfy the canonical C-owner settlement contract, including any legitimately progressed cancellation control. A later legitimate source change or loss can make this strict current-after-state route unavailable. It cannot substitute retained audit metadata for current completion/publication admission. Result is complete `SettledResult` or exact `NotSettled`.
+
+`owner.goal.cancel.read_retained_plan_effects.v3` instead accepts the closed `RetainedEffectSelector`: exact Run/Goal/Plan scope, original normalized operation/cancellation, original request ref/hash and idempotency key, and `retained_audit` or `original_result_replay`. It requires no `BeforeStopPrepared`, old Plan/run/schedule/consent beforeimages, old native safe-stop lease, old Goal body/control or old UI approval handle. The lookup derives all original physical effect/result keys from exact selected scope/cancellation identity using the registered grammar. It never trusts an arbitrary supplied source path or grants a different role based on a string.
+
+The native inner reader takes `RetainedEffectReadSources`: the actual original `RetainedEffectCustody` and actual current `ReadOwnerBoundary`. Custody contains the full original immutable stored result and its origin, both complete original effects and their origins, the exact original OwnerSettlement delivery projection, and the complete original run first-settlement SourceOrigin selected by `PlanEffect.run_change.after.origin`. These are the authentic original published compact objects, not a fresh current full-source capture. Their original physical hashes, keys, schemas, same actual original operation/transaction, owner issuance, complete CancellationLink and scope agree. The original result wrapper's immutable OriginalOperationIdentity joins the requested original request/idempotency identity and the original effect links. Same key with different original identity is idempotency_conflict. Missing/unavailable original custody is owner_unavailable, never proof that no effect happened.
+
+Validate the original run settlement anchor from that original SourceOrigin and its exact linkage to the original cancelled Run selector and PlanEffect. No raw Run body is reacquired or reconstructed after its lawful retirement. Other native-source hashes in the original effects remain original commitments; a retained read does not newly certify those full values as currently present. Complete original effect/result authority comes from their real original issuer/transaction custody and current retained-row authentication, not from merely comparing detached hashes.
+
+ReadOwnerBoundary selects actual current native root/generation, installed exact reader/schema/codec/migration/backup/restore authority, Storage owner, current read principal, permission and deletion/hold sources. References name the actual original current sources consulted by that native read; the reader independently captures their complete native values and current preimages before helpers and repeats final native checks afterward. A serialized boundary is not a grant, and losing actual complete source access makes the read unavailable. Retained audit requires current app/Project/audit disclosure permission and actual original row custody, not surviving Goal body text or a live Goal action lease. Original-result replay additionally requires the real original command/SIR replay participant and its current original-request/principal checks. Merely choosing `original_result_replay` in JSON cannot enter that participant.
+
+For retained audit, the delivery's `SettledResult.replay_of` is null. For original-result replay, that delivery field identifies the exact original stored result physical reference. The stored `plan_result.record.replay_of` and all stored result/effect/origin bytes remain unchanged. The unchanged OwnerSettlement fields are a projection of the two original effect selectors and original scope proof in their existing links, not a new settlement publication. The returned `RetainedEffectReadSuccess` explicitly has `action_authority=none` and `full_run_read=not_requested`; it cannot start an event/body/GoalRun transition, certify a current control, release a hold, resume work or mint a new cancellation effect. Current publication requires its separate current route and all original canonical publication/SIR checks.
+
+Both outer and inner retained methods return success or the exact existing NotSettled arm. Their own independent before-helper capture and final whole-current read guard apply even when called directly. A lost original preparation never requires a new preparation for retained replay. No full source archive is created to make the reader pass.
+
+C-owners fills the unchanged OwnerSettlement bound_plan_settled arm: original_scope_proof_ref/hash is the already selected original Goal/Plan scope source; original_owner_settlement_ref/hash selects the complete original PlanEffect physical value; original_schedule_quota_invalidation_ref/hash selects the complete original ScheduleQuotaEffect physical value. Both refs/hashes are non-null even when the scheduler proves an empty relevant set. The original ExecutionBinding is byte-exact. No new goal.cancelled field or run event is added.
+
+For this declared original source route, expected_currentness_hash is SHA-256 of the complete canonical StorageAssistantPlanRecord physical value. Whole PlanRun/source/Stop/membership CAS is independently required and cannot be omitted because the Plan currentness hash matches. PlanCancelCommittedResult.revision is the unchanged current Plan document version, not the independently advanced Storage source_revision; its currentness_hash binds the actual new whole Plan physical value. The complete typed native result is durably stored in assistant_plan_cancel_result with its own original origin in the same owner effect commit. The result references the already assembled PlanEffect source/origin, so it introduces no circular hash. Its schema describes the native internal owner result and does not claim the broader public command union has been installed.
+
+Replay delivery preserves StoragePlanCancelResult and all source/origin bytes exactly. The original committed result has replay_of=null; the SettledResult delivery envelope supplies replay_of for a repeated read of that immutable original result. It does not edit a persisted result to mark the replay or mint a second result/origin.
+
+OwnerSelection.original_safe_stop_source_ref identifies the actual native safe-stop owner/source consulted during preparation; it is not a promise that stop already completed. PlanEffect.safe_stop_source_ref names the genuine same-cancellation safe-stop result at commit. The owner verifies its actual causation/run/Stop identity; an unrelated historical safe point or prepared method name cannot satisfy the final safe-stop predicate.
+
+The original scheduler selection and callback-domain refs in OwnerSelection are typed native operation/resource references, not assertions that another physical service or archive exists. scheduler_selection_source_ref identifies the actual original native read operation producing the complete selection under the Scheduling owner; its durable original outcome evidence is the same ScheduleQuotaEffect with genuine issuer origin and complete source/result bindings. original_callback_domain_ref identifies the actual installed all-callback owner integration resource. Neither ref grants custody by itself. Current reads require the original native operation/resource authentication; retained audit cannot reconstruct a vanished private lease from these strings. These owner entrypoints and their full typed inputs/outputs are declared in Plans/assistant_plan_cancel_contracts/methods.json and this protocol; native installation is separately NOT_RUN.
+
+#### Exact original bound selection
+
+Consume the GRS-074/GRS-076 original Goal execution association selection. Its exact bound_plan ExecutionBinding and seven-field GoalPlanBinding supply Goal, PlanRun, approved version/hash and reuse identity; this contract never writes, re-derives or replaces that authority. Workflow associations are not handled by this Plan profile.
+
+The original Assistant Plan owner resolves the exact PlanRun and AssistantPlanRecord from that association and reads their whole native values/origins. Require matching project/thread/Plan/run/Goal identity, approved_version/hash and frozen PlanRun version/hash, actual goal_driven topology and Goal reference, expected version/currentness, current permissions and live owner sources. The positive new cancellation starts from the bound unfinished run with Plan control building. A completed run is not reclassified as cancelled; a different prior cancellation is not relabeled as this operation. Exact replay is recognized from the original operation's durable result and returns that result with unchanged identities. A failed unfinished run remains cancellable only through the existing Plan owner policy. No new disposition for other states is invented.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: APR-017
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: Original bound Plan cancellation effects and retained reads. The original owners preserve
+  all 61 logical native fields and their existing types except the explicitly authorized cancellation
+  deltas.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- APR-016
+- SP-306
+unblocks: []
+acceptance_criteria:
+- The original owners preserve all 61 logical native fields and their existing types except the explicitly
+  authorized cancellation deltas.
+- Only a genuine safe-stop-bound joint transaction publishes full Plan/Run/Scheduler changes, source origins,
+  both effects and the original result.
+- Current-effect reads require actual current after-state custody; retained original-result reads disclose
+  compact original custody with no action authority.
+- Every late callback and To-Do outcome independently checks actual Run epoch, state and current Stop;
+  no To-Do status is rewritten.
+- Missing or conflicting original custody returns exact NotSettled; repeated original result delivery
+  never repeats mutation.
+validation_surfaces:
+- Plans/assistant_plan_cancel_custody.schema.json
+- Plans/assistant_plan_cancel_contracts/methods.json
+- Plans/assistant_plan_cancel_contracts/semantic-obligations.json
+- Plans/assistant_plan_cancel_contracts/owner-field-map.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: apr_017_bound_plan_custody
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```

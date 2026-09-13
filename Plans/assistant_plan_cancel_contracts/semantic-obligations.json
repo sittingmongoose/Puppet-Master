@@ -1,0 +1,322 @@
+{
+  "field_rules": [
+    {
+      "record": "AssistantPlanRecord",
+      "field": "schema_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "schema_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "assistant_plan_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "project_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "thread_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "strategy",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "backend",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "current_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "approved_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "approved_hash",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "control_state",
+      "permitted_delta": "actual current building -> canceled; preserve all other fields"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "named_plan_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schema_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schema_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_run_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "assistant_plan_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_hash",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "execution_topology",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "todo_list_revision",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "runtime_snapshot_ref",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "permission_snapshot_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "project_context_ref",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schedule_ref",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "state",
+      "permitted_delta": "actual current owner-cancellable unfinished state -> cancelled"
+    },
+    {
+      "record": "PlanRun",
+      "field": "goal_ref",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_run_epoch",
+      "permitted_delta": "original exact epoch + 1"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schema_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schema_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schedule_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "project_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "target_kind",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "target_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "exact_target_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "exact_target_hash",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schedule_kind",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "timezone",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "local_start",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "local_pause",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "days_of_week",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "wind_down_seconds",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "missed_policy",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "auto_resume_next_window",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "state",
+      "permitted_delta": "active/paused -> invalidated; cancelled/completed/invalidated unchanged"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "revision",
+      "permitted_delta": "changed active/paused row: original + 1; unchanged terminal row: exact original"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "invalidated_reason",
+      "permitted_delta": "changed active/paused row: actual original execution-cancel reason; preserve original reason on already terminal row"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "dst_policy",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "schema_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "schema_version",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "consent_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "run_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "provider_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "account_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "enabled",
+      "permitted_delta": "true -> false; false unchanged"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "reset_time",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "reset_truth",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "confidence",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "execution_schedule_id",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "user_stop_epoch",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "created_at",
+      "permitted_delta": "exact original equality"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "updated_at",
+      "permitted_delta": "changed enabled row: actual original transaction timestamp; disabled row unchanged"
+    }
+  ],
+  "wrapper_rule": "Every changed current native source increments source_revision exactly once; unchanged rows and original source bindings remain byte-exact. All key/storage/schema/version fields remain exact.",
+  "origin_rule": "New source/value/result and actual original origin join same native commit; copied origins, after-the-fact origins and wrapper-hash/semantic-hash substitution fail.",
+  "membership_rule": "Actual owner complete selection includes every exact run-associated schedule/window and consent; per-request arrays cannot omit or broaden. New concurrent original writes are excluded/revalidated by same owner fence.",
+  "result_rule": "PlanEffect and ScheduleQuotaEffect link same authentic Goal cancellation, original scope, exact Stop and native transaction; both required even for authenticated empty scheduler set.",
+  "terminal_rule": "No OwnerSettlement bound_plan_settled before genuine original effects; no none_required fallback on a bound execution.",
+  "replay_rule": "Original result/source/receipt IDs and bytes unchanged; separate replay delivery carries replay_of; no second epoch or schedule revision increment.",
+  "failure_rule": "Retain genuine C-stop and any separately genuine original effects. Never compensate by erasing original effects, minting a new run or treating missing custody as absence.",
+  "callback_rule": "Original execution owner plus ToDoController plus native Scheduler independently validate current run/epoch/Stop/version/hash/work-binding/revisions at actual effects; receipt claim alone never fences callback.",
+  "wrapper_anchor_rule": "Full StoragePlanRun includes null before genuine settlement and exact first completed/cancelled anchor thereafter; original SourceOrigin copies that anchor, non-run origin null. Logical PlanRun is unchanged.",
+  "original_result_identity_rule": "Full StoragePlanCancelResult additionally retains exact original normalized C-source/request identity and original real operation reservations before Stop; record remains exact and replay_of null.",
+  "retained_read_rule": "Selector-only retained route and complete compact custody/current native read boundaries; no original transient preparation or raw old value reacquisition. Success or unchanged NotSettled.",
+  "retirement_rule": "Existing native Janitor/maintenance owner atomically writes compact original authority successor receipt and removes only exact eligible full Run row; protects all original origins/receipts, uses original first completion anchor and unchanged runtime policy, no EventRecord manifest authority.",
+  "retirement_origin_rule": "The narrow retirement receipt carries its actual original native Storage owner/operation/transaction directly; no recursive origin-of-origin and no after-the-fact receipt mint."
+}

@@ -1,0 +1,151 @@
+{
+  "methods": [
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.prepare.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/BeforeStopSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparationResult",
+      "effect": "Original private identity reservation and full domain preparation only; no Stop or cancellation effect.",
+      "route": "pre_stop",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.commit.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult",
+      "effect": "One original joint Plan/Scheduler/Storage transaction, or exact original NotSettled.",
+      "route": "post_stop_fresh_commit",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.scheduling.invalidate_cancelled_execution.participate.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PreparedBoundCancelRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CommitResult",
+      "effect": "Same enlisted original joint commit only; cannot publish or return a partial successful effect.",
+      "route": "post_stop_enlisted_participant",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.goal.cancel.read_current_plan_effects.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/EffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult",
+      "effect": "Read full actual current after-state under existing C-owner settlement guards, or exact NotSettled. No mutation.",
+      "route": "current_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.plan_effects.verify_current_custody.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadRequest",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectReadResult",
+      "effect": "Inner native current reader receives actual complete current sources and independently checks them; no pre-Stop preparation.",
+      "route": "current_inner_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.goal.cancel.read_retained_plan_effects.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectSelector",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult",
+      "effect": "Resolve immutable original custody under current disclosure permission; no pre-Stop preparation, raw old source or current completion authority.",
+      "route": "retained_audit_or_original_result_replay",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.plan_effects.read_original_custody.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadResult",
+      "effect": "Inner native retained reader independently verifies actual original full compact custody and current read controls.",
+      "route": "retained_inner_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.compact_expired.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Existing native Janitor resolves actual full inputs or original prior compact receipt; absent source without receipt is unavailable.",
+      "route": "native_janitor_compaction",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.compact_expired_native.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Original eligible native redb successor compaction: compact receipt and exact full Run row removal commit atomically.",
+      "route": "native_janitor_compaction",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.read_retirement.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Read original compact retirement receipt under current permission/origin and absence/conflict guards; no mutation.",
+      "route": "retained_retirement_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.verify_retirement_read.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementReadSources",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunRetirementResult",
+      "effect": "Inner native retirement reader checks original receipt, original anchor/origin and current read boundary.",
+      "route": "retained_retirement_inner",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    },
+    {
+      "method": "owner.storage.assistant_plan_run.read_completion_anchor.v3",
+      "input_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunScope",
+      "output_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RunAnchorReadResult",
+      "effect": "Read exact first original terminal source origin/anchor; never infer deletion, completed status or raw source existence.",
+      "route": "retained_original_anchor_read",
+      "entry": "Capture complete authentic original inputs, source/control preimages and independently expected entire result before every returning helper.",
+      "final": "After ALL returning helpers, native owners independently recheck whole originals, independent expected candidate, current access/installation/backup/restore/source/operation and applicable Stop/membership/retention guards; no gap to atomic effect or disclosure."
+    }
+  ],
+  "original_issuer_identities": [
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.select.v1",
+      "owner": "Assistant Plan Runtime",
+      "input": "actual original Goal cancellation and separately owned bound selection",
+      "output": "PlanExpected with whole native values/origins",
+      "native_placement": "same owner expected-state source read used by Plan cancellation; before C-stop"
+    },
+    {
+      "method": "owner.scheduling.select_cancelled_execution.v1",
+      "owner": "Scheduling and Quota Resume",
+      "input": "same original bound execution scope under native complete-set exclusion",
+      "output": "whole ScheduleExpected/ConsentExpected arrays plus native original selection commitment",
+      "native_placement": "server-owned schedule/consent originals; no UI/reverse-index absence inference"
+    },
+    {
+      "method": "owner.assistant_plan.cancel_bound_run.commit.v1",
+      "owner": "Assistant Plan Runtime",
+      "input": "BoundCancelRequest and privately held native owner/source/Stop/safe-stop capability",
+      "output": "whole PlanRun/AssistantPlan sources, PlanEffect and PlanCancelCommittedResult with genuine origins",
+      "native_placement": "one original joint native transaction with scheduling invalidation"
+    },
+    {
+      "method": "owner.scheduling.invalidate_cancelled_execution.commit.v1",
+      "owner": "Scheduling and Quota Resume",
+      "input": "same actual cancellation transaction, complete native scope selection and source CAS",
+      "output": "whole changed schedule/consent sources plus ScheduleQuotaEffect with genuine origins",
+      "native_placement": "same original joint transaction as Plan owner; original server writers share fence"
+    },
+    {
+      "method": "owner.goal.cancel.read_plan_effects.v1",
+      "owner": "Existing C-owners with original Plan/Scheduling read participants",
+      "input": "actual original effect values/origins and native settlement fence",
+      "output": "unchanged OwnerSettlement.bound_plan_settled",
+      "native_placement": "before C-publication; never independent Plan/Scheduler write authority"
+    }
+  ],
+  "installation": "The v3 method entries select the complete canonical input/final-boundary contracts. Original issuer identity tokens remain as declared; earlier unqualified direct entries are not admitted. Actual native installation is independently required and NOT_RUN.",
+  "native": "NOT_RUN"
+}

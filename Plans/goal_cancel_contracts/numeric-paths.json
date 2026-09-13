@@ -96,7 +96,7 @@
   "full_event_addition": [
     "/sequence_id"
   ],
-  "note": "Full EventRecord uses ProducerInput plus original Storage sequence/observed/persisted. The two timestamps are strings. No instance or codec was executed.",
+  "note": "Full EventRecord uses ProducerInput plus original Storage sequence/observed/persisted. The two timestamps are strings. No instance or codec was executed. Bound integration changes only the branch-qualified Plan version derivation. All original paths, interval domains and target codecs remain identical.",
   "derivation_inventory": [
     {
       "root": "ProducerInput",
@@ -143,8 +143,19 @@
     {
       "root": "SucceededResult",
       "path": "/control_publication/original_owner_settlement/original_execution_binding/plan_version",
-      "selected_route": "null_only",
-      "reason": "unchanged ExecutionBinding no_bound_plan branch requires null"
+      "selected_route": "branch_qualified_exact_original_domain",
+      "branches": [
+        {
+          "execution_binding_kind": "no_bound_plan",
+          "domain": "null_only",
+          "source_derivation": "unchanged existing no_bound_plan branch"
+        },
+        {
+          "execution_binding_kind": "bound_plan",
+          "domain": "singleton_integer_minimum_1",
+          "source_derivation": "original source_audit.original_execution_binding.plan_version; exactly equals actual bound GoalPlanBinding and original Plan/run identity; no future allocation or new maximum"
+        }
+      ]
     },
     {
       "root": "SucceededResult",

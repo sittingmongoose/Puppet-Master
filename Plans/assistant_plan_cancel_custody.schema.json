@@ -1,0 +1,3974 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json",
+  "$comment": "Narrow owner-backed native source declarations. No event registration, runtime execution or product lifecycle change. All actual native writers must use the declared full original records and origins.",
+  "$defs": {
+    "AssistantPlanRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "assistant_plan_id",
+        "project_id",
+        "thread_id",
+        "strategy",
+        "backend",
+        "current_version",
+        "approved_version",
+        "approved_hash",
+        "control_state",
+        "named_plan_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_plan.record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "strategy": {
+          "enum": [
+            "quick",
+            "standard",
+            "thorough",
+            "deep_thorough",
+            "deep_exhaustive",
+            "deep_brainstorm"
+          ]
+        },
+        "backend": {
+          "enum": [
+            "direct",
+            "ledger_bound"
+          ]
+        },
+        "current_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approved_version": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approved_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "control_state": {
+          "enum": [
+            "build",
+            "building",
+            "completed",
+            "canceled"
+          ]
+        },
+        "named_plan_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "strategy": {
+                "enum": [
+                  "quick",
+                  "standard",
+                  "thorough"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "backend": {
+                "const": "direct"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "backend": {
+                "const": "ledger_bound"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "approved_version": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "approved_hash": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "approved_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PlanRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "plan_run_id",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_hash",
+        "execution_topology",
+        "todo_list_revision",
+        "runtime_snapshot_ref",
+        "permission_snapshot_id",
+        "project_context_ref",
+        "schedule_ref",
+        "state",
+        "goal_ref",
+        "plan_run_epoch"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_plan.run.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "execution_topology": {
+          "enum": [
+            "agent",
+            "crew",
+            "goal_driven"
+          ]
+        },
+        "todo_list_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runtime_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_context_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schedule_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "running",
+            "paused",
+            "waiting_quota",
+            "waiting_window",
+            "blocked",
+            "completed",
+            "cancelled",
+            "failed"
+          ]
+        },
+        "goal_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_run_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_topology": {
+                "const": "goal_driven"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "goal_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExecutionSchedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "schedule_id",
+        "project_id",
+        "target_kind",
+        "target_id",
+        "exact_target_version",
+        "exact_target_hash",
+        "schedule_kind",
+        "timezone",
+        "local_start",
+        "local_pause",
+        "days_of_week",
+        "wind_down_seconds",
+        "missed_policy",
+        "auto_resume_next_window",
+        "state",
+        "revision",
+        "invalidated_reason",
+        "dst_policy"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.schedule.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "schedule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_kind": {
+          "enum": [
+            "scheduled_message",
+            "assistant_plan_run",
+            "crew_run",
+            "goal_run",
+            "agent_run"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exact_target_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "exact_target_hash": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schedule_kind": {
+          "enum": [
+            "one_time",
+            "recurring_window"
+          ]
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_start": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_pause": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "days_of_week": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "wind_down_seconds": {
+          "type": "integer"
+        },
+        "missed_policy": {
+          "enum": [
+            "hold",
+            "next_available",
+            "cancel_after_grace"
+          ]
+        },
+        "auto_resume_next_window": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "paused",
+            "cancelled",
+            "completed",
+            "invalidated"
+          ]
+        },
+        "revision": {
+          "type": "integer"
+        },
+        "invalidated_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dst_policy": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "invalidated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "invalidated_reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "QuotaResumeConsent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "consent_id",
+        "run_id",
+        "provider_id",
+        "account_id",
+        "enabled",
+        "reset_time",
+        "reset_truth",
+        "confidence",
+        "execution_schedule_id",
+        "user_stop_epoch",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.quota_resume_consent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "consent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "reset_time": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reset_truth": {
+          "enum": [
+            "provider_reported",
+            "locally_inferred",
+            "user_supplied",
+            "unknown"
+          ]
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_schedule_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "user_stop_epoch": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ScheduleRunBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "schedule_id",
+        "project_id",
+        "plan_run_id",
+        "target_kind",
+        "target_id",
+        "assistant_plan_id",
+        "plan_version",
+        "plan_hash",
+        "original_schedule_admission_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.execution.schedule_run_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "schedule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_kind": {
+          "enum": [
+            "assistant_plan_run",
+            "goal_run"
+          ]
+        },
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_schedule_admission_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "assistant_plan_id",
+        "plan_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "NativeOwner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "server_id",
+        "server_claim_epoch"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_claim_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "StorageAssistantPlanRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_record.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/AssistantPlanRecord"
+        }
+      }
+    },
+    "StoragePlanRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record",
+        "run_completion_anchor"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_run.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/PlanRun"
+        },
+        "run_completion_anchor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunCompletionAnchor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "record": {
+                "properties": {
+                  "state": {
+                    "enum": [
+                      "completed",
+                      "cancelled"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "run_completion_anchor": {
+                "$ref": "#/$defs/RunCompletionAnchor"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "run_completion_anchor": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StorageExecutionSchedule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.execution_schedule.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ExecutionSchedule"
+        }
+      }
+    },
+    "StorageQuotaResumeConsent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.quota_resume_consent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/QuotaResumeConsent"
+        }
+      }
+    },
+    "StorageScheduleRunBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "source_revision",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.execution_schedule_run_binding.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ScheduleRunBinding"
+        }
+      }
+    },
+    "Selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "enum": [
+            "assistant_plan_record",
+            "assistant_plan_run",
+            "execution_schedule",
+            "quota_resume_consent",
+            "execution_schedule_run_binding",
+            "plan_cancel_effect",
+            "schedule_quota_cancel_effect",
+            "assistant_plan_cancel_result",
+            "plan_cancel_source_origin",
+            "assistant_plan_run_retirement"
+          ]
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "SourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/Selector"
+        },
+        "origin": {
+          "$ref": "#/$defs/Selector"
+        }
+      }
+    },
+    "SourceOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "owner",
+        "original_operation_id",
+        "original_transaction_id",
+        "issuer_method",
+        "issued_family_id",
+        "issued_physical_key",
+        "issued_physical_sha256",
+        "prior_physical_sha256",
+        "source_revision",
+        "original_causation_ref",
+        "issued_at_utc",
+        "run_completion_anchor"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer_method": {
+          "enum": [
+            "owner.assistant_plan.original.write.v1",
+            "owner.assistant_plan.run.original.write.v1",
+            "owner.scheduling.schedule.original.write.v1",
+            "owner.scheduling.consent.original.write.v1",
+            "owner.scheduling.run_binding.original.write.v1",
+            "owner.assistant_plan.cancel_bound_run.commit.v1",
+            "owner.scheduling.invalidate_cancelled_execution.commit.v1"
+          ]
+        },
+        "issued_family_id": {
+          "enum": [
+            "assistant_plan_record",
+            "assistant_plan_run",
+            "execution_schedule",
+            "quota_resume_consent",
+            "execution_schedule_run_binding",
+            "plan_cancel_effect",
+            "schedule_quota_cancel_effect",
+            "assistant_plan_cancel_result"
+          ]
+        },
+        "issued_physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prior_physical_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_causation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "run_completion_anchor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RunCompletionAnchor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "issued_family_id": {
+                "const": "assistant_plan_run"
+              }
+            }
+          },
+          "then": {},
+          "else": {
+            "properties": {
+              "run_completion_anchor": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StorageSourceOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plan_cancel_source_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/SourceOrigin"
+        }
+      }
+    },
+    "ExecutionBinding": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "bound_plan"
+            }
+          }
+        }
+      ]
+    },
+    "OwnerSettlement": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/OwnerSettlement"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "bound_plan_settled"
+            }
+          }
+        }
+      ]
+    },
+    "CancellationLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "cancellation_id",
+        "original_execution_binding",
+        "original_scope_proof_ref",
+        "original_scope_proof_sha256",
+        "cancel_source_ref",
+        "cancel_source_sha256",
+        "cancellation_receipt_ref",
+        "cancellation_receipt_sha256",
+        "stop_receipt_ref",
+        "stop_receipt_sha256",
+        "user_stop_epoch"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_execution_binding": {
+          "$ref": "#/$defs/ExecutionBinding"
+        },
+        "original_scope_proof_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_proof_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cancel_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancel_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cancellation_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stop_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stop_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "PlanExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan",
+        "plan_source",
+        "run",
+        "run_source",
+        "expected_version",
+        "expected_hash",
+        "expected_currentness_hash"
+      ],
+      "properties": {
+        "plan": {
+          "$ref": "#/$defs/StorageAssistantPlanRecord"
+        },
+        "plan_source": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "run": {
+          "$ref": "#/$defs/StoragePlanRun"
+        },
+        "run_source": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ScheduleExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule",
+        "schedule_source",
+        "run_binding",
+        "run_binding_source"
+      ],
+      "properties": {
+        "schedule": {
+          "$ref": "#/$defs/StorageExecutionSchedule"
+        },
+        "schedule_source": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "run_binding": {
+          "$ref": "#/$defs/StorageScheduleRunBinding"
+        },
+        "run_binding_source": {
+          "$ref": "#/$defs/SourceBinding"
+        }
+      }
+    },
+    "ConsentExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consent",
+        "consent_source"
+      ],
+      "properties": {
+        "consent": {
+          "$ref": "#/$defs/StorageQuotaResumeConsent"
+        },
+        "consent_source": {
+          "$ref": "#/$defs/SourceBinding"
+        }
+      }
+    },
+    "OwnerSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "link",
+        "plan_owner",
+        "scheduler_owner",
+        "plan",
+        "schedules",
+        "consents",
+        "scheduler_complete_selection_sha256",
+        "scheduler_selection_source_ref",
+        "original_safe_stop_source_ref",
+        "original_callback_domain_ref"
+      ],
+      "properties": {
+        "link": {
+          "$ref": "#/$defs/CancellationLink"
+        },
+        "plan_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "scheduler_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "plan": {
+          "$ref": "#/$defs/PlanExpected"
+        },
+        "schedules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScheduleExpected"
+          }
+        },
+        "consents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConsentExpected"
+          }
+        },
+        "scheduler_complete_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scheduler_selection_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_safe_stop_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_callback_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ChangedSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "after"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "after": {
+          "$ref": "#/$defs/SourceBinding"
+        }
+      }
+    },
+    "ScheduleEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schedule_id",
+        "run_binding",
+        "change",
+        "original_state",
+        "result_state",
+        "invalidated_reason_sha256"
+      ],
+      "properties": {
+        "schedule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_binding": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "change": {
+          "$ref": "#/$defs/ChangedSource"
+        },
+        "original_state": {
+          "enum": [
+            "active",
+            "paused",
+            "cancelled",
+            "completed",
+            "invalidated"
+          ]
+        },
+        "result_state": {
+          "enum": [
+            "cancelled",
+            "completed",
+            "invalidated"
+          ]
+        },
+        "invalidated_reason_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ConsentEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consent_id",
+        "provider_id",
+        "account_id",
+        "change",
+        "result_enabled"
+      ],
+      "properties": {
+        "consent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "change": {
+          "$ref": "#/$defs/ChangedSource"
+        },
+        "result_enabled": {
+          "const": false
+        }
+      }
+    },
+    "PlanEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "link",
+        "original_operation_id",
+        "original_transaction_id",
+        "owner",
+        "plan_change",
+        "run_change",
+        "plan_control_state",
+        "plan_run_state",
+        "prior_plan_run_epoch",
+        "result_plan_run_epoch",
+        "safe_stop_source_ref",
+        "callback_domain_ref",
+        "committed_at_utc"
+      ],
+      "properties": {
+        "link": {
+          "$ref": "#/$defs/CancellationLink"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "plan_change": {
+          "$ref": "#/$defs/ChangedSource"
+        },
+        "run_change": {
+          "$ref": "#/$defs/ChangedSource"
+        },
+        "plan_control_state": {
+          "const": "canceled"
+        },
+        "plan_run_state": {
+          "const": "cancelled"
+        },
+        "prior_plan_run_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "result_plan_run_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "safe_stop_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "callback_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "committed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ScheduleQuotaEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "link",
+        "original_operation_id",
+        "original_transaction_id",
+        "owner",
+        "scheduler_selection_source_ref",
+        "scheduler_complete_selection_sha256",
+        "schedule_effects",
+        "consent_effects",
+        "committed_at_utc"
+      ],
+      "properties": {
+        "link": {
+          "$ref": "#/$defs/CancellationLink"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "scheduler_selection_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scheduler_complete_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "schedule_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScheduleEffect"
+          }
+        },
+        "consent_effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConsentEffect"
+          }
+        },
+        "committed_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StoragePlanEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plan_cancel_effect.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/PlanEffect"
+        }
+      }
+    },
+    "StorageScheduleQuotaEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.schedule_quota_cancel_effect.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ScheduleQuotaEffect"
+        }
+      }
+    },
+    "BoundCancelRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection",
+        "original_goal_cancel_request_ref",
+        "original_goal_cancel_request_sha256",
+        "idempotency_key"
+      ],
+      "properties": {
+        "selection": {
+          "$ref": "#/$defs/OwnerSelection"
+        },
+        "original_goal_cancel_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "PlanCancelCommittedResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "committed",
+        "revision",
+        "currentness_hash",
+        "receipt_refs",
+        "observable_work",
+        "error",
+        "reason",
+        "replay_of",
+        "original_plan_effect"
+      ],
+      "properties": {
+        "status": {
+          "const": "committed"
+        },
+        "committed": {
+          "const": true
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "observable_work": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Actual original observable-work reference under APR; never prose or summary. Null only under original owner applicability."
+        },
+        "error": {
+          "type": "null"
+        },
+        "reason": {
+          "type": "null"
+        },
+        "replay_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_plan_effect": {
+          "$ref": "#/$defs/SourceBinding"
+        }
+      }
+    },
+    "StoragePlanCancelResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record",
+        "original_operation_identity"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_cancel_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/PlanCancelCommittedResult"
+        },
+        "original_operation_identity": {
+          "$ref": "#/$defs/OriginalOperationIdentity"
+        }
+      }
+    },
+    "SettledResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plan_result",
+        "plan_result_origin",
+        "replay_of",
+        "plan_effect",
+        "plan_origin",
+        "schedule_quota_effect",
+        "schedule_quota_origin",
+        "owner_settlement"
+      ],
+      "properties": {
+        "plan_result": {
+          "$ref": "#/$defs/StoragePlanCancelResult"
+        },
+        "plan_result_origin": {
+          "$ref": "#/$defs/StorageSourceOrigin"
+        },
+        "replay_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_effect": {
+          "$ref": "#/$defs/StoragePlanEffect"
+        },
+        "plan_origin": {
+          "$ref": "#/$defs/StorageSourceOrigin"
+        },
+        "schedule_quota_effect": {
+          "$ref": "#/$defs/StorageScheduleQuotaEffect"
+        },
+        "schedule_quota_origin": {
+          "$ref": "#/$defs/StorageSourceOrigin"
+        },
+        "owner_settlement": {
+          "$ref": "#/$defs/OwnerSettlement"
+        }
+      }
+    },
+    "NotSettled": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "owner_reason",
+        "original_owner_result_ref",
+        "owner_settlement"
+      ],
+      "properties": {
+        "status": {
+          "const": "not_settled"
+        },
+        "owner_reason": {
+          "enum": [
+            "stale_plan_version",
+            "stale_currentness",
+            "waiting_for_safe_stop",
+            "permission_denied",
+            "owner_unavailable",
+            "command_not_registered",
+            "idempotency_conflict",
+            "cancelled"
+          ]
+        },
+        "original_owner_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_settlement": {
+          "type": "null"
+        }
+      }
+    },
+    "CurrentGoalSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body_control",
+        "host_stop_control",
+        "binding_selection",
+        "binding_control",
+        "binding_revision",
+        "binding_origin",
+        "writer_domain",
+        "writer_domain_head",
+        "goal_plan_binding",
+        "original_source_audit",
+        "original_owner_source_ref",
+        "original_owner_source_sha256"
+      ],
+      "properties": {
+        "body_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "host_stop_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingSelection"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        },
+        "goal_plan_binding": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageGoalPlanBinding"
+        },
+        "original_source_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit"
+        },
+        "original_owner_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "PreparationScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "cancellation_id",
+        "original_execution_binding",
+        "original_scope_proof_ref",
+        "original_scope_proof_sha256",
+        "original_goal_cancel_request_ref",
+        "original_goal_cancel_request_sha256",
+        "idempotency_key",
+        "original_plan_operation_id",
+        "original_scheduler_operation_id",
+        "original_joint_transaction_id",
+        "original_preparation_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_execution_binding": {
+          "$ref": "#/$defs/ExecutionBinding"
+        },
+        "original_scope_proof_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_proof_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_cancel_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_plan_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scheduler_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_joint_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_preparation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "BeforeStopSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "current_goal",
+        "plan_owner",
+        "scheduler_owner",
+        "plan",
+        "schedules",
+        "consents",
+        "scheduler_complete_selection_sha256",
+        "scheduler_selection_source_ref",
+        "original_safe_stop_owner_ref",
+        "original_callback_domain_ref",
+        "original_permission_source_ref",
+        "original_permission_source_sha256",
+        "original_deletion_hold_source_ref",
+        "original_deletion_hold_source_sha256"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/PreparationScope"
+        },
+        "current_goal": {
+          "$ref": "#/$defs/CurrentGoalSources"
+        },
+        "plan_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "scheduler_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "plan": {
+          "$ref": "#/$defs/PlanExpected"
+        },
+        "schedules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScheduleExpected"
+          }
+        },
+        "consents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConsentExpected"
+          }
+        },
+        "scheduler_complete_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scheduler_selection_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_safe_stop_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_callback_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_permission_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_permission_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_deletion_hold_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_deletion_hold_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "LiteralTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "const": "literal"
+        },
+        "value": {
+          "type": [
+            "null",
+            "boolean",
+            "integer",
+            "number",
+            "string"
+          ]
+        }
+      }
+    },
+    "ArrayTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "items"
+      ],
+      "properties": {
+        "kind": {
+          "const": "array"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ValueTerm"
+          }
+        }
+      }
+    },
+    "MemberTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/ValueTerm"
+        }
+      }
+    },
+    "ObjectTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "members"
+      ],
+      "properties": {
+        "kind": {
+          "const": "object"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemberTerm"
+          }
+        }
+      }
+    },
+    "SlotTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "slot_id"
+      ],
+      "properties": {
+        "kind": {
+          "const": "slot"
+        },
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ConcatTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "parts"
+      ],
+      "properties": {
+        "kind": {
+          "const": "concat"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "literal"
+                ],
+                "properties": {
+                  "literal": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "slot_id"
+                ],
+                "properties": {
+                  "slot_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ValueTerm": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LiteralTerm"
+        },
+        {
+          "$ref": "#/$defs/ArrayTerm"
+        },
+        {
+          "$ref": "#/$defs/ObjectTerm"
+        },
+        {
+          "$ref": "#/$defs/SlotTerm"
+        },
+        {
+          "$ref": "#/$defs/ConcatTerm"
+        }
+      ]
+    },
+    "FutureSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot_id",
+        "kind",
+        "owner_source_ref",
+        "owner_source_sha256",
+        "source_target_id",
+        "source_json_pointer",
+        "output_schema_ref",
+        "consumer_paths"
+      ],
+      "properties": {
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "original_timestamp",
+            "complete_physical_sha256"
+          ]
+        },
+        "owner_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_target_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumer_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target_id",
+              "json_pointer"
+            ],
+            "properties": {
+              "target_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "json_pointer": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "ReservedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_role",
+        "value",
+        "original_owner_ref",
+        "original_reservation_ref",
+        "original_reservation_sha256"
+      ],
+      "properties": {
+        "identity_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_reservation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_reservation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "NumericAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id",
+        "schema_branch",
+        "json_pointer",
+        "primitive_type",
+        "derivation",
+        "original_source_ref",
+        "original_json_pointer",
+        "original_exact_decimal",
+        "result_exact_decimal",
+        "canonical_domain_ref"
+      ],
+      "properties": {
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "primitive_type": {
+          "enum": [
+            "integer",
+            "number"
+          ]
+        },
+        "derivation": {
+          "enum": [
+            "preserve_original",
+            "increment_original_once",
+            "literal_native_initial",
+            "original_cancel_domain"
+          ]
+        },
+        "original_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_exact_decimal": {
+          "type": "string",
+          "pattern": "^-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?$"
+        },
+        "result_exact_decimal": {
+          "type": "string",
+          "pattern": "^-?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?$"
+        },
+        "canonical_domain_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PreparedTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id",
+        "schema_ref",
+        "physical_key_template",
+        "disposition",
+        "before_source",
+        "complete_value_template"
+      ],
+      "properties": {
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_ref": {
+          "enum": [
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageAssistantPlanRecord",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StoragePlanRun",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageExecutionSchedule",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageQuotaResumeConsent",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageScheduleRunBinding",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageSourceOrigin",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StoragePlanEffect",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StorageScheduleQuotaEffect",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/StoragePlanCancelResult",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CancellationLink",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/OwnerSelection",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/BoundCancelRequest",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/SettledResult",
+            "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/OwnerSettlement"
+          ]
+        },
+        "physical_key_template": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ValueTerm"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disposition": {
+          "enum": [
+            "changed_original",
+            "preserved_original",
+            "new_original",
+            "passive_delivery"
+          ]
+        },
+        "before_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complete_value_template": {
+          "$ref": "#/$defs/ValueTerm"
+        }
+      }
+    },
+    "CodecResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retrieval_uri",
+        "document_sha256",
+        "codec_id",
+        "original_installed_owner_ref",
+        "original_installed_owner_epoch",
+        "original_domain_admission_ref"
+      ],
+      "properties": {
+        "retrieval_uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "document_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_installed_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_installed_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_domain_admission_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "CarrierPolicyAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "exact_registry_row_sha256",
+        "policy_ref",
+        "policy_version",
+        "original_owner_admission_ref",
+        "original_storage_admission_ref"
+      ],
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exact_registry_row_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policy_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_admission_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_storage_admission_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "BeforeStopPrepared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "sources",
+        "reserved_identities",
+        "future_slots",
+        "targets",
+        "numeric_assignments",
+        "codec_resources",
+        "carrier_policy_admissions",
+        "current_cancel_assignment",
+        "complete_original_input_sha256",
+        "complete_assignment_sha256",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "prepared_not_effected"
+        },
+        "sources": {
+          "$ref": "#/$defs/BeforeStopSources"
+        },
+        "reserved_identities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReservedIdentity"
+          }
+        },
+        "future_slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FutureSlot"
+          }
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PreparedTarget"
+          }
+        },
+        "numeric_assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NumericAssignment"
+          }
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CodecResource"
+          }
+        },
+        "carrier_policy_admissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CarrierPolicyAdmission"
+          }
+        },
+        "current_cancel_assignment": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentAdmission"
+        },
+        "complete_original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_assignment_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "PreparationUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "source_unavailable",
+            "stale_source",
+            "unbound_carrier_policy",
+            "codec_unavailable",
+            "unrepresentable_required_value",
+            "incomplete_target_domain",
+            "owner_fence_unavailable"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "PreparationResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/BeforeStopPrepared"
+        },
+        {
+          "$ref": "#/$defs/PreparationUnavailable"
+        }
+      ]
+    },
+    "PreparedBoundCancelRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preparation",
+        "genuine_post_stop_request",
+        "genuine_stop_receipt",
+        "genuine_cancellation_receipt",
+        "actual_safe_stop_result_ref",
+        "actual_safe_stop_result_sha256"
+      ],
+      "properties": {
+        "preparation": {
+          "$ref": "#/$defs/BeforeStopPrepared"
+        },
+        "genuine_post_stop_request": {
+          "$ref": "#/$defs/BoundCancelRequest"
+        },
+        "genuine_stop_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt"
+        },
+        "genuine_cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt"
+        },
+        "actual_safe_stop_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_safe_stop_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "SlotSubstitution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot_id",
+        "actual_value",
+        "actual_original_source_ref",
+        "actual_original_source_sha256"
+      ],
+      "properties": {
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_value": {
+          "type": "string"
+        },
+        "actual_original_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "CommitAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prepared_request",
+        "substitutions",
+        "independently_checked_complete_assignment_sha256",
+        "actual_original_joint_transaction_id",
+        "actual_result",
+        "action_authority"
+      ],
+      "properties": {
+        "prepared_request": {
+          "$ref": "#/$defs/PreparedBoundCancelRequest"
+        },
+        "substitutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SlotSubstitution"
+          }
+        },
+        "independently_checked_complete_assignment_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_original_joint_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_result": {
+          "$ref": "#/$defs/SettledResult"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RunCompletionAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "assistant_plan_id",
+        "plan_run_id",
+        "terminal_state",
+        "original_operation_id",
+        "original_transaction_id",
+        "settled_at_utc",
+        "settlement_source_revision",
+        "settlement_plan_run_epoch"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "terminal_state": {
+          "enum": [
+            "completed",
+            "cancelled"
+          ]
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "settled_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "settlement_source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "settlement_plan_run_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "RunSourceBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        {
+          "properties": {
+            "source": {
+              "properties": {
+                "family_id": {
+                  "const": "assistant_plan_run"
+                }
+              }
+            },
+            "origin": {
+              "properties": {
+                "family_id": {
+                  "const": "plan_cancel_source_origin"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "RunSettlementOrigin": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/StorageSourceOrigin"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "issued_family_id": {
+                  "const": "assistant_plan_run"
+                },
+                "run_completion_anchor": {
+                  "$ref": "#/$defs/RunCompletionAnchor"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OriginalOperationIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "normalized_identity",
+        "operation_id",
+        "cancellation_id",
+        "original_goal_cancel_request_ref",
+        "original_goal_cancel_request_sha256",
+        "idempotency_key",
+        "original_plan_operation_id",
+        "original_scheduler_operation_id",
+        "original_joint_transaction_id"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "normalized_identity": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NormalizedIdentity"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_plan_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scheduler_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_joint_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "EffectSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "cancellation_id",
+        "original_goal_cancel_request_ref",
+        "original_goal_cancel_request_sha256",
+        "idempotency_key"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_cancel_request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ReadOwnerBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "original_read_operation_id",
+        "actual_storage_owner",
+        "original_read_principal_ref",
+        "current_root_source_ref",
+        "current_root_source_sha256",
+        "current_role_installation_ref",
+        "current_role_installation_sha256",
+        "current_permission_source_ref",
+        "current_permission_source_sha256",
+        "current_deletion_hold_source_ref",
+        "current_deletion_hold_source_sha256",
+        "current_backup_restore_source_ref",
+        "current_backup_restore_source_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_read_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_storage_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_read_principal_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_root_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_root_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_role_installation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_role_installation_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_permission_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_permission_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_deletion_hold_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_deletion_hold_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_backup_restore_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_backup_restore_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "CurrentEffectSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_goal",
+        "plan_owner",
+        "scheduler_owner",
+        "plan",
+        "plan_source",
+        "run",
+        "run_source",
+        "schedules",
+        "consents",
+        "scheduler_complete_selection_sha256",
+        "scheduler_selection_source_ref",
+        "actual_safe_stop_result_ref",
+        "actual_safe_stop_result_sha256",
+        "original_callback_domain_ref",
+        "current_read_boundary"
+      ],
+      "properties": {
+        "current_goal": {
+          "$ref": "#/$defs/CurrentGoalSources"
+        },
+        "plan_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "scheduler_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "plan": {
+          "$ref": "#/$defs/StorageAssistantPlanRecord"
+        },
+        "plan_source": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "run": {
+          "$ref": "#/$defs/StoragePlanRun"
+        },
+        "run_source": {
+          "$ref": "#/$defs/SourceBinding"
+        },
+        "schedules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ScheduleExpected"
+          }
+        },
+        "consents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConsentExpected"
+          }
+        },
+        "scheduler_complete_selection_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "scheduler_selection_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_safe_stop_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_safe_stop_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_callback_domain_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_read_boundary": {
+          "$ref": "#/$defs/ReadOwnerBoundary"
+        }
+      }
+    },
+    "CurrentEffectReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selector",
+        "actual_current_sources"
+      ],
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/EffectSelector"
+        },
+        "actual_current_sources": {
+          "$ref": "#/$defs/CurrentEffectSources"
+        }
+      }
+    },
+    "CurrentEffectReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SettledResult"
+        },
+        {
+          "$ref": "#/$defs/NotSettled"
+        }
+      ]
+    },
+    "CommitResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CommitAdmission"
+        },
+        {
+          "$ref": "#/$defs/NotSettled"
+        }
+      ]
+    },
+    "RetainedEffectSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selector",
+        "read_kind"
+      ],
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/EffectSelector"
+        },
+        "read_kind": {
+          "enum": [
+            "retained_audit",
+            "original_result_replay"
+          ]
+        }
+      }
+    },
+    "RetainedEffectCustody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_settled_result",
+        "original_run_settlement_origin"
+      ],
+      "properties": {
+        "original_settled_result": {
+          "$ref": "#/$defs/SettledResult"
+        },
+        "original_run_settlement_origin": {
+          "$ref": "#/$defs/RunSettlementOrigin"
+        }
+      }
+    },
+    "RetainedEffectReadSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "original_custody",
+        "current_read_boundary"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/RetainedEffectSelector"
+        },
+        "original_custody": {
+          "$ref": "#/$defs/RetainedEffectCustody"
+        },
+        "current_read_boundary": {
+          "$ref": "#/$defs/ReadOwnerBoundary"
+        }
+      }
+    },
+    "RetainedEffectReadSuccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "read_kind",
+        "original_custody",
+        "full_run_read",
+        "action_authority"
+      ],
+      "properties": {
+        "read_kind": {
+          "enum": [
+            "retained_audit",
+            "original_result_replay"
+          ]
+        },
+        "original_custody": {
+          "$ref": "#/$defs/RetainedEffectCustody"
+        },
+        "full_run_read": {
+          "const": "not_requested"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RetainedEffectReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RetainedEffectReadSuccess"
+        },
+        {
+          "$ref": "#/$defs/NotSettled"
+        }
+      ]
+    },
+    "RunScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "assistant_plan_id",
+        "plan_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assistant_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalSourceCommitment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "family_id",
+        "physical_key",
+        "schema_ref",
+        "complete_physical_sha256"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_physical_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "RuntimePopulationMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "run_owner_ref",
+        "run_id",
+        "stable_object_id",
+        "original_source",
+        "policy_id",
+        "policy_version",
+        "retention_anchor_at_utc",
+        "sequence_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stable_object_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source": {
+          "$ref": "#/$defs/OriginalSourceCommitment"
+        },
+        "policy_id": {
+          "const": "RP-RUNTIME-365D"
+        },
+        "policy_version": {
+          "const": "1.0.0"
+        },
+        "retention_anchor_at_utc": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "TerminalRunMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "run_owner_ref",
+        "run_id",
+        "original_anchor_ref",
+        "original_anchor_sha256",
+        "settled_at_utc",
+        "sequence_id",
+        "stable_object_id"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_anchor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_anchor_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "settled_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stable_object_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ProtectionMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "holder_ref",
+        "protected_source_ref",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "original_coverage_ref",
+        "original_coverage_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "legal_hold",
+            "recovery_anchor",
+            "preserved_anchor",
+            "recent_run_anchor",
+            "live_ref",
+            "backup_ref",
+            "rollback_ref",
+            "maintenance_ref"
+          ]
+        },
+        "holder_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protected_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_coverage_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_coverage_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ExistingRuntimePolicy": {
+      "const": {
+        "policy_id": "RP-RUNTIME-365D",
+        "retention_mode": "fixed_ttl",
+        "anchor_kind": "run_completion",
+        "retain_indefinitely": false,
+        "ttl_seconds": 31536000,
+        "source_policy_ref": null,
+        "max_cardinality": 1000000,
+        "cardinality_scope": "run",
+        "additional_cardinality_limits": [
+          {
+            "cardinality_scope": "project",
+            "max_cardinality": 5000000
+          }
+        ],
+        "max_bytes": null,
+        "overflow_action": "roll_successor",
+        "hold_eligible": true,
+        "expiry_action": "compact",
+        "policy_version": "1.0.0"
+      }
+    },
+    "RunRetentionBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "exact_policy",
+        "original_policy_registry_row_sha256",
+        "original_eligibility_owner",
+        "original_eligibility_source_ref",
+        "original_eligibility_source_sha256",
+        "frozen_cutoff_utc",
+        "runtime_population",
+        "runtime_population_source_ref",
+        "runtime_population_source_sha256",
+        "terminal_run_population",
+        "terminal_run_population_source_ref",
+        "terminal_run_population_source_sha256",
+        "protecting_members",
+        "protection_inventory_source_ref",
+        "protection_inventory_source_sha256",
+        "required_authority_survivors",
+        "survivor_inventory_source_ref",
+        "survivor_inventory_source_sha256",
+        "current_backup_restore_source_ref",
+        "current_backup_restore_source_sha256",
+        "current_deletion_source_ref",
+        "current_deletion_source_sha256"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "exact_policy": {
+          "$ref": "#/$defs/ExistingRuntimePolicy"
+        },
+        "original_policy_registry_row_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_eligibility_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_eligibility_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_eligibility_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frozen_cutoff_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "runtime_population": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RuntimePopulationMember"
+          }
+        },
+        "runtime_population_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_population_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_run_population": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TerminalRunMember"
+          }
+        },
+        "terminal_run_population_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "terminal_run_population_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "protecting_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProtectionMember"
+          }
+        },
+        "protection_inventory_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protection_inventory_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "required_authority_survivors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceCommitment"
+          }
+        },
+        "survivor_inventory_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "survivor_inventory_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_backup_restore_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_backup_restore_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_deletion_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current_deletion_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "RunRetirementReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "original_maintenance_operation_id",
+        "original_native_transaction_id",
+        "original_storage_owner",
+        "original_maintenance_lease_ref",
+        "issuer_method",
+        "removed_run_source",
+        "original_settlement_origin",
+        "run_completion_anchor",
+        "policy_id",
+        "policy_version",
+        "policy_registry_row_sha256",
+        "frozen_cutoff_utc",
+        "complete_original_retention_boundary_sha256",
+        "runtime_population_sha256",
+        "terminal_run_population_sha256",
+        "protection_inventory_sha256",
+        "authority_survivor_inventory_sha256",
+        "run_cardinality_observed",
+        "project_cardinality_observed",
+        "original_backup_restore_source_ref",
+        "original_backup_restore_source_sha256",
+        "original_deletion_source_ref",
+        "original_deletion_source_sha256",
+        "compacted_at_utc",
+        "successor_kind"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "original_maintenance_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_native_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_storage_owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_maintenance_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer_method": {
+          "const": "owner.storage.assistant_plan_run.compact_expired.v3"
+        },
+        "removed_run_source": {
+          "$ref": "#/$defs/RunSourceBinding"
+        },
+        "original_settlement_origin": {
+          "$ref": "#/$defs/Selector"
+        },
+        "run_completion_anchor": {
+          "$ref": "#/$defs/RunCompletionAnchor"
+        },
+        "policy_id": {
+          "const": "RP-RUNTIME-365D"
+        },
+        "policy_version": {
+          "const": "1.0.0"
+        },
+        "policy_registry_row_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "frozen_cutoff_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "complete_original_retention_boundary_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "runtime_population_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "terminal_run_population_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "protection_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "authority_survivor_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "run_cardinality_observed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "project_cardinality_observed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_backup_restore_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_backup_restore_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_deletion_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_deletion_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "compacted_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "successor_kind": {
+          "const": "original_identity_and_receipt_custody"
+        }
+      }
+    },
+    "StorageRunRetirementReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.assistant_plan_run_retirement.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/RunRetirementReceipt"
+        }
+      }
+    },
+    "RunRetirementSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "run",
+        "run_source",
+        "current_run_origin",
+        "original_settlement_origin",
+        "actual_maintenance_operation",
+        "actual_maintenance_source_ref",
+        "actual_maintenance_source_sha256",
+        "actual_retention_boundary"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "run": {
+          "$ref": "#/$defs/StoragePlanRun"
+        },
+        "run_source": {
+          "$ref": "#/$defs/RunSourceBinding"
+        },
+        "current_run_origin": {
+          "$ref": "#/$defs/StorageSourceOrigin"
+        },
+        "original_settlement_origin": {
+          "$ref": "#/$defs/RunSettlementOrigin"
+        },
+        "actual_maintenance_operation": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_storage_maintenance_operation"
+        },
+        "actual_maintenance_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_maintenance_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_retention_boundary": {
+          "$ref": "#/$defs/RunRetentionBoundary"
+        }
+      }
+    },
+    "RunRetirementSuccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "original_receipt",
+        "replay_of",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "compacted"
+        },
+        "original_receipt": {
+          "$ref": "#/$defs/StorageRunRetirementReceipt"
+        },
+        "replay_of": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RunRetirementUnavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "original_receipt",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "source_unavailable",
+            "not_eligible",
+            "protected",
+            "stale_source",
+            "policy_unavailable",
+            "custody_incomplete",
+            "codec_unavailable",
+            "owner_unavailable",
+            "idempotency_conflict"
+          ]
+        },
+        "original_receipt": {
+          "type": "null"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RunRetirementResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RunRetirementSuccess"
+        },
+        {
+          "$ref": "#/$defs/RunRetirementUnavailable"
+        }
+      ]
+    },
+    "RunRetirementReadSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "original_receipt",
+        "original_settlement_origin",
+        "current_read_boundary"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/RunScope"
+        },
+        "original_receipt": {
+          "$ref": "#/$defs/StorageRunRetirementReceipt"
+        },
+        "original_settlement_origin": {
+          "$ref": "#/$defs/RunSettlementOrigin"
+        },
+        "current_read_boundary": {
+          "$ref": "#/$defs/ReadOwnerBoundary"
+        }
+      }
+    },
+    "RunAnchorReadSuccess": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "anchor",
+        "original_settlement_origin",
+        "retention_anchor_kind",
+        "retention_anchor_at_utc",
+        "action_authority"
+      ],
+      "properties": {
+        "anchor": {
+          "$ref": "#/$defs/RunCompletionAnchor"
+        },
+        "original_settlement_origin": {
+          "$ref": "#/$defs/RunSettlementOrigin"
+        },
+        "retention_anchor_kind": {
+          "const": "run_completion"
+        },
+        "retention_anchor_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "RunAnchorReadResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RunAnchorReadSuccess"
+        },
+        {
+          "$ref": "#/$defs/RunRetirementUnavailable"
+        }
+      ]
+    }
+  }
+}

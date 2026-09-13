@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4407-L4622
+Source lines: L4407-L4705
 
-Source SHA256: `d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9`
+Source SHA256: `02174d365649f9fa5305d01a03314d50e317b093527671deaa3c78cf453bc8ab`
 
 ---
 
@@ -170,7 +170,7 @@ negative_constraints:
 
 The complete normative obligations are `Plans/goal_cancel_contracts/semantic-obligations.json`, the two method maps and the source numeric inventory. Every obligation retains NOT_RUN until its own actual execution evidence exists. Pair each permitted source/effect/disclosure with malformed or shape-valid wrong-source/currentness/key/epoch/codec/candidate alternatives; check complete post-state and independently issued original receipts, not only a helper return or selected-field assertion. Original helper replacement must not alter actual private preimages or issuer state.
 
-Required cases include genuine fresh birth/all-writer enrollment and hidden-writer rejection; null-active-run versus genuine association absence; prior Stop preservation; body-pending cancellation priority; receipt timestamp/identity fixed before Stop; complete optional event_unknown progress and retry; genuine acknowledged source before reservation; consumed reservation versus original append proof; loss after each genuine partial effect; exact immutable terminal replay; body-control v1/v2 migration and final read fences; standard local whole-resource resolution; bounded versus unsupported valid integer/codec domains; full backup/restore/tombstone/deletion guards; and passive SP-278 current/v2 historical source read with no durable effect. Bound Plan and Workflow variants must remain unavailable until their exact original effect sources are integrated.
+Required cases include genuine fresh birth/all-writer enrollment and hidden-writer rejection; null-active-run versus genuine association absence; prior Stop preservation; body-pending cancellation priority; receipt timestamp/identity fixed before Stop; complete optional event_unknown progress and retry; genuine acknowledged source before reservation; consumed reservation versus original append proof; loss after each genuine partial effect; exact immutable terminal replay; body-control v1/v2 migration and final read fences; standard local whole-resource resolution; bounded versus unsupported valid integer/codec domains; full backup/restore/tombstone/deletion guards; and passive SP-278 current/v2 historical source read with no durable effect. APR-017/SQR-011 and GRS-076/SIR-051 integrate the bound Plan source profile; ATS-052 adds its unexecuted owner/domain/replay/retirement oracles. Actual native admission remains unproved, and Workflow variants remain unavailable until their exact original effect sources are integrated.
 
 These are verification requirements for Plans. This change supplies no native execution, model run, fault fixture observation, PNC-019/readiness result or global event-depth completion. Historical D-R02/EA-UND-0002 status remains unchanged.
 
@@ -224,3 +224,86 @@ negative_constraints:
 The structural cases below do not create a GoalRun or WorkNode and do not prove original source ownership. The native source, concurrency and replay obligations remain NOT_RUN until the actual original owner and Storage participants execute them.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-075, ContractName:Plans/Contracts_V0.md#CV-340, ContractName:Plans/storage-plan.md#SP-289
+
+### ATS-052 - Bound Plan cancellation and runtime retirement verification obligations
+
+ATS-052 specifies source-only verification obligations for APR-017, SQR-011, CV-348, SP-306/307, GRS-076 and SIR-051. The exact canonical oracles are `Plans/assistant_plan_cancel_contracts/semantic-obligations.json` and `Plans/assistant_plan_cancel_contracts/bound-semantic-obligations.json`; full field, numeric, slot and dependency maps supplement those oracles. Existing Goal cancellation, binding, no-effect, unknown, current-source and backup/restore cases remain mandatory. No new fixture/model/native execution is claimed by adopting the source contracts.
+
+| Required seam | Required observation | Execution status |
+|---|---|---|
+| Whole native sources | All 61 logical fields and existing enums/types survive exact source capture, changed/preserved transitions and readback; full schedule reasons remain native values. Unknown/deployed variants refuse without truncation. | NOT_RUN |
+| Genuine origins and all-writer scope | Actual original birth/mutation jointly creates sources/origins; wrong owner/root/key/schema/revision, copied origins, missing writers and pending partial effects reject before unauthorized publication. | NOT_RUN |
+| Exact Scheduler membership | Complete actual Run-specific schedules, correlations and consents include authentic empty and terminal/disabled sets; omissions, duplicates, unrelated schedules and hidden writers reject. | NOT_RUN |
+| Before-Stop domains | Whole recursive target set and every actual numeric leaf/primitive/null/array member are covered. Unrepresentable successor, including a JCS-exact current integer with inexact +1, refuses before Stop without coercion or a new cap. | NOT_RUN |
+| Source/assignment/Plan order | Pre-C-source input contains no future SourceAudit; actual SIR ack/readback precedes exclusive append; C assignment has no dependency on Plan preparation; Plan preparation consumes exact current C admission. | NOT_RUN |
+| Future slots and hash DAG | Only declared original times/earlier whole hashes occur; all IDs/reasons/non-time primitives are fixed before Stop. Missing/extra slot occurrence or self/future hash cycle rejects. | NOT_RUN |
+| Original safe-stop and joint effect | Genuine first Stop/cancellation receipts and actual safe-stop result precede one full joint Plan/Run/Scheduler/origin/effect/result commit. Waiting/nonsettlement never returns partial success. | NOT_RUN |
+| Late callbacks and To-Dos | Actual current Stop/Run epoch and original binding/revision gates fence every callback/dispatch/To-Do update after final helpers; cancellation never rewrites To-Do statuses. | NOT_RUN |
+| Current versus retained reads | First C-publication requires actual current after-state custody. Retained original effects/result/origins and exact original request identity support passive replay without old full sources and never confer action authority. | NOT_RUN |
+| Terminal branch custody | Succeeded route requires assignment and authentic Plan settlement; pre-assignment no_effect and truthful unknown routes remain possible through original predicates without nonexistent Plan effects. Unknown remains immutable after recovery. | NOT_RUN |
+| Original Goal event | Original cancellation id, accepted/occurred time, payload, result/outcome/response types and progress 0..7 remain exact. Consumed reservation uses original append/first receipt, never a fabricated live lock. | NOT_RUN |
+| First settlement anchor | Unfinished Run starts with null anchor; first actual completed/cancelled write creates original timestamp/operation/transaction/revision/epoch anchor atomically. Later writers preserve it, non-run origins use null and historic missing evidence is unavailable. | NOT_RUN |
+| Runtime class protections | Actual full runtime class counts and Project terminal cohort preserve existing latest-25, every hold/live/recovery/backup/rollback/maintenance protection and unchanged policy values. Count pressure never permits this TTL-only removal of an unexpired Run. | NOT_RUN |
+| Atomic retirement | Genuine original redb compaction CASes full Run and gate preimages, publishes one exact compact receipt and removes only the expired full row atomically; all authority survivors remain exact. | NOT_RUN |
+| Crash, replay and restore | Before commit original Run survives; after commit genuine receipt/survivors establish original retirement. Missing/conflicting custody refuses; restore cannot resurrect old bytes or reset anchor/identity/time. | NOT_RUN |
+| Every direct boundary | Each original inner/outer effect, current/retained reader, anchor reader, Janitor and backup/restore participant independently captures originals before helpers and performs final whole-native/candidate checks with no returning gap. | NOT_RUN |
+
+Static schema/reference/path or PlanUnit validation establishes only source structure and cannot establish these observations. Actual codec implementation, dispatch/permissions, native lease/source installation, all-writer coverage, atomicity, durable readback, crash injection, real retention membership/protection, deletion/backup/restore and genuine event publication require separately authorized original execution. This source integration changes no historical audit verdict, global event-depth result, critical/MVP array, PNC-019, readiness or governance artifact.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: ATS-052
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Bound Plan cancellation and runtime retirement verification obligations. Every source/domain/primitive/membership/atomicity/callback/read/replay/retirement
+  oracle remains explicitly NOT_RUN until genuine original-owner execution demonstrates it.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- ATS-051
+- APR-017
+- SQR-011
+- CV-348
+- SP-306
+- SP-307
+- GRS-076
+- SIR-051
+unblocks: []
+acceptance_criteria:
+- Every source/domain/primitive/membership/atomicity/callback/read/replay/retirement oracle remains explicitly
+  NOT_RUN until genuine original-owner execution demonstrates it.
+- Static source checks cannot become fixture/model/native proof or change historical event-depth/readiness/governance
+  status.
+- Success and unsettled terminal paths, current versus retained authority and old full native/policy invariants
+  are tested independently.
+validation_surfaces:
+- Plans/assistant_plan_cancel_contracts/semantic-obligations.json
+- Plans/assistant_plan_cancel_contracts/bound-semantic-obligations.json
+- Plans/assistant_plan_cancel_contracts/owner-field-map.json
+- Plans/assistant_plan_cancel_contracts/numeric-paths.json
+- Plans/assistant_plan_cancel_contracts/future-slot-rules.json
+- Plans/assistant_plan_cancel_contracts/publication-dependencies.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: ats_052_bound_plan_custody
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```

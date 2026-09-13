@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15330,
+    "depends_on_edge_count": 15354,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17981,
-    "node_count": 6607,
+    "edge_count": 18005,
+    "node_count": 6615,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-13T20:56:11Z",
+  "generated_at_utc": "2026-09-13T21:52:54Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6607,
+  "plan_unit_count": 6615,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2063,
+      "high": 2071,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36281,7 +36281,7 @@
       "goal_body_currentness_accepted_history_or_receipt_authority_escape": 1,
       "goal_body_physical_origin_cas_retention_or_restore_authority_escape": 1,
       "goal_body_retention_and_deletion": 1,
-      "goal_cancellation_original_authority_or_effect_loss": 8,
+      "goal_cancellation_original_authority_or_effect_loss": 16,
       "goal_command_owner_gap": 1,
       "goal_command_wiring_gap": 1,
       "goal_completes_on_one_model_response": 1,
@@ -38684,7 +38684,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6416,
+      "accepted": 6424,
       "retired": 182,
       "superseded": 9
     },
@@ -38756,7 +38756,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 79,
+      "schema_contract": 87,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38840,7 +38840,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "f31698dcfd47bb6acc72a1b1ec16682f85293f0575420381ac6b177dc6011af7",
+        "expected": "bd5aa3b073d25cbb4f1cf716fc7a4f24233fe540de705e8b4890e2ff72feb522",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38858,7 +38858,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "becb9e14dcd4774151473072c3c6c239eae4e9f14f3608f0ac46d540cd76add0",
+        "expected": "0f2a22408493d57bbc77c3ed6873a5b2d4de4adede558a9942d99adc5287d12d",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38870,7 +38870,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9",
+        "expected": "02174d365649f9fa5305d01a03314d50e317b093527671deaa3c78cf453bc8ab",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

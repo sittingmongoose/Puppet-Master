@@ -1,0 +1,673 @@
+{
+  "fields": [
+    {
+      "record": "AssistantPlanRecord",
+      "field": "schema_id",
+      "schema": {
+        "const": "pm.assistant_plan.record.v1"
+      },
+      "evidence": "APR 660/877 named record identity; version is technical schema version"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "schema_version",
+      "schema": {
+        "const": "1.0.0"
+      },
+      "evidence": "technical version of declared native shape"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "assistant_plan_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 15/660 immutable identity"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "project_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 15/660 immutable scope"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "thread_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 15/660 immutable scope"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "strategy",
+      "schema": {
+        "enum": [
+          "quick",
+          "standard",
+          "thorough",
+          "deep_thorough",
+          "deep_exhaustive",
+          "deep_brainstorm"
+        ]
+      },
+      "evidence": "APR 643 closed six strategies"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "backend",
+      "schema": {
+        "enum": [
+          "direct",
+          "ledger_bound"
+        ]
+      },
+      "evidence": "APR 645-649 strategy/backend mapping"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "current_version",
+      "schema": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "evidence": "APR 670 exact revision lineage"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "approved_version",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "APR 672/748 immutable build-approved version; null before approval"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "approved_hash",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "APR 672/748 immutable build-approved hash; null before approval"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "control_state",
+      "schema": {
+        "enum": [
+          "build",
+          "building",
+          "completed",
+          "canceled"
+        ]
+      },
+      "evidence": "APR 662/740/760 exact four controls"
+    },
+    {
+      "record": "AssistantPlanRecord",
+      "field": "named_plan_id",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "APR 895 explicit nullable NamedPlan link"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schema_id",
+      "schema": {
+        "const": "pm.assistant_plan.run.v1"
+      },
+      "evidence": "APR 758/877 named run identity"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schema_version",
+      "schema": {
+        "const": "1.0.0"
+      },
+      "evidence": "technical version"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_run_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 758 original run id"
+    },
+    {
+      "record": "PlanRun",
+      "field": "assistant_plan_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 758 plan identity, normalized to immutable aggregate identity"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_version",
+      "schema": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "evidence": "APR 758 frozen version"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_hash",
+      "schema": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "evidence": "APR 758 frozen hash"
+    },
+    {
+      "record": "PlanRun",
+      "field": "execution_topology",
+      "schema": {
+        "enum": [
+          "agent",
+          "crew",
+          "goal_driven"
+        ]
+      },
+      "evidence": "APR 758 exact agent/crew/goal_driven"
+    },
+    {
+      "record": "PlanRun",
+      "field": "todo_list_revision",
+      "schema": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "evidence": "APR 758 durable To-Do list revision"
+    },
+    {
+      "record": "PlanRun",
+      "field": "runtime_snapshot_ref",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 758 runtime snapshot ref; technical spelling"
+    },
+    {
+      "record": "PlanRun",
+      "field": "permission_snapshot_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 758 permission snapshot ID"
+    },
+    {
+      "record": "PlanRun",
+      "field": "project_context_ref",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "APR 758 project context ref; technical spelling"
+    },
+    {
+      "record": "PlanRun",
+      "field": "schedule_ref",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "APR 758 optional schedule ref represented by explicit null"
+    },
+    {
+      "record": "PlanRun",
+      "field": "state",
+      "schema": {
+        "enum": [
+          "running",
+          "paused",
+          "waiting_quota",
+          "waiting_window",
+          "blocked",
+          "completed",
+          "cancelled",
+          "failed"
+        ]
+      },
+      "evidence": "APR 758 eight-value run state"
+    },
+    {
+      "record": "PlanRun",
+      "field": "goal_ref",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "APR 696 goal_driven plus Goal reference; existing separate GoalPlanBinding remains authority"
+    },
+    {
+      "record": "PlanRun",
+      "field": "plan_run_epoch",
+      "schema": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "evidence": "APR 1143 and ToDo 638/826 explicit PlanRun/run epoch; technical field spelling; cancel +1 realizes PFAIL existing callback fence"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schema_id",
+      "schema": {
+        "const": "pm.execution.schedule.v1"
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schema_version",
+      "schema": {
+        "const": "1.0.0"
+      },
+      "evidence": "technical version of declared native shape"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schedule_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "project_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "target_kind",
+      "schema": {
+        "enum": [
+          "scheduled_message",
+          "assistant_plan_run",
+          "crew_run",
+          "goal_run",
+          "agent_run"
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "target_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "exact_target_version",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "exact_target_hash",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "schedule_kind",
+      "schema": {
+        "enum": [
+          "one_time",
+          "recurring_window"
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "timezone",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "local_start",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "local_pause",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "days_of_week",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "wind_down_seconds",
+      "schema": {
+        "type": "integer"
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "missed_policy",
+      "schema": {
+        "enum": [
+          "hold",
+          "next_available",
+          "cancel_after_grace"
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "auto_resume_next_window",
+      "schema": {
+        "type": "boolean"
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "state",
+      "schema": {
+        "enum": [
+          "active",
+          "paused",
+          "cancelled",
+          "completed",
+          "invalidated"
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "revision",
+      "schema": {
+        "type": "integer"
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "invalidated_reason",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "ExecutionSchedule",
+      "field": "dst_policy",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 433-452 exact fields; dst_policy from SQR 455/459 expressly stored DST policy"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "schema_id",
+      "schema": {
+        "const": "pm.runtime.quota_resume_consent.v1"
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "schema_version",
+      "schema": {
+        "const": "1.0.0"
+      },
+      "evidence": "technical version of declared native shape"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "consent_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "run_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "provider_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "account_id",
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "enabled",
+      "schema": {
+        "type": "boolean"
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "reset_time",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "reset_truth",
+      "schema": {
+        "enum": [
+          "provider_reported",
+          "locally_inferred",
+          "user_supplied",
+          "unknown"
+        ]
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "confidence",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "execution_schedule_id",
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "user_stop_epoch",
+      "schema": {
+        "type": "integer"
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "created_at",
+      "schema": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    },
+    {
+      "record": "QuotaResumeConsent",
+      "field": "updated_at",
+      "schema": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "evidence": "SQR 479-492 exact whole declared fields"
+    }
+  ],
+  "field_count": 61,
+  "native_field_extensions": [
+    "PlanRun.goal_ref from APR 696",
+    "PlanRun.plan_run_epoch from APR 1143/TDR 638/826",
+    "ExecutionSchedule.dst_policy from SQR 455/459"
+  ],
+  "no_lifecycle_enum_changes": true
+}

@@ -225,5 +225,66 @@
     "No-effect proof is the authentic immutable epoch1 issued from source0 with zero effects of this operation; preserve actual prior Stop.",
     "All historical embedded resources resolve from the complete pinned graph through standard JSON Schema resolution."
   ],
-  "native_status": "NOT_RUN"
+  "native_status": "NOT_RUN",
+  "bound_plan_source_adoption": {
+    "classification": "NORMATIVE_ORACLES_NOT_EXECUTED",
+    "native_status": "NOT_RUN",
+    "cases": [
+      {
+        "id": "bound_source_exact",
+        "required_result": "Genuine bound association captured without converting to none_required; wrong Plan/run/version/hash/owner or incomplete binding domain refuses.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "ack_before_reservation",
+        "required_result": "Actual original SIR acknowledgement and durable readback complete before exclusive cancellation append reservation.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "acyclic_preparation",
+        "required_result": "C assignment cannot depend on PlanBeforeStopPrepared or its commitment; Plan preparation consumes existing current_cancel_assignment.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "bound_version_domain",
+        "required_result": "Nonnull exact original Plan version is admitted through original CV333 JCS codec; unsupported exact representation refuses before C-stop without invalidating Goal input.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "whole_primitive_domain",
+        "required_result": "All current numeric roots and nullable arms plus complete string/boolean/null/map/array fields and permitted future slots remain covered under original codecs.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "current_settlement_only",
+        "required_result": "Authentic current Plan settlement feeds C-owners; retained historical success alone cannot feed first C-publication.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "post_consumption",
+        "required_result": "After original append consumes reservation, genuine original append/first-receipt custody replaces live unconsumed lock predicate.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "retained_replay_only",
+        "required_result": "Original immutable terminal replay may use original retained Plan effects and genuine run-retirement authority; it cannot reactivate C-publish or manufacture a second event.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "future_and_prior_effects",
+        "required_result": "No preparation publishes placeholders or claims future settlement; all genuine prior effects survive later refusal; no_effect only with original zero-effect proof.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "bound_unsettled_terminal_without_assignment",
+        "required_result": "Original no_effect/unknown terminal and replay remain available under the original full proof/phase/source/current-read predicates when no AssignmentAudit or Plan effects were issued; no fabricated successor is required.",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "bound_succeeded_replay_requires_original_plan_effects",
+        "required_result": "Only original succeeded terminal uses BoundRetainedReplayEntry and original retained Plan effects; kind no_effect/unknown cannot enter either success-only branch.",
+        "execution": "NOT_RUN"
+      }
+    ]
+  }
 }

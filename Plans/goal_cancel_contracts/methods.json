@@ -7,7 +7,18 @@
       "write_boundary": "source/head epoch0 only",
       "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
       "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
-      "failure": "preserve genuine prior effects, no manufactured no_effect"
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "capture_source",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundSourceCaptureEntry",
+          "boundary": "SourceAudit and progress/source0 only; genuine bound association retained",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "capture_source"
+          ]
+        }
+      ]
     },
     {
       "operation": "latch_and_reserve",
@@ -16,7 +27,18 @@
       "write_boundary": "StopControl+StopReceipt+BodyControlV2 cancellation_pending+progress/head",
       "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
       "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
-      "failure": "preserve genuine prior effects, no manufactured no_effect"
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "latch_and_reserve",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundBeforeStopEntry",
+          "boundary": "existing original C-stop boundary only after complete Plan preparation",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "latch_and_reserve"
+          ]
+        }
+      ]
     },
     {
       "operation": "commit_receipt",
@@ -34,7 +56,18 @@
       "write_boundary": "only original owner effects; progress records actual evidence",
       "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
       "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
-      "failure": "preserve genuine prior effects, no manufactured no_effect"
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "settle_owner",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundOwnersEntry",
+          "boundary": "existing owners_settled progression only from authentic current Plan settlement",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "settle_owner"
+          ]
+        }
+      ]
     },
     {
       "operation": "freeze_event",
@@ -70,7 +103,29 @@
       "write_boundary": "original result/outcome/response/terminal together",
       "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
       "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
-      "failure": "preserve genuine prior effects, no manufactured no_effect"
+      "failure": "preserve genuine prior effects, no manufactured no_effect",
+      "bound_plan_entry_contracts": [
+        {
+          "operation": "terminal",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundTerminalEntry",
+          "boundary": "existing immutable SIR terminal/result/outcome/response",
+          "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        },
+        {
+          "operation": "terminal_no_effect_or_unknown",
+          "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledTerminalEntry",
+          "boundary": "unchanged original no_effect/unknown terminal; no assignment or Plan settlement requirement",
+          "mandatory_predicate": "all original TerminalInput phase, proof and SIR predicates",
+          "existing_operations": [
+            "terminal",
+            "publish_cancel_terminal"
+          ]
+        }
+      ]
     },
     {
       "operation": "resolve_original",
@@ -125,6 +180,23 @@
       "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
       "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
       "failure": "preserve genuine prior effects, no manufactured no_effect"
+    }
+  ],
+  "bound_plan_contract_adoption_ref": "Plans/assistant_plan_cancel_contracts/bound-method-adoptions.json",
+  "bound_plan_passive_replay_contracts": [
+    {
+      "operation": "retained_terminal_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundRetainedReplayEntry",
+      "boundary": "passive original terminal only; no C-publish authority",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": []
+    },
+    {
+      "operation": "retained_no_effect_or_unknown_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledReplayEntry",
+      "boundary": "unchanged passive immutable no_effect/unknown replay; no nonexistent Plan effects required",
+      "mandatory_predicate": "original terminal/source/snapshot/proof and current passive-read permission",
+      "existing_operations": []
     }
   ]
 }

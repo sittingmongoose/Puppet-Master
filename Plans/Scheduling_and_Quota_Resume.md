@@ -952,3 +952,74 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Assistant_Plan_Runtime.md
 
+### SQR-011 - Original run-specific cancellation and complete scheduler custody
+
+SQR-011 supplies the existing Scheduling owner participant in APR-017's original joint cancellation, using the full `ExecutionSchedule`, `QuotaResumeConsent`, `ScheduleRunBinding`, `ScheduleExpected`, `ConsentExpected`, `ScheduleQuotaEffect` and original source-origin contracts in `Plans/assistant_plan_cancel_custody.schema.json`. It does not add a scheduler service or widen consent to an account, thread or future Run.
+
+Under the existing Scheduling owner's native server transaction and all-writer exclusion, select every schedule/window and quota consent associated with exactly this execution. ScheduleRunBinding is the explicit original scheduling correlation required by canonical exact association keys: it maps an actual schedule to its admitted PlanRun and frozen target/version/hash. It is created/updated by the actual scheduler in the same original admission that binds the schedule, not by cancellation or by a scan heuristic. It does not map Goals to Plans. Existing pre-run future schedules create no Goal or PlanRun; this profile does not create a ScheduleRunBinding for those until actual scheduled admission binds the run. Unrelated scheduled messages are excluded by their original target kind and never mutated.
+
+Complete selection comes from the actual authoritative scheduler records and original correlations under the same native ownership fence, including disabled/terminal rows and in-flight original writes for this execution. It is not a caller-supplied list, a UI snapshot or an optional reverse index. The native selection attestation names the exact original source read operation and semantic hash of the whole ordered schedule/binding and consent arrays. Complete physical source keys are sorted by exact UTF-8 bytes; duplicate source identities, omitted originals, an unaccounted target mapping or a pending writer outside this fence refuse the route. A zero-cardinality set is proved by the native complete selection, not by omitted fields. Quota consent run_id/provider/account identities remain exact; account-wide or thread-wide consent is never selected.
+
+Every timer registration, schedule update, quota-consent writer, Plan-run admission/retry/resume and owner completion/callback that could race this selection must participate in the same applicable original owner exclusion and current Stop checks. This is placement within the existing owners, not a new coordinator service. C-source confirms that these exact source contracts/owners can be enlisted before the bound route is admitted. GRS-076 supplies the bound source adoption; actual native entry, representation and current authority remain mandatory.
+
+Every selected active or paused schedule changes only to invalidated, its original revision +1 and the actual original Scheduling cancellation reason for this execution. Preserve all other native fields, including full target/version/hash, local time, timezone, DST policy and existing schedule policy. Already cancelled, completed or invalidated rows remain whole-byte identical, including their full historical invalidated_reason, source_revision and origin. ScheduleRunBinding remains identical. The compact ScheduleEffect stores only null for an actual null resulting reason, otherwise lowercase SHA-256 of the resulting full original reason's exact scalar UTF-8 bytes with no normalization. Derive that commitment before Stop; it is not a future text slot and never replaces the full native reason.
+
+Every selected enabled quota consent changes only enabled=false and updated_at to the genuine original Scheduling commit time. Preserve run/provider/account/consent/schedule identity, reset source/truth/time/confidence and original user_stop_epoch. Already disabled consent remains whole-byte identical. The current effective host Stop separately invalidates old eligibility; the consent's recorded prior epoch is not rewritten to manufacture currentness.
+
+All changed native wrappers advance source_revision exactly once; unchanged rows retain exact wrapper and origin bytes. Original Plan/Scheduler/Storage participants publish their entire joined change/effect/result set in one transaction, including a genuine empty-set ScheduleQuotaEffect when selection proves no members. The Scheduler entry returns the complete `CommitResult` success `CommitAdmission` or exact `NotSettled`; it cannot release a partial successful receipt or manufacture bound_plan_settled while the Plan participant waits. A post-Stop refusal preserves the Stop and real earlier effects.
+
+At preparation and final mutation, all server timers, schedule admissions/updates, consent writers, Plan retry/resume/completion and callback writers participate in the exact current owner exclusion. Existing eligibility clauses run at decision and immediately before dispatch against current full original schedule/consent/correlation, Run state/epoch, target currentness and real Stop. Window opening, quota reset, fresh context and old timer delivery cannot resume this cancelled Run. No unrelated scheduled message is cancelled. Unknown effects remain with their original reconciliation owner. Current effect reads require the complete actual selected after-state; SP-307 retirement or a later legitimate source change can make that route unavailable without erasing original retained receipts.
+
+Full schedules and consents have the explicit SP-306 source-authority classifications. The full schedule reason is preserved; classifying compact reason digests as content-free does not redact the scheduling instruction. Runtime, transcript, provider response, scheduled-message and attachment content retain their own independent lifetimes.
+
+Every independently callable original participant captures complete authentic inputs, native participant/root/registration/operation/currentness/permission/deletion/hold sources, all beforeimages and the independently derived full permissible output before any returning helper. After all returning parsers, builders, codecs, resolvers, copies and comparators, it repeats one pure full-native and whole-candidate predicate with no helper, callback, logger or async gap to its own commit or passive disclosure. The outer publisher also checks the complete joined result. Original readback precedes dependent publication. Shape, detached hashes, matching names and serialized leases do not authenticate authority. Refusal preserves every genuine prior effect and unrelated original member.
+
+This is a source-contract integration. Native installation, original issuer authentication, all-writer enrollment, safe-stop/callback exclusion, exact codec execution, redb atomicity/fsync/crash behavior, source/result replay, backup/restore and Janitor execution remain NOT_RUN. No new public command, event, Goal state, WorkNode, NodeSeed, readiness admission, event-depth pass or governance seal follows.
+
+```yaml
+plan_unit_id: SQR-011
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Scheduling_and_Quota_Resume.md
+canonical_text: Original run-specific cancellation and complete scheduler custody. The native Scheduling
+  owner proves the complete exact Run-associated selection, including disabled/terminal rows, authentic
+  empty sets and all in-flight writers.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- SQR-010
+- SP-306
+unblocks: []
+acceptance_criteria:
+- The native Scheduling owner proves the complete exact Run-associated selection, including disabled/terminal
+  rows, authentic empty sets and all in-flight writers.
+- Only active/paused schedules and enabled consents receive the specified deltas; all full source fields
+  and existing terminal reasons remain exact.
+- The Scheduler returns the whole joint result or exact NotSettled and never publishes a partial successful
+  invalidation receipt.
+- Eligibility, source ownership and current Stop/Run epoch are rechecked after helpers at every actual
+  dispatch/effect boundary.
+validation_surfaces:
+- Plans/assistant_plan_cancel_custody.schema.json
+- Plans/assistant_plan_cancel_contracts/owner-field-map.json
+- Plans/assistant_plan_cancel_contracts/semantic-obligations.json
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: sqr_011_bound_plan_custody
+implementation_surfaces:
+- Plans/Scheduling_and_Quota_Resume.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No public command, event, Goal or Plan lifecycle expansion, peer owner or fabricated original effect.
+- No native field redaction, numeric coercion, new retention policy, full runtime archive or automatic
+  deployed migration.
+- No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
+```

@@ -6284,6 +6284,7 @@
     "ARC-037",
     "T-183",
     "T-184",
+    "CV-348",
     "ATS-050",
     "UF-097",
     "WS-018",
@@ -6297,6 +6298,7 @@
     "CWR-013",
     "PS-141",
     "PP-087",
+    "SP-306",
     "UF-098",
     "UF-094",
     "WS-019",
@@ -6306,6 +6308,7 @@
     "SIR-031",
     "APR-013",
     "PP-090",
+    "SQR-011",
     "UF-096",
     "WS-020",
     "RSC-017",
@@ -6342,10 +6345,15 @@
     "RTIM-001",
     "FGI-017",
     "GAAAF-017",
+    "APR-017",
     "MA-055",
+    "GRS-076",
+    "SP-307",
     "MA-056",
+    "SIR-051",
     "MA-057",
     "MA-060",
+    "ATS-052",
     "MA-058",
     "MA-068",
     "MA-059",
@@ -11305,6 +11313,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "APR-017",
+      "to": "APR-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "APR-017",
+      "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ARC-001",
       "to": "ARC-002"
     },
@@ -12527,6 +12545,46 @@
       "edge_type": "depends_on",
       "from": "ATS-051",
       "to": "SP-289"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "APR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "ATS-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "CV-348"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "GRS-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "SIR-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "SP-307"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-052",
+      "to": "SQR-011"
     },
     {
       "edge_type": "depends_on",
@@ -21410,6 +21468,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-348",
+      "to": "CV-347"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -28772,6 +28835,26 @@
       "edge_type": "depends_on",
       "from": "GRS-075",
       "to": "SP-289"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-076",
+      "to": "APR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-076",
+      "to": "GRS-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-076",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-076",
+      "to": "SQR-011"
     },
     {
       "edge_type": "depends_on",
@@ -56065,6 +56148,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SIR-051",
+      "to": "GRS-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-051",
+      "to": "SIR-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-051",
+      "to": "SP-307"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-001",
       "to": "SMPFS-002"
     },
@@ -67725,6 +67823,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-306",
+      "to": "CV-348"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-306",
+      "to": "SP-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-307",
+      "to": "APR-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-307",
+      "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -67777,6 +67895,16 @@
       "edge_type": "depends_on",
       "from": "SQR-010",
       "to": "SQR-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-011",
+      "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SQR-011",
+      "to": "SQR-010"
     },
     {
       "edge_type": "depends_on",
@@ -96519,7 +96647,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-13T20:56:11Z",
+  "generated_at_utc": "2026-09-13T21:52:54Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -107878,6 +108006,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "apr_017_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Assistant_Plan_Runtime.md",
+      "plan_unit_id": "APR-017",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "Exact original bound selection",
+        "heading_level": 4,
+        "heading_line": 1656,
+        "line": 1666,
+        "path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/agent-rules-context.md",
@@ -109372,6 +109517,23 @@
       },
       "status": "accepted",
       "unit_type": "validation_contract"
+    },
+    {
+      "context_scope": "ats_052_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-052",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "ATS-052 - Bound Plan cancellation and runtime retirement verification obligations",
+        "heading_level": 3,
+        "heading_line": 4624,
+        "line": 4653,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -121336,6 +121498,23 @@
         "heading_level": 3,
         "heading_line": 22826,
         "line": 22828,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "cv_348_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-348",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "Preparation release and original effect admission",
+        "heading_level": 4,
+        "heading_line": 22941,
+        "line": 22959,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -148234,6 +148413,23 @@
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "grs_076_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-076",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "Terminal branch preservation",
+        "heading_level": 4,
+        "heading_line": 7041,
+        "line": 7049,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -187761,6 +187957,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sir_051_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-051",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "SIR-051 - Original bound Plan acknowledgement, terminal and retained replay custody",
+        "heading_level": 3,
+        "heading_line": 2809,
+        "line": 2831,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "section15_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -195717,6 +195930,40 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sp_306_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-306",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "Exact physical codec and commitments",
+        "heading_level": 4,
+        "heading_line": 24981,
+        "line": 25010,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "sp_307_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-307",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "Original backup, restore and identity",
+        "heading_level": 4,
+        "heading_line": 25106,
+        "line": 25118,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -195885,6 +196132,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "sqr_011_bound_plan_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
+      "plan_unit_id": "SQR-011",
+      "reasoning_tier": "high",
+      "risk_class": "goal_cancellation_original_authority_or_effect_loss",
+      "source_location": {
+        "heading": "SQR-011 - Original run-specific cancellation and complete scheduler custody",
+        "heading_level": 3,
+        "heading_line": 955,
+        "line": 979,
+        "path": "Plans/Scheduling_and_Quota_Resume.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "server_owner_routing",
@@ -208847,10 +209111,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15330,
+    "depends_on_edge_count": 15354,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17981,
-    "node_count": 6607,
+    "edge_count": 18005,
+    "node_count": 6615,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

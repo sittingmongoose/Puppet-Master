@@ -1,0 +1,3102 @@
+{
+  "paths": [
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/identity/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/current_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/owner_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/expected_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/expected_stop_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/after_record/revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/accepted_revision/revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/pending/origin/goal_revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/cancellation_pending/accepted_user_stop_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/cancellation_pending/accepted_continuation_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/cancellation_pending/expected_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/cancellation_pending/expected_latest_objective_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/body_control/record/cancellation_pending/original_goal_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/host_stop_control/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/host_stop_control/record/continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_selection/record/association_count",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_selection/record/original_reader/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/candidate/binding_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/candidate/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/candidate/host_execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_control/record/pending/original_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_revision/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_revision/record/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_revision/record/host_execution_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_origin/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/binding_origin/record/issuer/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/writer_domain/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/writer_domain/record/writers/*/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/writer_domain/record/original_installation/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/writer_domain_head/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/goal_plan_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/request/expected_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/normalized_identity/owner_identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/normalized_identity/owner_identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/normalized_identity/target_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/nonterminal_outcome/identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/nonterminal_outcome/identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/nonterminal_outcome/target_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/nonterminal_outcome/acknowledgement_frame_offset",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/source_authority_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/original_body/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/original_body/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/original_body/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/original_execution_binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/captured_user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/captured_continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/current_goal/original_source_audit/record/producer_metadata/producer_sequence_id",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/scheduler_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/scheduler_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/plan/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/plan/record/current_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/plan/record/approved_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/record/todo_list_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/record/plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/run/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/plan/expected_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/schedule/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/schedule/record/exact_target_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/schedule/record/days_of_week/*",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/schedule/record/wind_down_seconds",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/schedule/record/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/run_binding/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/schedules/*/run_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/consents/*/consent/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/consents/*/consent/record/confidence",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "number"
+      }
+    },
+    {
+      "target": "BeforeStopSources",
+      "path_pattern": "/consents/*/consent/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/identity/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/current_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/owner_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/expected_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/expected_stop_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/after_record/revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/accepted_revision/revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/pending/origin/goal_revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/cancellation_pending/accepted_user_stop_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/cancellation_pending/accepted_continuation_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/cancellation_pending/expected_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/cancellation_pending/expected_latest_objective_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/body_control/record/cancellation_pending/original_goal_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/host_stop_control/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/host_stop_control/record/continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_selection/record/association_count",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_selection/record/original_reader/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/candidate/binding_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/candidate/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/candidate/host_execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_control/record/pending/original_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_revision/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_revision/record/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_revision/record/host_execution_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_origin/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/binding_origin/record/issuer/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/writer_domain/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/writer_domain/record/writers/*/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/writer_domain/record/original_installation/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/writer_domain_head/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/goal_plan_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/request/expected_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/normalized_identity/owner_identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/normalized_identity/owner_identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/normalized_identity/target_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/nonterminal_outcome/identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/nonterminal_outcome/identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/nonterminal_outcome/target_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/nonterminal_outcome/acknowledgement_frame_offset",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/source_authority_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/original_body/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/original_body/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/original_body/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/original_execution_binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/captured_user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/captured_continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/current_goal/original_source_audit/record/producer_metadata/producer_sequence_id",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/scheduler_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/scheduler_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/plan/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/plan/record/current_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/plan/record/approved_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/record/todo_list_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/record/plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/run/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/plan/expected_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/schedule/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/schedule/record/exact_target_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/schedule/record/days_of_week/*",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/schedule/record/wind_down_seconds",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/schedule/record/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/run_binding/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/schedules/*/run_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/consents/*/consent/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/consents/*/consent/record/confidence",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "number"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/sources/consents/*/consent/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/targets/*/physical_key_template/value",
+      "schema_branch": "root/anyOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": [
+          "null",
+          "boolean",
+          "integer",
+          "number",
+          "string"
+        ]
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/targets/*/complete_value_template/value",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": [
+          "null",
+          "boolean",
+          "integer",
+          "number",
+          "string"
+        ]
+      }
+    },
+    {
+      "target": "BeforeStopPrepared",
+      "path_pattern": "/codec_resources/*/original_installed_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/record/todo_list_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/record/plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StoragePlanRun",
+      "path_pattern": "/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageSourceOrigin",
+      "path_pattern": "/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageSourceOrigin",
+      "path_pattern": "/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageSourceOrigin",
+      "path_pattern": "/record/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StorageSourceOrigin",
+      "path_pattern": "/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StorageSourceOrigin",
+      "path_pattern": "/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanCancelResult",
+      "path_pattern": "/record/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StoragePlanCancelResult",
+      "path_pattern": "/original_operation_identity/normalized_identity/owner_identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanCancelResult",
+      "path_pattern": "/original_operation_identity/normalized_identity/owner_identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanCancelResult",
+      "path_pattern": "/original_operation_identity/normalized_identity/target_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/link/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/link/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/prior_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StoragePlanEffect",
+      "path_pattern": "/record/result_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageScheduleQuotaEffect",
+      "path_pattern": "/record/link/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StorageScheduleQuotaEffect",
+      "path_pattern": "/record/link/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageScheduleQuotaEffect",
+      "path_pattern": "/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageScheduleQuotaEffect",
+      "path_pattern": "/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/current_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/owner_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/expected_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/expected_stop_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/after_record/revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/accepted_revision/revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/pending/origin/goal_revision",
+      "schema_branch": "root/anyOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/cancellation_pending/accepted_user_stop_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/cancellation_pending/accepted_continuation_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/cancellation_pending/expected_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/cancellation_pending/expected_latest_objective_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/body_control/record/cancellation_pending/original_goal_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/host_stop_control/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/host_stop_control/record/continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_selection/record/association_count",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_selection/record/original_reader/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/candidate/binding_revision",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/candidate/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/candidate/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/candidate/host_execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_control/record/pending/original_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_revision/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_revision/record/associations/*/binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_revision/record/associations/*/execution_owner_epoch",
+      "schema_branch": "root/oneOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_revision/record/host_execution_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_origin/record/binding_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/binding_origin/record/issuer/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/writer_domain/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/writer_domain/record/writers/*/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/writer_domain/record/original_installation/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/writer_domain_head/record/domain_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/goal_plan_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/request/expected_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/normalized_identity/owner_identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/normalized_identity/owner_identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/normalized_identity/target_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/nonterminal_outcome/identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/nonterminal_outcome/identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/nonterminal_outcome/target_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/nonterminal_outcome/acknowledgement_frame_offset",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": [
+          "integer",
+          "null"
+        ],
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/source_authority_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/original_body/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/original_body/control_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/original_body/latest_objective_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/original_execution_binding/plan_version",
+      "schema_branch": "root/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/captured_user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/captured_continuation_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_goal/original_source_audit/record/producer_metadata/producer_sequence_id",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/plan_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/plan_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/scheduler_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/scheduler_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/plan/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/plan/record/current_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/plan/record/approved_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/record/todo_list_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/record/plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/run/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/schedule/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/schedule/record/exact_target_version",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/schedule/record/days_of_week/*",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/schedule/record/wind_down_seconds",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/schedule/record/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/run_binding/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/schedules/*/run_binding/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/consents/*/consent/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/consents/*/consent/record/confidence",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "number"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/consents/*/consent/record/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer"
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_read_boundary/actual_storage_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "CurrentEffectReadRequest",
+      "path_pattern": "/actual_current_sources/current_read_boundary/actual_storage_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result/record/revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result/original_operation_identity/normalized_identity/owner_identity/operation_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result/original_operation_identity/normalized_identity/owner_identity/topology_generation",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result/original_operation_identity/normalized_identity/target_generation",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result_origin/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result_origin/record/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_result_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/link/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/link/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/prior_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_effect/record/result_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_origin/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_origin/record/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/plan_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_effect/record/link/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_effect/record/link/user_stop_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_effect/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_effect/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_origin/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_origin/record/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/schedule_quota_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_settled_result/owner_settlement/original_execution_binding/plan_version",
+      "schema_branch": "root/allOf/0/oneOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/owner/owner_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/source_revision",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/original_custody/original_run_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/current_read_boundary/actual_storage_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RetainedEffectReadSources",
+      "path_pattern": "/current_read_boundary/actual_storage_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/record/plan_version",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/record/todo_list_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/record/plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/run/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/current_run_origin/record/owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/current_run_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/current_run_origin/record/source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/current_run_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/current_run_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/owner/owner_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/source_revision",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/exact_policy/ttl_seconds",
+      "schema_branch": "const",
+      "exact_constant": 31536000
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/exact_policy/max_cardinality",
+      "schema_branch": "const",
+      "exact_constant": 1000000
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/exact_policy/additional_cardinality_limits/0/max_cardinality",
+      "schema_branch": "const",
+      "exact_constant": 5000000
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/original_eligibility_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/original_eligibility_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/runtime_population/*/sequence_id",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/terminal_run_population/*/sequence_id",
+      "schema_branch": "root/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunRetirementSources",
+      "path_pattern": "/actual_retention_boundary/protecting_members/*/original_owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/original_storage_owner/owner_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/original_storage_owner/server_claim_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/run_cardinality_observed",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "StorageRunRetirementReceipt",
+      "path_pattern": "/record/project_cardinality_observed",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/anchor/settlement_source_revision",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/anchor/settlement_plan_run_epoch",
+      "schema_branch": "root",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/owner/owner_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/owner/server_claim_epoch",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/source_revision",
+      "schema_branch": "root/allOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/0/anyOf/0",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_source_revision",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    {
+      "target": "RunAnchorReadSuccess",
+      "path_pattern": "/original_settlement_origin/record/run_completion_anchor/settlement_plan_run_epoch",
+      "schema_branch": "root/allOf/1",
+      "numeric_schema": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  ],
+  "qualification": "Static complete-source/output schema paths. Instantiate every actual array member, branch and recursive ValueTerm leaf from the original native candidate; qualify exact original arithmetic/codec before mutation. No instance executed."
+}

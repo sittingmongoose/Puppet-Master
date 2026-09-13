@@ -1,0 +1,85 @@
+{
+  "qualification": "CANONICAL_SOURCE_CONTRACT_NATIVE_NOT_RUN",
+  "methods": [
+    {
+      "operation": "capture_source",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundSourceCaptureEntry",
+      "boundary": "SourceAudit and progress/source0 only; genuine bound association retained",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [
+        "capture_source"
+      ]
+    },
+    {
+      "operation": "reserve_assignment",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundAssignmentEntry",
+      "boundary": "existing AssignmentAudit and admission under original exclusive fence; no PlanPrepared input",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [
+        "issue_assignment_audit",
+        "admit_codec_domain"
+      ]
+    },
+    {
+      "operation": "latch_and_reserve",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundBeforeStopEntry",
+      "boundary": "existing original C-stop boundary only after complete Plan preparation",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [
+        "latch_and_reserve"
+      ]
+    },
+    {
+      "operation": "settle_owner",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundOwnersEntry",
+      "boundary": "existing owners_settled progression only from authentic current Plan settlement",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [
+        "settle_owner"
+      ]
+    },
+    {
+      "operation": "terminal",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundTerminalEntry",
+      "boundary": "existing immutable SIR terminal/result/outcome/response",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": [
+        "terminal",
+        "publish_cancel_terminal"
+      ]
+    },
+    {
+      "operation": "retained_terminal_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundRetainedReplayEntry",
+      "boundary": "passive original terminal only; no C-publish authority",
+      "mandatory_predicate": "Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076; all existing methods.json entry/final/failure predicates remain mandatory",
+      "existing_operations": []
+    },
+    {
+      "operation": "terminal_no_effect_or_unknown",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledTerminalEntry",
+      "boundary": "unchanged original no_effect/unknown terminal; no assignment or Plan settlement requirement",
+      "mandatory_predicate": "all original TerminalInput phase, proof and SIR predicates",
+      "existing_operations": [
+        "terminal",
+        "publish_cancel_terminal"
+      ]
+    },
+    {
+      "operation": "retained_no_effect_or_unknown_replay",
+      "entry_contract": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundUnsettledReplayEntry",
+      "boundary": "unchanged passive immutable no_effect/unknown replay; no nonexistent Plan effects required",
+      "mandatory_predicate": "original terminal/source/snapshot/proof and current passive-read permission",
+      "existing_operations": []
+    }
+  ],
+  "pre_reservation": {
+    "operation": "reserve_append_assignment",
+    "original_input_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AppendSourceRead",
+    "bound_source_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundSourceAudit",
+    "bound_binding_schema_ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json#/$defs/BoundBindingSelection",
+    "original_acknowledged_outcome_schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentInput/properties/original_acknowledged_outcome",
+    "mandatory_predicate": "The original full bound source, binding, actual SIR acknowledgement and its original physical custody/identity are authenticated and durably read back before the original exclusive reservation. All original AppendSourceRead/current/manifest/sequence and actual owner/fence predicates remain. No AssignmentInput, BoundAssignmentEntry, issued assignment audit/admission or Plan preparation is required before reservation; those follow the original reserved output."
+  },
+  "retained_replay_original_owner": "Existing SIR-050 original immutable terminal/result/outcome/response reader, under SIR-051. Passive delivery only; these are branch-qualified entries into that original reader, not new commands or publication participants."
+}

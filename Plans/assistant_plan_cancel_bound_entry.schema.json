@@ -1,0 +1,346 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/assistant_plan_cancel_bound_entry/1.0.0/schema.json",
+  "$comment": "Canonical transient original-owner entry contracts. No persisted family, action grant, successful instance or codec/native execution. Every original owner independently captures full sources and candidate before helpers; joins and native guards in Plans/Shared_Integration_Runtime.md#SIR-051 and Plans/Goal_Runtime_System.md#GRS-076 are mandatory.",
+  "$defs": {
+    "BoundSourceAudit": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/SourceAudit"
+        },
+        {
+          "properties": {
+            "original_execution_binding": {
+              "allOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "bound_plan"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "BoundBindingSelection": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingSelection"
+        },
+        {
+          "properties": {
+            "disposition": {
+              "const": "bound_plan_requires_owner_settlement"
+            }
+          }
+        }
+      ]
+    },
+    "OriginalGoalCaptureSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body_control",
+        "host_stop_control",
+        "binding_selection",
+        "binding_control",
+        "binding_revision",
+        "binding_origin",
+        "writer_domain",
+        "writer_domain_head",
+        "goal_plan_binding",
+        "original_owner_source_ref",
+        "original_owner_source_sha256"
+      ],
+      "properties": {
+        "body_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "host_stop_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingSelection"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        },
+        "goal_plan_binding": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageGoalPlanBinding"
+        },
+        "original_owner_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "BoundSourceCaptureEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "normalized_identity",
+        "original_nonterminal_outcome",
+        "producer_metadata",
+        "original_binding_selection",
+        "original_goal_sources",
+        "original_plan",
+        "original_plan_owner"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/GoalCancelRequestV2"
+        },
+        "normalized_identity": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NormalizedIdentity"
+        },
+        "original_nonterminal_outcome": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NonterminalOutcome"
+        },
+        "producer_metadata": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ProducerMetadata"
+        },
+        "original_binding_selection": {
+          "$ref": "#/$defs/BoundBindingSelection"
+        },
+        "original_goal_sources": {
+          "$ref": "#/$defs/OriginalGoalCaptureSources"
+        },
+        "original_plan": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/PlanExpected"
+        },
+        "original_plan_owner": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/NativeOwner"
+        }
+      }
+    },
+    "BoundAssignmentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_audit",
+        "original_binding_selection",
+        "input"
+      ],
+      "properties": {
+        "source_audit": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "original_binding_selection": {
+          "$ref": "#/$defs/BoundBindingSelection"
+        },
+        "input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentInput"
+        }
+      }
+    },
+    "BoundBeforeStopEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_audit",
+        "original_binding_selection",
+        "assignment_input",
+        "assignment_audit",
+        "assignment_admission",
+        "plan_prepared"
+      ],
+      "properties": {
+        "source_audit": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "original_binding_selection": {
+          "$ref": "#/$defs/BoundBindingSelection"
+        },
+        "assignment_input": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentInput"
+        },
+        "assignment_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentAudit"
+        },
+        "assignment_admission": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentAdmission"
+        },
+        "plan_prepared": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/BeforeStopPrepared"
+        }
+      }
+    },
+    "BoundOwnersEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_stop",
+        "original_stop_receipt",
+        "original_cancellation_receipt",
+        "actual_current_plan_sources",
+        "actual_current_settlement"
+      ],
+      "properties": {
+        "before_stop": {
+          "$ref": "#/$defs/BoundBeforeStopEntry"
+        },
+        "original_stop_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopReceipt"
+        },
+        "original_cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/CancellationReceipt"
+        },
+        "actual_current_plan_sources": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/CurrentEffectSources"
+        },
+        "actual_current_settlement": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/SettledResult"
+        }
+      }
+    },
+    "BoundTerminalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "original_assignment_audit",
+        "terminal_input"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "original_assignment_audit": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentAudit"
+        },
+        "terminal_input": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/TerminalInput"
+            },
+            {
+              "properties": {
+                "result": {
+                  "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/SucceededResult"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "BoundRetainedReplayEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "original_terminal",
+        "original_retained_plan_effects"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "original_terminal": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/Terminal"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "succeeded"
+                }
+              }
+            }
+          ]
+        },
+        "original_retained_plan_effects": {
+          "$ref": "https://puppetmaster.local/schemas/assistant_plan_cancel_custody/1.0.0/schema.json#/$defs/RetainedEffectReadSuccess"
+        }
+      }
+    },
+    "BoundUnsettledTerminalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "terminal_input"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "terminal_input": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/TerminalInput"
+            },
+            {
+              "properties": {
+                "result": {
+                  "oneOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NoEffectResult"
+                    },
+                    {
+                      "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/RecoveryRequiredResult"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "BoundUnsettledReplayEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "original_terminal"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "#/$defs/BoundSourceAudit"
+        },
+        "original_terminal": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/Terminal"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "no_effect",
+                    "unknown"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

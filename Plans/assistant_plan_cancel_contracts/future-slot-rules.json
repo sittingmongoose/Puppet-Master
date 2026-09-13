@@ -1,0 +1,41 @@
+{
+  "no_future_numeric_ids_or_text": true,
+  "timestamp_targets": [
+    {
+      "schema": "QuotaResumeConsent",
+      "path": "/updated_at",
+      "condition": "Only changed enabled consent; genuine original Scheduling time."
+    },
+    {
+      "schema": "SourceOrigin",
+      "path": "/issued_at_utc",
+      "condition": "Genuine original issuer time."
+    },
+    {
+      "schema": "PlanEffect",
+      "path": "/committed_at_utc",
+      "condition": "Genuine original joint commit time."
+    },
+    {
+      "schema": "ScheduleQuotaEffect",
+      "path": "/committed_at_utc",
+      "condition": "Genuine original joint commit time."
+    },
+    {
+      "schema": "StoragePlanRun",
+      "path": "/run_completion_anchor/settled_at_utc",
+      "condition": "First genuine completed/cancelled settlement only; same original native commit time, preserved literally thereafter."
+    },
+    {
+      "schema": "SourceOrigin",
+      "path": "/run_completion_anchor/settled_at_utc",
+      "condition": "Exact copy of the same original run anchor. Not the current later origin issuance clock."
+    }
+  ],
+  "hash_targets": "Only complete physical SHA fields and the exact digest component of their existing SourceOrigin physical keys. Every occurrence must bind a declared earlier whole target or separately qualified actual canonical Stop/cancellation receipt. All DAG edges and whole schemas checked independently.",
+  "source_binding": "owner_source_ref/sha256 authenticates original owner/resource before Stop; actual substitution authenticates actual original time/value/result afterward. It is not a fabricated hash of a future value.",
+  "fixed_reason_hash": "Computed before Stop from exact derived resulting native reason UTF8; null iff native reason null.",
+  "full_domain": "Check all possible actual timestamp string and lowercase64hex outputs under the installed codec/schema; all other fields are exact literals or exact original numeric assignments. Unknown or nonconforming source domain rejects before Stop.",
+  "original_operation_identity": "Every leaf is independently copied/fixed from actual original C-source and reservations before Stop; no runtime identity/text/number slot.",
+  "retirement_separate_domain": "Later Janitor compaction has its own complete exact preimage/candidate admission before mutation. Its timestamp is not a cancellation FutureSlot or a new run_completion anchor."
+}

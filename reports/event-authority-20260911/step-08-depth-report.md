@@ -157,3 +157,9 @@ GRS-073/074, SP-304/305, CV-347, SIR-050, APR-016 and ATS-050 now define current
 GRS-075/ATS-051 and the current GRS-065/CV-340/SP-289 writer refinements enforce authentic empty original child-Goal requirements before current activation/certification or writer replay. The [validation report](step-08-current-child-scope-validation.md) records preserved complete historical grammar, 244 passing source/fixture checks, two new PlanUnits and thirteen added criteria. Shards and index pass; full gates report 21 PASS / 15 FAIL. Native source/dispatch/concurrency/replay and complete Step 8 depth remain unproved; event membership, policies and frozen governance stay unchanged.
 
 Cost: source review and repository checks only; monetary attribution unavailable.
+
+## Original bound Plan cancellation and runtime retirement — 2026-09-13
+
+The [Plan cancellation validation report](step-08-assistant-plan-cancel-validation.md) records complete original Plan/Scheduler source custody, pre-Stop domains and actual C/SIR method adoption, distinct current versus retained effect reads, and first-settlement anchored runtime-only atomic retirement. Eight new units add 35 criteria; 257 root contract checks, 157 applied-source checks and 168 independent machine checks pass, with independent prose review clear. Ten physical families use existing classes while all prior families/policies and 42 event rows remain exact. Shards/index pass; full gates report 21 PASS / 15 FAIL. Native execution, Workflow settlement, complete Step 8 depth and later campaign/seal work remain unproved.
+
+Cost: source review and repository checks only; monetary attribution unavailable.
