@@ -1,0 +1,2514 @@
+{
+  "schema": "jj.continuation3.final_comparison.v1",
+  "status": "complete_for_all_retained_terminal_outputs",
+  "original": {
+    "denominator": 105,
+    "class_denominators": {
+      "correction": 1,
+      "optional_capability": 35,
+      "product_choice": 6,
+      "unsupported_or_rejected": 63
+    },
+    "arms": {
+      "premium": {
+        "count": 73,
+        "recall_percent": 69.52380952380952,
+        "by_class": {
+          "correction": 0,
+          "optional_capability": 19,
+          "product_choice": 3,
+          "unsupported_or_rejected": 51
+        },
+        "findings": [
+          "F002",
+          "F004",
+          "F005",
+          "F006",
+          "F007",
+          "F008",
+          "F010",
+          "F011",
+          "F015",
+          "F019",
+          "F020",
+          "F022",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F030",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F035",
+          "F036",
+          "F037",
+          "F038",
+          "F039",
+          "F043",
+          "F044",
+          "F046",
+          "F047",
+          "F048",
+          "F050",
+          "F051",
+          "F052",
+          "F053",
+          "F054",
+          "F056",
+          "F057",
+          "F059",
+          "F061",
+          "F062",
+          "F064",
+          "F065",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F070",
+          "F071",
+          "F072",
+          "F074",
+          "F076",
+          "F078",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F084",
+          "F085",
+          "F086",
+          "F087",
+          "F088",
+          "F089",
+          "F090",
+          "F092",
+          "F094",
+          "F096",
+          "F097",
+          "F102",
+          "F103",
+          "F104"
+        ],
+        "unique": [
+          "F005",
+          "F008",
+          "F030",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F036",
+          "F053",
+          "F065",
+          "F070",
+          "F078",
+          "F084",
+          "F085",
+          "F088",
+          "F090",
+          "F096",
+          "F104"
+        ]
+      },
+      "hybrid": {
+        "count": 86,
+        "recall_percent": 81.9047619047619,
+        "by_class": {
+          "correction": 0,
+          "optional_capability": 30,
+          "product_choice": 5,
+          "unsupported_or_rejected": 51
+        },
+        "findings": [
+          "F002",
+          "F003",
+          "F004",
+          "F006",
+          "F007",
+          "F009",
+          "F010",
+          "F011",
+          "F012",
+          "F013",
+          "F014",
+          "F015",
+          "F016",
+          "F017",
+          "F018",
+          "F019",
+          "F020",
+          "F021",
+          "F022",
+          "F023",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F035",
+          "F037",
+          "F038",
+          "F039",
+          "F040",
+          "F041",
+          "F042",
+          "F043",
+          "F044",
+          "F045",
+          "F046",
+          "F047",
+          "F048",
+          "F049",
+          "F050",
+          "F051",
+          "F052",
+          "F054",
+          "F055",
+          "F056",
+          "F057",
+          "F058",
+          "F059",
+          "F060",
+          "F061",
+          "F062",
+          "F063",
+          "F064",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F071",
+          "F072",
+          "F073",
+          "F074",
+          "F075",
+          "F076",
+          "F077",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F083",
+          "F086",
+          "F087",
+          "F089",
+          "F091",
+          "F092",
+          "F093",
+          "F094",
+          "F095",
+          "F097",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F102",
+          "F103",
+          "F105"
+        ],
+        "unique": [
+          "F003",
+          "F009",
+          "F012",
+          "F013",
+          "F014",
+          "F016",
+          "F017",
+          "F018",
+          "F021",
+          "F023",
+          "F040",
+          "F041",
+          "F042",
+          "F045",
+          "F049",
+          "F055",
+          "F058",
+          "F060",
+          "F063",
+          "F073",
+          "F075",
+          "F077",
+          "F083",
+          "F091",
+          "F093",
+          "F095",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F105"
+        ]
+      }
+    },
+    "shared": [
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F010",
+      "F011",
+      "F015",
+      "F019",
+      "F020",
+      "F022",
+      "F024",
+      "F025",
+      "F026",
+      "F027",
+      "F028",
+      "F029",
+      "F035",
+      "F037",
+      "F038",
+      "F039",
+      "F043",
+      "F044",
+      "F046",
+      "F047",
+      "F048",
+      "F050",
+      "F051",
+      "F052",
+      "F054",
+      "F056",
+      "F057",
+      "F059",
+      "F061",
+      "F062",
+      "F064",
+      "F066",
+      "F067",
+      "F068",
+      "F069",
+      "F071",
+      "F072",
+      "F074",
+      "F076",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F086",
+      "F087",
+      "F089",
+      "F092",
+      "F094",
+      "F097",
+      "F102",
+      "F103"
+    ],
+    "common_misses": [
+      "F001"
+    ]
+  },
+  "fixed_original_union_after_continuation": {
+    "denominator": 105,
+    "class_denominators": {
+      "correction": 1,
+      "optional_capability": 35,
+      "product_choice": 6,
+      "unsupported_or_rejected": 63
+    },
+    "arms": {
+      "premium": {
+        "count": 74,
+        "recall_percent": 70.47619047619048,
+        "by_class": {
+          "correction": 1,
+          "optional_capability": 19,
+          "product_choice": 3,
+          "unsupported_or_rejected": 51
+        },
+        "findings": [
+          "F001",
+          "F002",
+          "F004",
+          "F005",
+          "F006",
+          "F007",
+          "F008",
+          "F010",
+          "F011",
+          "F015",
+          "F019",
+          "F020",
+          "F022",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F030",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F035",
+          "F036",
+          "F037",
+          "F038",
+          "F039",
+          "F043",
+          "F044",
+          "F046",
+          "F047",
+          "F048",
+          "F050",
+          "F051",
+          "F052",
+          "F053",
+          "F054",
+          "F056",
+          "F057",
+          "F059",
+          "F061",
+          "F062",
+          "F064",
+          "F065",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F070",
+          "F071",
+          "F072",
+          "F074",
+          "F076",
+          "F078",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F084",
+          "F085",
+          "F086",
+          "F087",
+          "F088",
+          "F089",
+          "F090",
+          "F092",
+          "F094",
+          "F096",
+          "F097",
+          "F102",
+          "F103",
+          "F104"
+        ],
+        "unique": [
+          "F001",
+          "F005",
+          "F008",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F036",
+          "F053",
+          "F065",
+          "F070",
+          "F078",
+          "F084",
+          "F085",
+          "F090",
+          "F096",
+          "F104"
+        ]
+      },
+      "hybrid": {
+        "count": 88,
+        "recall_percent": 83.80952380952381,
+        "by_class": {
+          "correction": 0,
+          "optional_capability": 30,
+          "product_choice": 5,
+          "unsupported_or_rejected": 53
+        },
+        "findings": [
+          "F002",
+          "F003",
+          "F004",
+          "F006",
+          "F007",
+          "F009",
+          "F010",
+          "F011",
+          "F012",
+          "F013",
+          "F014",
+          "F015",
+          "F016",
+          "F017",
+          "F018",
+          "F019",
+          "F020",
+          "F021",
+          "F022",
+          "F023",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F030",
+          "F035",
+          "F037",
+          "F038",
+          "F039",
+          "F040",
+          "F041",
+          "F042",
+          "F043",
+          "F044",
+          "F045",
+          "F046",
+          "F047",
+          "F048",
+          "F049",
+          "F050",
+          "F051",
+          "F052",
+          "F054",
+          "F055",
+          "F056",
+          "F057",
+          "F058",
+          "F059",
+          "F060",
+          "F061",
+          "F062",
+          "F063",
+          "F064",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F071",
+          "F072",
+          "F073",
+          "F074",
+          "F075",
+          "F076",
+          "F077",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F083",
+          "F086",
+          "F087",
+          "F088",
+          "F089",
+          "F091",
+          "F092",
+          "F093",
+          "F094",
+          "F095",
+          "F097",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F102",
+          "F103",
+          "F105"
+        ],
+        "unique": [
+          "F003",
+          "F009",
+          "F012",
+          "F013",
+          "F014",
+          "F016",
+          "F017",
+          "F018",
+          "F021",
+          "F023",
+          "F040",
+          "F041",
+          "F042",
+          "F045",
+          "F049",
+          "F055",
+          "F058",
+          "F060",
+          "F063",
+          "F073",
+          "F075",
+          "F077",
+          "F083",
+          "F091",
+          "F093",
+          "F095",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F105"
+        ]
+      }
+    },
+    "shared": [
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F010",
+      "F011",
+      "F015",
+      "F019",
+      "F020",
+      "F022",
+      "F024",
+      "F025",
+      "F026",
+      "F027",
+      "F028",
+      "F029",
+      "F030",
+      "F035",
+      "F037",
+      "F038",
+      "F039",
+      "F043",
+      "F044",
+      "F046",
+      "F047",
+      "F048",
+      "F050",
+      "F051",
+      "F052",
+      "F054",
+      "F056",
+      "F057",
+      "F059",
+      "F061",
+      "F062",
+      "F064",
+      "F066",
+      "F067",
+      "F068",
+      "F069",
+      "F071",
+      "F072",
+      "F074",
+      "F076",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F086",
+      "F087",
+      "F088",
+      "F089",
+      "F092",
+      "F094",
+      "F097",
+      "F102",
+      "F103"
+    ],
+    "common_misses": []
+  },
+  "expanded_union": {
+    "denominator": 110,
+    "class_denominators": {
+      "correction": 5,
+      "optional_capability": 36,
+      "product_choice": 6,
+      "unsupported_or_rejected": 63
+    },
+    "arms": {
+      "premium": {
+        "count": 78,
+        "recall_percent": 70.9090909090909,
+        "by_class": {
+          "correction": 4,
+          "optional_capability": 20,
+          "product_choice": 3,
+          "unsupported_or_rejected": 51
+        },
+        "findings": [
+          "F001",
+          "F002",
+          "F004",
+          "F005",
+          "F006",
+          "F007",
+          "F008",
+          "F010",
+          "F011",
+          "F015",
+          "F019",
+          "F020",
+          "F022",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F030",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F035",
+          "F036",
+          "F037",
+          "F038",
+          "F039",
+          "F043",
+          "F044",
+          "F046",
+          "F047",
+          "F048",
+          "F050",
+          "F051",
+          "F052",
+          "F053",
+          "F054",
+          "F056",
+          "F057",
+          "F059",
+          "F061",
+          "F062",
+          "F064",
+          "F065",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F070",
+          "F071",
+          "F072",
+          "F074",
+          "F076",
+          "F078",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F084",
+          "F085",
+          "F086",
+          "F087",
+          "F088",
+          "F089",
+          "F090",
+          "F092",
+          "F094",
+          "F096",
+          "F097",
+          "F102",
+          "F103",
+          "F104",
+          "F106",
+          "F107",
+          "F108",
+          "F110"
+        ],
+        "unique": [
+          "F001",
+          "F005",
+          "F008",
+          "F031",
+          "F032",
+          "F033",
+          "F034",
+          "F036",
+          "F053",
+          "F065",
+          "F070",
+          "F078",
+          "F084",
+          "F085",
+          "F090",
+          "F096",
+          "F104",
+          "F106",
+          "F108",
+          "F110"
+        ]
+      },
+      "hybrid": {
+        "count": 90,
+        "recall_percent": 81.81818181818181,
+        "by_class": {
+          "correction": 2,
+          "optional_capability": 30,
+          "product_choice": 5,
+          "unsupported_or_rejected": 53
+        },
+        "findings": [
+          "F002",
+          "F003",
+          "F004",
+          "F006",
+          "F007",
+          "F009",
+          "F010",
+          "F011",
+          "F012",
+          "F013",
+          "F014",
+          "F015",
+          "F016",
+          "F017",
+          "F018",
+          "F019",
+          "F020",
+          "F021",
+          "F022",
+          "F023",
+          "F024",
+          "F025",
+          "F026",
+          "F027",
+          "F028",
+          "F029",
+          "F030",
+          "F035",
+          "F037",
+          "F038",
+          "F039",
+          "F040",
+          "F041",
+          "F042",
+          "F043",
+          "F044",
+          "F045",
+          "F046",
+          "F047",
+          "F048",
+          "F049",
+          "F050",
+          "F051",
+          "F052",
+          "F054",
+          "F055",
+          "F056",
+          "F057",
+          "F058",
+          "F059",
+          "F060",
+          "F061",
+          "F062",
+          "F063",
+          "F064",
+          "F066",
+          "F067",
+          "F068",
+          "F069",
+          "F071",
+          "F072",
+          "F073",
+          "F074",
+          "F075",
+          "F076",
+          "F077",
+          "F079",
+          "F080",
+          "F081",
+          "F082",
+          "F083",
+          "F086",
+          "F087",
+          "F088",
+          "F089",
+          "F091",
+          "F092",
+          "F093",
+          "F094",
+          "F095",
+          "F097",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F102",
+          "F103",
+          "F105",
+          "F107",
+          "F109"
+        ],
+        "unique": [
+          "F003",
+          "F009",
+          "F012",
+          "F013",
+          "F014",
+          "F016",
+          "F017",
+          "F018",
+          "F021",
+          "F023",
+          "F040",
+          "F041",
+          "F042",
+          "F045",
+          "F049",
+          "F055",
+          "F058",
+          "F060",
+          "F063",
+          "F073",
+          "F075",
+          "F077",
+          "F083",
+          "F091",
+          "F093",
+          "F095",
+          "F098",
+          "F099",
+          "F100",
+          "F101",
+          "F105",
+          "F109"
+        ]
+      }
+    },
+    "shared": [
+      "F002",
+      "F004",
+      "F006",
+      "F007",
+      "F010",
+      "F011",
+      "F015",
+      "F019",
+      "F020",
+      "F022",
+      "F024",
+      "F025",
+      "F026",
+      "F027",
+      "F028",
+      "F029",
+      "F030",
+      "F035",
+      "F037",
+      "F038",
+      "F039",
+      "F043",
+      "F044",
+      "F046",
+      "F047",
+      "F048",
+      "F050",
+      "F051",
+      "F052",
+      "F054",
+      "F056",
+      "F057",
+      "F059",
+      "F061",
+      "F062",
+      "F064",
+      "F066",
+      "F067",
+      "F068",
+      "F069",
+      "F071",
+      "F072",
+      "F074",
+      "F076",
+      "F079",
+      "F080",
+      "F081",
+      "F082",
+      "F086",
+      "F087",
+      "F088",
+      "F089",
+      "F092",
+      "F094",
+      "F097",
+      "F102",
+      "F103",
+      "F107"
+    ],
+    "common_misses": []
+  },
+  "findings": [
+    {
+      "finding_id": "F001",
+      "title": "Terminal attempts always have receipts",
+      "classification": "correction",
+      "proposition": "Require a non-null owner receipt for every terminal JJ attempt, including failed, cancelled, recovery-required and effect-unknown results.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [],
+      "continuation_credit": [
+        "premium/J0021-compare",
+        "premium/J0026-compare"
+      ]
+    },
+    {
+      "finding_id": "F002",
+      "title": "Nominal reads may write",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Classify and fence all effects of nominal reads: snapshots, ref import, head reconciliation, secure-config migration, lazy object hydration, index rebuilds and unpublished operation-diff objects.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F003",
+      "title": "Strict read-only repository mode",
+      "classification": "optional_capability",
+      "proposition": "Offer repository browsing when the original native store is mounted strictly read-only.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F004",
+      "title": "Writer authority is stronger than native locks",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Retain one admitted writer across UI, CLI, watchers, fetch/import and external Git activity; native advisory locks and timeouts do not establish ownership.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F005",
+      "title": "Expected operation is not native compare-and-swap",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Check the exact expected operation and immutable target under the writer lease, including after long fetches; --at-operation alone only chooses a native starting view.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F006",
+      "title": "Exact durable identity and operation-local selectors",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep repository, environment, workspace, mutable change, immutable commit, operation and operation-local selector identities separate across selection, caching and mutation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F007",
+      "title": "Process failure and cancellation are not no-effect proof",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Report actual multi-stage effects, partial publication and checkout progress, retain warnings, and reconcile unknown effects before retrying after timeout or cancellation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F008",
+      "title": "Partial multi-file resolve",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve earlier accepted resolutions when a later external merge tool fails, and report their native after-state rather than claiming the entire resolve did nothing.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F009",
+      "title": "Unknown auth retry effects",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Do not copy fail-prompt-retry credential flows unless the prior operation is proven safe to replay under the same command instance.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F010",
+      "title": "Native versus sidecar crash boundary",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep native objects, refs, workspace files and sidecar metadata independently observable across partial failure; recover from inconsistent state without trusting a healthy-looking graph.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F011",
+      "title": "Native recovery has explicit scope",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep undo, inverse-one-operation, full-view restore, workspace path recovery and external-file recovery distinct; undo never reverses a remote push.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F012",
+      "title": "Operation diff baseline safety",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Compare the correct recorded workspace or committed baseline when presenting an operation diff, excluding unrelated dirty work.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F013",
+      "title": "Named operation waypoints",
+      "classification": "optional_capability",
+      "proposition": "Let users name and revisit operation waypoints without creating artificial native history entries.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F014",
+      "title": "Grouped operation history and undo",
+      "classification": "optional_capability",
+      "proposition": "Group an intentional multi-command history edit for review and, where supported, one user-level undo.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F015",
+      "title": "Operation history navigation",
+      "classification": "optional_capability",
+      "proposition": "Add recent-operation and redo navigation with a virtualized operation timeline.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F016",
+      "title": "Operation history filtering",
+      "classification": "optional_capability",
+      "proposition": "Add user-facing filtering of noisy operation history by action, time or meaningful milestone.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F017",
+      "title": "Structured operation descriptions",
+      "classification": "optional_capability",
+      "proposition": "Attach structured application action descriptions and correlation metadata to operation-history presentation.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F018",
+      "title": "History maintenance policy",
+      "classification": "product_choice",
+      "proposition": "Choose whether PM merely diagnoses operation-history growth or offers user-approved pruning/garbage collection.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F019",
+      "title": "Stale workspace recovery",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Expose stale workspaces and saved/unpublished recovery operations without destructive refresh or guessing the newest operation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F020",
+      "title": "Workspace adoption and synchronization",
+      "classification": "optional_capability",
+      "proposition": "Support explicit adoption, rename/path repair and synchronization of existing native or Git workspaces where qualified.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F021",
+      "title": "Workspace archival visibility",
+      "classification": "optional_capability",
+      "proposition": "Allow a workspace to be hidden or archived without removing its files or claiming it disappeared from native history.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F022",
+      "title": "Divergent change convergence",
+      "classification": "optional_capability",
+      "proposition": "Offer explicit convergence of multiple visible commits sharing one change identity.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F023",
+      "title": "Additional history-editing actions",
+      "classification": "optional_capability",
+      "proposition": "Consider duplicate, merge, absorb and back-out actions beyond the currently enumerated Jujutsu change commands.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F024",
+      "title": "Interdiff",
+      "classification": "optional_capability",
+      "proposition": "Offer a comparison of two versions of a change rather than only their from/to file trees.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F025",
+      "title": "Change evolution view",
+      "classification": "optional_capability",
+      "proposition": "Add a dedicated per-change evolution view for predecessors, rewrites and abandoned versions.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F026",
+      "title": "Native annotation and file history",
+      "classification": "optional_capability",
+      "proposition": "Add Jujutsu-native line attribution and rename-aware file history where supported.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F027",
+      "title": "Persistent review marks",
+      "classification": "optional_capability",
+      "proposition": "Preserve reviewed markers and line-anchored notes across matching rewrites, with stale or orphaned status when correspondence is uncertain.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F028",
+      "title": "Machine-readable hunk selection",
+      "classification": "optional_capability",
+      "proposition": "Expose machine-readable partial-change specifications for agents and scripts through the existing adapter authority.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F029",
+      "title": "Hunk and editable diff safety",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Bind partial-edit selections and editable diff saves to both rendered sides, native conflict state, exact session/repository/revision, and complete matched selections.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F030",
+      "title": "Empty, absent and failed reads are distinct",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Never turn missing content, a failed native query, traversal omission or unsupported type into a valid empty file/list.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": [
+        "hybrid/J0015-reconcile"
+      ]
+    },
+    {
+      "finding_id": "F031",
+      "title": "Diff text and metadata round-trip",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve untouched source bytes, deletion state and file metadata through diff editors; saving unchanged text must not silently normalize line endings.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F032",
+      "title": "Edited text line-ending policy",
+      "classification": "product_choice",
+      "proposition": "Choose only the newline convention for genuinely newly inserted or replaced newline boundaries in mixed-ending edited text, preserving existing CRLF/LF/CR on ordinary Save.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F033",
+      "title": "External editor path confinement",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Protect output roots, links, ancestor directories and file identities so an admitted relative filename cannot write outside the authorized output tree.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F034",
+      "title": "Partial external editor writes",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Distinguish whole-request validation rejection from I/O failure after one or more external editor files were written.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F035",
+      "title": "External diff and merge tool handoff",
+      "classification": "optional_capability",
+      "proposition": "Offer a managed external diff/merge tool session, including supported remote forwarding, with readiness, save, exit, cancel and cleanup tracked separately.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F036",
+      "title": "External editor stale sessions",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Reject late saves from a stale diff or merge session even when a replacement repository exposes identical relative filenames.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F037",
+      "title": "Bound reads before allocating",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Bound file reads, scan work and concurrent content fetches before allocating unbounded buffers, and preserve partial/error states.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F038",
+      "title": "Credential architecture and custody already chosen",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Use the exact owner-brokered HTTPS/SSH credential paths, operation-scoped leases, authenticated IPC, typed waits/cancellation and safe helper progress; do not copy a competing raw askpass architecture.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F039",
+      "title": "Secret logging and redaction",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep credential values out of debug logs, receipts, artifacts and ordinary GUI state, and retain only owner-approved non-secret references.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F040",
+      "title": "Credential storage alternatives conflict with owner policy",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Do not adopt an application-secret backend that may delegate to plaintext Git credential storage or silently replace configured secret material.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F041",
+      "title": "SSH host trust is a separate decision",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve SSH confirmation/notification kinds and exact host-key trust decisions rather than accepting unknown host keys or displaying every request as a password field.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F042",
+      "title": "Null standard input does not prove no terminal",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Reject the claim that stdin=null and stderr=piped universally make Git/SSH unable to reach a terminal.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F043",
+      "title": "Authenticated browser and local IPC",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Authenticate local editor/server sessions, bind caller/repository identity and avoid reusing stale incompatible server instances.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F044",
+      "title": "Adapter implementation shape",
+      "classification": "product_choice",
+      "proposition": "Choose an adapter implementation based on the qualified CLI, embedded native libraries, or a separately owned internal service while keeping all consumers behind one owner.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F045",
+      "title": "Upstream RPC is not available",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Treat upstream jj api and high-level UI-library extraction as unshipped proposals rather than available dependencies.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F046",
+      "title": "Reusable diff library",
+      "classification": "product_choice",
+      "proposition": "Decide whether to reuse an independently licensed native diff library beneath the Rust/Slint UI.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F047",
+      "title": "External IDE clients",
+      "classification": "optional_capability",
+      "proposition": "Expose the Source Control owner to selected external IDE clients without transferring native mutation authority to them.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F048",
+      "title": "Multi-host reusable server",
+      "classification": "optional_capability",
+      "proposition": "Offer a reusable multi-repository service for external or remote UI clients.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F049",
+      "title": "MCP access to native actions",
+      "classification": "optional_capability",
+      "proposition": "Consider an MCP-facing source-control client that invokes the same admitted command family.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F050",
+      "title": "Included tools and exact qualification",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Retain included pinned tools, exact engine/CLI/repository-format and environment qualification, and truthful unsupported capability states.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F051",
+      "title": "Colocated import/export stays fail-closed",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep explicit colocated import/export unavailable by default and require the exact certified preflight for any compatibility mutation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F052",
+      "title": "Git HEAD and index health are separate",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Qualify colocated Git HEAD, index entries and exact index recovery state separately from JJ status.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F053",
+      "title": "Windows links and native file types",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Distinguish a Windows link/reparse point from its target and qualify file, symlink, hardlink and type transitions by exact native identity.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F054",
+      "title": "Effective config and template parsing",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Respect qualified config precedence and force explicit machine templates/escaping so user presentation settings cannot silently change adapter results.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F055",
+      "title": "State is not foreign configuration",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep high-churn UI state separate from externally managed Jujutsu configuration.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F056",
+      "title": "Native conflict truth and supported shape",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve native multi-term conflict state, side provenance, supported marker/type shapes and terminal reconciliation; clean-looking text is insufficient.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F057",
+      "title": "Exact-profile conflict byte regression",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Account for the known 0.44 carriage-return conflict round-trip defect when qualifying conflict editing.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F058",
+      "title": "Publishing conflicted changes",
+      "classification": "product_choice",
+      "proposition": "Choose whether qualified users may intentionally publish commits containing unresolved native JJ conflicts.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F059",
+      "title": "Push targets and bookmark effects",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve bookmark local/remote/tracked/absent/conflicted state and preview exact remote/ref, tag, tracking and descendant effects.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F060",
+      "title": "Guided bookmark conflict resolution",
+      "classification": "optional_capability",
+      "proposition": "Offer a guided target picker for conflicted bookmarks and explicit review of their local/remote targets.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F061",
+      "title": "Graph bounds, continuity and isolation",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Bind bounded graph pages to exact operation/projection identity, isolate cursors per query/caller, preserve geometry and selection, and expose missing/partial edges.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F062",
+      "title": "Graph visual and menu regressions",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Verify actual native menu/compositor routes, graph edges, drag targets, empty selection and contrast after rendering or lifetime changes.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F063",
+      "title": "Graph branch prioritization",
+      "classification": "optional_capability",
+      "proposition": "Let users prioritize selected branches/stacks in graph lane layout.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F064",
+      "title": "Hidden graph regression qualification",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Test prioritized/hidden-revision graph queries against the exact supported native version.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F065",
+      "title": "Revset assistance",
+      "classification": "optional_capability",
+      "proposition": "Add autocomplete and signature help for advanced native history queries.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F066",
+      "title": "Direct graph manipulation",
+      "classification": "optional_capability",
+      "proposition": "Support drag-to-rebase/reorder and multi-selection with explicit effect previews, busy-state gating and keyboard alternatives.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F067",
+      "title": "Focused comparison conveniences",
+      "classification": "optional_capability",
+      "proposition": "Add revision pinning, context-sensitive previews, inversion navigation and selected-revision bookmark details in the existing comparison surface.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F068",
+      "title": "Description drafts survive refresh",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve unsubmitted change-description drafts across exact-identity refreshes and clearly separate drafts from committed history.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F069",
+      "title": "Immutable content caches and async selection",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Separate immutable content keys from mutable UI/projection generations, quarantine late responses and never cache degraded data as complete.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F070",
+      "title": "Watcher reconnection and exclusions",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Treat watchers as invalidation hints, resolve shared-store indirection, and show stale state during missed events, reconnect or permanent watcher failure.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F071",
+      "title": "Queue reentrancy and dependency deadlocks",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Prevent nested queue/lock acquisition from deadlocking refresh, editor, authentication or mutation completion.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F072",
+      "title": "One catalog and authoritative eligibility",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Route all surfaces through one canonical action catalog with authoritative eligibility rechecks, idempotent command instances and exact work attribution.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F073",
+      "title": "Runtime evidence versus unused scaffolding",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Do not count unused file-lock schemas, nominal capability flags or handler strings as production serialization or certification.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F074",
+      "title": "Process execution follows owner environment",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Route Git/SSH, signing, filters, hooks, configured tools and forge sidecars through the exact owner environment and process policy.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F075",
+      "title": "PTY and shell decisions already resolved",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Use the canonical terminal owner for any genuinely interactive subprocess capability rather than adding a competing PTY or terminal engine.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F076",
+      "title": "Keyboard and ordinary settings surfaces",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Reuse the existing shortcut registry, remapping/conflict handling and owner-routed Settings UI.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F077",
+      "title": "AI description assistance already present",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Reuse advisory generated commit/change descriptions through existing Source Control commands, with explicit user acceptance.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F078",
+      "title": "Dedicated workspace AI review",
+      "classification": "optional_capability",
+      "proposition": "Offer an explicitly scoped AI review session for one workspace.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F079",
+      "title": "Complete retained native backup closure",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Capture the complete retained native operation/view/object/dependency/workspace closure and dirty physical files under one barrier and GC fence.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F080",
+      "title": "Snapshot omission and skipped checkout",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Distinguish physical dirty/untracked/ignored/large or invalid-UTF8 files from the recorded native tree, including successful commands with skipped paths.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F081",
+      "title": "Backup existence is not verified recovery",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Verify destination bytes, complete native object interpretation and an isolated selected historical-operation restore before activation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F082",
+      "title": "Extras head integrity and crash corruption",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Qualify extras-head/segment correspondence, object contents and keep-ref integrity; do not call every missing object corruption or assume reindex repairs every native store.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F083",
+      "title": "Backup derived indexes",
+      "classification": "product_choice",
+      "proposition": "Choose whether recoverable backups retain native derived indexes or rebuild them during isolated verification.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F084",
+      "title": "Sanitized inactive restore configuration",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep restored helpers, hooks, filters, config IDs, includes, remote credentials and owner references inactive until their owners revalidate them.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F085",
+      "title": "Capture generation differs from upload resume",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep resumable transfer/setup phases bound to their exact capture/destination generation and evidence, rather than treating a retry as proof of a consistent new snapshot.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F086",
+      "title": "Clone completion and cleanup",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Track clone setup, fetch, preset writing, checkout and residual-directory cleanup with exact destination identity; protect existing and dirty directories.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F087",
+      "title": "Read preview and dry-run side effects",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Do not assume preview, dry-run or immutable-override retry is read-only or newly authorized merely because a client labels it that way.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F088",
+      "title": "Parent retention in history edits",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Preserve exact merge-parent and descendant semantics when implementing native rebase or multi-parent change operations.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": [
+        "hybrid/J0015-reconcile"
+      ]
+    },
+    {
+      "finding_id": "F089",
+      "title": "Partial clone and LFS/submodule eligibility",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Give partial/promisor, LFS and nested/submodule repositories explicit qualification and backup-closure dispositions; never silently hydrate or fall back to Git mutation.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F090",
+      "title": "Authorized incomplete-object materialization",
+      "classification": "optional_capability",
+      "proposition": "Add an explicit authorized workflow to obtain missing promisor/LFS objects for inspection or complete retained-history backup.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F091",
+      "title": "Large-repository storage expansion",
+      "classification": "optional_capability",
+      "proposition": "Consider virtual filesystem, content-defined chunking or specialized large-file backends for very large repositories.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F092",
+      "title": "Performance mechanisms are not capability proof",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Measure graph/query/snapshot/ref-import costs independently and keep bounds and progress labels honest.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F093",
+      "title": "Worker panic isolation",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Contain worker panics without losing command outcome or blocking all future repository work.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F094",
+      "title": "Operation metadata is not idempotency",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Treat native operation descriptions and rewritten operation IDs as evidence, not a replacement for durable command-instance identity.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F095",
+      "title": "Redacted operation diagnostic export",
+      "classification": "optional_capability",
+      "proposition": "Offer an explicit sanitized export of native operation diagnostics for support and review.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F096",
+      "title": "Inspectable source command log",
+      "classification": "optional_capability",
+      "proposition": "Offer a human-readable source-control command/effect log sourced from existing receipts.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F097",
+      "title": "Hosting, transport and local history remain separate",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Keep forge accounts, PR/CI caches and remote transport separate from local Jujutsu identity and authority.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F098",
+      "title": "Automatic fetch and checks already owner-routed",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Reuse existing authorized Home Server observation for automatic fetch/CI projections rather than starting per-client pollers.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F099",
+      "title": "Stacked reviews",
+      "classification": "optional_capability",
+      "proposition": "Offer a workflow that publishes related changes as an ordered stack of hosted reviews with explicit base relationships.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F100",
+      "title": "Additional forge workflow support",
+      "classification": "optional_capability",
+      "proposition": "Consider native Gerrit and other additional forge-specific review workflows through the existing forge owner.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F101",
+      "title": "Third-party Jujutsu push hooks",
+      "classification": "optional_capability",
+      "proposition": "Allow explicitly configured third-party push hooks around native Jujutsu publication.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F102",
+      "title": "Upstream narrative inconsistencies",
+      "classification": "unsupported_or_rejected",
+      "proposition": "Resolve stale upstream prose and incomplete investigations against the more specific supplied implementation evidence.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F103",
+      "title": "Reverse one selected native operation",
+      "classification": "optional_capability",
+      "proposition": "Offer a separately labeled action that inversely merges one selected native operation into the current view, distinct from sequential Undo and full-view Restore.",
+      "arms": [
+        "hybrid",
+        "premium"
+      ],
+      "original_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F104",
+      "title": "Isolated rewrite preview and promotion",
+      "classification": "optional_capability",
+      "proposition": "Offer an explicitly admitted isolated rewrite preview that creates an unintegrated native operation, then separately admits integration or restoration after review.",
+      "arms": [
+        "premium"
+      ],
+      "original_arms": [
+        "premium"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F105",
+      "title": "Browse the repository at a past operation",
+      "classification": "optional_capability",
+      "proposition": "Offer repository browsing pinned to the view at one selected historical operation, distinct from per-change evolution and from restoring that state.",
+      "arms": [
+        "hybrid"
+      ],
+      "original_arms": [
+        "hybrid"
+      ],
+      "continuation_credit": []
+    },
+    {
+      "finding_id": "F106",
+      "title": "Restore readiness consistency",
+      "classification": "correction",
+      "proposition": "The existing backup JJ restore-verification validation contract must reject ready_for_owner_activation when workspace_map_result is collision_blocked, colocation_activation_disposition is blocked_dual_writer_or_identity_collision, or working_copy_relation is unverified.",
+      "original_arms": [],
+      "arms": [
+        "premium"
+      ],
+      "continuation_credit": [
+        "premium/J0020-compare",
+        "premium/J0027-compare"
+      ],
+      "current_status": "unrepaired static contract correction",
+      "independent_review_pointer": "/candidates/0",
+      "distinctness": "F001 concerns missing/non-null terminal command receipts. This candidate concerns contradictory readiness inside an already-present, typed BackupJujutsuRestoreVerificationReceipt. Adding a terminal receipt does not enforce this receipt content."
+    },
+    {
+      "finding_id": "F107",
+      "title": "Graph page consistency and adjacency bounds",
+      "classification": "correction",
+      "proposition": "The existing SourceGraph contract needs enforceable relational validation of emitted node counts/page bounds, usable continuation on a current page claiming more data, unambiguous node identity, and a finite parent-reference expansion policy, rather than relying only on per-field bounds and boolean declarations.",
+      "original_arms": [],
+      "arms": [
+        "premium",
+        "hybrid"
+      ],
+      "continuation_credit": [
+        "hybrid/J0017-compare",
+        "premium/J0026-compare"
+      ],
+      "current_status": "unrepaired static contract correction",
+      "independent_review_pointer": "/candidates/1",
+      "distinctness": "F001 governs terminal mutation/work receipts; this is a read-only graph projection consistency obligation. A required terminal receipt cannot repair page/count/node identity/reference validation."
+    },
+    {
+      "finding_id": "F108",
+      "title": "Clone identity before native initialization",
+      "classification": "correction",
+      "proposition": "The existing Jujutsu clone request/result contract must represent the legitimate destination-not-yet-initialized phase without requiring fabricated native commit/change/operation/snapshot identities; initialized repository operations retain their exact native fences.",
+      "original_arms": [],
+      "arms": [
+        "premium"
+      ],
+      "continuation_credit": [
+        "premium/J0026-compare"
+      ],
+      "current_status": "unrepaired static contract correction",
+      "independent_review_pointer": "/candidates/2",
+      "distinctness": "F001 requires terminal attempt evidence to exist. This candidate asks how pre-init native state is truthfully represented even when the terminal receipt exists; adding receipt_ref does not permit absent native before-state."
+    },
+    {
+      "finding_id": "F109",
+      "title": "Required transport credential evidence",
+      "classification": "correction",
+      "proposition": "The existing neutral credential_lease must require use_http_path for HTTPS and known_hosts_receipt_ref plus forwarding_disabled for SSH, while retaining the existing true/nonempty constraints.",
+      "original_arms": [],
+      "arms": [
+        "hybrid"
+      ],
+      "continuation_credit": [
+        "hybrid/J0018-compare"
+      ],
+      "current_status": "unrepaired static contract correction",
+      "independent_review_pointer": "/candidates/3",
+      "distinctness": "Terminal receipt presence does not constrain credential-lease transport evidence. These are different records and lifecycle boundaries."
+    },
+    {
+      "finding_id": "F110",
+      "title": "New-repository object-format selection",
+      "classification": "optional_capability",
+      "proposition": "Offer an evidence-gated user choice of object format when creating a new JJ repository, and show discovered effective format for existing repositories.",
+      "original_arms": [],
+      "arms": [
+        "premium"
+      ],
+      "continuation_credit": [
+        "premium/J0028-compare"
+      ],
+      "current_status": "unapproved optional capability",
+      "independent_review_pointer": "/optional_capability_review",
+      "distinctness": "F050 requires exact engine/CLI/repository-format qualification and truthful unsupported states. It does not require exposing a creation-time user selection control. Qualification is a prerequisite to the picker, not the picker itself."
+    }
+  ],
+  "limits": [
+    "One frozen case, unequal inherited history and terminal coverage; not a general model ranking.",
+    "Recall is against the adjudicated union, not an external exhaustive truth set.",
+    "Unsupported/rejected includes already-covered proposals; it is not a false-positive rate.",
+    "Budget-limited saved findings count when supported; unperformed research remains unknown.",
+    "No runtime certification or automatic product adoption."
+  ]
+}

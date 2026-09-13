@@ -1,0 +1,68 @@
+{
+  "captured_at": "2026-09-13T19:51:53.025809+00:00",
+  "phase_cap_usd": 105,
+  "previous_cap_usd": 80,
+  "authorized_extension_usd": 25,
+  "same_original_phase_start": "2026-09-11T20:03:41.494200+00:00Z",
+  "captured_standard_api_equivalent_usd": 103.303806,
+  "discontinuity_last_request_held_usd": 2.21155,
+  "captured_plus_held_usd": 105.515356,
+  "actual_cash_usd": null,
+  "complete_cost_certified": false,
+  "agents": [
+    {
+      "agent": "root",
+      "captured_usd": 62.947862,
+      "gaps": []
+    },
+    {
+      "agent": "v3_native",
+      "captured_usd": 3.72743,
+      "gaps": []
+    },
+    {
+      "agent": "v3_scheduler",
+      "captured_usd": 16.901078000000002,
+      "gaps": []
+    },
+    {
+      "agent": "v3_final_review",
+      "captured_usd": 19.66388,
+      "gaps": [
+        {
+          "line": 821,
+          "reason": "cumulative delta differs from last request; counter reset or missing request",
+          "delta": {
+            "input_tokens": -3221136,
+            "cached_input_tokens": -3078656,
+            "cache_write_input_tokens": 0,
+            "output_tokens": -8267,
+            "total_tokens": -3229403
+          },
+          "last": {
+            "input_tokens": 218850,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 461,
+            "reasoning_output_tokens": 84,
+            "total_tokens": 219311
+          }
+        }
+      ]
+    },
+    {
+      "agent": "continuation3_qualification",
+      "captured_usd": 0.063556,
+      "gaps": []
+    }
+  ],
+  "note": "One reviewer cumulative-counter discontinuity at resume is preserved, not reset or silently treated as zero. Its 218850 input/461 output last-request record is conservatively held separately. This does not certify the unknown cumulative interval. Later publication/closeout usage is excluded from this timestamp.",
+  "authorization": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication-extension-20260913/authorization.json",
+    "sha256": "cecfdb3582d08dda3a32ba941182fe4eddb43a161326f0419929be3462820f61"
+  },
+  "sol_review_provisional_hold_usd": 0.5,
+  "captured_plus_all_holds_usd": 106.015356,
+  "accounted_excess_over_phase_cap_usd": 1.015355999999997,
+  "limit_status": "captured subtotal below cap; captured plus unresolved/monitoring holds exceeds cap; research and reviews stopped"
+}

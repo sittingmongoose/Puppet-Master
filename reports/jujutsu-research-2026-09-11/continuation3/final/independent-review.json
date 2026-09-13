@@ -1,0 +1,1124 @@
+{
+  "schema": "pm.jujutsu.continuation3.independent-candidate-review.v1",
+  "reviewer": "jj_v3_final_review",
+  "reviewed_at_utc": "2026-09-13T19:42:06.978610+00:00",
+  "current_worktree": "/home/sittingmongoose/pm-worktrees/jujutsu-adjudication-20260913",
+  "current_head": "6a6c24bfa78e7283acafa42faae42aea6fd93da2",
+  "scope": "Four frozen-research correction candidates, current owner contracts, direct baseline credits and one optional-capability distinction. Offline static review only; no new research, native execution, or canonical edits.",
+  "decision": "accept_four_distinct_correction_candidates",
+  "accepted_correction_count": 4,
+  "counting_policy": "Each owner-contract obligation counts once. Counterexamples are evidence, not additional findings. Existing F001 remains one original-baseline finding and is not a union extension.",
+  "repository_validator": {
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/scripts/pm-new-contracts-verify.py",
+      "sha256": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6",
+      "lines": [
+        1003,
+        1036
+      ]
+    },
+    "structural_validation": "Used validator_for and offline_schema_registry from the current repository gate.",
+    "semantic_validation": "Called contract_semantic_failures for every case. Neither source_control_contracts nor jujutsu_integration_contracts has a semantic dispatch branch; both return []. Backup RestoreRun semantic checks belong to a different schema and do not validate these records.",
+    "fixture_gate_call_sites": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/scripts/pm-new-contracts-verify.py",
+      "sha256": "37834af4e03c4326e3d45cb7d892c78595f764ed86475d482cc50ff30837eab6",
+      "lines": [
+        1283,
+        1293
+      ]
+    },
+    "full_gate_run": false
+  },
+  "candidates": [
+    {
+      "candidate_id": "P-J0020-activation-readiness",
+      "decision": "accepted",
+      "classification": "correction",
+      "direct_arm": "premium",
+      "direct_job": "J0020-compare",
+      "corroborating_direct_jobs": [
+        "premium/J0027-compare"
+      ],
+      "corroborating_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/notes.md",
+          "sha256": "ce220bf03a4344ced49262a39c61326ee5b92ceb0c34adf0ac99f287fcfb871e",
+          "lines": [
+            32,
+            48
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/schema-checks.json",
+          "sha256": "01450e5f6e5faf40954d3e49a5f8474e84cbfcbb956c416fc04de234e1821ff4"
+        }
+      ],
+      "proposition": "The existing backup JJ restore-verification validation contract must reject ready_for_owner_activation when workspace_map_result is collision_blocked, colocation_activation_disposition is blocked_dual_writer_or_identity_collision, or working_copy_relation is unverified.",
+      "owner_basis": "JJI-008 requires workspace/captured-file relationship truth before activation, explicitly blocks dual-writer or identity collision, and prohibits promoting blocked/conflicted results to successful activation. The readiness conditional enforces selected other prerequisites but omits these three result fields.",
+      "currentness": "All three frozen counterexamples still pass current structural and repository semantic validation at the recorded HEAD and file hashes; positive and negative controls behave as expected.",
+      "distinct_from_F001": "F001 concerns missing/non-null terminal command receipts. This candidate concerns contradictory readiness inside an already-present, typed BackupJujutsuRestoreVerificationReceipt. Adding a terminal receipt does not enforce this receipt content.",
+      "accepted_scope": "One local readiness consistency obligation with three counterexamples. Keep Backup activation/readiness authority and JJ verification truth in their current owners. Add conditional or owner semantic checks and negative fixtures.",
+      "excluded_scope": [
+        "No proven unsafe runtime activation.",
+        "No new event, command, handler, or Backup owner.",
+        "No automatic rollback/degraded-recovery feature adoption.",
+        "Do not infer every non-colocated owner-rebind disposition is invalid; the demonstrated cases concern explicit blockers or an unverified relation."
+      ],
+      "current_owner_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/Jujutsu_Integration.md",
+          "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+          "lines": [
+            450,
+            472
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contracts.schema.json",
+          "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+          "lines": [
+            2490,
+            2512
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contracts.schema.json",
+          "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+          "lines": [
+            2630,
+            2669
+          ]
+        }
+      ],
+      "frozen_research_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0020-compare/notes.md",
+          "sha256": "75d9f4fd6dfe250da017711625214a28f8eb4310fba042299db5dd0d9647fabf",
+          "lines": [
+            103,
+            143
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt_probe.py",
+          "sha256": "1835217b289f84d18c925c72689043d135905c0999a239ff8fd00d9e0978ff1d",
+          "lines": [
+            40,
+            83
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/receipt-probe-results.json",
+          "sha256": "7b84c12cb4c9e583efb68a922cda165bc9838816f876a889b767b38e48e9f329"
+        }
+      ],
+      "frozen_inputs": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00026/raw",
+          "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00047/raw",
+          "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0020-compare/workspace/research-evidence/sources/S00044/raw",
+          "sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff"
+        }
+      ],
+      "current_fixture": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contract_fixtures.json",
+        "sha256": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868",
+        "json_pointer": "/valid; name=backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in"
+      },
+      "current_probes": [
+        {
+          "name": "existing_sign_in_fixture",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ready_consistent_control",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ready_but_workspace_collision",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required",
+            "workspace_map_result": "collision_blocked"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ready_but_dual_writer_blocked",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required",
+            "colocation_activation_disposition": "blocked_dual_writer_or_identity_collision"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ready_but_working_copy_unverified",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required",
+            "working_copy_relation": "unverified"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "historical_operation_mismatch_negative",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required",
+            "historical_operation_result": "blocked_operation_mismatch"
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "historical_operation_result"
+              ],
+              "keyword": "const"
+            }
+          ]
+        },
+        {
+          "name": "collision_ref_negative",
+          "patch": {
+            "outcome": "ready_for_owner_activation",
+            "credential_resolution": "not_required",
+            "collision_refs": [
+              "collision:workspace:1"
+            ]
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "collision_refs"
+              ],
+              "keyword": "maxItems"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "H-J0017-sourcegraph-relational-validation",
+      "decision": "accepted_with_narrow_scope",
+      "classification": "correction",
+      "direct_arm": "hybrid",
+      "direct_job": "J0017-compare",
+      "corroborating_direct_jobs": [
+        "premium/J0026-compare"
+      ],
+      "credit_arms": [
+        "hybrid",
+        "premium"
+      ],
+      "corroborating_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+          "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+          "lines": [
+            34,
+            44
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.py",
+          "sha256": "8fb7137ff92dee091d04ac2685908ce9dcd9f152e37622f23c57ed5ff3258112"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.json",
+          "sha256": "e61e57864bf05dc491ed4674ba52921a414a8f01cd1238d5840a6502c529fad1"
+        }
+      ],
+      "proposition": "The existing SourceGraph contract needs enforceable relational validation of emitted node counts/page bounds, usable continuation on a current page claiming more data, unambiguous node identity, and a finite parent-reference expansion policy, rather than relying only on per-field bounds and boolean declarations.",
+      "owner_basis": "SCS-017 already requires bounded pagination/hydration, stable node/edge references, identity preservation, and visible stale/partial state. Its current schema caps nodes and edges independently but accepts contradictory count/continuation/identity declarations and unbounded parent_refs. No repository semantic check closes these gaps.",
+      "currentness": "All five frozen counterexamples still pass current structural and repository semantic validation at the recorded HEAD and file hashes; the 201-node and 601-edge controls are rejected.",
+      "distinct_from_F001": "F001 governs terminal mutation/work receipts; this is a read-only graph projection consistency obligation. A required terminal receipt cannot repair page/count/node identity/reference validation.",
+      "distinct_from_other_candidate": "The SourceGraph owner/projection and paging correctness predicates are independent of Backup JJ activation readiness.",
+      "accepted_scope": "One bounded SourceGraph validation obligation with five witnesses. Require returned_count == len(nodes) <= page_size <= 200, current-page continuation consistency, stable node identity consistency, and a finite parent-reference policy. Exact adjacency bound/partial representation needs owner specification and cannot be inferred from the 600-edge cap alone. Cross-field rules may live in the existing semantic gate where JSON Schema cannot express them.",
+      "excluded_scope": [
+        "No proof of a GG or Puppet Master runtime failure, performance result, or integration regression.",
+        "Do not require every parent ref to be present in the same page; cross-page ancestry is legitimate.",
+        "Do not impose a one-parent or arbitrary exact parent cap from the probe.",
+        "Do not count dynamic cursor ownership/generation or selection transition tests as separately discovered defects; those remain existing owner/runtime obligations.",
+        "Do not generalize current-page continuation rules to unavailable/partial/error pages without owner semantics."
+      ],
+      "current_owner_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/Source_Control_System.md",
+          "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+          "lines": [
+            1044,
+            1084
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contracts.schema.json",
+          "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+          "lines": [
+            2806,
+            2861
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contracts.schema.json",
+          "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+          "lines": [
+            2866,
+            2872
+          ]
+        }
+      ],
+      "frozen_research_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/notes.md",
+          "sha256": "a5f7afe2d1edef11dc1be3277ab7105cc38b7d638e8a20cc553891a33ec024c5",
+          "lines": [
+            7,
+            20
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/graph-contract-probes.py",
+          "sha256": "294065b7393ed97fbe0857ca6fc4ac7f9f1b5dbfbea523b13da5841135b858ec",
+          "lines": [
+            15,
+            59
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/graph-contract-probes.json",
+          "sha256": "4fcab2eed572f5079240534b4a3e9c31b3990fb22c1e18c8275f4c38c6848f40"
+        }
+      ],
+      "frozen_inputs": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/research-evidence/sources/S00007/raw",
+          "sha256": "90285d608c9d46fb00ab4b226656f3475a4afb114bfb7558eead35d096076deb"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/research-evidence/sources/S00008/raw",
+          "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0017-compare/workspace/research-evidence/sources/S00013/raw",
+          "sha256": "8233c4ab8ba8584a310925d9dde6f2f62b1578207c160e5a09ff746012780368"
+        }
+      ],
+      "current_fixture": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contract_fixtures.json",
+        "sha256": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642",
+        "json_pointer": "/valid; name=git_source_graph_is_bounded_identity_safe_and_virtualized"
+      },
+      "current_probes": [
+        {
+          "name": "positive_control",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "two_nodes_exceed_requested_page_size",
+          "patch": {
+            "path": [
+              "page",
+              "page_size"
+            ],
+            "value": 1
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "returned_count_disagrees_with_two_nodes",
+          "patch": {
+            "path": [
+              "page",
+              "returned_count"
+            ],
+            "value": 0
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "has_more_without_continuation_on_current_page",
+          "patch": {
+            "path": [
+              "page",
+              "next_cursor_ref"
+            ],
+            "value": null
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "duplicate_node_identity_with_distinct_revision",
+          "patch": {
+            "path": [
+              "nodes",
+              1,
+              "node_ref"
+            ],
+            "value": "graph-node:git:alpha:43"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "1001_parent_references",
+          "patch": {
+            "path": [
+              "nodes",
+              0,
+              "parent_refs"
+            ],
+            "replacement_count": 1001,
+            "construction": "1001_parent_references"
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "201_nodes_negative_control",
+          "patch": {
+            "path": [
+              "nodes"
+            ],
+            "replacement_count": 201,
+            "construction": "201_nodes_negative_control"
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "nodes"
+              ],
+              "keyword": "maxItems"
+            }
+          ]
+        },
+        {
+          "name": "601_edges_negative_control",
+          "patch": {
+            "path": [
+              "edges"
+            ],
+            "replacement_count": 601,
+            "construction": "601_edges_negative_control"
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "edges"
+              ],
+              "keyword": "maxItems"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "P-J0026-clone-preinit-native-identity",
+      "decision": "accepted_with_narrow_scope",
+      "classification": "correction",
+      "direct_arm": "premium",
+      "direct_job": "J0026-compare",
+      "proposition": "The existing Jujutsu clone request/result contract must represent the legitimate destination-not-yet-initialized phase without requiring fabricated native commit/change/operation/snapshot identities; initialized repository operations retain their exact native fences.",
+      "owner_basis": "JJI-002 defines revision/snapshot fields as exact native state and forbids synthetic workspace identity. JJI-003 and section 3.1 admit dedicated clone to a destination Source Location and cancellation settlement. Yet command_request.expected_revision, currentness.snapshot_id/expected_operation_id, and command_result.before_revision unconditionally require native values. No phase-discriminated absent-native-state branch exists. The pinned upstream clone code admits an absent/empty destination and calls init_workspace only after destination admission/creation; it rejects --at-op.",
+      "currentness": "Current owner/schema retain the unconditional native identity preconditions. Current positive request/cancellation controls pass; absent native expected_revision, operation, snapshot, and before_revision are rejected at those exact fields. This is a representability gap established by schema plus owner/native phase semantics, not a conclusion that any existing runtime fails.",
+      "distinct_from_F001": "F001 requires terminal attempt evidence to exist. This candidate asks how pre-init native state is truthfully represented even when the terminal receipt exists; adding receipt_ref does not permit absent native before-state.",
+      "distinct_from_other_candidates": "Clone admission and pre-init identity are separate from graph projection consistency and restored-repository activation readiness.",
+      "accepted_scope": "One existing clone contract correction. Distinguish reserved PM/destination identity and admission evidence from actual native identities, permitting explicit not-initialized state before init or a narrowly phase-restricted nullable representation. Bind subsequent checkpoints to observed native state, retain Host/Environment/catalog/currentness/lease/Permissions/FileSafe/idempotency/caller fences, and keep clone distinct from ordinary Git clone.",
+      "excluded_scope": [
+        "No shipping clone failure or runtime certification claim.",
+        "Do not waive existing-repository native fencing or pass --at-op to native clone.",
+        "Do not manufacture an initial operation by adding a separate pre-init mutation solely to satisfy a request shape.",
+        "P26 C2 receipt nullability is existing F001 support, not a fourth correction.",
+        "A newly closed stage/settlement record or expanded cleanup/materialization diagnostics needs separate owner design; it is not counted here."
+      ],
+      "current_owner_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/Jujutsu_Integration.md",
+          "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+          "lines": [
+            80,
+            91
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/Jujutsu_Integration.md",
+          "sha256": "3e0d626da7873a67224fa2cd7fc13f512157b444fc2d2d32f9f488f01fdb258a",
+          "lines": [
+            289,
+            304
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contracts.schema.json",
+          "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+          "lines": [
+            398,
+            449
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contracts.schema.json",
+          "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+          "lines": [
+            839,
+            897
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contracts.schema.json",
+          "sha256": "de5570c37d5f502f2d6f3e511d322a117e9e958600aebf3d7a0d14ee9f7f4711",
+          "lines": [
+            1780,
+            1835
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contracts.schema.json",
+          "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+          "lines": [
+            292,
+            326
+          ]
+        }
+      ],
+      "frozen_research_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+          "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+          "lines": [
+            56,
+            81
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.py",
+          "sha256": "8fb7137ff92dee091d04ac2685908ce9dcd9f152e37622f23c57ed5ff3258112",
+          "lines": [
+            58,
+            72
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.json",
+          "sha256": "e61e57864bf05dc491ed4674ba52921a414a8f01cd1238d5840a6502c529fad1"
+        }
+      ],
+      "frozen_native_phase_evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/sources/S00016/text.txt",
+        "sha256": "505b6c62e85fb6bcb50d3d816fad583a020651e8a7860b50932fb849c6f54136",
+        "lines": [
+          175,
+          228
+        ]
+      },
+      "frozen_inputs": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/sources/S00047/text.txt",
+          "sha256": "91d9c6de5b227cbe649a3d41f0cc9c8449d6dea4a0ebaf7b5e484c3a2679d041"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/sources/S00033/text.txt",
+          "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/sources/S00052/text.txt",
+          "sha256": "70ceee40fa99107f4be4cda5127d11a4cf69b7a0bc91582cecfa1762968ab9ff"
+        }
+      ],
+      "current_fixture": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/jujutsu_integration_contract_fixtures.json",
+        "sha256": "4beb3d1a8a340555a01b395ed0eda88566594a9dc8d214aaee8dc5d789354868",
+        "lines": [
+          2195,
+          2274
+        ]
+      },
+      "current_probes": [
+        {
+          "name": "clone_request_positive_control",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "clone_request_absent_native_revision",
+          "patch": {
+            "path": [
+              "expected_revision"
+            ],
+            "value": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "expected_revision"
+              ],
+              "keyword": "type"
+            }
+          ]
+        },
+        {
+          "name": "clone_request_absent_native_operation",
+          "patch": {
+            "path": [
+              "currentness",
+              "expected_operation_id"
+            ],
+            "value": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "currentness",
+                "expected_operation_id"
+              ],
+              "keyword": "type"
+            }
+          ]
+        },
+        {
+          "name": "clone_request_absent_native_snapshot",
+          "patch": {
+            "path": [
+              "currentness",
+              "snapshot_id"
+            ],
+            "value": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "currentness",
+                "snapshot_id"
+              ],
+              "keyword": "type"
+            }
+          ]
+        },
+        {
+          "name": "clone_cancel_positive_control",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "clone_cancel_absent_before_native_revision",
+          "patch": {
+            "path": [
+              "before_revision"
+            ],
+            "value": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "before_revision"
+              ],
+              "keyword": "type"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "H-J0018-credential-lease-required-evidence",
+      "decision": "accepted",
+      "classification": "correction",
+      "direct_arm": "hybrid",
+      "direct_job": "J0018-compare",
+      "proposition": "The existing neutral credential_lease must require use_http_path for HTTPS and known_hosts_receipt_ref plus forwarding_disabled for SSH, while retaining the existing true/nonempty constraints.",
+      "owner_basis": "Source Control section 3.3 explicitly requires HTTPS path scoping and SSH known-host/no-forwarding binding. The schema conditionals constrain those fields only when present; neither the common required list nor the transport branches requires their presence. No current repository semantic dispatch applies to credential_lease.",
+      "currentness": "All four frozen omission witnesses still pass the current schema and repository semantic validation. Complete HTTPS/SSH controls pass; existing false/null constraints still reject all five tested invalid-value controls.",
+      "distinct_from_F001": "Terminal receipt presence does not constrain credential-lease transport evidence. These are different records and lifecycle boundaries.",
+      "distinct_from_F038": "F038 says the broker/transport/custody policy is already chosen. This candidate demonstrates that the admitted machine contract fails to require specific already-mandated evidence. It repairs enforcement of that policy without proposing a competing credential architecture.",
+      "distinct_from_other_candidates": "The transport credential-lease field-presence obligation is separate from graph relational consistency, restore readiness, and clone pre-init native-state representation.",
+      "accepted_scope": "One transport-conditional required-field correction with four omission witnesses. Add required=[use_http_path] to the HTTPS then branch and required=[known_hosts_receipt_ref, forwarding_disabled] to SSH; retain const/nonempty constraints and current owner/field inventory. Add corresponding omission negatives.",
+      "excluded_scope": [
+        "No demonstrated live credential leak, authentication bypass, or runtime security proof.",
+        "Do not treat a nonempty known-host ref as proof its referent exists or is current; consumer resolution remains a separate existing obligation.",
+        "No new broker, raw askpass path, secret-bearing field, command, persisted record, or ambient fallback.",
+        "Opposite-transport fields need not be made mandatory."
+      ],
+      "current_owner_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/Source_Control_System.md",
+          "sha256": "7695846ddacdedf0f3a81f99830269dd7931e1719d78d19feb532ab90c1b080c",
+          "lines": [
+            336,
+            354
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contracts.schema.json",
+          "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+          "lines": [
+            417,
+            433
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contracts.schema.json",
+          "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+          "lines": [
+            501,
+            539
+          ]
+        }
+      ],
+      "frozen_research_evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/notes.md",
+          "sha256": "7c8726dca6a989bdabd1a5f85bfd9cce4035aeaf7db63f3e78e273a152d6d8fe",
+          "lines": [
+            25,
+            48
+          ]
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/comparison-evidence/check_credential_lease.py",
+          "sha256": "8bed97dfa7793f5fd78d5e06796b00a8617acfd6ba8bd4dbdec5baa6cde5cc55"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/comparison-evidence/credential-lease-validation.json",
+          "sha256": "b9dc1734d13b1ea3083ae9d57f4fdcafcec9b1c56e70a40c69ecc7788f16fd45"
+        }
+      ],
+      "frozen_inputs": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/research-evidence/sources/S00024/text.txt",
+          "sha256": "8122293ac4baf04cda54e92f8115214252759e9c47048829db0c20201c622ada"
+        },
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/research-evidence/sources/S00023/text.txt",
+          "sha256": "8233c4ab8ba8584a310925d9dde6f2f62b1578207c160e5a09ff746012780368"
+        }
+      ],
+      "current_fixture": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/Plans/source_control_contract_fixtures.json",
+        "sha256": "2c53e4f9d331a326db8cd320f48fbad07a275444e09e1e114c3b7e859f823642"
+      },
+      "current_probes": [
+        {
+          "name": "https_complete",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ssh_complete",
+          "patch": {},
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "https_missing_use_http_path",
+          "patch": {
+            "removed_fields": [
+              "use_http_path"
+            ]
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ssh_missing_known_hosts_receipt_ref",
+          "patch": {
+            "removed_fields": [
+              "known_hosts_receipt_ref"
+            ]
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ssh_missing_forwarding_disabled",
+          "patch": {
+            "removed_fields": [
+              "forwarding_disabled"
+            ]
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ssh_missing_both_trust_fields",
+          "patch": {
+            "removed_fields": [
+              "known_hosts_receipt_ref",
+              "forwarding_disabled"
+            ]
+          },
+          "structural_accepts": true,
+          "semantic_failures": [],
+          "repository_validation_accepts": true,
+          "errors": []
+        },
+        {
+          "name": "ssh_null_known_hosts_receipt_ref",
+          "patch": {
+            "known_hosts_receipt_ref": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "known_hosts_receipt_ref"
+              ],
+              "keyword": "type"
+            }
+          ]
+        },
+        {
+          "name": "ssh_null_forwarding_disabled",
+          "patch": {
+            "forwarding_disabled": null
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "forwarding_disabled"
+              ],
+              "keyword": "const"
+            }
+          ]
+        },
+        {
+          "name": "https_false_use_http_path",
+          "patch": {
+            "use_http_path": false
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "use_http_path"
+              ],
+              "keyword": "const"
+            }
+          ]
+        },
+        {
+          "name": "ssh_false_forwarding_disabled",
+          "patch": {
+            "forwarding_disabled": false
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "forwarding_disabled"
+              ],
+              "keyword": "const"
+            }
+          ]
+        },
+        {
+          "name": "ssh_false_prompt_suppressed",
+          "patch": {
+            "prompt_suppressed": false
+          },
+          "structural_accepts": false,
+          "semantic_failures": [],
+          "repository_validation_accepts": false,
+          "errors": [
+            {
+              "path": [
+                "prompt_suppressed"
+              ],
+              "keyword": "const"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "F001_credit": {
+    "decision": "direct_premium_continuation_credit_supported",
+    "job": "J0021-compare",
+    "corroborating_direct_jobs": [
+      "premium/J0026-compare"
+    ],
+    "corroborating_evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+        "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+        "lines": [
+          79,
+          83
+        ]
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0026-compare/workspace/research-evidence/contract-probes.json",
+        "sha256": "e61e57864bf05dc491ed4674ba52921a414a8f01cd1238d5840a6502c529fad1"
+      }
+    ],
+    "finding_id": "F001",
+    "rationale": "J0021 notes explicitly name receipt_ref nullability on failed/cancelled/recovery-required/effect-unknown terminal results, identify the owner requirement, record accepted malformed instances and negative controls, and propose requiring non-null terminal owner receipts. This is explicit discovery of F001, not generic cancellation commentary.",
+    "baseline_policy": "Original 105-finding union and original evaluator-derived/no-arm-credit provenance remain unchanged. Add premium direct evidence in the continuation comparison only; do not create a second F001 or a current-canon defect merely from frozen rediscovery.",
+    "hybrid_credit": false,
+    "hybrid_credit_reason": "Inspected hybrid terminal-receipt mentions describe covered existing requirements. They do not explicitly identify receiptless terminal schema acceptance. No hybrid F001 credit on that evidence.",
+    "currentness_boundary": "F001 frozen discovery credit is separate from current repair status; no additional union extension or current defect is asserted here.",
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0021-compare/notes.md",
+        "sha256": "b3b6c5da122e0cfd7db7cc9524f1bd997081a72cc8357013581f71a5f2d108a0",
+        "lines": [
+          188,
+          205
+        ]
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0021-compare/workspace/schema-witnesses.json",
+        "sha256": "7cb8b47fba083ef5d05dc93dd7d83391e9c5fac90c9782c7cfd3d7a28ec576bb"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/notes.md",
+        "sha256": "7c8726dca6a989bdabd1a5f85bfd9cce4035aeaf7db63f3e78e273a152d6d8fe",
+        "lines": [
+          19,
+          19
+        ]
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0022-compare/notes.md",
+        "sha256": "5bb0c0257fa1a72b6b6d9c43af6ba6ec93590e5e57155842fad68226298452a2",
+        "lines": [
+          15,
+          15
+        ]
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/d3/comparison.json",
+        "sha256": "62fa9fa7855faa7164b59f4270cb5840e8d1528c4d7d5408c8d5255438b00690",
+        "json_pointer": "/findings; finding_id=F001"
+      }
+    ],
+    "frozen_witness_summary": [
+      {
+        "name": "control_clone_cancel_with_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "control_success_with_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "control_waiting_work",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "control_split_request",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "jj_cancelled_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "jj_failed_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "jj_recovery_required_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "jj_effect_unknown_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "jj_split_cancel_known_effect_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "control_success_without_receipt_is_rejected",
+        "frozen_schema_accepts": false
+      },
+      {
+        "name": "work_completed_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "work_cancelled_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "work_failed_without_receipt",
+        "frozen_schema_accepts": true
+      },
+      {
+        "name": "control_wait_without_reason_is_rejected",
+        "frozen_schema_accepts": false
+      },
+      {
+        "name": "new_split_selection_ref_is_rejected",
+        "frozen_schema_accepts": false
+      }
+    ]
+  },
+  "additional_baseline_credit_reviews": [
+    {
+      "finding_id": "F030",
+      "direct_arm": "hybrid",
+      "job": "J0015-reconcile",
+      "match": "full_finding_level_match",
+      "decision": "credit_supported",
+      "rationale": "The original proposition explicitly includes failed native queries and traversal omissions becoming valid empty/list results. H15 identifies stream Err swallowed into Ok(LogPage), including initial traversal, and calls for partial/error/end distinction and initial/middle/peek injection. This is direct assertion of the same failure distinction, not merely a generic performance concern. It does not claim all file/type cases were independently studied.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-error-and-memory-contract.md",
+        "sha256": "8ccc4f891a2bc3f8dace81381b404accf408a847fa4b2c14cfec11ac248dfa72",
+        "lines": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "finding_id": "F088",
+      "direct_arm": "hybrid",
+      "job": "J0015-reconcile",
+      "match": "full_finding_level_match",
+      "decision": "credit_supported",
+      "rationale": "H15 explicitly explains that both destination-edge endpoints may be descendants and must be rebased before insertion; it cites parent-relationship/no-divergence regression coverage and states lower-level primitives can miss command semantics. The original F088 rationale itself names GG insert-rebase divergence. This preserves the original merge-parent/descendant obligation and does not add an unconditional no-divergence rule.",
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/embedded-semantics-and-feature-capabilities.md",
+        "sha256": "e18e7260157b5609857d8efb26de382f65b6405fbec54e2a11283c5049d8d43f",
+        "lines": [
+          6,
+          10
+        ]
+      }
+    }
+  ],
+  "optional_capability_review": {
+    "candidate_id": "P-J0028-new-repository-object-format-picker",
+    "decision": "distinct_optional_capability_candidate_pending_symmetric_old_arm_review",
+    "classification": "optional_capability",
+    "direct_arm": "premium",
+    "job": "J0028-compare",
+    "proposition": "Offer an evidence-gated user choice of object format when creating a new JJ repository, and show discovered effective format for existing repositories.",
+    "distinct_from_F050": "F050 requires exact engine/CLI/repository-format qualification and truthful unsupported states. It does not require exposing a creation-time user selection control. Qualification is a prerequisite to the picker, not the picker itself.",
+    "excluded_scope": [
+      "No approved default change, migration, universal SHA-256 support, or product adoption.",
+      "No additional finding for underlying certification matrix or format diagnostics already covered by F050."
+    ],
+    "evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md",
+      "sha256": "469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe",
+      "lines": [
+        91,
+        95
+      ]
+    }
+  },
+  "baseline_propositions_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/d3/adjudicated-findings.json",
+    "sha256": "a67d67b6cfd0559264b8fcc0a149a3995ffb9054093b2595e96fcd0e9e309863"
+  },
+  "validation_summary": {
+    "current_probe_count": 32,
+    "all_expected_outcomes_matched": true,
+    "readiness_counterexamples_accepted": 3,
+    "graph_counterexamples_accepted": 5,
+    "credential_omissions_accepted": 4,
+    "legitimate_preinit_null_representations_rejected": 4,
+    "positive_controls": 7,
+    "negative_controls": 9
+  },
+  "helper": {
+    "path": "/home/sittingmongoose/PM-Experiments/jujutsu-followup-20260911/continuation3/reporting/final-20260913/candidate_review.py",
+    "sha256": "bb63a1f3f207994344245241d2e44eec976a294fa393d2407a994fe88b3a4ea0"
+  },
+  "root_resolution_after_independent_review": {
+    "F110": "The reviewer left symmetric historical credit to root. Root completed that review in symmetric-adjudication.json and accepted F110 as an unapproved optional capability with premium-only direct support. The original independent candidate status is preserved as authored."
+  }
+}

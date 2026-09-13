@@ -1,0 +1,59 @@
+{
+  "d5": {
+    "44_answers_preserved": true,
+    "planunits": 42,
+    "independent_review_checks": 382,
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/d5/answered-companion.json",
+        "sha256": "9ed5a8246715d87785b932f215c5ad81d8d79ab165c5f1f635f04e226e3c6ef6"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/d5/independent-final-review.json",
+        "sha256": "790bd57c4e72be693c9a91b9ec46552dc8baaa95977a358ad4ebe1a2a7550cdb"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/d5/verification-summary.json",
+        "sha256": "92037106f7e03ebd3f16234b44e1f379fb8f1d00c40b81015f55056485be84a8"
+      }
+    ]
+  },
+  "repair_and_gate": {
+    "status": "published; later continuation3 gate supersedes failed earlier live attempts",
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/repair3/independent-offline-review.json",
+        "sha256": "5ff56dee1866a0833537527b30788fd8841ba93046b151f8911e8d72c8723528"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/continuation3/gate/launch-gate.json",
+        "sha256": "4628361f8336f3a5ca726975ec6d33b6e20ef72be6d2f03158dd7a8c6cb11164"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/continuation3/gate/independent-review.json",
+        "sha256": "1e8d45ab3119e5c63a8de5ba6a2dc0b2a5d4760f6c0a7568a4f17ea930c48c53"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/continuation3/gate/input-and-state-preservation.json",
+        "sha256": "4a2cac6f8dfc738ad1f8cfc77b8d8f3e341d4cfcd04b8a74efda2be4ade9a86f"
+      }
+    ]
+  },
+  "continuation": {
+    "terminal_arms": 2,
+    "terminal_deliveries_reviewed": 22,
+    "independent_current_probes": 32,
+    "all_expected_probe_outcomes_matched": true,
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/continuation3/end/runtime-summary.json",
+        "sha256": "9ab9c5986885d39d7df71a5b354ff7c4c0d14fc8aab451477e60d65b2f677cfe"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/reviewed-repository/reports/jujutsu-research-2026-09-11/continuation3/end/terminal-metrics-review.json",
+        "sha256": "1a4022346cd424e897bd9b6323016fbfcb39d5ddc23171edc4dac112a6520b1d"
+      }
+    ]
+  },
+  "known_limits": "D5 governance/ledger coverage failures were reported and not resealed; native runtime is uncertified; arm limits and unresolved costs are retained; new four corrections are adjudicated for future authorized canon repair."
+}

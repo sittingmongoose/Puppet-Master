@@ -1,7 +1,7 @@
 # Jujutsu research result
 
-The result contains one independently reviewed receipt correction and a [44-card decision packet](d3/decision-packet.md) awaiting Jared's answers. The [technical companion](d3/technical-companion.json) preserves source and owner mappings. No optional capability or product choice is adopted.
+[Completed continuation adjudication](continuation3/final/README.md) covers all 22 terminal deliveries and preserves the original comparison. The expanded union contains 110 findings: premium supports 78 and hybrid 90. Four newly identified static contract corrections remain unrepaired; the object-format picker is an unapproved optional capability. Runtime and budget limits remain explicit.
 
-Read the [correction and verification report](d4/README.md), [comparison with per-stage timing and costs](d3/README.md), and [governance state](d4/governance-delta.json). Both research campaigns ended with partial coverage; no complete-chain latency or overall cost-effectiveness winner is established.
+[Deliverable 5](d5/README.md) preserves all 44 answers, their accepted/conditional/declined dispositions, and 42 independently reviewed owner PlanUnits. [The answered companion](d5/answered-companion.json) supersedes the original unanswered decision packet as the answer record; the original packet remains historical.
 
-This execution ends at the checkpoint after deliverable 4. Main ancestry, push receipts and worktree cleanup establish arrival; the external landing receipt is referenced in `d4/verification.json`. Deliverable 5 remains pending Jared's packet answers.
+The [continuation launch gate](continuation3/gate/README.md), [terminal runtime report](continuation3/final/README.md), [original comparison](d3/README.md), and [earlier correction/governance report](d4/README.md) retain their separate evidence and spending boundaries. No general model-quality winner, complete cost liability, governance reseal or native runtime certification is claimed.

@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-09-13T19:51:53.205064+00:00",
+  "checks": {
+    "json_files": 10,
+    "hash_references": 393,
+    "exact_quotes": 11
+  },
+  "failures": [],
+  "scope": "Referenced source hashes and exact quotations, parseable result JSON, fixed original and expanded arithmetic; 32 independently executed validator probes retained separately.",
+  "shards": {
+    "status": "pass",
+    "docs_checked": 98,
+    "shards_checked": 2599,
+    "failures": []
+  },
+  "cost_hold_update": "Added explicit same-phase Sol hold and excess arithmetic after source verification; no source or finding edits."
+}

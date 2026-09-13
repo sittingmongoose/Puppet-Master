@@ -1,0 +1,1091 @@
+{
+  "schema": "jj.continuation3.final_adjudication.progress.v1",
+  "jobs": [
+    {
+      "arm": "premium",
+      "job": "J0024-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 7,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/notes.md",
+          "sha256": "df36d18c5a05e4bb072350be92a9f98ff7cb47b1587ad4169e5131bafa62f71d",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 8,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/crash-directory-entry-durability.md",
+          "sha256": "804a66c5e74b100bab8574e062047ff13536dcc28c8092637fc2be3d8242c993",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 9,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/crash-recovery-closure.md",
+          "sha256": "5f20204b4843e603a054fc78b46d63a433ad52ac30d72fc73f18f6045d170469",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 10,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-cleanup-regression-coverage.md",
+          "sha256": "864e99c6e6e275dfa8dcd8d1ff21a7e3617b9faf904f07bd55543c8f66498119",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 11,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-empty-heads-and-gc.md",
+          "sha256": "2c13fa1b575ccda83914627f046ed0bbf7e0c408618643dfad186b6c6a742d43",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 12,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-head-entry-validation.md",
+          "sha256": "232434e8f3e768d9b35c07dfc7d5d5b9e1038280ecaa4b89610362c6c146df60",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 13,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-legacy-metadata-recovery.md",
+          "sha256": "081d038b631e95f02f3ea8d60a43a900cd3ca36ae6d3d60a1fdde491ba78968e",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 14,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/extras-removal-error-observability.md",
+          "sha256": "67c3da8219b94eb6b64067d6219a0e0ed3bd7037701d278036a00a5c4a401ceb",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 15,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/fetch-prefetch-alternative.md",
+          "sha256": "811b3a31f65b90db25c7043948686a513a8d646d0b4d4c50eae00ec0b7e2de13",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 16,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/leads/fetch-snapshot-boundary-and-semantics.md",
+          "sha256": "2878b45d6d5fb341772283dfdb7e943160235ce81feb29e702b3749623c12219",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 17,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0024-reconcile/workspace/evidence-index.md",
+          "sha256": "a703085c37bccf2410cebc950ad517a9779ef1cc854206982f6fd1f5db34d453",
+          "review": "source locator inventory only; no independent assertions"
+        },
+        {
+          "bulk_document_index": 18,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0024-reconcile/workspace/reconciliation-audit.md",
+          "sha256": "e036cead70b9b240a9470f18dd3e826a882505a78c1d364948803f687e3d0419",
+          "review": "fully read"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F007",
+        "F081",
+        "F082",
+        "F102"
+      ],
+      "partial_matches": [
+        "F002",
+        "F004",
+        "F005",
+        "F010",
+        "F071",
+        "F079",
+        "F093"
+      ],
+      "new_union_candidates": [],
+      "disposition": "New primary details refine existing native-effects, crash/backup recovery, extras integrity and upstream-currentness propositions. No new product capability is asserted; platform crash triggers, deletion observability, empty-head recovery and concurrency alternatives remain unexecuted investigations. Unwrap/invalid-head behavior does not alone establish F093 worker-panic containment. The current merged head identity fix is distinguished from remaining error suppression and from unproved crash ordering.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0024-reconcile/notes.md",
+          "sha256": "df36d18c5a05e4bb072350be92a9f98ff7cb47b1587ad4169e5131bafa62f71d",
+          "line_start": 43,
+          "line_end": 48,
+          "exact_quote": "\nPreserve the damaged store and dirty working files before native reads or recovery attempts, because some reads repair/write metadata. Distinguish operation/view decoding, missing Git commits/trees, extras segments, and working-copy state. To demonstrate native recovery, inspect **and complete restoration of** a selected historical operation on a disposable copy, then verify operation identity, required objects and dirty-file retention. A readable log, functional Git checkout, green `status`, or restore progress line alone is insufficient.\n\nGit-content extraction or recreating a repository can salvage work when exact native recovery fails. They cannot be called complete recovery of jj identities, operations, conflicts or evolution history. The December report's replacement of a missing Git object with another object's bytes is retained as an unvalidated workaround, not a supported repair: content-addressed identity and historical fidelity were not verified. No manual recipes were executed or endorsed here.\n\nUnresolved: exact version/platform/filesystem durability, the extras create/delete persistence ordering, completeness of each reported recovery, failure-side mutation, and reliable dirty-file retention. The source review does not supply missing crash fixtures or runtime certification."
+        }
+      ]
+    },
+    {
+      "arm": "premium",
+      "job": "J0025-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 19,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/notes.md",
+          "sha256": "517131e62d42b4567aace37f378ae57f7089f5b645895360543d5366b2601bb5",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 20,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/gc-command-snapshot-side-effects.md",
+          "sha256": "af486d34274a0d6a445d9a9b61ead97ce3a513776b777422be996b4423d2c9ba",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 21,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/gc-detached-operation-closure.md",
+          "sha256": "e012c832102acd5afda2318bfc4d5ab9379fc09f2b5b343ad815df0ae0f29048",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 22,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/hash-existing-repo-effective-format.md",
+          "sha256": "1e49e7e2bea2e4efa775696854250176cef19aa19d79bc02ba8782a0b22be205",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 23,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/hash-legacy-signature-preservation.md",
+          "sha256": "101181feaf7516ee5e20bfd24d60baa57f8b382f7da0d34f6e61e34332d7e368",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 24,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/leads/revset-sibling-visibility.md",
+          "sha256": "500464a6eeef859051edfe402b16155993899c3b5f7f0edcf4f8ff5fef2f36b8",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 25,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0025-reconcile/workspace/evidence-index.md",
+          "sha256": "b725c14131268fc336afd341a713c100998bf3cf15cc845819b01a6140b9aa73",
+          "review": "source locator inventory only; no independent assertions"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F006",
+        "F050",
+        "F064",
+        "F079",
+        "F081",
+        "F082",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [],
+      "disposition": "Source-specific GC ancestor/retention races, effective SHA-256 format, legacy signature preservation and historical revset scoping refine existing qualification, identity, closure and currentness findings. They do not propose a user maintenance action, strict read-only browsing, priority UX or isolated rewrite promotion. No new baseline arm credit.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0025-reconcile/notes.md",
+          "sha256": "517131e62d42b4567aace37f378ae57f7089f5b645895360543d5366b2601bb5",
+          "line_start": 50,
+          "line_end": 55,
+          "exact_quote": "Corrections, alternatives, and unresolved questions:\n\n- Do not equate “0.44 supports SHA-256 objects” with “0.44 has correct SHA-256 signed interchange.” Nor does the fix in 0.45.1 establish that every packaged build and backend/library combination behaves identically. Record the actual release/build, Git executable, library resolution, backend, repository object format and transport/forge capabilities when collecting future evidence.\n- Git's transition document includes migration designs and prospective interoperability. Its existence is not proof that current Jujutsu clone supports cross-format transport. [Git v2.51.0's object-format disclaimer](https://github.com/git/git/blob/v2.51.0/Documentation/object-format-disclaimer.adoc) (S00044, lines 1–2) explicitly states there is no SHA-1/SHA-256 repository interoperability at that version. Choosing SHA-1 for a new repository where service compatibility requires it is an alternative; it is not permission or a mechanism to silently convert a captured SHA-256 repository.\n- **Fixing future signatures does not repair existing malformed objects.** In a SHA-256 repository, 0.45.1's read predicate recognizes `gpgsig-sha256`; an old commit containing only misplaced `gpgsig` will not acquire that header merely by loading. The patch does not add an object migration. Preserve raw bytes and IDs separately from a verifier's signed/unsigned result. Any proposed header repair changes the commit object and its ID; whether its existing cryptographic signature can be retained depends on the exact signed payload and requires verification. Re-signing is not established as necessary, and silent rewriting is not faithful restore. See [leads/hash-legacy-signature-preservation.md](leads/hash-legacy-signature-preservation.md).\n- Still unresolved: real-key SHA-256 write/read/Git-verify roundtrip; known old malformed SHA-256 objects across upgrade and restore; exact configured forge/transport profile; mismatch error behavior and cleanup; full-ID handling throughout consumers; and byte/ID/signature preservation in isolated restoration without re-signing or credential rebinding. These are explicit future evidence needs, not claims of runtime eligibility or a reason to discard the lead."
+        }
+      ]
+    },
+    {
+      "arm": "premium",
+      "job": "J0026-compare",
+      "documents": [
+        {
+          "bulk_document_index": 26,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+          "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 27,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/clone-destination-lifecycle.md",
+          "sha256": "07557678a92fff3f8d7d8a434645521b53c33222908dbf2525da3d4b2a919428",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 28,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/conflict-byte-roundtrip.md",
+          "sha256": "87806c7dec8109998127ff3f8b0cf2db26f5531594a95cb1cf8c6d5ecda9e8eb",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 29,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/conflict-editor-partial-results.md",
+          "sha256": "b2fbb600f6eb7f443a9405180e5ec06ead94cae17d8bfefed40975dcbe279752",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 30,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/leads/evolution-identity-pagination.md",
+          "sha256": "80fa715f297fe0e7a082a06be3af719b7dacfa52afb2262523f4ddb99e412f9f",
+          "review": "fully read"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F001",
+        "F006",
+        "F007",
+        "F008",
+        "F024",
+        "F025",
+        "F029",
+        "F030",
+        "F031",
+        "F037",
+        "F050",
+        "F056",
+        "F057",
+        "F061",
+        "F069",
+        "F072",
+        "F086",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [
+        "graph_page_semantics",
+        "clone_preinit_identity"
+      ],
+      "disposition": "Graph adjacency/count/cursor structural counterexamples corroborate H17. Clone pre-init native identity requirement is a distinct candidate, not settled by generic cleanup coverage. Terminal receipts directly corroborate F001. The marker-only conflict consumer allegation omits the frozen SCS Git-only default and is rejected as a canon correction; native terms/bytes/partial editing are covered. Many-term inspector/editor and clone staging/retention choices remain unapproved implementation/product elaborations, not runtime certification.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0026-compare/notes.md",
+          "sha256": "d7ac1cfc366a47bd05e8faaa4d06bb7fe57083bbb694d283145b9716d8d6590c",
+          "line_start": 75,
+          "line_end": 81,
+          "exact_quote": "**Repair C1 — pre-init identity must describe a destination reservation, not an existing JJ operation.** The closed request schema requires `expected_revision` to be a full `jujutsu_revision` for clone, while `currentness_fence` also requires non-null `snapshot_id` and `expected_operation_id` (`Plans/jujutsu_integration_contracts.schema.json:398–449, 839–895`). Every result requires a full `before_revision` (`:1775–1833`). The positive request supplies `change-expected-27`, `commit-expected-27`, and `op-expected-27`; even the cancellation fixture supplies `op-before-clone-cancelled-27` (`Plans/jujutsu_integration_contract_fixtures.json:2195–2274, 2703–2723`). These fixture strings prove structure, not actual pre-existing state. There is no native destination operation before init or after an admission-only cancellation, and clone explicitly rejects an ambient `--at-op` fence. An initialized repository's real first operation may be recorded as a later stage checkpoint; it cannot be fabricated as the initial fence.\n\nConcrete replacement: discriminate the clone pre-init context from operations on an existing JJ repository. Retain reserved PM lineage, exact Host/Environment/Source Location/topology, destination admission/existence/identity evidence, current adapter/catalog, writer/credential leases, Permissions/FileSafe, idempotency, and caller return context. Before native init, use an explicit `not_initialized` native-state branch (or a reasoned nullable field restricted to this phase) with no commit/change/operation/snapshot claim. After init, bind checkpoints and later mutations/recovery to observed native operation, commit and workspace identities. Never pass `--at-op` to native clone. Keep existing-repository mutations strictly fenced. This corrects an impossible precondition without weakening authority checks or aliasing to ordinary Git clone.\n\n**Repair C2 — terminal cleanup and materialization truth need an enforceable receipt contract.** The result schema allows `receipt_ref=null` except for successful mutations (`:1861–1869, 1995–2043`); for clone it only adds required `currentness` and `return_context` (`:2046–2059`). Cleanup is an `x-puppet-master-assertions` sentence and a fixture message/ref name, with no typed stage or cleanup record in the inspected owner family. Opaque receipt refs are valid DRY boundaries, but their required referent and verification predicate must be defined and tested. A receipt name is not cleanup evidence.\n\nThe local [contract probes](research-evidence/contract-probes.json), run with the two acquired schemas and no network, establish that ordinary Draft 2020-12 validation accepts the cancelled fixture with both receipt and detail refs removed, and also accepts `outcome=cancelled` with `effect_state=unknown`. A faithful null pre-init native revision is rejected. This is a standard-schema counterexample, **not** proof about a PM custom semantic validator or a shipping handler; no such implementation was tested."
+        }
+      ]
+    },
+    {
+      "arm": "premium",
+      "job": "J0027-compare",
+      "documents": [
+        {
+          "bulk_document_index": 31,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/notes.md",
+          "sha256": "ce220bf03a4344ced49262a39c61326ee5b92ceb0c34adf0ac99f287fcfb871e",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 32,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/leads.md",
+          "sha256": "f31ff986b695c248efc2abc13667445b101e5d4e7d2f9785117e929925102c1f",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 33,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/check_schema_evidence.py",
+          "sha256": "f31a6e4320dea927b0cccbfc6eaec05c9f3efe2fc98f7a5bf080829a69edea05",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 34,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/evidence-index.md",
+          "sha256": "ad16c50c80f0b7771cabb222b2f4796a0bd51dcb7a725bcf1faf748869c4abb2",
+          "review": "source locator inventory only; no independent assertions"
+        },
+        {
+          "bulk_document_index": 35,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/plan-integrity-checks.json",
+          "sha256": "9b74f721848029d46927511b4eecbfd294ddf94081a6d009290cfe90b1c2b967",
+          "review": "inputs and result fields inspected; repeated full fixture payload not separately read"
+        },
+        {
+          "bulk_document_index": 36,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0027-compare/workspace/schema-checks.json",
+          "sha256": "01450e5f6e5faf40954d3e49a5f8474e84cbfcbb956c416fc04de234e1821ff4",
+          "review": "inputs and result fields inspected; repeated full fixture payload not separately read"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F004",
+        "F005",
+        "F007",
+        "F010",
+        "F050",
+        "F051",
+        "F071",
+        "F079",
+        "F081",
+        "F082",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [
+        "restore_ready_semantics"
+      ],
+      "disposition": "Restore-ready counterexamples corroborate P20. Extras and fetch-source detail refine existing closure/read/currentness rules. Proposed mutation-capable status refresh would expand the settled read authority and is not an accepted correction. Component-specific diagnostic taxonomy, deletion-error policy and suspicious-head detector are elaborations of existing diagnostics/qualification/recovery outcomes; no new user command or complete capability is established.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0027-compare/notes.md",
+          "sha256": "ce220bf03a4344ced49262a39c61326ee5b92ceb0c34adf0ac99f287fcfb871e",
+          "line_start": 32,
+          "line_end": 48,
+          "exact_quote": "### Concrete repair: prevent a contradictory restore-ready receipt\n\n**Observed gap:** `Plans/jujutsu_integration_contracts.schema.json:2452–2486` defines historical-operation proof, object closure, working-copy relation, and colocation disposition. Its success conditional at **2607–2639** requires historical/object proof and empty conflict/collision arrays, but does **not** constrain `working_copy_relation` or `colocation_activation_disposition` (S00029). Thus a structurally valid receipt can claim `ready_for_owner_activation` together with `working_copy_relation=unverified` or `colocation_activation_disposition=blocked_dual_writer_or_identity_collision`. That contradicts JJI-008's captured dirty-file/native activation requirements and SCS-014's activation boundary.\n\n**Concrete evidence:** [check_schema_evidence.py](check_schema_evidence.py) and [schema-checks.json](schema-checks.json) validate helper-acquired copies with Draft 2020-12 and a locally registered neutral revision schema. The base is `backup_jj_isolated_restore_verifies_historical_operation_and_requires_sign_in`, at `Plans/jujutsu_integration_contract_fixtures.json:2948` (S00036/S00061). A control changes outcome to ready and credentials to `not_required`, retaining verified historical/object/workspace state. Results:\n\n| Static probe | Frozen schema result | Required meaning |\n| --- | --- | --- |\n| Unchanged supplied valid fixture | Accepts | Control: supplied non-ready receipt is representable. |\n| Consistent ready control | Accepts | Control: readiness branch exists. |\n| Ready + unverified dirty-file relation | **Accepts** | Must not authorize activation. |\n| Ready + blocked colocated dual writer | **Accepts** | Must not authorize activation. |\n| Ready + blocked historical operation | Rejects | Existing historical-restore requirement already has a structural guard. |\n\nThis proves a **structural constraint gap**, not that the full semantic verifier or a native handler would accept the bad receipt. The schema's `x-puppet-master-assertions` at **2717–2722** already states the single-writer invariant; an annotation is not a Draft 2020-12 conditional. No native readiness claim is made.\n\n**Replacement behavior to review:** keep the existing commands, outcome vocabulary, and owners. A `ready_for_owner_activation` JJ receipt must require verified workspace mapping, a working-copy relation of `matches_latest_snapshot` or `dirty_files_preserved_separately`, and no blocked colocation disposition. In a colocated layout it must require `restored_colocated_single_writer`. An owner rebind still required is a non-ready handoff until the relevant owner supplies current proof; it must not be silently relabeled as completed activation. Retain historical-operation/object proof, sanitized configuration, conflict/collision checks, and independent credential/remote validation. Encode the necessary conditionals in the JJ schema and corresponding fixture negatives when Plans repair is authorized, with consumers preserving their result unchanged."
+        }
+      ]
+    },
+    {
+      "arm": "premium",
+      "job": "J0028-compare",
+      "documents": [
+        {
+          "bulk_document_index": 37,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md",
+          "sha256": "469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 38,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-premium-continuation3-20260911/jobs/J0028-compare/workspace/evidence-index.md",
+          "sha256": "acc9902c5c5c67cd0927db4dbc1c30b92539722a4f39a3dd5160d48e0263246d",
+          "review": "source locator inventory only; no independent assertions"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F006",
+        "F050",
+        "F061",
+        "F064",
+        "F069",
+        "F079",
+        "F081",
+        "F082",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [
+        "new_repository_object_format_picker"
+      ],
+      "disposition": "All GC, legacy-signature and query-scope required outcomes refine existing identity/certification/closure/graph findings. Explicit user object-format choice for newly created repositories is a potentially distinct optional capability, pending symmetric historical review. Legacy-header repair is deferred and lacks an approved outcome; backup preserves original bytes rather than silently rewriting history.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/premium/J0028-compare/notes.md",
+          "sha256": "469c95597f5d7d498d549b6dd319f98996a354e88a05d771ca17b719a52d9bfe",
+          "line_start": 91,
+          "line_end": 95,
+          "exact_quote": "### Product choices requiring approval, retained separately\n\n**Optional proposal:** expose an object-format choice for newly created JJ repositories in the existing Source Control setup flow, with discovered effective format shown for existing repositories and unsupported choices disabled using current capability evidence. Benefit: users can deliberately choose stronger object hashing where their tools/remotes support it. Dependencies: a typed new-repository request extension, owner-DRY format evidence, certified backend/library/transport/provider profiles, setup/cancellation fixtures and clear immutable-format copy. Tradeoffs: extra setup complexity and a larger support matrix; SHA-1 remains more widely compatible according to the pinned native docs. Keeping current setup behavior and recording the effective format is the lower-scope alternative. No default change, cross-format migration, or universal SHA-256 support is approved by this note.\n\n**Legacy repair remains deferred:** an explicit old-header repair feature would need a preview of changed commit/descendant identities, original-object retention, independent signature verification, and an approved history-rewrite route. Its benefit would be improved signature recognition; its tradeoffs are history identity changes and uncertain cryptographic/forge behavior. A read-only diagnostic plus byte-preserving restore is sufficient for the concrete repair above. The two retained hash child directions remain attached to this parent."
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0013-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 39,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/notes.md",
+          "sha256": "1e9025fcfac43a1ffef551afc98d59fd4770ca881fe6422ea84abd59dd568e64",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 40,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/branchless-snapshot-undo-coverage.md",
+          "sha256": "8e18994bb0ecf1659cd96f53d51e922d5408bd5037847d4e53681793639dcae0",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 41,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/editor-scm-templates-and-snapshot-coordination.md",
+          "sha256": "af41a4309b3b1b09215a25caf533b0ec322c6510978ee797035dfda3ec8b53d7",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 42,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/forge-stack-identities.md",
+          "sha256": "4325110703fda6814866d33a7c546ff7b5e7cdaa3618198f491ec25313066056",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 43,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/gg-http-embedding.md",
+          "sha256": "2f7e0a2ab4883d6752a418ad0cff0e48930091b0600f0e4f193fbeddf01fe56e",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 44,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/gitbutler-snapshot-transactions.md",
+          "sha256": "62c96502bb8382016a6dfc04f2261b68feaca919a55cec5738a7bff9486a808c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 45,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/isl-lifecycle-queues-and-cancellation.md",
+          "sha256": "d1382aaabf308ee30336b701b47a2dd41f6cdd6cda0c87967b802374eabb1fc8",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 46,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/mixed-engines-and-repository-compatibility.md",
+          "sha256": "0445686b7ec9058191fe4907d0684450c0bbc7d4771b61071f4b6a6116ae0c01",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 47,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/operation-waypoints-and-grouping.md",
+          "sha256": "899b54ba6d17c8b769b8c77c9f0167b5bb1f3525617238455964721ba835da85",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 48,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/readonly-inspection-and-migrations.md",
+          "sha256": "7d9c5fb9225f09096c028ba9a6f1e162533c7ed85f8e038406ee0455b60561fa",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 49,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/review-state-across-rewrites.md",
+          "sha256": "1de4a5fc62e3ee390aea0cf9afe24cf97089a8d6897a95426d3079f7673fec92",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 50,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/structured-api-demand.md",
+          "sha256": "c01a7aa565a33ecad9105ed036a7f64bceb32e19fad7be58a8aca2e6b9e349d7",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 51,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/leads/visualjj-private-protocol-and-store.md",
+          "sha256": "04e79caa75f2482e09b3dcac2ab0cbd7b75ccdc1ce057e646097c3480686f1cc",
+          "review": "fully read"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F003",
+        "F004",
+        "F007",
+        "F010",
+        "F011",
+        "F013",
+        "F014",
+        "F027",
+        "F043",
+        "F044",
+        "F045",
+        "F046",
+        "F047",
+        "F048",
+        "F050",
+        "F051",
+        "F054",
+        "F061",
+        "F074",
+        "F095",
+        "F097",
+        "F099",
+        "F100",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [],
+      "disposition": "Partial delivered research with substantive child notes. Reconciles actual subprocess, protocol, version, snapshot and forge behavior. No full new baseline credits: no-integration aliases do not assert isolated preview and promotion (F104); source/tool availability is not feature certification.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0013-reconcile/notes.md",
+          "sha256": "1e9025fcfac43a1ffef551afc98d59fd4770ca881fe6422ea84abd59dd568e64",
+          "line_start": 10,
+          "line_end": 17,
+          "exact_quote": "## Verified corrections saved during the pass\n\n- **git-branchless has selective working-copy snapshot coverage.** The retained history child overstates the limitation as “commit graph only.” At its own pinned commit `03d6ab8dc1a2ff8a2bc44709b93ea6a9038147eb`, `git-branchless-undo/src/lib.rs:712–719` explicitly restores the working copy to a recorded snapshot; `756–777` makes that snapshot the checkout target (S00062). `core/check_out.rs:138–140,211–239` creates such snapshots and records them as events, and `core/config.rs:216–221` enables `branchless.undo.createSnapshots` by default. README:107–115 names narrower limitations, especially untracked files. Storage remains SQLite (`git/repo.rs:646–657`, S00064), while synthetic refs retain commits for GC. This direction is retained with corrected coverage, not discarded.\n- **JayJay embeds jj-lib and also runs the jj CLI.** At the handoff's exact old commit `3b53b4080f6704b4aad61b0173027b84ba0b10ea`, `crates/jayjay-core/src/repo/command.rs:15–20` resolves `environment::jj_binary()`, constructs a command, and invokes `running_jj_processes.output`; the same file provides cancellation (S00065, fetched from the commit-specific raw GitHub URL). A literal search for `Command::new(\"jj\")` cannot establish absence when executable resolution is indirect.\n- **VisualJJ defaults to colocation when initializing Git repos.** Its configuration docs explicitly say it runs `jj git init --colocate` (S00007:52–54). The jj community listing's “not relying on Git colocation” (S00004:83–87) is a capability statement, not a statement about this default.\n- **VisualJJ's observed protocol is custom NDJSON, not demonstrated JSON-RPC 2.0.** Independently downloaded VSIX 0.35.1 has requests `{type,id,...params}`, responses keyed by `id`, and event messages. `requestId` is a JavaScript counter, not the wire field. The package's VS Code requirement is `^1.86.0`, correcting the child claim of 1.80+. Evidence is saved in `evidence/visualjj/` with download and binary hashes; nothing was executed.\n- **“No jj forge integration” is too broad.** The current jj source has `jj gerrit upload`, documented to create one review change per selected revision and its mutable ancestors (`cli/src/commands/gerrit/upload.rs:50–58,86–90`). The Sapling comparison doc's blanket “or any other forge” statement (S00005:69–70) conflicts with that source. GitHub/GitLab PR-stack automation remains a distinct open direction.\n- **`jj web` age is known, universal implementation absence is not.** #2765 is open, created 2024-01-01, and has zero comments (S00008). Correct the original “decade-old-style” wording; the issue alone cannot prove no prototype exists elsewhere."
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0014-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 52,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/notes.md",
+          "sha256": "6ee3575adee8597c7285497ea029ce7b6716603a1d75bf6fbbc763376d0bfeca",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 53,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-ipc-boundaries.md",
+          "sha256": "2c12c1144b50ac5466eced64c7422c45085dd80d4d2bc197dc8a6b91c6b37a97",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 54,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-packaging-and-windows.md",
+          "sha256": "370b800ad28852b3be9f2a024c680a011d449c7d1e6fe275d54b4051c8ee7bf3",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 55,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/askpass-prompt-framing-and-types.md",
+          "sha256": "24a6e1b57987ad754dd5ae48ebdfecf5f03af2477230c6a1361026e13b8eb232",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 56,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/cancellation-and-request-lifecycle.md",
+          "sha256": "2b52780ddd4f1dd80b5bf63e626b9a885e7fafe7ff155245482a4a197dfd7f3d",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 57,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/credential-policy-and-precedence.md",
+          "sha256": "24604e461ed9941b4c84b56e2dd5b8cbc932b6ce8fbc4581b3121713c8a65d30",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 58,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/credential-storage-boundaries.md",
+          "sha256": "4c28f70c6e7b8674f61239eeccfcff03b84fe94a913d9c79bf4af3b69e4a6fbb",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 59,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-retry-and-clone-coverage.md",
+          "sha256": "7343901a442faf6807ede3e926369dfd33a410bab14ecba95406b1844623c28c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 60,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-secret-display-and-logging.md",
+          "sha256": "c514c8e273349bb283c161c98efff99a1ed5f3034387515b172b7e85ab11d9f0",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 61,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gg-web-credential-boundary.md",
+          "sha256": "af4836559c00b93301e56e78a023d42964989399e64a100d4147c403eb292d69",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 62,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/gui-agent-environment.md",
+          "sha256": "a402f7e7a5a04e1d7b1e435f5a0e9f684488184bce8d14e73c4ce9b08e4e2535",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 63,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/leads/jj-interaction-and-hook-coverage.md",
+          "sha256": "231776f5b5286ae2b212e18c332f01d56ea55bcbed5c76c98cd59447e2035da2",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 64,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0014-reconcile/workspace/evidence-index.md",
+          "sha256": "11364ee9dbd31168f1de86a7107bac6eb114fc6d9b204c40ab99612e7b62ab84",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F007",
+        "F009",
+        "F038",
+        "F039",
+        "F040",
+        "F041",
+        "F042",
+        "F043",
+        "F050",
+        "F071",
+        "F074",
+        "F075",
+        "F086",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [],
+      "disposition": "Prompt framing, secret logging, precedence, retry accumulation, signing and launch-environment details refine existing credential/IPC/partial-effect obligations. No new capability or schema correction is asserted.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0014-reconcile/notes.md",
+          "sha256": "6ee3575adee8597c7285497ea029ce7b6716603a1d75bf6fbbc763376d0bfeca",
+          "line_start": 69,
+          "line_end": 75,
+          "exact_quote": "**Host-key correction:** `SSH_ASKPASS_PROMPT=confirm` belongs to `ask_permission()`, e.g. permission to add a key to an agent. That function accepts empty or “yes” (S00038:197–220; S00039:1792). New-host verification instead calls `confirm(msg, fingerprint)` → `read_passphrase(..., RP_ECHO)` and rejects empty or “no”; “yes” or the exact fingerprint accepts (S00039:603–628, 1213–1248). Therefore the child claim that an empty GG host-key answer approves trust is false. Neither relay transports the environment hint to the app (S00004:137–155; S00022:15–35), but missing that hint is not the explanation for all host-key handling.\n\n**New framing finding:** OpenSSH builds the host-key prompt with embedded newlines containing the host, fingerprint, and question (S00039:1213–1248). Both helpers write the unescaped prompt to a newline-delimited connection, and both servers read one prompt line (GG S00004:139–155, 208–212; GitButler S00022:29–35, S00017:275–284). The first line can reach the app while the fingerprint/question are lost. This is a direct source-derived protocol limitation; no GUI reproduction is claimed. The handoff's promise that the complete host-key question reaches a generic form is consequently unsupported.\n\nGitButler adds `StrictHostKeyChecking=accept-new` and `KbdInteractiveAuthentication=no` only if no `GIT_SSH_COMMAND`, `core.sshCommand`, or `GIT_SSH` is selected (S00017:338–390). This check is narrower than “no user SSH configuration”: command-line defaults may override settings in ssh_config. `accept-new` trusts new keys but still rejects changed keys (S00084:2037–2057). Disabling keyboard-interactive is a separate policy choice; it is not required to make askpass work when `force` already applies (S00038; S00040's `read_passphrase` calls).\n\n**Application secret store:** `but-secret` is separate from these relay functions. It wraps keyring handles and automatically selects a Git-credential backend only for debug builds on macOS or debug E2E environments (S00026:104–134). The synthetic credential identity is username `gitbutler-secrets`, host `gitbutler.com`, path `/<handle>`—equivalent to `https://gitbutler-secrets@gitbutler.com/<handle>` before including the password (S00026:175–183). Several child notes omitted the `@` and changed the host incorrectly. The backend disables gix prompting, explicitly uses helper get/store/erase, and on macOS deletes the old entry before storing its replacement (S00026:192–245, 262–272). Its storage properties depend on helper configuration; they are not guaranteed by the wrapper's name. The automatic debug gate does not make the public `git_credentials::setup()` function impossible to call in another build (305–310). Secret lifetime, failure atomicity, and handle/path semantics remain separate questions."
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0015-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 65,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/notes.md",
+          "sha256": "d7d841fe6b1e8a1baeeb74b9c1f60113f4420e7394708cb959ea35b5a04caf34",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 66,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/askpass-replay-and-lifecycle.md",
+          "sha256": "a8de855f08f8382bf28c93e0e9a451ef222d536d6c8072887f40f19c1e32e998",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 67,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/bookmark-projection-and-eligibility.md",
+          "sha256": "70b39ffb1e66f7698e8f4ad5891efd05b73b3c10d59ed3fd40db5b016744ca99",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 68,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/config-and-ui-state.md",
+          "sha256": "f570def3192ba6e4c06df49e20f72ba8cd41d20530f3fbcda50f3dd0c1bb03f9",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 69,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/embedded-semantics-and-feature-capabilities.md",
+          "sha256": "e18e7260157b5609857d8efb26de382f65b6405fbec54e2a11283c5049d8d43f",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 70,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-error-and-memory-contract.md",
+          "sha256": "8ccc4f891a2bc3f8dace81381b404accf408a847fa4b2c14cfec11ac248dfa72",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 71,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-ordering-and-stream-contract.md",
+          "sha256": "dc7201c4288e0b6b67ed3535c97d926b3c220e8ef8bbf2eab72b618c42116fad",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 72,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/graph-pagination-coordinates.md",
+          "sha256": "2fda333a798d8fc50dd6a9a166b66a20d20fe7599e71d7c6b0490afbba6bb1f1",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 73,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/jj-api-and-embedding.md",
+          "sha256": "966688758b34b50f817cc7f2c7f65acfe2aab515011dab500dd54d0ca0508f21",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 74,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/large-repository-costs.md",
+          "sha256": "9b4e16c60066dcf315b397022eab4ded3e6f06ffb4c8c3803e6ec6a1ee9e791f",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 75,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/native-and-graph-verification.md",
+          "sha256": "db9dd4794ba888ecf11f5d32e46193a117ed097152d1b72ec694ceaba334dbe3",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 76,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/operation-history-and-durable-identity.md",
+          "sha256": "3369abfdf2ef7aa38f6d269e9d16a46e80ee96230ba250bd11942bab6a9b8d6c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 77,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/push-helper-boundary.md",
+          "sha256": "f09a1d1c08251a201dd1b38e83e72497f6db39871f231913cd1f3eecbc77d74a",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 78,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/leads/web-query-ownership.md",
+          "sha256": "bbe4f311364b5781bdc5b2ad0c788787a8d5a43356f882271fab153352a7537d",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 79,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0015-reconcile/workspace/evidence-index.md",
+          "sha256": "811db9af1c88005b13dbb57c2e41fe21ce454e7f7433f2da6741fd0ea4cb80f4",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        },
+        {
+          "bulk_document_index": 80,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0015-reconcile/workspace/history-passages.md",
+          "sha256": "a226e278a354df64d3b352604095e8d021c60fe57f4d0758fc8837902edc7557",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        }
+      ],
+      "new_original_arm_credit_fids": [
+        "F030",
+        "F088"
+      ],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F004",
+        "F006",
+        "F007",
+        "F009",
+        "F015",
+        "F016",
+        "F017",
+        "F030",
+        "F038",
+        "F039",
+        "F043",
+        "F044",
+        "F045",
+        "F048",
+        "F050",
+        "F052",
+        "F054",
+        "F055",
+        "F059",
+        "F060",
+        "F061",
+        "F062",
+        "F063",
+        "F064",
+        "F066",
+        "F067",
+        "F068",
+        "F069",
+        "F071",
+        "F072",
+        "F073",
+        "F074",
+        "F088",
+        "F092",
+        "F093",
+        "F094",
+        "F101",
+        "F102",
+        "F105"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [],
+      "disposition": "Independent reviewer confirms full finding-level new hybrid credit for F030 swallowed traversal errors and F088 insert-rebase descendant topology. Normal live-stream paging disproves prior unconditional quadratic-cost claim; interruptions/coordinate bugs remain conditional source evidence. Graph candidate in H17 is separately counted, not each native pagination example.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0015-reconcile/notes.md",
+          "sha256": "d7d841fe6b1e8a1baeeb74b9c1f60113f4420e7394708cb959ea35b5a04caf34",
+          "line_start": 50,
+          "line_end": 57,
+          "exact_quote": "### Bounds, selection and newly identified failure directions\n\n- **Page size is not an unconditional commit or byte bound.** get_page sets `max = next_row + page_size`, increments row per commit and again for a non-root missing-edge drawing row, and breaks only on `row == max` (`queries.rs:154–161,282–307`, S00003). A two-row increment can pass max without equality. Wide graphs also increase per-row edges, so even an exact row count would not bound bytes.\n- **Restart mixes coordinate units:** `next_row` includes missing-edge drawing rows, but reconstruction treats it as the number of commit nodes to skip (`94–104,284–305`). After C commits and M extra drawing rows, it can skip C+M nodes rather than C. This is a source-level concern even without repository mutation, provided the missing-edge path and a reconstruction occur. Frontend graph assembly also indexes its commit-row array by line coordinates (`LogPane:365–368`), so synthetic-row alignment deserves inspection. No runtime reproduction or attribution to #137 is claimed. [Direction](leads/graph-pagination-coordinates.md).\n- **Some stream errors are silently consumed by control flow:** `while let Some(Ok(...)) = self.next_node()` terminates on an Err and can return an ordinary LogPage; restart skipping uses `Some(_)`. By contrast, errors from commit/header/immutability calls using `?` propagate. This needs explicit partial/error semantics. [Direction](leads/graph-error-and-memory-contract.md).\n- **Graph continuity is real state:** stems retain target IDs, coordinates, indirect/inserted/immutable flags; edges merge into existing columns, reuse gaps or add columns. Non-root missing edges get ToMissing; root missing edges are suppressed. `has_more` peeks into lookahead. This is useful geometry prior art, not proof of correctness over every page boundary. S00003:43–79,135–320.\n- **The frontend drains and retains the whole result.** Each returned page is added to graphRows immediately (`LogPane:271–302`); the statement that nothing beyond page one can display until the entire drain ends is unsupported. GraphLog virtualizes visible row components, but edge rendering also depends on distinct visible lines and width (`GraphLog:63–108`, S00046). Stored rows/line references, graph columns and graph-wrapper buffers are not bounded by the viewport/page setting. The upstream wrapper owns maps/queues of buffered nodes (jj v0.41 graph.rs:133–145, S00055); “backend never materializes the whole revset” is not established by use of a stream.\n- **Selection uses identities, with limits:** after reload's page drain, match both endpoints by commit hex, then change hex plus offset; if either cannot resolve, select row zero. There is no guarantee of preserving an abandoned or newly disambiguated selection. S00006:305–335, S00077. On page-query error the drain can break with already loaded rows, without a typed partial-log result in this function."
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0018-compare",
+      "documents": [
+        {
+          "bulk_document_index": 87,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/notes.md",
+          "sha256": "7c8726dca6a989bdabd1a5f85bfd9cce4035aeaf7db63f3e78e273a152d6d8fe",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 88,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/leads/credential-boundary-followups.md",
+          "sha256": "4c3c36b9b79a8c85f6a8d05c362ae49d35f0d24980ff487ceee9f5c3f2433f9f",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 89,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0018-compare/workspace/evidence-index.md",
+          "sha256": "55fb4524d1b2e35fa58f833d800dfa463b4faec44809ae57034f1d366b6033d7",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F007",
+        "F009",
+        "F038",
+        "F039",
+        "F040",
+        "F041",
+        "F042",
+        "F043",
+        "F050",
+        "F071",
+        "F074",
+        "F075",
+        "F086",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [
+        "credential_transport_required_fields"
+      ],
+      "disposition": "Four omitted credential-field counterexamples identify one distinct static contract correction; false/null negatives already reject. Foreground challenge/delegation proposal is not reclassified as a new accepted capability: original F038 disposition already fixes prompt-suppressed owner broker policy, and this proposal explicitly requires review of auth owners outside its selected corpus.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0018-compare/notes.md",
+          "sha256": "7c8726dca6a989bdabd1a5f85bfd9cce4035aeaf7db63f3e78e273a152d6d8fe",
+          "line_start": 25,
+          "line_end": 48,
+          "exact_quote": "### 2. Concrete repair: require transport-specific credential-lease evidence\n\n**Problem and affected boundary.** The owner requires HTTPS path scoping and SSH known-host/no-forwarding evidence (`Source_Control_System.md:325–327,377`). However, `Plans/source_control_contracts.schema.json:419–431` omits `use_http_path`, `known_hosts_receipt_ref` and `forwarding_disabled` from the common required list. The transport conditionals at `502–537` constrain these properties only if present. JSON Schema `properties` does not require presence.\n\nThe existing valid fixture `https_credential_lease_is_promptless_and_path_scoped` includes all expected data (`Plans/source_control_contract_fixtures.json:204–222`). The negative `credential_prompt_must_be_suppressed` tests `prompt_suppressed:false` while keeping both SSH fields (`2413–2432`); it does not test omission.\n\n**Verified counterexamples.** Validating the frozen `$defs/credential_lease` with Draft 2020-12 accepts all four malformed cases:\n\n- HTTPS with `use_http_path` removed;\n- SSH with `known_hosts_receipt_ref` removed;\n- SSH with `forwarding_disabled` removed;\n- SSH with both SSH fields removed.\n\nFalse/null variants that were checked already fail. This is specifically an omission gap, not evidence that the schema allows `prompt_suppressed:false`.\n\n**Concrete replacement behavior.** In the existing credential-lease schema, add `required: [use_http_path]` inside the HTTPS conditional `then`; add `required: [known_hosts_receipt_ref, forwarding_disabled]` inside the SSH conditional `then`. Retain their existing true/nonempty constraints, `prompt_suppressed: true` and `additionalProperties:false`. Opposite-transport fields remain optional. No new broker, prompt policy, secret-bearing field, command family or persisted record is needed.\n\nThe consumer behavior stays within existing ownership: Git and JJ transport resolve and validate the neutral lease before launch (`Source_Control_System.md:333–343`; `Jujutsu_Integration.md:291,301,317`; `Shared_Integration_Runtime.md:163`). Missing evidence rejects the lease; it never means implicit trust, forwarding allowed, host-wide credential reuse or helper-default inheritance. Runtime resolution must separately verify that the known-host receipt exists, is current and applies to the exact host, repository and operation; a nonempty string is not proof.\n\n**Why this matters externally.** Git's manual says HTTP helpers otherwise omit the URL path and may reuse a credential between `/foo.git` and `/bar.git` on the same host (S00034:208–214). OpenSSH host trust is a distinct decision with a host/fingerprint prompt, not a generic password answer (S00032:603–628,1213–1255). Those facts make the omitted evidence materially relevant to this credential lead; they do not establish a live PM bypass.\n\n**Acceptance checks.** Add negatives to the existing fixture owner for omission of each transport field and both SSH fields. Complete HTTPS and SSH leases must still validate; false/null required transport values must fail; unsuppressed prompting must continue to fail. Consumer tests must reject missing, expired, revoked, mismatched-host/repository/operation and stale-generation leases before either Git or JJ transport starts. Known-host proof must be resolved, not merely syntactically accepted; no terminal fallback or implicit forwarding may occur after rejection.\n\nThe structural portion is reproduced by [check_credential_lease.py](comparison-evidence/check_credential_lease.py) and its [11-case result](comparison-evidence/credential-lease-validation.json). It checks frozen source hashes, tests an **in-memory** prospective repair, and proves that the four omission cases would then fail while the two valid cases remain accepted. It does not edit Plans, execute an upstream application or prove runtime security. Existing serialized leases missing these fields need rejection/reacquisition, not default-true migration."
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0019-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 90,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/notes.md",
+          "sha256": "7501b5bbba5e595ba1da62ae1991b58bc47a4093ffed513b98c5bb859cbaf165",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 91,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/api-contract-and-local-transport.md",
+          "sha256": "35a8adfcb897f4acd1673d45a5a7d556d8a308f219beb96746dd9885043a0de2",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 92,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/conflict-artifact-containment.md",
+          "sha256": "429273334590f13ff1daf32dd73019922d145c570be3170de1305bd7da8683a7",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 93,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/file-write-lock-schema.md",
+          "sha256": "4d9091e3e0635d06023651ac8099a9c04c621c0a3f5e9670e67e1ca700f9efc0",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 94,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/forge-account-and-cache-boundaries.md",
+          "sha256": "725d894911b90c143c2921ed02b2c02e311fc723c7166d496729b745296c141a",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 95,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/graph-editor-selector-and-borrow-scope.md",
+          "sha256": "fd2aba8e2293adfe941779bd5e98c5a52ca977f958b683b924d10129f5ec91fa",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 96,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/index-consistency.md",
+          "sha256": "f365a4c15040ef964635356d4e204324b8f358546eb02249d7465812684e9d8c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 97,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/multi-store-metadata-recovery.md",
+          "sha256": "166eb7b2cefbc29521cc2ae1933eb53683aa1ead5b8e62d23bdb7ee27adb8ff3",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 98,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/oplog-outcome-and-retry.md",
+          "sha256": "2611224dd513802b582d6fc9db22fa1e66d0662bd1fe1c67a41ae6b7bdea4801",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 99,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/restore-projection-validation.md",
+          "sha256": "5491a47ff11236b4c80a04978e19ba6229ca696a489861fdf7e259140fd04954",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 100,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/snapshot-capture-and-restore-coverage.md",
+          "sha256": "d39f251047a2b19ccd27505958430715df49c5d34a1cc208868874687b535e64",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 101,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/worktree-identity-and-adoption.md",
+          "sha256": "a5b03c1ec9133b6c7aaa2812bff9480c0b602d6c44598334b9470bcb930e3eed",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 102,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/leads/writer-lock-failure-and-wait.md",
+          "sha256": "b5b5b9cb9237518a7e250060060cae425cd01b41b8e31c5c7452f8a220a1b26c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 103,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/evidence-map.json",
+          "sha256": "3245737a589d746e6b49fe404c29ff6705f742b71af35121d5806f19f3e91847",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        },
+        {
+          "bulk_document_index": 104,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/issue-map.json",
+          "sha256": "1716c6f6755b94dce5f61a415b7797ab7d5aaa55d9d230c5ae906232e6d27426",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        },
+        {
+          "bulk_document_index": 105,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/retained-primary-index.json",
+          "sha256": "71f9492dcfa9f21882992fd9dad065e86baa13a6ccde1f57e434cec2b1ae01cb",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        },
+        {
+          "bulk_document_index": 106,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0019-reconcile/workspace/web-map.json",
+          "sha256": "a9182d9adb6f2928ace3f0b2ff87d484bd421b6311f6d8606fabbd7ec057279d",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F004",
+        "F006",
+        "F007",
+        "F010",
+        "F011",
+        "F020",
+        "F021",
+        "F030",
+        "F038",
+        "F039",
+        "F040",
+        "F043",
+        "F044",
+        "F047",
+        "F048",
+        "F050",
+        "F052",
+        "F056",
+        "F069",
+        "F071",
+        "F072",
+        "F073",
+        "F079",
+        "F080",
+        "F081",
+        "F093",
+        "F094",
+        "F097",
+        "F102"
+      ],
+      "partial_matches": [
+        "F001"
+      ],
+      "new_union_candidates": [],
+      "disposition": "Partially delivered parent plus substantive leads preserves same-revision dirty/untracked snapshot correction, selective DB restore, actual locking and worktree identity. Explicit request receipts do not identify universal non-null terminal JJ schema requirement, so F001 remains only partial match. Oplog and multi-store findings are existing F007/F010, not new restore-ready schema credit.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0019-reconcile/notes.md",
+          "sha256": "7501b5bbba5e595ba1da62ae1991b58bc47a4093ffed513b98c5bb859cbaf165",
+          "line_start": 11,
+          "line_end": 21,
+          "exact_quote": "\n**The original dirty-file exclusion claim and the history study's attempted defense of it are wrong for the pinned implementation.** The design in `but-oplog/src/lib.rs` is explicitly a “letter of intent” (S00002:46–53). Its supposedly new snapshot helper still calls `ctx.prepare_snapshot` (112–123). The legacy engine builds a `worktree` tree with `create_wd_tree(AUTO_TRACK_LIMIT_BYTES)` (S00003:929–932), with that limit set to zero (37–39). The tree builder adds untracked paths (S00004:323–332,372–376); zero disables its size cutoff (238–240). Restore explicitly describes the destination as including captured uncommitted changes (S00003:1173–1179). PR #13471 changed **diff selection and direction**, not snapshot capture (retained H00037). The history note's assertion that the discrepancy belonged to different revisions cannot survive this same-revision call chain.\n\nThis is still **not an exact backup of all filesystem bytes**. The builder starts with HEAD, uses Git's filter pipeline, excludes ignored/pruned entries, does not recurse into submodule dirty content, and drops individual status errors with `filter_map(|change| change.ok())` (S00004:230–265,334–368). Untracked capture is deprecated (S00004:94–95). A complete object/shared-store closure, writer barrier, or recoverability proof cannot be inferred from this function.\n\n**“Commit the snapshot after success” describes publication ordering, not atomic effects.** Reword prepares first, runs its mutation, then calls `snapshot.commit(...).ok()` only on an `Ok` result (S00005:90–110). Preparation errors log a warning and return `None` (S00002:108–123). Thus an effect can succeed without a restore point. Conversely, a log-write error does not guarantee *absence* of a record: `commit_snapshot` writes the log head before a later fallible `set_reference_to_oplog` call (S00003:965–1002). The transaction wrapper propagates `snapshot.commit(...)?` after materialization (S00013:99–125), so it can return an error after the effect already succeeded. Neither success nor error alone proves a complete effect/log pair. Also, preparation writes blobs and trees before publishing the log commit (S00003:818–824,907–920,959–960); “in-memory/non-observable” must be scoped to log visibility, not physical object-store writes.\n\n**Undo retains a linear history with bookkeeping entries.** Snapshot contents represent state before the operation (S00006:1–14). Commits parent the current oplog head (S00003:977–1002). Restore appends a snapshot of the pre-restore state with `RestoredFrom`, `RestoredOperation`, and `RestoredDate` trailers (1280–1306). Undo/redo select targets by skipping bookkeeping entries; a new real operation stops redo selection (S00006:169–262). This is not evidence that old log commits are physically erased or that the design sketch's moving-head/“forget” implementation has shipped. The old trait documentation promising `None` for unchanged trees disagrees with the concrete ObjectId-returning, unconditional commit path (S00003:161–180,965–1002).\n\n**Restore has useful validation and ordering, but no single atomic boundary.** It parses snapshot metadata before mutation, checks an additional ref against other worktrees, verifies reconstructed commit IDs, and checks checkout/workspace identity (S00003:1042–1061,1118–1160). It prepares the pre-restore tree, but does not publish that recovery snapshot until the end (1063–1076,1299–1306). It checks out before moving the workspace ref, using the captured workdir as merge baseline so identical dirty edits do not conflict with themselves (1166–1194). Conflict-file restore failures and per-branch ref-update failures are ignored (1078–1080,1217–1221); other failures can occur between filesystem, refs, TOML, DB, config, index, HEAD and final log writes. Several ref writes use `PreviousValue::Any`, unlike the graph editor's conditional ref updates. A pre-restore tree is not proof that a crash/failure leaves an accessible undo entry.\n"
+        }
+      ]
+    },
+    {
+      "arm": "hybrid",
+      "job": "J0020-reconcile",
+      "documents": [
+        {
+          "bulk_document_index": 107,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/notes.md",
+          "sha256": "234a7dbc0cd02b9381bf3a6a4d4d6cf828dead1db69ce1cac98f3d2f39c70063",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 108,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/documentation-and-gc.md",
+          "sha256": "65f1e6221a08d90b975a60c3a1001e3524546d67048051fcf59c9c9d8aac7ff4",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 109,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/evolution-retention.md",
+          "sha256": "e35bd18577381555ccf49f13133aa4d9906329789b9e40d6251d87715affe2cf",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 110,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/external-config-capture.md",
+          "sha256": "362ae01788c8033bf9421d816ae06276178107a6ecb35aeaf46c24676286e6ed",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 111,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/extras-marker-integrity.md",
+          "sha256": "56c1459d2ca5ee4761cd9585091b3e90b150794ad8d8a2c134eed47af1e18012",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 112,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/index-rebuild-boundary.md",
+          "sha256": "d38520d1535631684840c8e49da606f363ae286a34d060eff5eb42220d0a2edd",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 113,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/keep-ref-recovery.md",
+          "sha256": "91fa0b3f6be8065f5966fa639acbb6d930f6cf8809bd05a8b7ee82345a5acedd",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 114,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/operation-head-capture.md",
+          "sha256": "d90e606b699f6452fb4adfe8a63e22f376e5d767394c4d5b3e69da3f78040d6c",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 115,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/operation-retention.md",
+          "sha256": "aca0fb3d57a29b3f232a1ba5c02bf866d97eece35a46e89ed0bf6d73dbeb9705",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 116,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/partial-clone-completeness.md",
+          "sha256": "b402c3aff58f2716fe4e4c9b930ba9db8f3ae59d02d3f38892d0836cafd74625",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 117,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/relocation-and-object-stores.md",
+          "sha256": "e9c0f5f0456cc225f3d77f88ed72b4987fee645f4871e0a58d70d081007d441e",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 118,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/leads/workspace-restore-state.md",
+          "sha256": "6750931c64e59fdc13794d56d01054302285a498e6749a54eede503ef59e032b",
+          "review": "fully read"
+        },
+        {
+          "bulk_document_index": 119,
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/runs/jujutsu-hybrid-continuation3-20260911/jobs/J0020-reconcile/workspace/evidence-index.md",
+          "sha256": "36252e91f4fb4400de602228bd0cd84f1fb104007037a47fac4d51f2aaf62ab8",
+          "review": "retained primary-source/locator inventory; assertions reviewed in notes and leads"
+        }
+      ],
+      "new_original_arm_credit_fids": [],
+      "existing_baseline_support_fids": [
+        "F002",
+        "F006",
+        "F007",
+        "F011",
+        "F018",
+        "F019",
+        "F025",
+        "F050",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F083",
+        "F089",
+        "F094",
+        "F102"
+      ],
+      "partial_matches": [],
+      "new_union_candidates": [],
+      "disposition": "Pinned native storage/GC/partial-clone/config evidence refines complete backup closure and preserved restore truth. New secure-config capture detail does not fully assert inactive restored helper/credential ownership F084. Upstream refetch/backfill alternatives do not assert an explicit PM hydration capability F090. No contradictory ready schema, pre-init clone, graph or credential-omission discovery.",
+      "evidence": [
+        {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/adjudication/sources/hybrid/J0020-reconcile/notes.md",
+          "sha256": "234a7dbc0cd02b9381bf3a6a4d4d6cf828dead1db69ce1cac98f3d2f39c70063",
+          "line_start": 134,
+          "line_end": 138,
+          "exact_quote": "## 8. Additional independent capture dependencies found during reconciliation\n\n**External repository/workspace configuration is concrete, not just global preference state.** At this pinned tree, `SecureConfig::new_repo` uses `R/config-id`; workspace config uses `W/.jj/workspace-config-id` (S00087:163–176). Actual files are under the platform user config root's `jj/repos/<id>/config.toml` and `jj/workspaces/<id>/config.toml`, with `metadata.binpb` path metadata (S00086:60–61,286–288,448–461,530–548,596–625; S00087:38–40,179–214). A `.jj` copy alone need not include the effective configuration. A missing metadata directory causes the loader to initialize metadata and warn “Per-repo config not found. Generating an empty one” (S00087:48–50,379–403); it does not recover the missing settings. Path handling distinguishes moves/copies and can update metadata, generate a new config ID and copy the config (S00087:217–284). Unix legacy config migration can replace the old file with a symlink (S00087:288–299). A verification environment sharing the original user's config directory is therefore not fully isolated even if the Git target is isolated. First-release dating and cross-platform restore behavior remain unverified; this finding is scoped to the pinned tree.\n\n**Git storage indirection is an additional direction.** Git documents that a repository with `commondir` is incomplete without the referenced repository and that alternate object stores can supply required objects (S00056). The pinned jj changelog also places additional colocated-workspace/Git-worktree behavior in the **unreleased** section (S00077:15–35). This reinforces the distinction between the pinned post-release tree and a blanket 0.45.1 release claim. A capture inventory must resolve these dependencies or explicitly exclude that layout; simple “copy `.jj` and `.git`” language is insufficient. Behavior across all submodule, linked-worktree and alternate-store combinations is not certified here."
+        }
+      ]
+    }
+  ],
+  "status": "All eleven previously unread jobs semantically reviewed; combine with prior eleven-job review and candidate audit. Primary locator inventories are explicitly separate from assertion reading."
+}

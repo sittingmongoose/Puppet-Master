@@ -1,0 +1,30 @@
+{
+  "reviewer": "gpt-5.6-sol",
+  "effort": "medium",
+  "task_id": "01a09c51-7421-7c63-9323-05c08c7bcaa2",
+  "status": "pass_with_wording_findings_resolved",
+  "checks": [
+    "105 to 110 findings; 4 corrections and 1 unapproved optional",
+    "78 premium,90 hybrid,58 shared,20 premium-only,32 hybrid-only",
+    "All22 jobs reviewed;5 premium and8 hybrid limited",
+    "32 independent probes with expected outcomes",
+    "392 hash-reference and11 quote check scope correctly distinguished",
+    "No governance or runtime certification claims"
+  ],
+  "resolved_findings": [
+    {
+      "issue": "Independent optional-candidate status stops before root symmetric review",
+      "resolution": "Preserved reviewer statement and added explicit root-resolution field linking symmetric-adjudication.json."
+    },
+    {
+      "issue": "Legacy root report says D5 pending",
+      "resolution": "Updated report root to completed D5 and final continuation."
+    }
+  ],
+  "usage_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/jujutsu-followup-20260911/continuation3/final-20260913/sol-review-token-counts.json",
+    "sha256": "16944fab453d926a579b2f860c6530914808981ffa41d845fe81b5d4e23c3c71"
+  },
+  "conservative_nonarm_hold_usd": 0.5,
+  "note": "Additional same-phase provisional monitoring allowance, not cash billing or a certified liability bound. Retained counters preserve actual usage for later valuation."
+}
