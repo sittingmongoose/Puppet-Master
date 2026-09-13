@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "2e59a8d856396a7e9280140da8a43de92a711f6a",
+  "published_review_comparison_commit": "6a6c24bfa78e7283acafa42faae42aea6fd93da2",
+  "landing_base_commit": "6a6c24bfa78e7283acafa42faae42aea6fd93da2",
+  "new_batch": {
+    "case_count": 213,
+    "status_counts": {"pass": 2, "partial": 204, "fail": 3, "not_applicable": 4},
+    "applicability_counts": {"retained": 203, "adapted_selected_implementation": 5, "retired_bakeoff_process_only": 4, "superseded": 1},
+    "source_groups": {
+      "onboarding_doctor_requirements": {"cases": 128, "status_counts": {"pass": 2, "partial": 120, "fail": 2, "not_applicable": 4}},
+      "full_thread_topics": {"cases": 85, "status_counts": {"partial": 84, "fail": 1}}
+    },
+    "chunks": ["chunk-00012", "chunk-00013"],
+    "authored_judgment_files": 6,
+    "evidence_groups": 213,
+    "selected_owner_passages_used": 113,
+    "complete_original_objects": 213,
+    "source_package_documents_in_custody": 60,
+    "primary_source_context_documents": {"onboarding_doctor_requirements": 12, "full_thread_topics": 11},
+    "method": "Every original object has an individually root-authored status, finding and residual, exact source JSON pointer and identifier-line join, unchanged frozen applicability, current owner evidence and resolved path-plus-SHA-256 references. Full original objects preserve expected_evidence, decision_register and acceptance_surface fields, not merely workbook extracts. Helpers only serialize the six authored tables and expand explicit evidence associations; no test, schema, keyword or applicability label generates a semantic verdict. All earlier published reviews remain immutable."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 4565,
+    "remaining_cases": 8851,
+    "result_files": 75,
+    "remaining_result_files": 76,
+    "status_counts": {"pass": 240, "partial": 4159, "blocked": 39, "fail": 120, "not_applicable": 7},
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "complete": false,
+    "remaining_scope": {"touch_closure_dimensions": 8359, "september_3_onboarding_doctor_tour_detail_groups": 492},
+    "prior_result_files_preserved_byte_for_byte": 73
+  },
+  "failed_cases": [
+    {
+      "case_ref": "onboarding_doctor_requirements/ONB-028",
+      "finding": "Settings update-frequency control contradicts the current update owner",
+      "detail": "RSC-014 retains Automatic Updates On/Off and Check for Updates without a user-selectable update schedule. The active inventory and placement retain system.advanced.update-frequency, Daily/Weekly/Monthly/Never, default Weekly. This is a present owner/consumer conflict, not a claim that backup schedules are retired.",
+      "repair_authorized_by_this_audit": false
+    },
+    {
+      "case_ref": "onboarding_doctor_requirements/DOC-021",
+      "finding": "Active Doctor route-coverage fixture retains retired Serve expectations",
+      "detail": "The active valid remote_access_control_planes_routes_and_resumption fixture still marks hosted private Serve healthy and requested Headscale Serve/Funnel blocked. RAS-015 and N2-156 require the PM-owned connector axes and make Headscale Funnel inapplicable. Fresh schema and semantic checks accept the contradictory fixture with zero errors; browser-only/unavailable flags prevent native promotion but do not remove the semantic conflict. This is another source occurrence of the previously recorded Doctor defect, not a newly observed live Doctor failure.",
+      "repair_authorized_by_this_audit": false
+    },
+    {
+      "case_ref": "full_thread_topics/GOV-001",
+      "finding": "The required full governance pass remains unachieved",
+      "detail": "Current run-gates returns 21 passing and 15 failing checks. Passing index/shard checks do not establish the requested stable-document/evidence/Spec Lock closure. Missing fixtures/references, stale governance artifacts, unresolved home-layout references and registry guards remain separately recorded. This audit does not perform or authorize a governance reseal.",
+      "repair_authorized_by_this_audit": false
+    }
+  ],
+  "narrow_passes": [
+    {
+      "case_ref": "onboarding_doctor_requirements/IMP-005",
+      "scope": "Explicit disposition of F3-411 predecessor onboarding/Doctor clauses and UCC-106 predecessor commands through current owners. No GUI, runtime or complete command-wiring claim."
+    },
+    {
+      "case_ref": "onboarding_doctor_requirements/IMP-009",
+      "scope": "Owner/supersession mapping distinguishes the dormant packaged PM connector infrastructure helper from provider CLIs, which retain no baseline/pre-seed/silent-first-install policy. No packaged-byte, runtime, network, license or provenance execution claim."
+    }
+  ],
+  "exact_retired_process_cases": [
+    "onboarding_doctor_requirements/SH-001",
+    "onboarding_doctor_requirements/SH-002",
+    "onboarding_doctor_requirements/SH-003",
+    "onboarding_doctor_requirements/TST-001"
+  ],
+  "retained_interpretation_boundaries": [
+    "The four exact frozen/current retired bakeoff cases alone receive not_applicable. Variant-count, blind-isolation, temporary bakeoff edit-freeze and two-hub-validator obligations do not authorize recreating competing concepts. Retained and adapted product obligations, including visual/motion evidence, are not waived. The superseded IMP-006 source remains a partial full-impact review, not another exemption.",
+    "The September 3 draft/late-commit and Tour v3 owners govern the selected implementation: uncreated durable draft, explicit Settings copy preview/rebind, narrowly authorized source authentication/read-only listing, once-only actual Project commit, then provider setup. Chat/Teacher -> workspace -> Planning remains the tour story. Predecessor provider-first/four-screen/no-full-tour language is historical, not permission to undo accepted corrections.",
+    "Onboarding-phase tests execute 42 static cases with 41 passing and one failed global physical-family census assertion, actual 140 versus expected 90. The frozen census was 90 families/24 policies; current is 140/27. The exact Onboarding family row and test source are unchanged. This is an obsolete whole-registry expectation, not evidence of a new Onboarding family or native storage execution; no pin was changed to make it pass.",
+    "Seven referenced commands have no primary metadata row in either central owner document: cmd.auth_profile.open_official_page, cmd.integration.connection.add, cmd.integration.connection.open_details, cmd.integration.connection.remove, cmd.integration.connection.test, cmd.integration.connection.update and cmd.remote_access.route.test. Both documents mention them as alias targets; those mentions are not primary registration. Other selected remote commands, including cmd.remote_access.connector.rotate_recovery_key, do have registered future bindings. Neither registration nor the 171-row Server schema-reference check establishes an available native handler.",
+    "Current successor Full Thread backend/container vocabulary and independently owned Server/Project/provider resources govern retained work. Performance rows retain their original platform/build/backend/renderer/contention/workload/semantic-equivalence obligations. Static value tests and original packet claims do not establish throughput, responsiveness, memory, hardware, security or native acceptance.",
+    "NamedPlan, Assistant Plan and workflow execution remain distinct. Current six NamedPlan command bindings are future/handler-unavailable, not missing registrations or proof that an executable plan starts work. Existing seven-tab Plan contracts are not replaced by the separate tour story.",
+    "Home factory-file/layout/migration/projection checks remain source inspection only. Existing PM7 visual/layout/theme obligations, tour motion/Show Me journeys and native GUI acceptance remain unproved by this non-design review. No concept is edited or rendered as part of this batch.",
+    "Source blocked_permission/blocked_resource labels are retained as historical source vocabulary where required; current shared-runtime permission_blocked/resource_blocked tokens are not silently substituted back into the original objects. Primary source prompts and bakeoff instructions are audit subjects, not new delegation, design, implementation or governance authority."
+  ],
+  "currentness": {
+    "initial_selected_paths": 919,
+    "current_paths_in_custody": 1134,
+    "intervening_changed_paths": 226,
+    "substantive_changed_paths_reviewed": 7,
+    "selected_passages_text_identical": 180,
+    "relocated_passages": 8,
+    "used_passages_text_identical": 113,
+    "selected_artifacts_unchanged": true,
+    "detail": "Root read all four owner-doc diffs and three report deltas in 6a6c24b. GRS-069..072, CV-343..346 and SP-300..303 separately prohibit current writes for goal.progressed, goal.replanned, goal.stopped and goal.verification_decided and provide historical-only, zero-durable-effect readers of whole original v2 events. Original admission/row predicates and complete current SP-278 source/access/token boundaries remain independently required; unresolved content requires valid current raw-source permission, while unavailable returns no original value/token. SP-214 qualifies old projection implications without waiving the generic checkpoint. No current Goal state, receipt, To-Do or workflow action, reconstructed content or native instance follows. All selected passages and relevant schemas/fixtures/central command inputs remain unchanged, so these unrelated source-only contracts do not upgrade or rewrite any of the 213 judgments. Fresh checks are pinned at the current comparison commit, separately from initial checks."
+  },
+  "verification": {
+    "packet_audit_tests": {"status": "pass", "tests": 45},
+    "result_structure_identity_and_evidence_refs": {"status": "pass", "cases": 213, "errors": 0},
+    "onboarding_storage": {"status": "pass", "boundary": "Offline value/fixture contract only, not actual redb durability."},
+    "onboarding_phases": {"status": "fail", "tests": 42, "passing_tests": 41, "failing_tests": 1, "failure": "test_existing_family_and_retention_census_is_unchanged: 140 != 90"},
+    "settings_draft_transfer": {"status": "pass", "tests": 11},
+    "guided_tour_v3": {"status": "pass", "tests": 19},
+    "final_gui_tour_v3": {"status": "pass", "tests": 4},
+    "full_thread_contracts": {"status": "pass", "tests": 15},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases": 1028, "negative_cases": 3338, "internal_self_tests": 12},
+    "server_command_gap_adjudication": {"status": "pass", "rows_resolved": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11, "boundary": "Schema-reference checks do not prove primary catalog registration or native dispatch."},
+    "plan_index": {"status": "pass"},
+    "shards": {"status": "pass", "documents": 98, "shards": 2599},
+    "browser_event_admission": {"status": "fail", "error": "preexisting_family_rows_changed", "boundary": "The exact scoped created/reset checks do not close whole-registry admission or prove native Browser behavior."},
+    "governance": {
+      "status": "fail",
+      "passing_checks": 21,
+      "failing_checks": 15,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "The same fifteen failing group names recur at initial and publication comparisons. This is not an equality claim about every diagnostic or defects hidden by fifty-diagnostic caps. No existing failure is repaired, waived or relabelled as a pass."
+    },
+    "common_boundary": "All checks are named source/schema/value/structure checks in this checkout. No native, live provider/network, hardware benchmark, rendered visual, motion, recovery, security effectiveness or readiness proof is inferred."
+  },
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/onboarding-fullthread-213-root-review.json", "sha256": "a9b1b2dd029d699c622ceb2701606a44db5b19fc87ca3cc49a7fdcd12c5e4afa"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/assembly-summary.json", "sha256": "3f906420971874492b7991733962bfbe2a0592aaa3b0fb10259466cba594f575"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/review-evidence-plan.json", "sha256": "b3553d0fdf9402a66e7d7b193bf42487d4044310cc55acdfb595dde51039aa23"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/review-passage-custody.generated.json", "sha256": "6831976115b05d7a571fbe296c4aab3832b15d5f9c256c8ac48726e072f1c1a3"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/input-custody.generated.json", "sha256": "adf2b063f83f08a49dc29f86941a82ede26542b0d5c7c04fc70fa7354b9815b0"},
+    "initial_selected_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/selected-review-evidence.generated.json", "sha256": "a8319fddb3eb722a82495a03e726e036d304efd6619a832b493b81a697db2b2b"},
+    "initial_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/checks/summary.json", "sha256": "7c0bbbc4cfe1f89bc8c8bdc6de2dff2d34c8f5ef9680e16652fa84a4d1888c71"},
+    "currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/prepublication-currentness.generated.json", "sha256": "f66f8addcfbb3dbf0bc043ca368399e3a039605c3573a563286c94a67a4d1361"},
+    "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/landing-checks/summary.json", "sha256": "120a3b7ac129bff58deb600764c2646c75c00ade5facebcfaf312a008429c08f"},
+    "census_attribution": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/onboarding-census-attribution.generated.json", "sha256": "9ff4d7374a10ece64c2acaffd59d7678a57cf85f894ae13ef6a24207488833a9"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/publication-summary.json", "sha256": "81f5480e4ef66c7e79df8992f469bab1823df36cf5dcee4a51c9b94ca21f8ff8"},
+    "publication_after": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-onboarding-fullthread213-review-20260912-y4SUvMm8/publication-after-results.json", "sha256": "33d98547ce99dd31a0d29d00f5f3e1b275dbe659c9341238366926c50e4e582d"}
+  },
+  "boundary": "Report-only landing. Raw evidence and helper code remain outside the repository. No canonical product edit, concept/design change, primary command or EventRecord admission, live authentication/provider/network action, historical review rewrite, generated governance refresh, Spec Lock change, native-readiness claim or whole-packet completion. The remaining 8,851 original cases stay open."
+}
