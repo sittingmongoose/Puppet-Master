@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L2654-L2740
+Source lines: L2654-L2807
 
-Source SHA256: `df688fdfe1afa18b87902bf090df9aa6311c43f52aa5004ff4f1dcbfe0c555cc`
+Source SHA256: `99d7c7bf3a7ac862eb9f5ba1c4d15624399a6d0834825dab27c55db89577e861`
 
 ---
 
@@ -95,3 +95,70 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Contracts_V0.md#CV-342
+
+### SIR-050 - Original Cancel acknowledgement terminal and replay
+
+```yaml
+plan_unit_id: SIR-050
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: The existing original SIR cancellation dispatch captures its genuine normalized operation and
+  acknowledged source, then prepares and publishes original result/outcome/response in the same actual terminal
+  transaction. Terminal unknown remains the issued original after later recovery; retained replay selects that
+  immutable member and CV-333 decoration only. A successful cancellation uses SIR succeeded, while command
+  cancelled/error is not cancellation success.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- SIR-049
+- GRS-073
+- SP-304
+- SP-305
+- CV-333
+unblocks: []
+acceptance_criteria:
+- Actual accepted dispatch and original user acceptance precede source capture; caller-built valid request
+  or source ref is insufficient.
+- Original acknowledged source commits before the exclusive append reservation.
+- Private TerminalInput/TerminalPrepared remain complete and unpublished until the actual result/outcome/response/Terminal
+  atomic release.
+- Known or unknown genuine Stop/receipt/owner/event/control effects cannot return zero effects or success by
+  reinterpretation.
+- Retained replay preserves exact original terminal and epoch after later head advance, with only CV-333 replay
+  decoration.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_execution_binding_custody.schema.json
+- Plans/goal_cancel_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: sir-050_original_cancel_contract
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
+- No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
+  receipt.
+- No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
+```
+
+##### Original SIR private prepared input
+
+TerminalInput is the complete actual original source audit, exact selected immutable progress and selector/hash, original current nonterminal CommandOutcomeRecord, authentic typed result/ref/hash and expected SIR owner epoch. TerminalPrepared.input_sha256 is SHA-256 of UTF8(pm.goal.cancel.sir_terminal_input.v1), one actual LF byte and exact local canonical JSON of all TerminalInput fields. It excludes only the later TerminalPrepared because that object is not an input member; no input field is omitted. Actual source/result/owner preimages are captured independently before helper staging. CV-333 owner_result_sha256 is separately verified in its unchanged RFC8785 domain. The actual original SIR method owns the private unpublished prepared candidate and transaction participant; its serialized participant_ref supplies no handle. After all helpers it compares full original input, current source/progress/owner and complete candidate before the one original terminal publication. No input/early source hashes the future terminal; no future source/codec witness commits its containing input. A prepared token cannot be reconstructed to impersonate the original owner.
+
+The exact narrow original owner roles are `owner.sir.goal_cancel@1.0.0` and `owner.goal.cancel@1.0.0`; `owner.goal.host_stop@1.0.0` names the actual effective Goal host epoch owner. They are declarations for this existing operation and original dispatch, not callable alternate constructors. Before first returning helpers each original issuer captures actual accepted action/source/identity and complete permitted result; after the final helper it independently validates the complete actual source/owner/typed candidate/epoch/codec predicate with no helper gap to publication. SP-305 requires genuine original SIR acknowledgement and committed readback before the exclusive append reservation.
+
+Retained replay reads exact immutable Terminal and its original progress epoch, preserving original request/result/outcome/response and applying only CV-333 original_dispatch_id/replayed decoration. It never dispatches again, relatches Stop, emits a new event, republishes control, or changes prior unknown to success. Current-body visibility is not an audit prerequisite; actual current app/Project audit authority and original physical/source/codec/retention installation remain required. Recovery may settle genuine pending effects under their owners but cannot rewrite the original issued terminal result. SP-304 owns the exact source-to-terminal stage predicates, fixed original error profile and no-effect/unknown branches.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305

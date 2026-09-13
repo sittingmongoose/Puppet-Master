@@ -1,0 +1,229 @@
+{
+  "schema_id": "pm.goal_cancel_semantic_obligations.v1",
+  "classification": "NORMATIVE_ORACLES_NOT_EXECUTED",
+  "cancellation": {
+    "status": "NORMATIVE_REVIEW_ORACLES_NOT_EXECUTED",
+    "cases": [
+      {
+        "id": "stale_before_stop",
+        "trigger": "Original expected body/Stop source changes before C-stop",
+        "required_result": "Refuse original operation; no own Stop/receipt/event/control effect; no target refresh",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "fresh_goal_existing_stop",
+        "trigger": "New Goal is created in a host domain already stopped",
+        "required_result": "Preserve actual original effective epoch/latch; never initialize zero from Goal absence",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "existing_pending",
+        "trigger": "Cancel is accepted while prior body pending exists",
+        "required_result": "Atomic Stop+cancellation slot preserves earlier pending; original owner resolves effects, no overwrite",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "stop_then_failure",
+        "trigger": "C-stop committed and event/provider later fails",
+        "required_result": "Keep latch/pending/StopReceipt; no_effect prohibited; truthful pending or immutable unknown",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "receipt_before_event",
+        "trigger": "Minimal receipt committed, append not issued",
+        "required_result": "Receipt is original acceptance/Stop evidence only, no success/removal claim",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "lost_append_ack",
+        "trigger": "Actual append/first receipt exists while progress event_unknown",
+        "required_result": "Original first custody resolves/permits passive observation; no replacement event/receipt",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "control_publication",
+        "trigger": "Genuine receipt/event and all original current owners hold",
+        "required_result": "Control marker/publication/progress atomic, body/revision/history bytes unchanged",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "later_stop",
+        "trigger": "Additional actual Stop occurs after original cancel latch",
+        "required_result": "Preserve authenticated monotonic still-latched successor and original intent; never refresh source epoch",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "bound_plan",
+        "trigger": "Actual GoalPlanBinding exists but exact owner effect adapter absent",
+        "required_result": "Unavailable before coupled admission; no none_required fallback, no PlanRun/schedule mutations from Goal",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "absence_without_owner",
+        "trigger": "Caller omits binding and active_run_ref is null",
+        "required_result": "No complete original binding proof; unavailable, not proof of no Plan",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "terminal_unknown_later_effect",
+        "trigger": "SIR issued unknown, original recovery later publishes control",
+        "required_result": "Progress may advance from actual original owner; original terminal/selected epoch/response unchanged",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "no_effect",
+        "trigger": "Genuine complete owner proof precedes C-stop",
+        "required_result": "Zero actual Stop/receipt/owner/event/control effects, source audit only; original no-effect replay immutable",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "history_after_cancel",
+        "trigger": "Original cancellation is fully published",
+        "required_result": "Active view absent; retained body/history under current content owner remains readable, no fifth state",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "deleted_content",
+        "trigger": "Thread content/control lawfully purged",
+        "required_result": "Audit only under current audit permissions; no reconstructed body, no continuation or control write",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "historical_v2",
+        "trigger": "Complete original D-R02 payload with original admission",
+        "required_result": "Whole old schema and meaning preserved; no current state/write or v3 receipt invention",
+        "execution": "NOT_RUN"
+      },
+      {
+        "id": "post_helper_mutation",
+        "trigger": "Last resolver changes original owner/source/candidate",
+        "required_result": "Final pure whole predicate rejects before release while preserving genuine earlier effects",
+        "execution": "NOT_RUN"
+      }
+    ]
+  },
+  "execution_source": {
+    "classification": "SOURCE_PREDICATES_ONLY_NOT_EXECUTED",
+    "obligations": [
+      {
+        "id": "fresh_birth_origin",
+        "required_observation": "No original Goal/binding member or pending writer exists; genuine common birth commits all records and actual prior effective Stop.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "empty_cache_is_unavailable",
+        "required_observation": "Missing binding control is never no_execution_association.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "null_active_run_is_not_absence",
+        "required_observation": "Null Goal active_run_ref with any original Plan/Workflow association rejects the narrow route.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "all_writer_coverage",
+        "required_observation": "An enabled native binding implementation absent from the exact domain prevents enrollment/read/commit.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "copied_original_shape",
+        "required_observation": "Byte-identical records from another owner/root fail actual native origin/registration admission.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "binding_race_before_stop",
+        "required_observation": "Newly committed/uncaptured pending association between read and C-stop refuses before that operation Stop.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "captured_pending_stop_priority",
+        "required_observation": "Wholly unpublished original pending binding participates in Stop fence; its original owner alone aborts and receipts it.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "no_late_attach",
+        "required_observation": "An old binding writer checks actual Stop/cancellation after its final helper and cannot publish after C-stop.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "pending_partial_effect",
+        "required_observation": "Any original binding effect or unknown partial publication cannot be reclassified as no-effect abort.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "bound_plan_stays_bound",
+        "required_observation": "Association read reports bound Plan; no Plan/run/schedule/quota settlement is invented.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "workflow_not_plan_absence",
+        "required_observation": "Workflow binding does not enter no_execution_association.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "writer_generation_race",
+        "required_observation": "Registration/owner/root generation changes after helper refuse at the original boundary.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "whole_candidate_splice",
+        "required_observation": "A helper changing an unrelated preserved pending/control/origin/template/domain member fails independent whole candidate comparison.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "codec_goal_domain",
+        "required_observation": "Arbitrary-precision Goal input remains exact and valid; unsupported JCS/MP route is representation unavailability, never numeric clamping.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "complete_assignment_domain",
+        "required_observation": "Every valid future frame length lies in the existing-cap domain; all nested success/unknown/no-effect integer paths are covered.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "allocator_not_sample",
+        "required_observation": "Reservation consumes one actual original never-reused lease value and holds the selected append position; reading current small values alone does not admit it.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "jcs_decimal_exactness",
+        "required_observation": "An exactly representable binary64 whose JCS decimal changes the mathematical integer still fails the selected exact route.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "abandoned_assignment",
+        "required_observation": "Native fence loss invalidates reservation; old audit cannot assign another sequence or append. Stop persists.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "oversized_future_event",
+        "required_observation": "Existing physical cap refusal before append preserves genuine Stop/receipt; no payload truncation or false no_effect.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "audit_after_control_purge",
+        "required_observation": "Historical immutable metadata may disclose under current audit permission; current absence/Goal mutation cannot reconstruct purged control.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "frozen_history_and_commands",
+        "required_observation": "Whole cancellation v2 historical resource and all existing start/update schemas remain exact.",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "not_adoption",
+        "required_observation": "Static source/hash/metaschema checks create no native instance, provider grant, Step9 event or readiness clearance.",
+        "status": "NOT_RUN"
+      }
+    ]
+  },
+  "root_corrections": [
+    "Original accepted occurrence bytes equal receipt.accepted_at and payload.cancelled_at_utc; future observations do not rewrite them.",
+    "Progress source0/no_effect1 or stop1/receipt2/owners3/ready4/issued5/control6; optional unknown5/issued6/control7, no repeated-unknown epoch.",
+    "Genuine SIR acknowledgement precedes exclusive append reservation; consumed reservation is replaced by actual original append proof for later control/terminal.",
+    "cancellation_id equals the normalized original operation_id and receipt_ref is the exact already known scoped key.",
+    "No-effect proof is the authentic immutable epoch1 issued from source0 with zero effects of this operation; preserve actual prior Stop.",
+    "All historical embedded resources resolve from the complete pinned graph through standard JSON Schema resolution."
+  ],
+  "native_status": "NOT_RUN"
+}

@@ -1522,3 +1522,64 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Scheduling_and_Quota_Resume.md
 
+### APR-016 - Original Goal Plan binding participation
+
+```yaml
+plan_unit_id: APR-016
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: The original build-as-Goal transaction jointly publishes the exact seven-field GoalPlanBinding,
+  Goal/PlanRun association and GRS-074 binding origin/revision/control through its actual owners. All Plan
+  binding changes participate in the exhaustive writer domain. Current association truth and original Plan
+  cancellation effects remain separately owned; a no-Plan association never waives independently required Workflow
+  safe-stop work.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- APR-001
+- APR-007
+- APR-015
+- GRS-074
+- SP-305
+unblocks: []
+acceptance_criteria:
+- Genuine original Plan build publication jointly commits exact GoalPlanBinding and original association authority;
+  a later capture cannot repair missing participation.
+- All original Plan association writers and current readers participate in complete writer-domain/Stop/cancellation
+  fencing.
+- Missing binding control, a null active_run_ref or an empty supplied Plan list cannot establish no bound work.
+- The bound cancellation route requires exact original PlanRun/Plan/schedule/quota effect adapters and all
+  existing PGOAL obligations.
+- No unrelated message schedule, peer build route, new Workflow policy or certification claim is introduced.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_execution_binding_custody.schema.json
+- Plans/goal_cancel_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: apr-016_original_cancel_contract
+implementation_surfaces:
+- Plans/Assistant_Plan_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
+- No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
+  receipt.
+- No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
+```
+
+The original PGOAL Goal/PlanRun/binding birth joins GRS-074/SP-305 through the existing actual Plan build issuer, Goal body/Stop owner and Storage transaction. `StorageGoalPlanBinding` stores the exact existing seven-field GoalPlanBinding under `goal_plan_binding.v1:G:k(plan_run_id)`; its full original plan/run/Goal/revision identities and original origin must agree. A later copy, caller-built tuple, independently callable peer build service or live cache does not establish original participation. Every original Plan association creator/changer/detacher, pending resolver, migration/restore/deletion participant enrolls in the current exhaustive writer domain and respects complete Goal/Stop/control/cancellation fences.
+
+PGOAL-007 through PGOAL-010 retain all original bound-run effects: cancel the actual bound PlanRun, set the Plan control to Canceled, invalidate only that execution's schedules and quota consent, fence late callbacks, and preserve unrelated scheduled messages. SP-305 supplies original association selection; it does not supply the remaining exact original PlanRun/Plan/schedule/quota expected-state CAS, durable settlement and invalidation query/result adapters. Until those source contracts are actually bound, that variant is unavailable before C-stop. The minimal Goal cancellation receipt or v3 event proves none of those independently owned settlements. Likewise no AssistantPlan binding is not evidence of absent Workflow association or permission to discard its ordinary in-flight run/tool obligations.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305

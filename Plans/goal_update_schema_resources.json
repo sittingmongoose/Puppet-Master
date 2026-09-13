@@ -34,7 +34,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/goal_runtime_contracts/2.0.0/goal_runtime_contracts.schema.json",
       "path": "Plans/goal_runtime_contracts.schema.json",
-      "sha256": "d900496598a32833195e61fc0340d922b6d52504b0107cb5c19bd44e00bb6f38",
+      "sha256": "381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e",
       "binding": "exact selected local document ID; registration alone is not source authority"
     },
     {
@@ -66,6 +66,60 @@
       "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
       "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
       "binding": "explicit absolute retrieval mapping to exact same active-v3 bytes; no rewrite, guessed alias or network fallback"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_created.schema.v3",
+      "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/event_record_index_checkpoint.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/goal_cancel_command_custody.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/goal_execution_binding_custody.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json",
+      "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/goal_runtime_events.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/pm.goal_runtime_events.schema.v1",
+      "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/shared_runtime_contracts.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/shared_runtime/1.0.0/shared_runtime_contracts.schema.json",
+      "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
+    },
+    {
+      "path": "Plans/storage_compaction_native_contracts.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+      "binding": "Exact current shared-control/cancellation dependency under CV-347; no current cancellation command or other source authority follows from selection."
     }
   ],
   "remote_fallback": false,
@@ -74,7 +128,28 @@
     "GoalUpdateRequestV2",
     "GoalUpdateResultV2",
     "active updated-v3",
-    "whole retained updated-v2"
+    "whole retained updated-v2",
+    "Current shared BodyControlV2/StorageBodyControlV2 and actual host Stop source under GRS-073/SP-304; complete legacy control remains explicitly retained only. New command definitions are not Update dispatch authority."
   ],
-  "unselected_start_definitions": "preserved only; not selected authority or dependencies"
+  "unselected_start_definitions": "preserved only; not selected authority or dependencies",
+  "embedded_resources": [
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "json_pointer": "#/legacy_v2_reader",
+      "complete_document_sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_created.schema.v2",
+      "json_pointer": "#/$defs/legacy_v2_reader",
+      "complete_document_sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841"
+    },
+    {
+      "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "retrieval_uri": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_updated.schema.v2",
+      "json_pointer": "#/$defs/legacy_v2_reader",
+      "complete_document_sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea"
+    }
+  ]
 }

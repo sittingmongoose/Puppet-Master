@@ -307,16 +307,16 @@
     },
     {
       "family_id": "event-family-goal-cancelled",
-      "family_revision": "2.0.0",
+      "family_revision": "3.0.0",
       "event_type": "goal.cancelled",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-      "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
-      "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v2",
+      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-073",
+      "payload_owner_doc": "Plans/storage-plan.md#SP-304",
+      "payload_schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v3",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
         "json_pointer": "#",
-        "schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v2"
+        "schema_id": "pm.goal_runtime_event.goal_cancelled.schema.v3"
       },
       "legacy": {
         "aliases": [],
@@ -338,8 +338,8 @@
       },
       "source_refs": [
         "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json#",
-        "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-        "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+        "Plans/Goal_Runtime_System.md#GRS-073",
+        "Plans/Contracts_V0.md#CV-347"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",

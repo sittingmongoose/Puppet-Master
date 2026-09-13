@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22434-L22820
+Source lines: L22434-L22885
 
-Source SHA256: `ce738bd2b4603f80caa28b0a5c85a385abb93853550c34c0107f2a980e98e26a`
+Source SHA256: `fff461b60671f07aa5500d1f047a95b437539502da5962363a186293378b2221`
 
 ---
 
@@ -395,3 +395,68 @@ For exactly `goal.verification_decided`, qualify CV-287, the 21-root schema rost
 SP-303 expressly adopts actual SP-278 root/current generation/dataset, immutable row birth anchor, complete advancing global frontier/source token and the final after-helper source/admission/access boundary for `storage.goal_verification_decided_history_read.v1@1.0.0`. Its family checkpoint is individually `none_required` because this exact owner assigns zero durable effect. Full original validation is mandatory for verified history; unresolved or unavailable results confer no current authority. Reader withdrawal preserves original source and registry/retention membership, admits no new writer and settles no other event.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-072, ContractName:Plans/storage-plan.md#SP-303, SchemaID:pm.goal_runtime_event.goal_verification_decided.schema.v2
+
+### CV-347 - Current cancelled-v3 and exact cancellation resource graph
+
+```yaml
+plan_unit_id: CV-347
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Register current goal.cancelled family revision 3.0.0 with complete content-free v3 payload
+  and preserve the entire original v2 schema under legacy_v2_reader. The single existing Cancel handler gains
+  closed GoalCancelRequestV2/GoalCancelResultV2 references. All 107 cancellation and execution-source definitions
+  and the 19-document plus three embedded-resource graph are required alongside complete relational source/owner/codec
+  predicates.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- GRS-073
+- SP-304
+- SP-305
+- CV-333
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Exactly one existing registry row changes to current v3; whole old v2 schema and every other row remain exact.
+- The central Cancel request is closed with fourteen original fields and no Update-only conditional; all original
+  central definitions remain unchanged.
+- Every transitive reference resolves from complete explicitly registered local resources, including the custom
+  whole cancellation-v2 container.
+- Complete key/scope/source/epoch/body/Stop/event/receipt/result/codec equality is checked beyond structural
+  schemas.
+- No new Goal integer cap, generic command, alias, EventRecord field, retention policy or native proof follows
+  from these declarations.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_execution_binding_custody.schema.json
+- Plans/goal_cancel_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: cv-347_original_cancel_contract
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
+- No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
+  receipt.
+- No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
+```
+
+The exact schema owners are `Plans/goal_cancel_command_custody.schema.json` and `Plans/goal_execution_binding_custody.schema.json`. The central `Plans/goal_runtime_contracts.schema.json` adds only `GoalCancelRequestV2` and `GoalCancelResultV2`; all old central definitions and actual Start/Update schemas remain exact. No generic Pause/Resume contract is inferred. The active event is `pm.goal_runtime_event.goal_cancelled.schema.v3`; its whole unchanged `pm.goal_runtime_event.goal_cancelled.schema.v2` is selected only at `#/legacy_v2_reader` for actual historical reads. This existing event changes revision, not family count, aliases, EventRecord envelope, legacy joins or indefinite event retention.
+
+`Plans/goal_cancel_schema_resources.json` selects all nineteen complete local schema documents by actual retrieval URI/path/hash and separately enrolls all three whole embedded historical resources by containing-document hash and exact pointer. Use a standard offline JSON Schema registry with these explicit registrations; no network fetch, basename guessing, lexical fallback or inferred custom-container crawling is allowed. The current cancellation, execution-association, selected body-control, original Start/Update callers, body/history/currentness readers, SIR/append/migration/backup and retained historical readers require the actual corresponding complete graph/role installation. File hashes and role strings are necessary bindings, not native installation or authority evidence.
+
+GRS-064's local arbitrary-precision Goal JSON qualification is preserved in the new local codec. EventRecord producer semantics and CV-333 owner-result hashes retain RFC8785, and the complete event/first receipt retain their original MessagePack formats. SP-305 must prove the actual complete possible assignment domain, not rely on current small values. Unsupported valid Goal values are an unavailable codec route, never a corrupt Goal or a new schema limit. SP-304/SP-305 own complete full-value versus semantic hash preimages and the final cross-object predicates; shape-only agreement cannot admit original source, currentness, side effects, result, replay or disclosure.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305

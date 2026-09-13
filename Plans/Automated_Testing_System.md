@@ -2461,6 +2461,8 @@ This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means th
 
 ### Goal Runtime v2 event acceptance oracles
 
+The exact `EA-UND-0002-GOAL-POS/NEG` pair below is retained whole-v2 historical interpretation only. ATS-050 owns the separate current cancelled-v3 obligations. No historical execution status is changed.
+
 For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 structural statements describe the complete retained v2 resource. Active `goal.created` v3 instead follows CV-341/SP-294/SIR-048/GRS-066. Its report separates original joined-source/body/event/result validation from retained-v2 interpretation, ordinary corrected-model evidence, native gaps and still-separate current-reader/projector facets. The earlier pair is preserved and is not relabeled as executed or as active-v3 coverage.
 
 - `EA-UND-0001-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Append a permission block with exact permission evidence, ordered action IDs containing `request_approval`, and matching CAS; projection becomes `blocked` and exposes the exact cause/safe action.
@@ -4503,3 +4505,69 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Automated_Testing_System.md#ATS-048, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe, ContractName:Plans/testing_session_event_admission.json, ContractName:Plans/testing_session_event_payloads.schema.json
+
+### ATS-050 - Current cancellation original-operation verification obligations
+
+```yaml
+plan_unit_id: ATS-050
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Verify the exact current Cancel operation and execution-source contracts using independent
+  actual-owner observations at every entry/final boundary. Preserve historical-v2 acceptance pairs as source-dated
+  historical oracles. Static schema/source checks do not execute native original custody, cancellation, codecs,
+  crash recovery, Plan/Workflow settlement, replay or passive source reads.
+gui_related: false
+gui_classification_reason: Defines original owner, schema, storage or verification contracts.
+split_recommended: false
+depends_on:
+- GRS-073
+- GRS-074
+- SP-304
+- SP-305
+- SIR-050
+- CV-347
+unblocks: []
+acceptance_criteria:
+- Structural checks validate all complete documents, every registered wrapper and all transitive refs through
+  standard offline explicit-resource resolution.
+- Independent original-source and whole post-state observations distinguish valid permitted effect, pre-effect
+  refusal, genuine partial effects and immutable replay.
+- Every mutation/read helper boundary is checked through final original-owner release with no replaceable helper
+  gap.
+- Both current-v3 and whole historical-v2 readers preserve original authority and produce no checkpoint or
+  new receipt.
+- Native missing source/installation/codec/Plan/Workflow dependencies and unexecuted obligations remain explicitly
+  unproved.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- Plans/goal_execution_binding_custody.schema.json
+- Plans/goal_cancel_schema_resources.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancellation_original_authority_or_effect_loss
+reasoning_tier: high
+context_scope: ats-050_original_cancel_contract
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+negative_constraints:
+- No fifth Goal state, objective/body revision mutation, child/tool settlement list, new command or peer handler.
+- No raw Goal content in indefinite audit, new retention limit, silent codec substitution or fabricated original
+  receipt.
+- No native execution proof, full event-depth verdict, WorkNode/readiness admission or governance seal.
+```
+
+The complete normative obligations are `Plans/goal_cancel_contracts/semantic-obligations.json`, the two method maps and the source numeric inventory. Every obligation retains NOT_RUN until its own actual execution evidence exists. Pair each permitted source/effect/disclosure with malformed or shape-valid wrong-source/currentness/key/epoch/codec/candidate alternatives; check complete post-state and independently issued original receipts, not only a helper return or selected-field assertion. Original helper replacement must not alter actual private preimages or issuer state.
+
+Required cases include genuine fresh birth/all-writer enrollment and hidden-writer rejection; null-active-run versus genuine association absence; prior Stop preservation; body-pending cancellation priority; receipt timestamp/identity fixed before Stop; complete optional event_unknown progress and retry; genuine acknowledged source before reservation; consumed reservation versus original append proof; loss after each genuine partial effect; exact immutable terminal replay; body-control v1/v2 migration and final read fences; standard local whole-resource resolution; bounded versus unsupported valid integer/codec domains; full backup/restore/tombstone/deletion guards; and passive SP-278 current/v2 historical source read with no durable effect. Bound Plan and Workflow variants must remain unavailable until their exact original effect sources are integrated.
+
+These are verification requirements for Plans. This change supplies no native execution, model run, fault fixture observation, PNC-019/readiness result or global event-depth completion. Historical D-R02/EA-UND-0002 status remains unchanged.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305

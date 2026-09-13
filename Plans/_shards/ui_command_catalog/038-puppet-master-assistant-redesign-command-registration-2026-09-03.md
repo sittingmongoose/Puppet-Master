@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L12406-L12700
 
-Source SHA256: `6f89175f288ee598848a4a4d3b98f1d47bdaddab4223bb09d5bae6dbc23131de`
+Source SHA256: `4fb0eb751c66b8565aa82e5407a97b67c6efb582c9206cbc47ee5f538ed504a6`
 
 ---
 
@@ -27,7 +27,7 @@ Goal V2 is one text-only objective plus durable host continuation. `cmd.chat.goa
 | `cmd.chat.goal.propose_update` | Propose Goal Update | Lets the agent runtime request an objective change; it opens the existing approval dialog and never mutates the Goal by itself. | `goal_present && agent_runtime_active && approval_surface_available` | `domain_action` | `Plans/Goal_Runtime_System.md` | `GoalUpdateProposalRequest` → `ApprovalRequest` | `handlers::goal_runtime::goal_propose_update` |
 | `cmd.chat.goal.pause` | Pause Goal | Pauses host continuation for the Goal without discarding the objective, revision history, or workflow-owned state. | `goal_present && goal_status == active` | `domain_action` | `Plans/Goal_Runtime_System.md` | `GoalControlRequestV2` → `GoalControlResultV2` | `handlers::goal_runtime::goal_pause` |
 | `cmd.chat.goal.resume` | Resume Goal | Resumes host continuation after a user pause; it is refused when a manual stop is the reason the Goal is not running. | `goal_present && goal_status == paused && !manual_stop_latched` | `domain_action` | `Plans/Goal_Runtime_System.md` | `GoalControlRequestV2` → `GoalControlResultV2` | `handlers::goal_runtime::goal_resume` |
-| `cmd.chat.goal.cancel` | Cancel Goal | Ends the Goal permanently, records the terminal reason, and leaves workflow-owned records under their own owners. | `goal_present && goal_status in {active, paused, blocked}` | `domain_action` | `Plans/Goal_Runtime_System.md` | `GoalControlRequestV2` → `GoalControlResultV2` | `handlers::goal_runtime::goal_cancel` |
+| `cmd.chat.goal.cancel` | Cancel Goal | Ends the Goal permanently, records the terminal reason, and leaves workflow-owned records under their own owners. | `goal_present && goal_status in {active, paused, blocked}` | `domain_action` | `Plans/Goal_Runtime_System.md` | `GoalCancelRequestV2` → `GoalCancelResultV2` | `handlers::goal_runtime::goal_cancel` |
 
 Source surfaces for this family: `agent_runtime`, `approved_agent_proposal`, `goal_activity`, `goal_activity_editor`, `goal_control`, `goal_hover`, `natural_language`, `slash`, `wand`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 

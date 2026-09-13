@@ -1,0 +1,361 @@
+{
+  "kind": "complete_static_integer_path_inventory_including_separate_nullable_and_branch_constraints",
+  "root_branches": [
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ProducerInput",
+      "potential_integer_paths": [
+        "/payload/revision",
+        "/payload/user_stop_epoch",
+        "/producer_sequence_id"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/SucceededResult",
+      "potential_integer_paths": [
+        "/cancellation_receipt/original_revision",
+        "/cancellation_receipt/user_stop_epoch",
+        "/control_publication/after_control_epoch",
+        "/control_publication/before_control_epoch",
+        "/control_publication/original_owner_settlement/original_execution_binding/plan_version",
+        "/control_publication/original_publication/first_append_receipt/byte_offset",
+        "/control_publication/original_publication/first_append_receipt/durable_end_offset",
+        "/control_publication/original_publication/first_append_receipt/manifest_generation",
+        "/control_publication/original_publication/first_append_receipt/segment_generation",
+        "/control_publication/original_publication/first_append_receipt/sequence_id",
+        "/control_publication/original_publication/original_append_result/byte_offset",
+        "/control_publication/original_publication/original_append_result/sequence_id",
+        "/control_publication/revision",
+        "/publication/first_append_receipt/byte_offset",
+        "/publication/first_append_receipt/durable_end_offset",
+        "/publication/first_append_receipt/manifest_generation",
+        "/publication/first_append_receipt/segment_generation",
+        "/publication/first_append_receipt/sequence_id",
+        "/publication/original_append_result/byte_offset",
+        "/publication/original_append_result/sequence_id"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NoEffectResult",
+      "potential_integer_paths": []
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/RecoveryRequiredResult",
+      "potential_integer_paths": [
+        "/original_progress_selector/progress_epoch"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/TerminalSuccessOutcome",
+      "potential_integer_paths": [
+        "/acknowledgement_frame_offset",
+        "/identity/operation_generation",
+        "/identity/topology_generation",
+        "/target_generation"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/TerminalUnknownOutcome",
+      "potential_integer_paths": [
+        "/acknowledgement_frame_offset",
+        "/identity/operation_generation",
+        "/identity/topology_generation",
+        "/target_generation"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/TerminalNoEffectOutcome",
+      "potential_integer_paths": [
+        "/acknowledgement_frame_offset",
+        "/identity/operation_generation",
+        "/identity/topology_generation",
+        "/target_generation"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/SuccessResponse",
+      "potential_integer_paths": [
+        "/owner_identity/operation_generation",
+        "/owner_identity/topology_generation"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/UnknownResponse",
+      "potential_integer_paths": [
+        "/owner_identity/operation_generation",
+        "/owner_identity/topology_generation"
+      ]
+    },
+    {
+      "root_schema_ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NoEffectResponse",
+      "potential_integer_paths": [
+        "/owner_identity/operation_generation",
+        "/owner_identity/topology_generation"
+      ]
+    }
+  ],
+  "full_event_addition": [
+    "/sequence_id"
+  ],
+  "note": "Full EventRecord uses ProducerInput plus original Storage sequence/observed/persisted. The two timestamps are strings. No instance or codec was executed.",
+  "derivation_inventory": [
+    {
+      "root": "ProducerInput",
+      "path": "/payload/revision",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.original_body.revision"
+    },
+    {
+      "root": "ProducerInput",
+      "path": "/payload/user_stop_epoch",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.captured_user_stop_epoch + 1 (original C-stop only)"
+    },
+    {
+      "root": "ProducerInput",
+      "path": "/producer_sequence_id",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.producer_metadata.producer_sequence_id (preserve null or exact original singleton)"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/cancellation_receipt/original_revision",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.original_body.revision"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/cancellation_receipt/user_stop_epoch",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.captured_user_stop_epoch + 1 (original C-stop only)"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/after_control_epoch",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_goal_control.control_epoch + 2 + original_pending_resolution_count"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/before_control_epoch",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_goal_control.control_epoch + 1 + original_pending_resolution_count"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_owner_settlement/original_execution_binding/plan_version",
+      "selected_route": "null_only",
+      "reason": "unchanged ExecutionBinding no_bound_plan branch requires null"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/first_append_receipt/byte_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.byte_offset singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/first_append_receipt/durable_end_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.durable_end_offset_domain: existing full-cap interval"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/first_append_receipt/manifest_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.selected_manifest_generation singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/first_append_receipt/segment_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.selected_segment_generation singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/first_append_receipt/sequence_id",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.reserved_sequence_id singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/original_append_result/byte_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.byte_offset singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/original_publication/original_append_result/sequence_id",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.reserved_sequence_id singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/control_publication/revision",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "source_audit.original_body.revision"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/first_append_receipt/byte_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.byte_offset singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/first_append_receipt/durable_end_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.durable_end_offset_domain: existing full-cap interval"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/first_append_receipt/manifest_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.selected_manifest_generation singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/first_append_receipt/segment_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.selected_segment_generation singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/first_append_receipt/sequence_id",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.reserved_sequence_id singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/original_append_result/byte_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.byte_offset singleton"
+    },
+    {
+      "root": "SucceededResult",
+      "path": "/publication/original_append_result/sequence_id",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "append_reservation.reserved_sequence_id singleton"
+    },
+    {
+      "root": "RecoveryRequiredResult",
+      "path": "/original_progress_selector/progress_epoch",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "assignment_input.original_fixed_progress_epochs exactly [0,1,2,3,4,5,6,7]; actual phase/path/epoch must agree"
+    },
+    {
+      "root": "TerminalSuccessOutcome",
+      "path": "/acknowledgement_frame_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.acknowledgement_frame_offset singleton (no assumed zero)"
+    },
+    {
+      "root": "TerminalSuccessOutcome",
+      "path": "/identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "TerminalSuccessOutcome",
+      "path": "/identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    },
+    {
+      "root": "TerminalSuccessOutcome",
+      "path": "/target_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.target_generation singleton"
+    },
+    {
+      "root": "TerminalUnknownOutcome",
+      "path": "/acknowledgement_frame_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.acknowledgement_frame_offset singleton (no assumed zero)"
+    },
+    {
+      "root": "TerminalUnknownOutcome",
+      "path": "/identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "TerminalUnknownOutcome",
+      "path": "/identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    },
+    {
+      "root": "TerminalUnknownOutcome",
+      "path": "/target_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.target_generation singleton"
+    },
+    {
+      "root": "TerminalNoEffectOutcome",
+      "path": "/acknowledgement_frame_offset",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.acknowledgement_frame_offset singleton (no assumed zero)"
+    },
+    {
+      "root": "TerminalNoEffectOutcome",
+      "path": "/identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "TerminalNoEffectOutcome",
+      "path": "/identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    },
+    {
+      "root": "TerminalNoEffectOutcome",
+      "path": "/target_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.target_generation singleton"
+    },
+    {
+      "root": "SuccessResponse",
+      "path": "/owner_identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "SuccessResponse",
+      "path": "/owner_identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    },
+    {
+      "root": "UnknownResponse",
+      "path": "/owner_identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "UnknownResponse",
+      "path": "/owner_identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    },
+    {
+      "root": "NoEffectResponse",
+      "path": "/owner_identity/operation_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.operation_generation singleton"
+    },
+    {
+      "root": "NoEffectResponse",
+      "path": "/owner_identity/topology_generation",
+      "selected_route": "exact_original_domain",
+      "source_derivation": "original_acknowledged_outcome.identity.topology_generation singleton"
+    }
+  ],
+  "target_codecs": {
+    "ProducerInput": "original Contracts RFC8785 producer-semantic projection; full EventRecord independently original MessagePack with Storage sequence singleton",
+    "SucceededResult": "original CV333 RFC8785 whole GoalCancelResultV2",
+    "NoEffectResult": "original CV333 RFC8785 whole GoalCancelResultV2",
+    "RecoveryRequiredResult": "original CV333 RFC8785 whole GoalCancelResultV2",
+    "all_original_outcome_and_response_branches": "new cancellation retained carrier uses exact Goal JSON; original SIR transport preserves identical complete types, no implied new RFC8785 projection"
+  }
+}

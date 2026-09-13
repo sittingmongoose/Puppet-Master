@@ -267,6 +267,12 @@
     },
     "GoalUpdateResultV2": {
       "$ref": "https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/goal_update_command_custody.schema.json#/$defs/Result"
+    },
+    "GoalCancelRequestV2": {
+      "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/GoalCancelRequestV2"
+    },
+    "GoalCancelResultV2": {
+      "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/Result"
     }
   }
 }

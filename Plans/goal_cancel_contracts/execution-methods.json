@@ -1,0 +1,175 @@
+{
+  "methods": [
+    {
+      "operation": "install_writer_domain",
+      "actual_original_owner": "original Storage registration + Goal/Plan/Workflow",
+      "closed_types": "WriterDomain / WriterDomainHead",
+      "permitted_effect": "domain epoch+head only; original dispatch revocation/enrollment",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "birth_none",
+      "actual_original_owner": "actual original Goal creator + host Stop + shared body + Storage",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "permitted_effect": "joint genuine Goal birth and binding revision0/control0; no execution",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "reserve_binding",
+      "actual_original_owner": "actual Plan/Workflow association owner + Goal + Storage",
+      "closed_types": "BindingPending",
+      "permitted_effect": "complete binding control CAS; original candidate only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "commit_plan_binding",
+      "actual_original_owner": "actual original PGOAL joint issuer",
+      "closed_types": "GoalPlanBinding / PlanAssociation / BindingRevision",
+      "permitted_effect": "original Goal/PlanRun/Plan binding and association commit together",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "commit_workflow_binding",
+      "actual_original_owner": "actual original Workflow + Goal owner",
+      "closed_types": "WorkflowAssociation / BindingRevision",
+      "permitted_effect": "original Workflow association and shared Goal metadata join",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "transfer_binding_owner",
+      "actual_original_owner": "actual accepted execution owner transfer",
+      "closed_types": "BindingRevision",
+      "permitted_effect": "preserve full binding identities; accepted owner epoch transition only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "adopt_existing_binding",
+      "actual_original_owner": "actual Storage migration + every original association owner",
+      "closed_types": "BindingRevision / BindingOrigin / BindingControl",
+      "permitted_effect": "complete original legacy mapping only; no empty default",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "resolve_stopped_pending",
+      "actual_original_owner": "actual original pending binding owner + Goal + Storage",
+      "closed_types": "BindingPendingResolution",
+      "permitted_effect": "clear only genuinely unpublished original pending; immutable resolution + control CAS",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "read_current_for_cancel",
+      "actual_original_owner": "actual original Goal association source reader",
+      "closed_types": "BindingReadRequest / BindingReadCurrent",
+      "permitted_effect": "passive full current source/owner/absence read; no durable selection",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "read_retained_selection",
+      "actual_original_owner": "original retained lineage/selection audit owner",
+      "closed_types": "BindingReadAudit",
+      "permitted_effect": "passive historical metadata only; no current absence claim",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "capture_cancel_selection",
+      "actual_original_owner": "original C-source Goal + SIR + Storage",
+      "closed_types": "BindingSelection",
+      "permitted_effect": "selection + unchanged SourceAudit + progress0 one transaction",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "reserve_append_assignment",
+      "actual_original_owner": "actual original append/sequence/rotation owner",
+      "closed_types": "AppendSourceRead / AppendReservationSource",
+      "permitted_effect": "real nonserializable fence; original lease single assignment; no event/receipt",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "issue_assignment_audit",
+      "actual_original_owner": "actual original append + Goal + SIR codec owners",
+      "closed_types": "AssignmentInput / AssignmentAudit",
+      "permitted_effect": "immutable administrative assignment evidence only",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "admit_codec_domain",
+      "actual_original_owner": "actual SIR and original codec owners",
+      "closed_types": "DomainCommitmentInput / AssignmentAdmission",
+      "permitted_effect": "no durable effect; full exact-domain capability retained privately",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "append_reserved",
+      "actual_original_owner": "actual original SP278/SP286 append/first-receipt owner",
+      "closed_types": "unchanged ProducerInput / OriginalPublication",
+      "permitted_effect": "original event+first receipt only under reserved assignment; current registered-family Step8 route not yet adopted",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "publish_cancel_terminal",
+      "actual_original_owner": "actual original SIR + Storage",
+      "closed_types": "unchanged TerminalInput / TerminalPrepared / Terminal",
+      "permitted_effect": "unchanged full result/outcome/response joint publication",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "backup_capture",
+      "actual_original_owner": "actual complete original backup participants",
+      "closed_types": "all original source families",
+      "permitted_effect": "existing coherent backup only; locks never serialized as capabilities",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "backup_restore",
+      "actual_original_owner": "actual Storage coordinator + current original source owners",
+      "closed_types": "all original source families",
+      "permitted_effect": "existing qualified restore + deletion/Stop/domain fences; no lock resurrection",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    },
+    {
+      "operation": "delete_binding_control",
+      "actual_original_owner": "actual thread deletion/hold + Storage owner",
+      "closed_types": "BindingControl",
+      "permitted_effect": "eligible current control only; no lineage/Plan/Stop clearing",
+      "entry": "independent complete original source/root/registration/owner/permission/Stop/operation/preimages and entire permissible candidate BEFORE first returning helper",
+      "final": "after ALL returning helpers, pure full typed native/candidate/whole control CAS/absent immutable key predicate under the same original fence; NO helper gap to commit or disclosure",
+      "failure": "refuse new effect; preserve all genuine prior source/Stop/receipt/event/control/SIR and unrelated original effects"
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21824-L21939
+Source lines: L21824-L21941
 
-Source SHA256: `2d4828c52e63f6175e4c13927af8e45b6bdc223b4566a35888d7fea7c1729640`
+Source SHA256: `aacd2af29da44764f4168fbb1199eee8eecd704a3eb70ac2db1451adf37d16ab`
 
 ---
 
@@ -14,14 +14,14 @@ SP-287 owns the five canonical physical families for GRS-064's shared Goal body,
 
 ### Five exact versioned physical values
 
-Each family stores one redb value with exactly the three required outer members `{schema_id, schema_version, record}` and no additional members. The outer `schema_version` is exactly `1.0.0`. The schema and exact closed wrapper definitions live in `Plans/goal_body_custody.schema.json`; `Plans/storage_value_registry.json` points each family to its wrapper, not its inner semantic definition.
+Each family stores one redb value with exactly the three required outer members `{schema_id, schema_version, record}` and no additional members. The four unchanged outer wrappers use `schema_version=1.0.0` in `Plans/goal_body_custody.schema.json`. Current `goal_body_control` uses the closed `StorageBodyControlV2` wrapper, outer version `2.0.0`, in `Plans/goal_cancel_command_custody.schema.json` under SP-304/GRS-073. The complete original v1 control remains an explicitly selected retained reader in `goal_body_custody.schema.json`; ordinary readers do not default or upgrade it. `Plans/storage_value_registry.json` points each family to its complete wrapper, not its inner semantic definition.
 
 | Family | Exact key | Outer `schema_id` | Wrapper / inner definition | Retention |
 |---|---|---|---|---|
 | `goal_body_record` | `goal_record.v2:{P}:{G}` | `pm.storage_value.goal_body_record.v1` | `storage_body` / `body` | `RP-GOAL-THREAD-LIFETIME@1.0.0` |
 | `goal_objective_revision` | `goal_revision.v2:{P}:{G}:{R}` | `pm.storage_value.goal_objective_revision.v1` | `storage_revision` / `revision` | `RP-GOAL-THREAD-LIFETIME@1.0.0` |
 | `goal_objective_origin` | `goal_origin.v1:{P}:{G}:{R}` | `pm.storage_value.goal_objective_origin.v1` | `storage_origin` / `origin` | `RP-GOAL-THREAD-LIFETIME@1.0.0` |
-| `goal_body_control` | `goal_body_control.v1:{P}:{G}` | `pm.storage_value.goal_body_control.v1` | `storage_control` / `control` | `RP-GOAL-THREAD-LIFETIME@1.0.0` |
+| `goal_body_control` | `goal_body_control.v1:{P}:{G}` | `pm.storage_value.goal_body_control.v2` | `StorageBodyControlV2` / `BodyControlV2` (SP-304) | `RP-GOAL-THREAD-LIFETIME@1.0.0` |
 | `goal_body_mutation_receipt` | `goal_body_mutation_receipt.v1:{P}:{G}:{O}` | `pm.storage_value.goal_body_mutation_receipt.v1` | `storage_receipt` / `receipt` | `RP-AUTHORITY-INDEFINITE@1.0.0` |
 
 Definition names in the table mean exact `#/$defs/<name>` locations. The inner `record` retains the exact eleven-field body, nine-field objective revision, seven-field origin, or separately closed hidden control/receipt. The inner control/receipt's existing semantic schema IDs remain distinct from the outer physical IDs. The wrapper satisfies §2.3.1/SP-231 version requirements without adding a semantic Goal field or exempting these values from Storage rules. The shared schema dependency is not a sixth family or an extra stored copy. Existing `goal_runtime_lineage_record` and `goal_receipt` retain their independent shapes, owners and policies; neither supplies body CAS or reconstructs purged text.
@@ -83,6 +83,8 @@ canonical_text: >-
   24-hour/30-day purge limits under valid holds. Original content-free receipts remain independently
   auditable without retaining or rebuilding purged text. Detailed Goal body storage custody
   governs terminal fences, restore/tombstone replay and activation; sibling events remain separate.
+  SP-304/GRS-073 select current control v2 in the same physical family/key, with independent
+  cancellation_pending and complete retained v1 decoding; the other four wrappers remain exact.
 gui_related: false
 gui_classification_reason: Defines physical storage, transaction, retention and recovery contracts; Goal presentation is owned by GRS-064.
 depends_on: [SP-231, SP-235, SP-237, SP-239, GRS-064, DL-045, DL-047]

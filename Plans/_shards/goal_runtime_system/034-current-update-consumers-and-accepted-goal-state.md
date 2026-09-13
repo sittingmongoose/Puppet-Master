@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5969-L6059
+Source lines: L5971-L6063
 
-Source SHA256: `51a12e64668bec85a61dd810af0ca8919c1d8bfc2a40c010ae261448603b9baa`
+Source SHA256: `89b5eeb05e1db7d8fc32e1a93b1e070a21d46af1d2074727f8b36be1a068c4de`
 
 ---
 
@@ -54,6 +54,8 @@ canonical_text: >-
   The explicitly adopted active updated-v3 Activity/body/control/history views use those current
   canonical readers; separate SP-299 event/audit/input and original SIR replay boundaries preserve
   accepted effects and original terminal meaning without event-built Goal state.
+  GRS-073/SP-304 select the shared current BodyControlV2 with independent cancellation_pending;
+  every current mutation/read/backup route preserves genuine Stop and cancellation effects.
   No sibling Goal event or Workflow certification closure follows from this prerequisite.
 gui_related: true
 gui_classification_reason: Preserves exact accepted Goal text, direct Save/approval behavior and authorized history visibility through deletion and recovery.

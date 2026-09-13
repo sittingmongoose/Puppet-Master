@@ -55504,8 +55504,8 @@
       "status": "materialized",
       "tier": "later_gui_or_feature_projection",
       "key_shape": "goal_body_control.v1:{P}:{G}",
-      "value_schema_id": "pm.storage_value.goal_body_control.v1",
-      "value_schema_ref": "Plans/goal_body_custody.schema.json#/$defs/storage_control",
+      "value_schema_id": "pm.storage_value.goal_body_control.v2",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2",
       "owner_doc": "Plans/storage-plan.md#goal-body-storage-custody",
       "producer": [
         "owner.goal.body.mutation@1.0.0",
@@ -55516,7 +55516,7 @@
         "reader.goal.objective_history@1.0.0",
         "owner.goal.body.mutation@1.0.0"
       ],
-      "schema_version": "1.0.0",
+      "schema_version": "2.0.0",
       "encoding": "json_canonical",
       "required_fields": [
         "schema_id",
@@ -55525,546 +55525,13 @@
       ],
       "optional_fields": [],
       "nullable_fields": [],
-      "replay_behavior": "Goal Runtime authenticates the canonical versioned physical wrapper and exact inner semantic record, current coherent body/control/history/origin, complete current owner/read lease and same-Goal mutation fence. Pending afterimages never become current before terminal CAS. Later reads need retained admission and current authority, not discarded original controls.",
-      "migration": "First physical writer uses wrapper version 1.0.0 and pm.goal.canonical_json.v1. Exact inner semantic fields and hashes remain unchanged. Explicit StorageMigrationCoordinator graph/backup/exclusive-lock/verify-before-stamp/MigrationReceipt adoption is required; unwrapped source records are not accepted by ordinary readers or inferred from key names.",
+      "replay_behavior": "Original shared body owner reads v2 control with separate cancellation_pending alongside old pending; Stop has priority and no new body mutation crosses cancellation pending/receipt. Exact original control-only publication removes current active view after event/receipt, without body mutation. Every original Start/Update, metadata, approval, pause/resume, continuation, migration, backup and content reader shares the selected v2 control and final Stop/cancellation predicate under GRS-073/SP-304. Their existing request/body/revision/origin/receipt schemas are unchanged.",
+      "migration": "Explicit SP-304 actual original owner/coordinator v1 -> v2 control adoption; preserve all semantic body/history and complete old pending. Add cancellation_pending=null only after genuine original cancellation/Stop/binding inventory proof. Old v1 reader remains exact; no ordinary missing-row initialization. Current v2 routes select the complete CV-347 resource graph. Retained v1 values use only the whole original goal_body_custody storage_control reader with its genuine original installation; no unguarded field-default upgrade.",
       "retention_compaction": "DL-047 / RP-GOAL-THREAD-LIFETIME: no time/count eviction while the exact bound chat is retained, including archive. Chat deletion immediately hides content; purge unheld active and pending copies within 24 hours and deleted backup bytes within 30 days. A valid hold delays physical purge only. Compaction/model changes are not deletion; source refs retain independent policies.",
       "redaction_no_secret_rule": "Existing Goal/Storage redaction and external-secret-custody gates apply before admission. Do not persist raw credentials, secret values or machine-local credential paths. Exact accepted semantic record bytes are preserved; audit receipt stores no objective or source text.",
       "legacy_canonical_crosswalk_status": "New explicitly versioned physical family for the Goal Runtime semantic record. Existing goal_runtime_lineage_record and goal_receipt retain their independent schemas/policies; no alias, implicit migration, alternate Goal field or additional event.",
       "value_schema": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "schema_id",
-          "schema_version",
-          "record"
-        ],
-        "properties": {
-          "schema_id": {
-            "const": "pm.storage_value.goal_body_control.v1"
-          },
-          "schema_version": {
-            "const": "1.0.0"
-          },
-          "record": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-              "schema_id",
-              "storage_instance_id",
-              "project_id",
-              "thread_id",
-              "goal_id",
-              "body_key",
-              "body_sha256",
-              "current_revision",
-              "currentness_hash",
-              "latest_objective_revision",
-              "latest_revision_hash",
-              "origin_key",
-              "control_epoch",
-              "cancellation_receipt_ref",
-              "pending"
-            ],
-            "properties": {
-              "schema_id": {
-                "const": "pm.goal.body_control.v1"
-              },
-              "storage_instance_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "project_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "thread_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "goal_id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "body_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "body_sha256": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
-              },
-              "current_revision": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "currentness_hash": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
-              },
-              "latest_objective_revision": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "latest_revision_hash": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
-              },
-              "origin_key": {
-                "type": "string",
-                "minLength": 1
-              },
-              "control_epoch": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "cancellation_receipt_ref": {
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              },
-              "pending": {
-                "anyOf": [
-                  {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": [
-                      "operation_id",
-                      "owner_ref",
-                      "owner_epoch",
-                      "operation_kind",
-                      "expected_revision",
-                      "expected_currentness_hash",
-                      "expected_stop_epoch",
-                      "intent_sha256",
-                      "after_record",
-                      "accepted_revision",
-                      "origin",
-                      "original_change_authority_ref",
-                      "external_authority_ref"
-                    ],
-                    "properties": {
-                      "operation_id": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "owner_ref": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "owner_epoch": {
-                        "type": "integer",
-                        "minimum": 0
-                      },
-                      "operation_kind": {
-                        "enum": [
-                          "objective_update",
-                          "metadata_update"
-                        ]
-                      },
-                      "expected_revision": {
-                        "type": "integer",
-                        "minimum": 1
-                      },
-                      "expected_currentness_hash": {
-                        "type": "string",
-                        "pattern": "^[0-9a-f]{64}$"
-                      },
-                      "expected_stop_epoch": {
-                        "type": "integer",
-                        "minimum": 0
-                      },
-                      "intent_sha256": {
-                        "type": "string",
-                        "pattern": "^[0-9a-f]{64}$"
-                      },
-                      "after_record": {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "required": [
-                          "goal_id",
-                          "project_id",
-                          "thread_id",
-                          "objective_text",
-                          "revision",
-                          "state",
-                          "blocked_reason_ref",
-                          "active_run_ref",
-                          "created_at",
-                          "updated_at",
-                          "currentness_hash"
-                        ],
-                        "properties": {
-                          "goal_id": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "project_id": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "thread_id": {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          "objective_text": {
-                            "type": "string",
-                            "maxLength": 4000
-                          },
-                          "revision": {
-                            "type": "integer",
-                            "minimum": 1
-                          },
-                          "state": {
-                            "enum": [
-                              "active",
-                              "paused",
-                              "blocked",
-                              "completed"
-                            ]
-                          },
-                          "blocked_reason_ref": {
-                            "anyOf": [
-                              {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "active_run_ref": {
-                            "anyOf": [
-                              {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              {
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "currentness_hash": {
-                            "type": "string",
-                            "pattern": "^[0-9a-f]{64}$"
-                          }
-                        },
-                        "allOf": [
-                          {
-                            "if": {
-                              "properties": {
-                                "state": {
-                                  "const": "blocked"
-                                }
-                              }
-                            },
-                            "then": {
-                              "properties": {
-                                "blocked_reason_ref": {
-                                  "type": "string",
-                                  "minLength": 1
-                                }
-                              }
-                            }
-                          }
-                        ]
-                      },
-                      "accepted_revision": {
-                        "anyOf": [
-                          {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": [
-                              "goal_id",
-                              "revision",
-                              "objective_text",
-                              "change_source",
-                              "source_message_id",
-                              "approval_id",
-                              "prior_revision_hash",
-                              "revision_hash",
-                              "created_at"
-                            ],
-                            "properties": {
-                              "goal_id": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "revision": {
-                                "type": "integer",
-                                "minimum": 1
-                              },
-                              "objective_text": {
-                                "type": "string",
-                                "maxLength": 4000
-                              },
-                              "change_source": {
-                                "enum": [
-                                  "user_direct",
-                                  "agent_proposed_user_approved"
-                                ]
-                              },
-                              "source_message_id": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "minLength": 1
-                                  },
-                                  {
-                                    "type": "null"
-                                  }
-                                ]
-                              },
-                              "approval_id": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "minLength": 1
-                                  },
-                                  {
-                                    "type": "null"
-                                  }
-                                ]
-                              },
-                              "prior_revision_hash": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "pattern": "^[0-9a-f]{64}$"
-                                  },
-                                  {
-                                    "type": "null"
-                                  }
-                                ]
-                              },
-                              "revision_hash": {
-                                "type": "string",
-                                "pattern": "^[0-9a-f]{64}$"
-                              },
-                              "created_at": {
-                                "type": "string",
-                                "format": "date-time"
-                              }
-                            },
-                            "allOf": [
-                              {
-                                "if": {
-                                  "properties": {
-                                    "change_source": {
-                                      "const": "user_direct"
-                                    }
-                                  }
-                                },
-                                "then": {
-                                  "properties": {
-                                    "approval_id": {
-                                      "type": "null"
-                                    }
-                                  }
-                                },
-                                "else": {
-                                  "properties": {
-                                    "approval_id": {
-                                      "type": "string",
-                                      "minLength": 1
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "if": {
-                                  "properties": {
-                                    "change_source": {
-                                      "const": "user_direct"
-                                    },
-                                    "revision": {
-                                      "minimum": 2
-                                    }
-                                  }
-                                },
-                                "then": {
-                                  "properties": {
-                                    "source_message_id": {
-                                      "type": "null"
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      },
-                      "origin": {
-                        "anyOf": [
-                          {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": [
-                              "goal_id",
-                              "goal_revision",
-                              "origin_kind",
-                              "source_message_refs",
-                              "source_context_manifest_ref",
-                              "bound_plan_ref",
-                              "owning_workflow_ref"
-                            ],
-                            "properties": {
-                              "goal_id": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "goal_revision": {
-                                "type": "integer",
-                                "minimum": 1
-                              },
-                              "origin_kind": {
-                                "enum": [
-                                  "user_request",
-                                  "agent_created_at_user_request",
-                                  "plan_build",
-                                  "internal_workflow"
-                                ]
-                              },
-                              "source_message_refs": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "minLength": 1
-                                },
-                                "uniqueItems": true
-                              },
-                              "source_context_manifest_ref": {
-                                "type": "string",
-                                "minLength": 1
-                              },
-                              "bound_plan_ref": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "minLength": 1
-                                  },
-                                  {
-                                    "type": "null"
-                                  }
-                                ]
-                              },
-                              "owning_workflow_ref": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "minLength": 1
-                                  },
-                                  {
-                                    "type": "null"
-                                  }
-                                ]
-                              }
-                            },
-                            "allOf": [
-                              {
-                                "if": {
-                                  "properties": {
-                                    "origin_kind": {
-                                      "const": "plan_build"
-                                    }
-                                  }
-                                },
-                                "then": {
-                                  "properties": {
-                                    "bound_plan_ref": {
-                                      "type": "string",
-                                      "minLength": 1
-                                    }
-                                  }
-                                },
-                                "else": {
-                                  "properties": {
-                                    "bound_plan_ref": {
-                                      "type": "null"
-                                    }
-                                  }
-                                }
-                              },
-                              {
-                                "if": {
-                                  "properties": {
-                                    "origin_kind": {
-                                      "const": "internal_workflow"
-                                    }
-                                  }
-                                },
-                                "then": {
-                                  "properties": {
-                                    "owning_workflow_ref": {
-                                      "type": "string",
-                                      "minLength": 1
-                                    }
-                                  }
-                                },
-                                "else": {
-                                  "properties": {
-                                    "owning_workflow_ref": {
-                                      "type": "null"
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      },
-                      "original_change_authority_ref": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      },
-                      "external_authority_ref": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "minLength": 1
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            }
-          }
-        }
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
       },
       "compatibility_key_shapes": [],
       "recovery_disposition": {
@@ -93695,6 +93162,1441 @@
           "Plans/Shared_Integration_Runtime.md#original-goal-update-source-and-terminal-custody",
           "Plans/Goal_Runtime_System.md#GRS-068",
           "Plans/Contracts_V0.md#CV-342"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_cancel_source_audit",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_source_audit:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_source_audit.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.sir.goal_cancel@1.0.0",
+        "owner.goal.cancel@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit"
+      }
+    },
+    {
+      "family_id": "goal_host_stop_control",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_host_stop_control:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_host_stop_control.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.goal.host_stop@1.0.0",
+        "owner.goal.body.mutation@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.host_stop@1.0.0",
+        "owner.goal.body.mutation@1.0.0",
+        "original Goal continuation dispatch owner"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-GOAL-THREAD-LIFETIME@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-GOAL-THREAD-LIFETIME",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+      }
+    },
+    {
+      "family_id": "goal_cancel_stop_receipt",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_stop_receipt:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_stop_receipt.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.goal.host_stop@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt"
+      }
+    },
+    {
+      "family_id": "goal_cancel_receipt",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_receipt:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_receipt.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.goal.cancel@1.0.0",
+        "owner.goal.body.mutation@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt"
+      }
+    },
+    {
+      "family_id": "goal_cancel_progress",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_progress:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id):head OR goal_cancel_progress:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id):epoch:N",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_progress.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageProgress",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.goal.cancel@1.0.0",
+        "owner.goal.host_stop@1.0.0",
+        "owner.goal.body.mutation@1.0.0",
+        "owner.sir.goal_cancel@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageProgress"
+      }
+    },
+    {
+      "family_id": "goal_cancel_control_publication",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_control_publication:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_control_publication.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageControlPublication",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.goal.body.mutation@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageControlPublication"
+      }
+    },
+    {
+      "family_id": "goal_cancel_terminal_audit",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_terminal_audit:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_terminal_audit.v1",
+      "value_schema_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageTerminal",
+      "owner_doc": "Plans/storage-plan.md#SP-304",
+      "producer": [
+        "owner.sir.goal_cancel@1.0.0",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "reader.goal.cancel_command_audit@1.0.0",
+        "storage.goal_cancelled.inspect_current.v1",
+        "original Goal continuation and shared body owners"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original typed key/version/source and immutable epoch/receipt/result custody; source-shaped values grant no original authority. See SP-304.",
+      "migration": "New exact original creator/all-writer/coordinator enrollment; prior absence is not first birth. Original old schemas remain exact. See SP-304 original cancellation stages.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 only; content-free audit versus exact bound-thread control lifecycle. No inferred holds or reconstructed content.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only actual original fixed content-free cancellation profile; no objective, user reason, raw diagnostic/path or source body. No post-hoc sanitization.",
+      "legacy_canonical_crosswalk_status": "New explicit family; no old source/receipt bootstrap or alias.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-304",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "value_schema": {
+        "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageTerminal"
+      }
+    },
+    {
+      "family_id": "goal_execution_writer_domain",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_writer_domain.v1:k(storage_instance_id):epoch:N",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_writer_domain.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageWriterDomain",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Storage registration + Goal + Plan + Workflow owners",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_writer_domain.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/WriterDomain"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_execution_writer_domain_head",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_writer_domain_head.v1:k(storage_instance_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_writer_domain_head.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageWriterDomainHead",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Storage registration owner",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_writer_domain_head.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/WriterDomainHead"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_execution_binding_revision",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_binding_revision.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):revision:N",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_binding_revision.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageBindingRevision",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Goal execution association owner",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_binding_revision.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingRevision"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_execution_binding_origin",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_binding_origin.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):revision:N",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_binding_origin.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageBindingOrigin",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Goal/Plan/Workflow + Storage transaction",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_binding_origin.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingOrigin"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_plan_binding",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_plan_binding.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(plan_run_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_plan_binding.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageGoalPlanBinding",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Plan build-as-Goal + Goal + Storage joint birth",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_plan_binding.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/GoalPlanBinding"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_execution_binding_control",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_binding_control.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_binding_control.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageBindingControl",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Goal execution association owner",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "DL-047 RP-GOAL-THREAD-LIFETIME: retained chat has no TTL/count eviction; deletion hides immediately, unheld active copies purge within 24h and backups within 30d. Holds delay physical purge only.",
+      "retention_policy_ref": "RP-GOAL-THREAD-LIFETIME",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_binding_control.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingControl"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_execution_binding_pending_resolution",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_execution_binding_pending_resolution.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(pending_operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_execution_binding_pending_resolution.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageBindingPendingResolution",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original pending binding owner + Goal + Storage",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_execution_binding_pending_resolution.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingPendingResolution"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_cancel_binding_selection",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_binding_selection.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_binding_selection.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageBindingSelection",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original Goal association reader + cancellation source owner",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_cancel_binding_selection.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingSelection"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      }
+    },
+    {
+      "family_id": "goal_cancel_assignment_audit",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "goal_cancel_assignment_audit.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id):attempt:N",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.goal_cancel_assignment_audit.v1",
+      "value_schema_ref": "Plans/goal_execution_binding_custody.schema.json#/$defs/StorageAssignmentAudit",
+      "owner_doc": "Plans/storage-plan.md#SP-305",
+      "producer": [
+        "original append + Goal + SIR codec owners",
+        "StorageMigrationCoordinator"
+      ],
+      "consumers": [
+        "owner.goal.cancel@1.0.0",
+        "original Goal/Plan/Workflow binding owners",
+        "original installed execution association reader and audit reader"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "SP-305 authenticates exact original writer-domain/Goal/binding/selection/assignment custody and whole source/epoch/key joins. Immutable originals cannot be reissued or inferred from current shapes; current selection and retained audit use distinct permissions and authority.",
+      "migration": "SP-305 requires complete actual owner enrollment and all-writer fencing, coherent protected backup, authenticated original source migration and verify-before-stamp. Missing history is unavailable; no zero bootstrap, guessed mapping or old-source reinterpretation.",
+      "retention_compaction": "Existing RP-AUTHORITY-INDEFINITE@1.0.0 content-free original authority/audit custody; no new time/count/byte ceiling. References grant no lifetime extension or content reconstruction.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Only closed content-free original identity/commitment/decision metadata; no Goal objective, source body, raw diagnostic, secret or machine-local credential path. No sanitization of already accepted originals.",
+      "legacy_canonical_crosswalk_status": "Explicit original source family; no aliases or historical absence inferred as native birth.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "physical_key",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.goal_cancel_assignment_audit.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "physical_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AssignmentAudit"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-305",
+          "Plans/Goal_Runtime_System.md#GRS-073",
+          "Plans/Decision_Log.md#DL-047"
         ]
       }
     }

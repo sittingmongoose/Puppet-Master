@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2448-L2717
+Source lines: L2448-L2719
 
-Source SHA256: `3ffcbc949af16a26957ce9e08144b835fdbe55f6884a6a109320c4f56254b7b9`
+Source SHA256: `b1de4d4ed2f9240cb56ff4da589fe07efe7b2be9ce6d9f84b63f39523e070455`
 
 ---
 
@@ -23,6 +23,8 @@ This is canonical acceptance/test-spec prose. `STATICALLY_MATERIALIZED` means th
 - `K37-STATIC-07` — `STATICALLY_MATERIALIZED` — The retained-inline remaining-nine row schemas and their owner/consumer clauses form a 37/37 historical KNOWN-KERNEL STATIC contract-depth account; the source-dated at-least-248 confirmed persisted-unregistered floor, at-least-40 unresolved exact rows, 68 exclusions, and `UNKNOWN_OPEN` complete denominator remain explicit residuals, and no runtime, fixture, gate, shard, harness, certification, buildability, or closure result is inferred.
 
 ### Goal Runtime v2 event acceptance oracles
+
+The exact `EA-UND-0002-GOAL-POS/NEG` pair below is retained whole-v2 historical interpretation only. ATS-050 owns the separate current cancelled-v3 obligations. No historical execution status is changed.
 
 For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 structural statements describe the complete retained v2 resource. Active `goal.created` v3 instead follows CV-341/SP-294/SIR-048/GRS-066. Its report separates original joined-source/body/event/result validation from retained-v2 interpretation, ordinary corrected-model evidence, native gaps and still-separate current-reader/projector facets. The earlier pair is preserved and is not relabeled as executed or as active-v3 coverage.
 

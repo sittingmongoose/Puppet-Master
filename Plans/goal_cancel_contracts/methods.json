@@ -1,0 +1,130 @@
+{
+  "methods": [
+    {
+      "operation": "capture_source",
+      "original_owner": "original SIR + Goal + Storage",
+      "closed_types": "SourceAudit",
+      "write_boundary": "source/head epoch0 only",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "latch_and_reserve",
+      "original_owner": "original host Stop + shared body owner + Storage",
+      "closed_types": "StopIntent",
+      "write_boundary": "StopControl+StopReceipt+BodyControlV2 cancellation_pending+progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "commit_receipt",
+      "original_owner": "original Goal cancellation + shared body + Storage",
+      "closed_types": "CancellationReceipt",
+      "write_boundary": "minimal receipt+progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "settle_owner",
+      "original_owner": "actual Plan/run/schedule/quota owners if applicable",
+      "closed_types": "OwnerSettlement",
+      "write_boundary": "only original owner effects; progress records actual evidence",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "freeze_event",
+      "original_owner": "original Goal event producer + Storage",
+      "closed_types": "ProducerInput",
+      "write_boundary": "frozen producer progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "append_original",
+      "original_owner": "actual SP278/SP286 append/first receipt owner",
+      "closed_types": "OriginalPublication",
+      "write_boundary": "original event and first custody; then progress/head",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "publish_control",
+      "original_owner": "sole shared body owner + Storage",
+      "closed_types": "ControlPublication",
+      "write_boundary": "control marker/slot/epoch+publication+progress/head; no body change",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "terminal",
+      "original_owner": "original SIR + Storage",
+      "closed_types": "TerminalInput / TerminalPrepared / Terminal",
+      "write_boundary": "original result/outcome/response/terminal together",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "resolve_original",
+      "original_owner": "same actual original effect owners",
+      "closed_types": "Progress",
+      "write_boundary": "same original effects only; terminal immutable",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "audit_read",
+      "original_owner": "actual retained cancellation Storage audit owner",
+      "closed_types": "AuditReadRequest / AuditReadResult",
+      "write_boundary": "none",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "inspect_current",
+      "original_owner": "actual current SP278 + original receipt/audit owners",
+      "closed_types": "EventInspectRequest / EventInspectResult",
+      "write_boundary": "none",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "backup_capture",
+      "original_owner": "actual complete joined backup owners",
+      "closed_types": "all physical families/required source members",
+      "write_boundary": "existing original coherent backup",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "backup_restore",
+      "original_owner": "actual coordinator/backup/Goal/Stop/SIR/shared owners",
+      "closed_types": "all physical families/required source members",
+      "write_boundary": "existing qualified coherent restore, no new authority",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    },
+    {
+      "operation": "enroll_stop_and_control",
+      "original_owner": "actual native Goal creator or StorageMigrationCoordinator + original host",
+      "closed_types": "StopControl / BodyControlV2",
+      "write_boundary": "actual fresh birth or exact original epoch adoption only",
+      "entry": "independent actual full sources/participants/preimages and permissible full output before helpers",
+      "final": "pure full current original source/owners/candidate predicate after ALL returning helpers, no helper gap to effect or passive release",
+      "failure": "preserve genuine prior effects, no manufactured no_effect"
+    }
+  ]
+}

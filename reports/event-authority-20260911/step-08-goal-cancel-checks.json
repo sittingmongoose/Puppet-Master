@@ -1,0 +1,187 @@
+{
+  "status": "BOUNDED_CANONICAL_CONTRACT_COMPILED_FULL_DEPTH_INCOMPLETE",
+  "scope": "Existing goal.cancelled current-v3 original operation and execution association source; not a new event family or Step 9 admission.",
+  "source_base_commit": "802fc8a03ff834d1ed5f388111abadc3d1a020db",
+  "new_plan_units": [
+    "APR-016",
+    "ATS-050",
+    "CV-347",
+    "GRS-073",
+    "GRS-074",
+    "SIR-050",
+    "SP-304",
+    "SP-305"
+  ],
+  "new_acceptance_criteria": 42,
+  "schemas": {
+    "cancel_definitions": 53,
+    "execution_binding_definitions": 54,
+    "complete_cancel_graph_documents": 19,
+    "embedded_whole_historical_resources": 3,
+    "standard_offline_ref_occurrences": 1957,
+    "existing_graph_checks": [
+      {
+        "path": "Plans/goal_update_schema_resources.json",
+        "resources": 20,
+        "resolved_reference_occurrences": 2022
+      },
+      {
+        "path": "Plans/goal_updated_consumer_resources.json",
+        "resources": 21,
+        "resolved_reference_occurrences": 2068
+      },
+      {
+        "path": "Plans/goal_created_reader_contracts/schema-dependencies.json",
+        "resources": 19,
+        "resolved_reference_occurrences": 1957
+      }
+    ]
+  },
+  "storage": {
+    "prior_families": 140,
+    "current_families": 156,
+    "new_families": [
+      "goal_cancel_assignment_audit",
+      "goal_cancel_binding_selection",
+      "goal_cancel_control_publication",
+      "goal_cancel_progress",
+      "goal_cancel_receipt",
+      "goal_cancel_source_audit",
+      "goal_cancel_stop_receipt",
+      "goal_cancel_terminal_audit",
+      "goal_execution_binding_control",
+      "goal_execution_binding_origin",
+      "goal_execution_binding_pending_resolution",
+      "goal_execution_binding_revision",
+      "goal_execution_writer_domain",
+      "goal_execution_writer_domain_head",
+      "goal_host_stop_control",
+      "goal_plan_binding"
+    ],
+    "only_changed_prior_family": "goal_body_control",
+    "current_control_version": "2.0.0",
+    "same_physical_key": true,
+    "all_other_prior_rows_and_policies_preserved": true
+  },
+  "events": {
+    "count": 42,
+    "only_changed_family": "event-family-goal-cancelled",
+    "family_revision": "3.0.0",
+    "whole_original_v2_preserved": true
+  },
+  "verification": {
+    "registry_schema": "PASS",
+    "exact_preservation": "PASS",
+    "independent_source_checks": 309,
+    "shards": {
+      "status": "PASS",
+      "documents": 98,
+      "shards": 2604
+    },
+    "index": {
+      "status": "PASS",
+      "units": 6605,
+      "acceptance_units": 25622,
+      "old_unit_semantic_changes": [
+        "GRS-064 canonical_text",
+        "SP-287 canonical_text"
+      ]
+    },
+    "wiring": "PASS",
+    "standard_gates": {
+      "status": "fail",
+      "checks": 36,
+      "failed_checks": 15,
+      "failed_names": [
+        "json_syntax",
+        "verify_spec_lock",
+        "validate_plan_graph",
+        "validate_evidence",
+        "lint_contractrefs",
+        "lint_path_refs",
+        "validate_prd_planning_runtime_contracts",
+        "validate_browser_event_admission",
+        "validate_testing_session_event_admission",
+        "validate_github_project_integration",
+        "validate_implementation_readiness",
+        "validate_plan_migration",
+        "validate_pm7_gui_fixtures",
+        "validate_audit_closure",
+        "validate_audit_status_index"
+      ]
+    },
+    "native": "NOT_RUN",
+    "full_depth": "NOT_CLAIMED"
+  },
+  "remaining_source_integrations": [
+    "Bound original PlanRun/Plan control/run-specific schedules/quota consent expected-state CAS and settlement adapters",
+    "Workflow association-specific effect source and ordinary in-flight execution obligations",
+    "Exact original source migration for unenrolled older binding/host Stop representations",
+    "Broader owner-qualified codec route for valid Goal values unsupported by the bounded original JCS/MessagePack route"
+  ],
+  "preserved_constraints": [
+    "Original four-state Goal and unchanged body/ordinary revision/objective history",
+    "No Goal content in indefinite original audit; unchanged thread-lifetime control and deletion/hold rules",
+    "Actual original SIR acknowledgement before append reservation; consumed reservation does not invalidate genuine original append evidence",
+    "No fabricated no-effect, changed terminal unknown, reconstructed original source or current event-derived Goal state",
+    "No Step 9 event admission, validator edit, frozen closure restamp, WorkNode/NodeSeed/readiness admission or governance seal"
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/static-validation.json",
+      "sha256": "3a44652fc045d0160a73d48945c6b2b34c8cd937a348ffff5beccce617a5e7c5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/reviewed-draft-manifest.json",
+      "sha256": "dadb7924d1028dd19859f2bc6256eff4050df9c0620c3727e1bdd8511395b2fa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/index-dependency-correction.json",
+      "sha256": "1d3f822192da1b786a75e1d8b87603ba53b32cbf3811bb63938a9c9eeb5eb133"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/wiring-declaration-correction.json",
+      "sha256": "09334d43cce4dd6f0f7d6970a8bc22378e2b8d6fef9c0822814370e785c73764"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/index-scope-final.json",
+      "sha256": "667bc415954e5fd122c6f892b9f939282f8eec6fbca405689208ca67cc339353"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/final-scope.json",
+      "sha256": "0c03758678e9e517592e69889a73899373994c9a5f2c7ffa246bfe89aa39e104"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/index-generate-final.json",
+      "sha256": "4b38c21ceb031bdba7b34b15778a992d1562bcd207ccc49165034e232b882511"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/shard-check-final.json",
+      "sha256": "96aa30aea19cbed1fbbb9e7e3ad821fe0bb1e7c520dd73ce051bba3103f7a58a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/wiring-check-final.json",
+      "sha256": "cee05e083242de5c37e4bd6bec97f239efd8e2e885c7b9083111bf6b996aa27d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/run-gates-final.log",
+      "sha256": "06273b893e6a43b4a84a1c1f51f1509b492cd1f404e62f2ba04204f767f66ba2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/goal-cancel-canonical-20260913/run-gates-final.json",
+      "sha256": "e1b1e9d64dda61d912b8a2c352e00daf797b6d362eaeb90183de89772cd6b743"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-cancelled-root-review-20260913/v4-explicit-resource-correction/manifest.json",
+      "sha256": "893b5cf3d41146360d5706092d58fb4039c978a67a467648ac92944d9117c5df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-cancelled-canonical-independent-review-20260913/v2/manifest.json",
+      "sha256": "f99b07ce4d6f8909dde8461f9b004dff66996e9c86d091f3ee66acffd4f28c34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-cancelled-canonical-independent-review-20260913/v2/review.md",
+      "sha256": "25887f68919c73929f1ceab7c0977960bdd5ba39e4e9be952ff330c325c349c4"
+    }
+  ]
+}
