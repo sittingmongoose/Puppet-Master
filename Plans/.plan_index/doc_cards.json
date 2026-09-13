@@ -12750,10 +12750,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 22,
+        "False": 23,
         "True": 1
       },
-      "heading_count": 34,
+      "heading_count": 36,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.implementation_readiness/buildability_gate_report.json",
@@ -12792,9 +12792,9 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1488,
+      "line_count": 1563,
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "plan_unit_count": 23,
+      "plan_unit_count": 24,
       "plan_unit_ids": [
         "PNC-001",
         "PNC-002",
@@ -12818,7 +12818,8 @@
         "PNC-017",
         "PNC-018",
         "PNC-019",
-        "PNC-020"
+        "PNC-020",
+        "PNC-024"
       ],
       "reasoning_tiers": [
         "high",
@@ -12831,6 +12832,7 @@
         "execution_boundary",
         "executor_boundary_bypass",
         "fable_residual_plan_to_node_schema_drift",
+        "fabricated_or_premature_compile_receipt",
         "false_completion",
         "false_node_generation",
         "false_plancompile_buildability",
@@ -12843,16 +12845,16 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+      "sha256": "06a7df70048390a6a790e364ff8d0544097d7985312401675437137a34b6652d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 23
+        "accepted": 24
       },
       "title": "Plan To Node Compilation",
       "unit_type_counts": {
         "constraint": 5,
         "requirement": 17,
-        "schema_contract": 1
+        "schema_contract": 2
       },
       "validation_surfaces": [
         "Future compiler boundary tests.",
@@ -12865,6 +12867,7 @@
         "Plans/.plan_index/dependencies.json",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/.plan_index/plan_units.jsonl",
+        "Plans/plans_to_code_handoff.schema.json",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
@@ -19341,7 +19344,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-13T21:52:54Z",
+  "generated_at_utc": "2026-09-13T22:21:09Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19349,13 +19352,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3446,
+      "False": 3447,
       "True": 3169
     },
-    "plan_unit_count": 6615,
+    "plan_unit_count": 6616,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6424,
+      "accepted": 6425,
       "retired": 182,
       "superseded": 9
     },
@@ -19427,7 +19430,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 87,
+      "schema_contract": 88,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

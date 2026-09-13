@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15354,
+    "depends_on_edge_count": 15361,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18005,
-    "node_count": 6615,
+    "edge_count": 18012,
+    "node_count": 6616,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-13T21:52:54Z",
+  "generated_at_utc": "2026-09-13T22:21:10Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6615,
+  "plan_unit_count": 6616,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2071,
+      "high": 2072,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36088,6 +36088,7 @@
       "fabricated_collaborative_history_on_migration": 1,
       "fabricated_command_or_event_registration": 1,
       "fabricated_oauth_readiness_or_distributed_confidential_client_secret": 1,
+      "fabricated_or_premature_compile_receipt": 1,
       "fabricated_original_platform_decision_or_scope_authority": 1,
       "fabricated_participant_output_or_lost_transcript": 1,
       "fabricated_recovery_or_unscoped_destructive_consent": 1,
@@ -38684,7 +38685,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6424,
+      "accepted": 6425,
       "retired": 182,
       "superseded": 9
     },
@@ -38756,7 +38757,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 87,
+      "schema_contract": 88,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,
@@ -38842,6 +38843,12 @@
         "error": "pnc019_source_hash_stale",
         "expected": "bd5aa3b073d25cbb4f1cf716fc7a4f24233fe540de705e8b4890e2ff72feb522",
         "source_path": "Plans/storage_value_registry.json"
+      },
+      {
+        "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
+        "error": "pnc019_source_hash_stale",
+        "expected": "06a7df70048390a6a790e364ff8d0544097d7985312401675437137a34b6652d",
+        "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",

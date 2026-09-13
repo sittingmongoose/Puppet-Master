@@ -163,3 +163,9 @@ Cost: source review and repository checks only; monetary attribution unavailable
 The [Plan cancellation validation report](step-08-assistant-plan-cancel-validation.md) records complete original Plan/Scheduler source custody, pre-Stop domains and actual C/SIR method adoption, distinct current versus retained effect reads, and first-settlement anchored runtime-only atomic retirement. Eight new units add 35 criteria; 257 root contract checks, 157 applied-source checks and 168 independent machine checks pass, with independent prose review clear. Ten physical families use existing classes while all prior families/policies and 42 event rows remain exact. Shards/index pass; full gates report 21 PASS / 15 FAIL. Native execution, Workflow settlement, complete Step 8 depth and later campaign/seal work remain unproved.
 
 Cost: source review and repository checks only; monetary attribution unavailable.
+
+## Original compiler receipt timing — 2026-09-13
+
+PNC-024 corrects premature assignment/completion receipt requirements while retaining authentic dispatch minimums, complete coverage and all original completion gates. The [validation report](step-08-compile-receipt-timing-validation.md) records 19 passing source checks, independent reviews, unchanged unrelated definitions and the explicit frozen-validator discrepancy. Shards/index pass; Standard gates report 21 PASS / 15 FAIL; newly failing check names: []. Full per-check counts are recorded in the JSON report; diagnostic samples remain bounded. Native execution, lifecycle certification and full Step 8 depth remain unproved.
+
+Cost: source review and repository checks only; monetary attribution unavailable.

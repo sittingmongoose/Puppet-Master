@@ -5615,6 +5615,7 @@
     "OSI-187",
     "PDS-020",
     "PNC-023",
+    "PNC-024",
     "PG-060",
     "UIW-009",
     "RAS-010",
@@ -42874,6 +42875,41 @@
     {
       "edge_type": "depends_on",
       "from": "PNC-023",
+      "to": "PNC-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "PNC-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "PNC-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "PNC-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "PNC-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
+      "to": "PNC-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-024",
       "to": "PNC-021"
     },
     {
@@ -96647,7 +96683,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-13T21:52:54Z",
+  "generated_at_utc": "2026-09-13T22:21:09Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -176448,6 +176484,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "original_compile_receipt_lifecycle",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-024",
+      "reasoning_tier": "high",
+      "risk_class": "fabricated_or_premature_compile_receipt",
+      "source_location": {
+        "heading": "PNC-024 - Truthful Compile Worklist Receipt Timing",
+        "heading_level": 3,
+        "heading_line": 1493,
+        "line": 1495,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "provider_opencode_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Provider_OpenCode.md",
@@ -209111,10 +209164,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15354,
+    "depends_on_edge_count": 15361,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18005,
-    "node_count": 6615,
+    "edge_count": 18012,
+    "node_count": 6616,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

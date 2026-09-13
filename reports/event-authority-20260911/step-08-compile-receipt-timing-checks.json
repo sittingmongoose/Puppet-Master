@@ -1,0 +1,294 @@
+{
+  "status": "SOURCE_CONTRACT_REVIEWED",
+  "base_commit": "ced70178c23f8077afef4020a822085d363284b1",
+  "scope": {
+    "source_files": [
+      {
+        "path": "Plans/Plan_To_Node_Compilation.md",
+        "sha256": "06a7df70048390a6a790e364ff8d0544097d7985312401675437137a34b6652d"
+      },
+      {
+        "path": "Plans/plans_to_code_handoff.schema.json",
+        "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2"
+      }
+    ],
+    "new_plan_units": [
+      "PNC-024"
+    ],
+    "new_acceptance_criteria": 9,
+    "changed_schema_definitions": [
+      "compile_worklist",
+      "compile_parallelism_policy"
+    ],
+    "unchanged_complete_definitions": 108
+  },
+  "source_checks": {
+    "status": "PASS",
+    "count": 19
+  },
+  "independent_packages": [
+    {
+      "role": "proposal",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/compile-receipt-timing-successor-20260913/v2/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/proposal/manifest.json",
+      "manifest_sha256": "e2e367b63c63e025fd080012d3e189c4a7a9b1360d0ebe7edd9d442a95a24272",
+      "members_verified": 5
+    },
+    {
+      "role": "proposal-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/compile-receipt-timing-independent-review-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/proposal-review/manifest.json",
+      "manifest_sha256": "de44ce39b56dbf108e99194f8b6123ca70b921ea35894317bcd0d9cc9e3cc3ee",
+      "members_verified": 2
+    },
+    {
+      "role": "applied-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/compile-receipt-timing-pnc024-independent-review-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/applied-review/manifest.json",
+      "manifest_sha256": "f50f8a13a9a63c0deda7f936922dc661f7b706b65be9a6740454312a5cf0a15d",
+      "members_verified": 4
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/prepare.py",
+      "sha256": "1477a5ad327327e766bc2c9ce42abb9f36464aea1fc89d3cb368331c0444c0a5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/build_report.py",
+      "sha256": "012c03313014a4f6e81a286acbc3a6682e867a253cdbc21ef0d575da9bea1728"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/source-checks.json",
+      "sha256": "38c391e8bb6dc5ac4ab4771a3ff113b202c64b362f736d85a8ec5940199ba294"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/source-paths.json",
+      "sha256": "424b7c49cad456c72dfe7863d20b2ca69fab2178e7c31da625158d99a95f3b09"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/baseline-run-gates.json",
+      "sha256": "8af6d280d18194128cb15f4de9751d332286224734144dd6fb26846656938bf2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/baseline-run-gates.log",
+      "sha256": "1a8331f339e8812c8fb84b44aa20ea0d6ed70dfc0da49f1080bc1897835f924e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/shard-generate.log",
+      "sha256": "e1d8566cd6e7f843eb32acd428772dd74ca24ae710ac540333ee9069b465efd9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/index-generate.log",
+      "sha256": "a52a9601685d2387d85e774c7ac621689d065e97cfd3ab257e76966ec8a9be47"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/gate-comparison.json",
+      "sha256": "23eb12499ed78f5177b5780bb7fb77cf8d167af2f3b1bb6dc260161876a67f5a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/run-gates.json",
+      "sha256": "4f1966e8a5987f207c56a0fe4a13c88ca74c622d0a79fb29cb15cf548bd23b74"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/run-gates.log",
+      "sha256": "f069761ce302e5493e4c746c58eafaecbb38ffe418029e766be4c05d43a51797"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/shard-check.log",
+      "sha256": "b7e67f24b298753e26dffae5dec56749f3ebea8551c06b3aba1429d1a2ab7d24"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/index-validate.log",
+      "sha256": "e8f2569f3f35ad1112076a906908f5b9d0e3ad15b8c7ced751bfad715cccd274"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/derived-scope.json",
+      "sha256": "bf29515a443d99303154375b12e4be62edbe8a795b76897e057094fdc1b97d16"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/compile-receipt-timing-canonical-20260913/root/applied-review-location.json",
+      "sha256": "dc695f79b5c52273fcad83d3798b589e0b1e46db241755560a4075452158d332"
+    }
+  ],
+  "gates": {
+    "status": "fail",
+    "pass_count": 21,
+    "fail_count": 15,
+    "failing_checks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_browser_event_admission",
+      "validate_evidence",
+      "validate_github_project_integration",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_prd_planning_runtime_contracts",
+      "validate_testing_session_event_admission",
+      "verify_spec_lock"
+    ],
+    "new_failing_check_names": [],
+    "cleared_check_names": [],
+    "failure_counts": {
+      "check_project_artifact_requirements": {
+        "before": 0,
+        "after": 0
+      },
+      "check_shards": {
+        "before": 0,
+        "after": 0
+      },
+      "json_syntax": {
+        "before": 1,
+        "after": 1
+      },
+      "lint_banned_phrases": {
+        "before": 0,
+        "after": 0
+      },
+      "lint_contractrefs": {
+        "before": 1,
+        "after": 1
+      },
+      "lint_path_refs": {
+        "before": 10,
+        "after": 10
+      },
+      "validate_audit_closure": {
+        "before": 201,
+        "after": 201
+      },
+      "validate_audit_status_index": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_auto_decisions": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_browser_event_admission": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_evidence": {
+        "before": 1501,
+        "after": 1513
+      },
+      "validate_filesafe_security_policy": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_github_project_integration": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_gui_asset_policy": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_implementation_readiness": {
+        "before": 120,
+        "after": 121
+      },
+      "validate_new_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_plan_graph": {
+        "before": 1501,
+        "after": 1513
+      },
+      "validate_plan_migration": {
+        "before": 180,
+        "after": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "before": 1240,
+        "after": 1240
+      },
+      "validate_project_output_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_server_command_gap": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_testing_session_event_admission": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_touch_closure": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_ui_command_response": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_usage_contract_drift": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_web_capability_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_wiring_matrix": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_working_notebook_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "verify_spec_lock": {
+        "before": 29,
+        "after": 31
+      }
+    },
+    "counts_are_reported_full_counts": true,
+    "diagnostic_samples_are_bounded": true
+  },
+  "native_execution": "NOT_RUN",
+  "schema_instance_execution": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "family_depth_clearance": false,
+  "validator_edits": false,
+  "governance_seal": false,
+  "schema_version_and_launch_controls": "UNCHANGED",
+  "preparation_note": "First root script run rejected definition iteration order before writing any source; root changed the assertion to set equality and reapplied the identical five reviewed operations. The no-change regeneration and baseline remained clean."
+}
