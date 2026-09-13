@@ -13,15 +13,15 @@
       "schema_id": "pm.storage_value.goal_receipt.v1",
       "schema_version": "1.0.0",
       "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/legacy_goal_receipt_v1",
-      "scope": "All originally authorized generic v1 kinds/tiers remain; accepted/receipt_kind/tier strings supply no Standard proof."
+      "scope": "All originally authorized generic v1 kinds/tiers remain; accepted/receipt_kind/tier strings supply no Standard proof. GRS-052/GRS-075 retirement still governs actual current semantic issuance; the broad retained grammar authorizes no child Goal or parent-completion behavior."
     },
     {
       "producer_role": "original Workflow controller or assigned canonical artifact owner through Storage",
       "binding": "storage.goal_receipt.capture_standard.v2",
       "schema_id": "pm.storage_value.goal_receipt.v2",
       "schema_version": "2.0.0",
-      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_certification_custody_v2",
-      "scope": "New authenticated Standard certification only, passing validators and no unresolved risk/exception/waiver; absent original key or exact original admitted v2 retry."
+      "schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/current_standard_certification_custody_v2",
+      "scope": "New authenticated Standard certification only, passing validators and no unresolved risk/exception/waiver; independently authenticated complete child-Goal requirement set and both child-receipt arrays are empty. Reject nonempty or unknown original child requirements before capture or writer replay, without coercion. Absent original key or exact original admitted current-scope v2 retry; retained historical disclosure uses the separate unchanged read route."
     }
   ],
   "read_routes": [
@@ -57,7 +57,8 @@
   "owner_refs": [
     "Plans/storage-plan.md#SP-289",
     "Plans/Goal_Runtime_System.md#GRS-065",
-    "Plans/Contracts_V0.md#CV-340"
+    "Plans/Contracts_V0.md#CV-340",
+    "Plans/Goal_Runtime_System.md#GRS-075"
   ],
   "unknown_route": "Reject missing/unknown/uninstalled/withdrawn role or unsupported schema pair; never select by kind/tier string or silently validate every value against a union.",
   "activation": "Actual StorageMigrationCoordinator installs schemas, exact per-role dispatcher, current origin/backup/restore admission and dependent owners before enabling Standard capture/read. Existing generic gates validate v1 root only; no native installation is asserted."

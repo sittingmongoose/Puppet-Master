@@ -6070,7 +6070,7 @@ GRS-065 defines the minimal original Standard certification prerequisite under D
 
 The actual owning Workflow controller or assigned canonical artifact owner issues the original typed decision. The existing Planning Run/final audit controller allocation in Planning Wizard remains authoritative; workers, auditors and receipt panels cannot promote their own result to certification. Source identity is its actual resolved ref and schema, not a hardcoded fixture location or a caller permission boolean. The schema and owner/target authorization, current source/workgraph revision and original issuance time must be authenticated before receipt custody.
 
-Resolve the original Workflow's complete required WorkNode, child, validator and acceptance-criterion sets independently from the original workgraph/owner records. Require exact Project/Goal/GoalRun/receipt identity and scope, source ref, original certifier authority for that target, original tier and graph revision/hash. Each required WorkNode receipt validates against the original canonical `worknode_completion_receipt`, names the expected WorkNode and is complete without unresolved findings. Each required child receipt binds the original parent and required child Goal/GoalRun and successful result. Each validator's actual source record validates against `validator_outcome`, joins its expected source ref/ID, passed status and evidence; every required criterion has satisfied disposition and evidence. Missing/extra/duplicate/foreign/failed records reject.
+Resolve the original Workflow's complete required WorkNode, child, validator and acceptance-criterion sets independently from the original workgraph/owner records. **Current issuance applies GRS-052/GRS-075: the complete child-Goal/GoalRun requirement set and child-receipt arrays must be authentically empty.** Nonempty or unknown original requirements reject before certification/capture or current-writer replay; never drop a child edge or substitute an empty array. Require exact Project/Goal/GoalRun/receipt identity and scope, source ref, original certifier authority for that target, original tier and graph revision/hash. Each required WorkNode receipt validates against the original canonical `worknode_completion_receipt`, names the expected WorkNode and is complete without unresolved findings. The retained historical child-receipt grammar binds its original parent and child Goal/GoalRun and result only for original historical interpretation; it supplies no current parent-completion authority. Each validator's actual source record validates against `validator_outcome`, joins its expected source ref/ID, passed status and evidence; every required criterion has satisfied disposition and evidence. Missing/extra/duplicate/foreign/failed records reject.
 
 The original Workflow's eight booleans (`all_worknodes_terminal`, `all_tests_passed_or_dispositioned`, `source_control_receipts_valid`, `no_active_blockers`, `rollback_requirements_satisfied`, `safe_point_requirements_satisfied`, `no_stale_plan_workgraph_currentness_mismatch`, `auditor_passed`) are actually true, with valid original referenced source/runtime/admission evidence; setting flags in a supplied object is insufficient. Its final source state is `clean` or `intentionally_preserved`, decision is `certified`, and unresolved risks are empty. Actual original authority checks bind the certifier and GoalRun, and original issuance/observation chronology is valid without rewriting timestamp spelling or precision.
 
@@ -6100,7 +6100,8 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Original Standard certification comes from the actual owning Workflow controller or assigned
   canonical artifact owner and complete independently resolved source, target authority, workgraph,
-  validator, child, WorkNode and acceptance evidence. The Original Standard certification receipt
+  validator, WorkNode and acceptance evidence, with authentically empty current child-Goal
+  requirements under GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
   contract preserves its immutable decision and truthful labels through SP-289 custody, keeps
   existing generic receipts and exception semantics separate, and grants no Goal/body/event action.
 gui_related: false
@@ -6111,6 +6112,7 @@ acceptance_criteria:
   - "The actual original source and certifier/target/scope/revision/time evidence independently establish every required dependency and Standard final decision."
   - "Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final current owner/origin checks."
   - "Generic accepted markers, worker success and body receipts never substitute for original Standard certification."
+  - "Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty or unknown input refuses without rewriting it, while retained grammar stays exact."
   - "D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source enum is granted."
   - "Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action, event proof or Goal/GoalRun transition."
 validation_surfaces:
@@ -6944,3 +6946,62 @@ The public `BindingReadRequest` has only `current_for_cancel` and `retained_sele
 SP-305 owns physical keys, full byte/hash preimages, codec reservation and independent final effect/disclosure predicates. APR-016 joins the original Plan build transaction. These records carry no Goal title, task graph, provider response or objective text.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+
+## Current Workflow activation and certification child scope
+
+GRS-052 retires child Goals and parent completion authority, and GRS-053 gives internal callers the same Goal engine. Neither the older GRS-026/GRS-027 Workflow envelope nor GRS-065's retained complete receipt grammar supplies an exception. Their child-Goal wording is compatibility/source lineage in the current runtime. Workflow stages, WorkGraph dependencies, bounded To-Dos and collaborative participants remain with their existing owners; none is renamed to a child Goal.
+
+Every current original activation, required-set publication, verification/completion decision, certification source issuer and Standard capture must independently read the complete original owner graph and requirements and prove that child Goal/GoalRun parent edges and required-child sets are empty. A supplied empty list, omitted field, absent index or missing source does not prove that fact. Nonempty or unknown original child requirements refuse before new publication, current-writer replay or dependent activation/completion; they are preserved for original history or owner correction, never silently dropped, coerced or converted to another work kind. Every directly callable participant repeats its complete source/owner/currentness predicate after all returning helpers and before its own release/commit; outer publication rechecks the complete joint result. Earlier genuine effects remain preserved on later refusal.
+
+The current Standard writer selects CV-340's `current_standard_certification_custody_v2` refinement, requiring empty `original_certification.child_receipt_refs` and `legacy_goal_receipt.child_receipt_refs` in addition to the independently authenticated empty original requirement set. The stored v2 identity, complete original generic v1 and Standard v2 grammars, source hash recipe, immutable bytes, and retained read routes remain unchanged. Historical reads may return genuine original child refs under their original interpretation and current disclosure permission; they cannot authorize current Goal creation, activation, completion or a new receipt/event. A schema-valid historical row is not an exception to retirement. No new event or registry membership follows.
+
+### GRS-075 - Current Workflow Child-Goal Retirement Admission
+
+```yaml
+plan_unit_id: GRS-075
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Current Workflow activation, completion and certification apply GRS-052's retirement of child
+  Goals and parent completion authority. Complete original child-Goal requirements and receipt
+  arrays must authenticate as empty before new publication or current-writer replay; nonempty
+  or unknown sources refuse without coercion. Exact generic and historical receipt grammars and
+  original retained disclosure remain separate and confer no current action authority.
+gui_related: false
+gui_classification_reason: Defines internal current source admission and retained interpretation, with no new visual surface.
+depends_on: [GRS-052, GRS-053, GRS-065, CV-340, SP-289]
+unblocks: []
+acceptance_criteria:
+  - Complete original owner graph and required-child sets prove current emptiness; supplied empty arrays or missing sources do not.
+  - Nonempty, unknown, omitted or incoherent current child requirements refuse before new publication or writer replay without modifying source history.
+  - Each original issuer and final joint publisher repeats complete current source and candidate checks after returning helpers.
+  - Current Standard schema and role routing require both child-receipt arrays empty while retained v1/v2 grammar and original bytes remain unchanged.
+  - Workflow participants, To-Dos and WorkGraph dependencies are never relabeled child Goals.
+validation_surfaces:
+  - Plans/goal_certification_custody.schema.json
+  - Plans/goal_receipt_version_routes.json
+  - Plans/goal_certification_current_scope_fixtures.json
+  - reports/event-authority-20260911/step-08-current-child-scope-validation.md
+risk_class: retired_child_goal_authority_reintroduced
+reasoning_tier: high
+context_scope: current_workflow_activation_and_certification_child_scope
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Goal_Runtime_System.md#GRS-052
+  - Plans/Goal_Runtime_System.md#GRS-053
+  - reports/event-authority-20260911/step-08-current-child-scope-validation.md
+negative_constraints:
+  - No child Goal, parent-completion authority, new lifecycle, event, runtime instance, or historical conversion.
+  - No native/depth/readiness claim, validator modification, frozen audit rewrite or governance seal.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-052, ContractName:Plans/Goal_Runtime_System.md#GRS-053, ContractName:Plans/Goal_Runtime_System.md#GRS-065, ContractName:Plans/Contracts_V0.md#CV-340, ContractName:Plans/storage-plan.md#SP-289

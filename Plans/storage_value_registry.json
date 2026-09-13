@@ -3970,7 +3970,7 @@
         "effective_runtime_ref"
       ],
       "replay_behavior": "Original generic v1 state/receipt consumers remain under existing authority. Explicit Standard v2 reader returns original immutable Workflow certification metadata after actual canonical origin and current disclosure checks; no old raw Workflow reacquisition, legacy accepted-marker conversion, current action authority or Goal/event depth inheritance.",
-      "migration": "Explicit exact-family concurrent role routes in Plans/goal_receipt_version_routes.json and SP-289. Root and outer field/schema metadata remain the unchanged generic v1 writer; named inline/external Standard v2 writer and retained v1/v2 grammars are separate. Actual installed role dispatch must select exact writer/reader schema, origin and backup/migration gates. New Standard first-write requires absent key or exact already-admitted v2 replay. Existing occupied v1 is never upgraded, overwritten or inferred certified; all generic v1 kinds/tiers/roles remain available. No validator or native-dispatch pass follows from named schema definitions.",
+      "migration": "Explicit exact-family concurrent role routes in Plans/goal_receipt_version_routes.json and SP-289. Root and outer field/schema metadata remain the unchanged generic v1 writer; named inline/external Standard v2 writer and retained v1/v2 grammars are separate. Actual installed role dispatch must select exact writer/reader schema, origin and backup/migration gates. New Standard first-write requires absent key or exact already-admitted v2 replay. Existing occupied v1 is never upgraded, overwritten or inferred certified; all generic v1 kinds/tiers/roles remain available. No validator or native-dispatch pass follows from named schema definitions. Current Standard capture selects current_standard_certification_custody_v2 under GRS-075 and authenticates empty original child-Goal requirements. Exact v1/v2 retained grammars and stored schema/version pairs remain unchanged; no historical child receipt grants current issuance or parent-completion authority.",
       "retention_compaction": "Retain completion, degraded, stopped, blocked, child-goal, recovery, evidence, and certification receipts under Goal Runtime retention anchors.",
       "redaction_no_secret_rule": "Receipts store validator/evidence refs and decisions only; provider output and local evidence bodies are ref-only/redacted.",
       "legacy_canonical_crosswalk_status": "Generic v1 root/outer metadata and all old kinds, tiers and fields stay exact. Standard v2 is a separately registered same-family first-write/capture role under SP-289/GRS-065/CV-340; native installation, actual initial absence, source authentication and full event/body producer remain NOT_RUN. Prototype proposal_version/proposal.1 rows are never a deployed migration source.",
@@ -4676,7 +4676,7 @@
                 "$ref": "#/$defs/legacy_goal_receipt_v1"
               },
               {
-                "$ref": "#/$defs/standard_certification_custody_v2"
+                "$ref": "#/$defs/current_standard_certification_custody_v2"
               }
             ]
           },
@@ -4722,6 +4722,43 @@
                 "minLength": 1
               }
             }
+          },
+          "current_standard_certification": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/standard_certification"
+              },
+              {
+                "properties": {
+                  "child_receipt_refs": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            ],
+            "$comment": "Current original issuance requires independently authenticated empty child-Goal requirements under GRS-052/GRS-075. The complete retained Standard grammar remains separate; empty output alone does not prove empty original requirements."
+          },
+          "current_standard_certification_custody_v2": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/standard_certification_custody_v2"
+              },
+              {
+                "properties": {
+                  "original_certification": {
+                    "$ref": "#/$defs/current_standard_certification"
+                  },
+                  "legacy_goal_receipt": {
+                    "properties": {
+                      "child_receipt_refs": {
+                        "maxItems": 0
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "$comment": "Current Standard capture grammar only; both components preserve the actual empty set. No coercion, historical conversion or new stored schema/version."
           }
         }
       },

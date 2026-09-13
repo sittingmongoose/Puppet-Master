@@ -1,0 +1,405 @@
+{
+  "schema_id": "pm.goal.certification_current_scope_fixtures.v1",
+  "fixture_only": true,
+  "qualification": "Structural receipt-only examples. Retained grammar validity is not authentic historical provenance, current action, native source proof or executable work.",
+  "current_schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/current_standard_certification_custody_v2",
+  "retained_schema_ref": "Plans/goal_certification_custody.schema.json#/$defs/standard_certification_custody_v2",
+  "cases": [
+    {
+      "case": "empty_current",
+      "value": {
+        "legacy_goal_receipt": {
+          "certification_tier": "standard",
+          "child_receipt_refs": [],
+          "created_at_utc": "2020-01-01T00:00:00Z",
+          "evidence_refs": [
+            "evidence:original"
+          ],
+          "final_certifier_decision": "accepted",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "receipt_kind": "goal_run_certification",
+          "redaction_profile": "no_secrets",
+          "schema_id": "pm.storage_value.goal_receipt.v1",
+          "schema_version": "1.0.0",
+          "unresolved_risks": [],
+          "validator_outputs": [
+            "validator-result:original"
+          ],
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "original_certification": {
+          "acceptance_criteria_disposition": [
+            {
+              "criterion_ref": "fixture:required-criterion",
+              "disposition": "satisfied",
+              "evidence_refs": [
+                "evidence:original"
+              ]
+            }
+          ],
+          "approval_refs": [],
+          "authority_checks": [
+            {
+              "authority_ref": "fixture:actual-certifier-grant",
+              "authority_sha256": "8735a0269002caa9eb07e23c6e5217848eeea5010a98c308f8c009d8f9375065",
+              "certifier_ref": "fixture:workflow-controller",
+              "decision": "authorized",
+              "target_ref": "run-original"
+            }
+          ],
+          "certification_tier": "standard",
+          "certifier_ref": "fixture:workflow-controller",
+          "changed_artifact_refs": [],
+          "child_receipt_refs": [],
+          "final_certifier_decision": "certified",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "issued_at_utc": "2020-01-01T00:00:00Z",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "required_worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ],
+          "schema_version": "1.0.0",
+          "source_schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+          "source_workflow_ref": "workflow-receipt:original",
+          "source_workflow_sha256": "48a527cc58de8c363c99ee98002a7565d39574429b76b8088a06fcf8c10c3c65",
+          "truthful_result_label": "certified",
+          "unresolved_risk_refs": [],
+          "validator_outputs": [
+            {
+              "evidence_ref": "evidence:original",
+              "outcome": "passed",
+              "validator_id": "validator-original"
+            }
+          ],
+          "validator_source_bindings": [
+            {
+              "source_ref": "validator-result:original",
+              "source_sha256": "614697ff81ae376cc5378a6b9b54f8c2832b6934adcb31626263b1e24dc69152",
+              "validator_id": "validator-original"
+            }
+          ],
+          "workgraph_ref": "workgraph:original",
+          "workgraph_revision": 1,
+          "workgraph_sha256": "8047715b90070623e408954657c71ef68c24a9330492b3dad90cc2d59cae9e96",
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "physical_key": "goal_receipt.v1:project-original:receipt-original",
+        "storage_instance_id": "fixture:storage",
+        "schema_id": "pm.storage_value.goal_receipt.v2",
+        "schema_version": "2.0.0"
+      },
+      "current_write_valid": true,
+      "retained_read_shape_valid": true
+    },
+    {
+      "case": "nonempty_original",
+      "value": {
+        "legacy_goal_receipt": {
+          "certification_tier": "standard",
+          "child_receipt_refs": [],
+          "created_at_utc": "2020-01-01T00:00:00Z",
+          "evidence_refs": [
+            "evidence:original"
+          ],
+          "final_certifier_decision": "accepted",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "receipt_kind": "goal_run_certification",
+          "redaction_profile": "no_secrets",
+          "schema_id": "pm.storage_value.goal_receipt.v1",
+          "schema_version": "1.0.0",
+          "unresolved_risks": [],
+          "validator_outputs": [
+            "validator-result:original"
+          ],
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "original_certification": {
+          "acceptance_criteria_disposition": [
+            {
+              "criterion_ref": "fixture:required-criterion",
+              "disposition": "satisfied",
+              "evidence_refs": [
+                "evidence:original"
+              ]
+            }
+          ],
+          "approval_refs": [],
+          "authority_checks": [
+            {
+              "authority_ref": "fixture:actual-certifier-grant",
+              "authority_sha256": "8735a0269002caa9eb07e23c6e5217848eeea5010a98c308f8c009d8f9375065",
+              "certifier_ref": "fixture:workflow-controller",
+              "decision": "authorized",
+              "target_ref": "run-original"
+            }
+          ],
+          "certification_tier": "standard",
+          "certifier_ref": "fixture:workflow-controller",
+          "changed_artifact_refs": [],
+          "child_receipt_refs": [
+            "fixture:historical-child-receipt"
+          ],
+          "final_certifier_decision": "certified",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "issued_at_utc": "2020-01-01T00:00:00Z",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "required_worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ],
+          "schema_version": "1.0.0",
+          "source_schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+          "source_workflow_ref": "workflow-receipt:original",
+          "source_workflow_sha256": "48a527cc58de8c363c99ee98002a7565d39574429b76b8088a06fcf8c10c3c65",
+          "truthful_result_label": "certified",
+          "unresolved_risk_refs": [],
+          "validator_outputs": [
+            {
+              "evidence_ref": "evidence:original",
+              "outcome": "passed",
+              "validator_id": "validator-original"
+            }
+          ],
+          "validator_source_bindings": [
+            {
+              "source_ref": "validator-result:original",
+              "source_sha256": "614697ff81ae376cc5378a6b9b54f8c2832b6934adcb31626263b1e24dc69152",
+              "validator_id": "validator-original"
+            }
+          ],
+          "workgraph_ref": "workgraph:original",
+          "workgraph_revision": 1,
+          "workgraph_sha256": "8047715b90070623e408954657c71ef68c24a9330492b3dad90cc2d59cae9e96",
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "physical_key": "goal_receipt.v1:project-original:receipt-original",
+        "storage_instance_id": "fixture:storage",
+        "schema_id": "pm.storage_value.goal_receipt.v2",
+        "schema_version": "2.0.0"
+      },
+      "current_write_valid": false,
+      "retained_read_shape_valid": true
+    },
+    {
+      "case": "nonempty_generic",
+      "value": {
+        "legacy_goal_receipt": {
+          "certification_tier": "standard",
+          "child_receipt_refs": [
+            "fixture:historical-child-receipt"
+          ],
+          "created_at_utc": "2020-01-01T00:00:00Z",
+          "evidence_refs": [
+            "evidence:original"
+          ],
+          "final_certifier_decision": "accepted",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "receipt_kind": "goal_run_certification",
+          "redaction_profile": "no_secrets",
+          "schema_id": "pm.storage_value.goal_receipt.v1",
+          "schema_version": "1.0.0",
+          "unresolved_risks": [],
+          "validator_outputs": [
+            "validator-result:original"
+          ],
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "original_certification": {
+          "acceptance_criteria_disposition": [
+            {
+              "criterion_ref": "fixture:required-criterion",
+              "disposition": "satisfied",
+              "evidence_refs": [
+                "evidence:original"
+              ]
+            }
+          ],
+          "approval_refs": [],
+          "authority_checks": [
+            {
+              "authority_ref": "fixture:actual-certifier-grant",
+              "authority_sha256": "8735a0269002caa9eb07e23c6e5217848eeea5010a98c308f8c009d8f9375065",
+              "certifier_ref": "fixture:workflow-controller",
+              "decision": "authorized",
+              "target_ref": "run-original"
+            }
+          ],
+          "certification_tier": "standard",
+          "certifier_ref": "fixture:workflow-controller",
+          "changed_artifact_refs": [],
+          "child_receipt_refs": [],
+          "final_certifier_decision": "certified",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "issued_at_utc": "2020-01-01T00:00:00Z",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "required_worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ],
+          "schema_version": "1.0.0",
+          "source_schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+          "source_workflow_ref": "workflow-receipt:original",
+          "source_workflow_sha256": "48a527cc58de8c363c99ee98002a7565d39574429b76b8088a06fcf8c10c3c65",
+          "truthful_result_label": "certified",
+          "unresolved_risk_refs": [],
+          "validator_outputs": [
+            {
+              "evidence_ref": "evidence:original",
+              "outcome": "passed",
+              "validator_id": "validator-original"
+            }
+          ],
+          "validator_source_bindings": [
+            {
+              "source_ref": "validator-result:original",
+              "source_sha256": "614697ff81ae376cc5378a6b9b54f8c2832b6934adcb31626263b1e24dc69152",
+              "validator_id": "validator-original"
+            }
+          ],
+          "workgraph_ref": "workgraph:original",
+          "workgraph_revision": 1,
+          "workgraph_sha256": "8047715b90070623e408954657c71ef68c24a9330492b3dad90cc2d59cae9e96",
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "physical_key": "goal_receipt.v1:project-original:receipt-original",
+        "storage_instance_id": "fixture:storage",
+        "schema_id": "pm.storage_value.goal_receipt.v2",
+        "schema_version": "2.0.0"
+      },
+      "current_write_valid": false,
+      "retained_read_shape_valid": true
+    },
+    {
+      "case": "nonempty_both",
+      "value": {
+        "legacy_goal_receipt": {
+          "certification_tier": "standard",
+          "child_receipt_refs": [
+            "fixture:historical-child-receipt"
+          ],
+          "created_at_utc": "2020-01-01T00:00:00Z",
+          "evidence_refs": [
+            "evidence:original"
+          ],
+          "final_certifier_decision": "accepted",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "receipt_kind": "goal_run_certification",
+          "redaction_profile": "no_secrets",
+          "schema_id": "pm.storage_value.goal_receipt.v1",
+          "schema_version": "1.0.0",
+          "unresolved_risks": [],
+          "validator_outputs": [
+            "validator-result:original"
+          ],
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "original_certification": {
+          "acceptance_criteria_disposition": [
+            {
+              "criterion_ref": "fixture:required-criterion",
+              "disposition": "satisfied",
+              "evidence_refs": [
+                "evidence:original"
+              ]
+            }
+          ],
+          "approval_refs": [],
+          "authority_checks": [
+            {
+              "authority_ref": "fixture:actual-certifier-grant",
+              "authority_sha256": "8735a0269002caa9eb07e23c6e5217848eeea5010a98c308f8c009d8f9375065",
+              "certifier_ref": "fixture:workflow-controller",
+              "decision": "authorized",
+              "target_ref": "run-original"
+            }
+          ],
+          "certification_tier": "standard",
+          "certifier_ref": "fixture:workflow-controller",
+          "changed_artifact_refs": [],
+          "child_receipt_refs": [
+            "fixture:historical-child-receipt"
+          ],
+          "final_certifier_decision": "certified",
+          "goal_id": "goal-original",
+          "goal_run_id": "run-original",
+          "issued_at_utc": "2020-01-01T00:00:00Z",
+          "project_id": "project-original",
+          "receipt_id": "receipt-original",
+          "required_worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ],
+          "schema_version": "1.0.0",
+          "source_schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+          "source_workflow_ref": "workflow-receipt:original",
+          "source_workflow_sha256": "48a527cc58de8c363c99ee98002a7565d39574429b76b8088a06fcf8c10c3c65",
+          "truthful_result_label": "certified",
+          "unresolved_risk_refs": [],
+          "validator_outputs": [
+            {
+              "evidence_ref": "evidence:original",
+              "outcome": "passed",
+              "validator_id": "validator-original"
+            }
+          ],
+          "validator_source_bindings": [
+            {
+              "source_ref": "validator-result:original",
+              "source_sha256": "614697ff81ae376cc5378a6b9b54f8c2832b6934adcb31626263b1e24dc69152",
+              "validator_id": "validator-original"
+            }
+          ],
+          "workgraph_ref": "workgraph:original",
+          "workgraph_revision": 1,
+          "workgraph_sha256": "8047715b90070623e408954657c71ef68c24a9330492b3dad90cc2d59cae9e96",
+          "worknode_receipt_refs": [
+            "worknode-receipt:original"
+          ]
+        },
+        "physical_key": "goal_receipt.v1:project-original:receipt-original",
+        "storage_instance_id": "fixture:storage",
+        "schema_id": "pm.storage_value.goal_receipt.v2",
+        "schema_version": "2.0.0"
+      },
+      "current_write_valid": false,
+      "retained_read_shape_valid": true
+    }
+  ],
+  "native_obligations_not_run": [
+    "independent complete original child-set read",
+    "caller empty versus nonempty original rejection",
+    "missing/stale original source rejection",
+    "late child-edge/helper mutation rejection",
+    "current-writer replay refusal for historical nonempty source",
+    "historical retained disclosure preserves original bytes without current action"
+  ]
+}

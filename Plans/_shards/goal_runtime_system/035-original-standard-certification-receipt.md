@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6065-L6140
+Source lines: L6065-L6142
 
-Source SHA256: `89b5eeb05e1db7d8fc32e1a93b1e070a21d46af1d2074727f8b36be1a068c4de`
+Source SHA256: `becb9e14dcd4774151473072c3c6c239eae4e9f14f3608f0ac46d540cd76add0`
 
 ---
 
@@ -16,7 +16,7 @@ GRS-065 defines the minimal original Standard certification prerequisite under D
 
 The actual owning Workflow controller or assigned canonical artifact owner issues the original typed decision. The existing Planning Run/final audit controller allocation in Planning Wizard remains authoritative; workers, auditors and receipt panels cannot promote their own result to certification. Source identity is its actual resolved ref and schema, not a hardcoded fixture location or a caller permission boolean. The schema and owner/target authorization, current source/workgraph revision and original issuance time must be authenticated before receipt custody.
 
-Resolve the original Workflow's complete required WorkNode, child, validator and acceptance-criterion sets independently from the original workgraph/owner records. Require exact Project/Goal/GoalRun/receipt identity and scope, source ref, original certifier authority for that target, original tier and graph revision/hash. Each required WorkNode receipt validates against the original canonical `worknode_completion_receipt`, names the expected WorkNode and is complete without unresolved findings. Each required child receipt binds the original parent and required child Goal/GoalRun and successful result. Each validator's actual source record validates against `validator_outcome`, joins its expected source ref/ID, passed status and evidence; every required criterion has satisfied disposition and evidence. Missing/extra/duplicate/foreign/failed records reject.
+Resolve the original Workflow's complete required WorkNode, child, validator and acceptance-criterion sets independently from the original workgraph/owner records. **Current issuance applies GRS-052/GRS-075: the complete child-Goal/GoalRun requirement set and child-receipt arrays must be authentically empty.** Nonempty or unknown original requirements reject before certification/capture or current-writer replay; never drop a child edge or substitute an empty array. Require exact Project/Goal/GoalRun/receipt identity and scope, source ref, original certifier authority for that target, original tier and graph revision/hash. Each required WorkNode receipt validates against the original canonical `worknode_completion_receipt`, names the expected WorkNode and is complete without unresolved findings. The retained historical child-receipt grammar binds its original parent and child Goal/GoalRun and result only for original historical interpretation; it supplies no current parent-completion authority. Each validator's actual source record validates against `validator_outcome`, joins its expected source ref/ID, passed status and evidence; every required criterion has satisfied disposition and evidence. Missing/extra/duplicate/foreign/failed records reject.
 
 The original Workflow's eight booleans (`all_worknodes_terminal`, `all_tests_passed_or_dispositioned`, `source_control_receipts_valid`, `no_active_blockers`, `rollback_requirements_satisfied`, `safe_point_requirements_satisfied`, `no_stale_plan_workgraph_currentness_mismatch`, `auditor_passed`) are actually true, with valid original referenced source/runtime/admission evidence; setting flags in a supplied object is insufficient. Its final source state is `clean` or `intentionally_preserved`, decision is `certified`, and unresolved risks are empty. Actual original authority checks bind the certifier and GoalRun, and original issuance/observation chronology is valid without rewriting timestamp spelling or precision.
 
@@ -46,7 +46,8 @@ owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
   Original Standard certification comes from the actual owning Workflow controller or assigned
   canonical artifact owner and complete independently resolved source, target authority, workgraph,
-  validator, child, WorkNode and acceptance evidence. The Original Standard certification receipt
+  validator, WorkNode and acceptance evidence, with authentically empty current child-Goal
+  requirements under GRS-052/GRS-075 and unchanged historical receipt grammar. The Original Standard certification receipt
   contract preserves its immutable decision and truthful labels through SP-289 custody, keeps
   existing generic receipts and exception semantics separate, and grants no Goal/body/event action.
 gui_related: false
@@ -57,6 +58,7 @@ acceptance_criteria:
   - "The actual original source and certifier/target/scope/revision/time evidence independently establish every required dependency and Standard final decision."
   - "Original issuer/Storage outputs exactly match actual complete source projection and remain guarded through final current owner/origin checks."
   - "Generic accepted markers, worker success and body receipts never substitute for original Standard certification."
+  - "Current original child-Goal requirements and both stored child-receipt arrays are authenticated empty; nonempty or unknown input refuses without rewriting it, while retained grammar stays exact."
   - "D-R18 exception/waiver semantics stay distinct and unavailable through this Standard route; no new policy or source enum is granted."
   - "Receipt disclosure preserves original metadata after lawful source/body disposal and grants no current action, event proof or Goal/GoalRun transition."
 validation_surfaces:

@@ -1,0 +1,391 @@
+{
+  "schema_id": "pm.event_authority.current_child_scope_checks.v1",
+  "source_base": "1136661ddcd6cc83eedef95e60e447dc005f6b94",
+  "scope": "Current original Workflow child-Goal retirement admission and Standard writer refinement; historical grammar preserved.",
+  "source_checks": {
+    "passed": 244,
+    "failed": 0,
+    "source_pins": [
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "bytes": 504001,
+        "sha256": "becb9e14dcd4774151473072c3c6c239eae4e9f14f3608f0ac46d540cd76add0"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "bytes": 1238628,
+        "sha256": "5722720b33830c3e6a441df2d4c5e302e9879c13e1f11d7cad76f22422e19e55"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "bytes": 2049613,
+        "sha256": "365c5fa39cab5d0525f56d6eaf54da2dfb298fa4cf9c22bb027cfcdb8c77fedc"
+      },
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "bytes": 404597,
+        "sha256": "d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9"
+      },
+      {
+        "path": "Plans/goal_certification_custody.schema.json",
+        "bytes": 19088,
+        "sha256": "50687ee0c5d335898ce9ce98fe6e258ac69f344ab3ba7086dba787623201c00b"
+      },
+      {
+        "path": "Plans/goal_receipt_version_routes.json",
+        "bytes": 4096,
+        "sha256": "28a41733a52e700b24b20654d953250e0fb2e4d2140ffb3c4fcf4faf3c579a87"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "bytes": 3344730,
+        "sha256": "f31698dcfd47bb6acc72a1b1ec16682f85293f0575420381ac6b177dc6011af7"
+      },
+      {
+        "path": "Plans/goal_certification_current_scope_fixtures.json",
+        "bytes": 15884,
+        "sha256": "6c00c9955a5ff4826eb3532a057c61c70dad1ef587b332b15b6e945adce3298b"
+      }
+    ]
+  },
+  "fixtures": {
+    "new_receipt_only_cases": 4,
+    "new_route_assertions_passed": 8,
+    "retained_original_cases": 19,
+    "retained_route_assertions_passed": 57,
+    "native_instances_created": false
+  },
+  "independent_review": "No blocking source finding; all review source hashes match the final canonical source files.",
+  "shards": {
+    "docs_checked": 98,
+    "failures": [],
+    "shards_checked": 2605,
+    "source_count": 98,
+    "status": "pass"
+  },
+  "shard_scope": {
+    "expected_source_docs": [
+      "Plans/Automated_Testing_System.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/storage-plan.md",
+      "Plans/storage_value_registry.json"
+    ],
+    "actual_changed_shard_dirs": [
+      "Plans/_shards/automated_testing_system",
+      "Plans/_shards/contracts_v0",
+      "Plans/_shards/goal_runtime_system",
+      "Plans/_shards/storage-plan",
+      "Plans/_shards/storage_value_registry"
+    ],
+    "passed": true,
+    "initial_scope_check_correction": "Initial ad hoc expected set omitted edited JSON registry; sharding_config explicitly includes it. No unedited source directory changed."
+  },
+  "index": {
+    "failures": [],
+    "generated_at_utc": "2026-09-13T20:57:50Z",
+    "schema_id": "pm.plan_index.validation_report.v1",
+    "status": "pass",
+    "summary": {
+      "acceptance_unit_count": 25635,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 6607
+    }
+  },
+  "index_scope": {
+    "old_count": 6605,
+    "new_count": 6607,
+    "new": [
+      "ATS-051",
+      "GRS-075"
+    ],
+    "removed": [],
+    "old_semantic_changes": [
+      "CV-340",
+      "GRS-065",
+      "SP-289"
+    ]
+  },
+  "standard_gates": {
+    "total": 36,
+    "passed": 21,
+    "failed": 15,
+    "results": {
+      "check_project_artifact_requirements": {
+        "status": "pass",
+        "failures": 0
+      },
+      "check_shards": {
+        "status": "pass",
+        "failures": 0
+      },
+      "json_syntax": {
+        "status": "fail",
+        "failures": 1
+      },
+      "lint_banned_phrases": {
+        "status": "pass",
+        "failures": 0
+      },
+      "lint_contractrefs": {
+        "status": "fail",
+        "failures": 1
+      },
+      "lint_path_refs": {
+        "status": "fail",
+        "failures": 10
+      },
+      "validate_audit_closure": {
+        "status": "fail",
+        "failures": 201
+      },
+      "validate_audit_status_index": {
+        "status": "fail",
+        "failures": 1
+      },
+      "validate_auto_decisions": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_browser_event_admission": {
+        "status": "fail",
+        "failures": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_evidence": {
+        "status": "fail",
+        "failures": 1501
+      },
+      "validate_filesafe_security_policy": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_github_project_integration": {
+        "status": "fail",
+        "failures": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_gui_asset_policy": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_implementation_readiness": {
+        "status": "fail",
+        "failures": 120
+      },
+      "validate_new_contracts": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_plan_graph": {
+        "status": "fail",
+        "failures": 1501
+      },
+      "validate_plan_migration": {
+        "status": "fail",
+        "failures": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "status": "fail",
+        "failures": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "status": "fail",
+        "failures": 1240
+      },
+      "validate_project_output_fixtures": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_server_command_gap": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_testing_session_event_admission": {
+        "status": "fail",
+        "failures": 1
+      },
+      "validate_touch_closure": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_ui_command_response": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_usage_contract_drift": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_web_capability_contracts": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_wiring_matrix": {
+        "status": "pass",
+        "failures": 0
+      },
+      "validate_working_notebook_contracts": {
+        "status": "pass",
+        "failures": 0
+      },
+      "verify_spec_lock": {
+        "status": "fail",
+        "failures": 29
+      }
+    }
+  },
+  "preservation": {
+    "event_families": 42,
+    "storage_families": 156,
+    "unchanged_storage_rows": 155,
+    "changed_storage_row": "goal_receipt current-writer schema definitions and migration description only",
+    "stored_ids_keys_versions_policies": "unchanged",
+    "retained_grammars_read_routes": "unchanged",
+    "validators_frozen_audits_spec_lock_governance_evidence": "unchanged"
+  },
+  "unproved": [
+    "native original source authentication",
+    "actual installation and current issuer dispatch",
+    "late-helper/all-writer/concurrent publication exclusion",
+    "native replay/restart/backup/restore",
+    "complete family event depth",
+    "remaining Step 8 queues",
+    "Step 9 campaign",
+    "Step 10 certification and seal"
+  ],
+  "native_source_execution": "NOT_RUN",
+  "native_concurrency_replay": "NOT_RUN",
+  "event_depth_status": "NOT_CLAIMED",
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/source-paths.json",
+      "bytes": 321,
+      "sha256": "2d37ce013531a9a1db389780ecb40b18f75ea9f33d6cda162a3b4e83766fa96a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/source-checks.json",
+      "bytes": 26303,
+      "sha256": "89a586d3fe1e060175caed951e274a1e286380350d6de895042097b1652ae221"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/shard-scope.json",
+      "bytes": 640,
+      "sha256": "caa912218feb98dda412ac6a10a6180c993001d74bfd7ebe435f85d0e89c6301"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/index-scope.json",
+      "bytes": 182,
+      "sha256": "d170af4b3f4077c49b62997799ce4212eaf2d49e1298602a444881d8a9464162"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/shard-generate.log",
+      "bytes": 115,
+      "sha256": "ee049dda411a7ba8b45ce1e5b2ddc078727e2e4ffb7f052b055a49044a0b691c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/shard-check.log",
+      "bytes": 111,
+      "sha256": "3bd5a91c625764288940eee103c18b5fa8812e64cf215769ed397b9b122b7b67"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/index-generate.log",
+      "bytes": 713,
+      "sha256": "8fa79aac4a32cb2fb9b89fdb1906a419c00d518787dd959dabf955511780ea92"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/index-validate.log",
+      "bytes": 328,
+      "sha256": "7d1ab709f81b37266ec673febbfb0c1a623c891bf1df844dcb0d74db7420a5e4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/run-gates.json",
+      "bytes": 176257,
+      "sha256": "c9cd7287faea706bf275d9db6a3bdde48c60254814970414595a2bef004729fb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/run-gates.log",
+      "bytes": 143901,
+      "sha256": "c6a67cbce9a9778d04288aeec8764908ec39b44028aa573dc8fe512bf6e6c181"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/prepare.py",
+      "bytes": 20787,
+      "sha256": "3f8fcfa13dd839317380b870e18299f25fabc6a1cef221b8bdbffe0a74fc156f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/root/verify.py",
+      "bytes": 4730,
+      "sha256": "01362b53f29b32ecfac317a50e39b6e899084360fe653c6fe37fc01299dc1a93"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/independent/manifest.json",
+      "bytes": 516,
+      "sha256": "c408de455e977feb87a02740f52aa3675af31ef5a01b77f857023ef7e5a0f468"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/independent/review.md",
+      "bytes": 3240,
+      "sha256": "657fbbc85e677e9198cbfaee1e48cb4bc3f86ca1a3d421786d10669b73d1eeb7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/independent/source-checks.json",
+      "bytes": 2726,
+      "sha256": "3fe28e9e1aa20e51cbd27a1f2f47b546aac23c5275c267b889ca2f692c9b6674"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/manifest.json",
+      "bytes": 1346,
+      "sha256": "cac8994797ae2a88167bf7b8e1a6e7ec054c5b386ae888b2ef3b091e09bf22da"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/Goal_Runtime_System-excerpts.txt",
+      "bytes": 26142,
+      "sha256": "b16ab1ff880ad8d0e901e3f7449647681926d8e2aca1fa95579819431e62354d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/Scheduling_and_Quota_Resume-excerpts.txt",
+      "bytes": 8523,
+      "sha256": "9d00fd9e00d7564a961b4bf17c705db5a8c49661b3eae491b3fbf7f720530864"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/adjudication.md",
+      "bytes": 4886,
+      "sha256": "e92c528463372da057a91668e6be97731773a98bb99eb84fcd60a16042d7543b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/pins.json",
+      "bytes": 1206,
+      "sha256": "e206b0e0e8204da33f359e2e4911b0cc880704349b64ea21371c58ac401cef67"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/current-child-scope-canonical-20260913/owner-adjudication/storage-plan-excerpts.txt",
+      "bytes": 4269,
+      "sha256": "6bcf7fc1d3df84a4f44dfc21f99881f111d9ef1a1295f7b671eb33e1071133f7"
+    }
+  ],
+  "cost": "Source review and repository checks only; monetary attribution unavailable."
+}

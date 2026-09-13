@@ -1745,10 +1745,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 18,
+        "False": 19,
         "True": 32
       },
-      "heading_count": 113,
+      "heading_count": 114,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1761,6 +1761,7 @@
         "Plans/Executor_Protocol.md",
         "Plans/FileSafe.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Goal_Runtime_System.md",
         "Plans/Multi-Account.md",
         "Plans/Orchestrator_Page.md",
         "Plans/Permissions_System.md",
@@ -1831,9 +1832,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4573,
+      "line_count": 4622,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 50,
+      "plan_unit_count": 51,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1884,7 +1885,8 @@
         "ATS-047",
         "ATS-048",
         "ATS-049",
-        "ATS-050"
+        "ATS-050",
+        "ATS-051"
       ],
       "reasoning_tiers": [
         "high",
@@ -1910,6 +1912,7 @@
         "forbidden_browser_compatibility_dependency",
         "forge_provider_automation_security_or_evidence_layer_false_pass",
         "goal_cancellation_original_authority_or_effect_loss",
+        "historical_child_receipt_reinterpreted_as_current_authority",
         "history_validation_gap",
         "implementation_readiness",
         "incomplete_pm7_static_visual_coverage",
@@ -1938,10 +1941,10 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "b1de4d4ed2f9240cb56ff4da589fe07efe7b2be9ce6d9f84b63f39523e070455",
+      "sha256": "d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 50
+        "accepted": 51
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
@@ -1949,6 +1952,7 @@
         "constraint": 1,
         "requirement": 22,
         "schema_contract": 1,
+        "validation_contract": 1,
         "validation_criterion": 23
       },
       "validation_surfaces": [
@@ -1972,7 +1976,10 @@
         "Plans/forge_integration_contracts.schema.json",
         "Plans/goal_cancel_command_custody.schema.json",
         "Plans/goal_cancel_schema_resources.json",
+        "Plans/goal_certification_current_scope_fixtures.json",
+        "Plans/goal_certification_custody.schema.json",
         "Plans/goal_execution_binding_custody.schema.json",
+        "Plans/goal_receipt_version_routes.json",
         "Plans/guided_tour_contract_fixtures.json",
         "Plans/guided_tour_contracts.schema.json",
         "Plans/product_onboarding_contract_fixtures.json",
@@ -2050,6 +2057,7 @@
         "python3 scripts/pm-ui-command-response.py",
         "python3 scripts/pm-validate-pm7-gui-fixtures.py validate",
         "python3 scripts/pm-working-notebook-contracts.py",
+        "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
         "scripts/pm-integration-packet-audit.py",
@@ -4085,7 +4093,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 22885,
+      "line_count": 22889,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 345,
       "plan_unit_ids": [
@@ -4784,7 +4792,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "fff461b60671f07aa5500d1f047a95b437539502da5962363a186293378b2221",
+      "sha256": "5722720b33830c3e6a441df2d4c5e302e9879c13e1f11d7cad76f22422e19e55",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 345
@@ -8104,10 +8112,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 40,
+        "False": 41,
         "True": 32
       },
-      "heading_count": 180,
+      "heading_count": 182,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8168,9 +8176,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 6946,
+      "line_count": 7007,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 72,
+      "plan_unit_count": 73,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8243,7 +8251,8 @@
         "GRS-071",
         "GRS-072",
         "GRS-073",
-        "GRS-074"
+        "GRS-074",
+        "GRS-075"
       ],
       "reasoning_tiers": [
         "high",
@@ -8301,6 +8310,7 @@
         "planning_wizard_runtime_drift",
         "premature_runtime_launch",
         "product_scope_drift",
+        "retired_child_goal_authority_reintroduced",
         "retired_goal_child_writer_reintroduction",
         "retired_goal_degradation_reintroduced",
         "retired_goal_projection_in_transcript",
@@ -8317,16 +8327,16 @@
         "weak_worker_false_completion",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "89b5eeb05e1db7d8fc32e1a93b1e070a21d46af1d2074727f8b36be1a068c4de",
+      "sha256": "becb9e14dcd4774151473072c3c6c239eae4e9f14f3608f0ac46d540cd76add0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 63,
+        "accepted": 64,
         "superseded": 9
       },
       "title": "Goal Runtime System",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "constraint": 13,
+        "constraint": 14,
         "owner_boundary": 2,
         "requirement": 47,
         "risk": 1,
@@ -8370,6 +8380,7 @@
         "Plans/goal_body_custody_fixtures.json",
         "Plans/goal_cancel_command_custody.schema.json",
         "Plans/goal_cancel_schema_resources.json",
+        "Plans/goal_certification_current_scope_fixtures.json",
         "Plans/goal_certification_custody.schema.json",
         "Plans/goal_certification_custody_fixtures.json",
         "Plans/goal_child_status_history_contract_fixtures.json",
@@ -8446,6 +8457,7 @@
         "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "python3 scripts/pm-shard-plans.py --check",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
+        "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
         "reports/event-authority-20260911/step-08-goal-reader-validation.md",
         "reports/event-authority-20260911/step-08-goal-start-validation.md",
@@ -16780,7 +16792,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 24951,
+      "line_count": 24954,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 299,
       "plan_unit_ids": [
@@ -17174,7 +17186,7 @@
         "usage_projection_storage_alias_drift",
         "usage_view_state_becomes_second_policy_or_preview_store"
       ],
-      "sha256": "aacd2af29da44764f4168fbb1199eee8eecd704a3eb70ac2db1451adf37d16ab",
+      "sha256": "365c5fa39cab5d0525f56d6eaf54da2dfb298fa4cf9c22bb027cfcdb8c77fedc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 296,
@@ -19289,7 +19301,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-13T20:09:59Z",
+  "generated_at_utc": "2026-09-13T20:56:11Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19297,13 +19309,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3436,
+      "False": 3438,
       "True": 3169
     },
-    "plan_unit_count": 6605,
+    "plan_unit_count": 6607,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6414,
+      "accepted": 6416,
       "retired": 182,
       "superseded": 9
     },
@@ -19329,7 +19341,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 625,
+      "constraint": 626,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -19395,6 +19407,7 @@
       "surface_default_policy": 1,
       "ui_wiring_rule": 1,
       "validation": 13,
+      "validation_contract": 1,
       "validation_criterion": 26,
       "validation_requirement": 3,
       "validation_rule": 24,

@@ -703,7 +703,7 @@
           "$ref": "#/$defs/legacy_goal_receipt_v1"
         },
         {
-          "$ref": "#/$defs/standard_certification_custody_v2"
+          "$ref": "#/$defs/current_standard_certification_custody_v2"
         }
       ]
     },
@@ -749,6 +749,43 @@
           "minLength": 1
         }
       }
+    },
+    "current_standard_certification": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/standard_certification"
+        },
+        {
+          "properties": {
+            "child_receipt_refs": {
+              "maxItems": 0
+            }
+          }
+        }
+      ],
+      "$comment": "Current original issuance requires independently authenticated empty child-Goal requirements under GRS-052/GRS-075. The complete retained Standard grammar remains separate; empty output alone does not prove empty original requirements."
+    },
+    "current_standard_certification_custody_v2": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/standard_certification_custody_v2"
+        },
+        {
+          "properties": {
+            "original_certification": {
+              "$ref": "#/$defs/current_standard_certification"
+            },
+            "legacy_goal_receipt": {
+              "properties": {
+                "child_receipt_refs": {
+                  "maxItems": 0
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$comment": "Current Standard capture grammar only; both components preserve the actual empty set. No coercion, historical conversion or new stored schema/version."
     }
   }
 }

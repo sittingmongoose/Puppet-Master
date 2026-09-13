@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4407-L4573
+Source lines: L4407-L4622
 
-Source SHA256: `b1de4d4ed2f9240cb56ff4da589fe07efe7b2be9ce6d9f84b63f39523e070455`
+Source SHA256: `d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9`
 
 ---
 
@@ -175,3 +175,52 @@ Required cases include genuine fresh birth/all-writer enrollment and hidden-writ
 These are verification requirements for Plans. This change supplies no native execution, model run, fault fixture observation, PNC-019/readiness result or global event-depth completion. Historical D-R02/EA-UND-0002 status remains unchanged.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+
+### ATS-051 - Current Workflow Child-Scope Admission Verification
+
+```yaml
+plan_unit_id: ATS-051
+unit_type: validation_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Current Workflow activation and Standard certification verify GRS-075's authentic empty
+  child-Goal requirement set before publication or current-writer replay. Schema tests distinguish
+  current empty-child refinements from complete historical v1/v2 readers; native source checks
+  must reject caller-empty, missing, stale or nonempty original requirements without coercion.
+gui_related: false
+gui_classification_reason: Defines source/schema/native verification obligations without GUI behavior.
+depends_on: [GRS-075, CV-340, SP-289]
+unblocks: []
+acceptance_criteria:
+  - Empty-child current Standard values validate, while nonempty original or generic-component child refs fail current capture and remain representable by exact retained grammar.
+  - Current original source verification rejects unknown, omitted, stale and nonempty complete child requirements even when returned arrays are empty.
+  - Direct issuer and outer publication repeat actual current source/owner/full-candidate checks after every returning helper; a late child-edge change cannot publish.
+  - Historical read/replay preserves original bytes and source identity with no current activation/completion or new capture authority.
+  - Tests distinguish schema structure from native source authenticity and report native execution separately.
+validation_surfaces:
+  - Plans/goal_certification_current_scope_fixtures.json
+  - Plans/goal_certification_custody.schema.json
+  - Plans/goal_receipt_version_routes.json
+  - reports/event-authority-20260911/step-08-current-child-scope-validation.md
+risk_class: historical_child_receipt_reinterpreted_as_current_authority
+reasoning_tier: high
+context_scope: current_workflow_child_scope_verification
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Goal_Runtime_System.md#GRS-075
+negative_constraints:
+  - No native runtime instance, event admission, validator change, frozen evidence restamp or governance seal.
+```
+
+The structural cases below do not create a GoalRun or WorkNode and do not prove original source ownership. The native source, concurrency and replay obligations remain NOT_RUN until the actual original owner and Storage participants execute them.
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-075, ContractName:Plans/Contracts_V0.md#CV-340, ContractName:Plans/storage-plan.md#SP-289

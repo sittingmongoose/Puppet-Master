@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15322,
+    "depends_on_edge_count": 15330,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17973,
-    "node_count": 6605,
+    "edge_count": 17981,
+    "node_count": 6607,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-09-13T20:10:00Z",
+  "generated_at_utc": "2026-09-13T20:56:11Z",
   "gui_related_units": {
     "count": 3169,
     "units": [
@@ -18029,8 +18029,8 @@
         "source_location": {
           "heading": "GRS-069 - Exact historical goal.progressed contract",
           "heading_level": 3,
-          "heading_line": 6390,
-          "line": 6392,
+          "heading_line": 6392,
+          "line": 6394,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18040,8 +18040,8 @@
         "source_location": {
           "heading": "GRS-070 - Exact historical goal.replanned contract",
           "heading_level": 3,
-          "heading_line": 6482,
-          "line": 6484,
+          "heading_line": 6484,
+          "line": 6486,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18051,8 +18051,8 @@
         "source_location": {
           "heading": "GRS-071 - Exact historical goal.stopped contract",
           "heading_level": 3,
-          "heading_line": 6574,
-          "line": 6576,
+          "heading_line": 6576,
+          "line": 6578,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18062,8 +18062,8 @@
         "source_location": {
           "heading": "GRS-072 - Exact historical goal.verification_decided contract",
           "heading_level": 3,
-          "heading_line": 6665,
-          "line": 6667,
+          "heading_line": 6667,
+          "line": 6669,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -18073,8 +18073,8 @@
         "source_location": {
           "heading": "GRS-073 - Current explicit Goal cancellation",
           "heading_level": 3,
-          "heading_line": 6757,
-          "line": 6759,
+          "heading_line": 6759,
+          "line": 6761,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -29601,8 +29601,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23006,
-          "line": 23008,
+          "heading_line": 23009,
+          "line": 23011,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -34883,10 +34883,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 6605,
+  "plan_unit_count": 6607,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2061,
+      "high": 2063,
       "low": 5,
       "medium": 5,
       "standard": 4534
@@ -36420,6 +36420,7 @@
       "hidden_mutation_channel": 1,
       "hidden_peer_channel_drift": 1,
       "hidden_runtime_fallback": 1,
+      "historical_child_receipt_reinterpreted_as_current_authority": 1,
       "historical_goal_event_source_and_checkpoint_authority": 1,
       "historical_handoff_drift": 1,
       "historical_projection_and_ghost_evidence": 1,
@@ -37635,6 +37636,7 @@
       "retention_visibility_loss": 1,
       "retired_assistant_surface_reintroduced_as_command": 1,
       "retired_bridge_overreach": 1,
+      "retired_child_goal_authority_reintroduced": 1,
       "retired_crew_cap_example": 1,
       "retired_gemini_cli_auth_pool_resurrection": 1,
       "retired_gemini_cli_nanobanana_resurrection": 1,
@@ -38682,7 +38684,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6414,
+      "accepted": 6416,
       "retired": 182,
       "superseded": 9
     },
@@ -38708,7 +38710,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 625,
+      "constraint": 626,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -38774,6 +38776,7 @@
       "surface_default_policy": 1,
       "ui_wiring_rule": 1,
       "validation": 13,
+      "validation_contract": 1,
       "validation_criterion": 26,
       "validation_requirement": 3,
       "validation_rule": 24,
@@ -38837,7 +38840,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "1833e09c03eac0933331a02eabe5a04c28da33bd7f7ed9804312dc8919009a7d",
+        "expected": "f31698dcfd47bb6acc72a1b1ec16682f85293f0575420381ac6b177dc6011af7",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -38855,7 +38858,7 @@
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "89b5eeb05e1db7d8fc32e1a93b1e070a21d46af1d2074727f8b36be1a068c4de",
+        "expected": "becb9e14dcd4774151473072c3c6c239eae4e9f14f3608f0ac46d540cd76add0",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -38867,7 +38870,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "b1de4d4ed2f9240cb56ff4da589fe07efe7b2be9ce6d9f84b63f39523e070455",
+        "expected": "d72fd8e4dd162d58eb70b1d3879851d474243f33d51f899c06b686f9626ef3e9",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -38879,7 +38882,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "2410cf0be22d0bb9f5463696a78f675217c4b1c5fa780f81cb0640697586d228",
+        "expected": "c93502858906bf34850ee618aaaed52911a4471435ea7176e72d035177f3d0a0",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

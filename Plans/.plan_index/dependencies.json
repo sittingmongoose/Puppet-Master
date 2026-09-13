@@ -6055,6 +6055,7 @@
     "UCC-124",
     "SP-292",
     "SP-277",
+    "GRS-075",
     "SP-281",
     "SMPFS-036",
     "SMPFS-101",
@@ -6100,6 +6101,7 @@
     "SIR-048",
     "SP-296",
     "F3-457",
+    "ATS-051",
     "ACD-465",
     "SP-274",
     "SP-275",
@@ -12510,6 +12512,21 @@
       "edge_type": "depends_on",
       "from": "ATS-050",
       "to": "SP-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-051",
+      "to": "CV-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-051",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-051",
+      "to": "SP-289"
     },
     {
       "edge_type": "depends_on",
@@ -28730,6 +28747,31 @@
       "edge_type": "depends_on",
       "from": "GRS-074",
       "to": "GRS-073"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-075",
+      "to": "CV-340"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-075",
+      "to": "GRS-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-075",
+      "to": "GRS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-075",
+      "to": "GRS-065"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-075",
+      "to": "SP-289"
     },
     {
       "edge_type": "depends_on",
@@ -96477,7 +96519,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-13T20:09:59Z",
+  "generated_at_utc": "2026-09-13T20:56:11Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -109315,6 +109357,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "current_workflow_child_scope_verification",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-051",
+      "reasoning_tier": "high",
+      "risk_class": "historical_child_receipt_reinterpreted_as_current_authority",
+      "source_location": {
+        "heading": "ATS-051 - Current Workflow Child-Scope Admission Verification",
+        "heading_level": 3,
+        "heading_line": 4576,
+        "line": 4578,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -121156,8 +121215,8 @@
       "source_location": {
         "heading": "CV-340 - Original Standard Certification Schemas And Source Bytes",
         "heading_level": 3,
-        "heading_line": 22313,
-        "line": 22315,
+        "heading_line": 22314,
+        "line": 22316,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121173,8 +121232,8 @@
       "source_location": {
         "heading": "CV-341 - Goal start original command shapes",
         "heading_level": 2,
-        "heading_line": 22376,
-        "line": 22378,
+        "heading_line": 22380,
+        "line": 22382,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121190,8 +121249,8 @@
       "source_location": {
         "heading": "CV-342 - Original Goal Update Request Result And Event Contract",
         "heading_level": 3,
-        "heading_line": 22451,
-        "line": 22452,
+        "heading_line": 22455,
+        "line": 22456,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121207,8 +121266,8 @@
       "source_location": {
         "heading": "CV-343 - Exact historical goal.progressed writer exclusion",
         "heading_level": 3,
-        "heading_line": 22522,
-        "line": 22524,
+        "heading_line": 22526,
+        "line": 22528,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121224,8 +121283,8 @@
       "source_location": {
         "heading": "CV-344 - Exact historical goal.replanned writer exclusion",
         "heading_level": 3,
-        "heading_line": 22597,
-        "line": 22599,
+        "heading_line": 22601,
+        "line": 22603,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121241,8 +121300,8 @@
       "source_location": {
         "heading": "CV-345 - Exact historical goal.stopped writer exclusion",
         "heading_level": 3,
-        "heading_line": 22672,
-        "line": 22674,
+        "heading_line": 22676,
+        "line": 22678,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121258,8 +121317,8 @@
       "source_location": {
         "heading": "CV-346 - Exact historical goal.verification_decided writer exclusion",
         "heading_level": 3,
-        "heading_line": 22747,
-        "line": 22749,
+        "heading_line": 22751,
+        "line": 22753,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -121275,8 +121334,8 @@
       "source_location": {
         "heading": "CV-347 - Current cancelled-v3 and exact cancellation resource graph",
         "heading_level": 3,
-        "heading_line": 22822,
-        "line": 22824,
+        "heading_line": 22826,
+        "line": 22828,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -148016,8 +148075,8 @@
       "source_location": {
         "heading": "GRS-066 - Original Goal creation command settlement",
         "heading_level": 2,
-        "heading_line": 6156,
-        "line": 6158,
+        "heading_line": 6158,
+        "line": 6160,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148033,8 +148092,8 @@
       "source_location": {
         "heading": "GRS-067 - Passive Creation Observation And Independent Command Result",
         "heading_level": 3,
-        "heading_line": 6230,
-        "line": 6232,
+        "heading_line": 6232,
+        "line": 6234,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148050,8 +148109,8 @@
       "source_location": {
         "heading": "GRS-068 - Original Objective Update Acceptance And Effect Settlement",
         "heading_level": 3,
-        "heading_line": 6315,
-        "line": 6316,
+        "heading_line": 6317,
+        "line": 6318,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148067,8 +148126,8 @@
       "source_location": {
         "heading": "GRS-069 - Exact historical goal.progressed contract",
         "heading_level": 3,
-        "heading_line": 6390,
-        "line": 6392,
+        "heading_line": 6392,
+        "line": 6394,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148084,8 +148143,8 @@
       "source_location": {
         "heading": "GRS-070 - Exact historical goal.replanned contract",
         "heading_level": 3,
-        "heading_line": 6482,
-        "line": 6484,
+        "heading_line": 6484,
+        "line": 6486,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148101,8 +148160,8 @@
       "source_location": {
         "heading": "GRS-071 - Exact historical goal.stopped contract",
         "heading_level": 3,
-        "heading_line": 6574,
-        "line": 6576,
+        "heading_line": 6576,
+        "line": 6578,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148118,8 +148177,8 @@
       "source_location": {
         "heading": "GRS-072 - Exact historical goal.verification_decided contract",
         "heading_level": 3,
-        "heading_line": 6665,
-        "line": 6667,
+        "heading_line": 6667,
+        "line": 6669,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148135,8 +148194,8 @@
       "source_location": {
         "heading": "GRS-073 - Current explicit Goal cancellation",
         "heading_level": 3,
-        "heading_line": 6757,
-        "line": 6759,
+        "heading_line": 6759,
+        "line": 6761,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -148152,12 +148211,29 @@
       "source_location": {
         "heading": "GRS-074 - Original execution association authority",
         "heading_level": 3,
-        "heading_line": 6848,
-        "line": 6850,
+        "heading_line": 6850,
+        "line": 6852,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "current_workflow_activation_and_certification_child_scope",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-075",
+      "reasoning_tier": "high",
+      "risk_class": "retired_child_goal_authority_reintroduced",
+      "source_location": {
+        "heading": "GRS-075 - Current Workflow Child-Goal Retirement Admission",
+        "heading_level": 3,
+        "heading_line": 6959,
+        "line": 6961,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -195225,8 +195301,8 @@
       "source_location": {
         "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
         "heading_level": 3,
-        "heading_line": 23006,
-        "line": 23008,
+        "heading_line": 23009,
+        "line": 23011,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195378,8 +195454,8 @@
       "source_location": {
         "heading": "SP-290 - Platform Capability Decision Custody",
         "heading_level": 3,
-        "heading_line": 23211,
-        "line": 23213,
+        "heading_line": 23214,
+        "line": 23216,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195395,8 +195471,8 @@
       "source_location": {
         "heading": "SP-291 - Boot Recovery Aggregate and Original Producer Custody",
         "heading_level": 3,
-        "heading_line": 23324,
-        "line": 23326,
+        "heading_line": 23327,
+        "line": 23329,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195412,8 +195488,8 @@
       "source_location": {
         "heading": "SP-292 - Boot Earliest Receipt Continuity and Activation",
         "heading_level": 3,
-        "heading_line": 23422,
-        "line": 23424,
+        "heading_line": 23425,
+        "line": 23427,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195429,8 +195505,8 @@
       "source_location": {
         "heading": "SP-293 - Recovery Original Action Custody and Publication",
         "heading_level": 3,
-        "heading_line": 23518,
-        "line": 23520,
+        "heading_line": 23521,
+        "line": 23523,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195446,8 +195522,8 @@
       "source_location": {
         "heading": "SP-294 - Goal start original command custody and publication",
         "heading_level": 2,
-        "heading_line": 23593,
-        "line": 23595,
+        "heading_line": 23596,
+        "line": 23598,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195463,8 +195539,8 @@
       "source_location": {
         "heading": "SP-295 - Compaction Original Native Source Controls",
         "heading_level": 3,
-        "heading_line": 23756,
-        "line": 23758,
+        "heading_line": 23759,
+        "line": 23761,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195480,8 +195556,8 @@
       "source_location": {
         "heading": "SP-296 - Compaction Original Phase and Observation Custody",
         "heading_level": 3,
-        "heading_line": 23792,
-        "line": 23794,
+        "heading_line": 23795,
+        "line": 23797,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195497,8 +195573,8 @@
       "source_location": {
         "heading": "SP-297 - Compaction Original Settlement and Seven-Day Detail Retirement",
         "heading_level": 3,
-        "heading_line": 23828,
-        "line": 23830,
+        "heading_line": 23831,
+        "line": 23833,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195514,8 +195590,8 @@
       "source_location": {
         "heading": "SP-298 - Passive Goal Creation Read And Original Member Boundaries",
         "heading_level": 3,
-        "heading_line": 23923,
-        "line": 23925,
+        "heading_line": 23926,
+        "line": 23928,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195531,8 +195607,8 @@
       "source_location": {
         "heading": "SP-299 - Original Goal Update Physical And Transaction Custody",
         "heading_level": 3,
-        "heading_line": 24128,
-        "line": 24129,
+        "heading_line": 24131,
+        "line": 24132,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195548,8 +195624,8 @@
       "source_location": {
         "heading": "SP-300 - Exact historical goal.progressed source reader",
         "heading_level": 3,
-        "heading_line": 24204,
-        "line": 24206,
+        "heading_line": 24207,
+        "line": 24209,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195565,8 +195641,8 @@
       "source_location": {
         "heading": "SP-301 - Exact historical goal.replanned source reader",
         "heading_level": 3,
-        "heading_line": 24306,
-        "line": 24308,
+        "heading_line": 24309,
+        "line": 24311,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195582,8 +195658,8 @@
       "source_location": {
         "heading": "SP-302 - Exact historical goal.stopped source reader",
         "heading_level": 3,
-        "heading_line": 24408,
-        "line": 24410,
+        "heading_line": 24411,
+        "line": 24413,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195599,8 +195675,8 @@
       "source_location": {
         "heading": "SP-303 - Exact historical goal.verification_decided source reader",
         "heading_level": 3,
-        "heading_line": 24510,
-        "line": 24512,
+        "heading_line": 24513,
+        "line": 24515,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195616,8 +195692,8 @@
       "source_location": {
         "heading": "SP-304 - Original cancellation stages and custody",
         "heading_level": 3,
-        "heading_line": 24612,
-        "line": 24614,
+        "heading_line": 24615,
+        "line": 24617,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -195633,8 +195709,8 @@
       "source_location": {
         "heading": "SP-305 - Execution binding custody and original append reservation",
         "heading_level": 3,
-        "heading_line": 24790,
-        "line": 24792,
+        "heading_line": 24793,
+        "line": 24795,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -208771,10 +208847,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15322,
+    "depends_on_edge_count": 15330,
     "downstream_blocked_node_count": 0,
-    "edge_count": 17973,
-    "node_count": 6605,
+    "edge_count": 17981,
+    "node_count": 6607,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0
