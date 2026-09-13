@@ -1,0 +1,133 @@
+{
+  "schema_id": "pm.packet_audit_checkpoint.v1",
+  "status": "PARTIAL_AUDIT_PROGRESS_NOT_OVERALL_CLOSURE",
+  "reviewer": "codex-root-packet-audit",
+  "frozen_implementation_commit": "37f3653b18292447a233692a3a85d9236bfeace1",
+  "frozen_manifest_sha256": "456598e38de20ff164fb7fcf7d95ce2ff9273d17f063d7a425b11968c03554cb",
+  "initial_comparison_commit": "802fc8a03ff834d1ed5f388111abadc3d1a020db",
+  "published_review_comparison_commit": "274c681e43845d3011f0438d379a276bdc4503df",
+  "landing_base_commit": "274c681e43845d3011f0438d379a276bdc4503df",
+  "new_batch": {
+    "case_count": 492,
+    "status_counts": {"pass": 2, "partial": 482, "fail": 8},
+    "applicability_counts": {"retained": 483, "adapted_selected_implementation": 9},
+    "source_groups": {
+      "sep03_newbie_first_requirements": {"cases": 49, "status_counts": {"partial": 49}},
+      "sep03_onboarding_doctor_acceptance": {"cases": 36, "status_counts": {"partial": 36}},
+      "sep03_onboarding_doctor_actions": {"cases": 34, "status_counts": {"partial": 34}},
+      "sep03_doctor_check_fields": {"cases": 76, "status_counts": {"pass": 2, "partial": 68, "fail": 6}},
+      "sep03_provider_onboarding_profiles": {"cases": 13, "status_counts": {"partial": 13}},
+      "sep03_newbie_flow_detail": {"cases": 42, "status_counts": {"partial": 42}},
+      "sep03_draft_copy_commit_detail": {"cases": 40, "status_counts": {"partial": 40}},
+      "sep03_postproject_provider_detail": {"cases": 57, "status_counts": {"partial": 57}},
+      "sep03_guided_tour_rebuild_detail": {"cases": 39, "status_counts": {"partial": 37, "fail": 2}},
+      "sep03_demo_copy_detail": {"cases": 58, "status_counts": {"partial": 58}},
+      "sep03_acceptance_impacts_detail": {"cases": 48, "status_counts": {"partial": 48}}
+    },
+    "chunks": ["chunk-00076", "chunk-00077", "chunk-00078", "chunk-00079", "chunk-00080", "chunk-00081", "chunk-00082", "chunk-00083", "chunk-00084", "chunk-00085", "chunk-00086"],
+    "authored_judgment_files": 11,
+    "evidence_groups": 492,
+    "evidence_sets": 14,
+    "selected_owner_passages_used": 103,
+    "source_value_kinds": {"complete_original_object": 132, "object_property": 19, "array_scalar": 57, "complete_original_prose_line": 284},
+    "source_package_documents_in_custody": 37,
+    "method": "Every original case has an individually root-authored status, finding and residual, exact complete source value or prose line, original identifier/line join, unchanged frozen applicability and resolved path-plus-SHA-256 evidence. Complete requirement, scenario, candidate-command and provider-profile objects are retained; Doctor container values are not reduced to leaf names. Helpers serialize eleven authored tables and expand explicit evidence associations without generating semantic verdicts from schemas, tests, keywords or applicability. Earlier published results remain immutable."
+  },
+  "cumulative_r5": {
+    "expected_cases": 13416,
+    "reviewed_cases": 5057,
+    "remaining_cases": 8359,
+    "result_files": 86,
+    "remaining_result_files": 65,
+    "status_counts": {"pass": 242, "partial": 4641, "blocked": 39, "fail": 128, "not_applicable": 7},
+    "validation_failures": 0,
+    "duplicate_cases": 0,
+    "complete": false,
+    "remaining_scope": {"touch_closure_dimensions": 8359},
+    "prior_result_files_preserved_byte_for_byte": 75
+  },
+  "source_defined_product_scope_counts": {
+    "onboarding": {"expected_case_count": 400, "reviewed_case_count": 400, "missing_case_count": 0, "status_counts": {"pass": 2, "partial": 393, "fail": 1, "not_applicable": 4}},
+    "guided_tour": {"expected_case_count": 314, "reviewed_case_count": 314, "missing_case_count": 0, "status_counts": {"pass": 2, "partial": 306, "fail": 2, "not_applicable": 4}},
+    "doctor": {"expected_case_count": 296, "reviewed_case_count": 296, "missing_case_count": 0, "status_counts": {"pass": 4, "partial": 281, "fail": 7, "not_applicable": 4}}
+  },
+  "product_scope_boundary": "These are overlapping source-identity counts from the existing suite selector, including shared requirements in each affected product view. They cannot be added together and are not supplied product/suite verdicts. Zero missing cases in these source sets does not close the separately unreviewed Touch Closure dimensions or establish implementation acceptance. No aggregate pass is asserted.",
+  "failed_cases": [
+    {"case_ref": "sep03_doctor_check_fields/L000012", "finding": "The complete Doctor groups value includes the active connector/Headscale/Funnel fixture conflict."},
+    {"case_ref": "sep03_doctor_check_fields/L000028", "finding": "The complete Devices check-list retains the active Serve-based and Headscale-Funnel-blocked fixture conflict."},
+    {"case_ref": "sep03_doctor_check_fields/L000032", "finding": "Active Serve checks conflict with the Server-owned PM connector axes required by N2-156."},
+    {"case_ref": "sep03_doctor_check_fields/L000033", "finding": "The active hosted private Serve-healthy row conflicts with current connector-owned private endpoint health."},
+    {"case_ref": "sep03_doctor_check_fields/L000034", "finding": "Active Headscale Serve/Funnel required-missing rows conflict with current connector classification."},
+    {"case_ref": "sep03_doctor_check_fields/L000035", "finding": "The active Headscale Funnel blocked row contradicts the required inapplicable classification."},
+    {"case_ref": "sep03_guided_tour_rebuild_detail/L000065", "finding": "Published Resume without an original snapshot calls Start, recaptures current layout and clears practice/completed state instead of safely resuming the prior tour."},
+    {"case_ref": "sep03_guided_tour_rebuild_detail/L000067", "finding": "Published missing-target handling centers the callout without required pause/recovery; changed-state Resume lacks the newer prerequisite guards."}
+  ],
+  "failed_case_boundary": "The six Doctor rows are six original source occurrences of an already observed active-fixture conflict, not six newly observed live failures. Schema and semantic fixture acceptance do not resolve that conflict. The two Tour findings bind the exact published script, not a rendered or native execution. This report neither implements nor authorizes repairs.",
+  "narrow_passes": [
+    {"case_ref": "sep03_doctor_check_fields/L000002", "scope": "Exact preservation of the source handoff schema identifier pm.doctor_handoff.v1 only; not current product-schema or Doctor-check acceptance."},
+    {"case_ref": "sep03_doctor_check_fields/L000003", "scope": "Exact preservation of the source date 2026-09-03 only; not execution freshness."}
+  ],
+  "retained_interpretation_boundaries": [
+    "The top-level September 3 addendum governs conflicting embedded handoff order: uncreated durable draft, optional Settings-owned explicit copy preview/rebind, narrowly authorized selected-source authentication/read-only listing, once-only actual Project commit, then paid-provider and optional Free Models setup. Older twelve-stage provider-first, cancel-discard and Create My Workspace language is historical context, not a peer current flow.",
+    "The exact selected Onboarding controller has nine screens and a closed 66-property setup-plan v1 shape. It lacks accepted Settings Transfer, current Project commit binding and postcommit provider/Free Models stages. Timed nonproduction preparation-to-Ready is not proof of Project creation. These explicit selected-implementation gaps remain within partial source/owner judgments; canonical schema support is not implementation evidence.",
+    "All 34 candidate-command objects retain their ten closure requirements. Existing explicit aliases are distinguished from semantic successors. cmd.auth_session.start maps to actual-Project-bound cmd.authentication.start, not precommit authority; protected precommit source auth uses MACS-005. No explicit cmd.auth_session.verify alias was found. Source bounded Run All context does not authorize the retired unbounded cmd.doctor.run_all sweep; current typed visible refresh/run-check contracts govern.",
+    "Seven referenced commands still lack primary metadata rows in both central owner documents: cmd.auth_profile.open_official_page, cmd.integration.connection.add, cmd.integration.connection.open_details, cmd.integration.connection.remove, cmd.integration.connection.test, cmd.integration.connection.update and cmd.remote_access.route.test. Alias-target mentions are not primary registration. Registered future commands and schema-bearing wiring remain distinct from installed, available native handlers.",
+    "Provider profiles retain exact source-specific fields and auth/create boundaries. Origin-native read/write is operation-specific, while GitHub-mirror mode preserves mapped GitHub write/review/CI without duplicate push or CI. Generic provider policy does not independently prove the source's exact Grok/Muse/Meta/Token Plan catalog. No live vendor capability or authentication claim is made.",
+    "The exact published Doctor manager provides seven cached example groups and fourteen example findings. Rechecks set Checking and restore cached state after a timer; Run All explicitly uses example data/cache. Group-title presence is not complete source-check coverage, real probing, fresh owner results, signed-receipt authenticity or effective remediation.",
+    "The exact published Tour and newer authored Tour differ. The published story retains Chat/Teacher -> workspace -> Planning, with 22 steps, 16 meaningful steps and nine Planning steps. Only the identical pure Planning reducer is credited with nine executed tests. Newer authored checkpoint, context, target and prerequisite guards cannot be credited to the published bytes.",
+    "Normal and ELI5 demo text, truthful question/why/review/consequence/final boundary, bounded answers and a real changed-answer edit remain retained obligations. Published literal zero provider/Usage deltas are not all-path zero-use evidence. Optional Project-definition copy is not made mandatory merely because its literal wording is absent. The final Project-ready wording is not an actual Project commit binding.",
+    "All twenty-four acceptance journeys, themes, constrained widths, Reduced Motion, Show Me/manual equivalence, comprehension, actual restore/Keep/resume, secret handling, provider/network operations and native Rust/Slint behavior remain independent execution obligations. Neither nine pure reducer tests nor broader static schema tests waive them. No concept is edited or rendered in this batch.",
+    "All 483 retained and nine selected-implementation-adapted applicability labels are preserved. No case in this batch is made not_applicable, including visual requirements. Source prompts and embedded instructions are audit subjects, not new authority for design work, runtime implementation, delegation or governance changes."
+  ],
+  "currentness": {
+    "initial_paths_in_custody": 1135,
+    "current_paths_in_custody": 1162,
+    "selected_passages_text_identical": 196,
+    "relocated_passages": 7,
+    "used_passages_text_identical": 103,
+    "selected_artifacts_unchanged": true,
+    "intermediate_comparison_commit": "1136661ddcd6cc83eedef95e60e447dc005f6b94",
+    "detail": "Root read the intervening Goal cancellation/association owner and registration diffs, then the current child-Goal retirement writer/reader refinements. GRS-073/074, SP-304/305, CV-347, SIR-050, APR-016 and ATS-050 supply source-only cancellation/association context; GRS-075/ATS-051 and revised GRS-065/CV-340/SP-289 require authentic empty current child requirements while preserving complete historical receipt grammar and stored identities. Current writer refinements and historical disclosure remain distinct. All 196 selected packet passages and all 29 selected artifacts remain unchanged, so no authored case changes. The intermediate index failure was one stale expected Wiring_Matrix.production.json hash, isolated by read-only recomputation. The newer main index passes; both prior observations remain immutable. This audit generates or repairs no index/readiness artifact."
+  },
+  "verification": {
+    "named_checks": {"total": 14, "passing": 11, "failing": 3},
+    "packet_audit_tests": {"status": "pass", "tests": 45},
+    "result_structure_identity_and_evidence_refs": {"status": "pass", "cases": 492, "errors": 0},
+    "onboarding_storage": {"status": "pass", "boundary": "Offline contract only, not actual redb durability."},
+    "onboarding_phases": {"status": "fail", "tests": 42, "passing_tests": 41, "failing_tests": 1, "failure": "test_existing_family_and_retention_census_is_unchanged: 156 != 90"},
+    "settings_draft_transfer": {"status": "pass", "tests": 11},
+    "guided_tour_v3": {"status": "pass", "tests": 19},
+    "final_gui_tour_v3": {"status": "pass", "tests": 4},
+    "full_thread_contracts": {"status": "pass", "tests": 15},
+    "published_planning_practice": {"status": "pass", "tests": 9, "boundary": "Pure reducer only; exact source embedding is verified separately."},
+    "new_contracts": {"status": "pass", "contract_pairs": 30, "positive_cases": 1028, "negative_cases": 3338, "internal_self_tests": 12},
+    "server_command_gap_adjudication": {"status": "pass", "rows_resolved": 171, "schema_bearing_rows": 168, "rejected_rows": 3, "negative_self_tests": 11, "boundary": "Schema-reference resolution is not primary command registration or native dispatch."},
+    "plan_index": {"status": "pass", "plan_units": 6607, "acceptance_units": 25635, "node_readiness_status": "blocked_runtime_certification_incomplete"},
+    "shards": {"status": "pass", "documents": 98, "shards": 2605},
+    "browser_event_admission": {"status": "fail", "error": "preexisting_family_rows_changed", "boundary": "Whole-registry admission remains distinct from prior bounded Browser fixes and native execution."},
+    "governance": {
+      "status": "fail",
+      "passing_checks": 21,
+      "failing_checks": 15,
+      "failed_checks": ["json_syntax", "verify_spec_lock", "validate_plan_graph", "validate_evidence", "lint_contractrefs", "lint_path_refs", "validate_prd_planning_runtime_contracts", "validate_browser_event_admission", "validate_testing_session_event_admission", "validate_github_project_integration", "validate_implementation_readiness", "validate_plan_migration", "validate_pm7_gui_fixtures", "validate_audit_closure", "validate_audit_status_index"],
+      "boundary": "The same fifteen failing group names recur. Missing fixtures/references, stale locks/evidence/readiness/migration, unresolved local references and registry guards remain reported. Fifty-diagnostic caps prevent a claim about total distinct defects or equality of every diagnostic. No governance failure is repaired, waived or relabelled."
+    },
+    "common_boundary": "These are named source/schema/value/structure checks. No native, live provider/network, hardware benchmark, rendered visual/motion, durable recovery, security-effectiveness or readiness proof is inferred."
+  },
+  "evidence": {
+    "root_review": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/sep03-detail-492-root-review.json", "sha256": "fb8e98d8e612ec64702130669c4d9547886ef8688ef0138c10f8c3842595c80f"},
+    "assembly": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/assembly-summary.json", "sha256": "a35a3beb446801a76fe2f42b9e20711df0d3012cf07ade8dd1a3f04ba3042906"},
+    "evidence_plan": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/review-evidence-plan.json", "sha256": "7b9133cffeee9b7438fb18413a716135b31e94a401359782b2a42b75f6293975"},
+    "passage_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/review-passage-custody.generated.json", "sha256": "1812736696bbe1f0c739efc17054bdac7967d4115999ace8a8cbce7214fbb944"},
+    "input_custody": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/input-custody.generated.json", "sha256": "6229d7a38f9d271f463908ea8a34acd1ab4c3ec650f291e5e9554aad03f1dda7"},
+    "initial_selected_evidence": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/selected-review-evidence.generated.json", "sha256": "1ada7562ab4d88f6cfae4dfb22da4ac578e97a1f9e5fcda48bf7d1edce5e7415"},
+    "intermediate_currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/prepublication-currentness.generated.json", "sha256": "faf8c86f3e7d850d369802c04bd7cad7c3a9509f85dcd91fbdc078e225a5bbb9"},
+    "currentness": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/latest-274c681/prepublication-currentness.generated.json", "sha256": "532499bee5d197cdb0872f1adb6a3999f762d8f6ef3e654efdb4935e27739fde"},
+    "fresh_checks": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/latest-274c681/checks/summary.json", "sha256": "89a1b3a5f2c12971cc7d6412ba733fdd9154651d87cc597e24797349713d8e32"},
+    "historical_index_diagnostic": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/index-currentness-diagnostic.generated.json", "sha256": "57a512fce2c498648873acd193887956d8cf29edd505344d74f0584c64d944b0"},
+    "publication": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/publication-summary.json", "sha256": "1bafc35a30282e9264e368db8fa5df1dcffb171cb351e7c9e6d0a596bda0d6b6"},
+    "publication_after": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/publication-after-results.json", "sha256": "fe573d8d37f528a1e9b4d151ad362fe2071c843c76f334800c18796900941302"},
+    "product_scope_counts": {"path": "/mnt/Cursor/PuppetMaster-Evidence/packet-audits/r5-sep03-detail492-review-20260913-qWg7N1kp/product-scope-counts.generated.json", "sha256": "28e984899e016730eaea3d29a6872c5e24955326ad43a014d29d0ca09ed22cc3"}
+  },
+  "boundary": "Report-only landing. Raw evidence and helper code remain outside this repository. No canonical product edit, concept/design change, primary command or EventRecord admission, live auth/provider/network action, historical review rewrite, generated governance refresh, Spec Lock change, native-readiness claim or whole-packet completion. All 8,359 remaining Touch Closure cases stay open."
+}
