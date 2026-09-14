@@ -6548,12 +6548,15 @@
     "F3-525",
     "SSYS-017",
     "BRS-025",
+    "GRS-078",
     "CS-079",
     "UCC-158",
     "C-051",
     "UIW-018",
     "F3-526",
     "SSYS-026",
+    "SIR-052",
+    "SP-310",
     "UCC-159",
     "UCC-160",
     "UCC-161",
@@ -6562,6 +6565,7 @@
     "UIW-019",
     "F3-528",
     "SSYS-027",
+    "BRS-026",
     "WM-052",
     "F3-550",
     "UIW-023",
@@ -13263,6 +13267,16 @@
       "edge_type": "depends_on",
       "from": "BRS-025",
       "to": "SP-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-026",
+      "to": "BRS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-026",
+      "to": "SP-310"
     },
     {
       "edge_type": "depends_on",
@@ -29073,6 +29087,36 @@
       "edge_type": "depends_on",
       "from": "GRS-077",
       "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "EP-118"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "EP-119"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "GRS-076"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "SIR-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-078",
+      "to": "SP-309"
     },
     {
       "edge_type": "depends_on",
@@ -56456,6 +56500,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SIR-052",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-052",
+      "to": "SIR-050"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-052",
+      "to": "SIR-051"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-001",
       "to": "SMPFS-002"
     },
@@ -68183,6 +68242,26 @@
       "edge_type": "depends_on",
       "from": "SP-309",
       "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-310",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-310",
+      "to": "SP-304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-310",
+      "to": "SP-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-310",
+      "to": "SP-309"
     },
     {
       "edge_type": "depends_on",
@@ -96990,7 +97069,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-14T01:53:49Z",
+  "generated_at_utc": "2026-09-14T02:56:58Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -110536,6 +110615,23 @@
         "heading_level": 4,
         "heading_line": 1429,
         "line": 1435,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "brs_026_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-026",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "BRS-026 - Coherent original Workflow Goal cancellation backup and restore",
+        "heading_level": 3,
+        "heading_line": 1493,
+        "line": 1514,
         "path": "Plans/Backup_Restore_System.md"
       },
       "status": "accepted",
@@ -148905,6 +149001,23 @@
         "heading_level": 4,
         "heading_line": 7241,
         "line": 7255,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "grs_078_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-078",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Explicit unproved installation prerequisites",
+        "heading_level": 4,
+        "heading_line": 7356,
+        "line": 7362,
         "path": "Plans/Goal_Runtime_System.md"
       },
       "status": "accepted",
@@ -188504,6 +188617,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sir_052_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-052",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "SIR-052 - Original Workflow cancellation acceptance, terminal and retained replay",
+        "heading_level": 3,
+        "heading_line": 2882,
+        "line": 2904,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "section15_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -196522,6 +196652,23 @@
         "heading_level": 4,
         "heading_line": 25424,
         "line": 25430,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "sp_310_original_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-310",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_workflow_source_custody_or_native_admission_drift",
+      "source_location": {
+        "heading": "Existing readiness validator representation gap",
+        "heading_level": 4,
+        "heading_line": 25566,
+        "line": 25578,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -209675,10 +209822,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15420,
+    "depends_on_edge_count": 15435,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18071,
-    "node_count": 6628,
+    "edge_count": 18086,
+    "node_count": 6632,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

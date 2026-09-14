@@ -1,0 +1,575 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json",
+  "$comment": "New uninstalled exact original Workflow Goal cancellation source profile. Whole private arguments and authentic original native owner fences required; serialized data never supplies a capability.",
+  "$defs": {
+    "WholeCurrentGoalValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "control",
+        "accepted_objective",
+        "accepted_origin",
+        "stop",
+        "binding_revision",
+        "binding_origin",
+        "binding_control",
+        "writer_domain",
+        "writer_domain_head",
+        "complete_accepted_history",
+        "complete_original_history_origins"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_body"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "accepted_objective": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision"
+        },
+        "accepted_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin"
+        },
+        "stop": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        },
+        "complete_accepted_history": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision"
+          }
+        },
+        "complete_original_history_origins": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin"
+          }
+        }
+      }
+    },
+    "WorkflowBindingSelection": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingSelection"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "disposition": {
+                  "const": "workflow_requires_owner_disposition"
+                },
+                "association_count": {
+                  "const": 1
+                },
+                "actual_active_run_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WorkflowSourceAudit": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageSourceAudit"
+        },
+        {
+          "properties": {
+            "record": {
+              "properties": {
+                "original_execution_binding": {
+                  "properties": {
+                    "kind": {
+                      "const": "no_bound_plan"
+                    },
+                    "active_run_ref": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SourceCaptureEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "normalized_identity",
+        "original_nonterminal_outcome",
+        "producer_metadata",
+        "current_goal",
+        "binding_selection_candidate"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/GoalCancelRequestV2"
+        },
+        "normalized_identity": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NormalizedIdentity"
+        },
+        "original_nonterminal_outcome": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NonterminalOutcome"
+        },
+        "producer_metadata": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerMetadata"
+        },
+        "current_goal": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeCurrentGoalValues"
+        },
+        "binding_selection_candidate": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowBindingSelection"
+        }
+      }
+    },
+    "BeforeStopEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_audit",
+        "binding_selection",
+        "current_goal",
+        "original_acknowledged_outcome_source",
+        "original_acknowledged_outcome",
+        "exact_event_encoding_template",
+        "complete_numeric_inventory",
+        "codec_resources",
+        "current_progress"
+      ],
+      "properties": {
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowBindingSelection"
+        },
+        "current_goal": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeCurrentGoalValues"
+        },
+        "original_acknowledged_outcome_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_acknowledged_outcome": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/NonterminalOutcome"
+            },
+            {
+              "properties": {
+                "outcome": {
+                  "enum": [
+                    "acknowledged",
+                    "executing"
+                  ]
+                },
+                "acknowledgement_receipt_ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "acknowledgement_frame_offset": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "exact_event_encoding_template": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/EncodingTerm"
+        },
+        "complete_numeric_inventory": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/BeforeStopNumericInventory"
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/CodecResource"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "goal_json"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "producer_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "event_msgpack"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "sir_result_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "current_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentProgressPair"
+        }
+      }
+    },
+    "StopPublicationEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "whole_before_stop",
+        "original_readiness",
+        "original_stop_intent"
+      ],
+      "properties": {
+        "whole_before_stop": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/BeforeStopEntry"
+        },
+        "original_readiness": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+        },
+        "original_stop_intent": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+        }
+      }
+    },
+    "CurrentStoppedGoalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_audit",
+        "binding_selection",
+        "original_readiness",
+        "current_goal",
+        "whole_current_stop",
+        "current_progress"
+      ],
+      "properties": {
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowBindingSelection"
+        },
+        "original_readiness": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+        },
+        "current_goal": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeCurrentGoalValues"
+        },
+        "whole_current_stop": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/CurrentGoalStopArgument"
+        },
+        "current_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentProgressPair"
+        }
+      }
+    },
+    "OriginalOwnersEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stopped_goal",
+        "original_cancellation_receipt"
+      ],
+      "properties": {
+        "stopped_goal": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentStoppedGoalEntry"
+        },
+        "original_cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageCancellationReceipt"
+        }
+      }
+    },
+    "PostOwnersEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_owners",
+        "original_workflow_proof",
+        "original_owner_settlement"
+      ],
+      "properties": {
+        "original_owners": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/OriginalOwnersEntry"
+        },
+        "original_workflow_proof": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+        },
+        "original_owner_settlement": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/WorkflowOwnerSettlement"
+        }
+      }
+    },
+    "WorkflowSucceededResult": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SucceededResult"
+        },
+        {
+          "properties": {
+            "control_publication": {
+              "properties": {
+                "original_owner_settlement": {
+                  "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/WorkflowOwnerSettlement"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SucceededTerminalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "post_owners",
+        "original_assignment",
+        "terminal_input",
+        "original_selected_progress"
+      ],
+      "properties": {
+        "post_owners": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        "original_assignment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        "terminal_input": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/TerminalInput"
+            },
+            {
+              "properties": {
+                "result": {
+                  "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSucceededResult"
+                }
+              }
+            }
+          ]
+        },
+        "original_selected_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressEpoch"
+        }
+      }
+    },
+    "UnsettledTerminalEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "terminal_input",
+        "original_selected_progress"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "terminal_input": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/TerminalInput"
+            },
+            {
+              "properties": {
+                "result": {
+                  "oneOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NoEffectResult"
+                    },
+                    {
+                      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/RecoveryRequiredResult"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "original_selected_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressEpoch"
+        }
+      }
+    },
+    "SucceededRetainedEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "original_terminal",
+        "original_workflow_proof",
+        "original_assignment",
+        "original_selected_progress"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "original_terminal": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "kind": {
+                      "const": "succeeded"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "original_workflow_proof": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+        },
+        "original_assignment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        "original_selected_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressEpoch"
+        }
+      }
+    },
+    "UnsettledRetainedEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_source",
+        "original_terminal",
+        "original_selected_progress"
+      ],
+      "properties": {
+        "original_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "original_terminal": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "no_effect",
+                        "unknown"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "original_selected_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressEpoch"
+        }
+      }
+    },
+    "WholeStorageProgressHead": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "properties": {
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressHead"
+            }
+          }
+        }
+      ]
+    },
+    "WholeStorageProgressEpoch": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "properties": {
+            "record": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Progress"
+            }
+          }
+        }
+      ]
+    },
+    "CurrentProgressPair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_head",
+        "current_selected_epoch"
+      ],
+      "properties": {
+        "current_head": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressHead"
+        },
+        "current_selected_epoch": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WholeStorageProgressEpoch"
+        }
+      }
+    }
+  }
+}

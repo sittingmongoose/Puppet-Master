@@ -1488,3 +1488,91 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json
+
+
+### BRS-026 - Coherent original Workflow Goal cancellation backup and restore
+
+BRS-026 applies BRS-025 and SP-310 to the GRS-078 original Workflow cancellation profile. The three original audit families retain their genuine accepted V2 routes, old whole values and original keys; the additional V3 routes use the three versioned carriers plus three compact lineage families selected by `Plans/goal_workflow_cancel_contracts/physical-profiles.json`. Its nonstored schema composition grants no new stored envelope, admission or authority. Whole source, key, codec, phase and original accepted profile remain inseparable at backup and restore.
+
+All six profiles use existing `RP-AUTHORITY-INDEFINITE@1.0.0`: actual creation anchor, indefinite retention, no new TTL/count/byte eviction, existing hold eligibility, fail-closed overflow and original privacy/deletion/restore rules. The three audit profiles inherit the original complete command/event audit meaning. The three new metadata profiles use the existing original lineage/assignment authority class. There is no new retention policy or universal content-free category. References and commitments create no hold on Goal/history/Workflow/D05/EventRecord sources and never recreate disposed source bytes. A retained terminal may report original command facts only; it cannot prove a current EventRecord or current native source remains available.
+
+Each authoritative profile is canonical non-rebuildable custody and requires actual mandatory coherent backup. Before admission the genuine Storage owner must enroll the exact family/profile/key/schema/codec/root in its original backup/restore, deletion/hold and migration boundaries. Registry `materialized` is a source-definition classification, not proof of installed native writers or successful backup. An absent registration or missing required authority fails closed; it does not become a default policy or a rebuildable projection.
+
+A coherent capture includes all **actually issued** records for the original scope and authentic phase/absence evidence for profiles that have not yet issued. Capture the existing SourceAudit, Stop/control/receipt, current progress head plus selected immutable epochs, SIR terminal/outcome/response, original event/first custody, versioned control publication and the three compact lineage values at their real phases. Include original positive D06 result/origin and applicable retained D05/start/native sources through their real owners. Full Goal body/control/history/origin and event/source bytes enter only while legitimately retained and required by that original boundary. An early no-effect or unknown outcome cannot be forced to contain a future assignment, D05/D06 success or publication. A family list, empty array, surviving reference or lookup failure is not coherent capture or proof of nonissuance.
+
+Capture and release independently authenticate actual original owner/root/permission/deletion/hold/codec/backup controls before helpers and in the final pure predicate. Restore uses the protected image and genuine original Storage coordinator, applies current tombstones before disclosure, preserves newer Stop/progress/terminal truth and authenticates the original immutable selected epoch and whole outer hash. It cannot silently accept an image missing an issued mandatory family, backfill an origin, alter old keys, manufacture an EventRecord or revive a lease, native process, late reservation, callback capability or runnable release. Missing original authority remains data loss/unavailable under the existing disclosure/recovery path.
+
+A lost or released late reservation cannot be reacquired by this stored audit. Same-owner restart may only resume a genuinely already admitted stage whose complete native fences still hold. Unknown or refused later work preserves every real earlier Stop/receipt/D05/D06/append/control effect and never fabricates no-effect or success. Retained succeeded and unsettled readers keep their distinct complete source prerequisites; neither replays cancellation or demands disposed historical bodies. Withdrawal removes current effect authority while preserving lawful original audit facts and original deletion/hold dispositions.
+
+
+The SP-310 complete field classification, including actual original typed UICommandError diagnostic text, applies before admission and backup; no content is made admissible by dropping, hashing or rewriting original fields. Whole retained terminal facts do not imply present EventRecord or native source availability. Current tombstones, lawful holds and actual source retention govern release. No policy duration or source retention is extended.
+
+Every independently callable capture, restore, verification or release helper repeats the full authentic source/owner/root/registration/permission/deletion/hold/backup/codec predicate before helpers and as the final pure predicate after every returning helper and after all helpers, without a callback or mutable gap before its own effect or disclosure. Restoration preserves actual earlier effects and immutable original terminal truth; it cannot implicitly enter an action-recovery route.
+
+This source contract does not establish installed native capture/restore, transaction/crash qualification, complete v3 Workflow event consumers/checkpoints, event depth, native runtime/readiness admission or a governance seal. SP-310 records the unchanged readiness validator representation gap.
+
+```yaml
+plan_unit_id: BRS-026
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Coherent original Workflow Goal cancellation backup and restore. Mandatory original profile enrollment
+  and actual phase-sensitive issued-record capture precede authority admission.
+gui_related: false
+gui_classification_reason: Defines native owner, typed source, physical custody and verification semantics without
+  a visual surface.
+split_recommended: false
+depends_on:
+- BRS-025
+- SP-310
+unblocks: []
+acceptance_criteria:
+- Mandatory original profile enrollment and actual phase-sensitive issued-record capture precede authority admission.
+- Coherent images include full authentic original selected immutable progress and every actually issued required
+  custody participant without demanding nonexistent future success records.
+- Restore applies current tombstones, preserves newer Stop/progress/terminal facts and authenticates original
+  keys, codecs, owner and backup controls.
+- No missing source, EventRecord, reservation, lease, process or action capability is recreated from retained
+  audit or a protected image.
+- Independent capture/restore/release boundaries repeat complete authentic entry and final predicates; native
+  crash/restore qualification remains unproved.
+validation_surfaces:
+- Plans/goal_runtime_workflow_cancel_contracts.schema.json
+- Plans/goal_workflow_cancel_schema_resources.json
+- Plans/goal_workflow_cancel_contracts/entry-boundaries.json
+- Plans/goal_workflow_cancel_contracts/methods.json
+- Plans/goal_workflow_cancel_contracts/numeric-paths.json
+- Plans/goal_workflow_cancel_contracts/physical-profiles.json
+- Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+- Plans/storage_value_registry.json
+risk_class: original_goal_workflow_source_custody_or_native_admission_drift
+reasoning_tier: high
+context_scope: brs_026_original_source_contract
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/goal_runtime_workflow_cancel_contracts.schema.json
+- Plans/goal_workflow_cancel_schema_resources.json
+- Plans/goal_workflow_cancel_contracts/entry-boundaries.json
+- Plans/goal_workflow_cancel_contracts/methods.json
+- Plans/goal_workflow_cancel_contracts/numeric-paths.json
+- Plans/goal_workflow_cancel_contracts/physical-profiles.json
+- Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event-membership, Goal lifecycle or retention-policy expansion.
+- No fabricated source, absence, original acceptance, native authority, receipt, reservation or retrospective
+  enrollment.
+- No numeric coercion, lossy codec, stored header relabelling, dropped diagnostic branch or rewritten immutable
+  terminal.
+- No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json

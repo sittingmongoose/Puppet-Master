@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json",
+  "$comment": "New uninstalled exact original Workflow Goal cancellation source profile. Whole private arguments and authentic original native owner fences required; serialized data never supplies a capability.",
+  "$defs": {
+    "BeforeStopNativeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_start",
+        "original_domain_birth",
+        "reservation_lineage",
+        "registered_goal_terminal_writer",
+        "registered_workflow_terminal_writer",
+        "actual_original_goal_boundary"
+      ],
+      "properties": {
+        "current_start": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
+        },
+        "original_domain_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        "reservation_lineage": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationLineage"
+        },
+        "registered_goal_terminal_writer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "registered_workflow_terminal_writer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "actual_original_goal_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary"
+        }
+      }
+    },
+    "GoalControlPlaneAdmission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_domain_birth",
+        "registered_goal_terminal_writer",
+        "actual_original_goal_boundary"
+      ],
+      "properties": {
+        "original_domain_birth": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        "registered_goal_terminal_writer": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        "actual_original_goal_boundary": {
+          "$ref": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary"
+        }
+      }
+    },
+    "OriginalOwnersNativeEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "complete_current_workflow_disposition",
+        "goal_control_plane"
+      ],
+      "properties": {
+        "complete_current_workflow_disposition": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/CurrentSuccessfulReadback"
+        },
+        "goal_control_plane": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/GoalControlPlaneAdmission"
+        }
+      }
+    },
+    "RetainedWorkflowEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_disposition",
+        "original_result_storage",
+        "original_origin_storage"
+      ],
+      "properties": {
+        "original_disposition": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/RetainedResult"
+        },
+        "original_result_storage": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageResult"
+        },
+        "original_origin_storage": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin"
+        }
+      }
+    }
+  }
+}

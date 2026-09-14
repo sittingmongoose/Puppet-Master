@@ -1,0 +1,769 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json",
+  "$comment": "New uninstalled exact original Workflow Goal cancellation source profile. Whole private arguments and authentic original native owner fences required; serialized data never supplies a capability.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "codec_id",
+        "complete_value_sha256"
+      ],
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "CodecResource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "codec_id",
+        "codec_version",
+        "actual_schema_id",
+        "actual_schema_version",
+        "original_resource_sha256",
+        "original_registration_ref",
+        "original_owner_ref",
+        "original_owner_epoch"
+      ],
+      "properties": {
+        "purpose": {
+          "enum": [
+            "goal_json",
+            "producer_jcs",
+            "event_msgpack",
+            "sir_result_jcs"
+          ]
+        },
+        "codec_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codec_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_resource_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_registration_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_method",
+        "original_owner_ref",
+        "original_owner_epoch",
+        "original_operation_id",
+        "original_transaction_id",
+        "original_permission_source",
+        "original_causation_ref",
+        "committed_at"
+      ],
+      "properties": {
+        "owner_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_permission_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "original_causation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "committed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "BeforeStopReadiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "source_profile",
+        "source_audit",
+        "binding_selection",
+        "goal_argument_sha256",
+        "native_argument_sha256",
+        "exact_encoding_template_sha256",
+        "complete_numeric_inventory_sha256",
+        "codec_resources",
+        "storage_assignment_phase",
+        "original_issuer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_profile": {
+          "const": "goal_workflow_cancel_late_assignment.v1"
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "exact_encoding_template_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_numeric_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/CodecResource"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "goal_json"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "producer_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "event_msgpack"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "sir_result_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "storage_assignment_phase": {
+          "const": "after_original_workflow_disposition_before_goal_append"
+        },
+        "original_issuer": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Issuer"
+            },
+            {
+              "properties": {
+                "owner_method": {
+                  "const": "owner.goal.workflow_cancel.prepare.v1"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "WorkflowScopeProof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "source_profile",
+        "goal_run_id",
+        "execution_owner_ref",
+        "execution_owner_epoch",
+        "source_audit",
+        "binding_selection",
+        "before_stop_readiness",
+        "original_stop_receipt",
+        "original_cancellation_receipt",
+        "d06_result",
+        "d06_origin",
+        "d06_operation_id",
+        "d06_disposition",
+        "preserved_terminal_status",
+        "d05_result",
+        "d05_origin",
+        "goal_argument_sha256",
+        "native_argument_sha256",
+        "original_issuer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_profile": {
+          "const": "goal_workflow_cancel_late_assignment.v1"
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "before_stop_readiness": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "original_stop_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "original_cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "d06_result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "d06_origin": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "d06_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "d06_disposition": {
+          "enum": [
+            "cancelled_from_nonterminal",
+            "terminal_preserved"
+          ]
+        },
+        "preserved_terminal_status": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "certified",
+                "failed",
+                "cancelled"
+              ]
+            }
+          ]
+        },
+        "d05_result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "d05_origin": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "native_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_issuer": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Issuer"
+            },
+            {
+              "properties": {
+                "owner_method": {
+                  "const": "owner.goal.workflow_cancel.settle_owner.v1"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "d06_disposition": {
+                "const": "cancelled_from_nonterminal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "preserved_terminal_status": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "preserved_terminal_status": {
+                "enum": [
+                  "certified",
+                  "failed",
+                  "cancelled"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LateReservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "original_operation_id",
+        "original_native_boot_session_ref",
+        "original_append_owner_ref",
+        "original_append_owner_epoch",
+        "original_exclusive_fence_id",
+        "current",
+        "manifest",
+        "sequence_allocator",
+        "original_lease_id",
+        "reserved_sequence_id",
+        "selected_segment_generation",
+        "selected_manifest_generation",
+        "selected_segment_name",
+        "selected_segment_physical_id",
+        "byte_offset",
+        "exact_header_byte_length",
+        "event_value_byte_length_domain",
+        "frame_byte_length_domain",
+        "durable_end_offset_domain",
+        "complete_original_active_sink_sha256",
+        "original_reservation_transaction_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_native_boot_session_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_append_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_append_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_exclusive_fence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "current": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "manifest": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "sequence_allocator": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "original_lease_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reserved_sequence_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_segment_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_manifest_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "selected_segment_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selected_segment_physical_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "byte_offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "exact_header_byte_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "event_value_byte_length_domain": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/IntegerDomain"
+        },
+        "frame_byte_length_domain": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/IntegerDomain"
+        },
+        "durable_end_offset_domain": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/IntegerDomain"
+        },
+        "complete_original_active_sink_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_reservation_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "IntegerDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum",
+        "maximum",
+        "step"
+      ],
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "LateAssignmentAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "operation_id",
+        "source_profile",
+        "source_audit",
+        "binding_selection",
+        "before_stop_readiness",
+        "workflow_scope_proof",
+        "original_event_id",
+        "producer_semantic_digest",
+        "complete_goal_argument_sha256",
+        "complete_native_argument_sha256",
+        "complete_assignment_input_sha256",
+        "complete_numeric_inventory_sha256",
+        "actual_late_reservation",
+        "original_issuer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Scope"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_profile": {
+          "const": "goal_workflow_cancel_late_assignment.v1"
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "binding_selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "before_stop_readiness": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "workflow_scope_proof": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Selection"
+        },
+        "original_event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_semantic_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_goal_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_native_argument_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_assignment_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "complete_numeric_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_late_reservation": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateReservation"
+        },
+        "original_issuer": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/Issuer"
+            },
+            {
+              "properties": {
+                "owner_method": {
+                  "const": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "StorageBeforeStopReadiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_workflow_cancel_readiness.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/BeforeStopReadiness"
+        }
+      }
+    },
+    "StorageWorkflowScopeProof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_workflow_cancel_scope_proof.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/WorkflowScopeProof"
+        }
+      }
+    },
+    "StorageLateAssignmentAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_workflow_cancel_late_assignment.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateAssignmentAudit"
+        }
+      }
+    }
+  }
+}

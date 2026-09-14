@@ -1,0 +1,498 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json",
+  "$comment": "New uninstalled exact original Workflow Goal cancellation source profile. Whole private arguments and authentic original native owner fences required; serialized data never supplies a capability.",
+  "$defs": {
+    "LiteralNull": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term"
+      ],
+      "properties": {
+        "term": {
+          "const": "null"
+        }
+      }
+    },
+    "LiteralBoolean": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "boolean"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      }
+    },
+    "LiteralInteger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "integer"
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "LiteralString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "value"
+      ],
+      "properties": {
+        "term": {
+          "const": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "TemplateArray": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "items"
+      ],
+      "properties": {
+        "term": {
+          "const": "array"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/EncodingTerm"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "TemplateMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "value"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/EncodingTerm"
+        }
+      }
+    },
+    "TemplateMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "members"
+      ],
+      "properties": {
+        "term": {
+          "const": "map"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/TemplateMember"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "RuntimeHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "source_slot",
+        "encoded_utf8_bytes"
+      ],
+      "properties": {
+        "term": {
+          "const": "original_sha256"
+        },
+        "source_slot": {
+          "enum": [
+            "cancellation_receipt_sha256"
+          ]
+        },
+        "encoded_utf8_bytes": {
+          "const": 64
+        }
+      }
+    },
+    "RuntimeTimestamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "term",
+        "source_slot"
+      ],
+      "properties": {
+        "term": {
+          "const": "original_timestamp"
+        },
+        "source_slot": {
+          "enum": [
+            "event.observed_at_utc",
+            "event.persisted_at_utc"
+          ]
+        }
+      }
+    },
+    "LateStorageInteger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "field",
+        "original_owner_method"
+      ],
+      "properties": {
+        "kind": {
+          "const": "late_storage_integer"
+        },
+        "field": {
+          "const": "sequence_id"
+        },
+        "original_owner_method": {
+          "const": "owner.storage.goal_workflow_cancel.reserve_assignment.v1"
+        }
+      }
+    },
+    "EncodingTerm": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LiteralNull"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LiteralBoolean"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LiteralInteger"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LiteralString"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/TemplateArray"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/TemplateMap"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/RuntimeHash"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/RuntimeTimestamp"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateStorageInteger"
+        }
+      ]
+    },
+    "FutureNumericPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "schema_branch",
+        "json_pointer",
+        "original_owner_method",
+        "admission_phase"
+      ],
+      "properties": {
+        "target": {
+          "enum": [
+            "producer_semantic_digest",
+            "event_value",
+            "goal_cancel_result",
+            "command_outcome",
+            "command_response"
+          ]
+        },
+        "schema_branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_pointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_method": {
+          "const": "owner.storage.goal_workflow_cancel.reserve_assignment.v1"
+        },
+        "admission_phase": {
+          "const": "actual_post_owner_before_goal_append"
+        }
+      }
+    },
+    "BeforeStopNumericInventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "known_paths",
+        "late_storage_paths",
+        "complete_original_schema_inventory_sha256"
+      ],
+      "properties": {
+        "known_paths": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NumericPathDomain"
+          }
+        },
+        "late_storage_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/FutureNumericPath"
+          }
+        },
+        "complete_original_schema_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "TypedGoalEventRecord": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        {
+          "properties": {
+            "event_type": {
+              "const": "goal.cancelled"
+            },
+            "payload_schema_id": {
+              "const": "pm.goal_runtime_event.goal_cancelled.schema.v3"
+            },
+            "payload": {
+              "$ref": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3"
+            }
+          }
+        }
+      ]
+    },
+    "EventReadyProgress": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "properties": {
+            "record": {
+              "required": [
+                "phase"
+              ],
+              "properties": {
+                "phase": {
+                  "const": "event_ready"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LatePrepareEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "post_owners",
+        "original_event_ready_progress",
+        "original_producer",
+        "actual_append_source"
+      ],
+      "properties": {
+        "post_owners": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        "original_event_ready_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/EventReadyProgress"
+        },
+        "original_producer": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+        },
+        "actual_append_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AppendSourceRead"
+        }
+      }
+    },
+    "LateAssignmentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "post_owners",
+        "original_event_ready_progress",
+        "original_producer",
+        "actual_append_source",
+        "actual_late_reservation",
+        "actual_storage_assigned_event",
+        "complete_numeric_domains",
+        "codec_resources"
+      ],
+      "properties": {
+        "post_owners": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        "original_event_ready_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/EventReadyProgress"
+        },
+        "original_producer": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+        },
+        "actual_append_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AppendSourceRead"
+        },
+        "actual_late_reservation": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateReservation"
+        },
+        "actual_storage_assigned_event": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/TypedGoalEventRecord"
+        },
+        "complete_numeric_domains": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/NumericPathDomain"
+          }
+        },
+        "codec_resources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/CodecResource"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "goal_json"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "producer_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "event_msgpack"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "purpose": {
+                    "const": "sir_result_jcs"
+                  }
+                }
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        }
+      }
+    },
+    "OriginalGoalAppendReadback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "publication",
+        "full_value_result",
+        "original_custody",
+        "original_assignment",
+        "actual_current_append_source",
+        "actual_source_frame",
+        "actual_index_checkpoint",
+        "actual_index_generation",
+        "actual_index_frontier",
+        "actual_index_read_token",
+        "actual_index_row"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/TypedGoalEventRecord"
+        },
+        "publication": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalPublication"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        },
+        "original_custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        },
+        "original_assignment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        "actual_current_append_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/AppendSourceRead"
+        },
+        "actual_source_frame": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/frame"
+        },
+        "actual_index_checkpoint": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_index_root__checkpoint"
+        },
+        "actual_index_generation": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_index_root__generation"
+        },
+        "actual_index_frontier": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_index_root__frontier"
+        },
+        "actual_index_read_token": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_index_root__read_token"
+        },
+        "actual_index_row": {
+          "$ref": "https://puppetmaster.local/schemas/storage_compaction_native_contracts/1.0.0/schema.json#/$defs/existing_event_record_index"
+        }
+      }
+    }
+  }
+}

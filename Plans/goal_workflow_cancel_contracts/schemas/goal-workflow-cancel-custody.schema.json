@@ -1,0 +1,4282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json",
+  "$comment": "NEW source-only exact cancellation proposal. No shape authenticates an issuer. Full original final predicates and key/phase joins are mandatory.",
+  "$defs": {
+    "NormalizedIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "owner_identity",
+        "payload_sha256",
+        "idempotency_key",
+        "target_generation",
+        "dispatch_frame_id"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.cancel"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_identity": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope"
+            },
+            {
+              "required": [
+                "thread_id",
+                "command_instance_id"
+              ],
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                },
+                "thread_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "command_instance_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              }
+            }
+          ]
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dispatch_frame_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "NonterminalOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "outcome": {
+              "enum": [
+                "accepted",
+                "acknowledged",
+                "executing"
+              ]
+            },
+            "result_receipt_ref": {
+              "type": "null"
+            },
+            "error_ref": {
+              "type": "null"
+            },
+            "owner_result_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "type": "null"
+            },
+            "owner_result_sha256": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "OriginalAppendResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "sequence_id",
+        "byte_offset",
+        "segment_ref"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "segment_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "first_append_receipt",
+        "original_append_result",
+        "original_event_value_commitment"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "first_append_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+        },
+        "original_append_result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalAppendResult"
+        },
+        "original_event_value_commitment": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+        }
+      }
+    },
+    "GoalError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "evidence_ref",
+        "offending_field"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "invalid_request",
+            "goal_not_found",
+            "stale_goal_revision",
+            "stale_currentness",
+            "command_not_registered",
+            "permission_denied",
+            "owner_unavailable",
+            "cancelled"
+          ]
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "offending_field": {
+          "oneOf": [
+            {
+              "enum": [
+                "schema_id",
+                "schema_version",
+                "command_id",
+                "command_instance_id",
+                "project_id",
+                "thread_id",
+                "goal_id",
+                "expected_revision",
+                "expected_currentness_hash",
+                "actor_ref",
+                "permission_snapshot_ref",
+                "idempotency_key",
+                "source_surface",
+                "return_route_ref"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "TerminalSuccessOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "outcome": {
+              "const": "succeeded"
+            },
+            "error_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            },
+            "result_receipt_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "TerminalUnknownOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "outcome": {
+              "const": "terminal_unknown"
+            },
+            "result_receipt_ref": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TerminalNoEffectOutcome": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/CommandOutcomeRecord"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "outcome": {
+              "enum": [
+                "failed",
+                "cancelled",
+                "rejected"
+              ]
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            },
+            "result_receipt_ref": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "SuccessResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "ack_status": {
+              "const": "accepted"
+            },
+            "result_status": {
+              "const": "succeeded"
+            },
+            "error": {
+              "type": "null"
+            },
+            "event_refs": {
+              "minItems": 1,
+              "maxItems": 1
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            },
+            "receipt_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "UnknownResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "ack_status": {
+              "const": "accepted"
+            },
+            "result_status": {
+              "const": "recovery_required"
+            },
+            "error": {
+              "properties": {
+                "code": {
+                  "const": "internal_error"
+                }
+              }
+            },
+            "receipt_ref": {
+              "type": "null"
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            },
+            "event_refs": {
+              "maxItems": 1
+            }
+          }
+        }
+      ]
+    },
+    "NoEffectResponse": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/ui_command_response/2.0.0/ui_command_response.schema.json"
+        },
+        {
+          "properties": {
+            "command_id": {
+              "const": "cmd.chat.goal.cancel"
+            },
+            "response_kind": {
+              "const": "owner_operation"
+            },
+            "result_status": {
+              "enum": [
+                null,
+                "failed",
+                "cancelled"
+              ]
+            },
+            "event_refs": {
+              "maxItems": 0
+            },
+            "replayed": {
+              "const": false
+            },
+            "original_dispatch_id": {
+              "type": "null"
+            },
+            "owner_result_schema_ref": {
+              "const": {
+                "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+                "json_pointer": "#/$defs/GoalCancelResultV3",
+                "schema_id": "pm.goal.cancel.result.v3"
+              }
+            },
+            "receipt_ref": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "ProducerMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.event.v0"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "2.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "event_type": {
+          "const": "goal.cancelled"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "node_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "requested_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "effective_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "occurred_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string"
+        },
+        "producer_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer"
+        },
+        "correlation_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "causation_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "parent_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_cancelled.schema.v3"
+        },
+        "payload_ref": {
+          "type": "null"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "replay_policy": {
+          "const": "dedupe_by_idempotency_key"
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration"
+        }
+      }
+    },
+    "ProgressHead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "progress_epoch",
+        "snapshot_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.progress_head.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "progress_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "ProgressSnapshotSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "progress_epoch",
+        "snapshot_key"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "progress_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "$comment": "Exact original immutable epoch selector; snapshot_key is the prescribed scoped goal_cancel_progress.v2 epoch key for this new original Workflow profile. Cross-record scope, epoch, original source, head and outer-byte joins are mandatory under protocol v2; schema validity is not provenance."
+    },
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OperationSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "GoalCancelRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "actor_ref",
+        "permission_snapshot_ref",
+        "idempotency_key",
+        "source_surface",
+        "return_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.cancel"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "return_route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$comment": "Complete fourteen-field original explicit user Cancel request. The actual SIR dispatch and original accepted user action issue its authority. source_surface is original routing lineage only. No Update, Save, objective proposal or approval field is accepted by this closed request."
+    },
+    "Bytes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "opaque_ref",
+        "sha256",
+        "byte_length"
+      ],
+      "properties": {
+        "opaque_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byte_length": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "BodySelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "body_key",
+        "body_outer_sha256",
+        "body_semantic_sha256",
+        "revision",
+        "currentness_hash",
+        "control_key",
+        "control_outer_sha256",
+        "control_epoch",
+        "latest_objective_revision",
+        "latest_revision_hash",
+        "origin_key",
+        "complete_history_origin_inventory_sha256",
+        "state",
+        "active_run_ref"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "body_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "control_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_outer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latest_objective_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "latest_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "origin_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_history_origin_inventory_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "state": {
+          "enum": [
+            "active",
+            "paused",
+            "blocked"
+          ]
+        },
+        "active_run_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ExecutionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "active_run_ref",
+        "goal_plan_binding_ref",
+        "goal_plan_binding_sha256",
+        "assistant_plan_id",
+        "plan_run_id",
+        "plan_version",
+        "plan_hash",
+        "execution_owner_ref",
+        "original_binding_source_ref"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "no_bound_plan",
+            "bound_plan"
+          ]
+        },
+        "active_run_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_plan_binding_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_plan_binding_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assistant_plan_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_run_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_version": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "plan_hash": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_binding_source_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "bound_plan"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "goal_plan_binding_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assistant_plan_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "plan_run_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "goal_plan_binding_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "plan_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "plan_hash": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "active_run_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "goal_plan_binding_ref": {
+                "type": "null"
+              },
+              "goal_plan_binding_sha256": {
+                "type": "null"
+              },
+              "assistant_plan_id": {
+                "type": "null"
+              },
+              "plan_run_id": {
+                "type": "null"
+              },
+              "plan_version": {
+                "type": "null"
+              },
+              "plan_hash": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "StopControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "user_stop_epoch",
+        "latched",
+        "last_original_stop_receipt_ref",
+        "last_original_stop_receipt_sha256",
+        "original_birth_or_adoption_ref",
+        "continuation_epoch"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.stop_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "latched": {
+          "type": "boolean"
+        },
+        "last_original_stop_receipt_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_original_stop_receipt_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_birth_or_adoption_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "StopIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "source_audit_sha256",
+        "before_stop_control_sha256",
+        "before_user_stop_epoch",
+        "after_user_stop_epoch",
+        "before_continuation_epoch",
+        "after_continuation_epoch",
+        "expected_revision",
+        "expected_currentness_hash",
+        "original_execution_binding",
+        "original_host_owner_epoch",
+        "original_accepted_cancel_ref",
+        "requested_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.stop_intent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_stop_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "before_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_execution_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ExecutionBinding"
+        },
+        "original_host_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_accepted_cancel_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StopReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "stop_intent_sha256",
+        "source_audit_sha256",
+        "before_user_stop_epoch",
+        "after_user_stop_epoch",
+        "before_continuation_epoch",
+        "after_continuation_epoch",
+        "original_host_transaction_ref",
+        "committed_at",
+        "latched"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.stop_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stop_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "before_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_host_transaction_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "committed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latched": {
+          "const": true
+        }
+      }
+    },
+    "CancellationPending": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "source_audit_sha256",
+        "stop_intent_sha256",
+        "accepted_user_stop_epoch",
+        "accepted_continuation_epoch",
+        "expected_revision",
+        "expected_currentness_hash",
+        "expected_body_semantic_sha256",
+        "expected_latest_objective_revision",
+        "expected_latest_revision_hash",
+        "original_goal_owner_epoch",
+        "original_sir_source_ref",
+        "original_cancel_authority_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.reservation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stop_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accepted_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "accepted_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_body_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_latest_objective_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expected_latest_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_goal_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_sir_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_cancel_authority_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "BodyControlV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "body_key",
+        "body_sha256",
+        "current_revision",
+        "currentness_hash",
+        "latest_objective_revision",
+        "latest_revision_hash",
+        "origin_key",
+        "control_epoch",
+        "cancellation_receipt_ref",
+        "pending",
+        "cancellation_pending"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.body_control.v2"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "current_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "latest_objective_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "latest_revision_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "origin_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancellation_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pending": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/pending"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cancellation_pending": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationPending"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cancellation_receipt_ref": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pending": {
+                "type": "null"
+              },
+              "cancellation_pending": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SourceAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "request",
+        "normalized_identity",
+        "dispatch_id",
+        "command_outcome_ref",
+        "nonterminal_outcome",
+        "original_user_cancel_acceptance_ref",
+        "source_authority_ref",
+        "source_authority_epoch",
+        "original_body",
+        "original_execution_binding",
+        "original_stop_control_sha256",
+        "captured_user_stop_epoch",
+        "captured_continuation_epoch",
+        "producer_metadata",
+        "captured_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.source_audit.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/GoalCancelRequestV2"
+        },
+        "normalized_identity": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NormalizedIdentity"
+        },
+        "dispatch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_outcome_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nonterminal_outcome": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NonterminalOutcome"
+        },
+        "original_user_cancel_acceptance_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_authority_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_authority_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_body": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/BodySelection"
+        },
+        "original_execution_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ExecutionBinding"
+        },
+        "original_stop_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "captured_continuation_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producer_metadata": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerMetadata"
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CancellationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "cancellation_id",
+        "source_audit_sha256",
+        "original_revision",
+        "original_currentness_hash",
+        "stop_receipt_ref",
+        "stop_receipt_sha256",
+        "user_stop_epoch",
+        "cancel_reason",
+        "accepted_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "stop_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stop_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "user_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cancel_reason": {
+          "const": "user_cancelled"
+        },
+        "accepted_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OwnerSettlement": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalOwnerSettlement"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/WorkflowOwnerSettlement"
+        }
+      ]
+    },
+    "ControlPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "source_audit_sha256",
+        "cancellation_receipt_ref",
+        "cancellation_receipt_sha256",
+        "original_publication",
+        "before_control_sha256",
+        "after_control_sha256",
+        "before_control_epoch",
+        "after_control_epoch",
+        "body_semantic_sha256",
+        "revision",
+        "currentness_hash",
+        "original_owner_settlement",
+        "original_transaction_ref",
+        "published_at",
+        "active_projection_removed",
+        "body_history_unchanged"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.control_publication.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "cancellation_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cancellation_receipt_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_publication": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalPublication"
+        },
+        "before_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "after_control_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "after_control_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "body_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_owner_settlement": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+        },
+        "original_transaction_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "active_projection_removed": {
+          "const": true
+        },
+        "body_history_unchanged": {
+          "const": true
+        }
+      }
+    },
+    "ProducerInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope_kind",
+        "event_id",
+        "event_type",
+        "project_id",
+        "thread_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "actor_ref",
+        "requested_account_ref",
+        "effective_account_ref",
+        "occurred_at_utc",
+        "producer_sequence_id",
+        "correlation_id",
+        "causation_event_id",
+        "parent_event_id",
+        "idempotency_key",
+        "payload_schema_id",
+        "payload_ref",
+        "redaction_profile",
+        "replay_policy",
+        "migration",
+        "payload"
+      ],
+      "properties": {
+        "schema_id": {
+          "type": "string",
+          "const": "pm.event.v0"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "2.0.0"
+        },
+        "scope_kind": {
+          "const": "project"
+        },
+        "event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "event_type": {
+          "const": "goal.cancelled"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "node_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "attempt_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "actor_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "requested_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "effective_account_ref": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "occurred_at_utc": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string"
+        },
+        "producer_sequence_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_negative_integer"
+        },
+        "correlation_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "causation_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "parent_event_id": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/nullable_non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/non_empty_string"
+        },
+        "payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_cancelled.schema.v3"
+        },
+        "payload_ref": {
+          "type": "null"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        },
+        "replay_policy": {
+          "const": "dedupe_by_idempotency_key"
+        },
+        "migration": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/migration"
+        },
+        "payload": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/goal_runtime/pm.goal_runtime_event.goal_cancelled.schema.v3"
+        }
+      }
+    },
+    "Progress": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "source_admitted"
+            },
+            "stop_intent": {
+              "type": "null"
+            },
+            "stop_receipt": {
+              "type": "null"
+            },
+            "reservation_sha256": {
+              "type": "null"
+            },
+            "cancellation_receipt": {
+              "type": "null"
+            },
+            "owner_settlement": {
+              "type": "null"
+            },
+            "producer_input": {
+              "type": "null"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "stop_reserved"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "type": "null"
+            },
+            "owner_settlement": {
+              "type": "null"
+            },
+            "producer_input": {
+              "type": "null"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "receipt_committed"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "type": "null"
+            },
+            "producer_input": {
+              "type": "null"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "owners_settled"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+            },
+            "producer_input": {
+              "type": "null"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "event_ready"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+            },
+            "producer_input": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "event_unknown"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+            },
+            "producer_input": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "event_issued"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+            },
+            "producer_input": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+            },
+            "publication": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalPublication"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "control_published"
+            },
+            "stop_intent": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopIntent"
+            },
+            "stop_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "reservation_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "cancellation_receipt": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "owner_settlement": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OwnerSettlement"
+            },
+            "producer_input": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+            },
+            "publication": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalPublication"
+            },
+            "control_publication": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ControlPublication"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "progress_epoch",
+            "phase",
+            "stop_intent",
+            "stop_receipt",
+            "reservation_sha256",
+            "cancellation_receipt",
+            "owner_settlement",
+            "producer_input",
+            "publication",
+            "control_publication",
+            "resolution_owner_ref"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.progress.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "progress_epoch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "phase": {
+              "const": "no_effect"
+            },
+            "stop_intent": {
+              "type": "null"
+            },
+            "stop_receipt": {
+              "type": "null"
+            },
+            "reservation_sha256": {
+              "type": "null"
+            },
+            "cancellation_receipt": {
+              "type": "null"
+            },
+            "owner_settlement": {
+              "type": "null"
+            },
+            "producer_input": {
+              "type": "null"
+            },
+            "publication": {
+              "type": "null"
+            },
+            "control_publication": {
+              "type": "null"
+            },
+            "resolution_owner_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "SucceededResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "cancellation_receipt",
+        "publication",
+        "control_publication"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.cancel"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "succeeded"
+        },
+        "cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+        },
+        "publication": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/OriginalPublication"
+        },
+        "control_publication": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ControlPublication"
+        }
+      }
+    },
+    "NoEffectResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "effect_disposition",
+        "no_effect_proof_ref",
+        "error"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.cancel"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "failed",
+            "cancelled",
+            "rejected"
+          ]
+        },
+        "effect_disposition": {
+          "const": "no_effect"
+        },
+        "no_effect_proof_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/GoalError"
+        }
+      }
+    },
+    "RecoveryRequiredResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "operation_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "status",
+        "original_progress_selector",
+        "stop_effect",
+        "receipt_effect",
+        "event_effect",
+        "control_effect",
+        "original_effect_evidence_refs",
+        "resolution_owner_ref",
+        "error"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "command_id": {
+          "const": "cmd.chat.goal.cancel"
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "recovery_required"
+        },
+        "original_progress_selector": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+        },
+        "stop_effect": {
+          "enum": [
+            "not_latched",
+            "latched",
+            "unknown"
+          ]
+        },
+        "receipt_effect": {
+          "enum": [
+            "not_committed",
+            "committed",
+            "unknown"
+          ]
+        },
+        "event_effect": {
+          "enum": [
+            "not_attempted",
+            "issued",
+            "unknown"
+          ]
+        },
+        "control_effect": {
+          "enum": [
+            "not_published",
+            "published",
+            "unknown"
+          ]
+        },
+        "original_effect_evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "resolution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/GoalError"
+        }
+      }
+    },
+    "Result": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SucceededResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NoEffectResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/RecoveryRequiredResult"
+        }
+      ]
+    },
+    "Terminal": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "terminal_progress_sha256",
+            "owner_result_ref",
+            "owner_result_sha256",
+            "terminal_authority_ref",
+            "committed_at",
+            "kind",
+            "result",
+            "outcome",
+            "response",
+            "terminal_progress_selector"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.terminal_audit.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_progress_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "owner_result_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner_result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_authority_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "committed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "kind": {
+              "const": "succeeded"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SucceededResult"
+            },
+            "outcome": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/TerminalSuccessOutcome"
+            },
+            "response": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SuccessResponse"
+            },
+            "terminal_progress_selector": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "terminal_progress_sha256",
+            "owner_result_ref",
+            "owner_result_sha256",
+            "terminal_authority_ref",
+            "committed_at",
+            "kind",
+            "result",
+            "outcome",
+            "response",
+            "terminal_progress_selector"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.terminal_audit.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_progress_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "owner_result_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner_result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_authority_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "committed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "kind": {
+              "const": "no_effect"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NoEffectResult"
+            },
+            "outcome": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/TerminalNoEffectOutcome"
+            },
+            "response": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NoEffectResponse"
+            },
+            "terminal_progress_selector": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema_id",
+            "schema_version",
+            "storage_instance_id",
+            "project_id",
+            "thread_id",
+            "goal_id",
+            "operation_id",
+            "source_audit_sha256",
+            "terminal_progress_sha256",
+            "owner_result_ref",
+            "owner_result_sha256",
+            "terminal_authority_ref",
+            "committed_at",
+            "kind",
+            "result",
+            "outcome",
+            "response",
+            "terminal_progress_selector"
+          ],
+          "properties": {
+            "schema_id": {
+              "const": "pm.goal.cancel.terminal_audit.v2"
+            },
+            "schema_version": {
+              "const": "2.0.0"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "thread_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "goal_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_audit_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_progress_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "owner_result_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "owner_result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "terminal_authority_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "committed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "kind": {
+              "const": "unknown"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/RecoveryRequiredResult"
+            },
+            "outcome": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/TerminalUnknownOutcome"
+            },
+            "response": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnknownResponse"
+            },
+            "terminal_progress_selector": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+            }
+          }
+        }
+      ]
+    },
+    "StorageSourceAudit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_source_audit.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SourceAudit"
+        }
+      }
+    },
+    "StorageStopControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_host_stop_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopControl"
+        }
+      }
+    },
+    "StorageStopReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_stop_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+        }
+      }
+    },
+    "StorageCancellationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+        }
+      }
+    },
+    "StorageProgress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_progress.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "oneOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Progress"
+            },
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressHead"
+            }
+          ]
+        }
+      }
+    },
+    "StorageTerminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_terminal_audit.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Terminal"
+        }
+      }
+    },
+    "StorageControlPublication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_cancel_control_publication.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ControlPublication"
+        }
+      }
+    },
+    "StorageBodyControlV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.goal_body_control.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "record": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/BodyControlV2"
+        }
+      }
+    },
+    "AuditReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "operation_id",
+        "member",
+        "progress_epoch"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "reader.goal.cancel_command_audit@1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "member": {
+          "enum": [
+            "source_audit",
+            "stop_receipt",
+            "cancellation_receipt",
+            "control_publication",
+            "terminal",
+            "progress_epoch",
+            "progress_head"
+          ]
+        },
+        "progress_epoch": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "member": {
+                "const": "progress_epoch"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "progress_epoch": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "progress_epoch": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "EventInspectRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reader_binding",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "event_id",
+        "sequence_id",
+        "event_index_key",
+        "read_token"
+      ],
+      "properties": {
+        "reader_binding": {
+          "const": "storage.goal_cancelled.inspect_current.v1"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_index_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_token": {
+          "$ref": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token"
+        }
+      }
+    },
+    "EventObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "event_id",
+        "sequence_id",
+        "payload_version",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "revision",
+        "occurred_at_utc",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "const": "original_cancellation_event"
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payload_version": {
+          "enum": [
+            "2.0.0",
+            "3.0.0"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "UnavailableRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reason",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "member_pending",
+            "missing_original",
+            "source_unavailable",
+            "permission_denied",
+            "unsupported_version",
+            "contradictory_original",
+            "installation_unavailable"
+          ]
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "EventInspectResult": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventObservation"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+        }
+      ]
+    },
+    "AuditReadResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "source_audit"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SourceAudit"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "stop_receipt"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StopReceipt"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "cancellation_receipt"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/CancellationReceipt"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "control_publication"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ControlPublication"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "terminal"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Terminal"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "progress_epoch"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Progress"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value",
+            "action_authority"
+          ],
+          "properties": {
+            "kind": {
+              "const": "progress_head"
+            },
+            "value": {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressHead"
+            },
+            "action_authority": {
+              "const": "none"
+            }
+          }
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+        }
+      ]
+    },
+    "TerminalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_audit",
+        "selected_progress",
+        "selected_progress_selector",
+        "selected_progress_sha256",
+        "original_current_outcome",
+        "result",
+        "owner_result_ref",
+        "owner_result_sha256",
+        "expected_sir_owner_epoch"
+      ],
+      "properties": {
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/SourceAudit"
+        },
+        "selected_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Progress"
+        },
+        "selected_progress_selector": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+        },
+        "selected_progress_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_current_outcome": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/NonterminalOutcome"
+        },
+        "result": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Result"
+        },
+        "owner_result_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_sir_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "TerminalPrepared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_sha256",
+        "candidate_terminal",
+        "actual_original_sir_participant_ref",
+        "expected_original_source_sha256",
+        "publicly_released"
+      ],
+      "properties": {
+        "input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "candidate_terminal": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Terminal"
+        },
+        "actual_original_sir_participant_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_original_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "publicly_released": {
+          "const": false
+        }
+      }
+    },
+    "FinalFence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "scope",
+        "original_source_commitment",
+        "original_complete_preimage",
+        "independently_permitted_candidate",
+        "current_original_owner_set",
+        "actual_complete_candidate",
+        "predicate"
+      ],
+      "properties": {
+        "operation": {
+          "enum": [
+            "capture_source",
+            "latch_and_reserve",
+            "commit_receipt",
+            "settle_owner",
+            "freeze_event",
+            "append_original",
+            "publish_control",
+            "terminal",
+            "resolve_original",
+            "audit_read",
+            "inspect_current",
+            "backup_capture",
+            "backup_restore",
+            "enroll_stop_and_control"
+          ]
+        },
+        "scope": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Scope"
+        },
+        "original_source_commitment": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Bytes"
+        },
+        "original_complete_preimage": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Bytes"
+        },
+        "independently_permitted_candidate": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Bytes"
+        },
+        "current_original_owner_set": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Bytes"
+        },
+        "actual_complete_candidate": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Bytes"
+        },
+        "predicate": {
+          "const": "final_pure_after_all_helpers_no_gap"
+        }
+      }
+    },
+    "OriginalOwnerSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "original_execution_binding",
+        "original_scope_proof_ref",
+        "original_scope_proof_sha256",
+        "original_owner_settlement_ref",
+        "original_owner_settlement_sha256",
+        "original_schedule_quota_invalidation_ref",
+        "original_schedule_quota_invalidation_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "none_required",
+            "bound_plan_settled"
+          ]
+        },
+        "original_execution_binding": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ExecutionBinding"
+        },
+        "original_scope_proof_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_proof_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_owner_settlement_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_owner_settlement_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_schedule_quota_invalidation_ref": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_schedule_quota_invalidation_sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "none_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_execution_binding": {
+                "properties": {
+                  "kind": {
+                    "const": "no_bound_plan"
+                  }
+                }
+              },
+              "original_owner_settlement_ref": {
+                "type": "null"
+              },
+              "original_owner_settlement_sha256": {
+                "type": "null"
+              },
+              "original_schedule_quota_invalidation_ref": {
+                "type": "null"
+              },
+              "original_schedule_quota_invalidation_sha256": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "original_execution_binding": {
+                "properties": {
+                  "kind": {
+                    "const": "bound_plan"
+                  }
+                }
+              },
+              "original_owner_settlement_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_owner_settlement_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "original_schedule_quota_invalidation_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "original_schedule_quota_invalidation_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WorkflowOwnerSettlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "original_execution_binding",
+        "original_scope_proof_ref",
+        "original_scope_proof_sha256",
+        "original_owner_settlement_ref",
+        "original_owner_settlement_sha256",
+        "original_schedule_quota_invalidation_ref",
+        "original_schedule_quota_invalidation_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "const": "workflow_settled"
+        },
+        "original_execution_binding": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ExecutionBinding"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "no_bound_plan"
+                },
+                "active_run_ref": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ]
+        },
+        "original_scope_proof_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_proof_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_owner_settlement_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_owner_settlement_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_schedule_quota_invalidation_ref": {
+          "type": "null"
+        },
+        "original_schedule_quota_invalidation_sha256": {
+          "type": "null"
+        }
+      }
+    }
+  }
+}

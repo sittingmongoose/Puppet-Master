@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json",
+  "title": "Complete original Goal cancellation stored profile composition; no new stored wrapper",
+  "$comment": "Original native accepted command/result descriptor selects a fixed whole-value/key branch. A caller-provided route object or schema validity confers no authority. This schema is a nonstored validation composition, not a new storage envelope.",
+  "$defs": {
+    "goal_cancel_progress_v1_head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_progress"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v2"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_progress:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:head$"
+        },
+        "complete_value": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageProgress"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ProgressHead"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "goal_cancel_progress_v1_epoch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_progress"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v2"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_progress:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:epoch:(?:0|[1-9][0-9]*)$"
+        },
+        "complete_value": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageProgress"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/Progress"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "goal_cancel_progress_v2_head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_progress"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_progress\\.v2:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:head$"
+        },
+        "complete_value": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressHead"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "goal_cancel_progress_v2_epoch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_progress"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_progress\\.v2:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:epoch:(?:0|[1-9][0-9]*)$"
+        },
+        "complete_value": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/Progress"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "goal_cancel_progress_values": {
+      "$id": "https://puppetmaster.local/proposals/goal_cancel_progress_stored_profiles.v1.schema.json",
+      "$comment": "Nonstored family validation schema 1.0.0; retains whole original stored wrappers 1.0.0 and 2.0.0, neither replaces the other.",
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageProgress"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress"
+        }
+      ]
+    },
+    "goal_cancel_progress_key_value_route": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_progress_v1_head"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_progress_v1_epoch"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_progress_v2_head"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_progress_v2_epoch"
+        }
+      ]
+    },
+    "goal_cancel_control_publication_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_control_publication"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v2"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_control_publication:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageControlPublication"
+        }
+      }
+    },
+    "goal_cancel_control_publication_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_control_publication"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_control_publication\\.v2:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageControlPublication"
+        }
+      }
+    },
+    "goal_cancel_control_publication_values": {
+      "$id": "https://puppetmaster.local/proposals/goal_cancel_control_publication_stored_profiles.v1.schema.json",
+      "$comment": "Nonstored family validation schema 1.0.0; retains whole original stored wrappers 1.0.0 and 2.0.0, neither replaces the other.",
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageControlPublication"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageControlPublication"
+        }
+      ]
+    },
+    "goal_cancel_control_publication_key_value_route": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_control_publication_v1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_control_publication_v2"
+        }
+      ]
+    },
+    "goal_cancel_terminal_audit_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_terminal_audit"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v2"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_terminal_audit:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageTerminal"
+        }
+      }
+    },
+    "goal_cancel_terminal_audit_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_cancel_terminal_audit"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_cancel_terminal_audit\\.v2:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+        }
+      }
+    },
+    "goal_cancel_terminal_audit_values": {
+      "$id": "https://puppetmaster.local/proposals/goal_cancel_terminal_audit_stored_profiles.v1.schema.json",
+      "$comment": "Nonstored family validation schema 1.0.0; retains whole original stored wrappers 1.0.0 and 2.0.0, neither replaces the other.",
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageTerminal"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+        }
+      ]
+    },
+    "goal_cancel_terminal_audit_key_value_route": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_terminal_audit_v1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_cancel_terminal_audit_v2"
+        }
+      ]
+    },
+    "goal_workflow_cancel_readiness_values": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+    },
+    "goal_workflow_cancel_readiness_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_workflow_cancel_readiness"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_workflow_cancel_readiness\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+        }
+      }
+    },
+    "goal_workflow_cancel_readiness_key_value_route": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_workflow_cancel_readiness_v1"
+    },
+    "goal_workflow_cancel_scope_proof_values": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+    },
+    "goal_workflow_cancel_scope_proof_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_workflow_cancel_scope_proof"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_workflow_cancel_scope_proof\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+        }
+      }
+    },
+    "goal_workflow_cancel_scope_proof_key_value_route": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_workflow_cancel_scope_proof_v1"
+    },
+    "goal_workflow_cancel_late_assignment_values": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+    },
+    "goal_workflow_cancel_late_assignment_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "accepted_result_profile",
+        "physical_key",
+        "complete_value"
+      ],
+      "properties": {
+        "family_id": {
+          "const": "goal_workflow_cancel_late_assignment"
+        },
+        "accepted_result_profile": {
+          "const": "pm.goal.cancel.result.v3"
+        },
+        "physical_key": {
+          "type": "string",
+          "pattern": "^goal_workflow_cancel_late_assignment\\.v1:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+:(?:[0-9a-f]{2})+$"
+        },
+        "complete_value": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        }
+      }
+    },
+    "goal_workflow_cancel_late_assignment_key_value_route": {
+      "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_storage_profile_composition.v1.schema.json#/$defs/goal_workflow_cancel_late_assignment_v1"
+    }
+  }
+}

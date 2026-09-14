@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6951-L7312
+Source lines: L6951-L7430
 
-Source SHA256: `26e495c464b61ce9292702720e6d333f4f6eff6e5b6f604917360eddd35112d2`
+Source SHA256: `7d8c007ecdf30ed23e917899114be94b5e84ecb01b6bc5a1ecf205b40ce0b590`
 
 ---
 
@@ -370,3 +370,121 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/association-hash-dependencies.json, ContractName:Plans/workflow_activation_schema_resources.json
+
+
+### GRS-078 - Original Workflow Goal cancellation with late event assignment
+
+GRS-078 defines one original `cmd.chat.goal.cancel` profile, `goal_workflow_cancel_late_assignment.v1`, for the existing Workflow association. SP-304, SP-305, GRS-073..076 and SIR-050/051 source/currentness/final-release obligations remain, with the explicitly versioned Workflow settlement arm, original V3 result selection, physical carriers and late Storage assignment order below. The source prerequisites are EP-118/119 and SP-309. The original no-association and bound Plan V2 profiles remain active on their existing complete routes. `none_required` cannot represent this profile's actual nonnull Workflow association: the new disjoint arm is `workflow_settled`.
+
+The complete central descriptor is `Plans/goal_runtime_workflow_cancel_contracts.schema.json#/$defs/GoalCancelResultV3`, schema ID `pm.goal.cancel.result.v3`. All six complete source schemas and their separately resolved Goal/native resource realms are selected by `Plans/goal_workflow_cancel_contracts/entry-boundaries.json` and `Plans/goal_workflow_cancel_schema_resources.json`. Schema registration defines a source contract; actual native installation and original admission remain independently required. SP-310 owns exact codecs, numeric commitments, physical profile composition, retention and Storage participation; SIR-052 owns original acceptance/terminal/replay; BRS-026 owns coherent backup and restore.
+
+#### Whole installed profile and original admission
+
+The public command and handler, actual owner.goal.cancel@1.0.0, owner.goal.host_stop@1.0.0, owner.goal.body.mutation@1.0.0 and owner.sir.goal_cancel@1.0.0 remain. Private method names in Plans/goal_workflow_cancel_contracts/methods.json identify new adapters of those actual native owners; a name, hash or schema does not install one. The complete schema/resource/codec/dispatch/read/write/backup graph is registered by the real original owners before a new operation can be admitted. The genuine original SIR acceptance selects `pm.goal.cancel.result.v3` and the complete new central GoalCancelResultV3 descriptor. The retained original V2 selection is never upgraded, reinterpreted or sent through this profile after acceptance. Ordinary no-association and bound Plan operations retain their original entire V2 schema, method, physical-key and SIR routes. The new complete schema preserves their arms for source accounting; the new live Workflow route admits only exact `workflow_requires_owner_disposition`, association_count=1 and actual nonnull Workflow owner/run association.
+
+The Goal registry and native registry are separately resolved. Conflicting same-ID historic resources are not merged, silently substituted or fetched from network. Whole shared Goal arguments pass separately into the native boundary; each authentic owner reads the original corresponding complete values. A recursive schema-equivalence proof is type compatibility only, not common issuance or a permission transfer. The complete EP-119 D05 and EP-118 positive D06 profiles remain one-way prerequisites. They do not import this coordinator.
+
+The entire native writer/reservation/dispatch graph must already have enrolled the original Workflow terminal publisher, original Goal terminal publisher and their actual registered scopes before actual Workflow run allocation/domain birth. Existing uncovered runs are unavailable; no post-Stop role enrollment, re-created birth, fabricated writer registration or empty-domain inference is permitted. This source adds no public writer role or work capability. The actual original cancellation control-plane participants are existing independently registered terminal services outside the work queues cut by Stop. Both original terminal publishers still execute their own actual first durable event barrier, source/currentness checks and original permissions after their required Stop. No user-effect queue is reopened, and no late callback or reclaimed work reservation may publish. A serialization claiming a registered role is not evidence of installation.
+
+After C-source, BeforeStopEntry and CurrentStoppedGoalEntry carry the complete current StorageProgressHead and its complete selected immutable StorageProgress epoch as CurrentProgressPair. All inheriting owners/event/append/control entries re-fetch that pair under the actual original Storage owner for their own current phase. The exact versioned head key, epoch key, scope, operation, progress_epoch and whole outer snapshot hash must agree, and the actual phase must be the proper original predecessor for that method. A serialized pair does not establish native currentness. A later phase never reuses an earlier held head. Original selected terminal progress is a separate complete epoch wrapper supplied explicitly to terminal publication and both retained readers; authenticate its exact original selected key/codec/epoch/full outer hash against the immutable terminal or terminal staging input. It is never replaced by the current head or a later epoch. SourceCapture has only its original genuine creation/absence admission and does not require a future head.
+
+At every private method entry, the actual original owners independently obtain the complete typed inputs, complete native current controls/origins, original source and output candidates applicable to that phase. All identity, source, operation, scope, owner epoch, permission, deletion, backup/root and codec participants agree. Each returning helper is followed by the full pure final predicate against those actual current participants. No helper or unguarded interleaving occurs between that predicate and a write or passive release. Native capabilities cannot be reconstructed from the arguments. BeforeStopNativeEntry's registrations are checked against the actual original exhaustive writer inventory and native boot/owner/domain/lineage sources; the exact original current-start admission must be covered by its proper pre-Stop phase. No future DomainCut or successful D05/D06 is required before Stop.
+
+#### Exact ordered original effects
+
+1. C-source uses full SourceCaptureEntry and the actual pre-Stop native admission. Original Goal body, accepted revision/history/origins, BodyControlV2, current host Stop and complete execution-binding domain/control/revision/origin/selection agree. Actual original accepted SIR identity/nonterminal outcome and producer identity/time are preserved. SourceAudit and new v2 progress/head source_admitted epoch 0 issue together. BindingSelection is genuinely coissued under the same original binding exclusion; it is not a prerequisite fabricated before the source transaction. Existing active/paused/blocked source statuses and complete existing Stop epochs retain their canonical meanings; no absent or old Stop is converted to zero.
+2. The real original SIR acknowledgment barrier and authentic acknowledged outcome are read back. Preparation validates whole BeforeStopEntry and BeforeStopNativeEntry, actual installed codecs, complete accepted input graph, exact event template and complete numeric path inventory. It qualifies known values and all permitted genuinely runtime-derived domains without a future next-sequence value. Storage issues immutable BeforeStopReadiness. No exclusive append/rotation/selection fence or sequence reservation crosses C-stop, D05 drains or D06 publication. Readiness gives no first receipt, current source, settlement or success authority.
+3. C-stop consumes StopPublicationEntry plus pre-Stop native source at the actual shared host/Goal/Storage fence. It performs exactly original durable StopControl succession, immutable StopReceipt, BodyControlV2 cancellation_pending and stop_reserved progress/head epoch 1. The progress field reservation_sha256 retains its original shared-body cancellation reservation meaning; it is not the late append reservation or readiness hash. Genuine existing ordinary body pending can settle once as the original owner permits before C-receipt, but cancellation does not rewrite the body or target a new revision. Readiness is authenticated original custody and cannot be regenerated after a refused source.
+4. C-receipt requires current authentic stopped Goal/host/body custody, no uncleared ordinary pending, and the original control-plane admission. It issues the original minimal CancellationReceipt and receipt_committed epoch 2 atomically. cancellation_id remains the originally accepted operation_id, physical receipt key remains `goal_cancel_receipt:O`, and accepted_at remains the exact original producer occurred_at_utc. The receipt proves acceptance and Stop only.
+5. The real D05 owners complete current safe-stop aggregation with the complete EP-118/119 current-start and separate current-Goal argument, closing all existing required work admission/drain/absence obligations. Actual original positive D06 then uses its unchanged methods/protocol and full successful D05 input. If Workflow was nonterminal, D06 performs its original cancelled run transition and its own original `goal_run.cancelled` event plus first receipt; if originally terminal, it preserves the authentic certified/failed/cancelled result without inventing that event. Both branches still require the full current D05/current-start proof stipulated by positive D06. This is not a boolean D05 success substitution.
+6. C-owners receives full OriginalOwnersEntry and full OriginalOwnersNativeEntry, including complete current positive D06 SuccessfulReadback and original start/Goal/control-plane companions. Goal scope, original binding run and owner/epoch, original Goal Stop/receipt, D05 result/origin, D06 operation/result/origin/run branch and current full bodies agree under the actual joint native boundary. ScopeProof selects the complete actual D06 result wrapper and original origin and complete D05 result/origin with actual outer hashes. WorkflowOwnerSettlement has kind=workflow_settled; its owner result ref/hash is that exact D06 result wrapper, scope ref/hash is this actual ScopeProof wrapper, schedule/quota refs are null, and the exact original nonnull no_bound_plan execution association remains. ScopeProof and owners_settled progress epoch 3 publish atomically. Reusing none_required is forbidden.
+7. C-event freezes the unchanged original producer input in event_ready progress epoch 4. The original accepted event ID, idempotency key, payload, producer sequence, owner/version and timestamp spelling remain. It is still one Goal cancellation event. Workflow settlement does not replace the Goal event or emit it from the Workflow event producer.
+8. Only now does the real Storage append owner enter LatePrepareEntry with complete current append sink/manifest/sequence allocator and positive native/Goal companions. It obtains one genuine exclusive append/rotation/selection fence and actual next-sequence/segment/manifest/offset reservation for this original Goal event. Whole LateAssignmentEntry contains the actual complete typed Storage-assigned EventRecord, full original producer, exact current sources, actual reservation and all complete numeric domains/codecs. The local source is rechecked after every helper before the reservation/effect. No actual event or first receipt is required before this reservation. Its actual sequence is not borrowed from D06's earlier event or predicted before Stop.
+9. Storage checks every actual late integer and complete actual encoded value against the exact original route codecs and bounds, then issues LateAssignmentAudit. Complete EventRecord equality and producer semantic digest checks use all fields. The audit is compact original assignment custody, not a stored EventRecord or an authorization. It is tied to the exact same still-held actual reservation and native boot/owner/fence/transaction. The original append method consumes that full input, audit and actual native current companions and performs the real SP-278/SP-286 append and first barrier. It releases its append reservation only after actual append completion or authenticated abandonment under the existing owner. No D05 or D06 append is nested inside this exclusive fence.
+10. Authentic original append success yields full original EventRecord, source frame, current append sources, index checkpoint/generation/frontier/read-token/row, full-value result, original custody and first receipt. Every source frame byte/locator/index selection is authenticated by the real current source owner and joined to the exact original event and actual assigned sequence/reservation. The original index token is actual owner issued and held, not reconstructed from checkpoint fields; an optional index miss proves no absence. The full result alone proves no current event. event_issued progress advances from event_ready, or authentic event_unknown may precede event_issued under the canonical resolution rule.
+11. C-publish uses full PostOwnersEntry, current native successful disposition and full OriginalGoalAppendReadback. Under the sole shared body owner, verify unchanged original body, revision, complete history and origin, exact cancellation_pending, no ordinary pending and current original permissions/root/Stop. An authentic complete monotonic still-latched Stop successor is allowed exactly as original SP-304; a changed target or resumed Goal is not. Atomically set the actual receipt marker, clear only cancellation_pending, increment control_epoch, and issue immutable v2 ControlPublication and control_published progress. Body text, revision, timestamps, history and current Stop are preserved.
+12. Original SIR successful terminal publication receives SucceededTerminalEntry plus complete append and native current companions. The V3 result, original terminal CommandOutcome/CommandResponse and immutable v2 terminal join the exact actual original source and selected immutable progress snapshot. They publish together at the original SIR boundary. terminal_progress_selector names the original versioned epoch key/full outer hash; it is never rebound to a later head. No schema/hash is evidence of actual native terminal publication.
+
+#### Failure, resolution and passive audit
+
+A known refusal before any original Stop can yield no_effect only with the original complete no-effect proof. A post-Stop refusal, unsupported actual late numeric value, lost native reservation, unavailable current source or lost current permission preserves genuine Stop/receipt/D05/D06/append/control effects and classifies the actual original state under the existing unknown/recovery-required rules. It cannot manufacture no_effect, success, an earlier timestamp, rounded integer or refreshed command acceptance. The unsettled terminal adapter does not require a nonexistent D06 result, late assignment, receipt or successful publication; its full original TerminalInput phase/proof remains mandatory. An earlier final unknown is immutable even if original effects are subsequently resolved; replay returns that original unknown.
+
+Late reservation release/loss does not grant reacquisition, rotation refresh or a second original assignment in this profile. If no authenticated append occurred and the one original reservation is no longer valid, the operation remains bounded pending/unavailable with genuine original effects preserved. If original effects actually occurred, their real original owners may classify/read them through their existing authenticated original custody. Same-owner in-place restart may dispatch only an already admitted original stage whose complete native source/fence prerequisites still hold; no new source IDs, role, producer, acceptance or reservation is invented. A live revoked source cannot silently switch into recovery within that call. This conservative source contract claims no eventual-success guarantee for lost reservations.
+
+Retained succeeded replay consumes the complete original SourceAudit/terminal, compact original ScopeProof/Assignment and D06 retained result/origin through its exact retained reader. It reports original facts only and requires no fresh Goal body, Workflow runtime, current-start or current D05 success. Retained no_effect/unknown replay requires no nonexistent success metadata. Actual retained owner issuance, whole selected progress/terminal/result joins and current passive read permission/deletion/hold/backup rules still apply. Neither creates action authority. Current event inspection independently requires genuine current SP-278 full value/source/index evidence and the original first receipt/custody. Disposed original event bytes cannot be reconstructed from full-value hashes, receipts, terminal copies or a stored producer. Historical terminal replay does not assert current event availability.
+
+#### Explicit unproved installation prerequisites
+
+The source does not assert installed end-to-end cancellation. The separate canonical v3 goal_run.started/goal_run.cancelled event-family producer, consumer, schema registry, source query and backup adoption must be complete before this original profile is installed. All genuine native original owner/writer/codec/root/backup proofs must then qualify independently. Complete source schemas and this source-contract adoption do not discharge those installation predicates.
+
+Inherited historical completion aliases in the native prerequisite map remain explicitly noncallable. Their inherited unresolved sites remain outside the fixed Plans/goal_workflow_cancel_contracts/entry-boundaries.json route boundary; no historical URI is rebound to a different current same-ID resource, even if selected definitions compare equal. Only exact method-map roots can enter this coordinator. The complete live roots must resolve in their own original realms and must not reach the unresolved historical target. A future required target needs a distinct reviewed full successor or separate historical realm.
+
+```yaml
+plan_unit_id: GRS-078
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Original Workflow Goal cancellation with late event assignment. Genuine original SIR V3 acceptance
+  precedes source capture; old V2 profiles remain active and immutable.
+gui_related: false
+gui_classification_reason: Defines native owner, typed source, physical custody and verification semantics without
+  a visual surface.
+split_recommended: false
+depends_on:
+- GRS-076
+- GRS-077
+- EP-118
+- EP-119
+- SP-309
+- SIR-051
+unblocks: []
+acceptance_criteria:
+- Genuine original SIR V3 acceptance precedes source capture; old V2 profiles remain active and immutable.
+- BeforeStopReadiness qualifies whole source and numeric domains without an exclusive append reservation; Stop,
+  receipt and complete D05/D06 effects precede actual late Goal assignment.
+- All fifteen explicit methods consume complete original typed source roots in their fixed isolated resource realms
+  and repeat full entry and final predicates.
+- Terminal and retained routes use the authentic original selected immutable progress epoch and distinguish actual
+  current source from historical issuance.
+- Lost reservation, unknown terminal, revoked source and earlier real effects remain truthful; installation and
+  native proof remain required.
+validation_surfaces:
+- Plans/goal_runtime_workflow_cancel_contracts.schema.json
+- Plans/goal_workflow_cancel_schema_resources.json
+- Plans/goal_workflow_cancel_contracts/entry-boundaries.json
+- Plans/goal_workflow_cancel_contracts/methods.json
+- Plans/goal_workflow_cancel_contracts/numeric-paths.json
+- Plans/goal_workflow_cancel_contracts/physical-profiles.json
+- Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+- Plans/storage_value_registry.json
+risk_class: original_goal_workflow_source_custody_or_native_admission_drift
+reasoning_tier: high
+context_scope: grs_078_original_source_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/goal_runtime_workflow_cancel_contracts.schema.json
+- Plans/goal_workflow_cancel_schema_resources.json
+- Plans/goal_workflow_cancel_contracts/entry-boundaries.json
+- Plans/goal_workflow_cancel_contracts/methods.json
+- Plans/goal_workflow_cancel_contracts/numeric-paths.json
+- Plans/goal_workflow_cancel_contracts/physical-profiles.json
+- Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event-membership, Goal lifecycle or retention-policy expansion.
+- No fabricated source, absence, original acceptance, native authority, receipt, reservation or retrospective
+  enrollment.
+- No numeric coercion, lossy codec, stored header relabelling, dropped diagnostic branch or rewritten immutable
+  terminal.
+- No WorkNode/NodeSeed/runtime/readiness/event-depth/global safe-stop or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json

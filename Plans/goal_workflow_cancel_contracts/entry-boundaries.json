@@ -1,0 +1,330 @@
+{
+  "schema_id": "pm.goal_workflow_cancel_entry_boundaries.v1",
+  "source_profile": "goal_workflow_cancel_late_assignment.v1",
+  "public_command": "cmd.chat.goal.cancel",
+  "public_handler": "handlers::goal_runtime::goal_cancel",
+  "original_result_profile": "pm.goal.cancel.result.v3",
+  "original_result_descriptor": {
+    "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+    "json_pointer": "#/$defs/GoalCancelResultV3",
+    "schema_id": "pm.goal.cancel.result.v3"
+  },
+  "must_select_result_profile_before_source_capture": true,
+  "preserve_original_V2_profiles": true,
+  "installed_native_authority": false,
+  "runtime_instances": 0,
+  "dispatch_scope": "Only the complete explicitly enumerated method argument/result roots; no generic dispatch through historical aliases.",
+  "methods_ref": "Plans/goal_workflow_cancel_contracts/methods.json",
+  "resource_map_ref": "Plans/goal_workflow_cancel_schema_resources.json",
+  "callable_entries": [
+    {
+      "method": "owner.goal.workflow_cancel.capture_source.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SourceCaptureEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageSourceAudit"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.prepare.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/BeforeStopEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageBeforeStopReadiness"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.latch_and_reserve.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/StopPublicationEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/BeforeStopNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageStopReceipt"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.commit_receipt.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentStoppedGoalEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/GoalControlPlaneAdmission"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageCancellationReceipt"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.settle_owner.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/OriginalOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageWorkflowScopeProof"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.freeze_event.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+      }
+    },
+    {
+      "method": "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LatePrepareEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/LateReservation"
+      }
+    },
+    {
+      "method": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.append_original.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/LateAssignmentEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.publish_control.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/PostOwnersEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageControlPublication"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.terminal_succeeded.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededTerminalEntry"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/OriginalOwnersNativeEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.terminal_unsettled.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledTerminalEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageTerminal"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.read_retained_success.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/SucceededRetainedEntry"
+        },
+        {
+          "realm": "native",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json#/$defs/RetainedWorkflowEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/UnsettledRetainedEntry"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/AuditReadResult"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v1",
+      "arguments": [
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+        },
+        {
+          "realm": "goal",
+          "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        }
+      ],
+      "result": {
+        "realm": "goal",
+        "schema": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      }
+    }
+  ],
+  "complete_schemas": [
+    {
+      "path": "Plans/goal_workflow_cancel_contracts/schemas/coordinator-metadata.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json",
+      "complete_document_sha256": "92ccb3874b426310039549433c2b14670683cda274fa0cece9341f6b1f6cf8c5",
+      "definitions": 12
+    },
+    {
+      "path": "Plans/goal_workflow_cancel_contracts/schemas/goal-arguments.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json",
+      "complete_document_sha256": "5365b97af510468c100f0e69bbc4fd1287fb99ffef2412720e7a6b27db329568",
+      "definitions": 17
+    },
+    {
+      "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_runtime_workflow_cancel_contracts.v1.schema.json",
+      "complete_document_sha256": "d7326fe16e5ee15546645cc5fcbf20f54e8e1fa18d740156782635bcff2c7a6c",
+      "definitions": 7
+    },
+    {
+      "path": "Plans/goal_workflow_cancel_contracts/schemas/goal-workflow-cancel-custody.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json",
+      "complete_document_sha256": "c10e57960c3e21fd8a70a7dff1a86b165cbefcc7449f26bd4916605c6658127d",
+      "definitions": 55
+    },
+    {
+      "path": "Plans/goal_workflow_cancel_contracts/schemas/late-assignment.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json",
+      "complete_document_sha256": "d2c6bc2d037a5816495cd1d2f5a0cdded7c8645869ebd0d19fdf67397b5ba98a",
+      "definitions": 18
+    },
+    {
+      "path": "Plans/goal_workflow_cancel_contracts/schemas/native-arguments.schema.json",
+      "schema_id": "https://puppetmaster.local/proposals/goal_workflow_cancel_native_arguments.v1.schema.json",
+      "complete_document_sha256": "5b45113634ce99441ded593c6d0647bcf57d4d6752925573b0bb513c572a2a25",
+      "definitions": 4
+    }
+  ],
+  "inherited_historical_alias_boundary": {
+    "unrestricted_historical_graph_is_not_callable": true,
+    "historical_whole_resource_rebinding": false,
+    "unresolved_alias_count_at_source_review": 22,
+    "future_live_target_requires_distinct_complete_successor_or_separate_historical_realm": true
+  },
+  "separate_required_source_adoptions": [
+    "Existing goal_run.started and goal_run.cancelled v3 producer/consumer/projector/checkpoint/source-query/backup routes",
+    "Actual original native owner/writer/codec/root/backup qualification"
+  ],
+  "runtime_enabled": false,
+  "governance_seal": false
+}
