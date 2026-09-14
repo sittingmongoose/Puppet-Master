@@ -8226,10 +8226,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 46,
+        "False": 47,
         "True": 32
       },
-      "heading_count": 205,
+      "heading_count": 206,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8290,9 +8290,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 7562,
+      "line_count": 7641,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 78,
+      "plan_unit_count": 79,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8371,7 +8371,8 @@
         "GRS-077",
         "GRS-078",
         "GRS-079",
-        "GRS-080"
+        "GRS-080",
+        "GRS-081"
       ],
       "reasoning_tiers": [
         "high",
@@ -8423,6 +8424,7 @@
         "model_role_policy_drift",
         "orchestrator_runtime_authority_drift",
         "original_cancelled_source_or_combined_projection_currentness_drift",
+        "original_goal_inspection_source_or_disclosure_drift",
         "original_goal_workflow_source_custody_or_native_admission_drift",
         "original_started_source_or_projection_currentness_drift",
         "p0_agent_control_subagents_hardening",
@@ -8450,10 +8452,10 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "1186f32bb94582745eca5a5babcaf763681efbc06d890b52d2ca05d83ffa2b3d",
+      "sha256": "7820c4976279d68787ad662e324aa0c2c921b83fadcbca87be88f70b761b984d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 69,
+        "accepted": 70,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -8463,7 +8465,7 @@
         "owner_boundary": 2,
         "requirement": 47,
         "risk": 1,
-        "schema_contract": 10,
+        "schema_contract": 11,
         "validation_criterion": 2
       },
       "validation_surfaces": [
@@ -8489,6 +8491,9 @@
         "Parent cannot certify complete until all required child results are settled or explicitly waived.",
         "Parent sees child terminal errors as typed failed outcomes, never empty successful completion.",
         "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Backup_Restore_System.md#BRS-026",
+        "Plans/Goal_Runtime_System.md#GRS-078",
+        "Plans/Shared_Integration_Runtime.md#SIR-052",
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
         "Plans/assistant_plan_cancel_contracts/bound-method-adoptions.json",
         "Plans/event_family_registry.json",
@@ -8539,12 +8544,19 @@
         "Plans/goal_update_schema_resources.json",
         "Plans/goal_updated_consumer_contracts.schema.json",
         "Plans/goal_updated_consumer_resources.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json",
         "Plans/goal_workflow_cancel_contracts/entry-boundaries.json",
         "Plans/goal_workflow_cancel_contracts/methods.json",
         "Plans/goal_workflow_cancel_contracts/numeric-paths.json",
         "Plans/goal_workflow_cancel_contracts/physical-profiles.json",
+        "Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json",
         "Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json",
+        "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json",
         "Plans/goal_workflow_cancel_schema_resources.json",
+        "Plans/storage-plan.md#SP-304",
+        "Plans/storage-plan.md#SP-310",
         "Plans/storage_value_registry.json",
         "Plans/workflow_activation_contracts/association-hash-dependencies.json",
         "Plans/workflow_activation_contracts/methods.json",
@@ -16287,10 +16299,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 27,
+        "False": 28,
         "True": 24
       },
-      "heading_count": 117,
+      "heading_count": 118,
       "implementation_surfaces": [
         "Concepts/pm7-tools/full_thread_performance_source.py",
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
@@ -16345,9 +16357,9 @@
         "future owner-local UI controllers",
         "tests"
       ],
-      "line_count": 2971,
+      "line_count": 3052,
       "path": "Plans/Shared_Integration_Runtime.md",
-      "plan_unit_count": 51,
+      "plan_unit_count": 52,
       "plan_unit_ids": [
         "SIR-001",
         "SIR-002",
@@ -16399,7 +16411,8 @@
         "SIR-049",
         "SIR-050",
         "SIR-051",
-        "SIR-052"
+        "SIR-052",
+        "SIR-053"
       ],
       "reasoning_tiers": [
         "high",
@@ -16432,6 +16445,7 @@
         "installation_selection_acquisition_or_auth_conflation",
         "lease_or_awareness_authority_drift",
         "legal_hold_original_sir_custody_or_stale_owner_false_completion",
+        "original_goal_inspection_source_or_disclosure_drift",
         "original_goal_workflow_source_custody_or_native_admission_drift",
         "oversubscription_or_critical_path_starvation",
         "parallel_owner_drift",
@@ -16457,10 +16471,10 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "acd20bc89dc65b5e73c0589a891d2c96cc56cf7b816f318baa7f10e320d5794a",
+      "sha256": "6e99ff106d241920a037e7d6a5e75260a5191d6314f8dfc6a8b77edab992be2e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 51
+        "accepted": 52
       },
       "title": "Shared Integration Runtime (Canonical Owner)",
       "unit_type_counts": {
@@ -16474,7 +16488,7 @@
         "owner_boundary": 2,
         "platform_requirement": 1,
         "requirement": 26,
-        "schema_contract": 7,
+        "schema_contract": 8,
         "security_contract": 1
       },
       "validation_surfaces": [
@@ -16482,7 +16496,10 @@
         "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "DAP event races",
         "Eval persistence tests",
+        "Plans/Backup_Restore_System.md#BRS-026",
         "Plans/Commands_System.md",
+        "Plans/Goal_Runtime_System.md#GRS-078",
+        "Plans/Shared_Integration_Runtime.md#SIR-052",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
@@ -16506,11 +16523,16 @@
         "Plans/goal_update_schema_resources.json",
         "Plans/goal_updated_consumer_contracts.schema.json",
         "Plans/goal_updated_consumer_resources.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json",
         "Plans/goal_workflow_cancel_contracts/entry-boundaries.json",
         "Plans/goal_workflow_cancel_contracts/methods.json",
         "Plans/goal_workflow_cancel_contracts/numeric-paths.json",
         "Plans/goal_workflow_cancel_contracts/physical-profiles.json",
+        "Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json",
         "Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json",
+        "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json",
         "Plans/goal_workflow_cancel_schema_resources.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
@@ -16537,6 +16559,8 @@
         "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/shared_runtime_command_contracts.schema.json",
         "Plans/shared_runtime_contracts.schema.json",
+        "Plans/storage-plan.md#SP-304",
+        "Plans/storage-plan.md#SP-310",
         "Plans/storage_retention_hold_contracts.schema.json",
         "Plans/storage_retention_hold_evidence.schema.json",
         "Plans/storage_retention_hold_version_routes.json",
@@ -16896,10 +16920,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 204,
+        "False": 205,
         "True": 102
       },
-      "heading_count": 745,
+      "heading_count": 753,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16977,9 +17001,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 25920,
+      "line_count": 26070,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 306,
+      "plan_unit_count": 307,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17286,7 +17310,8 @@
         "SP-309",
         "SP-310",
         "SP-311",
-        "SP-312"
+        "SP-312",
+        "SP-313"
       ],
       "reasoning_tiers": [
         "high",
@@ -17339,6 +17364,7 @@
         "migration_backup_canonical_redb_recovery",
         "notification_storage_secret_leak",
         "original_cancelled_source_or_combined_projection_currentness_drift",
+        "original_goal_inspection_source_or_disclosure_drift",
         "original_goal_workflow_source_custody_or_native_admission_drift",
         "original_started_source_or_projection_currentness_drift",
         "original_workflow_source_custody_or_native_admission_drift",
@@ -17383,10 +17409,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "994b8628cdedf681cb2f5f9129e2fe5246dafb59eba2357519e6cdb063a1cd08",
+      "sha256": "4e5c584d62f039a435f2138df0140102d417c2b279d8c5ed814ba3a804cf62ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 303,
+        "accepted": 304,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17396,7 +17422,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 252,
-        "schema_contract": 20,
+        "schema_contract": 21,
         "security_contract": 1,
         "storage_contract": 21,
         "storage_security_contract": 1
@@ -17433,8 +17459,11 @@
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
         "Plans/Backup_Restore_System.md#BRS-024",
+        "Plans/Backup_Restore_System.md#BRS-026",
         "Plans/Decision_Log.md#DL-049",
         "Plans/Goal_Runtime_System.md#GRS-077",
+        "Plans/Goal_Runtime_System.md#GRS-078",
+        "Plans/Shared_Integration_Runtime.md#SIR-052",
         "Plans/assistant_plan_cancel_contracts/methods.json",
         "Plans/assistant_plan_cancel_contracts/physical-families.json",
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
@@ -17504,11 +17533,16 @@
         "Plans/goal_update_schema_resources.json",
         "Plans/goal_updated_consumer_contracts.schema.json",
         "Plans/goal_updated_consumer_resources.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+        "Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json",
         "Plans/goal_workflow_cancel_contracts/entry-boundaries.json",
         "Plans/goal_workflow_cancel_contracts/methods.json",
         "Plans/goal_workflow_cancel_contracts/numeric-paths.json",
         "Plans/goal_workflow_cancel_contracts/physical-profiles.json",
+        "Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json",
         "Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json",
+        "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json",
         "Plans/goal_workflow_cancel_schema_resources.json",
         "Plans/home_layout_event_contract_fixtures.json",
         "Plans/home_layout_event_contracts.schema.json",
@@ -17546,6 +17580,8 @@
         "Plans/seglog_append_observability_contracts.schema.json",
         "Plans/seglog_frame_v2_wire_fixtures.json",
         "Plans/shared_runtime_command_contract_fixtures.json (static settled-write boundary fixture only)",
+        "Plans/storage-plan.md#SP-304",
+        "Plans/storage-plan.md#SP-310",
         "Plans/storage_boot_history_floor.schema.json",
         "Plans/storage_boot_history_pending.schema.json",
         "Plans/storage_boot_original_source_contracts.schema.json",
@@ -19529,7 +19565,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-14T03:56:48Z",
+  "generated_at_utc": "2026-09-14T04:21:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19537,13 +19573,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3471,
+      "False": 3474,
       "True": 3169
     },
-    "plan_unit_count": 6640,
+    "plan_unit_count": 6643,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6449,
+      "accepted": 6452,
       "retired": 182,
       "superseded": 9
     },
@@ -19615,7 +19651,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 112,
+      "schema_contract": 115,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

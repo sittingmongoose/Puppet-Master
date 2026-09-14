@@ -2895,7 +2895,7 @@ Successful terminal publication requires the complete SucceededTerminalEntry, fu
 
 UnsettledTerminalEntry instead requires the full original TerminalInput and selected progress with NoEffectResult or RecoveryRequiredResult. It does not require nonexistent D05/D06 settlement, readiness/assignment, append or success records. An original known pre-Stop refusal may use its complete authentic no-effect proof under SIR-050; any genuine partial cancellation effect cannot be erased by that label. Unknown keeps the exact original selected epoch and original effect evidence. A later actual recovery may classify or finish genuinely owned pending effects but cannot rewrite an already issued unknown terminal as success or refresh original accepted time.
 
-SucceededRetainedEntry plus the separate RetainedWorkflowEntry supports passive replay only. It authenticates the complete original SourceAudit, immutable Terminal/result/outcome/response, entire original selected StorageProgress epoch, compact original WorkflowScopeProof and LateAssignmentAudit, and complete retained D06 disposition/result/origin through their actual retained owners. UnsettledRetainedEntry preserves original no_effect/unknown replay without nonexistent success metadata. Actual current passive SIR/Storage/app/Project authority and lawful deletion/hold/backup controls remain mandatory; current Goal/Workflow bodies, current start, current D05 success and former action leases are not retained-audit requirements. CV-333 original_dispatch_id/replayed decoration is the only replay decoration. Neither retained route dispatches, relatches Stop, republishes control, appends, reacquires a reservation, recreates custody or grants action authority. Independent current Event inspection requires its genuine full current SP-278 source and original first append custody; retained terminal/receipt/hash survives only as its own original fact and cannot reconstruct expired Event bytes.
+SucceededRetainedEntry plus the separate RetainedWorkflowEntry supports passive replay only. It authenticates the complete original SourceAudit, immutable Terminal/result/outcome/response, entire original selected StorageProgress epoch, compact original WorkflowScopeProof and LateAssignmentAudit, and complete retained D06 disposition/result/origin through their actual retained owners. UnsettledRetainedEntry preserves original no_effect/unknown replay without nonexistent success metadata. Actual current passive SIR/Storage/app/Project authority and lawful deletion/hold/backup controls remain mandatory; current Goal/Workflow bodies, current start, current D05 success and former action leases are not retained-audit requirements. CV-333 original_dispatch_id/replayed decoration is the only replay decoration. Neither retained route dispatches, relatches Stop, republishes control, appends, reacquires a reservation, recreates custody or grants action authority. Independent current Event inspection requires its genuine full current SP-278 source and original first append custody; retained terminal/receipt/hash survives only as its own original fact and cannot reconstruct expired Event bytes. SIR-053 selects the explicit GRS-081/SP-313 private source-reader and inspector-v2 graph for this originally accepted Workflow V3 profile; no original command/result acceptance or V2 reader is reinterpreted.
 
 Every upper SIR/Goal boundary and lower returning helper independently obtains its full authentic typed input, whole permissible candidate and actual original native owner/root/registration/operation/codec/epoch/current permission/deletion/hold/backup participants before helpers. After every helper and after all helpers, it reevaluates the complete pure source/owner/candidate predicate with no helper, callback, async gap or unguarded publication before its specific commit or passive release. Actual original readback precedes dependent publication. A caller's JSON, hash, prior validation or serialized participant_ref cannot recreate a capability. Missing/revoked source makes this call unavailable without switching source, entering recovery implicitly or removing genuine prior effects.
 
@@ -2969,3 +2969,84 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/goal_runtime_workflow_cancel_contracts.schema.json, ContractName:Plans/goal_workflow_cancel_schema_resources.json, ContractName:Plans/goal_workflow_cancel_contracts/entry-boundaries.json, ContractName:Plans/goal_workflow_cancel_contracts/methods.json, ContractName:Plans/goal_workflow_cancel_contracts/numeric-paths.json, ContractName:Plans/goal_workflow_cancel_contracts/physical-profiles.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/storage-profile-composition.schema.json
+
+
+### SIR-053 - Explicit private Workflow cancellation inspector selection
+
+SIR-053 selects the explicit goal_workflow_cancel_current_inspection.v2 private graph from Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, its complete methods map and Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json for the GRS-081/SP-313 source-reader and inspector. Actual native original Goal/SIR/Storage owners must register and qualify that whole descriptor/resource/codec/private-source/disclosure graph before exposure. The complete request/private entry/success/unavailable/result roots remain explicit; names, schema IDs or source adoption do not install native authority.
+
+The original accepted command remains cmd.chat.goal.cancel and its genuine immutable Workflow acceptance remains goal_workflow_cancel_late_assignment.v1 / pm.goal.cancel.result.v3 with the whole existing GoalCancelResultV3 central descriptor. This passive private graph adds no public dispatch, command result, SIR state, acknowledgment, terminal or replay decoration. A caller, present command catalog, schema-valid bundle or private method selection cannot choose or upgrade an old operation profile. Original no-association/bound Plan V2 selections and their active original readers remain exact. Inspector v1 remains its whole original source lineage; v2 is never an implicit signature widening.
+
+The separately callable private read_original_inspection_custody.v1 authenticates and returns only the complete original inspection custody under SP-313. The calling inspect_current_event.v2 independently authenticates the entire original custody and actual current Event/first/full-value/late-assignment source; it cannot delegate away admission to a successful helper. Whole-source/current-owner/candidate predicates apply before helpers and after the final returning helper with no subsequent callback/logger/copy or mutable disclosure gap. Only the existing narrow EventObservation or typed unavailable leaves the inspector; the complete private producer/source/receipt bundle stays within qualified original owners.
+
+Neither passive method requires a successful terminal, current Goal body, D05/D06/current Start or renewed late reservation to report an authentic preterminal original Event. Current event_ready/event_unknown custody remains admissible only with genuine current append evidence and all original joins. Missing acceptance/source, stale selected head, revoked disclosure or contradictory genuine evidence is unavailable; no recovery, source substitution, second append, acceptance refresh, earlier-effect rewrite or action authority follows. SIR-052 original terminal/retained routes and BRS-026 recovery/source-lifetime obligations remain unchanged. Native installation/execution and Event-depth/codec/crash/restore qualification remain independently unproved.
+
+```yaml
+plan_unit_id: SIR-053
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+gui_related: false
+title: Explicit private Workflow cancellation inspector selection
+canonical_text: SIR-053 selects the explicit goal_workflow_cancel_current_inspection.v2
+  private graph from Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json,
+  its complete methods map and Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+  for the GRS-081/SP-313 source-reader and inspector. Actual native original Goal/SIR/Storage
+  owners must register and qualify that whole descriptor/resource/codec/private-source/disclosure
+  graph before exposure. The complete request/private entry/success/unavailable/result
+  roots remain explicit; names, schema IDs or source adoption do not install native
+  authority.
+unblocks: []
+acceptance_criteria:
+- Complete original source graph and independently enforced entry/final passive boundaries
+  are selected.
+- All original accepted profiles, stored wrappers, keys, producer routes and source
+  lifetimes remain unchanged.
+- Native installation and execution, Event depth, readiness and governance remain
+  independently unqualified.
+depends_on:
+- SIR-052
+- GRS-081
+- SP-313
+validation_surfaces:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+risk_class: original_goal_inspection_source_or_disclosure_drift
+reasoning_tier: high
+context_scope: sir_053_source_contract
+implementation_surfaces:
+- Plans/Shared_Integration_Runtime.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+source_atom_ids: []
+negative_constraints:
+- No public command/result/Event/Goal-state or original accepted-profile change.
+- No source reconstruction, new archive, lifetime extension, implicit recovery or
+  original authority fabrication.
+- No native writer/capability, projector/checkpoint, Event depth or runtime qualification
+  from source adoption.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json

@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.goal_workflow_cancel_current_inspection_entry_boundaries.v2",
+  "status": "adopted_source_contract_native_unqualified",
+  "original_result_profile": "pm.goal.cancel.result.v3",
+  "original_result_descriptor": {
+    "path": "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
+    "json_pointer": "#/$defs/GoalCancelResultV3",
+    "schema_id": "pm.goal.cancel.result.v3"
+  },
+  "must_authenticate_original_immutable_accepted_profile": true,
+  "preserved_original_V2_no_association_and_bound_Plan_profiles": true,
+  "original_inspector_v1_remains_frozen_source_lineage": true,
+  "v1_is_not_installed_by_this_proposal": true,
+  "new_private_inspector_profile": "goal_workflow_cancel_current_inspection.v2",
+  "methods_ref": "Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json",
+  "resources_ref": "Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json",
+  "callable_entries": [
+    {
+      "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "realm": "goal_current_inspection",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadEntryV1"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadSuccessV1"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadResultV1"
+      }
+    },
+    {
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
+      "realm": "goal_current_inspection",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/InspectCurrentEventEntryV2"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventObservation"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      }
+    }
+  ],
+  "no_public_command_or_event_change": true,
+  "no_durable_projection_or_checkpoint": true,
+  "native_execution": "NOT_RUN",
+  "runtime_instances": 0
+}

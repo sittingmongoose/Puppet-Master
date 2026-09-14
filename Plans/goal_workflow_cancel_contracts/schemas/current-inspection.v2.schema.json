@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json",
+  "$comment": "Uninstalled source-only explicit private Workflow inspection successor. All referenced original resources remain whole. Native independently admitted original custody/current source and every entry/final predicate in Plans/storage-plan.md#SP-313 are mandatory; serialized values or descriptors grant no authority. No stored value or Event schema change.",
+  "$defs": {
+    "OriginalInspectionCustodyReadRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "progress_selector"
+      ],
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "progress_selector": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProgressSnapshotSelector"
+        }
+      }
+    },
+    "CurrentInspectionProgressPairV1": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/CurrentProgressPair"
+        },
+        {
+          "properties": {
+            "current_selected_epoch": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "phase": {
+                      "enum": [
+                        "event_ready",
+                        "event_unknown",
+                        "event_issued",
+                        "control_published"
+                      ]
+                    },
+                    "owner_settlement": {
+                      "properties": {
+                        "kind": {
+                          "const": "workflow_settled"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OriginalInspectionCustodyV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selection",
+        "source_audit",
+        "stop_receipt",
+        "cancellation_receipt",
+        "current_progress",
+        "frozen_producer"
+      ],
+      "properties": {
+        "selection": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+        },
+        "source_audit": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_goal_arguments.v1.schema.json#/$defs/WorkflowSourceAudit"
+        },
+        "stop_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageStopReceipt"
+        },
+        "cancellation_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageCancellationReceipt"
+        },
+        "current_progress": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/CurrentInspectionProgressPairV1"
+        },
+        "frozen_producer": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/ProducerInput"
+        }
+      }
+    },
+    "OriginalInspectionCustodyReadEntryV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "actual_custody"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+        },
+        "actual_custody": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyV1"
+        }
+      }
+    },
+    "OriginalInspectionCustodyReadSuccessV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "custody",
+        "action_authority"
+      ],
+      "properties": {
+        "kind": {
+          "const": "original_inspection_custody"
+        },
+        "custody": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyV1"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "OriginalInspectionCustodyReadResultV1": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadSuccessV1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+        }
+      ]
+    },
+    "InspectCurrentEventEntryV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "actual_custody",
+        "actual_current_event_source"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+        },
+        "actual_custody": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyV1"
+        },
+        "actual_current_event_source": {
+          "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_assignment.v1.schema.json#/$defs/OriginalGoalAppendReadback"
+        }
+      }
+    }
+  }
+}

@@ -6573,6 +6573,7 @@
     "F3-528",
     "SSYS-027",
     "BRS-026",
+    "SP-313",
     "BRS-028",
     "WM-052",
     "F3-550",
@@ -6584,6 +6585,7 @@
     "C-052",
     "F3-529",
     "SSYS-028",
+    "GRS-081",
     "UIW-021",
     "UIW-022",
     "WM-055",
@@ -6595,6 +6597,7 @@
     "F3-560",
     "SCS-017",
     "SSYS-029",
+    "SIR-053",
     "F3-545",
     "F3-547",
     "F3-548",
@@ -29220,6 +29223,16 @@
       "edge_type": "depends_on",
       "from": "GRS-080",
       "to": "SP-214"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-081",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-081",
+      "to": "SP-313"
     },
     {
       "edge_type": "depends_on",
@@ -56618,6 +56631,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SIR-053",
+      "to": "GRS-081"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-053",
+      "to": "SIR-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SIR-053",
+      "to": "SP-313"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SMPFS-001",
       "to": "SMPFS-002"
     },
@@ -68420,6 +68448,26 @@
       "edge_type": "depends_on",
       "from": "SP-312",
       "to": "SP-311"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-313",
+      "to": "GRS-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-313",
+      "to": "SIR-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-313",
+      "to": "SP-304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-313",
+      "to": "SP-310"
     },
     {
       "edge_type": "depends_on",
@@ -97227,7 +97275,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-14T03:56:48Z",
+  "generated_at_utc": "2026-09-14T04:21:53Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -149284,6 +149332,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "grs_081_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-081",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_inspection_source_or_disclosure_drift",
+      "source_location": {
+        "heading": "GRS-081 - Original Workflow Goal cancellation private current inspection",
+        "heading_level": 3,
+        "heading_line": 7565,
+        "line": 7575,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/human-in-the-loop.md",
@@ -188894,6 +188959,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sir_053_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Shared_Integration_Runtime.md",
+      "plan_unit_id": "SIR-053",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_inspection_source_or_disclosure_drift",
+      "source_location": {
+        "heading": "SIR-053 - Explicit private Workflow cancellation inspector selection",
+        "heading_level": 3,
+        "heading_line": 2974,
+        "line": 2984,
+        "path": "Plans/Shared_Integration_Runtime.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "section15_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -196963,6 +197045,23 @@
         "heading_level": 4,
         "heading_line": 25861,
         "line": 25873,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "sp_313_source_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-313",
+      "reasoning_tier": "high",
+      "risk_class": "original_goal_inspection_source_or_disclosure_drift",
+      "source_location": {
+        "heading": "Storage, retention and installation boundary",
+        "heading_level": 5,
+        "heading_line": 25995,
+        "line": 26004,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -210116,10 +210215,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15465,
+    "depends_on_edge_count": 15474,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18116,
-    "node_count": 6640,
+    "edge_count": 18125,
+    "node_count": 6643,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

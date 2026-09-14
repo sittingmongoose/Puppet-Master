@@ -1,0 +1,74 @@
+{
+  "schema_id": "pm.goal_workflow_cancel_current_inspection_methods.v2",
+  "status": "adopted_source_contract_native_unqualified",
+  "profile": "goal_workflow_cancel_current_inspection.v2",
+  "public_command_change": false,
+  "original_command_result_change": false,
+  "preserved_v1_source": {
+    "path": "Plans/goal_workflow_cancel_contracts/methods.json",
+    "json_pointer": "#/methods/14",
+    "method": "owner.goal.workflow_cancel.inspect_current_event.v1"
+  },
+  "predecessor_installation_claim": false,
+  "methods": [
+    {
+      "accepted_original_command_profile": "goal_workflow_cancel_late_assignment.v1",
+      "accepted_original_result_profile": "pm.goal.cancel.result.v3",
+      "visibility": "private_original_owner_boundary_only",
+      "effects": "none",
+      "storage_writes": false,
+      "entry": "Actual original owner independently obtains and admits complete typed request, every actual original/current source, whole permissible candidate and genuine owner/permission/codec/root/hold/deletion/backup participants before any returning helper.",
+      "final_guard": "After every returning helper and after the last, repeat the full pure typed/source/owner/candidate predicate under the actual held boundary; no helper, callback, mutation, async gap or unguarded disclosure follows it before this effect-free release.",
+      "failure": "Typed original UnavailableRead only; no partial authoritative result, source substitution, implicit recovery, fabricated absence, rewritten earlier effect or new issuance.",
+      "protocol": "Plans/storage-plan.md#SP-313",
+      "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+      "original_owner": "original retained Goal/SIR source-custody and actual Storage audit owners",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadRequestV1"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadEntryV1"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadSuccessV1"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/OriginalInspectionCustodyReadResultV1"
+      },
+      "release": "Whole private original custody only to this qualified inspector boundary; not a public audit API or Event observation. No current EventRecord availability claim."
+    },
+    {
+      "accepted_original_command_profile": "goal_workflow_cancel_late_assignment.v1",
+      "accepted_original_result_profile": "pm.goal.cancel.result.v3",
+      "visibility": "private_original_owner_boundary_only",
+      "effects": "none",
+      "storage_writes": false,
+      "entry": "Actual original owner independently obtains and admits complete typed request, every actual original/current source, whole permissible candidate and genuine owner/permission/codec/root/hold/deletion/backup participants before any returning helper.",
+      "final_guard": "After every returning helper and after the last, repeat the full pure typed/source/owner/candidate predicate under the actual held boundary; no helper, callback, mutation, async gap or unguarded disclosure follows it before this effect-free release.",
+      "failure": "Typed original UnavailableRead only; no partial authoritative result, source substitution, implicit recovery, fabricated absence, rewritten earlier effect or new issuance.",
+      "protocol": "Plans/storage-plan.md#SP-313",
+      "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
+      "original_owner": "actual current SP-278 source and original SP-286/Goal audit owners",
+      "request_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectRequest"
+      },
+      "whole_private_entry_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_current_inspection.v2.schema.json#/$defs/InspectCurrentEventEntryV2"
+      },
+      "success_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventObservation"
+      },
+      "unavailable_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/UnavailableRead"
+      },
+      "complete_result_schema": {
+        "$ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/EventInspectResult"
+      },
+      "release": "Only existing narrow EventObservation or complete UnavailableRead. Full original source bundle and producer stay private; no terminal/action/body/current-Workflow result.",
+      "independently_callable_source_helper": "owner.goal.workflow_cancel.read_original_inspection_custody.v1"
+    }
+  ]
+}

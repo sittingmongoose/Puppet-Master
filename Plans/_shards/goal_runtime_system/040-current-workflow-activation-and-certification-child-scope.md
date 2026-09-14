@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6951-L7562
+Source lines: L6951-L7641
 
-Source SHA256: `1186f32bb94582745eca5a5babcaf763681efbc06d890b52d2ca05d83ffa2b3d`
+Source SHA256: `7820c4976279d68787ad662e324aa0c2c921b83fadcbca87be88f70b761b984d`
 
 ---
 
@@ -411,7 +411,7 @@ A known refusal before any original Stop can yield no_effect only with the origi
 
 Late reservation release/loss does not grant reacquisition, rotation refresh or a second original assignment in this profile. If no authenticated append occurred and the one original reservation is no longer valid, the operation remains bounded pending/unavailable with genuine original effects preserved. If original effects actually occurred, their real original owners may classify/read them through their existing authenticated original custody. Same-owner in-place restart may dispatch only an already admitted original stage whose complete native source/fence prerequisites still hold; no new source IDs, role, producer, acceptance or reservation is invented. A live revoked source cannot silently switch into recovery within that call. This conservative source contract claims no eventual-success guarantee for lost reservations.
 
-Retained succeeded replay consumes the complete original SourceAudit/terminal, compact original ScopeProof/Assignment and D06 retained result/origin through its exact retained reader. It reports original facts only and requires no fresh Goal body, Workflow runtime, current-start or current D05 success. Retained no_effect/unknown replay requires no nonexistent success metadata. Actual retained owner issuance, whole selected progress/terminal/result joins and current passive read permission/deletion/hold/backup rules still apply. Neither creates action authority. Current event inspection independently requires genuine current SP-278 full value/source/index evidence and the original first receipt/custody. Disposed original event bytes cannot be reconstructed from full-value hashes, receipts, terminal copies or a stored producer. Historical terminal replay does not assert current event availability.
+Retained succeeded replay consumes the complete original SourceAudit/terminal, compact original ScopeProof/Assignment and D06 retained result/origin through its exact retained reader. It reports original facts only and requires no fresh Goal body, Workflow runtime, current-start or current D05 success. Retained no_effect/unknown replay requires no nonexistent success metadata. Actual retained owner issuance, whole selected progress/terminal/result joins and current passive read permission/deletion/hold/backup rules still apply. Neither creates action authority. Current event inspection independently requires genuine current SP-278 full value/source/index evidence and the original first receipt/custody. For this original Workflow V3 profile, GRS-081/SIR-053/SP-313 select the complete private read_original_inspection_custody.v1 and inspect_current_event.v2 source graph; the original inspector v1 remains unchanged source lineage without implicit installation. Disposed original event bytes cannot be reconstructed from full-value hashes, receipts, terminal copies or a stored producer. Historical terminal replay does not assert current event availability.
 
 #### Explicit unproved installation prerequisites
 
@@ -620,3 +620,82 @@ source_lineage:
 - Plans/Backup_Restore_System.md#BRS-025
 source_atom_ids: []
 ```
+
+
+### GRS-081 - Original Workflow Goal cancellation private current inspection
+
+GRS-081 adopts exactly owner.goal.workflow_cancel.read_original_inspection_custody.v1 and owner.goal.workflow_cancel.inspect_current_event.v2 as complete private original-owner source contracts for already accepted goal_workflow_cancel_late_assignment.v1 / pm.goal.cancel.result.v3 Workflow operations. SIR-053 owns explicit native private descriptor selection and SP-313 contains the complete normative inspection protocol. This source adoption fills only the original audit/frozen-producer/progress-custody binding required by SP-304; it does not itself install or qualify a reader.
+
+The selected whole original SourceAudit, Stop/minimal receipt wrappers, actual current progress head plus selected immutable epoch, exact selector and full frozen producer remain authentic original owner-held values. Current inspection additionally requires the complete actual current Event/source/index/frontier, original first/full-value custody and late assignment through their existing owners. Every independently callable source reader, inspector and lower helper authenticates its entire input and allowed candidate before helpers and repeats the pure complete predicate after its last helper under the real disclosure fence. A helper result, copied descriptor, commitment or equal Event cannot reconstruct original acceptance or source.
+
+Preterminal event_ready and event_unknown may be observed with genuine append/custody/current-source evidence and complete frozen inputs; no terminal, fresh Goal body/Workflow state, current Start or D05/D06 success is added as a passive read prerequisite. Historical unknown remains its own immutable outcome. Contradictory genuine evidence or missing original source yields typed unavailable without mutation, automatic retry, missing-source recovery or partial authoritative disclosure. The private bundle grants no public audit API or action authority.
+
+The original inspector v1 signature/resources remain complete source lineage without implicit widening or installation. Current Goal stays text with active, paused, blocked and completed; no fifth state or child/phase/budget revival occurs. Existing cmd.chat.goal.cancel, original V3 result acceptance, active original V2 no-association/bound Plan routes, all native writers, physical wrappers/keys/codecs/policies and retained replay are unchanged. The separate Workflow Event source/consumer/checkpoint contracts remain independent; this passive inspector owns no durable effect or checkpoint. BRS-026 and the source owners retain original lawful disclosure/backup/restore/hold/deletion and missing-source disposition. Native/source/codec/atomicity/crash/restore qualification, Event depth and runtime execution remain NOT_RUN or NOT_PROVED.
+
+```yaml
+plan_unit_id: GRS-081
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+gui_related: false
+title: Original Workflow Goal cancellation private current inspection
+canonical_text: GRS-081 adopts exactly owner.goal.workflow_cancel.read_original_inspection_custody.v1
+  and owner.goal.workflow_cancel.inspect_current_event.v2 as complete private original-owner
+  source contracts for already accepted goal_workflow_cancel_late_assignment.v1 /
+  pm.goal.cancel.result.v3 Workflow operations. SIR-053 owns explicit native private
+  descriptor selection and SP-313 contains the complete normative inspection protocol.
+  This source adoption fills only the original audit/frozen-producer/progress-custody
+  binding required by SP-304; it does not itself install or qualify a reader.
+unblocks: []
+acceptance_criteria:
+- Complete original source graph and independently enforced entry/final passive boundaries
+  are selected.
+- All original accepted profiles, stored wrappers, keys, producer routes and source
+  lifetimes remain unchanged.
+- Native installation and execution, Event depth, readiness and governance remain
+  independently unqualified.
+depends_on:
+- GRS-078
+- SP-313
+validation_surfaces:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+risk_class: original_goal_inspection_source_or_disclosure_drift
+reasoning_tier: high
+context_scope: grs_081_source_contract
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+source_atom_ids: []
+negative_constraints:
+- No public command/result/Event/Goal-state or original accepted-profile change.
+- No source reconstruction, new archive, lifetime extension, implicit recovery or
+  original authority fabrication.
+- No native writer/capability, projector/checkpoint, Event depth or runtime qualification
+  from source adoption.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json

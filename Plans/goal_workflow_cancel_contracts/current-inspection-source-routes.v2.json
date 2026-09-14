@@ -1,0 +1,113 @@
+{
+  "schema_id": "pm.goal_workflow_cancel_current_inspection_source_routes.v2",
+  "status": "adopted_source_contract_native_unqualified",
+  "native_selector": "authentic original immutable accepted SIR result/schema/profile; schema-valid route input cannot choose an operation profile",
+  "permission_cross_product": false,
+  "source_only_not_installation": true,
+  "profile": "goal_workflow_cancel_current_inspection.v2",
+  "routes": [
+    {
+      "family_id": "goal_cancel_source_audit",
+      "accepted_result_profile": "pm.goal.cancel.result.v3",
+      "exact_stored_schema_id": "pm.storage_value.goal_cancel_source_audit.v1",
+      "exact_stored_schema_version": "1.0.0",
+      "whole_wrapper_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageSourceAudit",
+      "key_shapes": [
+        "goal_cancel_source_audit:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)"
+      ],
+      "additional_native_consumers": [
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
+      ],
+      "scope": "Shared unchanged V1 physical source, but added adapters admit only genuine originally accepted Workflow V3 operation. Old no-association/Plan V2 consumers and original stored schemas are unchanged."
+    },
+    {
+      "family_id": "goal_cancel_stop_receipt",
+      "accepted_result_profile": "pm.goal.cancel.result.v3",
+      "exact_stored_schema_id": "pm.storage_value.goal_cancel_stop_receipt.v1",
+      "exact_stored_schema_version": "1.0.0",
+      "whole_wrapper_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageStopReceipt",
+      "key_shapes": [
+        "goal_cancel_stop_receipt:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)"
+      ],
+      "additional_native_consumers": [
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
+      ],
+      "scope": "Shared unchanged V1 physical source, but added adapters admit only genuine originally accepted Workflow V3 operation. Old no-association/Plan V2 consumers and original stored schemas are unchanged."
+    },
+    {
+      "family_id": "goal_cancel_receipt",
+      "accepted_result_profile": "pm.goal.cancel.result.v3",
+      "exact_stored_schema_id": "pm.storage_value.goal_cancel_receipt.v1",
+      "exact_stored_schema_version": "1.0.0",
+      "whole_wrapper_ref": "Plans/goal_cancel_command_custody.schema.json#/$defs/StorageCancellationReceipt",
+      "key_shapes": [
+        "goal_cancel_receipt:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)"
+      ],
+      "additional_native_consumers": [
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
+      ],
+      "scope": "Shared unchanged V1 physical source, but added adapters admit only genuine originally accepted Workflow V3 operation. Old no-association/Plan V2 consumers and original stored schemas are unchanged."
+    },
+    {
+      "family_id": "goal_cancel_progress",
+      "accepted_result_profile": "pm.goal.cancel.result.v3",
+      "exact_stored_schema_id": "pm.storage_value.goal_cancel_progress.v2",
+      "exact_stored_schema_version": "2.0.0",
+      "whole_wrapper_ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_custody.v1.schema.json#/$defs/StorageProgress",
+      "key_shapes": [
+        "goal_cancel_progress.v2:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id):head",
+        "goal_cancel_progress.v2:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id):epoch:N"
+      ],
+      "native_consumer_delta": {
+        "exact_before": [
+          "owner.goal.workflow_cancel.prepare.v1",
+          "owner.goal.workflow_cancel.latch_and_reserve.v1",
+          "owner.goal.workflow_cancel.commit_receipt.v1",
+          "owner.goal.workflow_cancel.settle_owner.v1",
+          "owner.goal.workflow_cancel.freeze_event.v1",
+          "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
+          "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
+          "owner.goal.workflow_cancel.append_original.v1",
+          "owner.goal.workflow_cancel.publish_control.v1",
+          "owner.goal.workflow_cancel.terminal_succeeded.v1",
+          "owner.goal.workflow_cancel.terminal_unsettled.v1",
+          "owner.goal.workflow_cancel.read_retained_success.v1",
+          "owner.goal.workflow_cancel.read_retained_unsettled.v1"
+        ],
+        "append_only": [
+          "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+          "owner.goal.workflow_cancel.inspect_current_event.v2"
+        ]
+      },
+      "scope": "Exact original accepted operation only; current head plus its genuine selected immutable epoch for progress. No generic audit member or V2 route dispatch."
+    },
+    {
+      "family_id": "goal_workflow_cancel_late_assignment",
+      "accepted_result_profile": "pm.goal.cancel.result.v3",
+      "exact_stored_schema_id": "pm.storage_value.goal_workflow_cancel_late_assignment.v1",
+      "exact_stored_schema_version": "1.0.0",
+      "whole_wrapper_ref": "https://puppetmaster.local/proposals/goal_workflow_cancel_coordinator_metadata.v1.schema.json#/$defs/StorageLateAssignmentAudit",
+      "key_shapes": [
+        "goal_workflow_cancel_late_assignment.v1:k(storage_instance_id):k(project_id):k(thread_id):k(goal_id):k(operation_id)"
+      ],
+      "native_consumer_delta": {
+        "exact_before": [
+          "owner.goal.workflow_cancel.append_original.v1",
+          "owner.goal.workflow_cancel.publish_control.v1",
+          "owner.goal.workflow_cancel.terminal_succeeded.v1",
+          "owner.goal.workflow_cancel.read_retained_success.v1",
+          "owner.goal.workflow_cancel.inspect_current_event.v1"
+        ],
+        "append_only": [
+          "owner.goal.workflow_cancel.inspect_current_event.v2"
+        ]
+      },
+      "scope": "Exact original accepted operation only; current head plus its genuine selected immutable epoch for progress. No generic audit member or V2 route dispatch."
+    }
+  ],
+  "unchanged": "Every stored body/schema/key/codec/producer, immutable original accepted command/result profile and all old profile consumer lists. No new physical family, projection, archive, retention policy or lifetime.",
+  "late_assignment_v1_inspector_preserved": "The predecessor inspect_current_event.v1 reference remains original source lineage; no implicit installation or signature widening. A selected v2 deployment uses the explicit v2 descriptor and full entry."
+}

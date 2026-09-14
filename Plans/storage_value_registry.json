@@ -93220,7 +93220,9 @@
       "consumers": [
         "reader.goal.cancel_command_audit@1.0.0",
         "storage.goal_cancelled.inspect_current.v1",
-        "original Goal continuation and shared body owners"
+        "original Goal continuation and shared body owners",
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
@@ -93367,7 +93369,9 @@
       "consumers": [
         "reader.goal.cancel_command_audit@1.0.0",
         "storage.goal_cancelled.inspect_current.v1",
-        "original Goal continuation and shared body owners"
+        "original Goal continuation and shared body owners",
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
@@ -93441,7 +93445,9 @@
       "consumers": [
         "reader.goal.cancel_command_audit@1.0.0",
         "storage.goal_cancelled.inspect_current.v1",
-        "original Goal continuation and shared body owners"
+        "original Goal continuation and shared body owners",
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
@@ -93537,7 +93543,9 @@
         "owner.goal.workflow_cancel.terminal_succeeded.v1",
         "owner.goal.workflow_cancel.terminal_unsettled.v1",
         "owner.goal.workflow_cancel.read_retained_success.v1",
-        "owner.goal.workflow_cancel.read_retained_unsettled.v1"
+        "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+        "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
@@ -107956,7 +107964,8 @@
         "owner.goal.workflow_cancel.terminal_succeeded.v1",
         "owner.goal.workflow_cancel.read_retained_success.v1",
         "owner.goal.workflow_cancel.inspect_current_event.v1",
-        "Storage original coherent backup/restore/deletion/hold owner for this exact family"
+        "Storage original coherent backup/restore/deletion/hold owner for this exact family",
+        "owner.goal.workflow_cancel.inspect_current_event.v2"
       ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",

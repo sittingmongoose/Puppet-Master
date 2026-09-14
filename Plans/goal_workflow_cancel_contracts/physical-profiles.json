@@ -70,7 +70,9 @@
             "owner.goal.workflow_cancel.terminal_succeeded.v1",
             "owner.goal.workflow_cancel.terminal_unsettled.v1",
             "owner.goal.workflow_cancel.read_retained_success.v1",
-            "owner.goal.workflow_cancel.read_retained_unsettled.v1"
+            "owner.goal.workflow_cancel.read_retained_unsettled.v1",
+            "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
+            "owner.goal.workflow_cancel.inspect_current_event.v2"
           ],
           "codec": "pm.goal.cancel_command_json.v1",
           "mutability": "head CAS; immutable epochs",
@@ -321,7 +323,8 @@
             "owner.goal.workflow_cancel.publish_control.v1",
             "owner.goal.workflow_cancel.terminal_succeeded.v1",
             "owner.goal.workflow_cancel.read_retained_success.v1",
-            "owner.goal.workflow_cancel.inspect_current_event.v1"
+            "owner.goal.workflow_cancel.inspect_current_event.v1",
+            "owner.goal.workflow_cancel.inspect_current_event.v2"
           ],
           "codec": "pm.goal.cancel_command_json.v1",
           "mutability": "immutable",

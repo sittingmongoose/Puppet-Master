@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24000-L25920
+Source lines: L24000-L26070
 
-Source SHA256: `994b8628cdedf681cb2f5f9129e2fe5246dafb59eba2357519e6cdb063a1cd08`
+Source SHA256: `4e5c584d62f039a435f2138df0140102d417c2b279d8c5ed814ba3a804cf62ed`
 
 ---
 
@@ -779,7 +779,7 @@ Backup capture includes the actual complete stop/control/body/history/origin uni
 
 ##### Exact current event inspection
 
-NEW storage.goal_cancelled.inspect_current.v1 is a passive single-member SP-278 consumer, distinct from Goal-created/update bindings. It accepts the exact actual Storage/project/thread/Goal/event/global sequence/full canonical index key, complete current ten-field read_token and thirteen-field source_selection. No paging cursor, hidden scan, best-effort prefix, numeric cut or search-by-hash exists. The actual Storage reader independently resolves the full original EventRecord from the token's genuine current selected root/node/dataset/families and all complete source frames. It validates the complete index row/value/key, covered source interval, checkpoint anchor versus later frontier, exact original event/first receipt/full-value custody and full current source selection. Copying a token or a SourceAudit does not confer source authority. Full schema/role/codec graph installation and actual selected original owner provenance are required.
+NEW storage.goal_cancelled.inspect_current.v1 is a passive single-member SP-278 consumer, distinct from Goal-created/update bindings. For originally accepted Workflow V3 operations, GRS-081/SIR-053/SP-313 select the explicit private owner.goal.workflow_cancel.inspect_current_event.v2 and its complete private source reader while preserving this original Storage observation binding. Original no-association and bound Plan V2 operations keep their complete existing routes. It accepts the exact actual Storage/project/thread/Goal/event/global sequence/full canonical index key, complete current ten-field read_token and thirteen-field source_selection. No paging cursor, hidden scan, best-effort prefix, numeric cut or search-by-hash exists. The actual Storage reader independently resolves the full original EventRecord from the token's genuine current selected root/node/dataset/families and all complete source frames. It validates the complete index row/value/key, covered source interval, checkpoint anchor versus later frontier, exact original event/first receipt/full-value custody and full current source selection. Copying a token or a SourceAudit does not confer source authority. Full schema/role/codec graph installation and actual selected original owner provenance are required.
 
 Active v3 validates the entire exact payload and original envelope, then derives exact original audit/receipt keys only from the verified original scope/operation/cancellation identity. Authenticate actual complete SourceAudit, immutable frozen ProducerInput, original minimal cancellation receipt and original Stop receipt, all actual header/payload/occurrence/revision/currentness/operation/source joins, and the genuine shared full-value/eleven-field first receipt. Original event may already be issued while local progress is event_ready or event_unknown; authentic original append evidence and original frozen input prove it without inventing local event_issued or terminal success. Later original progress may be event_issued/control_published; immutable original source/input/receipt comparisons stay identical. Contradictory no_effect or missing original input is unavailable, never repaired from matching current EventRecord bytes.
 
@@ -1542,7 +1542,7 @@ For each actual storage operation:
 5. Derive the entire permitted write candidate under the original native phase. Genuine first absence belongs only to original admission. Immutable unequal occupancy conflicts; equal occupancy requires actual same-original readback rather than another issuance. A progress advancement publishes the new immutable epoch and head CAS atomically; terminal selects its genuine original immutable epoch. No generic update, rekey or migration path is introduced.
 6. Every independently callable owner/lower Storage reader or writer repeats the complete original before-helper and final pure whole-source/candidate/owner/permission/hold/deletion/backup/codec predicate, including actual database key, accepted profile, root and phase. No returning helper, callback, logger or mutable gap follows the final predicate before that write/disclosure. A successful JSON Schema check is only one part of this predicate.
 
-The combined producer/consumer lists on the three registry rows are family inventories, not permission cross-products. `Plans/goal_workflow_cancel_contracts/physical-profiles.json` preserves each old list exactly and assigns new adapters only to the newly accepted profile. The source method signatures and original phase contracts remain complete. Control-publication terminal consumers authenticate its full original record through the genuine selected progress/publication custody; unsettled branches require that publication only if it actually occurred. No-effect or unknown replay gains no future successful-publication prerequisite.
+The combined producer/consumer lists on the three registry rows are family inventories, not permission cross-products. `Plans/goal_workflow_cancel_contracts/physical-profiles.json` preserves each old list exactly and assigns new adapters only to the newly accepted profile. SP-313 adds only its two private consumers to the Workflow V3 progress list and inspector v2 to the Workflow V3 late-assignment list; all original entries and every V2 list remain exact, and the five registry consumer additions are qualified inventories only. The source method signatures and original phase contracts remain complete. Control-publication terminal consumers authenticate its full original record through the genuine selected progress/publication custody; unsettled branches require that publication only if it actually occurred. No-effect or unknown replay gains no future successful-publication prerequisite.
 
 This source adoption contains schema/configuration checks, not encoded native values, schema instances, runtime readers, migrated records, source-custody proof or native codec qualification.
 
@@ -1929,3 +1929,153 @@ source_lineage:
 - Plans/Backup_Restore_System.md#BRS-025
 source_atom_ids: []
 ```
+
+
+### SP-313 - Whole original Workflow cancellation inspection custody
+
+SP-313 adopts the complete explicit private Workflow Goal cancellation current-inspection successor through the whole new schema and complete resource/method/entry/source-route maps. GRS-081 owns the semantic selection and SIR-053 the exact native private dispatch selection. The normative body below preserves the entire reviewed source protocol with recorded status, owner/path and heading substitutions only.
+
+Exactly five existing storage-family consumer inventories gain the qualified private routes: goal_cancel_source_audit, goal_cancel_stop_receipt, goal_cancel_receipt and goal_cancel_progress gain read_original_inspection_custody.v1 plus inspect_current_event.v2; goal_workflow_cancel_late_assignment gains only inspect_current_event.v2, all under owner.goal.workflow_cancel. Only the V3 progress native-consumer list gains those two methods, and only the V3 late-assignment list gains inspector v2. All old entries and V2 profiles remain. There are zero new families, Events, policies, stored wrapper/schema/key/producer changes or durable reader effects. The existing BRS-026 coherent recovery owner remains sufficient and unchanged; the private bundle is transient and grants no source archive, backup destination or retention extension.
+
+#### Original Workflow Goal cancellation current inspection — explicit private v2 source contract
+
+SP-313 adopts the complete source contract for the original-source inputs of the already declared Workflow Goal cancellation current Event inspector. The exact original command remains cmd.chat.goal.cancel, accepted under goal_workflow_cancel_late_assignment.v1 with pm.goal.cancel.result.v3. The current goal.cancelled payload remains its existing v3 and the original Event family is unchanged. Only the private current inspection signature is a successor: owner.goal.workflow_cancel.inspect_current_event.v2. Its separately callable private source reader is owner.goal.workflow_cancel.read_original_inspection_custody.v1. Their complete signatures are Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json and Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json.
+
+The original inspect_current_event.v1 signature and its source map remain whole source lineage. They are not silently widened, reinterpreted or claimed installed. A native owner selecting this current-inspection successor must register its entire explicit v2 descriptor/resource/private source-reader/profile/codec/disclosure graph before exposing it. Missing any part leaves the route unavailable. This source adoption supplies no actual native installation. It does not change the original accepted command/result profile of any operation; all active no-association and bound Plan V2 operations keep their whole original command, schemas, physical keys and reader/producer routes.
+
+##### Whole source types and separate authority
+
+The new seven-definition schema uses whole existing resources by literal retrieval URI and exact containing-document hash. The complete predecessor Goal resource realm, including its four explicit embedded registrations, is preserved and augmented by one new whole schema. No native realm is merged, historical same-ID resource substituted, trimmed alias installed or network fallback permitted. The existing complete Goal custody, Goal argument, late-assignment, EventRecord, index/source and first/full-value custody schemas remain byte-identical. Their original numeric domains and codecs remain distinct.
+
+OriginalInspectionCustodyV1 contains the complete original WorkflowSourceAudit wrapper, original StorageStopReceipt, original StorageCancellationReceipt, complete CurrentProgressPair, full frozen ProducerInput and exact OriginalInspectionCustodyReadRequestV1 selection. WorkflowSourceAudit refines the whole original StorageSourceAudit for the genuine nonnull Workflow association; it does not replace its complete original request, normalized identity, original nonterminal outcome, producer metadata, original body commitments or original execution binding. The shared SourceAudit/Stop/minimal-receipt physical wrappers keep their original V1 schemas and keys. Structural equality or reused schema IDs establish neither common issuer nor original accepted V3 profile.
+
+CurrentInspectionProgressPairV1 references the whole existing CurrentProgressPair: complete current V2 StorageProgress head and its complete selected immutable V2 StorageProgress epoch. It narrows that selected original epoch only to event_ready, event_unknown, event_issued or control_published, with workflow_settled owner disposition. All complete fields and branch constraints survive, including original StopIntent/receipts, owner settlement, producer, nullable original publication and control-publication members. No head stands in for an epoch and no field is extracted into a shortened progress substitute. The explicit frozen_producer member equals the entire authentic selected epoch's producer_input byte-semantically under its original codec; duplicate copies are not independent provenance.
+
+The source request contains exactly event_id and the whole existing seven-field ProgressSnapshotSelector. It is a requested selector, not an issued source capability. Its scoped versioned immutable key and epoch must agree with the actual current head and actual selected immutable epoch under original Storage custody. The inspector's actual original owners derive the scope/operation from the independently authenticated complete current Event and original accepted source, acquire the genuine current progress head/epoch, and form the exact requested selection. A caller cannot choose a V2 profile, forge a native accepted descriptor or turn a guessed key/hash into original custody. A stale or mismatched request refuses this invocation; it is not rewritten to a later head within the call.
+
+The original immutable SIR acceptance selects the complete existing GoalCancelResultV3 descriptor before C-source, as GRS-078/SIR-052 require. The native original acceptance/installation owner authenticates that actual retained selection, full original operation identity and original issuing source/phase, not a new boolean, result-shaped object, caller field, descriptor copy or current command catalog default. There is no new acceptance archive or historical-body prerequisite. Missing genuine original acceptance/profile custody is unavailable; old operations cannot be upgraded to satisfy the request.
+
+##### Exact permitted source routes
+
+Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json is the exact per-profile native consumer delta; SP-313 changes only the exact qualified consumer inventories in Plans/storage_value_registry.json under that adopted source contract. These inventories are not permission cross-products.
+
+The new source reader and inspector v2 may independently read only the actual original operation's unchanged shared goal_cancel_source_audit, goal_cancel_stop_receipt and goal_cancel_receipt values, and the goal_cancel_progress **V3 accepted-result / V2 stored-wrapper** current head plus its selected immutable epoch, for this full private current-inspection purpose. They gain no general audit member, terminal, body, arbitrary operation, old V2 profile, writer, restore or migration authority. The late-assignment family's V3 profile additionally admits only the inspector v2; its whole original assignment is already part of OriginalGoalAppendReadback. Existing producers, all original profile lists and the original v1 source-lineage entries remain exact.
+
+All five real key components use the existing lowercase even-length hexadecimal k(s) of exact scalar UTF-8: storage instance, project, thread, Goal and original operation. No Unicode normalization or rejection of otherwise valid colon-containing identifiers is allowed. The three shared prefixes remain unchanged. Progress uses only goal_cancel_progress.v2:...:head and goal_cancel_progress.v2:...:epoch:N, with N canonical nonnegative mathematical decimal and equal to the actual epoch. The actual database key, original root and exact stored wrapper identity are independently checked through the existing complete SP-310 family composition and fixed key/value branch. The current head's snapshot_sha256 hashes the entire actual selected immutable outer wrapper bytes under pm.goal.cancel_command_json.v1. Original immutable epoch selection does not use terminal copies, an old V1 key, hash-only lookup, a scan or a failed lookup as proof of absence.
+
+The current head and immutable epoch are read together under the real original Storage snapshot/registration/root and current passive disclosure fence. The complete actual phase must contain the already frozen producer. Missing head, epoch, shared source or receipt is unavailable; the reader does not initialize missing authority, use an earlier head as current or recapture an absent record. A later valid invocation may select its own genuine current head normally. This contract supplies no in-call source substitution, automatic retry, recovery or progress advance.
+
+##### Independently callable private source reader
+
+owner.goal.workflow_cancel.read_original_inspection_custody.v1 has the complete request, OriginalInspectionCustodyReadEntryV1, success and unavailable signatures in the method map. The private entry carries that same full request and actual_custody. The actual original Goal/SIR/Storage owners independently acquire those whole original values and authenticate original accepted profile/issuer, exact physical keys/codec and current root/permission/hold/deletion/backup participants before any returning helper. A caller-supplied bundle, a prior helper's output or successful schema check cannot assemble an admissible entry on their behalf. If the complete entry cannot be obtained, the only branch is typed unavailable; no partial authoritative source bundle is returned.
+
+The owner compares all scope and operation identities across request selector, original SourceAudit request/normalized identity, both original receipts, current head and selected epoch. The actual source has the original Workflow association admitted by GRS-078: no_bound_plan, genuine nonnull original run and exactly the original single Workflow owner association. Current binding changes or a later body cannot restamp that historical source. Original phase issuance is authenticated through its true retained owner/root/accepted profile and original storage lineage, not inferred from all matching identifiers.
+
+SourceAudit's complete original producer metadata equals the complete header metadata of the frozen ProducerInput. event_id equals the requested exact original Event ID. Full original producer payload, original source audit and receipt joins use SP-304's exact source contract. The selected progress source_audit_sha256, StopReceipt.source_audit_sha256, CancellationReceipt.source_audit_sha256 and producer payload source_audit_sha256 all hash the complete actual original StorageSourceAudit outer bytes. Progress's original StopReceipt and CancellationReceipt semantic values equal the records in their complete independently authenticated physical wrappers. Their original physical keys, original issuing transactions, StopIntent domain-separated hash, original epoch succession and original receipt ref/hash all agree under the unchanged SP-304 recipes. Do not recompute a stored-row hash from the bare record or conflate original semantic, outer-value, RFC8785 and MessagePack domains.
+
+The original cancellation_id equals the genuine original normalized operation_id; source, receipts, progress and producer retain the same project/thread/Goal/operation/command-instance identities. Receipt original_revision/currentness and producer payload revision/currentness equal the actual accepted SourceAudit body-selection facts. user_stop_epoch is the authentic original Stop receipt's resulting epoch, not today's host Stop. cancel_reason remains user_cancelled. CancellationReceipt.accepted_at, ProducerInput.occurred_at_utc and payload.cancelled_at_utc preserve SourceAudit.producer_metadata.occurred_at_utc exactly, including spelling. The source does not reauthorize the original user action against a newer body or permission snapshot and does not require the current Goal body/Stop row to reproduce these original facts.
+
+The complete selected epoch's original Workflow settlement is authentic original issuing-phase custody. Reading it does not require a fresh current Workflow body, D05 success, D06 current readback, live reservation or current Start. All embedded immutable original fields remain whole; compact owner refs/hashes do not reconstruct original runtime values or become effect authority. This reader proves the retained original Goal event inputs only. It neither certifies that an Event was appended nor claims current Event availability.
+
+On success the reader returns the entire OriginalInspectionCustodyReadSuccessV1 only across the qualified private original-owner boundary, with action_authority=none. It is not a public general audit API. The complete producer, source metadata and receipt/progress bundle stay private to the existing original inspection owners and are not exposed by the Event observation. Current app/Project audit permission and the actual original source owners' current lawful disclosure, codec, root, backup and hold/deletion guards apply independently, without a new current Goal-body/thread-visibility condition. No field is dropped, hashed or rewritten to manufacture an admissible original record.
+
+##### Current Event inspector v2
+
+owner.goal.workflow_cancel.inspect_current_event.v2 preserves the existing complete EventInspectRequest and EventInspectResult. Its complete private InspectCurrentEventEntryV2 adds the entire original Goal custody bundle to the complete actual OriginalGoalAppendReadback. The existing reader_binding remains storage.goal_cancelled.inspect_current.v1 as the original Storage observation binding; actual explicit native v2 method/descriptor/profile selection supplies this private source integration. That binding string is not a fallback into an old accepted-profile reader.
+
+At its own original entry the inspector independently holds and admits the full actual request, original custody, current Event source and whole permitted EventObservation/unavailable candidate. It may invoke the separately callable private source reader, but the source reader's successful returned bundle is never sufficient admission for its caller. The caller independently authenticates every actual source and repeats its complete predicate. Lower original Storage, first/full-value receipt, exact Event, source/index, codec, provenance and copy/disclosure helpers have their own complete independent entry and final boundaries as well.
+
+The genuine current SP-278 owner supplies the complete typed goal.cancelled v3 EventRecord, full actual source frame, append source/sink/manifest selection, index checkpoint/generation/frontier/read-token/row and current selected-root/coverage evidence. Exact storage/project/thread/Goal/event/global sequence/index-key and the whole read token/source selection agree with the full request. The source owner authenticates all actual source bytes and locator/index joins and the correct anchor/frontier relation. Neither a copied token, optional index miss, prior readback, old append-time source pointer nor equal value hash proves a current original Event. Lawful relocation/compaction is checked by the unchanged current SP-278 source/coverage owner, without rewriting original append facts or demanding that a current locator equal its original first-append locator.
+
+OriginalGoalAppendReadback also supplies the complete original publication, genuine eleven-field first AppendReceipt, full_value_result, original custody and entire original LateAssignmentAudit. Apply all existing SP-286 original first-custody and domain-bound complete-value predicates independently of producer semantic equality. Compare the full actual Event's producer-owned fields to the entire independently authenticated frozen ProducerInput, preserving every field and primitive type. Compare Storage-assigned sequence/observed/persisted fields and original full-value/first-receipt/assignment joins through their authentic original owner domains. The late audit binds this original producer and assignment but never substitutes for the full original producer, current Event bytes, first custody or native original issuance. A released old reservation is original history, not a renewed live append requirement or permission.
+
+All original payload/header/source/receipt joins from the private reader are rechecked against the current complete Event. The minimal receipt's physical key and complete outer hash equal payload.cancellation_receipt_ref and cancellation_receipt_sha256, and every original revision/currentness/Stop/occurrence/operation/source identity agrees. No current-body text, objective, fifth Goal state or fresh Workflow state is inferred. An unchanged invalid original remains invalid even when the current Event is byte-equal to a prior read.
+
+Preterminal event_ready and event_unknown remain successful observation candidates when the actual original append/first-custody/current-source evidence exists and all full original inputs agree. They do not require event_issued, control publication or any terminal. If original progress is event_issued or control_published, its full already-recorded original publication must agree with that same actual Event/custody; no alternative original Event is accepted. NoEffect/unknown terminal is not a mandatory inspector source or a future prerequisite. Any contradictory genuine original evidence encountered by the actual owner refuses, and a terminal copy never repairs a missing frozen input. An immutable original unknown terminal does not itself contradict a later authentic original append; that terminal remains its original unknown outcome while the inspector may observe the genuinely issued Event. A true original no-effect claim conflicting with actual prior Stop/receipt/append evidence is a contradiction, not an absence proof. The separate retained-success/unsettled readers keep their existing full terminal-only routes and cannot be used as a generic preterminal progress provider.
+
+Success discloses only the unchanged EventObservation fields: kind, event_id, sequence_id, payload_version, project_id, thread_id, goal_id, original revision, occurred_at_utc and action_authority=none. UnavailableRead discloses no partial authoritative observation. The inspector does not return the private source bundle, full producer, account identity, Goal body or a Workflow completion/state result. It changes no source, progress, receipt, control, terminal, Event or index state.
+
+##### Universal final predicate and failure
+
+Every method, independently callable original owner and returning lower helper first independently obtains and validates its entire actual typed input graph, genuine original accepted profile/issuance, full current source/custody/permission/deletion/hold/backup/root/codec participants and whole allowed candidate before any helper. Full expected sources are actual original owner-held values; booleans, hashes, schema IDs, resource maps, serialized handles, caller assertions or earlier helper results do not stand in for them. Structural checks apply to candidates as candidates, not as future previously issued objects.
+
+After every returning helper and after the last helper, that owner reevaluates one pure full typed/source/owner/candidate predicate under the real held transaction/snapshot/disclosure fence. It rechecks the actual current progress head and selected immutable epoch, all original stored bytes/keys/issuer/profile/disclosure guards and, for inspector v2, the complete actual current Event/source/index/first/full-value custody and exact final observation. No helper, callback, logger, asynchronous gap, mutation or unguarded disclosure may intervene before the specific effect-free release. A lower helper's guard and its caller's guard are separate obligations. Final returned immutable copies preserve all admitted bytes; a copy helper also precedes the last predicate.
+
+A changed head/selected epoch, missing full source, revoked registration, stale current Event selection, unsupported actual codec, wrong original profile/key, lost required original custody, changed permission, tombstone or lawful hold/deletion refusal yields the existing typed unavailable branch. It does not select a different source/epoch/profile in this call, replay the cancellation, enter recovery implicitly, initialize missing authority, append a replacement, invent no-effect/success, clear pending state or rewrite any genuine earlier effect. Earlier valid original Stop/receipt/Workflow/append/control/terminal facts remain as issued.
+
+##### Storage, retention and installation boundary
+
+There is no new physical family, stored wrapper, producer, checkpoint, projection, original archive, retention policy or lifetime. Source/progress/receipt/assignment originals keep their exact existing canonical non-rebuildable custody, RP-AUTHORITY-INDEFINITE policy and mandatory coherent backup/restore/deletion/hold rules. Full Event/source bytes remain governed by their actual original owners; a surviving audit or held derivative does not recreate or extend another source's lifetime. The transient private bundle grants no new storage or backup destination. Missing original authority stays unavailable/data loss under its existing owner; source readers never rebuild it from hashes, terminal copies, current Event bytes or current bodies.
+
+SP-304's current Activity removal remains the canonical C-publish control-marker view. This passive inspector and source reader have no durable effect and no checkpoint. The original historical v2 Goal cancelled projection remains its own old route; the separate goal_run started/cancelled projectors cannot be borrowed here. Neither this source adoption nor source signature closure establishes current action authority, native execution, Event depth, end-to-end cancellation, global safe-stop, readiness or governance.
+
+GRS-081/SIR-053/SP-313 select this complete private source-reader and inspector successor alongside the original GRS-078/SIR-052/SP-310 coordinator and separately adopted GRS-079/SP-311 started and GRS-080/SP-312 cancelled Event source contracts. Those event source adoptions remain separate installation prerequisites, as do every genuine original native writer/reader/codec/root/backup enrollment and all actual transaction/currentness/crash/replay/restore qualifications. This is adopted source-contract prose only; native installation and qualification remain independent.
+
+
+```yaml
+plan_unit_id: SP-313
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+gui_related: false
+title: Whole original Workflow cancellation inspection custody
+canonical_text: SP-313 adopts the complete explicit private Workflow Goal cancellation
+  current-inspection successor through the whole new schema and complete resource/method/entry/source-route
+  maps. GRS-081 owns the semantic selection and SIR-053 the exact native private dispatch
+  selection. The normative body below preserves the entire reviewed source protocol
+  with recorded status, owner/path and heading substitutions only.
+unblocks: []
+acceptance_criteria:
+- Complete original source graph and independently enforced entry/final passive boundaries
+  are selected.
+- All original accepted profiles, stored wrappers, keys, producer routes and source
+  lifetimes remain unchanged.
+- Native installation and execution, Event depth, readiness and governance remain
+  independently unqualified.
+depends_on:
+- SP-304
+- SP-310
+- GRS-078
+- SIR-052
+validation_surfaces:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+risk_class: original_goal_inspection_source_or_disclosure_drift
+reasoning_tier: high
+context_scope: sp_313_source_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Goal_Runtime_System.md#GRS-078
+- Plans/Shared_Integration_Runtime.md#SIR-052
+- Plans/storage-plan.md#SP-304
+- Plans/storage-plan.md#SP-310
+- Plans/Backup_Restore_System.md#BRS-026
+- Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json
+- Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json
+- Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json
+- Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
+source_atom_ids: []
+negative_constraints:
+- No public command/result/Event/Goal-state or original accepted-profile change.
+- No source reconstruction, new archive, lifetime extension, implicit recovery or
+  original authority fabrication.
+- No native writer/capability, projector/checkpoint, Event depth or runtime qualification
+  from source adoption.
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-078, ContractName:Plans/Shared_Integration_Runtime.md#SIR-052, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Backup_Restore_System.md#BRS-026, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-entry-boundaries.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-methods.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/current-inspection-source-routes.v2.json, ContractName:Plans/goal_workflow_cancel_contracts/schemas/current-inspection.v2.schema.json, ContractName:Plans/goal_workflow_cancel_current_inspection_schema_resources.v2.json
