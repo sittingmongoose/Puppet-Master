@@ -1,0 +1,942 @@
+{
+  "status": "SOURCE_CONTRACT_REVIEWED",
+  "base_commit": "11812c094995b1af9ae46fac31e6421741843187",
+  "scope": {
+    "canonical_source_files": [
+      {
+        "path": "Plans/Automated_Testing_System.md",
+        "sha256": "28490147bb124e5570be20c9bbd239b2ff5cea8137461652074b9e33e796257b"
+      },
+      {
+        "path": "Plans/Backup_Restore_System.md",
+        "sha256": "6652960da541e9a40b54801f4fb6e7e0eef915453490c91529727c32bd230ccf"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1"
+      },
+      {
+        "path": "Plans/Executor_Protocol.md",
+        "sha256": "0e776e116a335bbad98cf4a07f02282001ca3f398e498cec2c3eb28e7797a6b9"
+      },
+      {
+        "path": "Plans/Goal_Runtime_System.md",
+        "sha256": "26e495c464b61ce9292702720e6d333f4f6eff6e5b6f604917360eddd35112d2"
+      },
+      {
+        "path": "Plans/Models_System.md",
+        "sha256": "018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66"
+      },
+      {
+        "path": "Plans/Plan_To_Node_Compilation.md",
+        "sha256": "f31d88c4b35996d247054ac9faffae91c07489df4d1bed10e6555f2824fcdb12"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "sha256": "127c75e80ee14608dc2ca9ea159fb8e36e3d10bf9239380b406de4de8eed23f4"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "f9c61efae11b408ff633ea51eb67a3b290973842c73d0ac79953bbf50de6b390"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/activation-field-map.json",
+        "sha256": "3d838cb5f6eef83799c86f5ffc526088f402c9aa1b8b278d84ad6c76c7745e03"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/association-hash-dependencies.json",
+        "sha256": "18ada0ceaa3cc371b1902342aae4bcdc9fe5d796ce1da70fb10900256a7906f5"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/compiler-field-map.json",
+        "sha256": "37272ca7381261dedea2e10b683c9a05538682a5dcec304daa037f881e9769ca"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/current-materialization-reference-map.json",
+        "sha256": "e0f95073b1ffbebcfb12db837dce313dd39dfdd6a26e9d427b35674bd50a8043"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/methods.json",
+        "sha256": "cd24a81a13977ce343f270c253923d194ba3a660024f671d330e4fcc7bb19727"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/native-birth-field-map.json",
+        "sha256": "65678592c66ca4a98b8c85aa4eec540daf4565eed4a8c9b45998409b73372334"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/native-t2-joint-family-coverage.json",
+        "sha256": "75bdeae9741b5d3e9f09437e4106005f9c277bc2e3507f93b4f45ff56d9417d2"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/operational-current-source-adoption.json",
+        "sha256": "00f864b053eed66537f7b9ca743d33ab71b45686599b3445940ee20f574cf53f"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/physical-families.json",
+        "sha256": "ac338df39f9d1d54a0e3a6602cf3e114e261a3d9aa6aa78c0fdb3203f6c55e7f"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/retention-field-classification.json",
+        "sha256": "b9131582b9815fafd10b790fd70cda7e1fc34c6294cc39fc18bba3e914b6c62b"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+        "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+        "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+        "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+        "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+        "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/current-reader-routes.v1.schema.json",
+        "sha256": "e7b7b3c89fc79b72f1caa875fe6ffb0fc93414b474fc5ec84ae0233e876ce9dc"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+        "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+        "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+        "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+        "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+        "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/operational-custody.v1.schema.json",
+        "sha256": "a609cc8075c6d6eb087e208d189ae4dfb896a70f6f6faf6204e8b5e3f62c37bd"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+        "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+        "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+        "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+        "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+        "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4"
+      },
+      {
+        "path": "Plans/workflow_activation_contracts/source-control-field-map.json",
+        "sha256": "372fd9dfb0c5ae8b7438ed1a3282482891cd6aa0029450c9e0910f2dce3229f7"
+      },
+      {
+        "path": "Plans/workflow_activation_schema_resources.json",
+        "sha256": "007b94da4e1184f497d5e2760ad211073c7e0e1b9cf0b90c953f1784aac6123d"
+      }
+    ],
+    "new_plan_units": [
+      "GRS-077",
+      "CV-349",
+      "SP-308",
+      "PNC-025",
+      "EP-117",
+      "MS-139",
+      "ATS-053",
+      "BRS-024"
+    ],
+    "new_acceptance_criteria": 34,
+    "owner_prose_prior_bytes_preserved": true,
+    "new_storage_families": 54,
+    "old_storage_families_preserved": 166,
+    "total_storage_families": 220,
+    "existing_events_preserved": 42,
+    "new_events": 0,
+    "new_schema_files": 20,
+    "exact_whole_schema_imports": 44,
+    "exact_canonical_schema_reuse": 25,
+    "new_explicit_internal_compiler_reader_ids": 2,
+    "current_association_version": "v4",
+    "whole_native_materialization_families": 6,
+    "all_native_definitions_retained": 85,
+    "all_A4_definitions_retained": 82,
+    "typed_current_materialization_definitions": 17,
+    "current_seven_roles": 7,
+    "complete_direct_live_audit_returns": 14,
+    "all_previous_registry_policy_and_top_level_fields_preserved": true
+  },
+  "checks": {
+    "source_application": 209,
+    "static_schema_resource": 24011,
+    "assembly_and_routing": 1003,
+    "method_and_contract_string_targets": 503,
+    "all_status": "PASS"
+  },
+  "resource_realms": {
+    "retained_original_operational_v1": {
+      "registered_roots": 53,
+      "reference_sites": 6977,
+      "failures": 0
+    },
+    "current_operational_source": {
+      "registered_roots": 54,
+      "reference_sites": 6998,
+      "failures": 0
+    },
+    "current_goal_control": {
+      "registered_roots": 24,
+      "reference_sites": 2221,
+      "failures": 0
+    },
+    "current_materialization_source": {
+      "registered_roots": 57,
+      "reference_sites": 7326,
+      "failures": 0
+    }
+  },
+  "independent_and_author_packages": [
+    {
+      "role": "operational",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/operational/manifest.json",
+      "manifest_sha256": "91265d6aee0599bf8842e8376ec5ade38ae410ff900873fedcd9d994977301fc",
+      "members_verified": 560
+    },
+    {
+      "role": "integration",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-canonical-integration-map-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/integration/manifest.json",
+      "manifest_sha256": "a04442e01f42b87b02891bdbd3cdd6fb39baf912ba19df22b35b864bdf17121c",
+      "members_verified": 20
+    },
+    {
+      "role": "operational-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-source-independent-review-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/operational-review/manifest.json",
+      "manifest_sha256": "b526967328561709d948b7d2754af1b35f84100a125c4bce3ea9c37f7d9844b7",
+      "members_verified": 2
+    },
+    {
+      "role": "association",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/workflow-association-activation-join-20260913/v4/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/association/manifest.json",
+      "manifest_sha256": "37a8cf474f25d95ecb5f564a98cff97580d14982160102e9b5e14b2eba9aae9c",
+      "members_verified": 23
+    },
+    {
+      "role": "association-v3-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/workflow-association-independent-review-20260914/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/association-v3-review/manifest.json",
+      "manifest_sha256": "58c555a1c230d539be84b27f712dba128d5e6de90a58089606ad665e3e619954",
+      "members_verified": 3
+    },
+    {
+      "role": "association-v4-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/workflow-association-independent-review-20260914/v2/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/association-v4-review/manifest.json",
+      "manifest_sha256": "f1271688c59a56c6feed60830df7b280593320939ca5fb4b1082a7e495d42554",
+      "members_verified": 3
+    },
+    {
+      "role": "resource-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-canonical-resource-independent-review-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/resource-review/manifest.json",
+      "manifest_sha256": "9f7384963108420aafb0f1dd52870021490f06a9c010262251984d110411541d",
+      "members_verified": 3
+    },
+    {
+      "role": "initial-assembly-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-root-storage-method-review-20260913/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/initial-assembly-review/manifest.json",
+      "manifest_sha256": "9afedc6e1092d19c2f99adab1f3faabe1fa33f5779b6613c8b574a3a52ed7e07",
+      "members_verified": 33
+    },
+    {
+      "role": "machine-review-qualified-v3",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-machine-independent-review-20260914/v2/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/machine-review-qualified-v3/manifest.json",
+      "manifest_sha256": "adedc294383fbde462d8c2863aef181547faa7a22e3b569929fe9932d8e09aaf",
+      "members_verified": 3
+    },
+    {
+      "role": "owner-prose",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-owner-prose-20260914/v2/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/owner-prose/manifest.json",
+      "manifest_sha256": "408e62e07564951a1b29e83b28f7628f49ff969b7c880c66db9f1e0ddf6ac233",
+      "members_verified": 18
+    },
+    {
+      "role": "applied-review",
+      "original_manifest": "/home/sittingmongoose/PM-Experiments/activation-applied-machine-review-20260914/v1/manifest.json",
+      "copied_manifest": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/applied-review/manifest.json",
+      "manifest_sha256": "f708edcf08415b2313af65f864bc5bd18393d8ce5f886db4371aedaeb4d59634",
+      "members_verified": 71
+    }
+  ],
+  "whole_schema_source_evidence": [
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/activation-source.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0.json",
+      "sha256": "80597d53aada9af04c84ac7f501d22516a797c0240f85bdd610287a7e82d01f0",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/models-request-live.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7.json",
+      "sha256": "c11a123590b8d281f2b3682f591268af6fd719c9ef8b52037a7b15a7852bbad7",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/activation-read-result.v4.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-reader.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf.json",
+      "sha256": "743645f5c9a8430fbca1963fbc072a9ac206419a9ebfc1b1c825ed7020e36ddf",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/activation-recovery-views.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/operational-recovery-views.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4.json",
+      "sha256": "bd13ecb4e2581262b9e09353d03dd19a3c8858681175d3c317ca281fe84727e4",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-activation.v3.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/activation-v3/activation-source.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed.json",
+      "sha256": "5951fddfd4ce6b62d7acb195c27881e50b7431771369f68e0606e22b3be15aed",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/compiler/compiler-input-routes.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c.json",
+      "sha256": "0d3b50752870853d7fbaac6b5673ffdccded6328ba49a92eb82a22ed13046c9c",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/aggregate/aggregate-input-route.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522.json",
+      "sha256": "cd55ad417c9ae11097fe2f0655755b63bef5c887b88486c4dc468b21b26d0522",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/preflight-test/live-input.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2.json",
+      "sha256": "30cc5fc70474d8ce069be8d776519c2d2354d4e5635de0140d7e612fee3097c2",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/historical-plans-to-code-handoff.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/models-requests/inputs/Plans/plans_to_code_handoff.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d.json",
+      "sha256": "1b1cff7b32b90f22734e90f025c020a05f9145fbea82ce156cb2224611ce8d4d",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/requested_effective_runtime.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/frozen/models-requests/inputs/Plans/requested_effective_runtime.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6.json",
+      "sha256": "bcd467b368c2bbdc751d3e841e3a070bfbf40e03669ba6bc82f2bacfc2eeeaa6",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/execution_unit_context.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25.json",
+      "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/native-worknode.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1.json",
+      "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/source_control_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/inputs/Plans/source_control_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a.json",
+      "sha256": "39dda3e18a9cd96e7d561919a7a110c950db2826564c7e5fc76cf25565cb8a5a",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/source-routes.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06.json",
+      "sha256": "2c64fd916ec26aff73d09bcd7532f2cb690951cc9437509c2b2650b2bd708b06",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/operational-custody.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/operational-custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/a609cc8075c6d6eb087e208d189ae4dfb896a70f6f6faf6204e8b5e3f62c37bd.json",
+      "sha256": "a609cc8075c6d6eb087e208d189ae4dfb896a70f6f6faf6204e8b5e3f62c37bd",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/project_plan_node.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/evidence.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/inputs/Plans/evidence.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86.json",
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_body_custody.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8.json",
+      "sha256": "f2efc4d50985ebad7f7fbafe92f22b098364e3b262c0ccc10c25c0c90eec72d8",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/historical-goal-cancel-control.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c.json",
+      "sha256": "cc5d84b7c6f402cd26269f4621f5fda1122c1643032c7944957c4117c889830c",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/full_thread_runtime_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/full_thread_runtime_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea.json",
+      "sha256": "5fa07b1ee8a19c769883b6e8876bf0c5e6326b97f5992fec3b661d7ec2a541ea",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/event_append_receipt_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/event_append_receipt_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3.json",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/ui_command_response.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/ui_command_response.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37.json",
+      "sha256": "d4bf766322c4e0898ef9426fa1c9c48d6639c55390379895be3a73eb021fbb37",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/event_record.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/event_record.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb.json",
+      "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/event_record_index_checkpoint.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/event_record_index_checkpoint.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af.json",
+      "sha256": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/shared_runtime_command_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/shared_runtime_command_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b.json",
+      "sha256": "7c460c1e01956e15fce5977779b4920f100b30443ddd950f24fda22dc1b38d7b",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/frozen/operational-v1/frozen/activation/current-owner-inputs/Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/plans_to_code_handoff.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/plans_to_code_handoff.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2.json",
+      "sha256": "6a3465b358483aef9d020fcf64e7c16276b8aa11b3c73a8a36aae9455dbf02c2",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/operational-custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec.json",
+      "sha256": "5a876253a29cc83ee5eadc4ae4da5b7cffc001711f27fb9b2b98627286a3e8ec",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/event_payloads/goal_runtime/goal_created.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841.json",
+      "sha256": "415829ee3d73099aaa879a989f8300c37062e999d4cb19a65cebd2591a43c841",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea.json",
+      "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_cancel_command_custody.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_cancel_command_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8.json",
+      "sha256": "3a9477a8a41b273f589e6fc12a492a04a20ac2af5c0382d0ba0445c9a35799e8",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_execution_binding_custody.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_execution_binding_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a.json",
+      "sha256": "b866b72ac1831891cd605360e84e4e97a281b5f352f8b8176d7862e90def746a",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_runtime_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_runtime_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e.json",
+      "sha256": "381df40c03f16a4224d44731465c7c0ba4be0071d910b7cf9d0d935e7b60e36e",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_runtime_events.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_runtime_events.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e.json",
+      "sha256": "b300a7e1f149dcda32ae110c9abd51174c6e8768dce9f2a921fa2f62a8a3e95e",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_start_command_custody.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_start_command_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74.json",
+      "sha256": "098df8efeedf9ccbd41f276e931b64fa9469a8d61656a5be7f240b9935064a74",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/goal_update_command_custody.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/goal_update_command_custody.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988.json",
+      "sha256": "eaa2358de37467ec51ad039f52342900b80b6a7c70f98ad9b0b87a6e9eac2988",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/shared_runtime_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/shared_runtime_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59.json",
+      "sha256": "680d47fb8e6226aaa26046bcaa971d4a312da6c81949b4a7bb75208b90e97a59",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/storage_compaction_native_contracts.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-inputs/Plans/storage_compaction_native_contracts.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f.json",
+      "sha256": "d979220b712f1eb58c9bb83b039aacb71269912eac66f6869da464ce7ade6f0f",
+      "disposition": "REUSE_EXACT_CANONICAL_SCHEMA"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/current-goal-guard.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-seven-operational-custody-20260913/v2/current-goal-guard.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5.json",
+      "sha256": "8a4f2af3db93c882656a0777dc87a188611ada9e2b5874d069203dba0d85d9d5",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-canonical-integration-map-20260913/v1/native-worknode-current-activation.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79.json",
+      "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/activation-canonical-integration-map-20260913/v1/current-materialization-join.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d.json",
+      "sha256": "fdf7cd63359aeae8284121395e464cd8b6547204abe1d7aab45a858439fb525d",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/workflow-association-activation-join-20260913/v4/goal-association-join.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874.json",
+      "sha256": "777ff3bc17c153fa7310c749b624664002164e27e2b6fa1d894a7d9566eed874",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    },
+    {
+      "canonical_path": "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+      "original_path": "/home/sittingmongoose/PM-Experiments/workflow-association-activation-join-20260913/v4/workflow-birth-materialization-join.schema.json",
+      "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/whole-schema-sources/7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4.json",
+      "sha256": "7c13a5e166aca2d2545e39561f904d2ea1134d690f192d76443a8871c8588fa4",
+      "disposition": "NEW_EXACT_OWNER_SCHEMA_ADOPTION"
+    }
+  ],
+  "root_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/prepare_resources.py",
+      "sha256": "d7e6091247f401932c015f8644f1176a0a748c329065066459927c599b7ebc2b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/verify_resources.py",
+      "sha256": "aac987af7823fc7f59a253af2e4cebfaf296f5d133a57bddcf768a486332ecf6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/prepare_storage.py",
+      "sha256": "78b019e114a5c99acf4a7ea7043c56b370cf6d06b84d2f52bd0c090847c75f64"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/prepare_methods.py",
+      "sha256": "711b62a45b35a7550fd755e06bb1cc24510bebc8076ebd95233294043111f846"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/verify_assembly.py",
+      "sha256": "c0c225fbe5a3ad9b5c8adfb82348f72aa5b501b6f689bc780c209c6b9b38b5fd"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/apply_reviewed_draft.py",
+      "sha256": "00b1b7abb6fad78a04fb4b5560cb4b13b22ba4c30d9b7c16246cce90387a6da3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/build_report.py",
+      "sha256": "86016e0fa2ae3a23299448f2c65fe681206c1b8db3fddea059b892a26c264a9a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/resource-imports.json",
+      "sha256": "9161109f33fe9d43b592c89b2929d3783473be452a712b71b538fa0447def82a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/resource-checks.json",
+      "sha256": "ddf5a0e5a65df0a3c2d9f6fe709453a953cf4e28c306d0218ba1eed850f8b92f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/storage-checks.json",
+      "sha256": "4dc2d4bc9a9ac0bc495afa9569cb8aef961aff66aa701a1a058f33b99feabab5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/assembly-checks.json",
+      "sha256": "e03cc91e93f8e7d53caa4ec64fec575ecc3d21542ee2279da055385995ae3805"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/source-checks.json",
+      "sha256": "811ce83a1d4d4707451d7f64440442fd8a1e3a6e3a728a239383a31453043dea"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/source-paths.json",
+      "sha256": "573b63037d6ddca0c7ada0df5bf0a98bbfb84a92d03671e7bc81ea79fd2cf2a1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/baseline-reuse.json",
+      "sha256": "7700e103588ad58d98bf4049fcecadff476da22c7013595a5d39e8214c6caf95"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/baseline-run-gates.json",
+      "sha256": "4f1966e8a5987f207c56a0fe4a13c88ca74c622d0a79fb29cb15cf548bd23b74"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/baseline-run-gates.log",
+      "sha256": "f069761ce302e5493e4c746c58eafaecbb38ffe418029e766be4c05d43a51797"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/shard-generate.log",
+      "sha256": "e002249f5c85366b18f77c3a896f81d8d78995e724ad7b30209aa6f4ef549b86"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/index-generate.log",
+      "sha256": "c2a1afa22fab7025b19af96dbf53184ec88a33eaa61ab3ce6070de150d9e1c53"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/shard-check.log",
+      "sha256": "35f2e26be72907ec022a935d5c7cbb9c4ca22073cb3726bfc8a63519667e7024"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/index-validate.log",
+      "sha256": "2908ddbc800a0cfc887f8b83ec56e39c8ca1b869f9870da927767cced161f5b1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/derived-scope.json",
+      "sha256": "40dce8dd2d6dd8b488c13b9a08ad1943669932ec8fcb8a69b5c6a3f26177b271"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/index-preservation-checks.json",
+      "sha256": "2cdee417795e317da6c562fa21c966c0d1910d550b2fbce6a7b7c4ddedaddb40"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/gate-comparison.json",
+      "sha256": "f60e693a29e746d0096347bbd407d6be47f238eec2a9940da05de5f45cde9497"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/run-gates.json",
+      "sha256": "e8232949fbe0367ecab7186bdbf3b469a4c5a5ba4a71a6d267a472d38c30178f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/run-gates.log",
+      "sha256": "735f8f2779140b193bf5e33c50670d63fb8265ea2df3cedc6a8a74984e0401c6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08/activation-canonical-20260914/root/applied-review-location.json",
+      "sha256": "1ce56cbed2a7ad2fca22dd5b529c94ab5f3688fc53e3ad0a6129aefcd47a2c85"
+    }
+  ],
+  "gates": {
+    "status": "fail",
+    "check_count": 36,
+    "pass_count": 21,
+    "fail_count": 15,
+    "failing_checks": [
+      "json_syntax",
+      "lint_contractrefs",
+      "lint_path_refs",
+      "validate_audit_closure",
+      "validate_audit_status_index",
+      "validate_browser_event_admission",
+      "validate_evidence",
+      "validate_github_project_integration",
+      "validate_implementation_readiness",
+      "validate_plan_graph",
+      "validate_plan_migration",
+      "validate_pm7_gui_fixtures",
+      "validate_prd_planning_runtime_contracts",
+      "validate_testing_session_event_admission",
+      "verify_spec_lock"
+    ],
+    "new_failing_check_names": [],
+    "cleared_check_names": [],
+    "failure_counts": {
+      "check_project_artifact_requirements": {
+        "before": 0,
+        "after": 0
+      },
+      "check_shards": {
+        "before": 0,
+        "after": 0
+      },
+      "json_syntax": {
+        "before": 1,
+        "after": 1
+      },
+      "lint_banned_phrases": {
+        "before": 0,
+        "after": 0
+      },
+      "lint_contractrefs": {
+        "before": 1,
+        "after": 1
+      },
+      "lint_path_refs": {
+        "before": 10,
+        "after": 10
+      },
+      "validate_audit_closure": {
+        "before": 201,
+        "after": 201
+      },
+      "validate_audit_status_index": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_auto_decisions": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_browser_event_admission": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_case_l_non_event_materialization": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_evidence": {
+        "before": 1513,
+        "after": 1513
+      },
+      "validate_filesafe_security_policy": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_forge_backup_acceptance": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_github_project_integration": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_goal_runtime_event_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_gui_asset_policy": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_implementation_readiness": {
+        "before": 121,
+        "after": 121
+      },
+      "validate_new_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_plan_graph": {
+        "before": 1513,
+        "after": 1513
+      },
+      "validate_plan_migration": {
+        "before": 180,
+        "after": 180
+      },
+      "validate_plans_to_code_handoff_schema": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_pm7_gui_fixtures": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_prd_planning_runtime_contracts": {
+        "before": 1240,
+        "after": 1240
+      },
+      "validate_project_output_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_runtime_artifact_schemas": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_server_command_gap": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_testing_session_event_admission": {
+        "before": 1,
+        "after": 1
+      },
+      "validate_touch_closure": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_ui_command_response": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_usage_contract_drift": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_usage_gui_fixtures": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_web_capability_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_wiring_matrix": {
+        "before": 0,
+        "after": 0
+      },
+      "validate_working_notebook_contracts": {
+        "before": 0,
+        "after": 0
+      },
+      "verify_spec_lock": {
+        "before": 31,
+        "after": 31
+      }
+    },
+    "counts_are_reported_full_counts": true,
+    "diagnostic_samples_are_bounded": true
+  },
+  "index_preservation": {
+    "status": "PASS",
+    "indexes": [
+      {
+        "file": "Plans/.plan_index/plan_units.jsonl",
+        "old_count": 6616,
+        "new_count": 6624,
+        "new_records": 8,
+        "old_records_preserved_except_derived_source_document_hash": true,
+        "source_hash_changes": 1074
+      },
+      {
+        "file": "Plans/.plan_index/acceptance_units.jsonl",
+        "old_count": 25679,
+        "new_count": 25713,
+        "new_records": 34,
+        "all_old_records_exact": true
+      }
+    ],
+    "owner_prose_bytes_preserved": true,
+    "native_execution": "NOT_RUN"
+  },
+  "native_execution": "NOT_RUN",
+  "schema_instance_execution": "NOT_RUN",
+  "model_execution": "NOT_RUN",
+  "family_depth_clearance": false,
+  "workflow_started_or_cancelled_source_closure": false,
+  "global_D05_closure": false,
+  "step9_started": false,
+  "governance_seal": false,
+  "validator_edits": false,
+  "review_corrections": [
+    "Exact original publisher IDs replace prose in three producer arrays; original capture issuers and source owners are separate.",
+    "Compiler artifact/head exact original lower writers and all operational source-owner participants are explicit.",
+    "Association consumes genuine prior BindingControl reservation; direct Goal metadata external_authority_ref is null.",
+    "T2 includes the full global RunOperationResult and its original origin with all other native/Workflow members.",
+    "Current full Goal/Workflow reads use permitted immutable transition custody, without vanished prior mutable-body bytes.",
+    "Legacy physical-input contracts remain explicit compatibility-only; they cannot satisfy current seven-role reads."
+  ],
+  "qualifications": [
+    "The frozen compiler semantic validator still demands assignments for pre-assignment draft/ready values; no validator bypass/edit or runtime validation is claimed.",
+    "Later Workflow start/execution/cancellation/certification and all-backend safe-stop source integrations remain separately required.",
+    "Original native registration, capability enforcement, codec/transaction execution and coherent recovery/backup remain unexecuted."
+  ]
+}

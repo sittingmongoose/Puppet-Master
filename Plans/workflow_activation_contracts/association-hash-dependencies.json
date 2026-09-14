@@ -1,0 +1,316 @@
+{
+  "status": "SYMBOLIC_SOURCE_CONTRACT_NO_RUNTIME_VALUES",
+  "T1": [
+    {
+      "value": "actual_prior_sources",
+      "depends_on": [],
+      "meaning": "Whole authentic Goal B0/control/history/Stop, binding revision/origin/control/domain, native launch and accepted activation sources. Includes actual complete authentic T0 reserved BindingControl pending/current epoch and complete immutable candidate; W0 fixed by that admission."
+    },
+    {
+      "value": "goal_B1",
+      "depends_on": [
+        "actual_prior_sources"
+      ],
+      "meaning": "Complete original Goal metadata afterimage, including canonical currentness; actual reserved Workflow ID is an original input identity."
+    },
+    {
+      "value": "goal_metadata_intent",
+      "depends_on": [
+        "actual_prior_sources",
+        "goal_B1"
+      ],
+      "meaning": "Complete existing metadata intent, excluding its own intent hash under canonical recipe. Literal external_authority_ref is null for direct atomic Goal metadata; independently authenticated native authorization is genuine prior admission; no future binding-origin/receipt hash."
+    },
+    {
+      "value": "goal_control_after",
+      "depends_on": [
+        "actual_prior_sources",
+        "goal_B1",
+        "goal_metadata_intent"
+      ],
+      "meaning": "Full after-control under exact original pending/control rules; body_sha256 is semantic Goal body hash."
+    },
+    {
+      "value": "goal_body_receipt",
+      "depends_on": [
+        "actual_prior_sources",
+        "goal_B1",
+        "goal_metadata_intent"
+      ],
+      "meaning": "Complete original narrow receipt CANDIDATE, not a previously issued prerequisite."
+    },
+    {
+      "value": "workflow_W0",
+      "depends_on": [
+        "actual_prior_sources"
+      ],
+      "meaning": "Complete InitialGoalRunBody with original B0 physical selector and original Goal lineage; no BindingOrigin reference."
+    },
+    {
+      "value": "workflow_control_W0",
+      "depends_on": [
+        "workflow_W0",
+        "actual_prior_sources"
+      ],
+      "meaning": "Complete Workflow control with W0 semantic body hash."
+    },
+    {
+      "value": "reserved_outbox",
+      "depends_on": [
+        "actual_prior_sources",
+        "workflow_W0"
+      ],
+      "meaning": "Complete reserved outbox with event/first receipt absent and dispatch false."
+    },
+    {
+      "value": "workflow_W0_origin",
+      "depends_on": [
+        "actual_prior_sources",
+        "workflow_W0"
+      ],
+      "meaning": "Original A4 issuer origin; all source/permission/Stop/cancellation refs recursively exclude new BindingOrigin/after-binding-control."
+    },
+    {
+      "value": "workflow_control_W0_origin",
+      "depends_on": [
+        "actual_prior_sources",
+        "workflow_control_W0",
+        "workflow_W0",
+        "workflow_W0_origin"
+      ],
+      "meaning": "Original full Workflow control origin."
+    },
+    {
+      "value": "reserved_outbox_origin",
+      "depends_on": [
+        "actual_prior_sources",
+        "reserved_outbox",
+        "workflow_W0",
+        "workflow_W0_origin"
+      ],
+      "meaning": "Original full reserved outbox origin."
+    },
+    {
+      "value": "binding_revision_after",
+      "depends_on": [
+        "actual_prior_sources",
+        "workflow_W0"
+      ],
+      "meaning": "Full original revision with WorkflowAssociation.original_run_source equal to complete W0 physical selection."
+    },
+    {
+      "value": "binding_origin_after",
+      "depends_on": [
+        "actual_prior_sources",
+        "goal_B1",
+        "goal_control_after",
+        "goal_body_receipt",
+        "workflow_W0",
+        "workflow_control_W0",
+        "reserved_outbox",
+        "workflow_W0_origin",
+        "workflow_control_W0_origin",
+        "reserved_outbox_origin",
+        "binding_revision_after"
+      ],
+      "meaning": "Full origin with actual prior hashes and original_source_members; all members already assembled independently of this origin."
+    },
+    {
+      "value": "binding_control_after",
+      "depends_on": [
+        "actual_prior_sources",
+        "binding_revision_after",
+        "binding_origin_after"
+      ],
+      "meaning": "Full current binding control selecting exact new revision/origin."
+    },
+    {
+      "value": "T1_atomic_publication",
+      "depends_on": [
+        "goal_B1",
+        "goal_control_after",
+        "goal_body_receipt",
+        "workflow_W0",
+        "workflow_control_W0",
+        "reserved_outbox",
+        "workflow_W0_origin",
+        "workflow_control_W0_origin",
+        "reserved_outbox_origin",
+        "binding_revision_after",
+        "binding_origin_after",
+        "binding_control_after"
+      ],
+      "meaning": "Original Goal/Workflow/binding/Storage final pure predicate commits complete union; no returned output used as earlier admission proof."
+    }
+  ],
+  "T2": [
+    {
+      "value": "actual_T2_sources",
+      "depends_on": [],
+      "meaning": "Actual current B1/binding/Stop/domain and current W0/control/outbox, all seven complete durable roles and original accepted source graph/requirements; no old B0 body."
+    },
+    {
+      "value": "born_sources_and_origins",
+      "depends_on": [
+        "actual_T2_sources"
+      ],
+      "meaning": "All complete original immutable born source members and origins."
+    },
+    {
+      "value": "materialization_receipts_and_origins",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins"
+      ],
+      "meaning": "Full A4 original materialization receipts/origins."
+    },
+    {
+      "value": "installed_graph_and_origin",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins",
+        "materialization_receipts_and_origins"
+      ],
+      "meaning": "Full original accepted graph translation and origin."
+    },
+    {
+      "value": "required_set_and_origin",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins",
+        "materialization_receipts_and_origins",
+        "installed_graph_and_origin"
+      ],
+      "meaning": "Full original required set and origin, actual empty child source scope."
+    },
+    {
+      "value": "native_rows_and_results",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins",
+        "installed_graph_and_origin",
+        "required_set_and_origin"
+      ],
+      "meaning": "Whole WorkNode wrappers first, then controls selecting complete WorkNode outer hashes, then native results selecting those full wrappers; global native run control includes complete installed_workgraph binding. Every original field is preserved. The complete global StorageRunOperationResult follows the whole global run-control wrapper and selects its exact outer digest; its operation is materialize."
+    },
+    {
+      "value": "native_origins",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins",
+        "native_rows_and_results"
+      ],
+      "meaning": "All genuine native publication origins, no later Workflow body/control origin dependency. Includes the full original global RunOperationResult publication origin."
+    },
+    {
+      "value": "transition_and_origin",
+      "depends_on": [
+        "actual_T2_sources",
+        "born_sources_and_origins",
+        "native_rows_and_results",
+        "native_origins",
+        "materialization_receipts_and_origins",
+        "installed_graph_and_origin",
+        "required_set_and_origin"
+      ],
+      "meaning": "Complete original activation transition and origin; no later W1/control/origin hash."
+    },
+    {
+      "value": "workflow_W1",
+      "depends_on": [
+        "actual_T2_sources",
+        "installed_graph_and_origin",
+        "required_set_and_origin"
+      ],
+      "meaning": "Complete after-Workflow body; shared Goal B1 and historical launch selector unchanged."
+    },
+    {
+      "value": "workflow_W1_origin",
+      "depends_on": [
+        "actual_T2_sources",
+        "workflow_W1",
+        "transition_and_origin",
+        "installed_graph_and_origin",
+        "required_set_and_origin"
+      ],
+      "meaning": "Full after-body origin retains actual prior body/origin and exact transition provenance."
+    },
+    {
+      "value": "workflow_control_W1",
+      "depends_on": [
+        "actual_T2_sources",
+        "workflow_W1"
+      ],
+      "meaning": "Full Workflow control with current complete semantic body hash."
+    },
+    {
+      "value": "workflow_control_W1_origin",
+      "depends_on": [
+        "actual_T2_sources",
+        "workflow_control_W1",
+        "workflow_W1",
+        "workflow_W1_origin",
+        "transition_and_origin"
+      ],
+      "meaning": "Full after-control origin retains previous control/origin and new body/origin plus transition."
+    },
+    {
+      "value": "T2_atomic_publication",
+      "depends_on": [
+        "born_sources_and_origins",
+        "native_rows_and_results",
+        "native_origins",
+        "materialization_receipts_and_origins",
+        "installed_graph_and_origin",
+        "required_set_and_origin",
+        "transition_and_origin",
+        "workflow_W1",
+        "workflow_W1_origin",
+        "workflow_control_W1",
+        "workflow_control_W1_origin"
+      ],
+      "meaning": "Original Workflow/Executor/Storage union; shared Goal/binding are guarded reads, no new association/body mutation."
+    }
+  ],
+  "native_requirement": "Actual nested hash/source/authority dependencies must match this acyclic order. An extra original member with a back-edge refuses; never omit it or substitute a future hash.",
+  "not_claimed": [
+    "Native execution",
+    "Issued receipt instance",
+    "Event append",
+    "Full historical body custody",
+    "Generic post-start Workflow transition closure"
+  ],
+  "T0": [
+    {
+      "value": "actual_pre_reservation_sources",
+      "depends_on": []
+    },
+    {
+      "value": "admitted_fixed_workflow_W0",
+      "depends_on": [
+        "actual_pre_reservation_sources"
+      ]
+    },
+    {
+      "value": "complete_binding_revision_candidate",
+      "depends_on": [
+        "actual_pre_reservation_sources",
+        "admitted_fixed_workflow_W0"
+      ]
+    },
+    {
+      "value": "complete_reserved_binding_control",
+      "depends_on": [
+        "actual_pre_reservation_sources",
+        "complete_binding_revision_candidate"
+      ]
+    },
+    {
+      "value": "T0_original_reservation_publication",
+      "depends_on": [
+        "actual_pre_reservation_sources",
+        "complete_reserved_binding_control"
+      ]
+    }
+  ]
+}

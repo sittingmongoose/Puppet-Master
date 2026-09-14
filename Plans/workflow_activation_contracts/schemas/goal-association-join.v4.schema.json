@@ -1,0 +1,477 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json",
+  "description": "Transient complete original lower-owner arguments and prepared candidates. No new persistent family or native capability; all current shared Goal/control fields stay exact. Prepared receipt is an output candidate, never a previously issued admission prerequisite.",
+  "$defs": {
+    "ActualGoalBefore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "control",
+        "accepted_objective",
+        "accepted_origin",
+        "stop",
+        "binding_revision",
+        "binding_origin",
+        "binding_control",
+        "writer_domain",
+        "writer_domain_head"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_body"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "accepted_objective": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision"
+        },
+        "accepted_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin"
+        },
+        "stop": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        }
+      }
+    },
+    "OriginalMetadataIntent": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/pending"
+        },
+        {
+          "properties": {
+            "operation_kind": {
+              "const": "metadata_update"
+            },
+            "accepted_revision": {
+              "type": "null"
+            },
+            "origin": {
+              "type": "null"
+            },
+            "original_change_authority_ref": {
+              "type": "null"
+            },
+            "external_authority_ref": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "PreparedGoalMetadataOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "after_body",
+        "after_control",
+        "body_mutation_receipt"
+      ],
+      "properties": {
+        "after_body": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_body"
+        },
+        "after_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "body_mutation_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt"
+        }
+      }
+    },
+    "GoalMetadataLowerArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "actual_original_metadata_intent",
+        "expected_workflow_run_ref",
+        "prepared_output"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/FreshAssociationBefore"
+        },
+        "actual_original_metadata_intent": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/OriginalMetadataIntent"
+        },
+        "expected_workflow_run_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prepared_output": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/PreparedGoalMetadataOutput"
+        }
+      }
+    },
+    "PreparedBindingOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision",
+        "origin",
+        "control"
+      ],
+      "properties": {
+        "revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        }
+      }
+    },
+    "BindingOriginalMemberRoles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "launch_goal_before",
+        "goal_after",
+        "goal_control_after",
+        "goal_metadata_receipt",
+        "workflow_birth_body",
+        "workflow_birth_control",
+        "workflow_birth_body_origin",
+        "workflow_birth_control_origin",
+        "reserved_start_outbox",
+        "reserved_start_outbox_origin",
+        "original_native_compile_source",
+        "original_activation_decision",
+        "original_certified_graph",
+        "original_goal_objective_revision",
+        "original_goal_objective_origin"
+      ],
+      "properties": {
+        "launch_goal_before": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "goal_after": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "goal_control_after": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "goal_metadata_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "workflow_birth_body": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "workflow_birth_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "workflow_birth_body_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "workflow_birth_control_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "reserved_start_outbox": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "reserved_start_outbox_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_native_compile_source": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_activation_decision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_certified_graph": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_goal_objective_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        },
+        "original_goal_objective_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/PhysicalSelection"
+        }
+      }
+    },
+    "BindingLowerArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_goal_metadata",
+        "prepared_binding",
+        "original_member_roles"
+      ],
+      "properties": {
+        "original_goal_metadata": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/GoalMetadataLowerArgument"
+        },
+        "prepared_binding": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/PreparedBindingOutput"
+        },
+        "original_member_roles": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingOriginalMemberRoles"
+        }
+      }
+    },
+    "CurrentAssociatedGoalRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "control",
+        "accepted_objective",
+        "accepted_origin",
+        "stop",
+        "binding_revision",
+        "binding_origin",
+        "binding_control",
+        "writer_domain",
+        "writer_domain_head",
+        "original_association_body_receipt",
+        "original_member_roles"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_body"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "accepted_objective": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_revision"
+        },
+        "accepted_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_origin"
+        },
+        "stop": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        },
+        "original_association_body_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt"
+        },
+        "original_member_roles": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingOriginalMemberRoles"
+        }
+      }
+    },
+    "PreReservationBefore": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/ActualGoalBefore"
+        },
+        {
+          "properties": {
+            "body": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "active_run_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            },
+            "control": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "pending": {
+                      "type": "null"
+                    },
+                    "cancellation_pending": {
+                      "type": "null"
+                    },
+                    "cancellation_receipt_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            },
+            "binding_revision": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "active_run_ref": {
+                      "type": "null"
+                    },
+                    "associations": {
+                      "type": "array",
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            },
+            "binding_control": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "pending": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "FreshAssociationBefore": {
+      "allOf": [
+        {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/ActualGoalBefore"
+        },
+        {
+          "properties": {
+            "body": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "active_run_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            },
+            "control": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "pending": {
+                      "type": "null"
+                    },
+                    "cancellation_pending": {
+                      "type": "null"
+                    },
+                    "cancellation_receipt_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            },
+            "binding_revision": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "active_run_ref": {
+                      "type": "null"
+                    },
+                    "associations": {
+                      "type": "array",
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            },
+            "binding_control": {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "pending": {
+                      "allOf": [
+                        {
+                          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingPending"
+                        },
+                        {
+                          "properties": {
+                            "operation": {
+                              "const": "workflow_attach"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BindingReservationLowerArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "prepared_revision",
+        "prepared_reserved_control"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/PreReservationBefore"
+        },
+        "prepared_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "prepared_reserved_control": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "pending": {
+                      "allOf": [
+                        {
+                          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/BindingPending"
+                        },
+                        {
+                          "properties": {
+                            "operation": {
+                              "const": "workflow_attach"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

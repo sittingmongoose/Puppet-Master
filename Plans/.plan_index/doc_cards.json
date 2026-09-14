@@ -1750,10 +1750,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 20,
+        "False": 21,
         "True": 32
       },
-      "heading_count": 115,
+      "heading_count": 118,
       "implementation_surfaces": [
         "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
@@ -1837,9 +1837,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 4705,
+      "line_count": 4827,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 52,
+      "plan_unit_count": 53,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -1892,7 +1892,8 @@
         "ATS-049",
         "ATS-050",
         "ATS-051",
-        "ATS-052"
+        "ATS-052",
+        "ATS-053"
       ],
       "reasoning_tiers": [
         "high",
@@ -1945,19 +1946,20 @@
         "unverifiable_completion",
         "vision_bridge_validation_gap",
         "weak_test_oracle",
-        "web_gui_dev_test_authority_leak"
+        "web_gui_dev_test_authority_leak",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "02174d365649f9fa5305d01a03314d50e317b093527671deaa3c78cf453bc8ab",
+      "sha256": "28490147bb124e5570be20c9bbd239b2ff5cea8137461652074b9e33e796257b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 52
+        "accepted": 53
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
         "acceptance_contract": 3,
         "constraint": 1,
         "requirement": 22,
-        "schema_contract": 2,
+        "schema_contract": 3,
         "validation_contract": 1,
         "validation_criterion": 23
       },
@@ -1998,6 +2000,15 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/source_control_contract_fixtures.json",
         "Plans/source_control_contracts.schema.json",
+        "Plans/workflow_activation_contracts/activation-field-map.json",
+        "Plans/workflow_activation_contracts/association-hash-dependencies.json",
+        "Plans/workflow_activation_contracts/compiler-field-map.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/native-birth-field-map.json",
+        "Plans/workflow_activation_contracts/physical-families.json",
+        "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "Plans/workflow_activation_contracts/source-control-field-map.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Plans/working_notebook_contracts.schema.json",
         "Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.",
@@ -2288,10 +2299,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 4,
+        "False": 5,
         "True": 19
       },
-      "heading_count": 47,
+      "heading_count": 51,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -2325,9 +2336,9 @@
         "future restore coordinator",
         "future security adapter registry"
       ],
-      "line_count": 1303,
+      "line_count": 1404,
       "path": "Plans/Backup_Restore_System.md",
-      "plan_unit_count": 23,
+      "plan_unit_count": 24,
       "plan_unit_ids": [
         "BRS-001",
         "BRS-002",
@@ -2351,7 +2362,8 @@
         "BRS-020",
         "BRS-023",
         "BRS-021",
-        "BRS-022"
+        "BRS-022",
+        "BRS-024"
       ],
       "reasoning_tiers": [
         "high",
@@ -2379,12 +2391,13 @@
         "source_history_identity_safety_or_false_recovery",
         "static_backup_contract_promoted_to_recovery_readiness",
         "unsafe_migration_false_recovery_or_consumer_overclaim",
-        "unsafe_restore_or_false_operational_completion"
+        "unsafe_restore_or_false_operational_completion",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "9a70b79984c5c06e0db27969c51a7f89525800d8bbc1458f0bbe33910b3120ef",
+      "sha256": "6652960da541e9a40b54801f4fb6e7e0eef915453490c91529727c32bd230ccf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 23
+        "accepted": 24
       },
       "title": "Backup And Restore System",
       "unit_type_counts": {
@@ -2396,17 +2409,25 @@
         "owner_boundary": 1,
         "recovery_requirement": 4,
         "requirement": 5,
+        "schema_contract": 1,
         "security_requirement": 2,
         "validation_requirement": 1
       },
       "validation_surfaces": [
         "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md#GRS-077",
+        "Plans/Plan_To_Node_Compilation.md#PNC-025",
         "Plans/backup_restore_system_contract_fixtures.json",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_architecture_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_destination_recovery_admission_record",
         "Plans/backup_restore_system_contracts.schema.json#/$defs/restore_operational_safety_record",
         "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+        "Plans/storage_value_registry.json",
+        "Plans/workflow_activation_contracts/association-hash-dependencies.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/physical-families.json",
+        "Plans/workflow_activation_contracts/retention-field-classification.json",
         "future DST catch-up hold lease prune corruption and isolated-drill tests",
         "future backup and restore drill receipts",
         "future crash/barrier/GC/source-host/move/staging-capacity/runtime tests",
@@ -4009,10 +4030,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 273,
+        "False": 274,
         "True": 73
       },
-      "heading_count": 534,
+      "heading_count": 539,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4105,9 +4126,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23009,
+      "line_count": 23143,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 346,
+      "plan_unit_count": 347,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4454,7 +4475,8 @@
         "CV-345",
         "CV-346",
         "CV-347",
-        "CV-348"
+        "CV-348",
+        "CV-349"
       ],
       "reasoning_tiers": [
         "high",
@@ -4802,13 +4824,14 @@
         "webaction_payload_schema_fork",
         "wizard_blocked_route_ownership_drift",
         "wizard_unblocked_payload_loss",
+        "workflow_activation_original_source_or_lifetime_drift",
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "f2f241eaab17b9c6afa65d9cc460034a13323832e13de141effbdecb2e6930e9",
+      "sha256": "f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 346
+        "accepted": 347
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -4819,7 +4842,7 @@
         "integration_contract": 3,
         "owner_boundary": 1,
         "requirement": 224,
-        "schema_contract": 25,
+        "schema_contract": 26,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -4880,6 +4903,13 @@
         "Plans/shared_integration_runtime_expansion_fixtures.json",
         "Plans/storage_value_registry.json",
         "Plans/ui_command_response_fixtures.json",
+        "Plans/workflow_activation_contracts/current-materialization-reference-map.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "Plans/workflow_activation_contracts/schemas/current-reader-routes.v1.schema.json",
+        "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "Plans/workflow_activation_schema_resources.json",
         "Remote/tunnel WS requires configured auth",
         "Restarted workspace probes every configured surface before run",
         "Unavailable plugin is shown before model attempts tool use",
@@ -5817,10 +5847,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 99,
+        "False": 100,
         "True": 17
       },
-      "heading_count": 211,
+      "heading_count": 216,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -5854,9 +5884,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 7361,
+      "line_count": 7515,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 116,
+      "plan_unit_count": 117,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -5973,7 +6003,8 @@
         "EP-113",
         "EP-114",
         "EP-115",
-        "EP-116"
+        "EP-116",
+        "EP-117"
       ],
       "reasoning_tiers": [
         "high",
@@ -5999,17 +6030,19 @@
         "scheduler_boundary_drift",
         "unsafe_execution_context",
         "unsafe_runtime_activation",
-        "unverified_execution_completion"
+        "unverified_execution_completion",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "10452eeea029947d3836314274d2cde7bbeccaa79c69d4c7a346a385bcb319f1",
+      "sha256": "0e776e116a335bbad98cf4a07f02282001ca3f398e498cec2c3eb28e7797a6b9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 116
+        "accepted": 117
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 114
+        "requirement": 114,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Cumulative snapshots are persisted once",
@@ -6025,10 +6058,17 @@
         "No partial stream fragment is replayed as a full assistant turn.",
         "OpenCode remains HTTP/SSE unless upstream contract changes.",
         "Partial-stream failure routing fixtures",
+        "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/event_index_consumer_adoption.schema.json",
         "Plans/event_index_consumer_adoption_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
+        "Plans/workflow_activation_contracts/activation-field-map.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/native-birth-field-map.json",
+        "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+        "Plans/workflow_activation_contracts/source-control-field-map.json",
         "Provider native item IDs are kept only where allowed by replay policy.",
         "Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support",
         "UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.",
@@ -8131,10 +8171,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 42,
+        "False": 43,
         "True": 32
       },
-      "heading_count": 186,
+      "heading_count": 198,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
@@ -8195,9 +8235,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 7100,
+      "line_count": 7312,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 74,
+      "plan_unit_count": 75,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -8272,7 +8312,8 @@
         "GRS-073",
         "GRS-074",
         "GRS-075",
-        "GRS-076"
+        "GRS-076",
+        "GRS-077"
       ],
       "reasoning_tiers": [
         "high",
@@ -8345,12 +8386,13 @@
         "unnecessary_user_escalation",
         "unsupported_completion_claim",
         "weak_worker_false_completion",
+        "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "0f2a22408493d57bbc77c3ed6873a5b2d4de4adede558a9942d99adc5287d12d",
+      "sha256": "26e495c464b61ce9292702720e6d333f4f6eff6e5b6f604917360eddd35112d2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 65,
+        "accepted": 66,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -8360,7 +8402,7 @@
         "owner_boundary": 2,
         "requirement": 47,
         "risk": 1,
-        "schema_contract": 6,
+        "schema_contract": 7,
         "validation_criterion": 2
       },
       "validation_surfaces": [
@@ -8425,6 +8467,11 @@
         "Plans/goal_updated_consumer_contracts.schema.json",
         "Plans/goal_updated_consumer_resources.json",
         "Plans/storage_value_registry.json",
+        "Plans/workflow_activation_contracts/association-hash-dependencies.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json",
+        "Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json",
+        "Plans/workflow_activation_schema_resources.json",
         "Spend/quota caps terminate even when model output appears syntactically successful.",
         "Stop active MCP call leaves partial/cancelled result",
         "Stop provider stream does not replay unfinished assistant/tool turn",
@@ -9565,10 +9612,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 89,
+        "False": 90,
         "True": 49
       },
-      "heading_count": 234,
+      "heading_count": 235,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
@@ -9599,9 +9646,9 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9631,
+      "line_count": 9714,
       "path": "Plans/Models_System.md",
-      "plan_unit_count": 138,
+      "plan_unit_count": 139,
       "plan_unit_ids": [
         "MS-113",
         "MS-114",
@@ -9740,7 +9787,8 @@
         "MS-135",
         "MS-136",
         "MS-137",
-        "MS-138"
+        "MS-138",
+        "MS-139"
       ],
       "reasoning_tiers": [
         "high",
@@ -9876,12 +9924,13 @@
         "vision_model_route_drift",
         "web_capability_mirror_site_reader_routing",
         "web_operation_input_surface_mirror",
-        "webresearch_tiering_automation_session_boundary"
+        "webresearch_tiering_automation_session_boundary",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "980c157a97b3a45fd6c59d80dae731f9edffaafa63958d6ddf3e6b51e4c6ec39",
+      "sha256": "018c37767997cac4e20f76cebc19a39c42985f28d5a738fc12e397b0ce0abf66",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 138
+        "accepted": 139
       },
       "title": "Models System (Canonical SSOT)",
       "unit_type_counts": {
@@ -9914,7 +9963,7 @@
         "runtime_contract": 12,
         "runtime_disclosure": 2,
         "runtime_policy": 5,
-        "schema_contract": 4,
+        "schema_contract": 5,
         "schema_mirror": 1,
         "selection_contract": 1,
         "selection_policy": 2,
@@ -9945,6 +9994,11 @@
         "Model limit and cached-token accounting show measured/provider_reported/estimated/unknown.",
         "Model-switch tests from thinking to non-thinking models",
         "Multi-turn tool-call replay tests for DeepSeek/Kimi/MiMo/Claude-compatible routes",
+        "Plans/requested_effective_runtime.schema.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json",
+        "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json",
+        "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
         "Provider denied/configured fixtures",
         "Provider error fixtures for OpenAI-compatible, Kimi, OpenRouter, Copilot",
         "Provider-native replay rules are keyed by epoch.",
@@ -12750,10 +12804,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 23,
+        "False": 24,
         "True": 1
       },
-      "heading_count": 36,
+      "heading_count": 41,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.implementation_readiness/buildability_gate_report.json",
@@ -12792,9 +12846,9 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1563,
+      "line_count": 1674,
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "plan_unit_count": 24,
+      "plan_unit_count": 25,
       "plan_unit_ids": [
         "PNC-001",
         "PNC-002",
@@ -12819,7 +12873,8 @@
         "PNC-018",
         "PNC-019",
         "PNC-020",
-        "PNC-024"
+        "PNC-024",
+        "PNC-025"
       ],
       "reasoning_tiers": [
         "high",
@@ -12843,18 +12898,19 @@
         "routing_mismatch",
         "scheduling_correctness",
         "stale_or_forbidden_behavior",
-        "static_fixture_false_certification"
+        "static_fixture_false_certification",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "06a7df70048390a6a790e364ff8d0544097d7985312401675437137a34b6652d",
+      "sha256": "f31d88c4b35996d247054ac9faffae91c07489df4d1bed10e6555f2824fcdb12",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24
+        "accepted": 25
       },
       "title": "Plan To Node Compilation",
       "unit_type_counts": {
         "constraint": 5,
         "requirement": 17,
-        "schema_contract": 2
+        "schema_contract": 3
       },
       "validation_surfaces": [
         "Future compiler boundary tests.",
@@ -12867,7 +12923,11 @@
         "Plans/.plan_index/dependencies.json",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/.plan_index/plan_units.jsonl",
+        "Plans/Backup_Restore_System.md#BRS-024",
         "Plans/plans_to_code_handoff.schema.json",
+        "Plans/workflow_activation_contracts/compiler-field-map.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
@@ -16748,10 +16808,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 199,
+        "False": 200,
         "True": 102
       },
-      "heading_count": 706,
+      "heading_count": 710,
       "implementation_surfaces": [
         "Plans/Backup_Restore_System.md",
         "Plans/Commands_System.md",
@@ -16829,9 +16889,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 25168,
+      "line_count": 25333,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 301,
+      "plan_unit_count": 302,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -17133,7 +17193,8 @@
         "SP-304",
         "SP-305",
         "SP-306",
-        "SP-307"
+        "SP-307",
+        "SP-308"
       ],
       "reasoning_tiers": [
         "high",
@@ -17223,12 +17284,13 @@
         "unregistered_redaction_transform_or_protected_auth_persistence",
         "unsafe_storage_migration_or_false_recovery",
         "usage_projection_storage_alias_drift",
-        "usage_view_state_becomes_second_policy_or_preview_store"
+        "usage_view_state_becomes_second_policy_or_preview_store",
+        "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "fe3cab3c5136b0340d4463251e00f93405eb2a3649e46ca08be21f04f0ece2b6",
+      "sha256": "127c75e80ee14608dc2ca9ea159fb8e36e3d10bf9239380b406de4de8eed23f4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 298,
+        "accepted": 299,
         "retired": 3
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
@@ -17238,7 +17300,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 252,
-        "schema_contract": 15,
+        "schema_contract": 16,
         "security_contract": 1,
         "storage_contract": 21,
         "storage_security_contract": 1
@@ -17274,7 +17336,9 @@
         "Notification settings and sound asset storage fixtures",
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/Automated_Testing_System.md#storage-boot-integrity-and-recovery-owner-oracles",
+        "Plans/Backup_Restore_System.md#BRS-024",
         "Plans/Decision_Log.md#DL-049",
+        "Plans/Goal_Runtime_System.md#GRS-077",
         "Plans/assistant_plan_cancel_contracts/methods.json",
         "Plans/assistant_plan_cancel_contracts/physical-families.json",
         "Plans/assistant_plan_cancel_contracts/publication-dependencies.json",
@@ -17383,6 +17447,9 @@
         "Plans/storage_retention_hold_version_routes.json",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
+        "Plans/workflow_activation_contracts/methods.json",
+        "Plans/workflow_activation_contracts/physical-families.json",
+        "Plans/workflow_activation_contracts/retention-field-classification.json",
         "Plans/working_notebook_contract_fixtures.json",
         "Quota exceeded degrades with warning and exact subsystem, not crash.",
         "Redacted diagnostics export fixtures",
@@ -19344,7 +19411,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-09-13T22:21:09Z",
+  "generated_at_utc": "2026-09-13T23:56:39Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -19352,13 +19419,13 @@
     "docs_with_plan_units": 95,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3447,
+      "False": 3455,
       "True": 3169
     },
-    "plan_unit_count": 6616,
+    "plan_unit_count": 6624,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6425,
+      "accepted": 6433,
       "retired": 182,
       "superseded": 9
     },
@@ -19430,7 +19497,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 88,
+      "schema_contract": 96,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 16,

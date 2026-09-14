@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json",
+  "description": "New explicit current source argument for original native materialization. Whole A4 source values and complete native candidates are preserved; durable original reads supplement capture provenance without fabricating a live stage or original capability. Current shared controls are independently authenticated in another realm.",
+  "$defs": {
+    "CompilerDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadAvailable"
+        }
+      }
+    },
+    "CertificationDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadAvailable"
+        }
+      }
+    },
+    "AggregateDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadAvailable"
+        }
+      }
+    },
+    "TestDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadAvailable"
+        }
+      }
+    },
+    "ModelsDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadAvailable"
+        }
+      }
+    },
+    "RequestSetDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadAvailable"
+        }
+      }
+    },
+    "PreflightDurableOriginalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding",
+        "original_read"
+      ],
+      "properties": {
+        "binding": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightDurableInputBinding"
+        },
+        "original_read": {
+          "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadAvailable"
+        }
+      }
+    },
+    "SevenDurableOriginalInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_compile",
+        "compile_certification",
+        "aggregate_intake",
+        "test_capability",
+        "model_resolution",
+        "worknode_request_set",
+        "source_control_preflight"
+      ],
+      "properties": {
+        "native_compile": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CompilerDurableOriginalInput"
+        },
+        "compile_certification": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CertificationDurableOriginalInput"
+        },
+        "aggregate_intake": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/AggregateDurableOriginalInput"
+        },
+        "test_capability": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/TestDurableOriginalInput"
+          },
+          "minItems": 0,
+          "description": "Complete original role collection matching every corresponding original provisioning metadata member exactly. Empty only when the authenticated original owner source has no such member and original admission permits that actual case; absence/missing source never becomes empty."
+        },
+        "model_resolution": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/ModelsDurableOriginalInput"
+          },
+          "minItems": 0,
+          "description": "Complete original role collection matching every corresponding original provisioning metadata member exactly. Empty only when the authenticated original owner source has no such member and original admission permits that actual case; absence/missing source never becomes empty."
+        },
+        "worknode_request_set": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/RequestSetDurableOriginalInput"
+        },
+        "source_control_preflight": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/PreflightDurableOriginalInput"
+          },
+          "minItems": 0,
+          "description": "Complete original role collection matching every corresponding original provisioning metadata member exactly. Empty only when the authenticated original owner source has no such member and original admission permits that actual case; absence/missing source never becomes empty."
+        }
+      }
+    },
+    "NativeCompileSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeCompileSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "CertifiedGraphSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CertifiedGraphSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "NativeIntakeSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeIntakeSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "ProvisioningReceiptOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ProvisioningReceiptPhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "ActivationDecisionSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "CompletionRequirementSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CompletionRequirementSourcePhysical"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CurrentCompletionRequirementSource"
+                }
+              }
+            }
+          ]
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "NativeRequestSourceOriginalValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "OriginalActivationSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_compile",
+        "certified_graph",
+        "native_intake",
+        "provisioning",
+        "activation_decision",
+        "completion_requirements",
+        "source_request"
+      ],
+      "properties": {
+        "native_compile": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/NativeCompileSourceOriginalValue"
+        },
+        "certified_graph": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CertifiedGraphSourceOriginalValue"
+        },
+        "native_intake": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/NativeIntakeSourceOriginalValue"
+        },
+        "provisioning": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/ProvisioningReceiptOriginalValue"
+        },
+        "activation_decision": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/ActivationDecisionSourceOriginalValue"
+        },
+        "completion_requirements": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CompletionRequirementSourceOriginalValue"
+        },
+        "source_request": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/NativeRequestSourceOriginalValue"
+        }
+      }
+    },
+    "CurrentMaterializeArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_candidates",
+        "original_activation_sources",
+        "seven_durable_original_inputs"
+      ],
+      "properties": {
+        "native_candidates": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/MaterializeCurrentCandidates"
+            },
+            {
+              "properties": {
+                "inputs": {
+                  "properties": {
+                    "original_required_set": {
+                      "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CurrentRequiredSet"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "original_activation_sources": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/OriginalActivationSources"
+        },
+        "seven_durable_original_inputs": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/SevenDurableOriginalInputs"
+        }
+      }
+    }
+  }
+}

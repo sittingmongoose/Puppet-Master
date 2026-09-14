@@ -1,0 +1,217 @@
+{
+  "old_source": {
+    "path": "Plans/workflow_activation_contracts/schemas/native-worknode-source.v1.schema.json",
+    "sha256": "92acbc346f2d066801b3c06f3975d06779c8bc637a02d5ef944466918f89bae1",
+    "schema_id": "pm.executor.native_worknode_custody.proposed.v1"
+  },
+  "new_source": {
+    "path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+    "sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+    "schema_id": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json"
+  },
+  "complete_definition_count": 85,
+  "reverse_exact_delta_equals_entire_old_schema": true,
+  "enumerated_changes": [
+    {
+      "path": "/$id",
+      "old": "pm.executor.native_worknode_custody.proposed.v1",
+      "new": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+      "reason": "Explicit new current materialization resource; old complete resource remains exact."
+    },
+    {
+      "path": "/$defs/SourceSelector/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/SourceSelector",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/OriginalSourceBinding/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/RunIdentity/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/RunIdentity",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/WorkNodeRecord/properties/readiness_predicates/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/ReadinessSnapshot",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ReadinessSnapshot",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/WorkNodeRecord/properties/model/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/ModelResolutionMetadata",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ModelResolutionMetadata",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/WorkNodeRecord/properties/currentness/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/WorkNodeCurrentness",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeCurrentness",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/OriginalVerifierResult/$ref",
+      "old": "inputs/Plans/project_plan_node.schema.json#/properties/verifier_result",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json#/properties/verifier_result",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalVerifierInput/properties/complete_evidence/$ref",
+      "old": "inputs/Plans/evidence.schema.json",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/receipt/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/dispatch/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/changes/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/tests/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/auditor/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/source_control/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/finalization/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/validators/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/repairs/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/OriginalCompletionInput/properties/promotions/items/$ref",
+      "old": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_born_worknode/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/BornWorkNodeRecord",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecord",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_materialization_receipt/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/WorkNodeMaterializationReceipt",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceipt",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_source_request/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/NativeRequestSource",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSource",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_installed_graph/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/InstalledWorkGraph",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraph",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_required_set/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/RequiredSet",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSet",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_goal_run_body/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/GoalRunBody",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/MaterializeCurrentInputs/properties/original_goal_run_control/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/GoalRunControl",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/GoalControlWitness/properties/body/$ref",
+      "old": "cancellation/inputs/Plans/goal_body_custody.schema.json#/$defs/body",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json#/$defs/body",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/GoalControlWitness/properties/control/$ref",
+      "old": "cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/GoalControlWitness/properties/stop/$ref",
+      "old": "cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/StopControl",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/StopControl",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    },
+    {
+      "path": "/$defs/GoalControlWitness/properties/goal_run_body/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/GoalRunBody",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/GoalControlWitness/properties/goal_run_control/$ref",
+      "old": "activation/activation-source.schema.json#/$defs/GoalRunControl",
+      "new": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl",
+      "reason": "Select exact unchanged full A4 source resource and transitive capture typing."
+    },
+    {
+      "path": "/$defs/NativeCurrentSnapshot/properties/execution_unit/anyOf/0/$ref",
+      "old": "inputs/Plans/execution_unit_context.schema.json",
+      "new": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json",
+      "reason": "Preserve exact original non-activation resource target after new enclosing ID; lexical relocation only."
+    }
+  ],
+  "no_old_schema_overwrite": true,
+  "changed_physical_family_id_or_version": false,
+  "status": "SOURCE_PROPOSAL_NOT_INSTALLED"
+}

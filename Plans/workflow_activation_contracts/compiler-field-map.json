@@ -1,0 +1,190 @@
+{
+  "owner": "current-inputs/Plans/Plan_To_Node_Compilation.md",
+  "owner_planunit": "PNC-015",
+  "source_pin": {
+    "path": "current-inputs/Plans/Plan_To_Node_Compilation.md",
+    "canonical_path": "Plans/Plan_To_Node_Compilation.md",
+    "commit": "11812c094995b1af9ae46fac31e6421741843187",
+    "sha256": "06a7df70048390a6a790e364ff8d0544097d7985312401675437137a34b6652d",
+    "bytes": 112003
+  },
+  "checkpoint_schema": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerCheckpoint",
+  "requirements": [
+    {
+      "requirement": "stage",
+      "physical_paths": [
+        "/record/value/run/current_stage",
+        "/record/value/stage_cards"
+      ]
+    },
+    {
+      "requirement": "cursor",
+      "physical_paths": [
+        "/record/value/run/cursor"
+      ]
+    },
+    {
+      "requirement": "bounded worklists",
+      "physical_paths": [
+        "/record/value/worklists",
+        "/record/value/run/compile_wave_contracts"
+      ]
+    },
+    {
+      "requirement": "assignment receipts",
+      "physical_paths": [
+        "/record/value/run/compile_wave_contracts/*/assignment_receipt"
+      ]
+    },
+    {
+      "requirement": "source hashes",
+      "physical_paths": [
+        "/record/value/source_hashes",
+        "/record/value/run/last_green_hashes"
+      ]
+    },
+    {
+      "requirement": "currentness status",
+      "physical_paths": [
+        "/record/value/currentness_checks"
+      ]
+    },
+    {
+      "requirement": "blockers",
+      "physical_paths": [
+        "/record/value/run/blockers"
+      ]
+    },
+    {
+      "requirement": "repairs",
+      "physical_paths": [
+        "/record/value/repairs",
+        "/record/value/repair_attempt_receipts",
+        "/record/value/repair_receipt_sources",
+        "/record/value/audit_cycles",
+        "/record/value/verification_receipts"
+      ]
+    },
+    {
+      "requirement": "artifacts",
+      "physical_paths": [
+        "/record/value/artifact_sources"
+      ]
+    },
+    {
+      "requirement": "retries",
+      "physical_paths": [
+        "/record/value/retry_records",
+        "/record/value/run/compile_wave_contracts/*/retry_route"
+      ]
+    },
+    {
+      "requirement": "cancellation",
+      "physical_paths": [
+        "/record/value/cancellation"
+      ]
+    },
+    {
+      "requirement": "supersession",
+      "physical_paths": [
+        "/record/value/supersession"
+      ]
+    },
+    {
+      "requirement": "exact next action",
+      "physical_paths": [
+        "/record/value/next_action",
+        "/record/value/run/next_required_stage",
+        "/record/value/run/resume_command_or_action"
+      ]
+    }
+  ],
+  "full_native_run_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+  "full_native_run_field_count": 23,
+  "restart_rule": "Recover genuine current head, whole checkpoint, all referenced original artifacts/receipts and upstream source bytes; independently revalidate original current admission. Hashes alone never recover missing bodies.",
+  "additional_complete_bodies": [
+    "stage_card",
+    "compile_worklist",
+    "repair_record",
+    "repair_attempt_receipt",
+    "auditor_cycle_report",
+    "auditor_verification_receipt",
+    "node_seed_candidate",
+    "node_seed_review",
+    "workgraph_draft",
+    "worknode_request"
+  ],
+  "schema_definition_names": [
+    "Scope",
+    "Owner",
+    "Selector",
+    "Binding",
+    "OriginalIdentity",
+    "SourceHash",
+    "CurrentnessCheck",
+    "CompilerRetry",
+    "CompilerCancellation",
+    "ImpactLane",
+    "CompilerSupersession",
+    "NextAction",
+    "CompilerArtifactValue",
+    "CompilerArtifactRecord",
+    "CompilerArtifactPhysical",
+    "CompilerCheckpoint",
+    "CompilerRecord",
+    "CompilerPhysical",
+    "CompilerReadRequest",
+    "CompilerReadAvailable",
+    "CompilerReadResult",
+    "CertificationRecord",
+    "CertificationPhysical",
+    "CertificationReadRequest",
+    "CertificationReadAvailable",
+    "CertificationReadResult",
+    "AggregateRecord",
+    "AggregatePhysical",
+    "AggregateReadRequest",
+    "AggregateReadAvailable",
+    "AggregateReadResult",
+    "TestRecord",
+    "TestPhysical",
+    "TestReadRequest",
+    "TestReadAvailable",
+    "TestReadResult",
+    "ModelsRecord",
+    "ModelsPhysical",
+    "ModelsReadRequest",
+    "ModelsReadAvailable",
+    "ModelsReadResult",
+    "RequestSetRecord",
+    "RequestSetPhysical",
+    "RequestSetReadRequest",
+    "RequestSetReadAvailable",
+    "RequestSetReadResult",
+    "Unavailable",
+    "Origin",
+    "OriginPhysical",
+    "CompilerHead",
+    "CompilerHeadPhysical",
+    "CompilerRecoveryRequest",
+    "CompilerRecoveryAvailable",
+    "CompilerRecoveryResult",
+    "PreflightReadRequest",
+    "PreflightReadAvailable",
+    "PreflightReadResult",
+    "CompilerDurableInputBinding",
+    "CertificationDurableInputBinding",
+    "AggregateDurableInputBinding",
+    "TestDurableInputBinding",
+    "ModelsDurableInputBinding",
+    "RequestSetDurableInputBinding",
+    "PreflightDurableInputBinding",
+    "CompilerArtifactReadRequest",
+    "CompilerArtifactReadResult",
+    "OriginalPublishInput",
+    "OriginalPublishResult",
+    "CompilerCommitInput",
+    "CompilerCommitResult"
+  ],
+  "actual_timing_planunit": "PNC-024"
+}

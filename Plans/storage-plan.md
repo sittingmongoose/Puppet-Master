@@ -25166,3 +25166,168 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+### SP-308 - Original activation physical custody, current reads and lifetime
+
+SP-308 registers 54 new exact original-custody families while preserving all 166 previously registered family rows and every existing registry policy/top-level value. The resulting registry contains 220 families. `Plans/storage_value_registry.json` and `Plans/workflow_activation_contracts/physical-families.json` jointly specify each full closed outer wrapper, canonical physical key, schema/version, exact codec, original producer and consumer, mutability, non-rebuildable class, migration/restore disposition and retention assignment. The new rows are canonical source definitions; `materialized` registry status is not evidence of native installation or an available writer.
+
+The existing `attempt_record`, `attempt_receipt` and `execution_unit_context_store` are reused only through their actual complete native owner roles. Their original generic fields, codecs, keys, deferred posture and policies remain unchanged. The old bootstrap-only plan_compile_run, design-only compiler_wave_contract, per-request executor_intake_report and requested_effective_runtime are distinct original families. None is widened, reinterpreted or promoted to stand in for a full native checkpoint, thirteen-field aggregate report or eight-field Models receipt.
+
+#### Exact physical families and original producers
+
+The complete adopted key and producer mapping is normative below. Multiple listed original methods mean only the exact applicable original operation(s) for that family/value and declared joint transaction; listing a method never grants it permission to impersonate another member. Every source owner, capture issuer and Storage participant retains its original role. The full schemas and classification/mutability remain selected by the physical catalog.
+
+| Original physical family | Complete canonical key | Exact original producer methods |
+|---|---|---|
+| `workflow_activation_abort` | `workflow_activation_abort.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.workflow.activation.cancel_before_mutation.v1` |
+| `workflow_native_compile_source` | `workflow_native_compile_source.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):decimal(source_revision)` | `owner.workflow.compile.issue_native.v1` |
+| `workflow_native_request_source` | `workflow_native_request_source.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(workgraph_id):decimal(workgraph_revision):H(request_id):decimal(source_revision)` | `owner.workflow.compile.issue_request.v1` |
+| `workflow_certified_graph_source` | `workflow_certified_graph_source.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(workgraph_id):decimal(revision)` | `owner.workflow.compile.issue_graph.v1` |
+| `workflow_native_intake_source` | `workflow_native_intake_source.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.executor.intake.issue.v1` |
+| `workflow_provisioning_source` | `workflow_provisioning_source.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.executor.provision.issue.v1` |
+| `workflow_activation_decision_source` | `workflow_activation_decision_source.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.executor.activation.decide.v1` |
+| `workflow_completion_requirement_source` | `workflow_completion_requirement_source.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(workgraph_id):decimal(workgraph_revision)` | `owner.workflow.compile.issue_graph.v1` |
+| `workflow_born_worknode` | `workflow_born_worknode.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(worknode_id)` | `owner.executor.activation.materialize.v1` |
+| `workflow_worknode_materialization_receipt` | `workflow_worknode_materialization_receipt.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(worknode_id)` | `owner.executor.activation.materialize.v1` |
+| `workflow_installed_workgraph` | `workflow_installed_workgraph.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(workgraph_id):decimal(workgraph_revision)` | `owner.executor.activation.materialize.v1` |
+| `workflow_goal_run_required_set` | `workflow_goal_run_required_set.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(workgraph_id):decimal(workgraph_revision)` | `owner.executor.activation.materialize.v1` |
+| `workflow_goal_run_body` | `workflow_goal_run_body.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id)` | `owner.workflow.activation.begin.v1`; `owner.workflow.activation.commit_materialized.v1`; `owner.workflow.activation.stage_entrypoints.v1`; `owner.workflow.activation.prepare_start.v1`; `owner.workflow.activation.cancel_before_mutation.v1` |
+| `workflow_goal_run_control` | `workflow_goal_run_control.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id)` | `owner.workflow.activation.begin.v1`; `owner.workflow.activation.commit_materialized.v1`; `owner.workflow.activation.stage_entrypoints.v1`; `owner.workflow.activation.prepare_start.v1`; `owner.workflow.activation.cancel_before_mutation.v1` |
+| `workflow_activation_transition` | `workflow_activation_transition.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id):decimal(activation_revision)` | `owner.workflow.activation.commit_materialized.v1`; `owner.workflow.activation.stage_entrypoints.v1`; `owner.workflow.activation.prepare_start.v1`; `owner.workflow.activation.cancel_before_mutation.v1` |
+| `workflow_entrypoint_staging` | `workflow_entrypoint_staging.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.workflow.activation.stage_entrypoints.v1` |
+| `workflow_activation_receipt` | `workflow_activation_receipt.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.workflow.activation.prepare_start.v1` |
+| `workflow_start_outbox_intent` | `workflow_start_outbox_intent.v1:H(storage_instance_id):H(project_id):H(goal_id):H(goal_run_id):H(activation_id)` | `owner.workflow.activation.begin.v1`; `owner.workflow.activation.prepare_start.v1` |
+| `workflow_native_source_control` | `workflow_native_source_control.v1:H(storage_instance_id):H(logical_source_key)` | `owner.workflow.compile.issue_native.v1`; `owner.workflow.compile.issue_request.v1` |
+| `workflow_original_source_origin` | `workflow_original_source_origin.v1:H(storage_instance_id):H(issued_value_key):H(issued_record_sha256)` | `owner.workflow.compile.issue_native.v1`; `owner.workflow.compile.issue_graph.v1`; `owner.workflow.compile.issue_request.v1`; `owner.executor.intake.issue.v1`; `owner.executor.provision.issue.v1`; `owner.executor.activation.decide.v1`; `owner.workflow.activation.begin.v1`; `owner.workflow.activation.commit_materialized.v1`; `owner.executor.activation.materialize.v1`; `owner.workflow.activation.stage_entrypoints.v1`; `owner.workflow.activation.prepare_start.v1`; `owner.workflow.activation.cancel_before_mutation.v1`; `owner.storage.activation_source.capture_input.v1` |
+| `workflow_original_input_capture` | `workflow_original_input_capture.v1:H(storage_instance_id):H(original_source_operation_id):H(input_kind):H(capture_id)` | `owner.storage.activation_source.capture_input.v1` |
+| `workflow_native_compile_live_capture` | `workflow_native_compile_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}` | `owner.plan_compile.native.publish_state_input.v1` |
+| `workflow_compile_certification_live_capture` | `workflow_compile_certification_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}` | `owner.plan_compile.native.publish_certification_input.v1` |
+| `workflow_aggregate_intake_live_capture` | `workflow_aggregate_intake_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(activation_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}` | `owner.executor.intake.publish_aggregate_input.v1` |
+| `workflow_executor_preflight_live_capture` | `workflow_executor_preflight_live_capture.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(request_id)` | `owner.storage.executor_preflight.capture_live.v1` |
+| `workflow_test_capability_live_capture` | `workflow_test_capability_live_capture.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(request_id)` | `owner.storage.test_capability.capture_live.v1` |
+| `workflow_model_resolution_live_capture` | `workflow_model_resolution_live_capture.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(original_operation_id):H(output_identity)` | `models.storage.capture_role_resolution.v1` |
+| `workflow_worknode_request_set_live_capture` | `workflow_worknode_request_set_live_capture.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(original_operation_id):H(output_identity)` | `goal_runtime.storage.capture_activation_request_set.v1` |
+| `workflow_compiler_live_capture_origin` | `workflow_compiler_live_capture_origin.v1:{hex(storage_instance_id)}:{hex(issued_capture_key)}:{issued_capture_record_sha256}` | `owner.plan_compile.native.publish_state_input.v1`; `owner.plan_compile.native.publish_certification_input.v1` |
+| `workflow_aggregate_intake_live_capture_origin` | `workflow_aggregate_intake_live_capture_origin.v1:{hex(storage_instance_id)}:{hex(issued_capture_key)}:{issued_capture_record_sha256}` | `owner.executor.intake.publish_aggregate_input.v1` |
+| `workflow_provisioning_live_input_origin` | `workflow_provisioning_live_input_origin.v1:H(storage_instance_id):H(issued_value_key):H(issued_record_sha256)` | `owner.storage.executor_preflight.capture_live.v1`; `owner.storage.test_capability.capture_live.v1` |
+| `workflow_models_request_live_origin` | `workflow_models_request_live_origin.v1:H(storage_instance_id):H(issued_value_key):issued_record_sha256` | `models.storage.capture_role_resolution.v1`; `goal_runtime.storage.capture_activation_request_set.v1` |
+| `native_plan_compile_checkpoint` | `native_plan_compile_checkpoint.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `owner.plan_compile.native.publish_state_input.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `native_plan_compile_certification_receipt` | `native_plan_compile_certification_receipt.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `owner.plan_compile.native.publish_certification_input.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `executor_aggregate_intake_receipt` | `executor_aggregate_intake_receipt.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `owner.executor.intake.publish_aggregate_input.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `ats_test_capability_receipt` | `ats_test_capability_receipt.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `owner.ats.test_capability.output.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `models_plans_to_code_resolution_receipt` | `models_plans_to_code_resolution_receipt.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `models.resolve_plans_to_code_role.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `workflow_activation_request_set_decision` | `workflow_activation_request_set_decision.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `goal_runtime.executor.decide_activation_request_set.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `native_plan_compile_artifact` | `native_plan_compile_artifact.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(output_identity):N(output_revision)` | `owner.plan_compile.native.publish_artifact.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `native_plan_compile_head` | `native_plan_compile_head.v1:H(storage_instance_id):H(project_id):H(compile_id)` | `owner.plan_compile.native.advance_head.v1`; `owner.storage.activation_operational_custody.publish.v1` |
+| `activation_operational_origin` | `activation_operational_origin.v1:H(storage_instance_id):H(issued_key):H(issued_physical_sha256)` | `owner.storage.activation_operational_custody.publish.v1` |
+| `executor_source_control_preflight_receipt_source` | `executor_source_control_preflight_receipt_source.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(original_receipt_id)` | `owner.executor.source_control_preflight.output.v1`; `owner.storage.executor_sc_receipt.publish.v1` |
+| `executor_sc_receipt_original_origin` | `executor_sc_receipt_original_origin.v1:H(storage_instance_id):H(issued_key):H(issued_record_sha256)` | `owner.executor.source_control_preflight.output.v1`; `owner.storage.executor_sc_receipt.publish.v1` |
+| `executor_worknode` | `executor_worknode.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id)` | `owner.executor.activation.materialize.v1`; `owner.executor.native.begin_attempt.v1`; `owner.executor.native.submit_verification.v1`; `owner.executor.native.record_verified.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.record_invalidation.v1` |
+| `executor_worknode_control` | `executor_worknode_control.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id)` | `owner.executor.activation.materialize.v1`; `owner.executor.native.begin_attempt.v1`; `owner.executor.native.submit_verification.v1`; `owner.executor.native.record_verified.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.record_invalidation.v1` |
+| `executor_attempt_control` | `executor_attempt_control.v1:k(storage_instance_id):k(project_id):k(node_id):decimal(attempt_number)` | `owner.executor.native.begin_attempt.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1` |
+| `executor_run_execution_control` | `executor_run_execution_control.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id)` | `owner.executor.activation.materialize.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.apply_graph_lock.v1` |
+| `executor_attempt_birth` | `executor_attempt_birth.v1:k(storage_instance_id):k(project_id):k(node_id):decimal(attempt_number)` | `owner.executor.native.begin_attempt.v1` |
+| `executor_worknode_transition` | `executor_worknode_transition.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id):decimal(transition.cas_revision)` | `owner.executor.native.begin_attempt.v1`; `owner.executor.native.submit_verification.v1`; `owner.executor.native.record_verified.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1` |
+| `executor_worknode_completion` | `executor_worknode_completion.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id):k(completion_id)` | `owner.executor.native.complete_worknode.v1` |
+| `executor_native_operation_result` | `executor_native_operation_result.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id):k(operation_id)` | `owner.executor.activation.materialize.v1`; `owner.executor.native.begin_attempt.v1`; `owner.executor.native.submit_verification.v1`; `owner.executor.native.record_verified.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.record_invalidation.v1` |
+| `executor_original_input_capture` | `executor_original_input_capture.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(worknode_id):k(capture_id)` | `owner.executor.native.record_verified.v1`; `owner.executor.native.capture_original_input.v1` |
+| `executor_original_publication_origin` | `executor_original_publication_origin.v1:k(storage_instance_id):k(issued_key):issued_record_sha256` | `owner.executor.activation.materialize.v1`; `owner.executor.native.begin_attempt.v1`; `owner.executor.native.submit_verification.v1`; `owner.executor.native.record_verified.v1`; `owner.executor.native.record_failed.v1`; `owner.executor.native.complete_worknode.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.record_invalidation.v1`; `owner.executor.native.apply_graph_lock.v1`; `owner.executor.native.capture_original_input.v1` |
+| `executor_run_operation_result` | `executor_run_operation_result.v1:k(storage_instance_id):k(project_id):k(goal_id):k(goal_run_id):k(operation_id)` | `owner.executor.activation.materialize.v1`; `owner.executor.native.record_cancellation.v1`; `owner.executor.native.apply_graph_lock.v1` |
+
+`H` and compiler `{hex(...)}` denote the exact source-owner lowercase hex of scalar UTF-8 bytes, without Unicode normalization. `N(output_revision)` is exact positive decimal. The native `k(...)` key codec retains `pm.executor.native_source_json.v1`’s exact definition. All scope abbreviations are expanded through the physical catalog’s proper owner table: activation A means storage/project/Goal/GoalRun/activation, while native A means storage/project/node/attempt; activation R and native R retain their respective exact H/k codecs. A substring, basename or similarly named scope cannot select the other owner’s expansion. The key, schema_id, schema_version, storage_instance_id and entire record agree with their complete physical wrapper, including any original wrappers that do not contain an embedded key field.
+
+`workflow_native_source_control` is written only by the native compile/request source issuers through shared original Storage CAS. Its current immutable source, logical source key, revision, owner/epoch and pending state remain whole. `workflow_original_source_origin` uses the exact 13 A4 `OwnerIssueOrigin.issuer_method` alternatives, selected by the actual issuing family and genuine original transaction. It is not a generic copied-origin signer.
+
+`OriginalInputCapture` and `workflow_original_input_capture` remain the preserved older physical-input compatibility contract, with the exact original owner.storage.activation_source.capture_input.v1 issuer alternative and older original reader semantics. This family and its older readers reject every new live capture/origin schema ID. They are not selected for any of the current seven live/durable roles, and their registry/materialized source declaration or presence in OwnerIssueOrigin does not install a legacy endpoint or grant a current fallback. The current methods.json.compatibility_original_input entry records that boundary. Genuine surviving old values may be disclosed only through their original compatibility provenance and current policy; missing current input is never satisfied by this older family, retained metadata, a new producer operation or another source lease.
+
+Capture and semantic output are separate publications. `workflow_provisioning_live_input_origin.issuer_method` names owner.storage.executor_preflight.capture_live.v1 or owner.storage.test_capability.capture_live.v1, while original_source_method retains the preflight or ATS output owner. `workflow_models_request_live_origin.issuer_method` similarly names models.storage.capture_role_resolution.v1 or goal_runtime.storage.capture_activation_request_set.v1, independently of the original Models/request-set semantic owner. Compiler artifact/head methods are owner.plan_compile.native.publish_artifact.v1 and owner.plan_compile.native.advance_head.v1; their original participation joins state publication and owner.storage.activation_operational_custody.publish.v1. The operational origin’s physical publisher is that Storage method; its eight exact original semantic owner alternatives remain complete original_method data, not interchangeable physical publishers.
+
+#### Whole publication, hashes and reads
+
+The new operational compiler/state/receipt families use exact `pm.workflow.activation_source_json.v1`; the native WorkNode and reused source-control custody use their exact `pm.executor.native_source_json.v1` contract. Full source/certification payload digests retain their separately declared codec. Exact original integer domains, string spelling/escaping, array ordering and nullable/optional presence survive admission. Duplicate keys, malformed UTF-8, surrogates, unsupported non-integer JSON numbers and unknown fields refuse the applicable route. No source/body hash is silently substituted for the complete physical wrapper digest.
+
+For operational custody, Origin.issued_semantic_record_sha256 hashes the entire semantic record and Origin.issued_physical_sha256 hashes the complete outer wrapper. The origin’s physical key commits the full issued key and physical digest. A4 OwnerIssueOrigin.issued_record_sha256 retains its semantic preimage; its SourceSelector.physical_value_sha256 selects complete outer bytes. Native publication-origin and Source Control certification digests likewise retain their own exact preimages. A schema-shaped origin, matching digest or chosen owner/operation ID is not original issuance.
+
+Original output publication orders complete semantic output, its complete physical source, genuine original source origin and origin wrapper before any dependent capture/activation source and its separate original issuer origin. The compiler head selects already assembled checkpoint/origin and joins the original complete checkpoint commit. Immutable same-key changed bytes conflict; equal original retries return the actual original result. A mutable head/control uses the entire actual original current value, origin, owner and generation in its CAS. Proven fresh absence is permitted only at actual original birth under exclusion; restored missing rows or empty lookup results are not birth authority.
+
+`owner.storage.activation_operational_custody.publish.v1` consumes the complete OriginalPublishInput and returns the complete OriginalPublishResult under the actual original semantic owner transaction. Each role’s exact full request/result in methods.json remains mandatory. A complete available durable result supplies the whole original input and full source/origin; compiler reads also supply the whole operational checkpoint. Its original capture binding must identify the same actual original operation/output and complete input bytes. Missing, corrupt, foreign, stale or unavailable sources return the exact original unavailable arm. No reader runs a compiler, probe, model, Tool or receipt producer to replace unavailable original data.
+
+The fourteen current direct live/audit readers retain exact native request shapes and return the current inner complete available/unavailable union selected by CV-349. Current live reads require the actual original stage and source lease. Retained metadata reads disclose only the original surviving metadata and no full input. `original_durable_custody` is a separately admitted full source route with original capture provenance plus actual original durable input/origin; it never changes original_live source_mode, revives its lease or converts metadata to content. All these reads and recovery returns have action_authority=none; current original action admission remains separately mandatory.
+
+`owner.storage.activation_source.read_current.v1` on the admitted pre-start association route explicitly performs GRS-077’s CurrentWorkflowLaunchChainRead plus CurrentAssociatedGoalRead internal join before returning its same complete current physical value/origin or unavailable. It preserves complete current mutable body/control values and the actual compact original transition/origin chain. A prior selector or body receipt authenticates a historical commitment; it neither retrieves overwritten B0/W0 payload bytes nor makes an old full-body source current. Current source checking cannot return a later body under the original activation_body label. Staging/preparation chains do not authorize later start/execution/cancellation/certification writers.
+
+#### Retention, original lifetime and restore
+
+The 54 new family mappings use the existing `RP-AUTHORITY-INDEFINITE@1.0.0` canonical state/receipt/source-lineage class. Its original indefinite duration, creation anchor, hold eligibility, no expiry and fail_closed overflow remain unchanged; no TTL, cardinality or maximum-byte cap is added. Every full native checkpoint, typed artifact, native state and declared semantic receipt/report retains all canonical fields, including reason, summary, objective, test/model/command/context text. These complete defined values are not “content-free” merely because they are source authority. Original secret/raw-content admission occurs before issuance; stripping a required field afterward and calling the result the same original is forbidden.
+
+The classification is limited to the complete closed adopted value schemas. Source documents, code trees, logs, stdout, provider responses, screenshots, traces, raw test results, FileSafe snapshots, old design-only waves, requested_effective_runtime and all other separately referenced source/body families retain their original policy, anchor, legal/content holds and visibility/deletion controls. References and hashes do not extend those lifetimes, create a hold, imply restore capability or reconstruct disposed content. A full payload outside an adopted closed schema must obtain its actual owner/classification; it cannot enter through a generic blob, an omitted field or a blanket indefinite label.
+
+Mutable current authority keeps its genuine current value together with the permitted compact original transition/receipt/origin custody. Indefinite policy does not require an archive of every old full Goal or Workflow body. GRS-077 preserves B0’s launch commitment, B1’s actual metadata receipt/association bridge, and original Workflow transition commitments without the vanished prior payload. Already immutable checkpoints and semantic receipts remain complete immutable originals under their assigned policy. No current reader reacquires disposed full content merely because a surviving receipt references it.
+
+All new original families are canonical_non_rebuildable and require coherent mandatory backup under BRS-024 before durable/restart/dispatch promises. Original registry/schema/codec/owner/root identity, full current heads, exact original source/origin values, complete checkpoint/artifact/receipt participants and all dependencies necessary for the claimed operation must be captured through their actual owner boundaries. Restore validates exact complete keys/bytes/hashes/versions/origins, original transaction and dependency closure, current holds/tombstones/deletion and newer committed/terminal/head truth before exposure. Restored data does not restore a lease, writer capability or admission. Missing authority stays unavailable and keeps dependent mutation fenced; no reconstruction from Plans, UI, event summaries, sibling results or a new producer operation is allowed.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: SP-308
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Original activation physical custody, current reads and lifetime. The registry preserves all 166
+  old rows and policies while defining exactly 54 complete new non-rebuildable source families with exact owner/key/codec/backup
+  mappings.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- SP-278
+- SP-305
+- SP-306
+- SP-307
+- CV-349
+unblocks: []
+acceptance_criteria:
+- The registry preserves all 166 old rows and policies while defining exactly 54 complete new non-rebuildable source
+  families with exact owner/key/codec/backup mappings.
+- Original semantic source owners, capture publishers and Storage participants retain their distinct exact methods
+  and whole transaction obligations.
+- Current, original durable and retained metadata reads retain complete available/unavailable contracts without
+  reconstructing missing bodies or renewing source lifetimes.
+- Existing indefinite canonical state/receipt policy applies only to full closed adopted records; referenced raw
+  and mutable historical bodies retain their actual owner lifetimes.
+validation_surfaces:
+- Plans/storage_value_registry.json
+- Plans/workflow_activation_contracts/physical-families.json
+- Plans/workflow_activation_contracts/retention-field-classification.json
+- Plans/workflow_activation_contracts/methods.json
+- Plans/Backup_Restore_System.md#BRS-024
+- Plans/Goal_Runtime_System.md#GRS-077
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: sp_308_activation_original_custody
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/workflow_activation_contracts/physical-families.json, ContractName:Plans/workflow_activation_contracts/retention-field-classification.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/Backup_Restore_System.md#BRS-024, ContractName:Plans/Goal_Runtime_System.md#GRS-077

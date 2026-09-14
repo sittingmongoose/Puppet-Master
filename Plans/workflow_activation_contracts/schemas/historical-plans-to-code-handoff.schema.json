@@ -1,0 +1,5443 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json",
+  "title": "Plans-to-Code Handoff Runtime-Aware Schema Draft",
+  "description": "Single JSON Schema Draft 2020-12 schema draft whose top-level schema_id remains pm.plans_to_code_handoff.v1 for the shared handoff document. Inside that document, pldg-20260617-001-plans-to-code-handoff owns the current bootstrap/v1 design_only branch and pldg-20260618-001-prd-planning-wizard owns the runtime-capable v2 branch expressed by contract_mode=native_runtime plus runtime enablement evidence. The $defs document strict payload shapes for PlanCompileRun, stage cards, NodeSeed candidates, WorkGraph drafts, WorkNode requests, model routing, testing receipts, source-control receipts, and completion receipts. The plan_compile_run payload splits current design_only disabled bootstrap records from native_runtime records that require runtime enablement evidence; this schema does not create WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_id": {
+      "const": "pm.plans_to_code_handoff.v1",
+      "description": "Top-level schema document identity stays stable as pm.plans_to_code_handoff.v1; runtime-capable v2 identity is carried by payload.contract_mode=native_runtime with runtime_enablement_ref and runtime_policy_snapshot_ref."
+    },
+    "artifact_kind": {
+      "$ref": "#/$defs/artifact_kind"
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_id",
+    "artifact_kind",
+    "payload"
+  ],
+  "$defs": {
+    "artifact_kind": {
+      "type": "string",
+      "enum": [
+        "handoff_matrix",
+        "handoff_row",
+        "plan_compile_run",
+        "stage_card",
+        "compile_worklist",
+        "node_seed_candidate",
+        "node_seed_review",
+        "workgraph_draft",
+        "worknode_request",
+        "compiler_model_routing",
+        "codex_work_package",
+        "codex_external_gui_agent_request",
+        "plan_compile_receipt",
+        "test_capability_report",
+        "test_harness_probe_report",
+        "test_strategy",
+        "test_case",
+        "test_run_receipt",
+        "visual_evidence",
+        "source_control_receipt",
+        "source_control_preflight_receipt",
+        "safe_point_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "repair_attempt_receipt",
+        "validation_pass_report",
+        "merge_or_promotion_receipt",
+        "source_control_finalization_receipt",
+        "model_resolution_receipt",
+        "executor_intake_report",
+        "goal_completion_receipt"
+      ]
+    },
+    "ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ref_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "non_empty_ref_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "stage_success_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "next_stage",
+            "certify_stage",
+            "handoff_ready",
+            "parent_writeback"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "handoff_ready",
+                  "parent_writeback"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "next_stage",
+                  "certify_stage"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stage_blocked_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "record_blocker",
+            "request_parent_adjudication",
+            "escalate_authority_boundary",
+            "pause_for_repair",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "request_parent_adjudication",
+                  "escalate_authority_boundary",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "record_blocker",
+                  "pause_for_repair"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "compile_wave_retry_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "retry_same_assignment",
+            "split_assignment",
+            "resume_from_checkpoint",
+            "return_to_parent",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "return_to_parent",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "retry_same_assignment",
+                  "split_assignment",
+                  "resume_from_checkpoint"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "compile_worklist_blocked_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage",
+        "reason"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "record_blocker",
+            "regenerate_worklist",
+            "request_parent_adjudication",
+            "pause_for_repair",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "request_parent_adjudication",
+                  "critical_block"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "route_kind": {
+                "enum": [
+                  "record_blocker",
+                  "regenerate_worklist",
+                  "pause_for_repair"
+                ]
+              }
+            },
+            "required": [
+              "route_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target_stage": {
+                "$ref": "#/$defs/stage_name"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node_seed_review_decision": {
+      "type": "string",
+      "enum": [
+        "approve_candidate",
+        "changes_required",
+        "reject_candidate",
+        "split_candidate",
+        "merge_candidate",
+        "block_on_authority"
+      ]
+    },
+    "node_seed_reviewer_role": {
+      "type": "string",
+      "enum": [
+        "parent_compiler",
+        "auditor",
+        "owner_adjudicator",
+        "capability_reviewer"
+      ]
+    },
+    "handoff_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_id",
+        "transition",
+        "source_artifact",
+        "destination_artifact",
+        "producer",
+        "consumer",
+        "owner",
+        "validator",
+        "receipt",
+        "schema_payload",
+        "retry_route",
+        "rollback_route",
+        "user_escalation_condition",
+        "evidence_refs",
+        "plan_unit_refs"
+      ],
+      "properties": {
+        "row_id": {
+          "$ref": "#/$defs/handoff_row_id"
+        },
+        "transition": {
+          "type": "string"
+        },
+        "source_artifact": {
+          "type": "string"
+        },
+        "destination_artifact": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "consumer": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "validator": {
+          "type": "string"
+        },
+        "receipt": {
+          "type": "string"
+        },
+        "schema_payload": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/schema_payload_ref"
+          },
+          "minItems": 1
+        },
+        "retry_route": {
+          "type": "string"
+        },
+        "rollback_route": {
+          "type": "string"
+        },
+        "user_escalation_condition": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "plan_unit_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "handoff_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matrix_id",
+        "source_ledger_id",
+        "source_plan_unit_ids",
+        "rows",
+        "schema_contract_validation",
+        "status"
+      ],
+      "properties": {
+        "matrix_id": {
+          "type": "string"
+        },
+        "source_ledger_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 18,
+          "maxItems": 18,
+          "items": {
+            "$ref": "#/$defs/handoff_row"
+          }
+        },
+        "schema_contract_validation": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "design_only",
+            "validated",
+            "blocked"
+          ]
+        }
+      }
+    },
+    "plan_compile_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "contract_mode",
+        "launch_policy",
+        "runtime_adapter",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "resume_command_or_action",
+        "automatic_launch_enabled",
+        "planning_wizard_launch_enabled",
+        "codex_bootstrap_launch_enabled",
+        "current_state",
+        "receipts",
+        "compile_wave_contracts"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "source_plan_set_id": {
+          "type": "string"
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "launch_source": {
+          "enum": [
+            "codex_bootstrap",
+            "native_planning_wizard"
+          ]
+        },
+        "contract_mode": {
+          "enum": [
+            "design_only",
+            "native_runtime"
+          ]
+        },
+        "launch_policy": {
+          "enum": [
+            "disabled",
+            "automatic_after_approval"
+          ]
+        },
+        "runtime_adapter": {
+          "enum": [
+            "codex_bootstrap_adapter",
+            "native_puppet_master_adapter"
+          ]
+        },
+        "runtime_enablement_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runtime_policy_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "design_only_disabled",
+            "preflight",
+            "running",
+            "blocked",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "current_stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "cursor": {
+          "$ref": "#/$defs/cursor"
+        },
+        "last_green_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_green_hashes": {
+          "$ref": "#/$defs/hash_snapshot"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "next_required_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resume_command_or_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "automatic_launch_enabled": {
+          "type": "boolean"
+        },
+        "planning_wizard_launch_enabled": {
+          "type": "boolean"
+        },
+        "codex_bootstrap_launch_enabled": {
+          "const": false
+        },
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "initialized",
+            "preflight",
+            "stage_running",
+            "stage_blocked",
+            "stage_complete",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "receipts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "compile_wave_contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "design_only"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "disabled"
+              },
+              "launch_source": {
+                "const": "codex_bootstrap"
+              },
+              "runtime_adapter": {
+                "const": "codex_bootstrap_adapter"
+              },
+              "runtime_enablement_ref": {
+                "type": "null"
+              },
+              "runtime_policy_snapshot_ref": {
+                "type": "null"
+              },
+              "status": {
+                "const": "design_only_disabled"
+              },
+              "automatic_launch_enabled": {
+                "const": false
+              },
+              "planning_wizard_launch_enabled": {
+                "const": false
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "native_runtime"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "automatic_after_approval"
+              },
+              "launch_source": {
+                "const": "native_planning_wizard"
+              },
+              "runtime_adapter": {
+                "const": "native_puppet_master_adapter"
+              },
+              "runtime_enablement_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "runtime_policy_snapshot_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "status": {
+                "enum": [
+                  "preflight",
+                  "running",
+                  "blocked",
+                  "ready_for_executor_intake",
+                  "cancelled",
+                  "complete"
+                ]
+              },
+              "automatic_launch_enabled": {
+                "const": true
+              },
+              "planning_wizard_launch_enabled": {
+                "const": true
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "current_state": {
+                "const": "complete"
+              },
+              "current_stage": {
+                "const": "orchestrator_projection"
+              },
+              "cursor": {
+                "properties": {
+                  "stage": {
+                    "const": "orchestrator_projection"
+                  }
+                }
+              },
+              "next_required_stage": {
+                "type": "null"
+              },
+              "resume_command_or_action": {
+                "type": "null"
+              },
+              "receipts": {
+                "$ref": "#/$defs/non_empty_ref_list"
+              },
+              "compile_wave_contracts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_wave_contract"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "current_state": {
+                "const": "stage_blocked"
+              },
+              "blockers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/blocker"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stage_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_id",
+        "purpose",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "entry_gate",
+        "item_boundaries",
+        "exit_gate",
+        "success_route",
+        "blocked_route",
+        "assignment_contract",
+        "parent_writeback_policy"
+      ],
+      "properties": {
+        "stage_id": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "entry_gate": {
+          "type": "string"
+        },
+        "item_boundaries": {
+          "$ref": "#/$defs/item_boundaries"
+        },
+        "exit_gate": {
+          "type": "string"
+        },
+        "success_route": {
+          "$ref": "#/$defs/stage_success_route"
+        },
+        "blocked_route": {
+          "$ref": "#/$defs/stage_blocked_route"
+        },
+        "assignment_contract": {
+          "$ref": "#/$defs/compile_wave_contract"
+        },
+        "parent_writeback_policy": {
+          "$ref": "#/$defs/parent_writeback_policy"
+        }
+      }
+    },
+    "node_seed_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
+        "objective",
+        "owner_area",
+        "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
+        "acceptance_criteria",
+        "validator_candidates",
+        "dependency_refs",
+        "risk_class",
+        "reasoning_tier",
+        "work_type",
+        "gui_related",
+        "frontend_related",
+        "effort_class",
+        "capability_lane",
+        "authority",
+        "sizing",
+        "status",
+        "blockers",
+        "capability_requirements"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_acceptance_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "objective": {
+          "type": "string"
+        },
+        "owner_area": {
+          "type": "string"
+        },
+        "implementation_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set_candidates": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validator_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependency_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "risk_class": {
+          "$ref": "#/$defs/risk_class"
+        },
+        "reasoning_tier": {
+          "$ref": "#/$defs/reasoning_tier"
+        },
+        "work_type": {
+          "$ref": "#/$defs/work_type"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "effort_class": {
+          "$ref": "#/$defs/effort_class"
+        },
+        "effort": {
+          "$ref": "#/$defs/effort_class"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "sizing": {
+          "$ref": "#/$defs/sizing"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "review_ready",
+            "approved_for_workgraph_draft",
+            "blocked",
+            "excluded"
+          ]
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "capability_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
+        }
+      }
+    },
+    "workgraph_draft": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nodes",
+        "entrypoints",
+        "dependency_edges",
+        "scheduler_policy",
+        "graph_integrity",
+        "authority",
+        "evidence",
+        "validation_state"
+      ],
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/workgraph_node"
+          }
+        },
+        "entrypoints": {
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "dependency_edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency_edge"
+          }
+        },
+        "scheduler_policy": {
+          "$ref": "#/$defs/scheduler_policy"
+        },
+        "graph_integrity": {
+          "$ref": "#/$defs/graph_integrity"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "evidence": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "validation_state": {
+          "$ref": "#/$defs/validation_state"
+        }
+      }
+    },
+    "worknode_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
+        "objective",
+        "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
+        "acceptance_criteria",
+        "validator_candidates",
+        "dependency_refs",
+        "work_type",
+        "gui_related",
+        "frontend_related",
+        "effort_class",
+        "reasoning_tier",
+        "context_size",
+        "validation_cost",
+        "risk_class",
+        "authority_risk",
+        "user_visible_risk",
+        "capability_lane",
+        "test_binding",
+        "model_routing",
+        "ordering",
+        "authority",
+        "status",
+        "capability_requirements"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "source_acceptance_unit_ids": {
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "objective": {
+          "type": "string"
+        },
+        "implementation_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set_candidates": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validator_candidates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependency_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "work_type": {
+          "$ref": "#/$defs/work_type"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "effort_class": {
+          "$ref": "#/$defs/effort_class"
+        },
+        "reasoning_tier": {
+          "$ref": "#/$defs/reasoning_tier"
+        },
+        "context_size": {
+          "$ref": "#/$defs/context_size"
+        },
+        "validation_cost": {
+          "$ref": "#/$defs/validation_cost"
+        },
+        "risk_class": {
+          "$ref": "#/$defs/risk_class"
+        },
+        "authority_risk": {
+          "$ref": "#/$defs/authority_risk"
+        },
+        "user_visible_risk": {
+          "$ref": "#/$defs/user_visible_risk"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "test_binding": {
+          "$ref": "#/$defs/test_binding"
+        },
+        "model_routing": {
+          "$ref": "#/$defs/compiler_model_routing"
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "status": {
+          "enum": [
+            "request_draft",
+            "intake_pending",
+            "accepted_by_executor",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "capability_requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
+        }
+      }
+    },
+    "ordering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "build_phase",
+        "dependency_type",
+        "depends_on",
+        "unblocks",
+        "parallel_group_id",
+        "scheduler_lane",
+        "ordering_reason",
+        "manual_priority",
+        "required_before_start",
+        "required_after_start",
+        "required_before_completion",
+        "required_after_completion"
+      ],
+      "properties": {
+        "build_phase": {
+          "$ref": "#/$defs/build_phase"
+        },
+        "dependency_type": {
+          "$ref": "#/$defs/dependency_type"
+        },
+        "depends_on": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unblocks": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "parallel_group_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheduler_lane": {
+          "$ref": "#/$defs/scheduler_lane"
+        },
+        "ordering_reason": {
+          "type": "string"
+        },
+        "manual_priority": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "required_before_start": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_after_start": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_before_completion": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_after_completion": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "model_resolution_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "fallback_reason",
+        "capability_checks",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "requested_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "requested_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "effective_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_check"
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "test_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_capability_refs",
+        "required_harnesses",
+        "generated_test_ids",
+        "completion_commands",
+        "browser_session_required",
+        "emulator_required",
+        "visual_evidence_required",
+        "expected_artifacts",
+        "flake_policy",
+        "test_gap_policy",
+        "manual_only_acceptance_not_allowed",
+        "reused_test_ids"
+      ],
+      "properties": {
+        "required_capability_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_harnesses": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "completion_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "browser_session_required": {
+          "type": "boolean"
+        },
+        "emulator_required": {
+          "type": "boolean"
+        },
+        "visual_evidence_required": {
+          "type": "boolean"
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
+        },
+        "test_gap_policy": {
+          "$ref": "#/$defs/test_gap_policy"
+        },
+        "manual_only_acceptance_not_allowed": {
+          "const": true
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_capability_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_platform",
+        "framework_toolkit",
+        "local_capabilities",
+        "installed_tools",
+        "app_launch_ability",
+        "browser_automation",
+        "gui_automation",
+        "device_emulator_automation",
+        "screenshot_support",
+        "logs_available",
+        "headless_headed_support",
+        "project_native_runners",
+        "online_research",
+        "probes",
+        "automation_surface",
+        "requires_browser",
+        "requires_emulator",
+        "requires_display",
+        "requires_screenshot",
+        "verification_command",
+        "expected_artifacts",
+        "flake_policy"
+      ],
+      "properties": {
+        "project_platform": {
+          "type": "string"
+        },
+        "framework_toolkit": {
+          "type": "string"
+        },
+        "local_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
+        },
+        "installed_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "app_launch_ability": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "browser_automation": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "gui_automation": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "device_emulator_automation": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "screenshot_support": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "logs_available": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "headless_headed_support": {
+          "$ref": "#/$defs/capability_status"
+        },
+        "project_native_runners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "online_research": {
+          "$ref": "#/$defs/online_research"
+        },
+        "probes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/test_probe"
+          }
+        },
+        "automation_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "requires_browser": {
+          "type": "boolean"
+        },
+        "requires_emulator": {
+          "type": "boolean"
+        },
+        "requires_display": {
+          "type": "boolean"
+        },
+        "requires_screenshot": {
+          "type": "boolean"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
+        }
+      }
+    },
+    "test_run_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "test_level",
+        "automation_surface",
+        "verification_command",
+        "expected_artifacts",
+        "result",
+        "evidence_refs",
+        "visual_evidence_refs",
+        "flake_policy",
+        "test_gap_policy",
+        "manual_only_acceptance_not_allowed",
+        "handoff",
+        "receipt_id",
+        "test_strategy_ref",
+        "test_case_refs",
+        "generated_test_ids",
+        "reused_test_ids"
+      ],
+      "properties": {
+        "test_level": {
+          "$ref": "#/$defs/test_level"
+        },
+        "automation_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "result": {
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "visual_evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
+        },
+        "test_gap_policy": {
+          "$ref": "#/$defs/test_gap_policy"
+        },
+        "manual_only_acceptance_not_allowed": {
+          "const": true
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "receipt_id": {
+          "type": "string"
+        },
+        "test_strategy_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_case_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "source_control_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_id",
+        "worktree_id",
+        "worktree_path",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action",
+        "evidence_refs",
+        "handoff",
+        "source_control_context",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_id": {
+          "type": "string"
+        },
+        "worktree_id": {
+          "type": "string"
+        },
+        "worktree_path": {
+          "type": "string"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "$ref": "#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "goal_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "all_worknodes_terminal",
+        "all_tests_passed_or_dispositioned",
+        "source_control_receipts_valid",
+        "no_active_blockers",
+        "rollback_requirements_satisfied",
+        "safe_point_requirements_satisfied",
+        "no_stale_plan_workgraph_currentness_mismatch",
+        "final_source_state",
+        "final_summary_ref",
+        "auditor_passed",
+        "final_certifier_decision",
+        "evidence_refs",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "changed_artifact_refs",
+        "validator_outcomes",
+        "authority_check_refs",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "unresolved_risks",
+        "evidence_layers",
+        "handoff",
+        "final_source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "all_worknodes_terminal": {
+          "type": "boolean"
+        },
+        "all_tests_passed_or_dispositioned": {
+          "type": "boolean"
+        },
+        "source_control_receipts_valid": {
+          "type": "boolean"
+        },
+        "no_active_blockers": {
+          "type": "boolean"
+        },
+        "rollback_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "safe_point_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "no_stale_plan_workgraph_currentness_mismatch": {
+          "type": "boolean"
+        },
+        "final_source_state": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "intentionally_preserved",
+            "blocked"
+          ]
+        },
+        "final_summary_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "auditor_passed": {
+          "type": "boolean"
+        },
+        "final_certifier_decision": {
+          "enum": [
+            "certified",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "child_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "worknode_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "changed_artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "validator_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validator_outcome"
+          }
+        },
+        "authority_check_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_risks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/risk_record"
+          }
+        },
+        "evidence_layers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_evidence",
+            "canonical_plan_evidence",
+            "process_evidence",
+            "governance_evidence",
+            "test_evidence",
+            "source_control_evidence",
+            "completion_receipts"
+          ],
+          "properties": {
+            "source_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "canonical_plan_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "process_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "governance_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "test_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "source_control_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "completion_receipts": {
+              "$ref": "#/$defs/ref_list"
+            }
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "final_source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "compile_worklist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "stage",
+        "parallelism_policy",
+        "items",
+        "source_plan_index_hash",
+        "status",
+        "blocked_route",
+        "wave_assignments"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "parallelism_policy": {
+          "$ref": "#/$defs/compile_parallelism_policy"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_worklist_item"
+          }
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready",
+            "running",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        },
+        "blocked_route": {
+          "$ref": "#/$defs/compile_worklist_blocked_route"
+        },
+        "resume_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wave_assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "planunit_normalization",
+                  "test_repository_discovery",
+                  "typed_dependency_analysis",
+                  "implementation_surface_mapping",
+                  "work_risk_classification",
+                  "nodeseed_candidate_drafting",
+                  "split_merge_sizing",
+                  "candidate_review",
+                  "worknode_request_construction",
+                  "final_compile_audit_repair"
+                ]
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "parallelism_policy": {
+                "properties": {
+                  "parallelism_required": {
+                    "const": true
+                  },
+                  "minimum_parallel_assignments": {
+                    "type": "integer",
+                    "minimum": 2
+                  },
+                  "assignment_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  },
+                  "completion_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_worklist_item"
+                }
+              },
+              "wave_assignments": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_wave_contract"
+                }
+              },
+              "parallelism_policy": {
+                "properties": {
+                  "completion_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node_seed_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_ref",
+        "review_status",
+        "findings",
+        "decision",
+        "reviewer_role"
+      ],
+      "properties": {
+        "candidate_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "review_status": {
+          "enum": [
+            "pending",
+            "approved",
+            "changes_required",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "decision": {
+          "$ref": "#/$defs/node_seed_review_decision"
+        },
+        "reviewer_role": {
+          "$ref": "#/$defs/node_seed_reviewer_role"
+        },
+        "required_changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "compiler_model_routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_unit_ids",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "capability_checks"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "requested_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "requested_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "effective_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_check"
+          }
+        }
+      }
+    },
+    "codex_work_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_id",
+        "stage",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "instructions",
+        "validation_commands",
+        "status"
+      ],
+      "properties": {
+        "package_id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "validation_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready_for_codex",
+            "claimed",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        }
+      }
+    },
+    "codex_external_gui_agent_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "gui_related",
+        "frontend_related",
+        "target_surfaces",
+        "prompt",
+        "acceptance_criteria",
+        "status",
+        "provider_kind",
+        "provider_id"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "target_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "assets": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "bootstrap_only_draft",
+            "ready",
+            "sent",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        },
+        "provider_kind": {
+          "type": "string",
+          "enum": [
+            "antigravity",
+            "claude_code",
+            "cursor",
+            "opencode",
+            "custom_cli_provider"
+          ]
+        },
+        "provider_id": {
+          "type": "string"
+        }
+      }
+    },
+    "plan_compile_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "compile_id",
+        "stage",
+        "status",
+        "summary",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "test_harness_probe_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "harness_type",
+        "capability",
+        "verification_command",
+        "required_adapters",
+        "expected_artifacts",
+        "flake_policy",
+        "gaps",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "type": "string"
+        },
+        "harness_type": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "capability": {
+          "type": "string"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "required_adapters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "source_plan_unit_ids",
+        "test_cases",
+        "required_capabilities",
+        "gap_blockers",
+        "test_level",
+        "generated_test_ids",
+        "browser_session_required",
+        "visual_evidence_required",
+        "oracles",
+        "reused_test_ids"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_cases": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
+        },
+        "gap_blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "test_level": {
+          "$ref": "#/$defs/test_level"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "browser_session_required": {
+          "type": "boolean"
+        },
+        "visual_evidence_required": {
+          "type": "boolean"
+        },
+        "oracles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/test_oracle"
+          }
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "test_case_id",
+        "source_plan_unit_ids",
+        "kind",
+        "description",
+        "oracle",
+        "status"
+      ],
+      "properties": {
+        "test_case_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "kind": {
+          "$ref": "#/$defs/test_level"
+        },
+        "description": {
+          "type": "string"
+        },
+        "oracle": {
+          "$ref": "#/$defs/test_oracle"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "ready",
+            "generated",
+            "reused",
+            "deprecated",
+            "blocked"
+          ]
+        }
+      }
+    },
+    "visual_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "source_ref",
+        "artifact_refs",
+        "inspection_status",
+        "notes"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "inspection_status": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "source_control_preflight_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "worktree_ref",
+        "branch_ref",
+        "dirty_state",
+        "safe_point_required",
+        "status",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action",
+        "evidence_refs",
+        "handoff",
+        "source_control_context",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dirty_state": {
+          "$ref": "#/$defs/source_control_dirty_state"
+        },
+        "safe_point_required": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/source_control_status"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "$ref": "#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "safe_point_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "safe_point_ref",
+        "repo_ref",
+        "worktree_ref",
+        "created_at_utc",
+        "status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context",
+        "rollback_available",
+        "restore_command_or_action"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "safe_point_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at_utc": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/source_control_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        }
+      }
+    },
+    "worknode_dispatch_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_request_ref",
+        "executor_ref",
+        "dispatch_status",
+        "source_control_preflight_ref",
+        "model_resolution_ref",
+        "test_binding_ref",
+        "authority_ref",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_request_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "executor_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dispatch_status": {
+          "enum": [
+            "queued",
+            "dispatched",
+            "blocked",
+            "cancelled"
+          ]
+        },
+        "source_control_preflight_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "model_resolution_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_binding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "authority_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "worknode_change_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "changed_paths",
+        "diff_refs",
+        "test_run_refs",
+        "source_control_receipt_ref",
+        "status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "changed_paths": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "diff_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "$ref": "#/$defs/change_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "worknode_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "terminal_status",
+        "change_receipt_refs",
+        "test_run_refs",
+        "auditor_verification_ref",
+        "source_control_receipt_refs",
+        "unresolved_findings",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "terminal_status": {
+          "enum": [
+            "complete",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "change_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "auditor_verification_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "auditor_cycle_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cycle_id",
+        "cycle_number",
+        "auditor_model_profile",
+        "input_artifact_refs",
+        "findings",
+        "repairs_applied",
+        "unresolved_findings",
+        "terminal_state",
+        "certified",
+        "evidence_refs",
+        "compatibility_aliases",
+        "handoff"
+      ],
+      "properties": {
+        "cycle_id": {
+          "type": "string"
+        },
+        "cycle_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "auditor_model_profile": {
+          "type": "string"
+        },
+        "input_artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "repairs_applied": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/repair_record"
+          }
+        },
+        "unresolved_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "terminal_state": {
+          "enum": [
+            "continue_repair",
+            "certified",
+            "critical_block",
+            "authority_boundary",
+            "repair_budget_exhausted"
+          ]
+        },
+        "certified": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "compatibility_aliases": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "validation_pass_report",
+              "pass_1",
+              "pass_2",
+              "pass_3"
+            ]
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "auditor_verification_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "auditor_cycle_refs",
+        "worknode_ref",
+        "test_run_refs",
+        "source_control_receipt_refs",
+        "certified",
+        "terminal_state",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "auditor_cycle_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "certified": {
+          "type": "boolean"
+        },
+        "terminal_state": {
+          "enum": [
+            "certified",
+            "critical_block",
+            "authority_boundary",
+            "repair_budget_exhausted"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "repair_attempt_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "failure_signature_ref",
+        "repair_strategy",
+        "changed_refs",
+        "test_run_refs",
+        "auditor_cycle_ref",
+        "status",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "failure_signature_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "repair_strategy": {
+          "$ref": "#/$defs/repair_strategy"
+        },
+        "changed_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "auditor_cycle_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "enum": [
+            "applied",
+            "blocked",
+            "reverted",
+            "failed"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "validation_pass_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "legacy_alias_for",
+        "cycle_report_ref",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "compatibility_only",
+        "handoff"
+      ],
+      "properties": {
+        "legacy_alias_for": {
+          "const": "auditor_cycle_report"
+        },
+        "cycle_report_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "pass_number": {
+          "enum": [
+            1,
+            2,
+            3
+          ]
+        },
+        "pass_name": {
+          "enum": [
+            "document_creation",
+            "canonical_alignment",
+            "canonical_systems"
+          ]
+        },
+        "pass_verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "skipped",
+            "blocked"
+          ]
+        },
+        "compatibility_only": {
+          "const": true
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "merge_or_promotion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "source_ref",
+        "destination_ref",
+        "promotion_type",
+        "status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "destination_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "promotion_type": {
+          "$ref": "#/$defs/promotion_type"
+        },
+        "status": {
+          "$ref": "#/$defs/promotion_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "source_control_finalization_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "branch_ref",
+        "commit_ref",
+        "final_status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "commit_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "final_status": {
+          "$ref": "#/$defs/source_control_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "executor_intake_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intake_id",
+        "workgraph_ref",
+        "worknode_request_refs",
+        "accepted_refs",
+        "rejected_refs",
+        "blockers",
+        "status",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "authority_refs",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "intake_id": {
+          "type": "string"
+        },
+        "workgraph_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worknode_request_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "accepted_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rejected_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked",
+            "mixed"
+          ]
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "authority_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "handoff_row_id": {
+      "type": "string",
+      "enum": [
+        "H-001",
+        "H-002",
+        "H-003",
+        "H-004",
+        "H-005",
+        "H-006",
+        "H-007",
+        "H-008",
+        "H-009",
+        "H-010",
+        "H-011",
+        "H-012",
+        "H-013",
+        "H-014",
+        "H-015",
+        "H-016",
+        "H-017",
+        "H-018"
+      ]
+    },
+    "schema_payload_ref": {
+      "type": "string",
+      "enum": [
+        "auditor_cycle_report",
+        "auditor_verification_receipt",
+        "capability_requirement",
+        "codex_external_gui_agent_request",
+        "codex_work_package",
+        "compile_wave_contract",
+        "compile_worklist",
+        "compiler_model_routing",
+        "executor_intake_report",
+        "goal_completion_receipt",
+        "handoff_matrix",
+        "handoff_row",
+        "merge_or_promotion_receipt",
+        "model_resolution_receipt",
+        "node_seed_candidate",
+        "node_seed_review",
+        "ordering",
+        "plan_compile_receipt",
+        "plan_compile_run",
+        "repair_attempt_receipt",
+        "safe_point_receipt",
+        "source_control_context",
+        "source_control_finalization_receipt",
+        "source_control_preflight_receipt",
+        "source_control_receipt",
+        "stage_card",
+        "test_binding",
+        "test_capability_report",
+        "test_case",
+        "test_harness_probe_report",
+        "test_run_receipt",
+        "test_strategy",
+        "validation_pass_report",
+        "visual_evidence",
+        "workgraph_draft",
+        "worknode_change_receipt",
+        "worknode_completion_receipt",
+        "worknode_dispatch_receipt",
+        "worknode_request"
+      ]
+    },
+    "stage_name": {
+      "type": "string",
+      "enum": [
+        "preflight_currentness",
+        "scope_selection",
+        "planunit_normalization",
+        "test_repository_discovery",
+        "typed_dependency_analysis",
+        "implementation_surface_mapping",
+        "work_risk_classification",
+        "nodeseed_candidate_drafting",
+        "split_merge_sizing",
+        "candidate_review",
+        "workgraph_construction",
+        "worknode_request_construction",
+        "final_compile_audit_repair",
+        "executor_handoff_certification",
+        "activation_transaction",
+        "orchestrator_projection"
+      ]
+    },
+    "result_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "complete",
+        "blocked",
+        "failed",
+        "cancelled",
+        "retry_required"
+      ]
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "false_node_generation",
+        "executor_boundary_bypass",
+        "unsafe_execution_context",
+        "false_completion",
+        "manual_only_completion",
+        "weak_test_oracle",
+        "unverifiable_completion",
+        "handoff_gap",
+        "shared_contract_gap",
+        "model_role_drift",
+        "settings_model_role_drift",
+        "receipt_projection_authority_drift",
+        "missing_completion_evidence",
+        "schema_contract_gap",
+        "source_control_drift",
+        "test_gap",
+        "authority_boundary",
+        "currentness_drift",
+        "implementation_readiness_drift",
+        "unknown"
+      ]
+    },
+    "reasoning_tier": {
+      "type": "string",
+      "enum": [
+        "low",
+        "standard",
+        "high",
+        "xhigh",
+        "audit"
+      ]
+    },
+    "work_type": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "schema",
+        "backend",
+        "frontend",
+        "gui",
+        "testing",
+        "source_control",
+        "model_routing",
+        "documentation",
+        "governance",
+        "integration",
+        "repair",
+        "audit"
+      ]
+    },
+    "effort_class": {
+      "type": "string",
+      "enum": [
+        "xs",
+        "small",
+        "medium",
+        "large",
+        "xl",
+        "high_effort",
+        "unknown"
+      ]
+    },
+    "context_size": {
+      "type": "string",
+      "enum": [
+        "tiny",
+        "small",
+        "medium",
+        "large",
+        "repo_wide",
+        "unknown"
+      ]
+    },
+    "validation_cost": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "requires_browser",
+        "requires_device",
+        "unknown"
+      ]
+    },
+    "authority_risk": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "requires_owner_review",
+        "blocked"
+      ]
+    },
+    "user_visible_risk": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "capability_lane": {
+      "type": "string",
+      "enum": [
+        "default",
+        "overseer",
+        "worker",
+        "gui_frontend_worker",
+        "high_effort_worker",
+        "auditor",
+        "source_control",
+        "testing",
+        "codex_bootstrap",
+        "external_gui_agent",
+        "unknown"
+      ]
+    },
+    "model_profile": {
+      "type": "string",
+      "enum": [
+        "default_model",
+        "overseer_model",
+        "worker_model",
+        "gui_frontend_worker_model",
+        "high_effort_worker_model",
+        "auditor_model",
+        "custom_provider"
+      ]
+    },
+    "build_phase": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "source_control",
+        "environment",
+        "contracts_storage",
+        "core_runtime",
+        "providers_models_permissions",
+        "gui_shell",
+        "features",
+        "integrations",
+        "automated_tests",
+        "promotion",
+        "auditor_certification"
+      ]
+    },
+    "dependency_type": {
+      "type": "string",
+      "enum": [
+        "hard",
+        "soft",
+        "ordering_only",
+        "parallel_ok",
+        "blocks_start",
+        "blocks_completion"
+      ]
+    },
+    "scheduler_lane": {
+      "type": "string",
+      "enum": [
+        "serial",
+        "parallel",
+        "gui_frontend",
+        "source_control",
+        "test",
+        "audit",
+        "high_effort"
+      ]
+    },
+    "automation_surface": {
+      "type": "string",
+      "enum": [
+        "cli",
+        "browser",
+        "desktop_gui",
+        "mobile_device",
+        "backend_api",
+        "library",
+        "mixed",
+        "none"
+      ]
+    },
+    "test_level": {
+      "type": "string",
+      "enum": [
+        "unit",
+        "integration",
+        "e2e",
+        "smoke",
+        "visual",
+        "contract",
+        "manual_blocked",
+        "mixed"
+      ]
+    },
+    "flake_policy": {
+      "type": "string",
+      "enum": [
+        "no_flake_allowed",
+        "rerun_once",
+        "quarantine_with_evidence",
+        "block_on_flake",
+        "not_applicable"
+      ]
+    },
+    "test_gap_policy": {
+      "type": "string",
+      "enum": [
+        "block_completion",
+        "defer_non_executable_harness_candidate",
+        "allow_with_disposition",
+        "not_applicable"
+      ]
+    },
+    "capability_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "missing",
+        "blocked",
+        "requires_research",
+        "unknown",
+        "not_applicable"
+      ]
+    },
+    "source_control_dirty_state": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "conflicted",
+        "blocked_preserved",
+        "contaminated",
+        "lineage_mismatch",
+        "unknown"
+      ]
+    },
+    "source_control_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "valid",
+        "blocked",
+        "failed",
+        "complete",
+        "skipped"
+      ]
+    },
+    "branch_head_state": {
+      "type": "string",
+      "enum": [
+        "clean",
+        "dirty",
+        "ahead",
+        "behind",
+        "diverged",
+        "detached",
+        "conflicted",
+        "unknown"
+      ]
+    },
+    "owner_lane": {
+      "type": "string",
+      "enum": [
+        "parent",
+        "worker",
+        "source_control",
+        "github_promotion",
+        "unknown"
+      ]
+    },
+    "lease_state": {
+      "type": "string",
+      "enum": [
+        "unleased",
+        "leased",
+        "released",
+        "blocked",
+        "unknown"
+      ]
+    },
+    "dirty_state_policy": {
+      "type": "string",
+      "enum": [
+        "require_clean",
+        "preserve_intentional",
+        "block_on_dirty",
+        "allow_tracked_only",
+        "not_applicable"
+      ]
+    },
+    "conflict_policy": {
+      "type": "string",
+      "enum": [
+        "block",
+        "manual_resolution_required",
+        "auto_resolve_allowed",
+        "not_applicable"
+      ]
+    },
+    "merge_policy": {
+      "type": "string",
+      "enum": [
+        "no_merge",
+        "fast_forward_only",
+        "squash_allowed",
+        "merge_commit_allowed",
+        "promotion_only"
+      ]
+    },
+    "github_policy": {
+      "type": "string",
+      "enum": [
+        "local_only",
+        "optional_promotion",
+        "required_checks",
+        "not_configured"
+      ]
+    },
+    "change_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "applied",
+        "blocked",
+        "failed",
+        "reverted",
+        "complete"
+      ]
+    },
+    "promotion_type": {
+      "type": "string",
+      "enum": [
+        "local_finalization",
+        "branch_merge",
+        "pull_request",
+        "tag",
+        "release",
+        "not_applicable"
+      ]
+    },
+    "promotion_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "promoted",
+        "blocked",
+        "failed",
+        "skipped",
+        "complete"
+      ]
+    },
+    "finding_severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "finding_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "repaired",
+        "dispositioned",
+        "blocked",
+        "certified"
+      ]
+    },
+    "cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "item_index",
+        "checkpoint_ref",
+        "source_hash"
+      ],
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "item_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "item_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "hash_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_index_hash",
+        "plan_unit_hash_refs",
+        "schema_hash_refs",
+        "created_at_utc"
+      ],
+      "properties": {
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "plan_unit_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "schema_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "created_at_utc": {
+          "type": "string"
+        }
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker_id",
+        "blocker_type",
+        "severity",
+        "description",
+        "owner",
+        "resolution_route",
+        "evidence_refs"
+      ],
+      "properties": {
+        "blocker_id": {
+          "type": "string"
+        },
+        "blocker_type": {
+          "type": "string",
+          "enum": [
+            "missing_evidence",
+            "authority_boundary",
+            "schema_gap",
+            "test_gap",
+            "source_control_gap",
+            "currentness_gap",
+            "runtime_forbidden",
+            "other"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "resolution_route": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "capability_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "capability_lane",
+        "required_capability_refs",
+        "required_level",
+        "verification_refs",
+        "fallback_policy",
+        "blocker_policy"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "required_capability_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_level": {
+          "type": "string",
+          "enum": [
+            "required",
+            "preferred",
+            "fallback",
+            "blocked_if_missing"
+          ]
+        },
+        "verification_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "fallback_policy": {
+          "type": "string",
+          "enum": [
+            "no_fallback",
+            "allowed_with_evidence",
+            "requires_research",
+            "not_applicable"
+          ]
+        },
+        "blocker_policy": {
+          "type": "string",
+          "enum": [
+            "block_if_missing",
+            "warn_if_missing",
+            "defer_with_disposition"
+          ]
+        }
+      }
+    },
+    "capability_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "capability_ref",
+        "capability_lane",
+        "result",
+        "fallback_allowed",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string"
+        },
+        "capability_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "not_checked"
+          ]
+        },
+        "fallback_allowed": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_level",
+        "mutation_policy",
+        "escalation_required",
+        "owner_refs"
+      ],
+      "properties": {
+        "authority_level": {
+          "type": "string",
+          "enum": [
+            "design_only",
+            "review_only",
+            "executor_owned",
+            "owner_doc_owned",
+            "blocked"
+          ]
+        },
+        "mutation_policy": {
+          "type": "string",
+          "enum": [
+            "no_mutation",
+            "schema_only",
+            "plans_only",
+            "mutation_after_executor_intake",
+            "blocked"
+          ]
+        },
+        "escalation_required": {
+          "type": "boolean"
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "sizing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "size_class",
+        "estimated_files",
+        "estimated_plan_units",
+        "split_recommended",
+        "sizing_reason"
+      ],
+      "properties": {
+        "size_class": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "small",
+            "medium",
+            "large",
+            "xl",
+            "unknown"
+          ]
+        },
+        "estimated_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_plan_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "split_recommended": {
+          "type": "boolean"
+        },
+        "sizing_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "item_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_items",
+        "source_refs",
+        "write_scope",
+        "split_merge_policy"
+      ],
+      "properties": {
+        "max_items": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_scope": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "split_merge_policy": {
+          "type": "string",
+          "enum": [
+            "split_if_over_limit",
+            "merge_if_same_owner",
+            "block_if_ambiguous"
+          ]
+        }
+      }
+    },
+    "parent_writeback_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parent_only_writes",
+        "parent_writeback_required",
+        "allowed_write_refs"
+      ],
+      "properties": {
+        "parent_only_writes": {
+          "const": true
+        },
+        "parent_writeback_required": {
+          "const": true
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "compile_parallelism_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parallelism_required",
+        "minimum_parallel_assignments",
+        "assignment_receipt_refs",
+        "completion_receipt_refs",
+        "certification_rule"
+      ],
+      "properties": {
+        "parallelism_required": {
+          "type": "boolean"
+        },
+        "minimum_parallel_assignments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "assignment_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "completion_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "certification_rule": {
+          "type": "string",
+          "enum": [
+            "not_required_for_serial_stage",
+            "requires_assignment_and_completion_receipts",
+            "blocked_when_required_receipts_absent"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "parallelism_required": {
+                "const": true
+              }
+            },
+            "required": [
+              "parallelism_required"
+            ]
+          },
+          "then": {
+            "properties": {
+              "minimum_parallel_assignments": {
+                "type": "integer",
+                "minimum": 2
+              },
+              "assignment_receipt_refs": {
+                "$ref": "#/$defs/non_empty_ref_list"
+              },
+              "completion_receipt_refs": {
+                "$ref": "#/$defs/non_empty_ref_list"
+              },
+              "certification_rule": {
+                "enum": [
+                  "requires_assignment_and_completion_receipts",
+                  "blocked_when_required_receipts_absent"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "compile_wave_assignment_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "stage",
+        "wave_id",
+        "assignment_id",
+        "assigned_agent_role",
+        "issued_at_utc",
+        "source_item_refs",
+        "parent_writeback_required"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "wave_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assigned_agent_role": {
+          "type": "string",
+          "enum": [
+            "parent",
+            "subagent",
+            "auditor",
+            "repairer",
+            "reviewer"
+          ]
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_item_refs": {
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "parent_writeback_required": {
+          "const": true
+        }
+      }
+    },
+    "compile_wave_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "stage",
+        "wave_id",
+        "assignment_id",
+        "result_status",
+        "completed_at_utc",
+        "durable_evidence_refs",
+        "parent_writeback_required"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "wave_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assignment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_status": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "blocked",
+            "failed",
+            "cancelled",
+            "retry_required"
+          ]
+        },
+        "completed_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "durable_evidence_refs": {
+          "$ref": "#/$defs/non_empty_ref_list"
+        },
+        "parent_writeback_required": {
+          "const": true
+        }
+      }
+    },
+    "compile_wave_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wave_id",
+        "assignment_id",
+        "stage",
+        "assigned_agent_role",
+        "source_item_refs",
+        "read_set",
+        "write_set",
+        "forbidden_writes",
+        "parent_only_writes",
+        "result_status",
+        "retry_route",
+        "resume_ref",
+        "durable_evidence_refs",
+        "assignment_receipt",
+        "completion_receipt",
+        "parent_writeback_required"
+      ],
+      "properties": {
+        "wave_id": {
+          "type": "string"
+        },
+        "assignment_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "assigned_agent_role": {
+          "type": "string",
+          "enum": [
+            "parent",
+            "subagent",
+            "auditor",
+            "repairer",
+            "reviewer"
+          ]
+        },
+        "source_item_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_set": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "parent_only_writes": {
+          "const": true
+        },
+        "result_status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "retry_route": {
+          "$ref": "#/$defs/compile_wave_retry_route"
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "durable_evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "assignment_receipt": {
+          "$ref": "#/$defs/compile_wave_assignment_receipt"
+        },
+        "completion_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/compile_wave_completion_receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_writeback_required": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "result_status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "result_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "completion_receipt": {
+                "$ref": "#/$defs/compile_wave_completion_receipt"
+              },
+              "durable_evidence_refs": {
+                "$ref": "#/$defs/non_empty_ref_list"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "compile_worklist_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "source_refs",
+        "status",
+        "assigned_wave_ref",
+        "evidence_refs"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "assigned_wave_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "workgraph_node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_ref",
+        "source_candidate_refs",
+        "status",
+        "ordering"
+      ],
+      "properties": {
+        "node_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_candidate_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "review_ready",
+            "blocked",
+            "approved"
+          ]
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        }
+      }
+    },
+    "dependency_edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_ref",
+        "to_ref",
+        "dependency_type",
+        "evidence_refs"
+      ],
+      "properties": {
+        "from_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "to_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dependency_type": {
+          "$ref": "#/$defs/dependency_type"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "scheduler_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduler_lane",
+        "parallelism_policy",
+        "ordering"
+      ],
+      "properties": {
+        "scheduler_lane": {
+          "$ref": "#/$defs/scheduler_lane"
+        },
+        "parallelism_policy": {
+          "type": "string",
+          "enum": [
+            "serial_only",
+            "parallel_allowed",
+            "requires_isolated_worktree",
+            "blocked"
+          ]
+        },
+        "ordering": {
+          "$ref": "#/$defs/ordering"
+        }
+      }
+    },
+    "graph_integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "cycle_check_status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "blocked",
+            "invalid"
+          ]
+        },
+        "cycle_check_status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "validation_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "validator_refs",
+        "blockers"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "valid",
+            "blocked",
+            "invalid"
+          ]
+        },
+        "validator_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        }
+      }
+    },
+    "online_research": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status",
+        "source_refs"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_required",
+            "required_pending",
+            "complete",
+            "blocked"
+          ]
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_probe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "verification_command",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "oracle_id",
+        "oracle_type",
+        "automation_surface",
+        "assertion_refs",
+        "evidence_refs"
+      ],
+      "properties": {
+        "oracle_id": {
+          "type": "string"
+        },
+        "oracle_type": {
+          "type": "string",
+          "enum": [
+            "browser_dom",
+            "console",
+            "network",
+            "screenshot",
+            "visual",
+            "launch",
+            "window",
+            "accessibility",
+            "emulator_logs",
+            "api",
+            "contract",
+            "database",
+            "exit_code",
+            "output",
+            "filesystem",
+            "unit",
+            "property"
+          ]
+        },
+        "automation_surface": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "assertion_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "source_control_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_id",
+        "worktree_id",
+        "worktree_path",
+        "branch_ref",
+        "branch_head_state",
+        "baseline_commit_oid",
+        "head_commit_oid",
+        "safe_point_id",
+        "changed_files",
+        "conflict_refs",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "rollback_ref",
+        "restore_command_or_action",
+        "owner_lane",
+        "lease_state"
+      ],
+      "properties": {
+        "repo_id": {
+          "type": "string"
+        },
+        "worktree_id": {
+          "type": "string"
+        },
+        "worktree_path": {
+          "type": "string"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "dirty_state_policy": {
+          "$ref": "#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        }
+      }
+    },
+    "auditor_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "finding_id",
+        "severity",
+        "category",
+        "detail",
+        "source_refs",
+        "evidence_refs",
+        "status"
+      ],
+      "properties": {
+        "finding_id": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/finding_severity"
+        },
+        "category": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "$ref": "#/$defs/finding_status"
+        }
+      }
+    },
+    "repair_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repair_id",
+        "finding_refs",
+        "strategy",
+        "changed_refs",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "repair_id": {
+          "type": "string"
+        },
+        "finding_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "changed_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "applied",
+            "blocked",
+            "reverted",
+            "failed"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "repair_strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "finding_ref",
+        "approach",
+        "allowed_write_refs",
+        "rollback_route"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string"
+        },
+        "finding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "approach": {
+          "type": "string",
+          "enum": [
+            "bounded_repair",
+            "schema_repair",
+            "doc_repair",
+            "test_repair",
+            "source_control_repair",
+            "block"
+          ]
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_route": {
+          "type": "string"
+        }
+      }
+    },
+    "validator_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "validator_id",
+        "command",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "validator_id": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "risk_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "risk_id",
+        "risk_class",
+        "status",
+        "mitigation",
+        "evidence_refs"
+      ],
+      "properties": {
+        "risk_id": {
+          "type": "string"
+        },
+        "risk_class": {
+          "$ref": "#/$defs/risk_class"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "mitigated",
+            "accepted",
+            "blocked"
+          ]
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "handoff_matrix"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/handoff_matrix"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "handoff_row"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/handoff_row"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "plan_compile_run"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/plan_compile_run"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "stage_card"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/stage_card"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_dispatch_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_dispatch_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "compile_worklist"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/compile_worklist"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_completion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_completion_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "auditor_cycle_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/auditor_cycle_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "auditor_verification_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/auditor_verification_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "repair_attempt_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/repair_attempt_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "validation_pass_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/validation_pass_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "node_seed_candidate"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/node_seed_candidate"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "node_seed_review"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/node_seed_review"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "workgraph_draft"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/workgraph_draft"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_request"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "compiler_model_routing"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/compiler_model_routing"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "codex_work_package"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/codex_work_package"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "codex_external_gui_agent_request"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/codex_external_gui_agent_request"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "plan_compile_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/plan_compile_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_capability_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_capability_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_harness_probe_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_harness_probe_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_strategy"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_strategy"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_case"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_case"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "test_run_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/test_run_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "visual_evidence"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/visual_evidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_preflight_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_preflight_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "safe_point_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/safe_point_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "worknode_change_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/worknode_change_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "merge_or_promotion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/merge_or_promotion_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "source_control_finalization_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/source_control_finalization_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "model_resolution_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/model_resolution_receipt"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "executor_intake_report"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/executor_intake_report"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "goal_completion_receipt"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/goal_completion_receipt"
+          }
+        }
+      }
+    }
+  ]
+}

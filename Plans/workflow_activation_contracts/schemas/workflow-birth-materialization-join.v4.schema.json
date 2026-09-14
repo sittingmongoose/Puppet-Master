@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json",
+  "description": "Transient whole original Workflow source arguments for separate birth/association and later materialization transactions. A4 source values and original launch selectors remain exact. Current shared Goal/control values are separately authenticated native arguments.",
+  "$defs": {
+    "NativeCompileSourceWithOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeCompileSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "ActivationDecisionSourceWithOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "CertifiedGraphSourceWithOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CertifiedGraphSourcePhysical"
+        },
+        "origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "ActualWorkflowLaunchSources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_compile",
+        "activation_decision",
+        "certified_graph"
+      ],
+      "properties": {
+        "native_compile": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/NativeCompileSourceWithOrigin"
+        },
+        "activation_decision": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/ActivationDecisionSourceWithOrigin"
+        },
+        "certified_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/CertifiedGraphSourceWithOrigin"
+        }
+      }
+    },
+    "PreparedWorkflowBirth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "body_origin",
+        "control",
+        "control_origin",
+        "start_outbox",
+        "start_outbox_origin"
+      ],
+      "properties": {
+        "body": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+            },
+            {
+              "properties": {
+                "record": {
+                  "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InitialGoalRunBody"
+                }
+              }
+            }
+          ]
+        },
+        "body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        },
+        "control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "start_outbox": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+            },
+            {
+              "properties": {
+                "record": {
+                  "properties": {
+                    "phase": {
+                      "const": "reserved"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "start_outbox_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "WorkflowBirthLowerArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_launch_sources",
+        "prepared_birth"
+      ],
+      "properties": {
+        "original_launch_sources": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/ActualWorkflowLaunchSources"
+        },
+        "prepared_birth": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/PreparedWorkflowBirth"
+        }
+      }
+    },
+    "ActualWorkflowBeforeMaterialization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body",
+        "body_origin",
+        "control",
+        "control_origin",
+        "reserved_start_outbox",
+        "reserved_start_outbox_origin"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+        },
+        "body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        },
+        "control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "reserved_start_outbox": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+        },
+        "reserved_start_outbox_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "MaterializedMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_materialization",
+        "native_worknode",
+        "native_worknode_origin",
+        "native_control",
+        "native_control_origin",
+        "native_result",
+        "native_result_origin",
+        "born_source",
+        "born_origin",
+        "materialization_receipt",
+        "materialization_origin"
+      ],
+      "properties": {
+        "current_materialization": {
+          "$ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CurrentMaterializeArgument"
+        },
+        "native_worknode": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageWorkNodeRecord"
+        },
+        "native_worknode_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "native_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageWorkNodeControl"
+        },
+        "native_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "native_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageNativeOperationResult"
+        },
+        "native_result_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "born_source": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecordPhysical"
+        },
+        "born_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "materialization_receipt": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceiptPhysical"
+        },
+        "materialization_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "PreparedWorkflowMaterialization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_run_control",
+        "native_run_control_origin",
+        "members",
+        "installed_graph",
+        "installed_graph_origin",
+        "required_set",
+        "required_set_origin",
+        "after_body",
+        "after_body_origin",
+        "after_control",
+        "after_control_origin",
+        "transition",
+        "transition_origin",
+        "native_run_result",
+        "native_run_result_origin"
+      ],
+      "properties": {
+        "native_run_control": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunExecutionControl"
+        },
+        "native_run_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/MaterializedMember"
+          },
+          "minItems": 1
+        },
+        "installed_graph": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraphPhysical"
+        },
+        "installed_graph_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "required_set": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSetPhysical"
+        },
+        "required_set_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "after_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+        },
+        "after_body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "after_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        },
+        "after_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "transition": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+        },
+        "transition_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "native_run_result": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult"
+        },
+        "native_run_result_origin": {
+          "$ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin"
+        }
+      }
+    },
+    "WorkflowMaterializationLowerArgument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_launch_sources",
+        "before",
+        "prepared_materialization"
+      ],
+      "properties": {
+        "original_launch_sources": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/ActualWorkflowLaunchSources"
+        },
+        "before": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/ActualWorkflowBeforeMaterialization"
+        },
+        "prepared_materialization": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/PreparedWorkflowMaterialization"
+        }
+      }
+    },
+    "RetainedWorkflowTransitionLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_body",
+        "before_control",
+        "after_body",
+        "after_body_origin",
+        "after_control",
+        "after_control_origin",
+        "transition",
+        "transition_origin"
+      ],
+      "properties": {
+        "before_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "before_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "after_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "after_body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "after_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "after_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "transition": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical"
+        },
+        "transition_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "CurrentWorkflowLaunchChainRead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original_launch_sources",
+        "birth_body",
+        "birth_body_origin",
+        "birth_control",
+        "birth_control_origin",
+        "reserved_outbox_at_birth",
+        "reserved_outbox_origin",
+        "current_body",
+        "current_body_origin",
+        "current_control",
+        "current_control_origin",
+        "current_outbox",
+        "current_outbox_origin",
+        "transitions"
+      ],
+      "properties": {
+        "original_launch_sources": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/ActualWorkflowLaunchSources"
+        },
+        "birth_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "birth_body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "birth_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "birth_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "reserved_outbox_at_birth": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector"
+        },
+        "reserved_outbox_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "current_body": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical"
+        },
+        "current_body_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "current_control": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical"
+        },
+        "current_control_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "current_outbox": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+        },
+        "current_outbox_origin": {
+          "$ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOriginPhysical"
+        },
+        "transitions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/RetainedWorkflowTransitionLink"
+          }
+        }
+      }
+    }
+  }
+}

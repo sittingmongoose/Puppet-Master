@@ -1,0 +1,1515 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json",
+  "$comment": "SOURCE ONLY. Live readers require an independently held actual original native compiler operation, never a serialized capture/selector. Retained full operational state is a separate mandatory recovery dependency.",
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "project_id",
+        "plan_compile_run_id"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "NativeOwner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "owner_epoch",
+        "server_id",
+        "server_claim_epoch"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_claim_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "OriginalCompileState": {
+      "allOf": [
+        {
+          "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_run"
+        },
+        {
+          "properties": {
+            "contract_mode": {
+              "const": "native_runtime"
+            }
+          }
+        }
+      ]
+    },
+    "OriginalCompileReceipt": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt"
+    },
+    "OriginalGraph": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+    },
+    "OriginalRequest": {
+      "$ref": "inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+    },
+    "OriginalSourceBinding": {
+      "$ref": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+    },
+    "LaunchIdentityReservation": {
+      "$ref": "activation/activation-source.schema.json#/$defs/LaunchIdentityReservation"
+    },
+    "ApprovedPlanPack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "approved_plan_pack_id",
+        "pack_version",
+        "pack_hash",
+        "planning_run_id",
+        "planning_run_revision",
+        "topic_map_version",
+        "plan_unit_index_hash",
+        "acceptance_unit_index_hash",
+        "project_context_snapshot_hash",
+        "testing_policy_hash",
+        "final_audit_closure_hash",
+        "created_at_utc",
+        "created_by_actor_ref",
+        "source_refs",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.approved_plan_pack.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_plan_pack_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pack_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pack_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planning_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planning_run_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "topic_map_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan_unit_index_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acceptance_unit_index_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_context_snapshot_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testing_policy_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final_audit_closure_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by_actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "prd_pack_ref": {
+          "type": "string"
+        },
+        "amendment_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "closure_record_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readiness_report_ref": {
+          "type": "string"
+        },
+        "ledger_lineage_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supersedes_pack_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "PlanApprovedOutbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "approval_cas_receipt_id",
+        "approved_plan_pack_id",
+        "idempotency_key",
+        "plan_compile_run_id",
+        "outbox_status",
+        "outbox_sequence",
+        "created_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plan_approved_outbox.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_cas_receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_plan_pack_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outbox_status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "published",
+            "acked",
+            "failed"
+          ]
+        },
+        "outbox_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "published_event_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "published_sequence_id": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "retry_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_error_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "OriginalApprovalInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pack",
+        "outbox",
+        "pack_source",
+        "outbox_source",
+        "approval_cas_receipt_ref"
+      ],
+      "properties": {
+        "pack": {
+          "$ref": "#/$defs/ApprovedPlanPack"
+        },
+        "outbox": {
+          "$ref": "#/$defs/PlanApprovedOutbox"
+        },
+        "pack_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "outbox_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "approval_cas_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "OriginalCompilerView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "owner",
+        "original_operation_id",
+        "original_operation_revision",
+        "compile_revision",
+        "state",
+        "approvals",
+        "launch_identity"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "compile_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "$ref": "#/$defs/OriginalCompileState"
+        },
+        "approvals": {
+          "$ref": "#/$defs/OriginalApprovalInputs"
+        },
+        "launch_identity": {
+          "$ref": "#/$defs/LaunchIdentityReservation"
+        }
+      }
+    },
+    "OriginalCertificationView": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiler",
+        "receipt",
+        "graph",
+        "requests",
+        "request_bindings",
+        "source_draft_graph"
+      ],
+      "properties": {
+        "compiler": {
+          "$ref": "#/$defs/OriginalCompilerView"
+        },
+        "receipt": {
+          "$ref": "#/$defs/OriginalCompileReceipt"
+        },
+        "graph": {
+          "$ref": "#/$defs/OriginalGraph"
+        },
+        "requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalRequest"
+          }
+        },
+        "request_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "activation/activation-source.schema.json#/$defs/GraphRequestBinding"
+          }
+        },
+        "source_draft_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "NativeCompileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "capture"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "origin"
+          ],
+          "properties": {
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_native_compile_live_capture"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_native_compile_live_capture.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "origin": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_compiler_live_capture_origin"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_compiler_live_capture_origin.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "NativeCompileCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "input_kind",
+        "input_schema_ref",
+        "capture_id",
+        "owner",
+        "original_operation_id",
+        "original_operation_revision",
+        "original_compile_revision",
+        "original_input_semantic_sha256",
+        "original_approval_pack_sha256",
+        "original_approval_outbox_sha256",
+        "original_result_id",
+        "original_transaction_id",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run"
+        },
+        "capture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_compile_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_approval_pack_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_approval_outbox_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_result_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageNativeCompileCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_compile_live_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeCompileCapture"
+        }
+      }
+    },
+    "NativeCompileReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "expected_original_operation_id",
+        "expected_original_operation_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/NativeCompileBinding"
+        },
+        "expected_original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "NativeCompileLiveResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "input",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "input": {
+          "$ref": "#/$defs/OriginalCompileState"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageNativeCompileCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "NativeCompileAuditResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "native_compile"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageNativeCompileCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CompileCertificationBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "capture"
+      ],
+      "properties": {
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "capture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "origin"
+          ],
+          "properties": {
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_compile_certification_live_capture"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_compile_certification_live_capture.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "origin": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "storage_instance_id",
+                "family_id",
+                "physical_key",
+                "schema_id",
+                "schema_version",
+                "physical_value_sha256"
+              ],
+              "properties": {
+                "storage_instance_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "family_id": {
+                  "const": "workflow_compiler_live_capture_origin"
+                },
+                "physical_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema_id": {
+                  "const": "pm.storage_value.workflow_compiler_live_capture_origin.v1"
+                },
+                "schema_version": {
+                  "const": "1.0.0"
+                },
+                "physical_value_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "CompileCertificationCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "input_kind",
+        "input_schema_ref",
+        "capture_id",
+        "owner",
+        "original_operation_id",
+        "original_operation_revision",
+        "original_compile_revision",
+        "original_input_semantic_sha256",
+        "original_approval_pack_sha256",
+        "original_approval_outbox_sha256",
+        "original_result_id",
+        "original_transaction_id",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "input_schema_ref": {
+          "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt"
+        },
+        "capture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_compile_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "original_input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_approval_pack_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_approval_outbox_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_result_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageCompileCertificationCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_compile_certification_live_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CompileCertificationCapture"
+        }
+      }
+    },
+    "CompileCertificationReadRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "binding",
+        "expected_original_operation_id",
+        "expected_original_operation_revision"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "binding": {
+          "$ref": "#/$defs/CompileCertificationBinding"
+        },
+        "expected_original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_original_operation_revision": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "CompileCertificationLiveResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "input",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "input": {
+          "$ref": "#/$defs/OriginalCompileReceipt"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCompileCertificationCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CompileCertificationAuditResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "input_kind",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "input_kind": {
+          "const": "compile_certification"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCompileCertificationCapture"
+        },
+        "origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "CaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "issuer_method",
+        "owner",
+        "original_operation_id",
+        "original_transaction_id",
+        "issued_capture_key",
+        "issued_capture_record_sha256",
+        "captured_at_utc"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "issuer_method": {
+          "enum": [
+            "owner.plan_compile.native.publish_state_input.v1",
+            "owner.plan_compile.native.publish_certification_input.v1"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/NativeOwner"
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_capture_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_capture_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "StorageCaptureOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_compiler_live_capture_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CaptureOrigin"
+        }
+      }
+    },
+    "Unavailable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "reason",
+        "input",
+        "capture",
+        "origin",
+        "action_authority"
+      ],
+      "properties": {
+        "status": {
+          "const": "unavailable"
+        },
+        "reason": {
+          "enum": [
+            "native_runtime_unavailable",
+            "original_operation_unavailable",
+            "original_source_changed",
+            "owner_or_permission_changed",
+            "capture_custody_lost",
+            "role_not_installed",
+            "retained_full_source_unavailable",
+            "required_recovery_custody_unbound",
+            "scope_mismatch",
+            "codec_unavailable"
+          ]
+        },
+        "input": {
+          "type": "null"
+        },
+        "capture": {
+          "type": "null"
+        },
+        "origin": {
+          "type": "null"
+        },
+        "action_authority": {
+          "const": "none"
+        }
+      }
+    },
+    "NativeCompileMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "contract_mode",
+        "launch_policy",
+        "runtime_adapter",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "automatic_launch_enabled",
+        "planning_wizard_launch_enabled",
+        "codex_bootstrap_launch_enabled",
+        "current_state",
+        "receipts",
+        "compile_wave_contracts",
+        "complete_input"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "source_plan_set_id": {
+          "type": "string"
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "launch_source": {
+          "enum": [
+            "codex_bootstrap",
+            "native_planning_wizard"
+          ]
+        },
+        "contract_mode": {
+          "const": "native_runtime"
+        },
+        "launch_policy": {
+          "enum": [
+            "disabled",
+            "automatic_after_approval"
+          ]
+        },
+        "runtime_adapter": {
+          "enum": [
+            "codex_bootstrap_adapter",
+            "native_puppet_master_adapter"
+          ]
+        },
+        "runtime_enablement_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runtime_policy_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "design_only_disabled",
+            "preflight",
+            "running",
+            "blocked",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "current_stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "cursor": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/cursor"
+        },
+        "last_green_stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_green_hashes": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/hash_snapshot"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "activation/activation-source.schema.json#/$defs/BlockerDecisionMetadata"
+          },
+          "minItems": 0
+        },
+        "next_required_stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automatic_launch_enabled": {
+          "type": "boolean"
+        },
+        "planning_wizard_launch_enabled": {
+          "type": "boolean"
+        },
+        "codex_bootstrap_launch_enabled": {
+          "const": false
+        },
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "initialized",
+            "preflight",
+            "stage_running",
+            "stage_blocked",
+            "stage_complete",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "receipts": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "compile_wave_contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "activation/activation-source.schema.json#/$defs/CompileWaveMetadata"
+          },
+          "minItems": 0
+        },
+        "complete_input": {
+          "$ref": "#/$defs/NativeCompileBinding"
+        }
+      }
+    },
+    "CompileCertificationMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "compile_id",
+        "stage",
+        "status",
+        "evidence_refs",
+        "complete_input"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "status": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/result_status"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "complete_input": {
+          "$ref": "#/$defs/CompileCertificationBinding"
+        }
+      }
+    },
+    "NativeCompileSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_revision",
+        "launch_identity_reservation",
+        "plan_compile_run_id",
+        "project_id",
+        "approved_plan_pack",
+        "approval_outbox",
+        "approval_cas_receipt_ref",
+        "compile_metadata"
+      ],
+      "properties": {
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "launch_identity_reservation": {
+          "$ref": "activation/activation-source.schema.json#/$defs/LaunchIdentityReservation"
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_plan_pack": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "approval_outbox": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "approval_cas_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compile_metadata": {
+          "$ref": "#/$defs/NativeCompileMetadata"
+        }
+      }
+    },
+    "CertifiedGraphSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "plan_compile_run_id",
+        "workgraph_id",
+        "revision",
+        "source_compile",
+        "source_draft_graph",
+        "graph",
+        "request_bindings",
+        "compile_certification_receipt"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_compile": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "source_draft_graph": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OriginalSourceBinding"
+        },
+        "graph": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+        },
+        "request_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "activation/activation-source.schema.json#/$defs/GraphRequestBinding"
+          },
+          "minItems": 1
+        },
+        "compile_certification_receipt": {
+          "$ref": "#/$defs/CompileCertificationMetadata"
+        }
+      }
+    },
+    "NativeCompileSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_compile_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeCompileSource"
+        }
+      }
+    },
+    "CertifiedGraphSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_certified_graph_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CertifiedGraphSource"
+        }
+      }
+    },
+    "StatePublicationCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original",
+        "capture",
+        "capture_origin",
+        "source",
+        "source_origin"
+      ],
+      "properties": {
+        "original": {
+          "$ref": "#/$defs/OriginalCompilerView"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageNativeCompileCapture"
+        },
+        "capture_origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "source": {
+          "$ref": "#/$defs/NativeCompileSourcePhysical"
+        },
+        "source_origin": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    },
+    "CertificationPublicationCandidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "original",
+        "capture",
+        "capture_origin",
+        "source",
+        "source_origin"
+      ],
+      "properties": {
+        "original": {
+          "$ref": "#/$defs/OriginalCertificationView"
+        },
+        "capture": {
+          "$ref": "#/$defs/StorageCompileCertificationCapture"
+        },
+        "capture_origin": {
+          "$ref": "#/$defs/StorageCaptureOrigin"
+        },
+        "source": {
+          "$ref": "#/$defs/CertifiedGraphSourcePhysical"
+        },
+        "source_origin": {
+          "$ref": "activation/activation-source.schema.json#/$defs/OwnerIssueOriginPhysical"
+        }
+      }
+    }
+  }
+}

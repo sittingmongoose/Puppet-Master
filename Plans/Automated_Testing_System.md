@@ -4703,3 +4703,125 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+### ATS-053 - Original activation source and custody verification obligations
+
+ATS-053 defines the complete original test-capability source and unexecuted semantic verification obligations for CV-349, SP-308, PNC-025, GRS-077, EP-117, MS-139 and BRS-024. A source graph that parses or resolves is not proof that these original native owner boundaries execute correctly. Each obligation below requires its own positive and negative evidence from the actual original owner when implemented; static schema/source checks, examples, model output and a stored PASS flag cannot substitute for that execution.
+
+#### Whole original test-capability report
+
+`owner.ats.test_capability.output.v1` issues the complete original 22-field test_capability_report and actual ATS output identity through ats_test_capability_receipt and the original Storage participant. Preserve every required capability, installed tool/native runner, launch/browser/GUI/device/screenshot/log/headless observation, full research/probe arrays, automation surface, flags, exact verification command, expected artifacts, flake policy and complete handoff. The entire original request/digest, output identity and operation/occurrence join the exact original test-capability live stage and its capture/origin. `owner.storage.test_capability.capture_live.v1` is the capture/origin publisher, distinct from the semantic ATS output method.
+
+`owner.ats_test_capability_receipt.read_original.v1` retains full TestReadRequest/TestReadResult and complete TestDurableInputBinding. Its original source/origin and complete returned report must equal the whole genuinely captured input, not a subset of capability booleans. A missing original report cannot be repaired by a later re-probe, current tool inventory, copied screenshot, UI summary or another accepted request’s report. A newly authorized probe is a new original operation with new provenance; it is never historical recovery.
+
+The canonical report is distinct from raw probe stdout, logs, screenshots, traces and test-result blobs, which keep their actual ATS/Runtime Artifacts/source policies. Report readability proves neither successful probe execution nor current tool/capability availability. Current original ATS/Executor owners independently revalidate the relevant actual capability and admission before execution. No test command stored in a report is executed merely by reading or restoring it.
+
+#### Required semantic cases and expected dispositions
+
+| Obligation | Positive source/operation case | Required negative/refusal case |
+|---|---|---|
+| Whole resource identity | Every adopted resource and lexical/embedded reference resolves through its exact declared realm and unchanged complete body. | Same-ID historical control in a current realm, conflicting registration, network/basename fallback or changed nested reference cannot validate current authority. |
+| Existing storage preservation | All 166 original registry rows/policies remain exact while 54 complete new source rows are declared. | A deferred generic attempt/context or bootstrap compiler row is widened/promoted, an old policy changes, or an unrelated row joins the patch. |
+| Exact wrapper/key/codec | Entire required/optional/nullable/nested values and exact original key-scope/semantic/physical hashes agree under their actual codec. | An omitted nested field, rounded integer, unknown key, malformed Unicode, wrong A/R scope expansion, copied key prefix or semantic-versus-physical hash substitution refuses before effect. |
+| Genuine original provenance | Original operation/owner/epoch/request/output/capture/source/origin are authenticated from actual native services. | Equal bytes from another operation, caller owner IDs, copied origin or fake lease cannot establish source originality. |
+| Seven whole durable inputs | Every required source read returns its complete original input/source/origin and exact successful branch. | Unavailable source cannot be omitted, turned into empty collection, satisfied by capture metadata, re-probed, recompiled or re-resolved. |
+| Direct reader shape | Each of fourteen live/audit methods returns its exact complete inner available/unavailable result. | Adding an input_kind/result envelope, using only a success definition, or changing the original request shape fails the method contract. |
+| Role collection membership | Each preflight/test/Models collection exactly matches all original provisioning members and request applicability. | Duplicate, foreign or missing members, an empty failed-read collection or order changes where original order matters refuse. |
+| Compiler full state | Whole run, stage/worklist/wave/repair/audit/verification/retry/cancellation/supersession and next action survive original commit/readback. | A cursor-only checkpoint, flattened audit, missing whole wave, absent original artifact or reconstructed source cannot certify restart. |
+| Compiler timing | Genuine draft/ready before assignment persists only actual receipts; running required parallel work has its configured distinct non-parent assignments and authentic receipts. | Predicted completion, borrowed wave receipt, serial substitute for mandatory parallel work or validator-bypass claim refuses certification/dispatch. |
+| Certificate hash order | Certificate selects its genuine earlier input checkpoint; a later checkpoint can bind the issued certificate. | Certificate hashes the future checkpoint that hashes itself, or a reserved receipt ID is treated as already issued. |
+| Compiler head/recovery | Original whole-head CAS advances once and recovery preserves actual latest/terminal truth with full dependencies. | Missing restored head becomes fresh birth, an older head wins, or a stored resume string causes execution without current admission. |
+| Same-original preflight | Whole original 25-field receipt/context/handoff and request digest match its actual preflight operation and existing primary/origin. | Later completion capture, fake Attempt/context, fresh probe, current repository or compact capture replaces the original output. |
+| Models completeness | All eight receipt fields and entire request/model applicability remain, with original native policy/runtime sources where required. | Effective-model-only state, loss of fallback_reason, dummy pre-Goal runtime, replacing a full receipt with requested_effective_runtime, or a new resolution on replay refuses. |
+| ATS report identity | Whole 22-field report and original request/operation/probe provenance agree. | Report existence is treated as current capability or proof that an unavailable probe ran; raw artifact substitutes for whole original report. |
+| Child-source emptiness | Actual whole original graph/required-child authority is empty and applicable issued source arrays match. | Nonempty, omitted, unknown, stale or late-changed child authority passes because a caller supplied empty arrays. |
+| T0 reserved binding | Genuine full pre-reservation CAS issues complete owning BindingControl.pending and immutable revision/W0 candidate with epoch advance. | Empty lookup, foreign pending, stale owner/domain, changed candidate or partial reservation masquerades as original absence or final admission. |
+| T1 actual terminal control | Final joint commit consumes the actual reserved nonnull binding control/current epoch and clears only its own pending. | Older empty control is used as final preimage, expected_control hash is confused with reserved before_control hash, or a foreign pending is cleared. |
+| Direct Goal metadata | B0→B1 increments ordinary revision once, recomputes exact currentness/body hashes, preserves objective lineage and has null external_authority_ref. | Nonnull staged-producer external_authority_ref, invented accepted objective revision, unchanged ordinary revision or copied currentness refuses. |
+| T1 joint union | Actual original Workflow W0/control/outbox, Goal B1/control/narrow receipt and binding revision/origin/control publish atomically with genuine origin attribution. | A detached Goal metadata write, prematurely issued receipt, missing origin or partial association becomes success; any required output-authority back-edge refuses. |
+| Actual owner time attribution | Each original owner fixes its actual update/commit/issue time under its own literal field/codec rules before candidate hashing and final validation. | Future output supplies prior authority, hashed times are resampled after validation, or unrelated owner timestamps are forced equal to fabricate attribution. |
+| B0/B1 historical bridge | Actual current B1 plus original narrow receipt and binding source commitments authenticate the specific association step. | Reacquiring overwritten B0, labeling B1 as B0, rewriting original launch selector or accepting an arbitrary intervening Goal edit cannot authorize T2. |
+| T2 complete original family set | Every original native joint family and A4 materialization participant is present as a full required candidate/readback. | Missing global run result/origin, only a per-WorkNode result, missing whole run control/installed graph, or unused schema definitions are treated as the missing row. |
+| Global run result | Whole original operation=materialize result selects exact full run-control outer value, real operation/time and proven original birth preimage. | A result for another run/operation/control, fabricated before_revision=0 after restore loss, missing origin or after-predicate timestamp resampling refuses. |
+| Helper/native fences | Each actual lower reader/writer and outer publisher independently captures full source/preimage/expected output before helpers and rechecks after all helpers. | A helper changes any source/epoch/permission/Stop/candidate/unrelated union member; an outer-only check, returning logger or async gap cannot publish/disclose. |
+| Mutable Workflow successor | Current reader explicitly joins actual current body/control with authentic permitted compact transitions and current Goal association. | It requires vanished W0 payload, returns current bytes labeled activation_body, trusts a hash-only chain, or admits a later writer outside the pre-start contract. |
+| Retry and partial effects | Equal genuine original retry returns original result; later refusal preserves earlier actual reservation/Stop/source/effects and truthful unavailability. | Re-running a producer, second birth/materialization, rolling back unrelated genuine effects, or changing an immutable failure into success is forbidden. |
+| Retention and disclosure | Full closed canonical state/receipt custody retains its existing indefinite class; referenced raw/current-body sources keep original lifetimes and permissions. | Required fields are redacted after issuance, references extend raw-body lifetime, historical bodies are reconstructed, or disposed content is disclosed from surviving metadata. |
+| Backup/restore | Original coherent full transaction/dependency closure is verified with current tombstone/hold/newer-state truth before exposure. | Partial restored union, stale root/owner/codec, missing original dependency, resurrected deleted content or restored lease/capability leaves mutation fenced. |
+| Lifecycle boundary | Only original pre-start materialization is selected; later native methods remain separately admitted dependencies. | Later attempt/completion/cancellation/start action, event/dispatch/Usage, PNC-019, Step9 or global D05 clearance follows from source adoption. |
+
+Each negative case must be evaluated at every relevant independently callable entry and at its after-all-helpers final predicate, including passive disclosure/readback. Test the whole field/collection/transaction membership, not a single sampled hash or integer. Genuine prior effects and original immutable results remain truthful after a refusal. Fault injection must distinguish failure before original reservation, after genuine T0, after T1, before/after T2 and after original readback; neither a global Boolean nor a schema tag describes those actual effects.
+
+The known PNC-024 semantic-validator mismatch remains visible and unexecuted. Native execution, fixtures, adversarial helper probes, codec/crash/atomicity checks and backup/restore drills receive separate evidence and cannot be reported PASS from this contract. Existing event accounting, source-only depth findings, Step 9 and global D05 remain separately governed.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: ATS-053
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Original activation source and custody verification obligations. Every source/role/primitive/currentness/association/publication/read/replay/lifetime
+  oracle has explicit positive and negative behavior and remains unexecuted until native evidence exists.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- ATS-051
+- ATS-052
+- GRS-077
+- CV-349
+- SP-308
+- PNC-025
+- EP-117
+- MS-139
+- BRS-024
+unblocks: []
+acceptance_criteria:
+- Every source/role/primitive/currentness/association/publication/read/replay/lifetime oracle has explicit positive
+  and negative behavior and remains unexecuted until native evidence exists.
+- The full original 22-field ATS report and source identity are preserved separately from current capability and
+  raw probe artifacts.
+- T0/T1/T2 complete unions, global run result/origin, direct reader shapes and current mutable-body successor arguments
+  are validated at every lower and outer final boundary.
+- Static source checks cannot become native/fixture/model proof or alter PNC-019, Step9, global D05, readiness or
+  governance status.
+validation_surfaces:
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+- Plans/workflow_activation_contracts/compiler-field-map.json
+- Plans/workflow_activation_contracts/activation-field-map.json
+- Plans/workflow_activation_contracts/native-birth-field-map.json
+- Plans/workflow_activation_contracts/source-control-field-map.json
+- Plans/workflow_activation_contracts/association-hash-dependencies.json
+- Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json
+- Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: ats_053_activation_original_custody
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/physical-families.json, ContractName:Plans/workflow_activation_contracts/compiler-field-map.json, ContractName:Plans/workflow_activation_contracts/activation-field-map.json, ContractName:Plans/workflow_activation_contracts/native-birth-field-map.json, ContractName:Plans/workflow_activation_contracts/source-control-field-map.json, ContractName:Plans/workflow_activation_contracts/association-hash-dependencies.json, ContractName:Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json

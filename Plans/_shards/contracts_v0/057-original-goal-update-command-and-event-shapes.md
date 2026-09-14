@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22438-L23009
+Source lines: L22438-L23143
 
-Source SHA256: `f2f241eaab17b9c6afa65d9cc460034a13323832e13de141effbdecb2e6930e9`
+Source SHA256: `f51aafa68444acedecad08f0c3964b2786b822377c25745d01bf96f31ef0f9a1`
 
 ---
 
@@ -580,3 +580,137 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+### CV-349 - Complete Workflow activation source resources and original method contracts
+
+CV-349 adopts the whole owner schemas and resource bindings selected by `Plans/workflow_activation_schema_resources.json` and the complete physical/method contracts under `Plans/workflow_activation_contracts/`. Every imported schema body, `$id`, lexical `$ref`, required/optional/nullable branch, nested object/array and numeric language is preserved at its declared canonical path. A literal `proposals` or `proposed` token in an adopted identifier remains the exact canonical resource identity; it is not an instruction to fetch an experiment or permission to register arbitrary schemas. The owner declarations below, actual installed method and immutable resource map select the grammar. Existing owner schemas and retained historical graphs remain byte-exact.
+
+| Canonical schema below `Plans/workflow_activation_contracts/schemas/` | Preserved resource identity | Definitions |
+|---|---|---|
+| `activation-read-result.v4.schema.json` | `https://puppetmaster.local/proposals/workflow_activation_current_reader.v4.schema.json` | 0 |
+| `activation-recovery-views.v1.schema.json` | `https://puppetmaster.local/proposals/activation_original_recovery_views.v1.schema.json` | 8 |
+| `aggregate-live-input.v1.schema.json` | `https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json` | 21 |
+| `compiler-live-inputs.v1.schema.json` | `https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json` | 36 |
+| `current-goal-guard.v1.schema.json` | `https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json` | 3 |
+| `current-materialization.v1.schema.json` | `https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json` | 17 |
+| `goal-association-join.v4.schema.json` | `https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json` | 11 |
+| `historical-goal-cancel-control.schema.json` | `https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json` | 53 |
+| `historical-plans-to-code-handoff.schema.json` | `https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json` | 110 |
+| `models-request-live.v1.schema.json` | `https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json` | 17 |
+| `native-worknode-current-activation.v1.schema.json` | `https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json` | 85 |
+| `native-worknode-source.v1.schema.json` | `pm.executor.native_worknode_custody.proposed.v1` | 85 |
+| `operational-custody.v1.schema.json` | `https://puppetmaster.local/proposals/activation_seven_operational_custody.v1.schema.json` | 70 |
+| `operational-custody.v2.schema.json` | `https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json` | 72 |
+| `provisioning-live-inputs.v1.schema.json` | `https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0` | 17 |
+| `source-control-receipt-custody.v1.schema.json` | `https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0` | 56 |
+| `workflow-activation.v3.schema.json` | `https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json` | 78 |
+| `workflow-activation.v4.schema.json` | `https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json` | 82 |
+| `workflow-birth-materialization-join.v4.schema.json` | `https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json` | 12 |
+
+#### Separate whole resource realms
+
+The map supplies four independently closed offline realms. `retained_original_operational_v1` retains the whole original operational graph, including historical handoff/control bodies, for original interpretation only. `current_operational_source` selects the exact current operational-v2 grammar, its whole current handoff aliases and current direct-reader result contracts. `current_materialization_source` adds the complete current native materialization resource, full source join and Workflow birth/transition arguments. `current_goal_control` contains actual current Goal body/history/control/Stop/binding/writer-domain and Goal association arguments. No old same-ID body in a retained native cancellation graph can satisfy current Goal authority.
+
+Every whole-document retrieval URI and embedded resource pointer resolves to the exact pinned canonical file and whole bytes declared by the map. Relative and URN-like references retain their exact effective targets. Two different bodies cannot occupy one retrieval identity inside a realm. There is no network fallback, basename lookup, implicit search path, last-registration-wins alias or recursive validator substitution. Native source and current-control arguments are independently authenticated in their selected realms and joined by actual Storage/project/thread/Goal/run/operation/owner identity; a serialized cross-reference cannot mint native capability or join two unrelated operations.
+
+The complete historical native WorkNode resource has 85 definitions. Its separately adopted current-activation successor retains all 85 and changes only the explicit identity/reference propagation listed in `current-materialization-reference-map.json`; reversing that enumerated mapping restores the whole old resource. It is not a shortened native subset. The complete A4 resource retains all 82 definitions. `current-materialization.v1.schema.json` adds 17 definitions of whole transient arguments and current child refinements; it does not replace native fields or A4 capture provenance. Goal/Workflow association v4 adds whole transient before/candidate/current-read arguments, while its pre-existing physical families, original issuers and source record schemas remain unchanged. The exact original Goal body grammar is used with direct metadata external_authority_ref=null.
+
+#### Exact methods, returns and current refinements
+
+`methods.json` is the native original-method selection authority. It retains the seven complete original input/capture routes and explicitly selects fourteen complete current direct live/audit returns. The current result reference selects the nested `properties/result` schema, including the exact original available/unavailable alternatives; the outer `input_kind/result` inspection wrapper is not added to any existing direct method’s wire return. Existing complete native requests stay unchanged. The inspection-only SevenInputLiveResult, SevenInputAuditResult, SevenInputDurableRequest and SevenInputDurableResult unions are typed joins, not new public dispatcher commands.
+
+| Original input role | Current live direct method | Current retained metadata direct method |
+|---|---|---|
+| `native_compile` | `reader.workflow.native_compile.live_original.v1` | `reader.workflow.compiler_input.audit_metadata.v1` |
+| `compile_certification` | `reader.workflow.compile_certification.live_original.v1` | `reader.workflow.compiler_input.audit_metadata.v1` |
+| `aggregate_intake` | `reader.executor.aggregate_intake.live_original.v1` | `reader.executor.aggregate_intake.audit_metadata.v1` |
+| `test_capability` | `owner.ats.test_capability.read_live.v1` | `owner.storage.test_capability_capture.read_retained.v1` |
+| `model_resolution` | `models.read_live_role_resolution.v1` | `models.storage.read_retained_role_capture.v1` |
+| `worknode_request_set` | `goal_runtime.read_live_activation_request_set.v1` | `goal_runtime.storage.read_retained_request_set_capture.v1` |
+| `source_control_preflight` | `owner.executor.source_control_preflight.read_live.v1` | `owner.storage.executor_preflight_capture.read_retained.v1` |
+
+Each entry above retains its exact whole request and selects the full current inner result schema in methods.json. Shared audit method names still select the original whole native role through actual original owner admission; no new public role discriminator is added.
+
+All seven durable routes retain their exact typed request, full available/unavailable result and full source/origin binding. The native compiler’s successful read includes both complete_original_input and the whole complete_operational_checkpoint. A success-only materialization argument can be assembled only after every required whole durable read has actually succeeded. A failed read cannot be silently omitted, rewritten to an empty collection, routed through an old live lease, or represented by capture metadata. Full accepted source and output identity must match the actual original captured input, independent of hash equality or schema validity.
+
+Current operational v2 selects the whole landed PNC-024 handoff grammar through its explicitly enumerated lexical aliases. The five timing corrections admit truthful pre-assignment draft/ready state while preserving original running/complete/serial/blocked/cancelled behavior. No old stored schema bytes or source_mode are migrated by alias adoption. `CurrentCompletionRequirementSource.required_children` and `CurrentRequiredSet.required_child_goal_run_ids` impose their zero-length current branch only on whole genuine sources, accompanied by native original child-authority checks. Neither current array refinement nor an adopted map supplies actual source existence.
+
+`owner.executor.activation.materialize.v1` and `owner.workflow.activation.commit_materialized.v1` use `CurrentMaterializeArgument` in current_materialization_source plus the full actual_bound_goal GuardInput in current_goal_control, and GRS-077’s exact original association bridge. The complete original native MaterializeCurrentCandidates remains nested whole, with every preimage and candidate; the old GoalControlWitness is never the current-control argument. Nine other complete native operation contracts remain dependency declarations with no current activation dispatch selection.
+
+PNC-025 newly defines two internal technical owner methods where the earlier source map supplied complete signatures without named entries: `owner.native_plan_compile_checkpoint.read_recovery.v1` uses the complete CompilerRecoveryRequest/CompilerRecoveryResult, and `owner.native_plan_compile_artifact.read_original.v1` uses the complete CompilerArtifactReadRequest/CompilerArtifactReadResult. These are explicit canonical owner definitions, not claims of pre-existing installed endpoints. The ordinary `owner.native_plan_compile_checkpoint.read_original.v1` retains its exact CompilerReadRequest/CompilerReadResult; there is no caller discriminator, private schema factory or overload of its public shape. CompilerCommitInput/CompilerCommitResult belongs to the actual original state publication with its artifact/head/Storage participants.
+
+#### Preserved original physical-input compatibility contract
+
+A4 `OriginalInputCapture`, its complete `OriginalInputCapturePhysical` wrapper, `workflow_original_input_capture`, original `owner.storage.activation_source.capture_input.v1` issuer alternative and older physical-input reader contracts remain preserved compatibility definitions. They reject every new live capture/origin schema identity. Their inclusion in the complete A4 schema, origin enum, family catalog or resource realm does not select them as any current seven-role live/durable route or create a current legacy reader/issuer. `methods.json.compatibility_original_input` makes that non-selection explicit. Each current role selects only its exact original role-specific whole request/result and durable binding; an unavailable current input cannot fall back to older input/capture readers, retained metadata, another source operation/lease, current Settings or a new producer invocation. Genuine surviving compatibility values retain their original provenance and current disclosure predicates; schema registration cannot manufacture their historical custody.
+
+#### Primitive, codec and original publication semantics
+
+Whole JSON Schema admission includes all original string/null/boolean/integer/object/array languages, exact literals, field presence and every complete physical wrapper. `pm.workflow.activation_source_json.v1` and `pm.executor.native_source_json.v1` retain their separate exact owner recipes, supported arbitrary-precision integer domains, key encodings, ordering, escaping and source hashes. Existing Goal JSON, source certification JSON, JCS projections and EventRecord MessagePack are independent. No native integer is passed through binary64, given a new maximum, rounded, normalized into a timestamp, or coerced merely because another joined record uses a different carrier. Unsupported actual codec domains refuse that source route before its effect; they are not repaired by deleting native fields.
+
+Semantic record hashes, full physical wrapper hashes, currentness hashes, original origin bindings and key components keep their exact distinct preimages. No field may borrow a future event/receipt/BindingOrigin to authorize its own publication. GRS-077’s T0/T1/T2 order and original compiler/receipt hash order must be acyclic over every actual dependency, including transitively referenced permission/Stop/source origins. Complete candidates are fixed before the final pure predicate and actual original timestamps are not resampled afterward. An unavailable native fixed attribution or an extra required back-edge makes the route unavailable; omitting the required member is not a resolution.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: CV-349
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Complete Workflow activation source resources and original method contracts. Every exact schema
+  resource and whole reference graph resolves offline in its declared source or current-control realm without conflicting
+  alias bodies.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- CV-347
+- CV-348
+- GRS-075
+- PNC-024
+unblocks: []
+acceptance_criteria:
+- Every exact schema resource and whole reference graph resolves offline in its declared source or current-control
+  realm without conflicting alias bodies.
+- All original native definitions, current whole arguments, physical fields, primitive languages and direct method
+  return shapes are preserved.
+- The fourteen direct live/audit returns include their full available/unavailable alternatives without an extra
+  inspection wrapper.
+- Current durable and Goal-control joins require genuine original owner authority; schema identifiers, source hashes
+  or copied origins cannot provide it.
+validation_surfaces:
+- Plans/workflow_activation_schema_resources.json
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/current-materialization-reference-map.json
+- Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json
+- Plans/workflow_activation_contracts/schemas/current-reader-routes.v1.schema.json
+- Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json
+- Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: cv_349_activation_original_custody
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/workflow_activation_schema_resources.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/current-materialization-reference-map.json, ContractName:Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/current-reader-routes.v1.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json

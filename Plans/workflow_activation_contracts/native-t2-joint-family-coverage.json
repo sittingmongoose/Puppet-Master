@@ -1,0 +1,109 @@
+{
+  "status": "PASS_SOURCE_ONLY",
+  "method_source": {
+    "owner_method_ref": "Plans/workflow_activation_contracts/methods.json#/native_methods",
+    "owner_doc": "Plans/Executor_Protocol.md#EP-117"
+  },
+  "complete_original_method": {
+    "method": "owner.executor.activation.materialize.v1",
+    "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/MaterializeCurrentCandidates",
+    "public_authority": "actual original native operation only; serializable shape is not authority",
+    "joint_families": [
+      "executor_worknode",
+      "executor_worknode_control",
+      "executor_run_execution_control",
+      "executor_native_operation_result",
+      "executor_run_operation_result",
+      "executor_original_publication_origin"
+    ],
+    "contract": "actual original activation commit with frozen A BornWorkNode/materialization/graph/required-set participants; initial state exact mapped birth; no WorkNode from an index",
+    "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+    "installation": "CANONICAL_SOURCE_CONTRACT_NATIVE_INSTALLATION_NOT_RUN"
+  },
+  "exact_family_set": true,
+  "families": [
+    {
+      "family_id": "executor_worknode",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_worknode",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageWorkNodeRecord",
+          "required": true
+        }
+      ]
+    },
+    {
+      "family_id": "executor_worknode_control",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_control",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageWorkNodeControl",
+          "required": true
+        }
+      ]
+    },
+    {
+      "family_id": "executor_run_execution_control",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/PreparedWorkflowMaterialization/properties/native_run_control",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunExecutionControl",
+          "required": true
+        }
+      ]
+    },
+    {
+      "family_id": "executor_native_operation_result",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_result",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageNativeOperationResult",
+          "required": true
+        }
+      ]
+    },
+    {
+      "family_id": "executor_run_operation_result",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/PreparedWorkflowMaterialization/properties/native_run_result",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StorageRunOperationResult",
+          "required": true
+        }
+      ]
+    },
+    {
+      "family_id": "executor_original_publication_origin",
+      "whole_original_typed_values": [
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_worknode_origin",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+          "required": true
+        },
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_control_origin",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+          "required": true
+        },
+        {
+          "argument_pointer": "#/$defs/MaterializedMember/properties/native_result_origin",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+          "required": true
+        },
+        {
+          "argument_pointer": "#/$defs/PreparedWorkflowMaterialization/properties/native_run_control_origin",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+          "required": true
+        },
+        {
+          "argument_pointer": "#/$defs/PreparedWorkflowMaterialization/properties/native_run_result_origin",
+          "schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "count": 6,
+  "schema_instances": "NOT_RUN",
+  "native_execution": "NOT_RUN"
+}

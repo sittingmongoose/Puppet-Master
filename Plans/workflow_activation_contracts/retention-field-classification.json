@@ -1,0 +1,816 @@
+{
+  "schema_id": "pm.workflow_activation_retention_classification.v1",
+  "families": {
+    "workflow_activation_abort": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/PreMutationCancellationPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_native_compile_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/NativeCompileSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_native_request_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/NativeRequestSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_certified_graph_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/CertifiedGraphSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_native_intake_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/NativeIntakeSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_provisioning_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/ProvisioningReceiptPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_activation_decision_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/ActivationDecisionSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_completion_requirement_source": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/CompletionRequirementSourcePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_born_worknode": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/BornWorkNodeRecordPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_worknode_materialization_receipt": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/WorkNodeMaterializationReceiptPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_installed_workgraph": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/InstalledWorkGraphPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_goal_run_required_set": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/RequiredSetPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_goal_run_body": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/GoalRunBodyPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_goal_run_control": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/GoalRunControlPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_activation_transition": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/ActivationTransitionReceiptPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_entrypoint_staging": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/EntryPointStagingPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_activation_receipt": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/ActivationReceiptPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_start_outbox_intent": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/StartOutboxIntentPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_native_source_control": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/NativeSourceControlPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_original_source_origin": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/OwnerIssueOriginPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_original_input_capture": {
+      "value_class": "Complete declared original Workflow source/state/receipt or compact origin/capture. All accepted native fields and their original meanings are retained; no arbitrary upstream raw body is included.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/workflow-activation.v4.schema.json#/$defs/OriginalInputCapturePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_native_compile_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json#/$defs/StorageNativeCompileCapture",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_compile_certification_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json#/$defs/StorageCompileCertificationCapture",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_aggregate_intake_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json#/$defs/StorageCapture",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_executor_preflight_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json#/$defs/PreflightLiveCapturePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_test_capability_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json#/$defs/TestCapabilityLiveCapturePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_model_resolution_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json#/$defs/ModelsCapturePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_worknode_request_set_live_capture": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json#/$defs/RequestSetCapturePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_compiler_live_capture_origin": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/compiler-live-inputs.v1.schema.json#/$defs/StorageCaptureOrigin",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_aggregate_intake_live_capture_origin": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/aggregate-live-input.v1.schema.json#/$defs/StorageCaptureOrigin",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_provisioning_live_input_origin": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/provisioning-live-inputs.v1.schema.json#/$defs/LiveInputOriginPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_models_request_live_origin": {
+      "value_class": "Compact original input-capture or companion issuance metadata only; the full original input is not stored in this value.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/models-request-live.v1.schema.json#/$defs/OriginPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "native_plan_compile_checkpoint": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/CompilerPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "native_plan_compile_certification_receipt": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/CertificationPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_aggregate_intake_receipt": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/AggregatePhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "ats_test_capability_receipt": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/TestPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "models_plans_to_code_resolution_receipt": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/ModelsPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "workflow_activation_request_set_decision": {
+      "value_class": "original durable canonical state/receipt; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/RequestSetPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "native_plan_compile_artifact": {
+      "value_class": "original durable canonical state/artifact/receipt lineage; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/CompilerArtifactPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "native_plan_compile_head": {
+      "value_class": "original durable canonical state/artifact/receipt lineage; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/CompilerHeadPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "activation_operational_origin": {
+      "value_class": "original durable canonical state/artifact/receipt lineage; complete declared compiler state, artifact, receipt or decision, including its canonical text fields.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json#/$defs/OriginPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_source_control_preflight_receipt_source": {
+      "value_class": "Existing canonical receipt authority, not captured file bodies or a generic raw artifact; storage-plan durable receipt/state class and Workflow receipt replay, EP-103 full handoff receipt chain.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json#/$defs/PreflightPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_sc_receipt_original_origin": {
+      "value_class": "Original compact source-control receipt issuance provenance; no raw source body.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/source-control-receipt-custody.v1.schema.json#/$defs/ReceiptOriginPhysical",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_worknode": {
+      "value_class": "full canonical native WorkNode state. Includes objective, surfaces, actual test binding, readiness and model metadata, lineage and lifecycle. This is not content-free. Existing source/evidence references do not import their bodies or extend their policies.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageWorkNodeRecord",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_worknode_control": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageWorkNodeControl",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_attempt_control": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageAttemptControl",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_run_execution_control": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": true,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageRunExecutionControl",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_attempt_birth": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageAttemptBirth",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_worknode_transition": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageTransitionPublication",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_worknode_completion": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageWorkNodeCompletionPublication",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_native_operation_result": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageNativeOperationResult",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_original_input_capture": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageOriginalInputCapture",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_original_publication_origin": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StoragePublicationOrigin",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    },
+    "executor_run_operation_result": {
+      "value_class": "closed native control, lineage, receipt or original publication metadata. Complete typed identity/revision/time/status/hash/reference fields; referenced original content keeps independent source custody and lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "policy_version": "1.0.0",
+      "backup_required": true,
+      "rebuildable": false,
+      "mutable": false,
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "full_value_schema_ref": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json#/$defs/StorageRunOperationResult",
+      "source_lifetime_rule": "Referenced raw/full upstream content keeps its own actual policy and holds. Compact original capture/origin and historical commitment do not retain, retrieve or reconstruct that content. Current mutable authority uses original complete permitted-transition custody, not a full historical body archive."
+    }
+  },
+  "existing_families": "All 166 pre-existing storage registry rows and every existing retention policy remain exact; the three named native dependency families are not promoted from deferred state."
+}

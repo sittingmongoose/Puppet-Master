@@ -1,0 +1,569 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json",
+  "$comment": "Canonical current entry contracts. Full live, durable-original and retained-audit modes are distinct; native original custody, current scope and final publisher guards remain mandatory.",
+  "$defs": {
+    "SevenInputLiveResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileLiveResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationLiveResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/LiveResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightLiveReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityLiveReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsLiveResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetLiveResult"
+            }
+          }
+        }
+      ]
+    },
+    "SevenInputAuditResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileAuditResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationAuditResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/AuditResult"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/Unavailable"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightRetainedReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityRetainedReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsAuditResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetAuditResult"
+            }
+          }
+        }
+      ]
+    },
+    "SevenInputDurableRequest": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadRequest"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "request"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "request": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadRequest"
+            }
+          }
+        }
+      ]
+    },
+    "SevenInputDurableResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "native_compile"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "compile_certification"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "aggregate_intake"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "test_capability"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "model_resolution"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "worknode_request_set"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadResult"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_mode",
+            "input_kind",
+            "result"
+          ],
+          "properties": {
+            "source_mode": {
+              "const": "original_durable_custody"
+            },
+            "input_kind": {
+              "const": "source_control_preflight"
+            },
+            "result": {
+              "$ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadResult"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

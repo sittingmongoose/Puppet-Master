@@ -169,3 +169,9 @@ Cost: source review and repository checks only; monetary attribution unavailable
 PNC-024 corrects premature assignment/completion receipt requirements while retaining authentic dispatch minimums, complete coverage and all original completion gates. The [validation report](step-08-compile-receipt-timing-validation.md) records 19 passing source checks, independent reviews, unchanged unrelated definitions and the explicit frozen-validator discrepancy. Shards/index pass; Standard gates report 21 PASS / 15 FAIL; newly failing check names: []. Full per-check counts are recorded in the JSON report; diagnostic samples remain bounded. Native execution, lifecycle certification and full Step 8 depth remain unproved.
 
 Cost: source review and repository checks only; monetary attribution unavailable.
+
+## Original Workflow activation custody — 2026-09-14
+
+The [activation custody validation report](step-08-activation-custody-validation.md) records eight owner units, 34 criteria, 54 new original Storage families with all 166 earlier rows/policies preserved, complete seven-role custody and authentic T0/T1/T2 association/materialization. Twenty new exact schema resources and four isolated realms preserve every original native field; current mutable-body reads use original compact transition custody. All six native materialization families, including the global run result/origin, are explicit. Shards/index and root source checks pass. Standard gates report 21 PASS / 15 FAIL; newly failing check names: []. The checks report preserves full per-check failure counts and the bounded-diagnostic qualification. Native execution, later Workflow writers, safe-stop integration and full Step 8 depth remain unproved.
+
+Cost: source review and repository checks only; monetary attribution unavailable.

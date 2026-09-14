@@ -1,0 +1,996 @@
+{
+  "schema_id": "pm.workflow_activation_owner_methods.v1",
+  "status": "canonical_source_contract_native_installation_not_run",
+  "seven_input_entries": [
+    {
+      "input_kind": "native_compile",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "native_compile",
+        "source_mode": "original_native_live",
+        "native_method": "owner.plan_compile.native.publish_state_input.v1",
+        "capture_method": "owner.plan_compile.native.publish_state_input.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/StorageNativeCompileCapture",
+        "capture_family_id": "workflow_native_compile_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/StorageCaptureOrigin",
+        "capture_origin_family_id": "workflow_compiler_live_capture_origin",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileReadRequest",
+        "live_reader": "reader.workflow.native_compile.live_original.v1",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileLiveResult",
+        "audit_reader": "reader.workflow.compiler_input.audit_metadata.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileAuditResult",
+        "activation_metadata_def": "NativeCompileMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.workflow.compile.issue_native.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false,
+        "key": "workflow_native_compile_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}"
+      },
+      "current_live_reader": {
+        "method": "reader.workflow.native_compile.live_original.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/0/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "reader.workflow.compiler_input.audit_metadata.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/NativeCompileReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/0/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "native_compile",
+        "family_id": "native_plan_compile_checkpoint",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerPhysical",
+        "original_issuer": "owner.plan_compile.native.publish_state_input.v1",
+        "original_reader": "owner.native_plan_compile_checkpoint.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadResult",
+        "original_input_pointer": "/record/value/run",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "compile_certification",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "compile_certification",
+        "source_mode": "original_native_live",
+        "native_method": "owner.plan_compile.native.publish_certification_input.v1",
+        "capture_method": "owner.plan_compile.native.publish_certification_input.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/StorageCompileCertificationCapture",
+        "capture_family_id": "workflow_compile_certification_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/StorageCaptureOrigin",
+        "capture_origin_family_id": "workflow_compiler_live_capture_origin",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationReadRequest",
+        "live_reader": "reader.workflow.compile_certification.live_original.v1",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationLiveResult",
+        "audit_reader": "reader.workflow.compiler_input.audit_metadata.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationAuditResult",
+        "activation_metadata_def": "CompileCertificationMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.workflow.compile.issue_graph.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false,
+        "key": "workflow_compile_certification_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}"
+      },
+      "current_live_reader": {
+        "method": "reader.workflow.compile_certification.live_original.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/1/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "reader.workflow.compiler_input.audit_metadata.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/compiler_two_live_inputs.v1.schema.json#/$defs/CompileCertificationReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/1/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "compile_certification",
+        "family_id": "native_plan_compile_certification_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationPhysical",
+        "original_issuer": "owner.plan_compile.native.publish_certification_input.v1",
+        "original_reader": "owner.native_plan_compile_certification_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "aggregate_intake",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "aggregate_intake",
+        "source_mode": "original_native_live",
+        "native_method": "owner.executor.intake.publish_aggregate_input.v1",
+        "capture_method": "owner.executor.intake.publish_aggregate_input.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/Binding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/StorageCapture",
+        "capture_family_id": "workflow_aggregate_intake_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/StorageCaptureOrigin",
+        "capture_origin_family_id": "workflow_aggregate_intake_live_capture_origin",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/ReadRequest",
+        "live_reader": "reader.executor.aggregate_intake.live_original.v1",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/LiveResult",
+        "audit_reader": "reader.executor.aggregate_intake.audit_metadata.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/AuditResult",
+        "activation_metadata_def": "AggregateIntakeMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.executor.intake.issue.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false,
+        "key": "workflow_aggregate_intake_live_capture.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(plan_compile_run_id)}:{hex(activation_id)}:{hex(original_operation_id)}:{original_operation_revision}:{hex(capture_id)}"
+      },
+      "current_live_reader": {
+        "method": "reader.executor.aggregate_intake.live_original.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/ReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/2/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "reader.executor.aggregate_intake.audit_metadata.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/aggregate_intake_live_input.v1.schema.json#/$defs/ReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/2/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "aggregate_intake",
+        "family_id": "executor_aggregate_intake_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregatePhysical",
+        "original_issuer": "owner.executor.intake.publish_aggregate_input.v1",
+        "original_reader": "owner.executor_aggregate_intake_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "test_capability",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "test_capability",
+        "source_mode": "original_native_live",
+        "native_method": "owner.ats.test_capability.output.v1",
+        "capture_method": "owner.storage.test_capability.capture_live.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+        "native_stage_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/OriginalTestCapabilityLiveStage",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityInputBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityLiveCapturePhysical",
+        "capture_family_id": "workflow_test_capability_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/LiveInputOriginPhysical",
+        "capture_origin_family_id": "workflow_provisioning_live_input_origin",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "live_reader": "owner.ats.test_capability.read_live.v1",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityLiveReadResult",
+        "audit_reader": "owner.storage.test_capability_capture.read_retained.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/TestCapabilityRetainedReadResult",
+        "key": "workflow_test_capability_live_capture.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(request_id)",
+        "activation_metadata_def": "TestCapabilityMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.executor.provision.issue.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false
+      },
+      "current_live_reader": {
+        "method": "owner.ats.test_capability.read_live.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/4/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "owner.storage.test_capability_capture.read_retained.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/4/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "test_capability",
+        "family_id": "ats_test_capability_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestPhysical",
+        "original_issuer": "owner.ats.test_capability.output.v1",
+        "original_reader": "owner.ats_test_capability_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "model_resolution",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "model_resolution",
+        "source_mode": "original_native_live",
+        "native_method": "models.resolve_plans_to_code_role.v1",
+        "capture_method": "models.storage.capture_role_resolution.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt",
+        "native_stage_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsStage",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsCapturePhysical",
+        "capture_family_id": "workflow_model_resolution_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/OriginPhysical",
+        "capture_origin_family_id": "workflow_models_request_live_origin",
+        "live_reader": "models.read_live_role_resolution.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsReadRequest",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsLiveResult",
+        "audit_reader": "models.storage.read_retained_role_capture.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsAuditResult",
+        "key": "workflow_model_resolution_live_capture.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(original_operation_id):H(output_identity)",
+        "activation_metadata_def": "ModelResolutionMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.executor.provision.issue.v1",
+          "owner.executor.activation.materialize.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false
+      },
+      "current_live_reader": {
+        "method": "models.read_live_role_resolution.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/5/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "models.storage.read_retained_role_capture.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/ModelsReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/5/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "model_resolution",
+        "family_id": "models_plans_to_code_resolution_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsPhysical",
+        "original_issuer": "models.resolve_plans_to_code_role.v1",
+        "original_reader": "owner.models_plans_to_code_resolution_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "worknode_request_set",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "worknode_request_set",
+        "source_mode": "original_native_live",
+        "native_method": "goal_runtime.executor.decide_activation_request_set.v1",
+        "capture_method": "goal_runtime.storage.capture_activation_request_set.v1",
+        "input_schema_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests",
+        "native_stage_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetStage",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetCapturePhysical",
+        "capture_family_id": "workflow_worknode_request_set_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/OriginPhysical",
+        "capture_origin_family_id": "workflow_models_request_live_origin",
+        "live_reader": "goal_runtime.read_live_activation_request_set.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetReadRequest",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetLiveResult",
+        "audit_reader": "goal_runtime.storage.read_retained_request_set_capture.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetAuditResult",
+        "key": "workflow_worknode_request_set_live_capture.v1:H(storage_instance_id):H(project_id):H(plan_compile_run_id):H(original_operation_id):H(output_identity)",
+        "activation_metadata_def": "WorkNodeRequestsMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.executor.activation.materialize.v1",
+          "owner.workflow.activation.commit_materialized.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false
+      },
+      "current_live_reader": {
+        "method": "goal_runtime.read_live_activation_request_set.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/6/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "goal_runtime.storage.read_retained_request_set_capture.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/activation_models_request_set_live_inputs.v1.schema.json#/$defs/RequestSetReadRequest",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/6/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "worknode_request_set",
+        "family_id": "workflow_activation_request_set_decision",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetPhysical",
+        "original_issuer": "goal_runtime.executor.decide_activation_request_set.v1",
+        "original_reader": "owner.workflow_activation_request_set_decision.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    },
+    {
+      "input_kind": "source_control_preflight",
+      "complete_original_capture_and_input_contract": {
+        "input_kind": "source_control_preflight",
+        "source_mode": "original_native_live",
+        "native_method": "owner.executor.source_control_preflight.output.v1",
+        "capture_method": "owner.storage.executor_preflight.capture_live.v1",
+        "input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt",
+        "native_stage_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/OriginalPreflightLiveStage",
+        "binding_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightInputBinding",
+        "capture_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightLiveCapturePhysical",
+        "capture_family_id": "workflow_executor_preflight_live_capture",
+        "capture_origin_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/LiveInputOriginPhysical",
+        "capture_origin_family_id": "workflow_provisioning_live_input_origin",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "live_reader": "owner.executor.source_control_preflight.read_live.v1",
+        "live_result_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightLiveReadResult",
+        "audit_reader": "owner.storage.executor_preflight_capture.read_retained.v1",
+        "audit_result_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/PreflightRetainedReadResult",
+        "key": "workflow_executor_preflight_live_capture.v1:H(storage_instance_id):H(project_id):H(original_operation_id):H(request_id)",
+        "activation_metadata_def": "SourceControlPreflightMetadata",
+        "actual_activation_source_issuer_methods": [
+          "owner.executor.provision.issue.v1"
+        ],
+        "capture_origin_is_activation_issuer_origin": false,
+        "metadata_policy_ref": "RP-AUTHORITY-INDEFINITE@1.0.0",
+        "native_installation": "NOT_RUN",
+        "raw_archive_required_by_route": false
+      },
+      "current_live_reader": {
+        "method": "owner.executor.source_control_preflight.read_live.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult/oneOf/3/properties/result",
+        "availability": "Requires the actual original live stage and native source lease; source metadata does not replace either."
+      },
+      "current_retained_metadata_reader": {
+        "method": "owner.storage.executor_preflight_capture.read_retained.v1",
+        "request_schema_ref": "https://puppetmaster.local/proposals/workflow_provisioning_live_inputs/1.0.0#/$defs/CaptureSelector",
+        "result_schema_ref": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult/oneOf/3/properties/result",
+        "availability": "Exact surviving original capture/origin under current disclosure policy; metadata only, no original live input or action authority."
+      },
+      "current_durable_original_reader": {
+        "input_kind": "source_control_preflight",
+        "family_id": "executor_source_control_preflight_receipt_source",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PreflightPhysical",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/ReceiptOriginPhysical",
+        "original_issuer": "owner.executor.source_control_preflight.output.v1",
+        "original_publisher": "owner.storage.executor_sc_receipt.publish.v1",
+        "original_reader": "owner.executor_source_control_preflight_receipt_source.read_original_activation.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadResult",
+        "original_input_pointer": "/record/receipt",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt",
+        "old_live_route_retained": true,
+        "same_actual_original_operation_required": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightDurableInputBinding"
+      },
+      "direct_return_shape": "The current result_schema_ref is the full direct native return, with all original available/unavailable arms. It does not add the inspection-only input_kind/result wrapper to the original method wire shape.",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "source_realm": "current_operational_source",
+      "admission": "The actual original native owner selects its installed role, complete original operation/request/source and current guard; caller fields select no authority. Original full-source equality, complete same-operation identity, source ownership, source lifetime and final checks apply independently to every direct reader and publisher."
+    }
+  ],
+  "current_entry_selection": "Only current_live_reader/current_retained_metadata_reader/current_durable_original_reader select current direct returns. Complete_original_capture_and_input_contract preserves original source/capture/issuer definitions; its old success-only schema_ref is not the complete current return contract. All original request shapes remain whole.",
+  "inspection_wrapper_contracts": {
+    "live_result": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputLiveResult",
+    "retained_metadata_result": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputAuditResult",
+    "durable_request": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputDurableRequest",
+    "durable_result": "https://puppetmaster.local/schemas/workflow_activation_reader_routes/1.0.0/schema.json#/$defs/SevenInputDurableResult"
+  },
+  "operational_issuance": {
+    "role_methods": [
+      {
+        "input_kind": "native_compile",
+        "family_id": "native_plan_compile_checkpoint",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerPhysical",
+        "original_issuer": "owner.plan_compile.native.publish_state_input.v1",
+        "original_reader": "owner.native_plan_compile_checkpoint.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerReadResult",
+        "original_input_pointer": "/record/value/run",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerDurableInputBinding"
+      },
+      {
+        "input_kind": "compile_certification",
+        "family_id": "native_plan_compile_certification_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationPhysical",
+        "original_issuer": "owner.plan_compile.native.publish_certification_input.v1",
+        "original_reader": "owner.native_plan_compile_certification_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CertificationDurableInputBinding"
+      },
+      {
+        "input_kind": "aggregate_intake",
+        "family_id": "executor_aggregate_intake_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregatePhysical",
+        "original_issuer": "owner.executor.intake.publish_aggregate_input.v1",
+        "original_reader": "owner.executor_aggregate_intake_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/AggregateDurableInputBinding"
+      },
+      {
+        "input_kind": "test_capability",
+        "family_id": "ats_test_capability_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestPhysical",
+        "original_issuer": "owner.ats.test_capability.output.v1",
+        "original_reader": "owner.ats_test_capability_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/TestDurableInputBinding"
+      },
+      {
+        "input_kind": "model_resolution",
+        "family_id": "models_plans_to_code_resolution_receipt",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsPhysical",
+        "original_issuer": "models.resolve_plans_to_code_role.v1",
+        "original_reader": "owner.models_plans_to_code_resolution_receipt.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/ModelsDurableInputBinding"
+      },
+      {
+        "input_kind": "worknode_request_set",
+        "family_id": "workflow_activation_request_set_decision",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetPhysical",
+        "original_issuer": "goal_runtime.executor.decide_activation_request_set.v1",
+        "original_reader": "owner.workflow_activation_request_set_decision.read_original.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetReadResult",
+        "original_input_pointer": "/record/value",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/OriginPhysical",
+        "whole_input_schema_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests",
+        "new_source_mode": "original_durable_custody",
+        "old_live_route_retained": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/RequestSetDurableInputBinding"
+      },
+      {
+        "input_kind": "source_control_preflight",
+        "family_id": "executor_source_control_preflight_receipt_source",
+        "full_source_schema_ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/PreflightPhysical",
+        "source_origin_schema_ref": "https://puppetmaster.local/proposals/goal_completion_source_control_inputs/1.0.0#/$defs/ReceiptOriginPhysical",
+        "original_issuer": "owner.executor.source_control_preflight.output.v1",
+        "original_publisher": "owner.storage.executor_sc_receipt.publish.v1",
+        "original_reader": "owner.executor_source_control_preflight_receipt_source.read_original_activation.v1",
+        "read_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadRequest",
+        "read_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightReadResult",
+        "original_input_pointer": "/record/receipt",
+        "whole_input_schema_ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt",
+        "old_live_route_retained": true,
+        "same_actual_original_operation_required": true,
+        "proposed_durable_input_binding_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/PreflightDurableInputBinding"
+      }
+    ],
+    "compiler_methods": {
+      "commit_input": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerCommitInput",
+      "commit_result": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerCommitResult",
+      "recover_request": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerRecoveryRequest",
+      "recover_result": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerRecoveryResult",
+      "artifact_request": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerArtifactReadRequest",
+      "artifact_result": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerArtifactReadResult"
+    },
+    "all_independent_entries": [
+      "original issuer",
+      "original storage publisher",
+      "head writer",
+      "artifact writer",
+      "current source reader",
+      "historical retained reader",
+      "recovery reader",
+      "capture participant",
+      "replay responder"
+    ],
+    "required_native_fence": "Each entry captures genuine whole sources/preimages before first helper, independently derives every complete candidate, finishes all helpers, then independently compares whole sources/current fences/output and complete transaction union in final pure predicate with no subsequent helper or mutable gap before commit/release. Own authenticated readback precedes dependent release.",
+    "native_execution": "NOT_RUN"
+  },
+  "materialization": {
+    "original_mutation_method": "owner.executor.activation.materialize.v1",
+    "original_joint_publisher": "owner.workflow.activation.commit_materialized.v1",
+    "technical_argument_contract_version": "current_activation_durable_sources.v1",
+    "arguments": [
+      {
+        "name": "current_materialization",
+        "schema_ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CurrentMaterializeArgument",
+        "realm": "current_materialization_source"
+      },
+      {
+        "name": "current_guard",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput",
+        "realm": "current_goal_control",
+        "native_materialization_branch": "actual_bound_goal; pre-Goal alternative is forbidden for actual materialization"
+      }
+    ],
+    "existing_complete_output_schema_ref": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeOperationResult",
+    "new_original_issuer_identity": false,
+    "new_persistent_family": false,
+    "admission": "All seven original_read values are whole successful actual durable results. Any upstream unavailable result prevents preparing this success argument and original publication. Complete independent source/owner/candidate/current guard checks precede and follow every returning helper in each original and joint publisher.",
+    "historical_native_graph": "Preserve old complete ID, reference graph and methods as retained source grammar; no current authority from an old cancellation witness."
+  },
+  "original_activation_owner_methods": {
+    "owner.workflow.compile.issue_native.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeCompileSourcePhysical",
+      "originality": "Actual original native compile-state publication and separate original activation issuer origin."
+    },
+    "owner.workflow.compile.issue_request.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSourcePhysical",
+      "originality": "Actual parent-owned accepted original compiler request output."
+    },
+    "owner.workflow.compile.issue_graph.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/CertifiedGraphSourcePhysical",
+      "originality": "Actual original accepted certified graph and full completion requirements before outcome receipts."
+    },
+    "owner.executor.intake.issue.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeIntakeSourcePhysical",
+      "originality": "Exact accepted original scope, full per-request and aggregate source joins; no mixed-required acceptance."
+    },
+    "owner.executor.provision.issue.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ProvisioningReceiptPhysical",
+      "originality": "Actual full original preflight/test/Models and accepted request source joins; no fake attempt or reissued receipt."
+    },
+    "owner.executor.activation.decide.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationDecisionSourcePhysical",
+      "originality": "Actual independent integrity/provisioning/request-set checks under the original owner fences."
+    },
+    "owner.workflow.activation.begin.v1": {
+      "full_output_refs": [
+        "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical",
+        "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical",
+        "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+      ],
+      "originality": "Genuine Workflow birth and original GRS-074 association/shared Goal metadata transaction. Complete before/after source contract is separately mandatory; no original Goal or Attempt is created here."
+    },
+    "owner.executor.activation.materialize.v1": {
+      "full_input_ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CurrentMaterializeArgument",
+      "originality": "Whole current materialization argument plus independently authenticated current_goal_control actual_bound_goal and original association transition custody."
+    },
+    "owner.workflow.activation.commit_materialized.v1": {
+      "full_input_ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CurrentMaterializeArgument",
+      "originality": "Same actual transaction as all native WorkNode/control/result/origin, born/materialization/installed graph/RequiredSet and Workflow body/control/transition participants."
+    },
+    "owner.workflow.activation.stage_entrypoints.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/EntryPointStagingPhysical",
+      "originality": "Actual readiness checks on required entrypoints; dispatch_released remains false."
+    },
+    "owner.workflow.activation.prepare_start.v1": {
+      "full_output_refs": [
+        "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ActivationReceiptPhysical",
+        "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntentPhysical"
+      ],
+      "originality": "Actual prepared activation receipt and start intent; ready/start_event_pending, no original start EventRecord/first receipt or dispatch fabricated."
+    },
+    "owner.workflow.activation.cancel_before_mutation.v1": {
+      "full_output_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/PreMutationCancellationPhysical",
+      "originality": "Actual original pre-start abort only, no after-mutation settlement or GoalRun cancelled transition/event inferred."
+    }
+  },
+  "native_methods": [
+    {
+      "method": "owner.executor.activation.materialize.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/MaterializeCurrentCandidates",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_run_execution_control",
+        "executor_native_operation_result",
+        "executor_run_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual original activation commit with frozen A BornWorkNode/materialization/graph/required-set participants; initial state exact mapped birth; no WorkNode from an index",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "CURRENT_ORIGINAL_MATERIALIZATION_WITH_COMPLETE_SEPARATE_ARGUMENT",
+      "current_source_argument_ref": "https://puppetmaster.local/proposals/current_activation_materialization_join.v1.schema.json#/$defs/CurrentMaterializeArgument"
+    },
+    {
+      "method": "owner.executor.native.begin_attempt.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "attempt_record",
+        "executor_attempt_control",
+        "executor_attempt_birth",
+        "execution_unit_context_store",
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_worknode_transition",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual Scheduler start; new immutable attempt ID and monotonic number; exact packet/policy/runtime/source-control inputs; current counters increment only at start; queued->in_progress if original initial dispatch",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.submit_verification.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_worknode_transition",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual worker result accepted by Executor; in_progress->verify_pending; no verifier pass manufactured",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.record_verified.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalVerifierInput",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_worknode_transition",
+        "executor_original_input_capture",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual Verifier full pass/timestamp/evidence validated; original Overseer verify_pending->verified; no model done claim",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.record_failed.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalVerifierInput",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_worknode_transition",
+        "attempt_record",
+        "executor_attempt_control",
+        "attempt_receipt",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual Verifier fail; verify_pending->failed; actual original failure receipt; no current Goal writer",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.complete_worknode.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeFinalizationWitness",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "attempt_record",
+        "executor_attempt_control",
+        "attempt_receipt",
+        "executor_worknode_transition",
+        "executor_worknode_completion",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "exact verified->done original unit and whole field mapping in finalization-field-map.json; all sources final after helpers",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.record_cancellation.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_run_execution_control",
+        "executor_run_operation_result",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual Executor cancellation request and original before/after mutation disposition; keep canonical lifecycle enum; no overwrite of prior terminal truth; every changed RunExecutionControl joins the actual original RunOperationResult (operation=cancel, exact before/after control and operation binding) plus its authentic original PublicationOrigin in the same atomic publication; missing original source or participant remains unavailable",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.record_invalidation.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/NativeMutationRequest",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_worknode",
+        "executor_worknode_control",
+        "executor_native_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual PlanDiffImpact source; preserve original graph/attempt generations and immutable request; mark currentness/invalidation, never rebase an old attempt silently",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.apply_graph_lock.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunExecutionControl",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_run_execution_control",
+        "executor_run_operation_result",
+        "executor_original_publication_origin"
+      ],
+      "contract": "actual initial graph lock or applied structural replan publication; real existing generation source; checked u32 +1 for applied replan only; actual old attempts stale by generation mismatch",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    },
+    {
+      "method": "owner.executor.native.capture_original_input.v1",
+      "internal_typed_shape": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OriginalInputCapture",
+      "public_authority": "actual original native operation only; serializable shape is not authority",
+      "joint_families": [
+        "executor_original_input_capture",
+        "executor_original_publication_origin"
+      ],
+      "contract": "private actual original source-owner participant; request is NOT public supplied capture JSON; full input and independently derived metadata/codec/scope frozen before helpers; missing original role unavailable",
+      "full_final_boundary": "Plans/Executor_Protocol.md#EP-117",
+      "installation": "NOT_RUN",
+      "activation_selection": "COMPLETE_DEPENDENCY_DECLARATION_NOT_CURRENT_ACTIVATION_DISPATCH"
+    }
+  ],
+  "all_direct_entry_final_boundary": "Plans/Goal_Runtime_System.md#GRS-077 and Plans/Executor_Protocol.md#EP-117 require independently authenticated full original inputs/preimages and all current native writer/owner/permission/Stop/source/backup fences before helpers, then independent full candidate/source/transaction-union comparison after all returning helpers, with no helper or mutable gap before publication/release. Every lower publisher/reader enforces its own boundary; preserved prior genuine effects are not rolled back by a later refusal.",
+  "resource_map_ref": "Plans/workflow_activation_schema_resources.json",
+  "action_authority_from_source_read": "none",
+  "association_transactions": {
+    "T1_birth_and_association": {
+      "original_methods": [
+        "owner.workflow.activation.begin.v1",
+        "owner.workflow.goal_binding.commit.v1",
+        "owner.goal.body.mutation@1.0.0"
+      ],
+      "arguments": [
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowBirthLowerArgument",
+          "realm": "current_materialization_source"
+        },
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingLowerArgument",
+          "realm": "current_goal_control"
+        }
+      ],
+      "lower_goal_argument": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/GoalMetadataLowerArgument",
+      "new_original_issuer": false,
+      "new_physical_family": false
+    },
+    "T2_later_materialization": {
+      "original_methods": [
+        "owner.executor.activation.materialize.v1",
+        "owner.workflow.activation.commit_materialized.v1"
+      ],
+      "arguments": [
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowMaterializationLowerArgument",
+          "realm": "current_materialization_source"
+        },
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead",
+          "realm": "current_goal_control"
+        }
+      ],
+      "shared_goal_body_mutation": false,
+      "binding_revision_mutation": false
+    },
+    "join": "Actual native original owner and joint transaction authenticate both whole realms; serialized objects/roles do not mint capability. Every lower entry and final joint publisher independently checks all full sources/candidates after helpers.",
+    "T0_original_binding_reservation": {
+      "original_method": "owner.workflow.goal_binding.commit.v1",
+      "arguments": [
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/BindingReservationLowerArgument",
+          "realm": "current_goal_control"
+        },
+        {
+          "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/WorkflowBirthLowerArgument",
+          "realm": "current_materialization_source"
+        }
+      ],
+      "publication": "Only genuine BindingControl pending/current epoch reservation; complete candidate revision and prepared W0 fixed; Goal body/control and Workflow birth unpublished."
+    }
+  },
+  "association_current_join": {
+    "original_physical_reader": "owner.storage.activation_source.read_current.v1",
+    "original_complete_result_schema_ref": "https://puppetmaster.local/proposals/workflow_activation_current_reader.v4.schema.json",
+    "original_arguments": [
+      "family_id",
+      "exact_key"
+    ],
+    "physical_families_ref": "Plans/workflow_activation_contracts/physical-families.json",
+    "current_workflow_argument": {
+      "realm": "current_materialization_source",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_source_join.v4.schema.json#/$defs/CurrentWorkflowLaunchChainRead"
+    },
+    "current_goal_argument": {
+      "realm": "current_goal_control",
+      "schema_ref": "https://puppetmaster.local/proposals/workflow_birth_association_goal_join.v4.schema.json#/$defs/CurrentAssociatedGoalRead"
+    },
+    "applies_to_original_entries": [
+      "owner.workflow.activation.stage_entrypoints.v1",
+      "owner.workflow.activation.prepare_start.v1"
+    ],
+    "retry_and_recovery": "Each original T1/T2 or covered pre-start writer retry and current-source/recovery reader composes its current full body/control with authenticated retained original transition/origin commitments. The original per-family physical reader wire result remains complete value/origin or exact unavailable. These full joined arguments are internal owner inspection contracts, not an additional caller-selectable source mode or wire wrapper.",
+    "fresh_materialization": "T2 fresh admission selects association_transactions.T2_later_materialization, including full currently stored W0 and separately full B1 association afterimage. Fresh absent-key materialization cannot run again after publication.",
+    "historical_lifetime": "Birth Goal B0 and Workflow W0/outbox selectors remain original historical commitments once overwritten; no old full body archive or dereference is implied. Actual current goal/source change outside the specific admitted association bridge refuses dependent action. Full current read through an unsupported later writer is unavailable until its independently authorized owner transition contract is supplied.",
+    "scope": "Original birth/materialize/stage/prepare chain only. No start event/first AppendReceipt, dispatch, cancellation disposition, execution or certification writer is installed by this route.",
+    "action_authority": "none"
+  },
+  "compatibility_original_input": {
+    "family_id": "workflow_original_input_capture",
+    "original_issuer": "owner.storage.activation_source.capture_input.v1",
+    "full_value_schema_ref": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalInputCapturePhysical",
+    "source_realm": "current_materialization_source",
+    "current_seven_route_selection": false,
+    "rule": "OriginalInputCapture and its older physical-input reader contracts remain compatibility definitions and reject every new live capture/origin schema identity. Current seven-role live/durable entries select only their exact original role-specific request/result contracts. No unavailable current input falls back to a legacy input/capture reader, retained metadata, a new producer operation or a different source lease. Original provenance/current disclosure still govern any genuine surviving compatibility value; schema and family registration do not fabricate historical custody or install a legacy issuer."
+  },
+  "compiler_operational_entries": {
+    "owner.plan_compile.native.publish_state_input.v1": {
+      "source_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerCommitInput",
+      "source_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerCommitResult",
+      "joint_original_participants": [
+        "owner.plan_compile.native.publish_state_input.v1",
+        "owner.plan_compile.native.publish_certification_input.v1",
+        "owner.plan_compile.native.publish_artifact.v1",
+        "owner.plan_compile.native.advance_head.v1",
+        "owner.storage.activation_operational_custody.publish.v1"
+      ],
+      "participant_selection": "Each actual lifecycle point fixes the complete immutable checkpoint/head/artifact union and any genuinely issued certification. A certification is null until its authentic lifecycle point, and no listed participant invents a receipt. Artifact/head lower entries validate their whole own original candidate and the whole joint union independently; publishing a checkpoint alone does not prove recoverability.",
+      "identity_adoption": "Existing original state issuer, complete native compiler commit input/result adoption.",
+      "source_realm": "current_operational_source",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "owner_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-025",
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "native_execution": "NOT_RUN",
+      "action_authority_from_read_or_commit_receipt": "none"
+    },
+    "owner.native_plan_compile_checkpoint.read_recovery.v1": {
+      "source_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerRecoveryRequest",
+      "source_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerRecoveryResult",
+      "identity_adoption": "New explicit internal original-owner method identity for the existing complete compiler recovery contract; no native installation or caller discriminator. Ordinary read_original.v1 retains its distinct original request/result.",
+      "source_realm": "current_operational_source",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "owner_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-025",
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "native_execution": "NOT_RUN",
+      "action_authority_from_read_or_commit_receipt": "none"
+    },
+    "owner.native_plan_compile_artifact.read_original.v1": {
+      "source_request_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerArtifactReadRequest",
+      "source_result_schema_ref": "https://puppetmaster.local/proposals/activation_seven_operational_custody.v2.schema.json#/$defs/CompilerArtifactReadResult",
+      "identity_adoption": "New explicit internal original-owner method identity for the existing complete artifact reader contract; no native installation or caller discriminator.",
+      "source_realm": "current_operational_source",
+      "current_control_argument": {
+        "realm": "current_goal_control",
+        "schema_ref": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json#/$defs/GuardInput"
+      },
+      "owner_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-025",
+        "Plans/storage-plan.md#SP-308",
+        "Plans/Backup_Restore_System.md#BRS-024"
+      ],
+      "native_execution": "NOT_RUN",
+      "action_authority_from_read_or_commit_receipt": "none"
+    }
+  }
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.receipt_id",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.receipt_id",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.repo_ref",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.repo_ref",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.worktree_ref",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.worktree_ref",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.branch_ref",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.branch_ref",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.dirty_state",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.dirty_state",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.safe_point_required",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.safe_point_required",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.status",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.status",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.baseline_commit_oid",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.baseline_commit_oid",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.safe_point_id",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.safe_point_id",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.dirty_state_policy",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.dirty_state_policy",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.conflict_policy",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.conflict_policy",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.merge_policy",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.merge_policy",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.github_policy",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.github_policy",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.rollback_available",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.rollback_available",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.restore_command_or_action",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.restore_command_or_action",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.evidence_refs",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.evidence_refs",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.handoff",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.handoff",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.source_control_context",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.source_control_context",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.branch_head_state",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.branch_head_state",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.owner_lane",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.owner_lane",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.lease_state",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.lease_state",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.head_commit_oid",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.head_commit_oid",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.changed_files",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.changed_files",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.conflict_refs",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.conflict_refs",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  },
+  {
+    "input_kind": "source_control_preflight_receipt",
+    "target": "record.receipt.rollback_ref",
+    "source": "actual original owner.executor.source_control_preflight.output.v1 complete semantic output.rollback_ref",
+    "rule": "exact original field value, type, presence, array ordering and nested schema; never a display projection, default, new receipt ID, or metadata-only replacement"
+  }
+]

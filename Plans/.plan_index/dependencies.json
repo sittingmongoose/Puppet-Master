@@ -6299,6 +6299,7 @@
     "CWR-013",
     "PS-141",
     "PP-087",
+    "CV-349",
     "SP-306",
     "UF-098",
     "UF-094",
@@ -6352,11 +6353,15 @@
     "SP-307",
     "MA-056",
     "SIR-051",
+    "SP-308",
     "MA-057",
     "MA-060",
     "ATS-052",
+    "GRS-077",
+    "PNC-025",
     "MA-058",
     "MA-068",
+    "EP-117",
     "MA-059",
     "MA-069",
     "MA-070",
@@ -6375,6 +6380,7 @@
     "UCC-147",
     "WM-044",
     "ACD-447",
+    "MS-139",
     "BRS-001",
     "SSYS-018",
     "SSYS-036",
@@ -6492,6 +6498,7 @@
     "CS-071",
     "UCC-148",
     "BRS-022",
+    "BRS-024",
     "PJCT-006",
     "SIR-035",
     "C-046",
@@ -6503,6 +6510,7 @@
     "WM-047",
     "F2-212",
     "SP-261",
+    "ATS-053",
     "SIR-036",
     "C-047",
     "ATS-018",
@@ -12589,6 +12597,51 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "ATS-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "ATS-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "BRS-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "EP-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "MS-139"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "PNC-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-053",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -13166,6 +13219,36 @@
       "edge_type": "depends_on",
       "from": "BRS-023",
       "to": "SIR-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "BRS-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "BRS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "BRS-023"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "PNC-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BRS-024",
+      "to": "SP-308"
     },
     {
       "edge_type": "depends_on",
@@ -21474,6 +21557,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-349",
+      "to": "CV-347"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-349",
+      "to": "CV-348"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-349",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-349",
+      "to": "PNC-024"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -24076,6 +24179,36 @@
       "edge_type": "depends_on",
       "from": "EP-116",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "EP-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "EP-116"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "GRS-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "PNC-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-117",
+      "to": "SP-308"
     },
     {
       "edge_type": "depends_on",
@@ -28859,6 +28992,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "GRS-077",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-077",
+      "to": "GRS-064"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-077",
+      "to": "GRS-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-077",
+      "to": "GRS-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-077",
+      "to": "SP-308"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "HITL-036",
       "to": "PS-116"
     },
@@ -33251,6 +33409,21 @@
       "edge_type": "depends_on",
       "from": "MS-138",
       "to": "PP-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-139",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-139",
+      "to": "MS-138"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-139",
+      "to": "SP-308"
     },
     {
       "edge_type": "depends_on",
@@ -42911,6 +43084,31 @@
       "edge_type": "depends_on",
       "from": "PNC-024",
       "to": "PNC-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-025",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-025",
+      "to": "PNC-015"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-025",
+      "to": "PNC-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-025",
+      "to": "PNC-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-025",
+      "to": "SP-308"
     },
     {
       "edge_type": "depends_on",
@@ -67876,6 +68074,31 @@
       "edge_type": "depends_on",
       "from": "SP-307",
       "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-308",
+      "to": "CV-349"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-308",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-308",
+      "to": "SP-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-308",
+      "to": "SP-306"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-308",
+      "to": "SP-307"
     },
     {
       "edge_type": "depends_on",
@@ -96683,7 +96906,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-09-13T22:21:09Z",
+  "generated_at_utc": "2026-09-13T23:56:39Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -109572,6 +109795,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "ats_053_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-053",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Required semantic cases and expected dispositions",
+        "heading_level": 4,
+        "heading_line": 4719,
+        "line": 4763,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -110182,6 +110422,23 @@
       },
       "status": "accepted",
       "unit_type": "recovery_requirement"
+    },
+    {
+      "context_scope": "brs_024_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Backup_Restore_System.md",
+      "plan_unit_id": "BRS-024",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Retention and evidence limits",
+        "heading_level": 4,
+        "heading_line": 1333,
+        "line": 1345,
+        "path": "Plans/Backup_Restore_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -121557,6 +121814,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "cv_349_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-349",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Primitive, codec and original publication semantics",
+        "heading_level": 4,
+        "heading_line": 23073,
+        "line": 23085,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -129596,6 +129870,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ep_117_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-117",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Complete later native dependencies remain separately admitted",
+        "heading_level": 4,
+        "heading_line": 7430,
+        "line": 7453,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -148468,6 +148759,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "grs_077_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-077",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Explicit current reader and later lifecycle boundary",
+        "heading_level": 4,
+        "heading_line": 7241,
+        "line": 7255,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/human-in-the-loop.md",
@@ -159210,6 +159518,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ms_139_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-139",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "MS-139 - Original complete Models activation resolution custody",
+        "heading_level": 3,
+        "heading_line": 9633,
+        "line": 9659,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -176495,6 +176820,23 @@
         "heading_level": 3,
         "heading_line": 1493,
         "line": 1495,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "pnc_025_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-025",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Truthful receipt timing and current source admission",
+        "heading_level": 4,
+        "heading_line": 1603,
+        "line": 1615,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -196017,6 +196359,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "sp_308_activation_original_custody",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-308",
+      "reasoning_tier": "high",
+      "risk_class": "workflow_activation_original_source_or_lifetime_drift",
+      "source_location": {
+        "heading": "Retention, original lifetime and restore",
+        "heading_level": 4,
+        "heading_line": 25259,
+        "line": 25275,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -209164,10 +209523,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 15361,
+    "depends_on_edge_count": 15404,
     "downstream_blocked_node_count": 0,
-    "edge_count": 18012,
-    "node_count": 6616,
+    "edge_count": 18055,
+    "node_count": 6624,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2651,
     "unresolved_reference_count": 0

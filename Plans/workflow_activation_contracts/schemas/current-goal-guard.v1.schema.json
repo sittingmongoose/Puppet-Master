@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/activation_operational_current_goal_guard.v1.schema.json",
+  "$defs": {
+    "CurrentGoalGuard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "storage_instance_id",
+        "project_id",
+        "thread_id",
+        "goal_id",
+        "original_source_operation_id",
+        "original_guard_owner_ref",
+        "original_guard_source_ref",
+        "original_guard_source_sha256",
+        "body_control",
+        "host_stop_control",
+        "binding_control",
+        "binding_revision",
+        "binding_origin",
+        "writer_domain",
+        "writer_domain_head"
+      ],
+      "properties": {
+        "kind": {
+          "const": "actual_bound_goal"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_guard_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_guard_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_guard_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "body_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageBodyControlV2"
+        },
+        "host_stop_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StorageStopControl"
+        },
+        "binding_control": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingControl"
+        },
+        "binding_revision": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingRevision"
+        },
+        "binding_origin": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageBindingOrigin"
+        },
+        "writer_domain": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain"
+        },
+        "writer_domain_head": {
+          "$ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomainHead"
+        }
+      }
+    },
+    "OriginalPreGoalGuard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "storage_instance_id",
+        "project_id",
+        "original_source_operation_id",
+        "original_source_owner_ref",
+        "original_scope_source_ref",
+        "original_scope_source_sha256",
+        "actual_goal_id",
+        "actual_original_host_stop_source_ref",
+        "actual_original_host_stop_source_sha256"
+      ],
+      "properties": {
+        "kind": {
+          "const": "original_source_precedes_goal_binding"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_scope_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "actual_goal_id": {
+          "type": "null"
+        },
+        "actual_original_host_stop_source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actual_original_host_stop_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "GuardInput": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CurrentGoalGuard"
+        },
+        {
+          "$ref": "#/$defs/OriginalPreGoalGuard"
+        }
+      ]
+    }
+  }
+}

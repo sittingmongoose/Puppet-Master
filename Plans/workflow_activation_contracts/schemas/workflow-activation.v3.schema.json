@@ -1,0 +1,4269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json",
+  "$comment": "Future original-source contracts only. This file contains schemas, never WorkNode instances or executable tasks. Native original issuance/PNC-019/currentness checks remain mandatory. External hrefs resolve to complete unchanged canonical handoff resource. Initial WorkNode role cannot admit later retries, attempts or overlays.",
+  "$defs": {
+    "SourceSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage_instance_id",
+        "family_id",
+        "physical_key",
+        "schema_id",
+        "schema_version",
+        "physical_value_sha256"
+      ],
+      "properties": {
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_value_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "OriginalSourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "origin"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "origin": {
+          "$ref": "#/$defs/SourceSelector"
+        }
+      }
+    },
+    "RunIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "plan_compile_run_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "workgraph_ref",
+        "workgraph_sha256"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workgraph_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "OwnerIssueOrigin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer_method",
+        "owner_ref",
+        "owner_epoch",
+        "original_operation_id",
+        "original_causation_ref",
+        "issued_at_utc",
+        "issued_value_key",
+        "issued_record_sha256",
+        "source_bindings",
+        "actual_permission_source",
+        "actual_stop_source",
+        "actual_cancellation_source"
+      ],
+      "properties": {
+        "issuer_method": {
+          "enum": [
+            "owner.workflow.compile.issue_native.v1",
+            "owner.workflow.compile.issue_graph.v1",
+            "owner.workflow.compile.issue_request.v1",
+            "owner.executor.intake.issue.v1",
+            "owner.executor.provision.issue.v1",
+            "owner.executor.activation.decide.v1",
+            "owner.workflow.activation.begin.v1",
+            "owner.workflow.activation.commit_materialized.v1",
+            "owner.executor.activation.materialize.v1",
+            "owner.workflow.activation.stage_entrypoints.v1",
+            "owner.workflow.activation.prepare_start.v1",
+            "owner.workflow.activation.cancel_before_mutation.v1",
+            "owner.storage.activation_source.capture_input.v1"
+          ]
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_causation_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issued_value_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 0
+        },
+        "actual_permission_source": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "actual_stop_source": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "actual_cancellation_source": {
+          "$ref": "#/$defs/SourceSelector"
+        }
+      }
+    },
+    "PredicateObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "satisfied",
+        "source_bindings"
+      ],
+      "properties": {
+        "satisfied": {
+          "type": "boolean"
+        },
+        "source_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "ReadinessSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle_ready_eligible",
+        "blockers_resolve_in_active_graph",
+        "blockers_dependency_satisfying",
+        "no_active_backoff",
+        "no_active_runtime_block",
+        "replan_generation_current",
+        "worktree_conflict_allows_dispatch",
+        "lane_pool_capacity_available"
+      ],
+      "properties": {
+        "lifecycle_ready_eligible": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "blockers_resolve_in_active_graph": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "blockers_dependency_satisfying": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "no_active_backoff": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "no_active_runtime_block": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "replan_generation_current": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "worktree_conflict_allows_dispatch": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "lane_pool_capacity_available": {
+          "$ref": "#/$defs/PredicateObservation"
+        }
+      }
+    },
+    "AdmissionIntegrityChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graph_integrity_valid",
+        "required_requests_accepted_together",
+        "optional_dispositions_complete",
+        "source_currentness_valid",
+        "permission_write_authority_valid",
+        "provider_model_account_resolution_valid",
+        "budget_valid",
+        "parallelism_policy_valid",
+        "writer_capable_storage_valid",
+        "write_mode_allows_required_work"
+      ],
+      "properties": {
+        "graph_integrity_valid": {
+          "type": "boolean"
+        },
+        "required_requests_accepted_together": {
+          "type": "boolean"
+        },
+        "optional_dispositions_complete": {
+          "type": "boolean"
+        },
+        "source_currentness_valid": {
+          "type": "boolean"
+        },
+        "permission_write_authority_valid": {
+          "type": "boolean"
+        },
+        "provider_model_account_resolution_valid": {
+          "type": "boolean"
+        },
+        "budget_valid": {
+          "type": "boolean"
+        },
+        "parallelism_policy_valid": {
+          "type": "boolean"
+        },
+        "writer_capable_storage_valid": {
+          "type": "boolean"
+        },
+        "write_mode_allows_required_work": {
+          "type": "boolean"
+        }
+      }
+    },
+    "AdmissionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graph_integrity_valid",
+        "required_requests_accepted_together",
+        "optional_dispositions_complete",
+        "source_currentness_valid",
+        "permission_write_authority_valid",
+        "provider_model_account_resolution_valid",
+        "budget_valid",
+        "parallelism_policy_valid",
+        "writer_capable_storage_valid",
+        "write_mode_allows_required_work"
+      ],
+      "properties": {
+        "graph_integrity_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "required_requests_accepted_together": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "optional_dispositions_complete": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "source_currentness_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "permission_write_authority_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "provider_model_account_resolution_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "budget_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "parallelism_policy_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "writer_capable_storage_valid": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "write_mode_allows_required_work": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "LaunchIdentityReservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "plan_compile_run_id",
+        "activation_id",
+        "idempotency_key",
+        "original_goal_body",
+        "execution_owner_ref",
+        "execution_owner_epoch"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_goal_body": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "NativeCompileSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_revision",
+        "launch_identity_reservation",
+        "plan_compile_run_id",
+        "project_id",
+        "approved_plan_pack",
+        "approval_outbox",
+        "approval_cas_receipt_ref",
+        "compile_metadata"
+      ],
+      "properties": {
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "launch_identity_reservation": {
+          "$ref": "#/$defs/LaunchIdentityReservation"
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_plan_pack": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "approval_outbox": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "approval_cas_receipt_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "compile_metadata": {
+          "$ref": "#/$defs/NativeCompileMetadata"
+        }
+      }
+    },
+    "NativeRequestSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_revision",
+        "project_id",
+        "plan_compile_run_id",
+        "workgraph_id",
+        "workgraph_revision",
+        "request_id",
+        "source_compile",
+        "source_draft_graph",
+        "payload"
+      ],
+      "properties": {
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_compile": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_draft_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "payload": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/worknode_request"
+        }
+      }
+    },
+    "GraphRequestBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graph_node_ref",
+        "request"
+      ],
+      "properties": {
+        "graph_node_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "CertifiedGraphSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "plan_compile_run_id",
+        "workgraph_id",
+        "revision",
+        "source_compile",
+        "source_draft_graph",
+        "graph",
+        "request_bindings",
+        "compile_certification_receipt"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_compile": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_draft_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "graph": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/workgraph_draft"
+        },
+        "request_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GraphRequestBinding"
+          },
+          "minItems": 1
+        },
+        "compile_certification_receipt": {
+          "$ref": "#/$defs/CompileCertificationMetadata"
+        }
+      }
+    },
+    "NativeRequestIntakeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "request_id",
+        "intake_id",
+        "intake_status",
+        "graph_integrity_result",
+        "source_control_result",
+        "test_binding_result",
+        "model_routing_result",
+        "authority_result",
+        "readiness_result",
+        "scheduler_metadata_result",
+        "created_at_utc",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.executor_intake_report.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intake_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intake_status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "graph_integrity_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "source_control_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "test_binding_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "model_routing_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "authority_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "readiness_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "scheduler_metadata_result": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "type": "string",
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "blocked_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rejected_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "accepted_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "execution_unit_context_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "NativeIntakeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "identity",
+        "aggregate_intake",
+        "request_results",
+        "source_graph",
+        "source_requests"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "request_results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NativeRequestIntakeResult"
+          },
+          "minItems": 1
+        },
+        "source_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "aggregate_intake": {
+          "$ref": "#/$defs/AggregateIntakeMetadata"
+        }
+      }
+    },
+    "ProvisioningReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "identity",
+        "provisioning_id",
+        "source_intake",
+        "source_control",
+        "test_capability_reports",
+        "model_resolution_receipts",
+        "permission_write_authority",
+        "budget",
+        "parallelism_policy",
+        "writer_capable_storage",
+        "source_currentness",
+        "original_source_bindings"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "provisioning_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_intake": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_control": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceControlPreflightMetadata"
+          },
+          "minItems": 0
+        },
+        "test_capability_reports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TestCapabilityMetadata"
+          },
+          "minItems": 0
+        },
+        "model_resolution_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ModelResolutionMetadata"
+          },
+          "minItems": 0
+        },
+        "permission_write_authority": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "budget": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "parallelism_policy": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "writer_capable_storage": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "source_currentness": {
+          "$ref": "#/$defs/PredicateObservation"
+        },
+        "original_source_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "ActivationDecisionAccepted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_id",
+        "accepted_scope_refs",
+        "integrity_checks",
+        "provisioning_refs",
+        "status"
+      ],
+      "properties": {
+        "decision_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accepted_scope_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "integrity_checks": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AdmissionIntegrityChecks"
+            },
+            {
+              "properties": {
+                "graph_integrity_valid": {
+                  "const": true
+                },
+                "required_requests_accepted_together": {
+                  "const": true
+                },
+                "optional_dispositions_complete": {
+                  "const": true
+                },
+                "source_currentness_valid": {
+                  "const": true
+                },
+                "permission_write_authority_valid": {
+                  "const": true
+                },
+                "provider_model_account_resolution_valid": {
+                  "const": true
+                },
+                "budget_valid": {
+                  "const": true
+                },
+                "parallelism_policy_valid": {
+                  "const": true
+                },
+                "writer_capable_storage_valid": {
+                  "const": true
+                },
+                "write_mode_allows_required_work": {
+                  "const": true
+                }
+              }
+            }
+          ]
+        },
+        "provisioning_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "status": {
+          "const": "accepted"
+        }
+      }
+    },
+    "ActivationDecisionSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "identity",
+        "decision",
+        "source_intake",
+        "source_provisioning",
+        "integrity_evidence"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "decision": {
+          "$ref": "#/$defs/ActivationDecisionAccepted"
+        },
+        "source_intake": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_provisioning": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "integrity_evidence": {
+          "$ref": "#/$defs/AdmissionEvidence"
+        }
+      }
+    },
+    "ActivationState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "state",
+        "revision",
+        "goal_run_id",
+        "workgraph_ref",
+        "idempotency_key"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "activation_pending",
+            "records_materialized",
+            "entrypoints_queued",
+            "start_event_pending",
+            "active",
+            "cancelled_before_mutation"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "ActivationTransitionReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "activation_id",
+        "from_state",
+        "to_state",
+        "outbox_ref",
+        "causation_ref"
+      ],
+      "properties": {
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_state": {
+          "enum": [
+            "activation_pending",
+            "records_materialized",
+            "entrypoints_queued",
+            "start_event_pending",
+            "active",
+            "cancelled_before_mutation"
+          ]
+        },
+        "to_state": {
+          "enum": [
+            "activation_pending",
+            "records_materialized",
+            "entrypoints_queued",
+            "start_event_pending",
+            "active",
+            "cancelled_before_mutation"
+          ]
+        },
+        "outbox_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "causation_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "RequestDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "disposition",
+        "reason",
+        "original_source"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "accepted",
+            "deferred",
+            "excluded"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "WorkNodeRequests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_set_id",
+        "schema_version",
+        "goal_run_id",
+        "active_required_request_refs",
+        "optional_request_refs",
+        "dispositions",
+        "readiness_snapshot",
+        "activation_transaction_ref",
+        "mixed_result_reason"
+      ],
+      "properties": {
+        "request_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "active_required_request_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "optional_request_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequestDisposition"
+          },
+          "minItems": 1
+        },
+        "readiness_snapshot": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_ref",
+              "readiness"
+            ],
+            "properties": {
+              "request_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "readiness": {
+                "$ref": "#/$defs/ReadinessSnapshot"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "activation_transaction_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mixed_result_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "OriginalCriterionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "criterion_id",
+        "request_ref",
+        "criterion_index",
+        "criterion_text",
+        "source_acceptance_unit_refs",
+        "original_criterion_source"
+      ],
+      "properties": {
+        "criterion_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criterion_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "criterion_text": {
+          "type": "string"
+        },
+        "source_acceptance_unit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "original_criterion_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "OriginalValidatorBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "validator_id",
+        "request_ref",
+        "validator_candidate_index",
+        "validator_candidate_value",
+        "test_binding",
+        "original_validator_source"
+      ],
+      "properties": {
+        "validator_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validator_candidate_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "validator_candidate_value": {
+          "type": "string"
+        },
+        "test_binding": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_binding"
+        },
+        "original_validator_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "OriginalChildRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parent_goal_id",
+        "parent_goal_run_id",
+        "child_goal_id",
+        "child_goal_run_id",
+        "original_child_requirement_source"
+      ],
+      "properties": {
+        "parent_goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_goal_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_child_requirement_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "CompletionRequirementSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "source_graph",
+        "source_requests",
+        "criteria",
+        "validators",
+        "required_children",
+        "original_requirement_authority_sources"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "source_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalCriterionBinding"
+          },
+          "minItems": 0
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalValidatorBinding"
+          },
+          "minItems": 0
+        },
+        "required_children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalChildRequirement"
+          },
+          "minItems": 0
+        },
+        "original_requirement_authority_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "WorkNodeCurrentness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "source_request",
+        "source_graph",
+        "source_provisioning",
+        "replan_generation"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "current",
+            "stale",
+            "superseded",
+            "unknown"
+          ]
+        },
+        "source_request": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_provisioning": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "BornWorkNodeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worknode_id",
+        "goal_run_id",
+        "workgraph_id",
+        "revision",
+        "source_request_id",
+        "source_plan_unit_refs",
+        "source_acceptance_refs",
+        "objective",
+        "surfaces",
+        "readiness_predicates",
+        "lifecycle",
+        "attempts",
+        "retries",
+        "authority",
+        "model",
+        "tests",
+        "repository_ref",
+        "worktree_ref",
+        "safe_point_ref",
+        "evidence",
+        "currentness",
+        "cancellation",
+        "invalidation",
+        "replan_generation"
+      ],
+      "properties": {
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_plan_unit_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "source_acceptance_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "objective": {
+          "type": "string"
+        },
+        "surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "readiness_predicates": {
+          "$ref": "#/$defs/ReadinessSnapshot"
+        },
+        "lifecycle": {
+          "const": "queued"
+        },
+        "attempts": {
+          "type": "array",
+          "maxItems": 0,
+          "items": false
+        },
+        "retries": {
+          "type": "array",
+          "maxItems": 0,
+          "items": false
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/authority"
+        },
+        "model": {
+          "$ref": "#/$defs/ModelResolutionMetadata"
+        },
+        "tests": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_binding"
+        },
+        "repository_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "safe_point_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "currentness": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/WorkNodeCurrentness"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "current"
+                },
+                "replan_generation": {
+                  "const": 0
+                }
+              }
+            }
+          ]
+        },
+        "cancellation": {
+          "type": "null"
+        },
+        "invalidation": {
+          "type": "null"
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295,
+          "const": 0
+        }
+      }
+    },
+    "WorkNodeMaterializationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "identity",
+        "activation_id",
+        "worknode_id",
+        "source_request_id",
+        "workgraph_revision",
+        "source_request",
+        "activation_decision",
+        "born_worknode_key",
+        "born_worknode_record_sha256",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workgraph_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_request": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "activation_decision": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "born_worknode_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "born_worknode_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "MaterializedGraphMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "graph_node_ref",
+        "request_id",
+        "worknode_id",
+        "worknode",
+        "materialization_receipt"
+      ],
+      "properties": {
+        "graph_node_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worknode": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "materialization_receipt": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "InstalledEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_edge_index",
+        "from_worknode_id",
+        "to_worknode_id",
+        "dependency_type",
+        "evidence_refs"
+      ],
+      "properties": {
+        "source_edge_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "from_worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependency_type": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/dependency_type"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "InstalledWorkGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "original_certified_graph",
+        "members",
+        "entrypoint_worknode_ids",
+        "source_dependency_edges",
+        "active_dependency_edges"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "original_certified_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MaterializedGraphMember"
+          },
+          "minItems": 1
+        },
+        "entrypoint_worknode_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "source_dependency_edges": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/dependency_edge"
+          },
+          "minItems": 0
+        },
+        "active_dependency_edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InstalledEdge"
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "RequiredSetMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request",
+        "worknode_id",
+        "born_worknode",
+        "materialization_receipt",
+        "required_criterion_ids",
+        "required_validator_ids"
+      ],
+      "properties": {
+        "request": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "worknode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "born_worknode": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "materialization_receipt": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "required_criterion_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "required_validator_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      }
+    },
+    "RequiredSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_child_goal_run_ids",
+        "identity",
+        "worknode_requests",
+        "source_graph",
+        "installed_workgraph",
+        "original_completion_requirements",
+        "source_intake",
+        "activation_decision",
+        "members"
+      ],
+      "properties": {
+        "required_child_goal_run_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "worknode_requests": {
+          "$ref": "#/$defs/WorkNodeRequestsMetadata"
+        },
+        "source_graph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "installed_workgraph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "original_completion_requirements": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "source_intake": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "activation_decision": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequiredSetMember"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "GoalRunBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "revision",
+        "status",
+        "activation_state",
+        "original_goal_body",
+        "original_goal_lineage",
+        "execution_owner_ref",
+        "execution_owner_epoch",
+        "source_activation_decision",
+        "required_set",
+        "installed_workgraph",
+        "certification_receipt"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "ready",
+            "running",
+            "provisional_success",
+            "verifying",
+            "failed_verification",
+            "repairing",
+            "certified",
+            "failed",
+            "blocked",
+            "cancelled",
+            "stopped"
+          ]
+        },
+        "activation_state": {
+          "$ref": "#/$defs/ActivationState"
+        },
+        "original_goal_body": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "original_goal_lineage": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "execution_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_activation_decision": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "required_set": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "installed_workgraph": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "certification_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "InitialGoalRunBody": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/GoalRunBody"
+        },
+        {
+          "properties": {
+            "revision": {
+              "const": 1
+            },
+            "status": {
+              "const": "ready"
+            },
+            "activation_state": {
+              "properties": {
+                "state": {
+                  "const": "activation_pending"
+                }
+              }
+            },
+            "required_set": {
+              "type": "null"
+            },
+            "installed_workgraph": {
+              "type": "null"
+            },
+            "certification_receipt": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "GoalRunControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "revision",
+        "body_record_sha256",
+        "execution_owner_epoch",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "body_record_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "execution_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "EntryPointStaging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "activation_id",
+        "entrypoint_worknode_ids",
+        "required_set",
+        "readiness_snapshot",
+        "dispatch_released"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entrypoint_worknode_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "required_set": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "readiness_snapshot": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "worknode_id",
+              "readiness"
+            ],
+            "properties": {
+              "worknode_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "readiness": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/ReadinessSnapshot"
+                  },
+                  {
+                    "properties": {
+                      "lifecycle_ready_eligible": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "blockers_resolve_in_active_graph": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "blockers_dependency_satisfying": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "no_active_backoff": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "no_active_runtime_block": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "replan_generation_current": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "worktree_conflict_allows_dispatch": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "lane_pool_capacity_available": {
+                        "properties": {
+                          "satisfied": {
+                            "const": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "dispatch_released": {
+          "const": false
+        }
+      }
+    },
+    "StartOutboxIntent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "activation_id",
+        "event_name",
+        "source_alias",
+        "event_payload_schema_id",
+        "phase",
+        "staging_source",
+        "activation_receipt",
+        "published_event_id",
+        "published_first_append_receipt",
+        "dispatch_released"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_name": {
+          "const": "goal_run.started"
+        },
+        "source_alias": {
+          "enum": [
+            null,
+            "GoalRunStarted"
+          ]
+        },
+        "event_payload_schema_id": {
+          "const": "pm.goal_runtime_event.goal_run_started.schema.v2"
+        },
+        "phase": {
+          "enum": [
+            "reserved",
+            "prepared"
+          ]
+        },
+        "staging_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "activation_receipt": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OriginalSourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "published_event_id": {
+          "type": "null"
+        },
+        "published_first_append_receipt": {
+          "type": "null"
+        },
+        "dispatch_released": {
+          "const": false
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "reserved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "staging_source": {
+                "type": "null"
+              },
+              "activation_receipt": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "staging_source": {
+                "$ref": "#/$defs/OriginalSourceBinding"
+              },
+              "activation_receipt": {
+                "$ref": "#/$defs/OriginalSourceBinding"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ActivationReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "receipt_id",
+        "activation_id",
+        "activation_decision",
+        "required_set",
+        "installed_workgraph",
+        "worknode_materialization_receipts",
+        "entrypoints_staged",
+        "integrity_checks",
+        "integrity_evidence",
+        "issued_at_utc"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_decision": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "required_set": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "installed_workgraph": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "worknode_materialization_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OriginalSourceBinding"
+          },
+          "minItems": 1
+        },
+        "entrypoints_staged": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "integrity_checks": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/AdmissionIntegrityChecks"
+            },
+            {
+              "properties": {
+                "graph_integrity_valid": {
+                  "const": true
+                },
+                "required_requests_accepted_together": {
+                  "const": true
+                },
+                "optional_dispositions_complete": {
+                  "const": true
+                },
+                "source_currentness_valid": {
+                  "const": true
+                },
+                "permission_write_authority_valid": {
+                  "const": true
+                },
+                "provider_model_account_resolution_valid": {
+                  "const": true
+                },
+                "budget_valid": {
+                  "const": true
+                },
+                "parallelism_policy_valid": {
+                  "const": true
+                },
+                "writer_capable_storage_valid": {
+                  "const": true
+                },
+                "write_mode_allows_required_work": {
+                  "const": true
+                }
+              }
+            }
+          ]
+        },
+        "integrity_evidence": {
+          "$ref": "#/$defs/AdmissionEvidence"
+        },
+        "issued_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "PreMutationCancellation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "activation_id",
+        "activation_state",
+        "body_existed_before",
+        "original_before_body",
+        "actual_cancellation_source"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/RunIdentity"
+        },
+        "activation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activation_state": {
+          "$ref": "#/$defs/ActivationState"
+        },
+        "body_existed_before": {
+          "type": "boolean"
+        },
+        "original_before_body": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceSelector"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_cancellation_source": {
+          "$ref": "#/$defs/SourceSelector"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "activation_state": {
+              "properties": {
+                "state": {
+                  "const": "cancelled_before_mutation"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "body_existed_before": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "original_before_body": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "original_before_body": {
+                "$ref": "#/$defs/SourceSelector"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PreMutationCancellationPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_activation_abort.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/PreMutationCancellation"
+        }
+      }
+    },
+    "NativeCompileSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_compile_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeCompileSource"
+        }
+      }
+    },
+    "NativeRequestSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_request_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeRequestSource"
+        }
+      }
+    },
+    "CertifiedGraphSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_certified_graph_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CertifiedGraphSource"
+        }
+      }
+    },
+    "NativeIntakeSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_intake_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeIntakeSource"
+        }
+      }
+    },
+    "ProvisioningReceiptPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_provisioning_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ProvisioningReceipt"
+        }
+      }
+    },
+    "ActivationDecisionSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_activation_decision_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ActivationDecisionSource"
+        }
+      }
+    },
+    "CompletionRequirementSourcePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_completion_requirement_source.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/CompletionRequirementSource"
+        }
+      }
+    },
+    "BornWorkNodeRecordPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_born_worknode.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/BornWorkNodeRecord"
+        }
+      }
+    },
+    "WorkNodeMaterializationReceiptPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_worknode_materialization_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/WorkNodeMaterializationReceipt"
+        }
+      }
+    },
+    "InstalledWorkGraphPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_installed_workgraph.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/InstalledWorkGraph"
+        }
+      }
+    },
+    "RequiredSetPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_goal_run_required_set.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/RequiredSet"
+        }
+      }
+    },
+    "GoalRunBodyPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_goal_run_body.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/GoalRunBody"
+        }
+      }
+    },
+    "GoalRunControlPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_goal_run_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/GoalRunControl"
+        }
+      }
+    },
+    "ActivationTransitionReceiptPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_activation_transition.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ActivationTransitionReceipt"
+        }
+      }
+    },
+    "EntryPointStagingPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_entrypoint_staging.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/EntryPointStaging"
+        }
+      }
+    },
+    "ActivationReceiptPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_activation_receipt.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/ActivationReceipt"
+        }
+      }
+    },
+    "StartOutboxIntentPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_start_outbox_intent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/StartOutboxIntent"
+        }
+      }
+    },
+    "NativeSourceControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logical_source_key",
+        "source_revision",
+        "current_source",
+        "owner_ref",
+        "owner_epoch",
+        "pending_operation_id"
+      ],
+      "properties": {
+        "logical_source_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "current_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        },
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pending_operation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "NativeSourceControlPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_native_source_control.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/NativeSourceControl"
+        }
+      }
+    },
+    "OwnerIssueOriginPhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_original_source_origin.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/OwnerIssueOrigin"
+        }
+      }
+    },
+    "OriginalInputBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_kind",
+        "capture"
+      ],
+      "properties": {
+        "input_kind": {
+          "enum": [
+            "native_compile",
+            "compile_certification",
+            "aggregate_intake",
+            "source_control_preflight",
+            "test_capability",
+            "model_resolution",
+            "worknode_request_set"
+          ]
+        },
+        "capture": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "InputCaptureScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "plan_compile_run_id",
+        "goal_id",
+        "goal_run_id",
+        "activation_id",
+        "request_id",
+        "workgraph_id",
+        "workgraph_revision"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan_compile_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "activation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workgraph_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workgraph_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "OriginalInputCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capture_id",
+        "scope",
+        "input_kind",
+        "input_schema_ref",
+        "original_source",
+        "source_payload_pointer",
+        "input_semantic_sha256",
+        "original_source_owner_ref",
+        "original_source_owner_epoch",
+        "original_source_operation_id",
+        "original_source_currentness_ref",
+        "original_source_retention_policy_id",
+        "original_source_retention_policy_version",
+        "original_source_redaction_profile_ref",
+        "captured_at_utc",
+        "capture_operation_id",
+        "capture_outcome"
+      ],
+      "properties": {
+        "capture_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/InputCaptureScope"
+        },
+        "input_kind": {
+          "enum": [
+            "native_compile",
+            "compile_certification",
+            "aggregate_intake",
+            "source_control_preflight",
+            "test_capability",
+            "model_resolution",
+            "worknode_request_set"
+          ]
+        },
+        "input_schema_ref": {
+          "enum": [
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt",
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt",
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report",
+            "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt",
+            "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests"
+          ]
+        },
+        "original_source": {
+          "$ref": "#/$defs/SourceSelector"
+        },
+        "source_payload_pointer": {
+          "type": "string"
+        },
+        "input_semantic_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "original_source_owner_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_owner_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_source_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_currentness_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_retention_policy_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_retention_policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_source_redaction_profile_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "capture_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_outcome": {
+          "const": "original_input_validated"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "native_compile"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_run"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "compile_certification"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "aggregate_intake"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/executor_intake_report"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "source_control_preflight"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_preflight_receipt"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "test_capability"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_capability_report"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "model_resolution"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_resolution_receipt"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "input_kind": {
+                "const": "worknode_request_set"
+              }
+            },
+            "required": [
+              "input_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "input_schema_ref": {
+                "const": "https://puppetmaster.local/proposals/workflow_activation_sources.v3.schema.json#/$defs/WorkNodeRequests"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "BlockerDecisionMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker_id",
+        "blocker_type",
+        "severity",
+        "owner",
+        "evidence_refs"
+      ],
+      "properties": {
+        "blocker_id": {
+          "type": "string"
+        },
+        "blocker_type": {
+          "type": "string",
+          "enum": [
+            "missing_evidence",
+            "authority_boundary",
+            "schema_gap",
+            "test_gap",
+            "source_control_gap",
+            "currentness_gap",
+            "runtime_forbidden",
+            "other"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "CompileWaveRetryMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "route_kind",
+        "target_stage"
+      ],
+      "properties": {
+        "route_kind": {
+          "type": "string",
+          "enum": [
+            "retry_same_assignment",
+            "split_assignment",
+            "resume_from_checkpoint",
+            "return_to_parent",
+            "critical_block"
+          ]
+        },
+        "target_stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CompileWaveMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wave_id",
+        "assignment_id",
+        "stage",
+        "assigned_agent_role",
+        "source_item_refs",
+        "read_set",
+        "write_set",
+        "forbidden_writes",
+        "parent_only_writes",
+        "result_status",
+        "retry_route",
+        "resume_ref",
+        "durable_evidence_refs",
+        "assignment_receipt",
+        "completion_receipt",
+        "parent_writeback_required"
+      ],
+      "properties": {
+        "wave_id": {
+          "type": "string"
+        },
+        "assignment_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "assigned_agent_role": {
+          "type": "string",
+          "enum": [
+            "parent",
+            "subagent",
+            "auditor",
+            "repairer",
+            "reviewer"
+          ]
+        },
+        "source_item_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "read_set": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "write_set": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "parent_only_writes": {
+          "const": true
+        },
+        "result_status": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/result_status"
+        },
+        "retry_route": {
+          "$ref": "#/$defs/CompileWaveRetryMetadata"
+        },
+        "resume_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "durable_evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "assignment_receipt": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/compile_wave_assignment_receipt"
+        },
+        "completion_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/compile_wave_completion_receipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parent_writeback_required": {
+          "const": true
+        }
+      }
+    },
+    "NativeCompileMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "contract_mode",
+        "launch_policy",
+        "runtime_adapter",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "automatic_launch_enabled",
+        "planning_wizard_launch_enabled",
+        "codex_bootstrap_launch_enabled",
+        "current_state",
+        "receipts",
+        "compile_wave_contracts",
+        "complete_input"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "source_plan_set_id": {
+          "type": "string"
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "launch_source": {
+          "enum": [
+            "codex_bootstrap",
+            "native_planning_wizard"
+          ]
+        },
+        "contract_mode": {
+          "const": "native_runtime"
+        },
+        "launch_policy": {
+          "enum": [
+            "disabled",
+            "automatic_after_approval"
+          ]
+        },
+        "runtime_adapter": {
+          "enum": [
+            "codex_bootstrap_adapter",
+            "native_puppet_master_adapter"
+          ]
+        },
+        "runtime_enablement_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runtime_policy_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "design_only_disabled",
+            "preflight",
+            "running",
+            "blocked",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "current_stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "cursor": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/cursor"
+        },
+        "last_green_stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_green_hashes": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/hash_snapshot"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BlockerDecisionMetadata"
+          },
+          "minItems": 0
+        },
+        "next_required_stage": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automatic_launch_enabled": {
+          "type": "boolean"
+        },
+        "planning_wizard_launch_enabled": {
+          "type": "boolean"
+        },
+        "codex_bootstrap_launch_enabled": {
+          "const": false
+        },
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "initialized",
+            "preflight",
+            "stage_running",
+            "stage_blocked",
+            "stage_complete",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "receipts": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "compile_wave_contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CompileWaveMetadata"
+          },
+          "minItems": 0
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "native_compile"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "CompileCertificationMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "compile_id",
+        "stage",
+        "status",
+        "evidence_refs",
+        "complete_input"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/stage_name"
+        },
+        "status": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/result_status"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "compile_certification"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AggregateIntakeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intake_id",
+        "workgraph_ref",
+        "worknode_request_refs",
+        "accepted_refs",
+        "rejected_refs",
+        "blockers",
+        "status",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "authority_refs",
+        "evidence_refs",
+        "complete_input"
+      ],
+      "properties": {
+        "intake_id": {
+          "type": "string"
+        },
+        "workgraph_ref": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+        },
+        "worknode_request_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "accepted_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "rejected_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/BlockerDecisionMetadata"
+          },
+          "minItems": 0
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "rejected",
+            "blocked",
+            "mixed"
+          ]
+        },
+        "source_control_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "authority_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "aggregate_intake"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "SourceControlPreflightMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "worktree_ref",
+        "branch_ref",
+        "dirty_state",
+        "safe_point_required",
+        "status",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "evidence_refs",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref",
+        "complete_input"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+        },
+        "dirty_state": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_dirty_state"
+        },
+        "safe_point_required": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/source_control_status"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "branch_head_state": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "source_control_preflight"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "TestCapabilityMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_capabilities",
+        "app_launch_ability",
+        "browser_automation",
+        "gui_automation",
+        "device_emulator_automation",
+        "screenshot_support",
+        "logs_available",
+        "headless_headed_support",
+        "online_research",
+        "probes",
+        "automation_surface",
+        "requires_browser",
+        "requires_emulator",
+        "requires_display",
+        "requires_screenshot",
+        "expected_artifacts",
+        "flake_policy",
+        "complete_input"
+      ],
+      "properties": {
+        "local_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_requirement"
+          }
+        },
+        "app_launch_ability": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "browser_automation": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "gui_automation": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "device_emulator_automation": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "screenshot_support": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "logs_available": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "headless_headed_support": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_status"
+        },
+        "online_research": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/online_research"
+        },
+        "probes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TestProbeMetadata"
+          },
+          "minItems": 0
+        },
+        "automation_surface": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/automation_surface"
+        },
+        "requires_browser": {
+          "type": "boolean"
+        },
+        "requires_emulator": {
+          "type": "boolean"
+        },
+        "requires_display": {
+          "type": "boolean"
+        },
+        "requires_screenshot": {
+          "type": "boolean"
+        },
+        "expected_artifacts": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/flake_policy"
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "test_capability"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "TestProbeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/automation_surface"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/ref_list"
+        }
+      }
+    },
+    "ModelResolutionMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "capability_checks",
+        "complete_input"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "requested_lane": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_lane"
+        },
+        "requested_model_profile": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_profile"
+        },
+        "effective_model_profile": {
+          "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/model_profile"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/capability_check"
+          }
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "model_resolution"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "RequestDispositionMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_ref",
+        "disposition",
+        "original_source"
+      ],
+      "properties": {
+        "request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "disposition": {
+          "enum": [
+            "accepted",
+            "deferred",
+            "excluded"
+          ]
+        },
+        "original_source": {
+          "$ref": "#/$defs/OriginalSourceBinding"
+        }
+      }
+    },
+    "WorkNodeRequestsMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_set_id",
+        "schema_version",
+        "goal_run_id",
+        "active_required_request_refs",
+        "optional_request_refs",
+        "dispositions",
+        "readiness_snapshot",
+        "activation_transaction_ref",
+        "complete_input"
+      ],
+      "properties": {
+        "request_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "goal_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "active_required_request_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "optional_request_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequestDispositionMetadata"
+          },
+          "minItems": 1
+        },
+        "readiness_snapshot": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "request_ref",
+              "readiness"
+            ],
+            "properties": {
+              "request_ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "readiness": {
+                "$ref": "#/$defs/ReadinessSnapshot"
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "activation_transaction_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "complete_input": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/OriginalInputBinding"
+            },
+            {
+              "properties": {
+                "input_kind": {
+                  "const": "worknode_request_set"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "OriginalInputCapturePhysical": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "physical_key",
+        "record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.workflow_original_input_capture.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "physical_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/OriginalInputCapture"
+        }
+      }
+    }
+  }
+}

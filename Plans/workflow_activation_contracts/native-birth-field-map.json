@@ -1,0 +1,122 @@
+[
+  {
+    "target": "StorageWorkNodeRecord.record.worknode_id",
+    "source": "MaterializeCurrentInputs.original_born_worknode.worknode_id",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.goal_run_id",
+    "source": "MaterializeCurrentInputs.original_born_worknode.goal_run_id",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.workgraph_id",
+    "source": "MaterializeCurrentInputs.original_born_worknode.workgraph_id",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.revision",
+    "source": "MaterializeCurrentInputs.original_born_worknode.revision",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.source_request_id",
+    "source": "MaterializeCurrentInputs.original_born_worknode.source_request_id",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.source_plan_unit_refs",
+    "source": "MaterializeCurrentInputs.original_born_worknode.source_plan_unit_refs",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.source_acceptance_refs",
+    "source": "MaterializeCurrentInputs.original_born_worknode.source_acceptance_refs",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.objective",
+    "source": "MaterializeCurrentInputs.original_born_worknode.objective",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.surfaces",
+    "source": "MaterializeCurrentInputs.original_born_worknode.surfaces",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.readiness_predicates",
+    "source": "MaterializeCurrentInputs.original_born_worknode.readiness_predicates",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.lifecycle",
+    "source": "MaterializeCurrentInputs.original_born_worknode.lifecycle",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.attempts",
+    "source": "MaterializeCurrentInputs.original_born_worknode.attempts",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.retries",
+    "source": "MaterializeCurrentInputs.original_born_worknode.retries",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.authority",
+    "source": "MaterializeCurrentInputs.original_born_worknode.authority",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.model",
+    "source": "MaterializeCurrentInputs.original_born_worknode.model",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.tests",
+    "source": "MaterializeCurrentInputs.original_born_worknode.tests",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.repository_ref",
+    "source": "MaterializeCurrentInputs.original_born_worknode.repository_ref",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.worktree_ref",
+    "source": "MaterializeCurrentInputs.original_born_worknode.worktree_ref",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.safe_point_ref",
+    "source": "MaterializeCurrentInputs.original_born_worknode.safe_point_ref",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.evidence",
+    "source": "MaterializeCurrentInputs.original_born_worknode.evidence",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.currentness",
+    "source": "MaterializeCurrentInputs.original_born_worknode.currentness",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.cancellation",
+    "source": "MaterializeCurrentInputs.original_born_worknode.cancellation",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.invalidation",
+    "source": "MaterializeCurrentInputs.original_born_worknode.invalidation",
+    "rule": "exact whole original equality at same materialization commit"
+  },
+  {
+    "target": "StorageWorkNodeRecord.record.replan_generation",
+    "source": "MaterializeCurrentInputs.original_born_worknode.replan_generation",
+    "rule": "exact whole original equality at same materialization commit"
+  }
+]

@@ -1301,3 +1301,104 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-043, ContractName:Plans/Jujutsu_Integration.md, ContractName:Plans/Source_Control_System.md
+
+### BRS-024 - Coherent original activation custody backup and recovery
+
+BRS-024 defines coherent backup and restore closure for the complete original activation custody in SP-308. All 54 new families are canonical, non-rebuildable original state/receipt/source-lineage authority requiring mandatory coherent backup. Their exact complete values, keys, schema/version, codec, original source/capture/issuer identity, current mutable selections and permitted transition custody must be available to the backup owner before a durable-result, restart or dependent-dispatch promise. Source-contract registration alone does not establish that backup participation or any native recovery capability exists.
+
+The existing 166 family rows and every prior retention/backup policy remain unchanged. Native dependencies on attempt_record, attempt_receipt and execution_unit_context_store retain their actual original owner posture; this unit does not promote their deferred representation or manufacture a missing execution context. Existing BRS-023 phase-local restore evidence, actual target recovery prerequisite, current approval/lease and staged verification remain independently required. Source custody adoption creates no new restore command, consent shortcut or rollback claim.
+
+#### Coherent original capture sets
+
+A captured compiler recovery set contains the complete current native_plan_compile_head and its original origin, the exact selected full immutable checkpoint and origin, every original artifact/compile receipt participant necessary for its next action, and all genuine referenced original source/repair/audit/verification/approval/test/source-control/request/Models dependencies required by that recovery claim. Full inline canonical state and received repair/Auditor bodies retain their complete schemas. A capture binding or digest does not replace an absent original body, and backup must not reconstruct one from current Plans, event/UI projections, sibling results or a new producer operation.
+
+A captured operational input set preserves each complete original primary and original origin, original output/capture identity and required full source dependencies. Same-original preflight reuses its actual existing Source Control primary/origin and independent FileSafe/source-control objects required by the original receipt’s claim; it is not a duplicate newly synthesized receipt. Models receipt and genuine runtime/configuration/capability sources remain independent originals with their own inclusion and lifetime obligations. Capture origins and semantic issuer origins retain their distinct methods and original transaction provenance.
+
+A captured pre-start association/materialization set preserves the complete actual current Goal body/control/history/Stop/binding/writer-domain and Workflow body/control/outbox, original narrow metadata receipt, immutable original binding revision/origin, required accepted source graph/requirements, native rows/controls/per-WorkNode results/global run control/global run result and every authentic original origin/transition participant. Capture and restore must establish whether the real owner committed T0 reservation only, complete T1 birth/association, or complete T2 materialization. A pending reservation, co-issued candidate or partial capture cannot be labeled as a committed later union.
+
+T0 restores only its genuine owning binding reservation and its immutable candidate/original beforeimage commitments under current original owner admission. T1’s joint membership includes complete W0/control/outbox/origins, Goal B1/control/narrow receipt and binding revision/origin/control; T2 includes the exact six native materialization families, their complete required origins and A4 born/materialization/installed-graph/RequiredSet/body/control/transition participants. All six families must be captured and verified explicitly: the presence of 85 schema definitions or a per-WorkNode result does not replace executor_run_operation_result or its origin. Original pending/phase dispositions are recovered through actual owner contracts; restoration never clears pending to fabricate an empty association or retries mutation merely to reconstruct a missing result.
+
+Current Goal and Workflow keys may already contain later authentic values. Their permitted original compact receipts/origins/transition links carry historical commitments without requiring every overwritten B0/W0 payload. GRS-077’s specific B0-to-B1 association bridge and CurrentWorkflowLaunchChainRead govern what the current reader can establish. Indefinite current-state policy does not create an archive of old mutable bodies. A restored historical selector is not a current-read payload and cannot cause older state to overwrite a newer committed/terminal head. Later start/execution/cancellation/certification current-state restore requires its separate original owner contract, beyond this pre-start chain.
+
+#### Original barrier, restore verification and exposure
+
+The actual backup and every original owner authenticate complete Storage/root/backend identity, current registry/schema/codec and writer/owner generations, all relevant original transactions, currentness/permissions, deletion/tombstones/holds and actual capture boundary before helpers. Coherence is determined by the original transaction/capture protocol, not filesystem copy timing or a declaration that all paths were listed. A multi-part capture that cannot prove an actual consistent boundary remains incomplete and grants no recovery promise. This unit does not claim arbitrary cross-backend/network writes are one redb transaction.
+
+Restore stages complete original values and validates exact bytes, semantic/physical digests, keys, schema/version, scope, operation/output identity/revision, original origin/source graph, transaction membership and current mutable selection. Verify every dependency needed for the exact claimed original next action; a retained reference with unavailable content is disclosed and keeps dependent mutation fenced. Current tombstones, lawful content deletion, legal/reference holds, newer original head/terminal/cancellation/supersession truth and root/owner transfer evidence are applied before exposure. Missing, corrupt, foreign, split-generation or ambiguously restored source authority stays unavailable. No schema migration, guessed original origin, row birth, source reinterpretation or value sanitization is implicit in import.
+
+The actual original registration/dispatch writer graph and current native owner must be re-established by their existing installation/migration contract. Backup restores data and original evidence, not process-held leases, locks, reservations as capabilities, source lifetime, authorization grants or current model/tool availability. A persisted native-looking Owner/SourceSelector/Origin/WriterDomain is not its own installation proof. Every original resumed reader/publisher independently checks the complete current guard and source dependencies under CV-349’s separate resource realms before any effect or disclosure. An old same-ID historical control grammar cannot validate current restored Goal authority.
+
+Each directly callable backup, restore verification, current-source/recovery/readback and exposure participant applies its own full entry and after-all-helpers predicate; an outer restore coordinator’s check never substitutes for the original source owner’s check. The entire candidate/exposure union, including preserved/unrelated newer data and policy/tombstone state, must match the independently expected complete result with no subsequent helper, callback or mutable gap before its actual commit/release. Actual original authenticated readback precedes dependent exposure. Failure preserves genuine earlier capture/restore/effect truth and never triggers a new compiler/probe/Models operation to make recovery appear complete.
+
+#### Retention and evidence limits
+
+The new closed canonical state/artifact/report/receipt/origin values retain SP-308’s explicit mapping to existing RP-AUTHORITY-INDEFINITE@1.0.0, non-rebuildable status and mandatory backup. Independent raw source/body content, requested_effective_runtime, FileSafe snapshots, prior design-only wave/delivery records, logs/provider outputs/test artifacts and all other families retain their actual original policies, anchors, holds and backup inclusion. No reference extends a lifetime, creates a new hold or permits reconstructing disposed content. Full canonical text fields within the adopted closed records remain whole; unsafe original content is refused before issuance by its actual owner, never silently redacted after acceptance.
+
+A recovery report states the actual complete/incomplete original capture and restore disposition, the unavailable dependencies and the exact remaining original owner admission required for the requested action. Passive read/recovery results keep action_authority=none. A successful static schema graph or a backup manifest hash is not a restore drill, crash/atomicity proof, native issuer authentication, PNC-019 clearance, Step9 result or global D05 closure. Those claims require their independently scoped genuine execution evidence and remain NOT_RUN here.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: BRS-024
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Backup_Restore_System.md
+canonical_text: Coherent original activation custody backup and recovery. Backup captures and verifies each complete
+  original source/transaction/dependency set necessary for its exact recovery claim before any durable/restart promise.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- BRS-017
+- BRS-019
+- BRS-023
+- SP-308
+- GRS-077
+- PNC-025
+unblocks: []
+acceptance_criteria:
+- Backup captures and verifies each complete original source/transaction/dependency set necessary for its exact
+  recovery claim before any durable/restart promise.
+- Restore preserves current tombstone/hold/newer head and terminal truth, and never reconstructs missing original
+  sources or overwritten mutable bodies from retained commitments.
+- T0/T1/T2 states and every native/global/A4 participant remain explicit; a partial union or restored serialized
+  lease cannot grant original current authority.
+- Original owner re-admission and independent lower/final predicates precede resumed effects or disclosure, while
+  all existing source lifetimes and restore prerequisites remain unchanged.
+validation_surfaces:
+- Plans/storage_value_registry.json
+- Plans/workflow_activation_contracts/physical-families.json
+- Plans/workflow_activation_contracts/retention-field-classification.json
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/association-hash-dependencies.json
+- Plans/Goal_Runtime_System.md#GRS-077
+- Plans/Plan_To_Node_Compilation.md#PNC-025
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: brs_024_activation_original_custody
+implementation_surfaces:
+- Plans/Backup_Restore_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/storage_value_registry.json, ContractName:Plans/workflow_activation_contracts/physical-families.json, ContractName:Plans/workflow_activation_contracts/retention-field-classification.json, ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/association-hash-dependencies.json, ContractName:Plans/Goal_Runtime_System.md#GRS-077, ContractName:Plans/Plan_To_Node_Compilation.md#PNC-025

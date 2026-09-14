@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6951-L7100
+Source lines: L6951-L7312
 
-Source SHA256: `0f2a22408493d57bbc77c3ed6873a5b2d4de4adede558a9942d99adc5287d12d`
+Source SHA256: `26e495c464b61ce9292702720e6d333f4f6eff6e5b6f604917360eddd35112d2`
 
 ---
 
@@ -158,3 +158,215 @@ negative_constraints:
   deployed migration.
 - No model/native execution, WorkNode/NodeSeed/readiness admission or governance seal.
 ```
+
+### GRS-077 - Original Workflow source, association and current activation custody
+
+GRS-077 defines the original pre-start Workflow activation source route through CV-349, SP-308, PNC-025, EP-117 and MS-139. The complete A4 source records and original methods are canonical owner definitions selected by `Plans/workflow_activation_schema_resources.json`, even where their preserved literal resource identifiers contain `proposals`. Those identifiers are exact schema identity; neither that spelling nor a schema-valid object grants native capability. The current owner graph, genuine original operations and every lower/final boundary below remain mandatory.
+
+The source sequence begins with the genuinely accepted native compiler source, accepted request/graph certification, original aggregate/per-request intake and provisioning, and actual `owner.executor.activation.decide.v1` disposition. `goal_runtime.executor.decide_activation_request_set.v1` issues the complete original nine-field WorkNodeRequests decision through SP-308. It binds the actual graph, request membership, accepted exclusions, intake and provisioning. Required/optional dispositions, readiness_snapshot, activation_transaction_ref, every reason and mixed_result_reason remain whole; a mixed required result refuses materialization. A genuinely blocked decision can retain its true original result without a WorkNode. Replay returns that original result and cannot re-decide its request set to make an earlier activation succeed.
+
+`owner.workflow.compile.issue_native.v1`, `owner.workflow.compile.issue_request.v1` and `owner.workflow.compile.issue_graph.v1` issue their complete original physical values and separate original origins only after PNC-025’s actual source checks. `owner.executor.intake.issue.v1`, `owner.executor.provision.issue.v1` and `owner.executor.activation.decide.v1` likewise retain EP-117’s full upstream source and current admission obligations. NativeSourceControl selects the current immutable native compile/request revisions by exact logical key and whole original-owner CAS; the control is not a maximum-revision scan. A reserved run identity in the accepted native source is a genuine original identity reservation, not a born Workflow body, execution effect, fabricated Goal or Attempt.
+
+Current issue, certification, materialization and current-writer replay must independently authenticate the entire original required-child owner graph as empty under GRS-075. Nonempty, unknown, omitted, stale or inconsistent original sources refuse even if a caller supplies empty arrays. WorkGraph edges, Workflow participants and To-Dos are not child Goals. `CurrentCompletionRequirementSource` and `CurrentRequiredSet` preserve whole A4 values with only their current empty-child refinements. Their full values are required at the actual lifecycle point when they have genuinely issued; an unissued RequiredSet is never a compiler-birth prerequisite. Genuine pre-Goal source work uses the full OriginalPreGoalGuard and actual original host Stop; after association materialization requires the full actual_bound_goal branch.
+
+The current seven-role durable bindings preserve original capture provenance and actual complete durable source/origin/read, through the exact methods in `Plans/workflow_activation_contracts/methods.json`. The old original_live/native-live lease predicate is unchanged. Current durable source admission selects `original_durable_custody` explicitly, so a retained original capture neither grants a live lease nor substitutes for full input. SP-308 defines complete returns and current reads; EP-117 defines exact role collections and materialization joins.
+
+#### Distinct original transactions and available values
+
+A pre-existing original Goal is required by A4 `owner.workflow.activation.begin.v1`. Its genuine Goal/body/Stop/zero-association birth or explicit original migration has already occurred under GRS-074; this activation does not create a Goal from Plan Build, rerun birth_none for an existing Goal or manufacture a missing binding origin.
+
+Call its accepted launch-time Goal body **B0**. This is the complete actual `storage_body` outer value read from its real native owner. The native compile source's `launch_identity_reservation.original_goal_body` selects B0's exact physical key/schema/version/full outer digest. The source was genuinely issued before the association. Original accepted graph/request/permission/currentness and GRS-075 complete original child-source checks must still pass. T1 receives the whole genuinely issued native compile, certified graph and accepted decision sources. It authenticates the actual underlying graph/requirement authority; it does not require a future CompletionRequirementSource or RequiredSet to have been issued before its genuine lifecycle point. The later T2 argument contains the whole actual CompletionRequirementSource and staged original RequiredSet through its existing full materialization input contract.
+
+**T1** is the original Workflow birth plus association joint publication. The original methods are `owner.workflow.activation.begin.v1`, `owner.workflow.goal_binding.commit.v1` and `owner.goal.body.mutation@1.0.0`. They atomically commit the actual InitialGoalRunBody/control/origins and reserved start outbox/origin, the shared Goal metadata afterimage B1 and its original narrow body receipt/control, and actual Workflow binding revision/origin/control. Native capabilities and the whole common Storage/current-owner fence make this one transaction; the schema objects do not.
+
+**T2** occurs later. The actual current Workflow body is still the initial W0 body at fresh materialization admission, and the actual shared Goal is the particular B1 metadata successor from T1. `owner.executor.activation.materialize.v1` and `owner.workflow.activation.commit_materialized.v1` commit the complete native WorkNode/control/result/origins, the one native run control/origin, A4 immutable born/materialization records, installed graph/required set, Workflow body/control afterimages/origins and original transition receipt/origin together. T2 does not mutate the shared Goal B1 or issue another binding revision. No Attempt exists merely because the WorkNode is born.
+
+Fresh T2 is distinct from retry. A completed original T2 retries through actual original result/transition custody and current reads; it cannot rerun fresh absent-key birth after W0 has been overwritten. Later staging/preparation similarly starts with its actual current full body and its original predecessor commitments. No prior mutable body is required to be reread after replacement.
+
+#### Exact Goal before/after fields and digests at T1
+
+Let `n = B0.record.revision`, `c0 = B0.record.currentness_hash`, and let `r` be the actual already-reserved Workflow run identity from the original native launch source. B0 must still be current at the true T1 source boundary. A changed objective, changed source, foreign association or arbitrary newer Goal is not rebased into this original activation.
+
+| Field | Exact T1 relation |
+|---|---|
+| B1.goal_id / project_id / thread_id | Equal the complete original B0 identities. |
+| B1.objective_text | Exact B0 text, preserving all scalars and whitespace. |
+| B1.revision | `n + 1`; metadata updates are ordinary body mutations under GRS-064. |
+| B1.state / blocked_reason_ref | Exact B0 values; association adds no lifecycle transition. |
+| B1.active_run_ref | Actual `r`, matching the single original Workflow association and A4 run identity. |
+| B1.created_at | Exact B0 value. |
+| B1.updated_at | Actual Goal-owner admitted update timestamp, not earlier than B0.updated_at or created_at; no invented equality to a different owner's timestamp. |
+| B1.currentness_hash | Recomputed by the exact GRS-064 recipe over all other ten B1 fields. |
+| Goal control body_key | Same actual body key. |
+| Goal control current_revision / currentness_hash / body_sha256 | `n+1`, B1 currentness and SHA-256 of the complete semantic B1 body respectively. |
+| Goal control latest_objective_revision / latest_revision_hash / origin_key | Exact prior accepted objective head/origin; the full original accepted revision and origin stay byte-identical. |
+| Goal control pending / cancellation_pending / cancellation_receipt_ref | This bounded direct atomic route requires actual before pending, cancellation_pending and cancellation_receipt_ref all null, while the actual final binding-control preimage contains this operation’s genuine nonnull reserved workflow_attach pending. Only this owning binding pending clears; foreign pending, cancellation or Stop refuses. |
+| Goal control control_epoch | Advances through the original owner's exact real transition from its actual terminal preimage; never reset or inferred from an earlier empty control. |
+
+`pm.goal.canonical_json.v1` remains unchanged. `currentness_hash = SHA256(UTF8("pm.goal.currentness.v1") + LF + canonical JSON of the other ten semantic body fields)`. Goal control `body_sha256` hashes the entire semantic body including currentness, with no domain prefix. A4 `SourceSelector.physical_value_sha256`, Binding `PhysicalSelection.complete_value_sha256` and BindingOrigin Goal/control/Stop hash fields refer to complete actual outer values under their actual owner codecs, not those semantic-only digests. The Goal outer wrapper has its exact existing fields; a key is not inserted into a wrapper that does not contain one.
+
+The original narrow Goal body receipt has `before_revision=n`, `before_currentness_hash=c0`, `after_revision=n+1`, and `after_currentness_hash=B1.record.currentness_hash`. Its `accepted_objective_revision` and `accepted_revision_hash` are both null for this metadata-only operation. They are not copied from the unchanged accepted-history head. `operation_id`, `intent_sha256`, `owner_ref`, `authority_ref` and commit time are the actual Goal owner's original values. It is a body mutation receipt, not a binding receipt, event receipt, first AppendReceipt or UI result.
+
+The complete original metadata intent uses the existing closed `pending` grammar with `operation_kind=metadata_update`, expected ordinary revision/currentness/Stop from actual B0 admission, complete B1 after-record, and null accepted_revision/origin/original_change_authority_ref/external_authority_ref. This bounded owner contract selects the direct atomic owner route: the intent is the original owner's complete transient admission argument, not a previously persisted pending row. `FreshAssociationBefore` requires actual Goal pending/cancellation fields null, actual Goal/binding active_run_ref null, no existing binding associations, and the complete actual nonnull owning reserved BindingControl pending/current epoch. Empty binding pending is solely the earlier T0 pre-reservation condition. For this direct atomic Goal metadata route, the literal pending-grammar field `external_authority_ref` is null under GRS-064. The already genuine pre-T1 Workflow/activation admission remains independently authenticated native authorization of the joint operation; it is not a nonnull staged-producer field, future binding origin or returned receipt. The Goal body metadata route is direct atomic; the separate mandatory BindingControl reservation below is preserved. Other Goal-body staged reservation routes remain governed by their original contract outside this bounded argument.
+
+##### Original authority and timestamp boundary
+
+| Value | Original authority and publication boundary |
+|---|---|
+| Metadata intent `external_authority_ref` | Null for this direct atomic Goal body mutation. The whole genuinely accepted pre-T1 Workflow/activation admission and its original native owner authority are independently authenticated outside this field. No candidate BindingOrigin, body receipt, W0 origin or after-binding-control supplies prior authorization. |
+| B1 `updated_at` | Actual Goal owner admitted update time under its existing monotonic constraints; fixed in B1 before hashing and final validation. |
+| Narrow Goal body receipt `committed_at` | Actual Goal mutation owner's T1 commit attribution, fixed in its complete receipt candidate before dependent binding commitments. It is not an already issued receipt until T1 succeeds. |
+| Binding origin `issuer.committed_at` | Actual binding issuer's original commit attribution for the same T1 publication, under its exact schema and timestamp rules. |
+| Workflow origins `issued_at_utc` | Actual original Workflow issuers' literal issue times for co-published W0/control/outbox, under their exact original schema rules. |
+
+These times retain their own literal canonical field names, types and authority. No universal equality between update, commit and issue timestamps is invented. Actual owners must reserve/admit any publication attribution needed for candidate hashing before the terminal pure predicate. They may not resample a hashed timestamp or reserialize a candidate after that predicate. If their native transaction cannot supply an authentic fixed attribution, this joint route refuses; callers cannot fabricate a timestamp or treat an unissued candidate as proof. All co-published records are issued only by successful T1. T2 uses its own authentic original owner attributions under the same fixed-candidate rule; it cannot backdate or reissue T1.
+
+#### A4 launch selectors remain historical commitments
+
+`NativeCompileSource.launch_identity_reservation.original_goal_body` and the new W0 `GoalRunBody.original_goal_body` both retain the exact original B0 selector. W0 `original_goal_lineage` is the genuine pre-existing accepted Goal lineage; association writes no new accepted objective revision/origin and never changes origin_kind to internal_workflow merely because a Workflow is now associated.
+
+After T1, B0's mutable physical key contains B1. Therefore the B0 selector is not a current-read selector and must not be compared to B1 as if the hashes should remain equal. It is the immutable original launch commitment. The actual association's narrow body receipt and binding origin provide the explicit owner-authenticated B0-to-B1 bridge below. No source selector is rewritten to B1, and no missing B0 bytes are reconstructed from B1, hashes or history.
+
+Fresh T2 admits only this specific original B1 metadata transition: actual current Goal ordinary revision, currentness, complete physical/body hashes and whole body/control must match T1's afterimage commitments, with the exact current matching Workflow binding and original body receipt. The original Goal accepted objective head/origin is unchanged. Generic valid history or a later objective/currentness update does not satisfy this join. A genuine intervening edit/association/source change refuses original activation unless an independently canonical owner rule explicitly admits it. Passive retained audit may observe a later changed current body, but grants no materialization, dispatch or source-currentness authority.
+
+#### Existing binding records carry the original bridge
+
+At T1 the original binding revision advances from its genuine prior revision to the next original association revision, preserving complete previous_revision, scope, host owner/epoch and actual writer-domain selection. The new associations array contains exactly one genuine WorkflowAssociation whose `active_run_ref=r`, `original_run_source` selects the complete prepared W0 physical body, execution owner/epoch match the actual Workflow owner, and original_binding_transaction_id is this actual T1. The new revision's active_run_ref equals both that association and B1's field. A prior active Plan or another Workflow is not overwritten to force this branch.
+
+BindingOrigin's `before_control_sha256` is the full actual binding-control terminal preimage. `original_goal_body_sha256`, `original_goal_control_sha256` and `original_stop_control_sha256` commit the genuine B0/Goal-control/Stop outer preimages. `issued_revision_sha256` commits the complete newly assembled binding revision wrapper. Its issuer is the genuine original `owner.workflow.goal_binding.commit.v1` OriginalTransaction. Different participants retain their real operation IDs and owners; the native transaction establishes their actual same-transaction relationship. No string-equality shortcut turns the Goal receipt into the Workflow binding issuer.
+
+For this bounded composition, the existing `BindingOrigin.original_source_members` also carries exact original physical selections for: B0; B1; after-Goal control; narrow Goal body receipt; W0 birth body/control and both original Workflow origins; reserved start outbox and its origin; original native compile source, certified graph and original accepted activation decision; original accepted Goal objective revision and origin. `BindingOriginalMemberRoles` makes those full role selections explicit in the transient native argument. The original publisher independently derives and verifies every selection from the full actual source or complete co-issued candidate. Additional genuine source members remain only if the actual original owner requires them and independently proves their complete provenance and acyclic dependency closure; no unknown member or source omission is accepted.
+
+These members are original commitment metadata under the existing binding-origin contract, not an archive of old Goal/Workflow bodies. Before/after selectors at the same mutable key are deliberately distinct full commitments. On replay, their role comes from this original native contract and the retained original records, not a caller's tag. The B0 member equals the unchanged A4 launch selector after the explicit field mapping: native Storage instance comes from binding Scope, family/key/schema/version match, A4 physical_value_sha256 equals complete_value_sha256, and codec_id is the actual owner codec. No codec is guessed from a filename.
+
+Binding control then selects the exact new revision/origin and authentic current writer domain with its original epoch/pending rules. The complete writer domain/head and all seven affecting writer categories are checked at entry and at the final predicate; a hidden writer or stale generation makes the association unavailable. Neither null active_run_ref nor an absent cache establishes the prior no-association precondition.
+
+#### Mandatory original T0 binding reservation
+
+GRS-074 requires association mutation to first reserve `BindingControl.pending`. T0 is that genuine original reservation by `owner.workflow.goal_binding.commit.v1`, not a new method, receipt or body mutation. `BindingReservationLowerArgument.before` is the whole actual pre-reservation Goal/history/control/Stop/binding/domain state, with empty binding pending and no associations. Its complete `prepared_revision` and `prepared_reserved_control` are independently derived by the original owner. The separate whole Workflow birth argument provides the fixed complete W0 candidate used by `WorkflowAssociation.original_run_source`; W0 is still unpublished. Preparing an exact admitted W0 candidate does not issue a birth receipt or grant authority.
+
+The original owner reserves under exact whole BindingControl CAS and the actual Goal/Stop/registration fence. `pending.operation=workflow_attach`; operation ID, owner and epoch are the genuine original operation. `pending.candidate` equals the entire prepared new BindingRevision semantic record, including W0's exact full physical selector. `pending.expected_control_sha256` is the full pre-T0 binding-control outer digest; expected Goal body/control/Stop digests and writer-domain selection equal the full actual T0 originals. The reserved control preserves all other current revision/origin/domain/scope fields and advances control_epoch exactly once. T0 writes only this actual BindingControl reservation. B0 and Goal control remain current and unchanged; W0, B1, body receipt, binding revision/origin and outbox remain unissued.
+
+At T1 the whole current reserved BindingControl is the terminal preimage in `FreshAssociationBefore`, never the older empty control. Its complete pending must be the same authentic original reservation, including immutable candidate and all original beforeimage commitments; the original owner retains and authenticates its reservation operation under the same native fences. A serialized pending-shaped object does not prove reservation. T1 does not reacquire a vanished pre-T0 mutable control: its original pending expected digest remains a commitment authenticated by the actual original reservation owner, not a replacement current read. Goal/control/Stop/domain commitments are checked against their actual current full values. A changed source, W0 candidate, owner, pending or control epoch refuses; there is no rebase or silent rewrite of the admitted candidate.
+
+T1 publishes exactly the complete binding revision already present in its owning pending, clears only that pending and advances the actual reserved control epoch once again. `BindingOrigin.before_control_sha256` hashes this complete final reserved control, whereas `pending.expected_control_sha256` hashes the earlier pre-reservation control. They are intentionally different. All lower entries and the final pure joint predicate compare the actual reserved control and its complete immutable candidate after helpers. Interrupted reservation never becomes an absent-association success by clearing/relabeling pending; original pending disposition and fences remain required.
+
+#### Acyclic complete T1 hash order
+
+`Plans/workflow_activation_contracts/association-hash-dependencies.json` lists the exact dependency roles and is topologically checked. The following are complete prepared values, not previously issued receipts used as admission credentials:
+
+1. Authenticate all actual prior Goal/history/control/Stop/binding/domain and accepted Workflow/compile/decision sources, including the complete actual T0 reserved binding control and immutable admitted revision/W0 candidate. Allocate only genuine original operation/run identities already owned by that admission. No future result identity is borrowed as a receipt.
+2. Independently derive B1, its Goal currentness/semantic/outer hashes, complete original metadata intent, after-Goal control and narrow Goal body receipt. The intent has external_authority_ref=null; its independently authenticated native authorization contains no new BindingOrigin, after-binding-control or Workflow-origin hash. The narrow receipt is merely a candidate until T1 commits.
+3. Independently derive complete W0 InitialGoalRunBody (`ready`, `activation_pending`, revision 1, no installed graph/required set/certification), its GoalRunControl, reserved start outbox, and their original A4 issuer origins. Their source bindings use already genuine upstream sources and previously assembled values. No W0/control/outbox origin, actual_permission_source, Stop/cancellation source or transitively referenced authority depends on the new BindingOrigin or after-binding-control. W0 retains B0's launch selector, not B1's future binding-origin hash.
+4. Independently rederive the complete new BindingRevision from W0's complete physical selector, original prior revision/domain and actual association identity, and compare it exactly to T0’s complete immutable pending candidate. Build BindingOrigin from that complete revision wrapper plus the complete original preimages and the role members already assembled above. It may reference the prepared narrow Goal receipt and W0/control/outbox origins because none depends on BindingOrigin. This is co-issued candidate composition, not a claim that their future returned values already exist.
+5. Build after-binding-control from the complete new revision and origin selections, advancing the actual reserved control epoch and clearing only the authentic owning pending. The actual lower Goal, Workflow and binding publishers independently compare the entire intended union after every returning helper and commit it together under one final pure native predicate, with no later helper/mutable gap. Independently authenticated whole readback precedes dependent release.
+
+An original helper response is never the sole source of its own expected hash. Each participating owner independently derives its own complete candidate from its genuine originals before helpers and checks the entire candidate again after them. A source member that recursively references BindingOrigin or after-binding-control breaks the ordering and refuses; it is not omitted to make the graph acyclic. No new body's metadata contains a later source-origin hash to patch over the cycle.
+
+##### Whole original global RunOperationResult participant
+
+The original native method map includes `executor_run_operation_result` in `owner.executor.activation.materialize.v1`'s joint families. The complete `MaterializeCurrentCandidates.result` is per-WorkNode NativeOperationResult and does not supply that separate global result. `PreparedWorkflowMaterialization.native_run_result` therefore contains the entire unchanged native `StorageRunOperationResult`, and `native_run_result_origin` its entire unchanged `StoragePublicationOrigin`.
+
+The actual original materialization owner independently derives this run-level result with operation=materialize, exact original run scope/operation and publication attribution, and after_control selecting the complete prepared native_run_control outer value. The RunExecutionControl.last_operation_id equals this actual operation. Fresh first materialization proves real absence of every selected native run-control/result/origin key under original Storage/activation exclusion; only that genuine birth permits before_revision=0 and before_control_physical_sha256=null. A restored missing row is unavailable, not this absence proof. The original graph-lock observation remains the actual original value, null only for genuine no-lock birth; no future observation is invented.
+
+Compute the complete run-control wrapper before the full run result and then its original publication origin. The origin binds the actual result key, whole semantic result bytes, original materialization owner/operation/transaction and complete original source provenance under the unchanged native codec. T2's complete union includes this global result and origin with the full run control/origin, all per-WorkNode rows/controls/results/origins and A4 participants. Every lower and outer final predicate checks the complete values and authentic readback before dependent release; neither presence of an unused schema definition nor the per-WorkNode result replaces this participant. No run result is issued by a later repair after partial materialization.
+
+#### T2 complete materialization union and exact preimages
+
+Fresh T2 reads the actual complete W0 body/control/origins and reserved outbox currently stored after T1; it also reads `CurrentAssociatedGoalRead`, which contains full CURRENT B1/control/Stop/domain/binding values plus the original immutable association body receipt and member roles. It does not receive full B0. All original graph/request/intake/provisioning/requirements/seven durable inputs remain authenticated exactly as in EP-117 and the complete current materialization contract in Plans/workflow_activation_contracts/methods.json, including every actual preflight/test/Models collection member and GRS-075 underlying original graph/required-child emptiness.
+
+For each native `MaterializeCurrentCandidates.inputs`, original_goal_run_body and original_goal_run_control equal the complete current Workflow preimages W0/control read at this actual materialization boundary. original_installed_graph and original_required_set are the complete staged original Workflow candidates for this same T2, not falsely described previously stored objects. Their genuine original publisher participates in the same final union. Whole native_worknode/control/result wrappers/origins and one native_run_control/origin are explicit in `PreparedWorkflowMaterialization`. Every member's corresponding semantic native candidate equals its full wrapper record, and every repeated run-control view equals the one actual global candidate. No native field is trimmed.
+
+Born records and native WorkNodes begin queued with actual original accepted content; attempts/retries stay empty only under the genuine original absent-key birth predicate. Original materialization receipts bind their full born records. Installed graph and required set join all actual required members with exact source/graph/request/WorkNode bijections. New Workflow W1 preserves W0 identity, original B0 launch selector, original Goal lineage, execution owner and accepted decision, advances its own ordinary revision once, records the original records_materialized activation transition and installs the original graph/required-set bindings. GoalRunControl matches the complete W1 semantic hash/revision. GoalRun remains ready; certification remains absent. The shared Goal remains B1, and no new Goal body receipt or binding revision is issued in T2.
+
+Build born member sources/origins and materialization receipts/origins, then installed graph/origin and required set/origin from complete genuine sources and earlier prepared values. Build full native WorkNode wrappers, controls selecting their complete outer hashes and native results selecting those complete wrappers; the global native run control uses the already assembled full installed_workgraph binding. Then derive all corresponding native origins. Build the original activation transition receipt/origin using actual prior W0/control, original causation and outbox, and the already assembled graph/required-set/member sources. Build W1 and its original issuer origin with source bindings to the actual previous body/origin and that transition/graph/required-set provenance. Finally build W1 control/origin, binding the complete W1 physical body/origin, previous control/origin and transition. No member/transition/graph/required-set origin depends on later W1/control origin. No transient candidate is treated as earlier issued evidence; the actual joint publisher commits the whole union or none.
+
+If a genuine source or guard changes after helpers, original T2 publication refuses without changing B1/binding or overwriting earlier genuine T1 effects. Recovery does not erase a completed association merely because later materialization failed. Stop and original cancellation remain authoritative; neither T1 nor T2 releases a start event, first AppendReceipt, provider call or dispatch.
+
+#### Current Workflow reads after mutable body replacement
+
+`CurrentWorkflowLaunchChainRead` is the explicit successor current-read argument. The transient native inspection contains the complete CURRENT Workflow body/control/outbox and their original origins, original launch sources, retained birth body/control/outbox selectors with their actual immutable origins, and the complete retained activation transition/origin links. It deliberately has no field demanding full historical W0 or full old reserved-outbox bytes after those mutable rows advance. `RetainedWorkflowTransitionLink` contains full original compact transition receipt/origin plus original before/after physical selectors and after-body/control origins, not reconstructed old bodies.
+
+Each original pre-start body transition must publish its after-body origin with exact actual prior body/origin and original transition receipt/origin bindings. The after-control origin must bind the exact prior control/origin, complete new body/origin and the same transition. Those metadata source bindings are part of the genuine original transaction, authored before publication from actual full available preimages. No new persistent source is introduced and no old origin is backfilled. For intermediate transitions, the next genuine origin's prior selector identifies the prior afterimage; the current full body/control verify the chain endpoint. The native reader derives and authenticates all link roles from the original stored origin/transition records and actual owner protocol. Caller-supplied link arrays are not proof.
+
+The first birth commitment equals the original WorkflowAssociation.original_run_source and the birth members in the genuine T1 BindingOrigin. Link scope/keys/original issuer/causation/transition states and original activation revisions must be contiguous and match the actual registered key codec. Each after-body/control origin selects its actual emitted semantic record commitment and genuine prior bindings. The current full body/control matches the last complete physical selectors, semantic hash and owner/revision. Current GoalRun.original_goal_body remains the original B0 selector. Original accepted graph/decision/Goal lineage and exact preserved fields are checked under the actual original transition contract, without rereading disappeared previous body bytes.
+
+This bounded chain covers the original A4 pre-start birth/materialize/stage/prepare transitions. Any subsequent start, cancellation, execution or certification writer requires its own already authorized complete original transition/source contract; this owner contract does not invent a generic transition or claim those separate event protocols are closed. An older current reader that requires full original activation_body must explicitly select this new current-read contract for the covered chain. Its old grammar stays exact for genuine retained historical availability; current body bytes are never returned mislabeled as the old initial body. Missing origin/transition custody, an unexplained intervening mutation or an unsupported later writer returns unavailable for dependent current action. It cannot be repaired by replaying the operation, creating a full-body archive or treating a receipt as the missing body's content.
+
+Original passive receipt/origin audit may disclose surviving genuine metadata under current permission without reacquiring disposed B0/W0 content, and has action_authority=none. The current action path still needs the actual current full body/control and authentic exact transition chain; historical readability alone does not authorize source-currentness, materialization or dispatch.
+
+The reserved-to-prepared start-outbox mutation obeys the same retained-source rule: its genuine new outbox origin binds the prior outbox selector/origin and its actual original staging/activation-receipt provenance. A current prepared outbox is read as prepared, with the original reserved selector retained only as a commitment. No current reader requires old reserved payload bytes or returns prepared bytes labeled reserved. Future event/first-receipt output remains absent under the unchanged pre-start outbox schema; its separate publication owner is not bypassed.
+
+
+#### Explicit current reader and later lifecycle boundary
+
+The original physical reader `owner.storage.activation_source.read_current.v1` explicitly composes `CurrentWorkflowLaunchChainRead` from `Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json` with `CurrentAssociatedGoalRead` from `Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json` when serving this admitted pre-start association source route. The native method map’s `association_current_join` selects these complete internal arguments in their separate current_materialization_source and current_goal_control realms. This is a real original entry requirement, not a stored unused schema. The native owner derives the internal inspection from actual current values and genuine retained original metadata; caller tags do not select a past body or authority.
+
+The method’s physical return remains its exact complete current value plus genuine original origin, or its exact unavailable arm under the adopted A4 current-read contract. It does not add a Goal/Workflow inspection envelope, return current bytes labeled as old activation_body, expose a new public request discriminator, or write the inspection as a new durable family. Passive retained source/audit reads disclose only genuine surviving content permitted by its owner and carry no materialization or dispatch authority. Historical source grammar stays exact for historical interpretation; its requirement for full old B0/W0 content cannot silently be applied to the current successor.
+
+This bounded transition chain covers original association, birth, materialization and the existing pre-start staging/preparation continuity only. `owner.workflow.activation.stage_entrypoints.v1` retains genuine required-entrypoint readiness and dispatch_released=false. `owner.workflow.activation.prepare_start.v1` prepares the actual ActivationReceipt and outbox with ready/start_event_pending; it does not issue a start EventRecord, first append receipt or dispatch. `owner.workflow.activation.cancel_before_mutation.v1` records only its original pre-start abort where that original no-mutation branch is admissible; it supplies no after-mutation settlement or new cancelled GoalRun event. Later start, execution, certification, cancellation settlement and their current readers require their separately explicit owner transition contracts; this pre-start join grants none of those writers.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: GRS-077
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Original Workflow source, association and current activation custody. The actual T0 binding reservation,
+  T1 original joint birth/metadata/association publication and later T2 materialization preserve exact whole sources
+  and original owner identity.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- GRS-064
+- GRS-074
+- GRS-075
+- CV-349
+- SP-308
+unblocks: []
+acceptance_criteria:
+- The actual T0 binding reservation, T1 original joint birth/metadata/association publication and later T2 materialization
+  preserve exact whole sources and original owner identity.
+- Goal metadata advances ordinary revision/currentness exactly once while preserving accepted objective lineage;
+  the final binding commit consumes its genuine reserved pending/current epoch.
+- Current reads join authentic surviving B1 and compact Workflow transition provenance without reacquiring overwritten
+  B0/W0 bodies or substituting historical bytes.
+- All seven whole durable original inputs and actual empty child-source authority precede materialization; unavailable
+  or changed sources refuse.
+validation_surfaces:
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json
+- Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json
+- Plans/workflow_activation_contracts/association-hash-dependencies.json
+- Plans/workflow_activation_schema_resources.json
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: grs_077_activation_original_custody
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/schemas/goal-association-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/workflow-birth-materialization-join.v4.schema.json, ContractName:Plans/workflow_activation_contracts/association-hash-dependencies.json, ContractName:Plans/workflow_activation_schema_resources.json

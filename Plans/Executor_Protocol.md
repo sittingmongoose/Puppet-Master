@@ -7359,3 +7359,157 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Executor_Protocol.md
 ```
+
+### EP-117 - Whole original intake, provisioning and bounded native materialization
+
+EP-117 defines original accepted-request intake/provisioning and the bounded native materialization source composition. CV-349 preserves the complete native schema and every original physical field. SP-308 provides exact source/receipt/capture/WorkNode/control/result/origin custody; GRS-077 owns the actual Goal association and Workflow birth. An adopted source contract does not instantiate a WorkNode or grant an Executor lease.
+
+#### Seven whole original input roles
+
+Every role has a complete original semantic output owner, separately identified capture publisher/origin, original durable primary/origin and the following exact full read interface. The request/result definition names resolve in `Plans/workflow_activation_contracts/schemas/operational-custody.v2.schema.json`; source-control primary/origin definitions retain their exact independent source-control resource. The complete source and current-control arguments remain in separate CV-349 realms.
+
+| Whole original input role | Actual output owner | Original durable reader | Full direct request/result |
+|---|---|---|---|
+| `native_compile` | `owner.plan_compile.native.publish_state_input.v1` | `owner.native_plan_compile_checkpoint.read_original.v1` | `/$defs/CompilerReadRequest` / `/$defs/CompilerReadResult` in operational-custody.v2 |
+| `compile_certification` | `owner.plan_compile.native.publish_certification_input.v1` | `owner.native_plan_compile_certification_receipt.read_original.v1` | `/$defs/CertificationReadRequest` / `/$defs/CertificationReadResult` in operational-custody.v2 |
+| `aggregate_intake` | `owner.executor.intake.publish_aggregate_input.v1` | `owner.executor_aggregate_intake_receipt.read_original.v1` | `/$defs/AggregateReadRequest` / `/$defs/AggregateReadResult` in operational-custody.v2 |
+| `test_capability` | `owner.ats.test_capability.output.v1` | `owner.ats_test_capability_receipt.read_original.v1` | `/$defs/TestReadRequest` / `/$defs/TestReadResult` in operational-custody.v2 |
+| `model_resolution` | `models.resolve_plans_to_code_role.v1` | `owner.models_plans_to_code_resolution_receipt.read_original.v1` | `/$defs/ModelsReadRequest` / `/$defs/ModelsReadResult` in operational-custody.v2 |
+| `worknode_request_set` | `goal_runtime.executor.decide_activation_request_set.v1` | `owner.workflow_activation_request_set_decision.read_original.v1` | `/$defs/RequestSetReadRequest` / `/$defs/RequestSetReadResult` in operational-custody.v2 |
+| `source_control_preflight` | `owner.executor.source_control_preflight.output.v1` | `owner.executor_source_control_preflight_receipt_source.read_original_activation.v1` | `/$defs/PreflightReadRequest` / `/$defs/PreflightReadResult` in operational-custody.v2 |
+
+
+The original publishers and every lower reader authenticate the exact actual accepted graph/request/source scope, entire original input value and canonical request digest, operation/output identity and revision, owner/epoch, occurrence and original transaction. Equal bytes from another operation do not acquire original identity. Every complete durable binding retains the original capture and actual primary/origin; the capture is provenance, not input content or a renewed live lease. Current direct live/audit result selection remains CV-349’s exact inner union; durable reads retain their whole available/unavailable grammar and action_authority=none.
+
+#### Actual aggregate intake and provisioning
+
+`owner.executor.intake.publish_aggregate_input.v1` publishes the entire thirteen-field executor_intake_report through the new executor_aggregate_intake_receipt family. Every blocker, accepted/rejected request, source-control/test/Models/authority/evidence reference and full handoff remains. It binds the genuine whole graph and complete per-request reports under their unchanged MessagePack family. Already committed genuine per-request rows are read dependencies; newly co-issued rows participate only through their real original transaction. The aggregate is the actual original output, not a reconstruction from a later collection, and no per-request registry row is repurposed as the aggregate. Mixed, blocked, rejected and all explanations remain truthful. An incompatible genuine per-request value under an inherited PredicateObservation refinement is unavailable until its original owner/consumer schema contract is resolved; it cannot be coerced to fit.
+
+`owner.executor.intake.issue.v1` independently derives the complete A4 NativeIntakeSource from these actual aggregate/per-request sources and accepted original graph/request membership. `owner.executor.provision.issue.v1` independently derives the complete A4 ProvisioningReceipt from the actual accepted requests and genuine preflight, test and Models outputs. Both preserve exact required/optional membership and original original_source/complete_input bindings. Revalidate approved versus actual repository, host, environment, original permission/write ceilings, provider/account/model, test capability/harness, source-control/safe-point/rollback, budget, parallelism and current writer-capable Storage at their actual owners. No fake Attempt or WorkNode is created to fill an execution_unit_context; real native context, when present, remains whole under its unchanged owner schema.
+
+Source-control preflight reuses the one genuine `executor_source_control_preflight_receipt_source` and `executor_sc_receipt_original_origin` through `owner.executor.source_control_preflight.output.v1` joined with `owner.storage.executor_sc_receipt.publish.v1`. `owner.executor_source_control_preflight_receipt_source.read_original_activation.v1` consumes the whole original PreflightReadRequest/PreflightReadResult. The full 25-field receipt at /record/receipt, complete original context and handoff match the exact same accepted request, whole request digest, scope, output_identity, occurrence and actual service/native operation as OriginalPreflightLiveStage. Its separately typed live capture and origin remain original provenance. A later completion capture, current repository report, fresh probe or compact live capture cannot replace it. Existing SCS-021/FileSafe/source-control recovery and backup claims remain independently required where applicable; this accepted-request reuse adds no Source Control product operation or new receipt body.
+
+ATS-053 supplies the complete 22-field original test_capability_report and original output identity; MS-139 supplies all eight original Models resolution fields plus actual native model/configuration/capability and runtime sources where required. Neither source is reduced to a capability Boolean or effective-model name. The original provisioning output retains all members of those role arrays, preserving original request applicability. Absence is admissible only when the genuine original provisioning source has no such member and the actual original admission permits that branch; a failed reader is never converted to absence.
+
+`owner.executor.activation.decide.v1` performs its own full source integrity, accepted membership, provisioning and original request-set checks, issuing a complete original decision/origin only on actual owner admission. `goal_runtime.executor.decide_activation_request_set.v1` retains the entire WorkNodeRequests decision and its exact reasons/readiness/activation linkage. A mixed required result refuses; a retained failed decision is not re-decided to manufacture materialization.
+
+#### Complete current materialization argument and native join
+
+`Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json` has a new explicit resource ID. `Plans/workflow_activation_contracts/current-materialization-reference-map.json` enumerates its 33 ID/reference changes and verifies that reversing only those changes reconstructs the entire old schema exactly. Activation references now name the actual full A4 resource explicitly; all other relative references name their exact old effective resources so the new enclosing ID cannot alter their target. The old native schema/ID and complete graph remain historical resources. No old lexical alias is rebound to the new native schema. A4 remains byte-exact: all 82 definitions, source records, original metadata and capture provenance are unchanged.
+
+`Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json` adds a separate whole current source argument. `native_candidates` is the complete current-native MaterializeCurrentCandidates, including every original input, whole WorkNode/control/run-control candidate and complete original result. Current original RequiredSet and CompletionRequirementSource additionally retain their whole A4 bodies with GRS-075 empty-child refinements. The complete current source graph is authenticated too; array validation alone is insufficient.
+
+The second part supplies seven full original activation source values with their genuine original issuer origins: native compiler source, certified graph, aggregate intake source, provisioning source, accepted activation decision, original completion requirements and this complete source request. These are actual complete A4 physical values, not metadata projections or source-hash placeholders. OriginalSourceBinding/physical keys and complete physical hashes must equal the genuine sources referenced by the native inputs and the original accepted graph/activation chain. The native input `original_source_request` equals the source request's entire semantic record. Pending materialization values are independently derived complete candidates in the actual original transaction, not falsely claimed previously persisted sources.
+
+`seven_durable_original_inputs` supplies all seven typed routes. Compiler, certification, aggregate and request-set entries contain their complete durable binding and entire successful original read. Preflight, test and Models entries contain complete collections of those same pairs, preserving every corresponding original provisioning member. The original owner proves exact multiset membership and identity with no duplicates, omissions or foreign entries; original array order is preserved wherever the canonical source declares it. An empty collection is allowed only when the complete authenticated original provisioning source has no member for that role and the actual original admission permits that case. Missing source or failed read never becomes empty, and no not-required result, fake probe or invented model output is introduced. This preserves A4's existing per-role array cardinalities and original native obligations rather than narrowing them to one representative receipt.
+
+Each durable binding's `original_capture` equals the complete original A4 metadata `complete_input` at its matching source position: NativeCompileSource.compile_metadata; CertifiedGraphSource.compile_certification_receipt; NativeIntakeSource.aggregate_intake; each ProvisioningReceipt.source_control/test_capability_reports/model_resolution_receipts member; and the native input RequiredSet.worknode_requests. The actual native owner authenticates original capture/source/origin identities and full bytes. A4's stored capture is provenance; this route does not call an original-live reader, demand its old native lease, change its source_mode, reissue a capture or treat retained metadata as full content.
+
+For each pair, the original read's full source/origin is exactly the durable binding's selected primary/origin and belongs to the same actual original method, operation, transaction, output identity/revision and source scope. The complete returned input and original semantic hash/codec equal the whole genuine original value captured by that operation. Current compiler reads additionally carry the whole checkpoint, not just its run view. Native compiler source metadata, certification and graph/request sources, intake membership, provisioning source/request applicability and original WorkNodeRequests declaration must all describe the same accepted original activation. Distinct semantic outputs do not acquire identity merely from equal bytes or caller IDs.
+
+The exact native candidate WorkNode, readiness, authority, model metadata, test binding, source lineage and currentness remain derived from these complete original sources. In particular the native WorkNode.model is the same entire A4 Models metadata object, while the durable Models collection supplies its full eight-field receipt and actual accepted-request applicability. Original requested_effective_runtime and original configuration/policy sources remain independently authenticated where required; the resolution receipt cannot substitute for them. Preflight uses C's one genuine primary/origin and does not fabricate native WorkNode/Attempt context for accepted-request preflight.
+
+The original seven durable readers return their exact available/unavailable union. This success argument can only be prepared after every required whole original read is available. Upstream unavailable, corrupt, stale, foreign, duplicate or missing required inputs prevent original materialization; no validator fallback, old live retry, re-probe or second model resolution repairs them. A separately authorized new original operation needs new admission and provenance.
+
+`current_guard` remains a separate native argument validated in the actual current shared-control realm. Materialization requires CurrentGoalGuard's actual_bound_goal branch and the complete genuine GRS-074 Workflow association already committed with the shared Goal metadata mutation. OriginalPreGoalGuard is valid for truly pre-Goal compiler/preflight sources but never for actual materialization. Full BodyControlV2, effective host Stop, binding revision/origin/control, exhaustive registered writer domain/head and actual original Goal/project/thread/run/owner joins are checked from real owners. Neither old native GoalControlWitness nor the schema-valid serialized arguments establish current authority.
+
+Before helpers, each actual original Executor/Workflow/source/Storage participant authenticates all complete source/preimage values, owner capabilities and current guard, and independently derives all complete pending output rows/origins and the transaction union. Each helper/directly callable reader or lower writer repeats its own checks. After all helpers return, the actual native materializer and final joint publisher independently compare all full source and candidate bytes, original graph/requirement emptiness, current writer-domain/control/Stop and exact union in the final pure predicate with no subsequent helper or mutable gap before commit/release. The genuine same transaction includes full native WorkNode/control/run-control/result/origins and A4 born/materialization/installed-graph/required-set/body/control/transition participants. Whole authenticated readback precedes dependent exposure. No event or dispatch is released here; prior genuine effects remain durable on later refusal.
+
+
+
+The named realms are exactly current_materialization_source for CurrentMaterializeArgument and WorkflowMaterializationLowerArgument, and current_goal_control for current_guard plus CurrentAssociatedGoalRead. T2 can begin only after GRS-077’s authentic T0/T1 binding reservation and original joint publication. The actual Goal B1 ordinary revision/currentness/body/control, accepted objective head and original binding receipt/origin must be the specifically committed association metadata step; an arbitrary intervening Goal edit is not admitted by the bridge. B0’s immutable launch selector stays historical. T2 reads whole actual current pre-materialization Workflow W0/control/outbox and every original source/origin; no vanished B0 full body is required.
+
+Native MaterializeCurrentInputs.original_goal_run_body/control are the entire actual current W0 preimages at T2, not a later W1 and not a relabeled historic value. Native original_installed_graph and original_required_set are complete genuine candidates staged in that same T2, whose actual graph/requirement sources have already been authenticated. Born records/origins precede complete materialization receipts/origins, then full installed graph and RequiredSet/origins, then all complete native WorkNode wrappers, WorkNode controls, native operation results, global run control with its required installed_workgraph binding, and their original native publication origins. The actual original transition/origin precedes W1’s origin and new Workflow control/origin; W1 remains ready with materialized activation state and ordinary Workflow revision advancing once. Actual shared Goal B1 and binding are guarded reads and do not mutate again.
+
+The whole native materialization participants include executor_worknode, executor_worknode_control, executor_run_execution_control, executor_native_operation_result, executor_run_operation_result and executor_original_publication_origin under their exact original schemas and owner transaction. Per-member and global result/control origins are whole genuine co-issued values. The complete outer T2 union also includes A4 born sources, materialization receipts, installed graph, RequiredSet, Workflow body/control and activation transition with every original origin. No missing global run result/control or unrelated preserved member can be hidden by validating only a WorkNode candidate. Native result identities and all whole payload hashes are independently derived from actual original sources before helpers.
+
+Original output/receipt candidates are not pre-issued admission proofs. If a required nested authority/source/hash dependency points back to a future BindingOrigin, after-binding-control, W1 origin or returned result, the route refuses; no required field is omitted to make the dependency graph acyclic. The full GRS-077 dependency map is enforced at the actual native boundary, including fixed actual owner time attribution. T2 completion returns genuine original result/readback and releases no event, Attempt, tool dispatch or Usage charge.
+
+The retained CurrentWorkflowLaunchChainRead supports only GRS-077’s original pre-start materialization/staging/preparation successor path. Stage/prepare use the current Workflow body/control and their authentic compact transition sources, not an archived W0 body. Later native execution/state changes remain separately admitted. A retry after genuine T2 returns the original actual receipt/result and verifies current relevant source truth; it does not create a second birth or materialization.
+
+#### Complete later native dependencies remain separately admitted
+
+| Existing complete native method | Current activation selection |
+|---|---|
+| `owner.executor.activation.materialize.v1` | Original T2 materialization only, under the whole current source and current-Goal arguments. |
+| `owner.executor.native.begin_attempt.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.submit_verification.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.record_verified.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.record_failed.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.complete_worknode.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.record_cancellation.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.record_invalidation.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.apply_graph_lock.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+| `owner.executor.native.capture_original_input.v1` | Complete dependency contract only; no dispatch or later-state admission through this unit. |
+
+All ten original native method IDs retain their complete input/candidate definitions, joint family sets and existing operation semantics. Keeping later attempt, verification, completion, cancellation, invalidation, graph-lock or capture schema definitions in the current resource graph is not admission to call them through activation. Each later owner must independently establish its actual original lifecycle/source contract, native capability and complete writer/final predicates. The three existing generic native dependency families remain in their unchanged original registry posture, with no runtime promotion. Current materialization cannot use a dependency-only route as an alternate private writer.
+
+Every independently callable original issuer, capture participant, head/artifact writer, Storage publisher, live/current/durable/retained reader, recovery reader and replay responder must enforce both native boundaries itself. Before its first returning helper it authenticates the complete actual operation, registered owner and epoch, native Storage/root/backend identity, whole original source values and beforeimages, current permissions, effective Stop/cancellation, writer/registration generations, deletion/tombstone/hold and coherent recovery state. It independently derives every complete permissible candidate and return from those sources. Caller-selected method, schema, family, codec, source mode, operation ID, owner string or serialized lease cannot establish that authority.
+
+After all returning parsers, builders, codecs, copies, resolvers, validators, comparison helpers and currentness reads, the same original participant independently rechecks the whole authentic source/preimage set, actual native fences and entire candidate. A publisher checks its complete pending transaction union, including preserved/unrelated members; the outer joint publisher independently checks the complete joined union as well. One final pure predicate has no returning helper, asynchronous callback, logger or mutable gap before that participant’s commit or passive disclosure. A lower entry never inherits authority merely because its caller checked. Whole original readback with its own independent final predicate precedes dependent release. A later refusal preserves every genuine prior effect and never repairs a missing source by replaying its producer.
+
+This unit establishes a canonical source contract and the required original-owner placements. Native installation and capability authentication, original source execution, all-writer exclusion, exact codec execution, redb atomicity/fsync/crash behavior, retained/current replay and coherent backup/restore remain NOT_RUN. Schema/source checks do not establish those properties. No WorkNode, NodeSeed, executable queue, runtime launch, PNC-019 enablement, readiness admission, event-depth pass, Step 9 campaign result, global D05 closure or governance seal follows from this adoption.
+
+```yaml
+plan_unit_id: EP-117
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Whole original intake, provisioning and bounded native materialization. Materialization consumes
+  all seven complete genuine original durable input roles with exact membership, operation/source identity and current
+  native owner admission.
+gui_related: false
+gui_classification_reason: Defines original source, owner, storage and verification semantics without a visual surface.
+split_recommended: false
+depends_on:
+- EP-103
+- EP-116
+- GRS-077
+- CV-349
+- SP-308
+- PNC-025
+unblocks: []
+acceptance_criteria:
+- Materialization consumes all seven complete genuine original durable input roles with exact membership, operation/source
+  identity and current native owner admission.
+- The complete current native candidate and A4 source graph are preserved and joined to actual current Goal control
+  in separate resource realms.
+- One original T2 joins every native WorkNode/control/run/result/origin and Workflow born/materialization/graph/RequiredSet/body/control/transition
+  participant.
+- Same-original preflight and Models sources are reused without fake Attempt/context, new producer replay or metadata
+  substitution.
+- Nine later native operations remain complete dependency contracts with no current activation dispatch or lifecycle
+  authority.
+validation_surfaces:
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json
+- Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json
+- Plans/workflow_activation_contracts/native-birth-field-map.json
+- Plans/workflow_activation_contracts/activation-field-map.json
+- Plans/workflow_activation_contracts/source-control-field-map.json
+- Plans/Goal_Runtime_System.md#GRS-077
+risk_class: workflow_activation_original_source_or_lifetime_drift
+reasoning_tier: high
+context_scope: ep_117_activation_original_custody
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- Plans/Decision_Log.md#DL-039
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-047
+- Plans/workflow_activation_contracts/methods.json
+- Plans/workflow_activation_contracts/physical-families.json
+source_atom_ids: []
+negative_constraints:
+- No public command, event or Goal lifecycle expansion and no fabricated original source or receipt.
+- No full historical mutable-body archive, new retention policy, native field redaction, numeric coercion or automatic
+  deployed migration.
+- No WorkNode/NodeSeed/runtime/readiness/global event-depth or governance claim from source adoption.
+```
+
+ContractRef: ContractName:Plans/workflow_activation_contracts/methods.json, ContractName:Plans/workflow_activation_contracts/schemas/current-materialization.v1.schema.json, ContractName:Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json, ContractName:Plans/workflow_activation_contracts/native-birth-field-map.json, ContractName:Plans/workflow_activation_contracts/activation-field-map.json, ContractName:Plans/workflow_activation_contracts/source-control-field-map.json, ContractName:Plans/Goal_Runtime_System.md#GRS-077
